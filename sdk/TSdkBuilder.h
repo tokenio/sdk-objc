@@ -11,16 +11,17 @@
 
 #import <objc/NSObject.h>
 
-@class TokenSdk;
 
-@interface TokenSdkBuilder : NSObject
+@class TSdk;
+
+@interface TSdkBuilder : NSObject
 
 @property (readwrite, copy) NSString *host;
 @property (readwrite) int port;
 
 - (id)init;
-- (TokenSdk *)build;
+- (TSdk *)build;
 
 @end
 
-#endif /* TokenClientBuilder_h */
+#endif
