@@ -1,0 +1,120 @@
+syntax = "proto3";
+package io.token.proto.common.token;
+
+option java_outer_classname = "TokenProtos";
+
+import "google/protobuf/wrappers.proto";
+import "security.proto";
+import "transfer.proto";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token
+//
+
+message Token {
+  string id = 1;                        // Computed as sha(token).
+
+  oneof token {
+    PaymentToken payment = 2;           // Only used for payment token.
+    AccessToken access = 3;             // Only used for access token.
+  }
+
+  repeated TokenSignature signatures = 4;    // Token signatures.
+}
+
+message TokenSignature {
+  // List of valid actions that one can perform on the Token. We use lowercase string value
+  // of the action when computing a signature.
+  enum Action {
+    INVALID   = 0;
+    ENDORSED  = 1;                       // Endorses token. Both payer and payer bank co-endorse the token.
+    DECLINED  = 2;                       // Declines the token, executed by payer or issuer.
+    REVOKED   = 3;                       // Revokes the token, executed by payer.
+  }
+
+  Action action = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Payment Token
+//
+
+message PaymentToken {
+  string scheme = 1;                                    // Pay/1.0
+  string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
+  TokenMember issuer = 3;                               // Token issuer, bank.
+  TokenMember payer = 4;                                // Payer member.
+  TokenMember redeemer = 5;                             // Redeemer member.
+  io.token.proto.common.transfer.Transfer transfer = 6; // Transfer instructions.
+  TokenMember fees_paid_by = 7;                         // Payer or redeemer member id.
+  string currency = 8;                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+  double lifetime_amount = 9;                           // Optional: Token total lifetime amount.
+  double amount = 10;                                   // Optional: Single token charge request acceptable range.
+  int64 effective_at_ms = 11;                           // Optional
+  int64 expires_at_ms = 12;                             // Optional
+  string description = 13;                              // Optional
+
+  map<string, Var> vars = 14;                           // Optional: token variables.
+}
+
+message TokenMember {
+  string id = 1;
+  string alias = 2;
+  string name = 3;
+}
+
+// Describes a single variable value. Only one of the fields is set.
+message Var {
+  DoubleRange range = 1;              // Used to represent amount range.
+  repeated string one_of = 2;         // An array of strings a value must belong to.
+  string regex = 3;                   // Regex match.
+  string value = 4;                   // Plain string value.
+  TimePeriod period = 5;              // Amount per time period.
+}
+
+// A range of a double value, used for amounts.
+message DoubleRange {
+  double min = 1;
+  double max = 2;
+  double default = 3;
+}
+
+// Time period description for multi use payment tokens.
+message TimePeriod {
+  string duration = 1;                // ISO8601 duration. E.g.: P1M for 1 month.
+  double max = 2;                     // Max amount for the given duration.
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Information Access Token
+//
+
+message AccessToken {
+  string scheme = 1;                  // Info/1.0
+  string nonce = 2;                   // nonce, random string used to de-dupe tokens, set by client.
+  TokenMember member = 3;             // member_id/optional[FriendlyName]
+  TokenMember redeemer = 4;           // member_id/optional[FriendlyName]
+  repeated AccessTokenAcl acl = 5;    // Each entry defines access to a given API call (or many calls).
+  int64 effective_at_ms = 6;          // Optional
+  int64 expires_at_ms = 7;            // Optional
+  string description = 8;             // Optional
+}
+
+message AccessTokenAcl {
+  enum HttpMethod {
+    INVALID = 0;
+    GET = 1;
+    PUT = 2;
+    POST = 3;
+    DELETE = 4;
+  }
+
+  HttpMethod method = 1;              // HTTP method.
+  string URI = 2;                     // Optional: URI, any URI if not specified.
+  map<string, string> query = 3;      // Optional: URI query, any query if not specified.
+  repeated string fields = 4;         // Optional: Filters down returned fields.
+}
+

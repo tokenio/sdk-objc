@@ -1,0 +1,9 @@
+syntax = "proto3";
+package io.token.proto.common.device;
+option java_outer_classname = "DeviceProtos";
+
+enum Platform {
+    IOS = 0;
+    ANDROID = 1;
+    TEST = 2;
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+package io.token.proto.common.account;
+option java_outer_classname = "AccountProtos";
+
+// The payload of the account linking request. Used for serialization only.
+// The value of the payload is encrypted as a serialized JSON object.
+message AccountLinkPayload {
+  // A tuple containing the internal bak account number and its friendly name.
+  message NamedAccount {
+    string name = 1;
+    string account_number = 2;
+  }
+  string alias = 1;
+  string secret = 2;
+  repeated NamedAccount accounts = 3;
+}
+
+// Bank Service Account representation.
+message Account {
+  string id = 1;
+  string name = 2;
+}

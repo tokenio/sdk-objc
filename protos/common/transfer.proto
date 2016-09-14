@@ -1,0 +1,50 @@
+syntax = "proto3";
+package io.token.proto.common.transfer;
+
+option java_outer_classname = "TransferProtos";
+
+// Money transfer instructions.
+message Transfer {
+  Source from = 1;                    // From transferDest.
+  repeated Destination to = 2;        // To transferDest, could be an array of options.
+}
+
+// Money transfer source. This could be an transferDest id assigned by Token or
+// real bank transferDest number.
+message Source {
+  oneof source {
+    string account_id = 1;
+    string account_number = 2;
+  }
+}
+
+// Money transfer destination. The desitination is described differently
+// depending on the transfer method being used.
+message Destination {
+  oneof destination {
+    DestinationBic swift = 1;
+    DestinationIban iban = 2;
+    DestinationAch ach = 3;
+  }
+}
+
+// SWIFT transfer destination.
+message DestinationBic {
+  string bic = 1;
+  string account = 2;
+}
+
+// IBAN transfer destination, can be used with different transfer methods.
+message DestinationIban {
+  enum Method { INVALID = 0; SWIFT = 1; SEPA = 2; }
+
+  Method method = 1;
+  string iban = 2;
+  string name = 3;
+}
+
+// ACH transfer destination.
+message DestinationAch {
+  string routing = 1;
+  string account = 2;
+}

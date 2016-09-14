@@ -1,0 +1,13 @@
+syntax = "proto3";
+package io.token.proto.gateway;
+
+// The payload is signed by the client for every HTTP request. It consists
+// of some of the HTTP request fields. We convert the proto into canonical
+// JSON and sign it.
+message HttpAuthPayload {
+  string method = 1;
+  string uri_host = 2;
+  string uri_path = 3;
+  repeated string uri_param = 4;
+  string request_body = 5;
+}

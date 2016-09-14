@@ -1,0 +1,9 @@
+syntax = "proto3";
+package io.token.proto.common.money;
+
+option java_outer_classname = "MoneyProtos";
+
+message Money {
+  string currency = 1;
+  double value = 2;
+}

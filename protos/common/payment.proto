@@ -1,0 +1,24 @@
+syntax = "proto3";
+package io.token.proto.common.payment;
+
+option java_outer_classname = "PaymentProtos";
+
+import "money.proto";
+import "security.proto";
+import "transfer.proto";
+
+
+// A payment record as persisted on the ledger.
+message Payment {
+  string id = 1;                               // Computed as the hash of the payment payload.
+  string reference_id = 2;                     // Bank transaction reference id.
+  PaymentPayload payload = 3;
+  repeated io.token.proto.common.security.Signature signature = 4;
+}
+
+message PaymentPayload {
+  string nonce = 1;                                     // Client assigned unique request id.
+  string token_id = 2;                                  // Token id.
+  io.token.proto.common.money.Money amount = 3;         // Amount and currency.
+  io.token.proto.common.transfer.Transfer transfer = 5; // Transfer instructions.
+}

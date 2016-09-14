@@ -1,0 +1,16 @@
+syntax = "proto3";
+package io.token.proto.common.security;
+
+option java_outer_classname = "SecurityProtos";
+
+
+message Key {
+  string id = 1;
+  string public_key = 2;                      // Base64url encoded public key.
+}
+
+message Signature {
+  string key_id = 1;
+  string signature = 2;
+  int64 timestamp_ms = 7;
+}

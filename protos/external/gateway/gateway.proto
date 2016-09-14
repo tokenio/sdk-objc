@@ -1,0 +1,416 @@
+syntax = "proto3";
+package io.token.proto.gateway;
+
+import "google/api/annotations.proto";
+
+import "account.proto";
+import "member.proto";
+import "money.proto";
+import "security.proto";
+import "payment.proto";
+import "token.proto";
+import "transaction.proto";
+import "device.proto";
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Member registration, key and alias mamangement.
+//
+
+message CreateMemberRequest {
+  string nonce = 1;
+}
+
+message CreateMemberResponse {
+  string member_id = 1;
+}
+
+message UpdateMemberRequest {
+  io.token.proto.common.member.MemberUpdate update = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message UpdateMemberResponse {
+  io.token.proto.common.member.Member member = 1;
+}
+
+message GetMemberRequest {
+}
+
+message GetMemberResponse {
+  io.token.proto.common.member.Member member = 1;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Member PII/preferences management.
+//
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Notification service device management
+//
+
+message SubscribeDeviceRequest {
+    string provider = 1;
+    string notification_uri = 2;   // device_id
+    io.token.proto.common.device.Platform platform = 3;
+    repeated string tags = 4;
+}
+
+message SubscribeDeviceResponse {
+}
+
+message UnsubscribeDeviceRequest {
+    string provider = 1;
+    string notification_uri = 2;
+}
+
+message UnsubscribeDeviceResponse {
+}
+
+// Notify existing subscribers that a bank linking payload has been created
+message NotifyBankLinkingRequest {
+  string alias = 1;
+  string bank_id = 2;
+
+  // encrypted AccountLinkPayload
+  bytes account_link_payload = 3;
+}
+
+message NotifyBankLinkingResponse {
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Bank account management and information access.
+//
+
+message LinkAccountRequest {
+  string bank_id = 1;
+  // encrypted AccountLinkPayload
+  bytes account_link_payload = 2;
+}
+
+message LinkAccountResponse {
+  repeated io.token.proto.common.account.Account accounts = 1;
+}
+
+message LookupAccountRequest {
+  string account_id = 1;
+}
+
+message LookupAccountResponse {
+  io.token.proto.common.account.Account account = 1;
+}
+
+message LookupAccountsRequest {
+}
+
+message LookupAccountsResponse {
+  repeated io.token.proto.common.account.Account accounts = 1;
+}
+
+message SetAccountNameRequest {
+  string account_id = 1;
+  string name = 2;
+}
+
+message SetAccountNameResponse {
+  io.token.proto.common.account.Account account = 1;
+}
+
+message LookupBalanceRequest {
+  string account_id = 1;
+}
+
+message LookupBalanceResponse {
+  io.token.proto.common.money.Money current = 1;
+  io.token.proto.common.money.Money available = 2;
+}
+
+message LookupTransactionRequest {
+  string account_id = 1;
+  string transaction_id = 2;
+}
+
+message LookupTransactionResponse {
+  io.token.proto.common.transaction.Transaction transaction = 1;
+}
+
+message LookupTransactionsRequest {
+  string account_id = 1;
+  int32 offset = 2;                       // Optional token offset, used for paging.
+  int32 limit = 3;                        // Optional token limit, used for paging.
+}
+
+message LookupTransactionsResponse {
+  repeated io.token.proto.common.transaction.Transaction transactions = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Payment Tokens.
+//
+
+message CreatePaymentTokenRequest {
+  io.token.proto.common.token.PaymentToken token = 1;
+}
+
+message CreatePaymentTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tokens (payment or info).
+//
+
+message LookupTokenRequest {
+  string token_id = 2;
+}
+
+message LookupTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
+message LookupTokensRequest {
+  int32 offset = 1;      // Optional token offset, used for paging.
+  int32 limit = 2;       // Optional token limit, used for paging.
+}
+
+message LookupTokensResponse {
+  repeated io.token.proto.common.token.Token tokens = 1;
+}
+
+message EndorseTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message EndorseTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
+message DeclineTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message DeclineTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
+message RevokeTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message RevokeTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Payments.
+//
+
+message RedeemPaymentTokenRequest {
+  io.token.proto.common.payment.PaymentPayload payload = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message RedeemPaymentTokenResponse {
+  io.token.proto.common.payment.Payment payment = 1;
+}
+
+message LookupPaymentRequest {
+  string payment_id = 1;
+}
+
+message LookupPaymentResponse {
+  io.token.proto.common.payment.Payment payment = 1;
+}
+
+message LookupPaymentsRequest {
+  string token_id = 1;                    // Optional token_id to filter payments by.
+  int32 offset = 2;                       // Optional token offset, used for paging.
+  int32 limit = 3;                        // Optional token limit, used for paging.
+}
+
+message LookupPaymentsResponse {
+  repeated io.token.proto.common.payment.Payment payments = 1;    // List of payments.
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Gateway Service.
+//
+
+service GatewayService {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Member registration, key and alias mamangement.
+  //
+
+  rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
+    option (google.api.http) = {
+        post: "/members"
+        body: "*"
+    };
+  }
+
+  rpc UpdateMember (UpdateMemberRequest) returns (UpdateMemberResponse) {
+    option (google.api.http) = {
+        post: "/members/{update.member_id}"
+        body: "*"
+    };
+  }
+
+  rpc GetMember (GetMemberRequest) returns (GetMemberResponse) {
+    option (google.api.http) = {
+        get: "/member"
+    };
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Devices for notification service
+  //
+
+  rpc SubscribeDevice (SubscribeDeviceRequest) returns (SubscribeDeviceResponse) {
+    option (google.api.http) = {
+        post: "/notifications/devices"
+        body: "*"
+    };
+  }
+
+  rpc UnsubscribeDevice (UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse) {
+    option (google.api.http) = {
+        post: "/notifications/devices/unsubscribe"
+        body: "*"
+    };
+  }
+
+  rpc NotifyBankLinking (NotifyBankLinkingRequest) returns (NotifyBankLinkingResponse) {
+    option (google.api.http) = {
+        post: "/notifications"
+        body: "*"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Bank accounts.
+  //
+
+  rpc LinkAccount (LinkAccountRequest) returns (LinkAccountResponse) {
+    option (google.api.http) = {
+        post: "/accounts"
+        body: "*"
+    };
+  }
+
+  rpc LookupAccount (LookupAccountRequest) returns (LookupAccountResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}"
+    };
+  }
+
+  rpc LookupAccounts (LookupAccountsRequest) returns (LookupAccountsResponse) {
+    option (google.api.http) = {
+        get: "/accounts"
+    };
+  }
+
+  rpc SetAccountName (SetAccountNameRequest) returns (SetAccountNameResponse) {
+    option (google.api.http) = {
+        post: "/accounts/{account_id}?name={name}"
+    };
+  }
+
+  rpc LookupBalance (LookupBalanceRequest) returns (LookupBalanceResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}/balance"
+    };
+  }
+
+  rpc LookupTransaction (LookupTransactionRequest) returns (LookupTransactionResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}/transaction/{transction_id}"
+    };
+  }
+
+  rpc LookupTransactions (LookupTransactionsRequest) returns (LookupTransactionsResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}/transactions?offset={offset}&limit={limit}"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Payment Tokens.
+  //
+
+  rpc CreatePaymentToken (CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse) {
+    option (google.api.http) = {
+        post: "/pay/tokens"
+        body: "*"
+    };
+  }
+
+  rpc LookupToken (LookupTokenRequest) returns (LookupTokenResponse) {
+    option (google.api.http) = {
+        get: "/pay/tokens/{token_id}"
+    };
+  }
+
+  rpc LookupTokens (LookupTokensRequest) returns (LookupTokensResponse) {
+    option (google.api.http) = {
+        get: "/pay/tokens"
+    };
+  }
+
+  rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
+    option (google.api.http) = {
+        post: "/pay/tokens/{token_id}/endorse"
+        body: "*"
+    };
+  }
+
+  rpc DeclineToken (DeclineTokenRequest) returns (DeclineTokenResponse) {
+    option (google.api.http) = {
+        post: "/pay/tokens/{token_id}/decline"
+        body: "*"
+    };
+  }
+
+  rpc RevokeToken (RevokeTokenRequest) returns (RevokeTokenResponse) {
+    option (google.api.http) = {
+        post: "/pay/tokens/{token_id}/revoke"
+        body: "*"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Token Payments.
+  //
+
+  rpc RedeemPaymentToken (RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse) {
+    option (google.api.http) = {
+        post: "/pay/payments"
+        body: "*"
+    };
+  }
+
+  rpc LookupPayment (LookupPaymentRequest) returns (LookupPaymentResponse) {
+    option (google.api.http) = {
+        get: "/pay/payments/{payment_id}"
+    };
+  }
+
+  rpc LookupPayments (LookupPaymentsRequest) returns (LookupPaymentsResponse) {
+    option (google.api.http) = {
+        get: "/pay/payments?token_id={token_id}&offset={offset}&limit={limit}"
+    };
+  }
+}

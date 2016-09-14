@@ -1,0 +1,53 @@
+syntax = "proto3";
+package io.token.proto.common.member;
+
+option java_outer_classname = "MemberProtos";
+
+import "security.proto";
+
+
+// Adds member key to the directory.
+message MemberAddKeyOperation {
+  string public_key = 1;                               // Base64url encoded public key.
+  int32 level = 2;
+  repeated string tags = 3;
+}
+
+// Removes member key from the directory.
+message MemberRemoveKeyOperation {
+  string key_id = 1;
+}
+
+// Adds/removes member alias to/from the directory.
+message MemberAliasOperation {
+  string alias = 1;
+}
+
+// Updates member information in the directory. The directory is append only
+// log of operations.
+message MemberUpdate {
+  string prev_hash = 1;
+  string member_id = 2;
+  oneof operation {
+    MemberAddKeyOperation addKey = 3;
+    MemberRemoveKeyOperation removeKey = 4;
+    MemberAliasOperation addAlias = 5;
+    MemberAliasOperation removeAlias = 6;
+  }
+}
+
+// A member record that is computed by replaying all the member updates.
+message Member {
+  string id = 1;
+  string last_hash = 2;
+  repeated string aliases = 3;
+  repeated io.token.proto.common.security.Key keys = 4;
+}
+
+// A member address record
+message Address {
+  string id = 1;        // Address id
+  string name = 2;      // The display name of the address
+  string data = 3;      // Country specific JSON address
+  string signature = 4; // member signature of the data
+}

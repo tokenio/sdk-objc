@@ -1,0 +1,30 @@
+syntax = "proto3";
+package io.token.proto.common.transaction;
+
+option java_outer_classname = "TransactionProtos";
+
+import "money.proto";
+
+enum TransactionType {
+  INVALID_TYPE = 0;
+  DEBIT = 1;
+  CREDIT = 2;
+}
+
+enum TransactionStatus {
+  INVALID_STATUS = 0;
+  SUCCESS = 1;
+  FAILURE_INSUFFICIENT_FUNDS = 2;
+  FAILURE_GENERIC = 3;
+}
+
+message Transaction {
+  string id = 1;
+  TransactionType type = 2;
+  TransactionStatus status = 3;
+  io.token.proto.common.money.Money amount = 4;
+  string description = 5;
+
+  string token_id = 6;                             // Points to the token, only set for Token transactions.
+  string token_payment_id = 7;                     // Points to the token payment, only set for Token transactions.
+}
