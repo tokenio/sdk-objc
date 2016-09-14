@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -Rf Pods
+rm -Rf Podfile.lock
+rm -Rf sdk.xcworkspace
+pod install

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package io.token.proto.gateway;
+
+message CreateMemberRequest {
+  string nonce = 1;
+}
+
+message CreateMemberResponse {
+  string member_id = 1;
+}
+
+service GatewayService {
+  rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {}
+}
