@@ -48,14 +48,4 @@
     return result;
 }
 
-- (void)onSuccess:(id)result_ {
-    result = result_;
-    dispatch_semaphore_signal(isDone);
-}
-
-- (void)onError:(NSError *)error_ {
-    error = error_;
-    dispatch_semaphore_signal(isDone);
-}
-
 @end

@@ -9,20 +9,27 @@
 
 @implementation TKSecretKey
 
-+ (TKSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk {
++ (TKSecretKey *)withPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
     return [[TKSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
 }
 
-- (id)initWithPrivateKey:(NSString *)sk publicKey:(NSString *)pk {
+- (id)initWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
     self = [super init];
 
     if (self) {
         _privateKey = sk;
         _publicKey = pk;
-        _id = [TKUtil idForString:pk];
     }
 
     return self;
+}
+
+- (NSString *)id {
+    return [TKUtil idForData:self.publicKey];
+}
+
+- (NSString *)publicKeyStr {
+    return [TKUtil base64EncodeData:self.publicKey];
 }
 
 @end
