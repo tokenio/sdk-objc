@@ -1,0 +1,3 @@
+[submodule "sdk/ed25519"]
+	path = sdk/ed25519
+	url = git@github.com:orlp/ed25519.git
