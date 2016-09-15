@@ -46,7 +46,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
             RPCToGetMemberWithRequest:request
             handler:^(GetMemberResponse *response, NSError *error) {
                 if (response) {
-                    RpcLogCompleted(request);
+                    RpcLogCompleted(response);
                     onSuccess(response.member);
                 } else {
                     RpcLogError(error);
