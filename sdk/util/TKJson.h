@@ -7,9 +7,21 @@
 
 @class GPBMessage;
 
-
+/**
+ * Converts proto buffer messages to JSON. gRPC lib from Google doesn't
+ * implement this yet. We want the code to match what Google does because
+ * we use this to compile a message content for signing.
+ *
+ * See implementation notes.
+ */
 @interface TKJson : NSObject
 
+/**
+ * Converts proto buffer message into JSON string.
+ *
+ * @param message proto buffer message
+ * @return JSON string
+ */
 + (NSString *)serialize:(GPBMessage *)message;
 
 @end

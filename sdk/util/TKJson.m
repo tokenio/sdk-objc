@@ -11,12 +11,12 @@
 #import "TKUtil.h"
 
 
-@interface Value : NSObject
+@interface KeyValuePair : NSObject
 @property (nonatomic, retain) NSString *key;
 @property (nonatomic, retain) NSObject *value;
 @end
 
-@implementation Value
+@implementation KeyValuePair
 @end
 
 @implementation TKJson
@@ -30,7 +30,7 @@
  * @return JSON formatted string
  */
 + (NSString *)serialize:(GPBMessage *)message {
-    NSDictionary *result = [self serializeMessage:message];
+    NSDictionary<NSString*, NSObject*> *result = [self serializeMessage:message];
 
     NSError *error;
     NSData *json = [NSJSONSerialization dataWithJSONObject:result options:0 error:&error];
@@ -44,13 +44,13 @@
  * @param message proto message
  * @return dictionary
  */
-+ (NSDictionary *)serializeMessage:(GPBMessage *)message {
++ (NSDictionary<NSString*, NSObject*> *)serializeMessage:(GPBMessage *)message {
     GPBDescriptor *descriptor = [message descriptor];
     MutableOrderedDictionary *result = [MutableOrderedDictionary dictionary];
 
     for (GPBFieldDescriptor *field in descriptor.fields) {
         if (GPBMessageHasFieldSet(message, field) && !field.hasDefaultValue) {
-            Value *value = [self serialize:field forMessage:message];
+            KeyValuePair *value = [self serialize:field forMessage:message];
             result[value.key] = value.value;
         }
     }
@@ -65,7 +65,7 @@
  * @param message message containing the field
  * @return
  */
-+ (Value *)serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (KeyValuePair *)serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.fieldType) {
         case GPBFieldTypeRepeated:
             return [self serializeRepeated:field forMessage:message];
@@ -88,17 +88,17 @@
  * @param message message containing the field
  * @return
  */
-+ (Value *)serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
-    NSDictionary *valuesToKeys = GPBGetMessageMapField(message, field);
++ (KeyValuePair *)serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
+    NSDictionary<NSObject*, NSString*> *valuesToKeys = GPBGetMessageMapField(message, field);
 
-    MutableOrderedDictionary *keysToValues = [MutableOrderedDictionary dictionary];
+    MutableOrderedDictionary<NSString*, NSObject*> *keysToValues = [MutableOrderedDictionary dictionary];
     for (id value in valuesToKeys) {
         NSString *key = valuesToKeys[value];
         NSObject *serialized = [self serializeValue:value];
         [keysToValues setObject:serialized forKey:key];
     }
 
-    Value *result = [[Value alloc] init];
+    KeyValuePair *result = [[KeyValuePair alloc] init];
     result.key = field.name;
     result.value = keysToValues;
 
@@ -112,17 +112,17 @@
  * @param message message containing the field
  * @return
  */
-+ (Value *)serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (KeyValuePair *)serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSString *suffix = @"Array";
 
-    NSArray *values = GPBGetMessageRepeatedField(message, field);
-    NSMutableArray *serializedValues = [NSMutableArray array];
+    NSArray<NSObject*> *values = GPBGetMessageRepeatedField(message, field);
+    NSMutableArray<NSObject*> *serializedValues = [NSMutableArray array];
     for (id value in values) {
         NSObject *o = [self serializeValue:value];
         [serializedValues addObject:o];
     }
 
-    Value *result = [[Value alloc] init];
+    KeyValuePair *result = [[KeyValuePair alloc] init];
     result.key = [field.name substringWithRange:NSMakeRange(0, field.name.length - suffix.length)];
     result.value = serializedValues;
 
@@ -136,8 +136,8 @@
  * @param message message containing the field
  * @return
  */
-+ (Value *)serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
-    Value *value = [[Value alloc] init];
++ (KeyValuePair *)serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
+    KeyValuePair *value = [[KeyValuePair alloc] init];
     value.key = field.name;
     value.value = [self toObject:field forMessage:message];
     return value;

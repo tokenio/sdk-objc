@@ -5,9 +5,9 @@
 
 #import <XCTest/XCTest.h>
 
-@class TKSdk;
+@class TokenIO;
 
-typedef void (^AsyncTestBlock)(TKSdk *);
+typedef void (^AsyncTestBlock)(TokenIO *);
 
 /**
  * Base class for the integration tests. The derived classes invoke run method

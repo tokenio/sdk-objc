@@ -9,6 +9,7 @@
 #import "gateway/Gateway.pbrpc.h"
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
+#import "TKRpcLog.h"
 
 
 @implementation TKUnauthenticatedClient {
@@ -30,11 +31,14 @@
 
     CreateMemberRequest *request = [CreateMemberRequest message];
     request.nonce = [TKUtil nonce];
+    RpcLogStart(request);
 
     [gateway createMemberWithRequest:request handler:^(CreateMemberResponse *response, NSError *error) {
         if (response) {
+            RpcLogCompleted(response);
             onSuccess(response.memberId);
         } else {
+            RpcLogError(error);
             onError(error);
         }
     }];
@@ -51,11 +55,14 @@
     request.update.addKey.publicKey = key.publicKey;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:request.update usingKey:key];
+    RpcLogStart(request);
 
     [gateway updateMemberWithRequest:request handler:^(UpdateMemberResponse *response, NSError *error) {
         if (response) {
+            RpcLogCompleted(response);
             onSuccess(response.member);
         } else {
+            RpcLogError(error);
             onError(error);
         }
     }];

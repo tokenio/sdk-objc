@@ -1,13 +1,10 @@
 //
-//  TKMemberRegistrationTests.m
-//  TKMemberRegistrationTests
-//
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
 #import "TKMember.h"
-#import "TKSdk.h"
+#import "TokenIO.h"
 #import "TKTestBase.h"
 
 
@@ -17,17 +14,15 @@
 @implementation TKMemberRegistrationTests
 
 - (void)testCreateMember {
-    [self run: ^(TKSdk *sdk) {
-        TKMember *member = [sdk createMember];
-        NSLog(@"DONE: %@", member.debugDescription);
+    [self run: ^(TokenIO *tokenIO) {
+        TKMember *member = [tokenIO createMember];
     }];
 }
 
 - (void)testLoginMember {
-    [self run: ^(TKSdk *sdk) {
-        TKMember *created = [sdk createMember];
-        TKMember *loggedIn = [sdk loginMember:created.id secretKey:created.key];
-        NSLog(@"DONE: %@", loggedIn.debugDescription);
+    [self run: ^(TokenIO *tokenIO) {
+        TKMember *created = [tokenIO createMember];
+        TKMember *loggedIn = [tokenIO loginMember:created.id secretKey:created.key];
     }];
 }
 

@@ -6,6 +6,10 @@
 #import <Foundation/Foundation.h>
 
 
+/**
+ * Secret key that identifies a given client device. The key is private/public
+ * key pair.
+ */
 @interface TKSecretKey : NSObject
 
 + (TKSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk;

@@ -9,42 +9,58 @@
 #import "gateway/Gateway.pbrpc.h"
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
+#import "TKRpcLog.h"
+
+
+NSString *const kTokenRealm = @"Token";
+NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 
 @implementation TKClient {
     GatewayService *gateway;
+    NSString *memberId;
     TKSecretKey *key;
 }
 
-- (id)initWithGateway:(GatewayService *)gateway_ secretKey:(TKSecretKey *)key_ {
+- (id)initWithGateway:(GatewayService *)gateway_
+             memberId:(NSString *)memberId_
+            secretKey:(TKSecretKey *)key_ {
     self = [super init];
 
     if (self) {
         gateway = gateway_;
+        memberId = memberId_;
         key = key_;
     }
 
     return self;
 }
 
-- (void)getMember:(NSString *)memberId
-        onSuccess:(void(^)(Member*))onSuccess
+- (void)getMember:(void(^)(Member*))onSuccess
           onError:(void(^)(NSError *))onError {
 
     GetMemberRequest *request = [GetMemberRequest message];
+    RpcLogStart(request);
+
     GRPCProtoCall *call = [gateway
             RPCToGetMemberWithRequest:request
             handler:^(GetMemberResponse *response, NSError *error) {
                 if (response) {
+                    RpcLogCompleted(request);
                     onSuccess(response.member);
                 } else {
+                    RpcLogError(error);
                     onError(error);
                 }
             }
     ];
 
-    call.requestHeaders[@"token-realm"] = @"Token";
-    call.requestHeaders[@"token-scheme"] = @"Token-Ed25519-SHA512";
+    [self startCall:call withRequest:request];
+}
+
+- (void)startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
+    call.requestHeaders[@"token-realm"] = kTokenRealm;
+    call.requestHeaders[@"token-scheme"] = kTokenScheme;
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = key.id;
     call.requestHeaders[@"token-signature"] = [TKCrypto sign:request usingKey:key];
