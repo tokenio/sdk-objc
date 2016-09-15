@@ -18,8 +18,6 @@
 
 @implementation TKJsonTests
 
-- (void)setUp {}
-
 /**
  * Simple message.
  */

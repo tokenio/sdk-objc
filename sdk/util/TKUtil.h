@@ -36,6 +36,14 @@
 + (NSString *)base64EncodeData:(NSData *)data;
 
 /**
+ * URL safe Base64 decoder implementation.
+ *
+ * @param base64String URL safe Base64 encoded string
+ * @return decoded string
+ */
++ (NSData *)base64DecodeString:(NSString *)base64String;
+
+/**
  * Returns an ID for a given string. We hash the string value and Base64 encode
  * the result. Has to match what we do on the server.
  *
