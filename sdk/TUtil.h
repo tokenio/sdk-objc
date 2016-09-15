@@ -10,6 +10,8 @@
 
 + (NSString *)nonce;
 
++ (NSString *)base64EncodeData:(NSData *)data;
+
 + (NSString *)idForString:(NSString *)string;
 
 + (NSString *)idForBytes:(const char *)buffer;
