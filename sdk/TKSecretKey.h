@@ -6,9 +6,9 @@
 #import <Foundation/Foundation.h>
 
 
-@interface TSecretKey : NSObject
+@interface TKSecretKey : NSObject
 
-+ (TSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk;
++ (TKSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk;
 - (id)initWithPrivateKey:(NSString *)sk publicKey:(NSString *)pk;
 
 @property (atomic, readonly) NSString *id;

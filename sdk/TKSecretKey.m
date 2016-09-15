@@ -3,14 +3,14 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TSecretKey.h"
-#import "TUtil.h"
+#import "TKSecretKey.h"
+#import "TKUtil.h"
 
 
-@implementation TSecretKey
+@implementation TKSecretKey
 
-+ (TSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk {
-    return [[TSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
++ (TKSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk {
+    return [[TKSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
 }
 
 - (id)initWithPrivateKey:(NSString *)sk publicKey:(NSString *)pk {
@@ -19,7 +19,7 @@
     if (self) {
         _privateKey = sk;
         _publicKey = pk;
-        _id = [TUtil idForString:pk];
+        _id = [TKUtil idForString:pk];
     }
 
     return self;

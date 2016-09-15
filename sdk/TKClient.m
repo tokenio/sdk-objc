@@ -4,19 +4,19 @@
 //
 
 #import <ProtoRPC/ProtoRPC.h>
-#import "TClient.h"
+#import "TKClient.h"
 #import "Member.pbobjc.h"
 #import "gateway/Gateway.pbrpc.h"
-#import "TSecretKey.h"
-#import "TCrypto.h"
+#import "TKSecretKey.h"
+#import "TKCrypto.h"
 
 
-@implementation TClient {
+@implementation TKClient {
     GatewayService *gateway;
-    TSecretKey *key;
+    TKSecretKey *key;
 }
 
-- (id)initWithGateway:(GatewayService *)gateway_ secretKey:(TSecretKey *)key_ {
+- (id)initWithGateway:(GatewayService *)gateway_ secretKey:(TKSecretKey *)key_ {
     self = [super init];
 
     if (self) {
@@ -47,7 +47,7 @@
     call.requestHeaders[@"token-scheme"] = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = key.id;
-    call.requestHeaders[@"token-signature"] = [TCrypto sign:request usingKey:key];
+    call.requestHeaders[@"token-signature"] = [TKCrypto sign:request usingKey:key];
 
     [call start];
 }

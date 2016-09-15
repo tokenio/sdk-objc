@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class TSecretKey;
+@class TKSecretKey;
 
 
-@interface TMember : NSObject
+@interface TKMember : NSObject
 
-+(TMember *)memberWithId:(NSString *)id secretKey:(TSecretKey *)key;
++(TKMember *)memberWithId:(NSString *)id secretKey:(TKSecretKey *)key;
 
 @property (readonly, retain) NSString *id;
-@property (readonly, retain) TSecretKey *key;
+@property (readonly, retain) TKSecretKey *key;
 
 @end
 

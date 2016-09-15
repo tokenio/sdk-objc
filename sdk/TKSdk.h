@@ -11,27 +11,27 @@
 
 
 @class GatewayService;
-@class TSdkBuilder;
-@class TMember;
-@class TSecretKey;
+@class TKSdkBuilder;
+@class TKMember;
+@class TKSecretKey;
 
-@interface TSdk : NSObject {}
+@interface TKSdk : NSObject {}
 
-+ (TSdkBuilder *)builder;
++ (TKSdkBuilder *)builder;
 
 - (id)initWithHost:(NSString *)host port:(int)port;
 
-- (TMember *)createMember;
+- (TKMember *)createMember;
 
-- (void)createMemberAsync:(void(^)(TMember *))onSuccess
+- (void)createMemberAsync:(void(^)(TKMember *))onSuccess
                   onError:(void(^)(NSError *))onError;
 
-- (TMember *)loginMember:(NSString *)memberId
-               secretKey:(TSecretKey *)secretKey;
+- (TKMember *)loginMember:(NSString *)memberId
+               secretKey:(TKSecretKey *)secretKey;
 
 - (void)loginMemberAsync:(NSString *)memberId
-               secretKey:(TSecretKey *)key
-                onSucess:(void(^)(TMember *member))onSuccess
+               secretKey:(TKSecretKey *)key
+                onSucess:(void(^)(TKMember *member))onSuccess
                  onError:(void(^)(NSError *))onError;
 
 @end

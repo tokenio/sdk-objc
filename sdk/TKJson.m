@@ -3,12 +3,12 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TJson.h"
+#import "TKJson.h"
 #import "GPBMessage.h"
 #import "GPBDescriptor.h"
 #import "GPBUtilities.h"
 #import "OrderedDictionary.h"
-#import "TUtil.h"
+#import "TKUtil.h"
 
 
 @interface Value : NSObject
@@ -19,7 +19,7 @@
 @implementation Value
 @end
 
-@implementation TJson
+@implementation TKJson
 
 /**
  * Serializes proto message to a JSON string. Some limitations apply. We
@@ -188,7 +188,7 @@
         case GPBDataTypeUInt32:
             return @(GPBGetMessageUInt32Field(message, field));
         case GPBDataTypeBytes:
-            return [TUtil base64EncodeData:GPBGetMessageBytesField(message, field)];
+            return [TKUtil base64EncodeData:GPBGetMessageBytesField(message, field)];
         case GPBDataTypeString:
             return GPBGetMessageStringField(message, field);
         case GPBDataTypeEnum:

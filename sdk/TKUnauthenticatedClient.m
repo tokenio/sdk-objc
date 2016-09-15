@@ -3,15 +3,15 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TUnauthenticatedClient.h"
-#import "TUtil.h"
+#import "TKUnauthenticatedClient.h"
+#import "TKUtil.h"
 
 #import "gateway/Gateway.pbrpc.h"
-#import "TSecretKey.h"
-#import "TCrypto.h"
+#import "TKSecretKey.h"
+#import "TKCrypto.h"
 
 
-@implementation TUnauthenticatedClient {
+@implementation TKUnauthenticatedClient {
     GatewayService *gateway;
 }
 
@@ -29,7 +29,7 @@
                onError:(void(^)(NSError *))onError {
 
     CreateMemberRequest *request = [CreateMemberRequest message];
-    request.nonce = [TUtil nonce];
+    request.nonce = [TKUtil nonce];
 
     [gateway createMemberWithRequest:request handler:^(CreateMemberResponse *response, NSError *error) {
         if (response) {
@@ -40,7 +40,7 @@
     }];
 }
 
-- (void)addFirstKey:(TSecretKey *)key
+- (void)addFirstKey:(TKSecretKey *)key
           forMember:(NSString *)memberId
           onSuccess:(void(^)(Member*))onSuccess
             onError:(void(^)(NSError *))onError {
@@ -50,7 +50,7 @@
     request.update.addKey.level = 0;
     request.update.addKey.publicKey = key.publicKey;
     request.signature.keyId = key.id;
-    request.signature.signature = [TCrypto sign:request.update usingKey:key];
+    request.signature.signature = [TKCrypto sign:request.update usingKey:key];
 
     [gateway updateMemberWithRequest:request handler:^(UpdateMemberResponse *response, NSError *error) {
         if (response) {

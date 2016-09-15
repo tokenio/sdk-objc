@@ -7,16 +7,16 @@
 
 @class GatewayService;
 @class Member;
-@class TSecretKey;
+@class TKSecretKey;
 
-@interface TUnauthenticatedClient : NSObject
+@interface TKUnauthenticatedClient : NSObject
 
 - (id)initWithGateway:(GatewayService *)gateway;
 
 - (void)createMemberId:(void(^)(NSString *memberId))onSuccess
              onError:(void(^)(NSError *))onError;
 
-- (void)addFirstKey:(TSecretKey *)key
+- (void)addFirstKey:(TKSecretKey *)key
           forMember:(NSString *)memberId
        onSuccess:(void(^)(Member*))onSuccess
           onError:(void(^)(NSError *))onError;

@@ -7,12 +7,12 @@
 
 @class Member;
 @class GatewayService;
-@class TSecretKey;
+@class TKSecretKey;
 
 
-@interface TClient : NSObject
+@interface TKClient : NSObject
 
-- (id)initWithGateway:(GatewayService *)gateway secretKey:(TSecretKey *)key;
+- (id)initWithGateway:(GatewayService *)gateway secretKey:(TKSecretKey *)key;
 
 - (void)getMember:(NSString *)memberId
         onSuccess:(void(^)(Member*))onSuccess

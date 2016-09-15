@@ -1,6 +1,6 @@
 //
-//  sdkTests.m
-//  sdkTests
+//  TKMemberRegistrationTests.m
+//  TKMemberRegistrationTests
 //
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
@@ -8,22 +8,22 @@
 
 #import <XCTest/XCTest.h>
 
-#import "TMember.h"
-#import "TSdk.h"
-#import "TSdkBuilder.h"
+#import "TKMember.h"
+#import "TKSdk.h"
+#import "TKSdkBuilder.h"
 
 
-@interface sdkTests : XCTestCase
-@property (strong, nonatomic) TSdk *sdk;
+@interface TKMemberRegistrationTests : XCTestCase
+@property (strong, nonatomic) TKSdk *sdk;
 @property (strong, nonatomic) dispatch_queue_t queue;
 @end
 
-@implementation sdkTests
+@implementation TKMemberRegistrationTests
 
 - (void)setUp {
     [super setUp];
 
-    TSdkBuilder *builder = [TSdk builder];
+    TKSdkBuilder *builder = [TKSdk builder];
     builder.host = @"localhost";
     builder.port = 9000;
 
@@ -71,15 +71,15 @@ typedef void (^Block)();
 
 - (void)testCreateMember {
     [self async: ^{
-        TMember *member = [self.sdk createMember];
+        TKMember *member = [self.sdk createMember];
         NSLog(@"DONE: %@", member.debugDescription);
     }];
 }
 
 - (void)testLoginMember {
     [self async: ^{
-        TMember *created = [self.sdk createMember];
-        TMember *loggedIn = [self.sdk loginMember:created.id secretKey:created.key];
+        TKMember *created = [self.sdk createMember];
+        TKMember *loggedIn = [self.sdk loginMember:created.id secretKey:created.key];
         NSLog(@"DONE: %@", loggedIn.debugDescription);
     }];
 }
