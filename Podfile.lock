@@ -25,6 +25,7 @@ PODS:
     - gRPC-RxLibrary (= 1.0.0)
     - Protobuf (~> 3.0)
   - gRPC-RxLibrary (1.0.0)
+  - OrderedDictionary (1.4)
   - Protobuf (3.0.2)
   - protos (0.0.1):
     - '!ProtoCompiler-gRPCPlugin (~> 1.0)'
@@ -39,6 +40,7 @@ PODS:
     - protos/Messages
 
 DEPENDENCIES:
+  - OrderedDictionary
   - protos (from `.`)
 
 EXTERNAL SOURCES:
@@ -53,9 +55,10 @@ SPEC CHECKSUMS:
   gRPC-Core: 7ce9d18a7fb9fffc0f57646608d0741782b16996
   gRPC-ProtoRPC: 51745b5ebe4a844dc6e1ecf767d74ae3d124ea1e
   gRPC-RxLibrary: 3a8c5543115fb2183ed5624678e7ecbac5e9e4ad
+  OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
   protos: e8ab477037fabab2ed3fd80db76af158d1ce9d1b
 
-PODFILE CHECKSUM: 08a85287261365b496e248c9b75b497a35087265
+PODFILE CHECKSUM: 2d4f386957d7009f7e148dcd328985820ffc53f4
 
 COCOAPODS: 1.0.1
