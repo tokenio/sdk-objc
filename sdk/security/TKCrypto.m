@@ -3,6 +3,8 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+#import "ed25519.h"
+
 #import "TKCrypto.h"
 #import "TKSecretKey.h"
 #import "GPBMessage.h"
@@ -11,6 +13,11 @@
 @implementation TKCrypto
 
 +(NSString *)sign:(GPBMessage *)message usingKey:(TKSecretKey *)key {
+    unsigned char seed[32];
+    if (ed25519_create_seed(seed)) {
+        [NSException raise:NSInternalInconsistencyException format:@"Could not initialize random number generator"];
+    }
+
     return @"signature-123"; // TODO(alexey): Fix me.
 }
 
