@@ -26,6 +26,27 @@
     return base64String;
 }
 
++ (NSData *)base64DecodeString:(NSString *)base64String {
+    NSString *copy = [base64String stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+    copy = [copy stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
+
+    int padding = copy.length % 4;
+    if (padding > 0) {
+        copy = [copy stringByPaddingToLength:copy.length + 4 - padding withString:@"=" startingAtIndex:0];
+    }
+
+    NSData *result = [[NSData alloc]
+            initWithBase64EncodedString:copy
+                                options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    if (result == nil) {
+        [NSException
+                raise:NSInvalidArgumentException
+               format:@"Invalid Base64 string: %@", base64String];
+    }
+
+    return result;
+}
+
 + (NSString *)idForString:(NSString *)string {
     return [self idForBytes:[string cStringUsingEncoding:NSASCIIStringEncoding]];
 }

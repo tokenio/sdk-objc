@@ -24,6 +24,16 @@
 +(NSString *)sign:(GPBMessage *)message usingKey:(TKSecretKey *)key;
 
 /**
+ * Verifies a message signature.
+ *
+ * @param signature signature to verify
+ * @param message message to verify the signature for
+ * @param key public key used to verify the signature
+ * @return true if signature verifies
+ */
++(bool)verifySignature:(NSString *)signature forMessage:(GPBMessage *)message usingPublicKey:(NSData *)key;
+
+/**
  * Generates a new key pair.
  *
  * @return newly created key pair
