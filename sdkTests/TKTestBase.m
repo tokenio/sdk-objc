@@ -1,25 +1,22 @@
 //
-//  TKMemberRegistrationTests.m
-//  TKMemberRegistrationTests
-//
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.#import "TKSdk.h"
 //
 
 #import "TKTestBase.h"
-#import "TKSdk.h"
-#import "TKSdkBuilder.h"
+#import "TokenIO.h"
+#import "TokenIOBuilder.h"
 
 
 @implementation TKTestBase {
-    TKSdk *sdk;
+    TokenIO *sdk;
     dispatch_queue_t queue;
 }
 
 - (void)setUp {
     [super setUp];
 
-    TKSdkBuilder *builder = [TKSdk builder];
+    TokenIOBuilder *builder = [TokenIO builder];
     builder.host = @"localhost";
     builder.port = 9000;
 

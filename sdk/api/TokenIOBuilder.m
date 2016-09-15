@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TKSdkBuilder.h"
-#import "TKSdk.h"
+#import "TokenIOBuilder.h"
+#import "TokenIO.h"
 
-@implementation TKSdkBuilder
+@implementation TokenIOBuilder
 
 - (id)init {
     self = [super init];
@@ -23,8 +23,8 @@
     return self;
 }
 
-- (TKSdk *)build {
-    return [[TKSdk alloc] initWithHost:self.host port:self.port];
+- (TokenIO *)build {
+    return [[TokenIO alloc] initWithHost:self.host port:self.port];
 }
 
 @end

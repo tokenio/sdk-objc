@@ -1,26 +1,23 @@
 //
-//  TokenClientBuilder.h
-//  sdk
-//
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#ifndef TokenClientBuilder_h
-#define TokenClientBuilder_h
+#ifndef TokenIOBuilder_h
+#define TokenIOBuilder_h
 
 #import <objc/NSObject.h>
 
 
-@class TKSdk;
+@class TokenIO;
 
-@interface TKSdkBuilder : NSObject
+@interface TokenIOBuilder : NSObject
 
 @property (readwrite, copy) NSString *host;
 @property (readwrite) int port;
 
 - (id)init;
-- (TKSdk *)build;
+- (TokenIO *)build;
 
 @end
 

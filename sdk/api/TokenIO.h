@@ -1,23 +1,20 @@
 //
-//  Token.h
-//  sdk
-//
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#ifndef TokenSdk_h
-#define TokenSdk_h
+#ifndef TokenIO_h
+#define TokenIO_h
 
 
 @class GatewayService;
-@class TKSdkBuilder;
+@class TokenIOBuilder;
 @class TKMember;
 @class TKSecretKey;
 
-@interface TKSdk : NSObject {}
+@interface TokenIO : NSObject {}
 
-+ (TKSdkBuilder *)builder;
++ (TokenIOBuilder *)builder;
 
 - (id)initWithHost:(NSString *)host port:(int)port;
 

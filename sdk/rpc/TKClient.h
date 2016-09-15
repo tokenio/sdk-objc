@@ -10,12 +10,29 @@
 @class TKSecretKey;
 
 
+/**
+ * An authenticated RPC client that is used to talk to Token gateway. The
+ * class is a thin wrapper on top of gRPC generated client. Makes the API
+ * easier to use.
+ */
 @interface TKClient : NSObject
 
-- (id)initWithGateway:(GatewayService *)gateway secretKey:(TKSecretKey *)key;
+/**
+ * @param gateway gateway gRPC client
+ * @param key secret key to use for authentication
+ * @return newly created client
+ */
+- (id)initWithGateway:(GatewayService *)gateway
+             memberId:(NSString *)memberId
+            secretKey:(TKSecretKey *)key;
 
-- (void)getMember:(NSString *)memberId
-        onSuccess:(void(^)(Member*))onSuccess
+/**
+ * Looks up member information for the current user. The user is defined by
+ * the key used for authentication.
+ *
+ * @return member information
+ */
+- (void)getMember:(void(^)(Member*))onSuccess
           onError:(void(^)(NSError *))onError;
 
 @end
