@@ -14,6 +14,10 @@
     return [NSUUID UUID].UUIDString;
 }
 
++ (NSString *)base64EncodeBytes:(const char *)bytes length:(NSUInteger)length {
+    return [self base64EncodeData:[NSData dataWithBytes:bytes length:length]];
+}
+
 + (NSString *)base64EncodeData:(NSData *)data {
     NSString *base64String = [data base64EncodedStringWithOptions:0];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
@@ -23,17 +27,20 @@
 }
 
 + (NSString *)idForString:(NSString *)string {
-    return [TKUtil idForBytes:[string cStringUsingEncoding:NSASCIIStringEncoding]];
+    return [self idForBytes:[string cStringUsingEncoding:NSASCIIStringEncoding]];
 }
 
 + (NSString *)idForBytes:(const char *)buffer {
-    NSData *keyData=[NSData dataWithBytes:buffer length:strlen(buffer)];
+    return [self idForData:[NSData dataWithBytes:buffer length:strlen(buffer)]];
+}
 
-    uint8_t digest[CC_SHA256_DIGEST_LENGTH]={0};
-    CC_SHA256(keyData.bytes, keyData.length, digest);
++ (NSString *)idForData:(NSData *)data {
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH] = {0};
+    CC_SHA256(data.bytes, data.length, digest);
 
-    NSData *data = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
-    return [self base64EncodeData:data];
+    NSData *shaData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+    NSString *shaString = [self base64EncodeData:shaData];
+    return [shaString substringToIndex:16];
 }
 
 @end

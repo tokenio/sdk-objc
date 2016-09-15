@@ -21,13 +21,22 @@
 /**
  * URL safe Base64 encoder implementation.
  *
+ * @param bytes data to encode
+ * @param length number of bytes to encode
+ * @return base64 encoded data
+ */
++ (NSString *)base64EncodeBytes:(const char *)bytes length:(NSUInteger)length;
+
+/**
+ * URL safe Base64 encoder implementation.
+ *
  * @param data data to encode
  * @return base64 encoded data
  */
 + (NSString *)base64EncodeData:(NSData *)data;
 
 /**
- * Returns an ID for a given string. We have the string value and Base64 encode
+ * Returns an ID for a given string. We hash the string value and Base64 encode
  * the result. Has to match what we do on the server.
  *
  * @param string content to generate an id for
@@ -36,12 +45,21 @@
 + (NSString *)idForString:(NSString *)string;
 
 /**
- * Returns an ID for a given string. We have the string value and Base64 encode
+ * Returns an ID for a given string. We hash the string value and Base64 encode
  * the result. Has to match what we do on the server.
  *
  * @param string content to generate an id for
  * @return id
  */
 + (NSString *)idForBytes:(const char *)buffer;
+
+/**
+ * Returns an ID for a given data. We hash the data value and Base64 encode
+ * the result. Has to match what we do on the server.
+ *
+ * @param string content to generate an id for
+ * @return id
+ */
++ (NSString *)idForData:(NSData *)data;
 
 @end
