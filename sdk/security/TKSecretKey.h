@@ -12,11 +12,12 @@
  */
 @interface TKSecretKey : NSObject
 
-+ (TKSecretKey *)withPrivateKey:(NSString *)sk publicKey:(NSString *)pk;
-- (id)initWithPrivateKey:(NSString *)sk publicKey:(NSString *)pk;
++ (TKSecretKey *)withPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
+- (id)initWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
-@property (atomic, readonly) NSString *publicKey;
-@property (atomic, readonly) NSString *privateKey;
+@property (atomic, readonly) NSData *publicKey;
+@property (atomic, readonly) NSString *publicKeyStr;
+@property (atomic, readonly) NSData *privateKey;
 
 @end

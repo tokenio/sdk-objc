@@ -59,11 +59,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
+    NSString *signature = [TKCrypto sign:request usingKey:key];
+
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = key.id;
-    call.requestHeaders[@"token-signature"] = [TKCrypto sign:request usingKey:key];
+    call.requestHeaders[@"token-signature"] = signature;
 
     [call start];
 }
