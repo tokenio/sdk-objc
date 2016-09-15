@@ -1,6 +1,6 @@
 //
-//  sdkTests.m
-//  sdkTests
+//  TKMemberRegistrationTests.m
+//  TKMemberRegistrationTests
 //
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
@@ -10,16 +10,16 @@
 #import <protos/Member.pbobjc.h>
 #import <protos/Token.pbobjc.h>
 
-#import "TJson.h"
+#import "TKJson.h"
 
 #import "gateway/Gateway.pbobjc.h"
 #import "Security.pbobjc.h"
 
 
-@interface TJsonTests : XCTestCase
+@interface TKJsonTests : XCTestCase
 @end
 
-@implementation TJsonTests
+@implementation TKJsonTests
 
 - (void)setUp {}
 
@@ -30,7 +30,7 @@
     CreateMemberRequest *request = [CreateMemberRequest message];
     request.nonce = @"12345";
 
-    NSString *json = [TJson serialize:request];
+    NSString *json = [TKJson serialize:request];
     XCTAssertEqualObjects(json, @"{\"nonce\":\"12345\"}");
 }
 
@@ -40,7 +40,7 @@
 - (void)testEmpty {
     GetMemberRequest *request = [GetMemberRequest message];
 
-    NSString *json = [TJson serialize:request];
+    NSString *json = [TKJson serialize:request];
     XCTAssertEqualObjects(json, @"{}");
 }
 
@@ -56,7 +56,7 @@
     request.signature.keyId = @"key-id";
     request.signature.signature = @"signature";
 
-    NSString *json = [TJson serialize:request];
+    NSString *json = [TKJson serialize:request];
     XCTAssertEqualObjects(json, @"{\"update\":{\"memberId\":\"m123\",\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]}},\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
 
@@ -73,7 +73,7 @@
     Token *token = [Token message];
     token.signaturesArray = [@[s1, s2] mutableCopy];
 
-    NSString *json = [TJson serialize:token];
+    NSString *json = [TKJson serialize:token];
     XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"DECLINED\"}]}");
 }
 
@@ -84,7 +84,7 @@
     AccessTokenAcl *acl = [AccessTokenAcl message];
     acl.query = [@{@"q1": @"v1", @"q2": @"v2"} mutableCopy];
 
-    NSString *json = [TJson serialize:acl];
+    NSString *json = [TKJson serialize:acl];
     XCTAssertEqualObjects(json, @"{\"query\":{\"v2\":\"q2\",\"v1\":\"q1\"}}");
 }
 
@@ -104,7 +104,7 @@
 
     token.vars = [@{var1: @"one", var2: @"two"} mutableCopy];
 
-    NSString *json = [TJson serialize:token];
+    NSString *json = [TKJson serialize:token];
     XCTAssertEqualObjects(json, @"{\"amount\":123.45,\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");
 }
 
@@ -117,7 +117,7 @@
     signature.signature.keyId = @"key-id";
     signature.signature.signature = @"signature";
 
-    NSString *json = [TJson serialize:signature];
+    NSString *json = [TKJson serialize:signature];
     XCTAssertEqualObjects(json, @"{\"action\":\"ENDORSED\",\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
 
@@ -128,7 +128,7 @@
     LinkAccountRequest *request = [LinkAccountRequest message];
     request.accountLinkPayload = [@"hello" dataUsingEncoding:NSUTF8StringEncoding];
 
-    NSString *json = [TJson serialize:request];
+    NSString *json = [TKJson serialize:request];
     XCTAssertEqualObjects(json, @"{\"accountLinkPayload\":\"aGVsbG8\"}");
 }
 

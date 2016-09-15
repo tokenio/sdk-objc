@@ -12,20 +12,20 @@
 
 #import "gateway/Gateway.pbrpc.h"
 
-#import "TMember.h"
-#import "TSdk.h"
-#import "TSdkBuilder.h"
-#import "TUnauthenticatedClient.h"
-#import "TClient.h"
-#import "TSecretKey.h"
-#import "TCrypto.h"
+#import "TKMember.h"
+#import "TKSdk.h"
+#import "TKSdkBuilder.h"
+#import "TKUnauthenticatedClient.h"
+#import "TKClient.h"
+#import "TKSecretKey.h"
+#import "TKCrypto.h"
 
-@implementation TSdk {
+@implementation TKSdk {
     GatewayService *gateway;
 }
 
-+ (TSdkBuilder *)builder {
-    return [[TSdkBuilder alloc] init];
++ (TKSdkBuilder *)builder {
+    return [[TKSdkBuilder alloc] init];
 }
 
 - (id)initWithHost:(NSString *)host port:(int)port {
@@ -43,13 +43,13 @@
     return self;
 }
 
-- (TMember *)createMember {
+- (TKMember *)createMember {
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
-    __block TMember *member;
+    __block TKMember *member;
     __block NSError *error;
 
     [self
-            createMemberAsync:^(TMember *m) {
+            createMemberAsync:^(TKMember *m) {
                 member = m;
                 dispatch_semaphore_signal(done);
             }
@@ -68,9 +68,9 @@
     return member;
 }
 
-- (void)createMemberAsync:(void(^)(TMember *))onSuccess onError:(void(^)(NSError *))onError {
-    TUnauthenticatedClient *client = [[TUnauthenticatedClient alloc] initWithGateway:gateway];
-    TSecretKey *secretKey = [TCrypto generateKey];
+- (void)createMemberAsync:(void(^)(TKMember *))onSuccess onError:(void(^)(NSError *))onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKSecretKey *secretKey = [TKCrypto generateKey];
 
     [client
             createMemberId:^(NSString *memberId) {
@@ -79,22 +79,22 @@
                           forMember:memberId
                           onSuccess:^(Member *member) {
                               NSLog(@"Member: %@", member);
-                              onSuccess([TMember memberWithId:memberId secretKey:secretKey]);
+                              onSuccess([TKMember memberWithId:memberId secretKey:secretKey]);
                           }
                             onError:onError];
             }
             onError:onError];
 }
 
-- (TMember *)loginMember:(NSString *)memberId secretKey:(TSecretKey *)secretKey {
+- (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey {
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
-    __block TMember *member;
+    __block TKMember *member;
     __block NSError *error;
 
     [self
             loginMemberAsync:memberId
                    secretKey:secretKey
-                    onSucess:^(TMember *m) {
+                    onSucess:^(TKMember *m) {
                         member = m;
                         dispatch_semaphore_signal(done);
                     }
@@ -116,16 +116,16 @@
 }
 
 - (void)loginMemberAsync:(NSString *)memberId
-               secretKey:(TSecretKey *)key
-                onSucess:(void(^)(TMember *member))onSuccess
+               secretKey:(TKSecretKey *)key
+                onSucess:(void(^)(TKMember *member))onSuccess
                  onError:(void(^)(NSError *))onError {
 
-    TClient *client = [[TClient alloc] initWithGateway:gateway secretKey:key];
+    TKClient *client = [[TKClient alloc] initWithGateway:gateway secretKey:key];
     [client
             getMember:memberId
             onSuccess:^(Member *member) {
                 NSLog(@"Member: %@", member);
-                onSuccess([TMember memberWithId:memberId secretKey:key]);
+                onSuccess([TKMember memberWithId:memberId secretKey:key]);
             }
               onError: onError];
 }

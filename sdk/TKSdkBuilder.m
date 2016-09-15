@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TSdkBuilder.h"
-#import "TSdk.h"
+#import "TKSdkBuilder.h"
+#import "TKSdk.h"
 
-@implementation TSdkBuilder
+@implementation TKSdkBuilder
 
 - (id)init {
     self = [super init];
@@ -23,8 +23,8 @@
     return self;
 }
 
-- (TSdk *)build {
-    return [[TSdk alloc] initWithHost:self.host port:self.port];
+- (TKSdk *)build {
+    return [[TKSdk alloc] initWithHost:self.host port:self.port];
 }
 
 @end

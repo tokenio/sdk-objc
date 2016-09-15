@@ -5,13 +5,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class TSecretKey;
 @class GPBMessage;
 
 
-@interface TCrypto : NSObject
+@interface TKJson : NSObject
 
-+(NSString *)sign:(GPBMessage *)message usingKey:(TSecretKey *)key;
-+(TSecretKey *)generateKey;
++ (NSString *)serialize:(GPBMessage *)message;
 
 @end

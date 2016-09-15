@@ -5,10 +5,10 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-#import "TUtil.h"
+#import "TKUtil.h"
 
 
-@implementation TUtil
+@implementation TKUtil
 
 + (NSString *)nonce {
     return [NSUUID UUID].UUIDString;
@@ -23,7 +23,7 @@
 }
 
 + (NSString *)idForString:(NSString *)string {
-    return [TUtil idForBytes:[string cStringUsingEncoding:NSASCIIStringEncoding]];
+    return [TKUtil idForBytes:[string cStringUsingEncoding:NSASCIIStringEncoding]];
 }
 
 + (NSString *)idForBytes:(const char *)buffer {

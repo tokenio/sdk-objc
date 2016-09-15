@@ -12,15 +12,15 @@
 #import <objc/NSObject.h>
 
 
-@class TSdk;
+@class TKSdk;
 
-@interface TSdkBuilder : NSObject
+@interface TKSdkBuilder : NSObject
 
 @property (readwrite, copy) NSString *host;
 @property (readwrite) int port;
 
 - (id)init;
-- (TSdk *)build;
+- (TKSdk *)build;
 
 @end
 

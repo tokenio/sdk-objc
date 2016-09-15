@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface TUtil : NSObject
+@interface TKUtil : NSObject
 
 + (NSString *)nonce;
 

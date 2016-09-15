@@ -3,21 +3,21 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TCrypto.h"
-#import "TSecretKey.h"
+#import "TKCrypto.h"
+#import "TKSecretKey.h"
 #import "GPBMessage.h"
 
 
-@implementation TCrypto
+@implementation TKCrypto
 
-+(NSString *)sign:(GPBMessage *)message usingKey:(TSecretKey *)key {
++(NSString *)sign:(GPBMessage *)message usingKey:(TKSecretKey *)key {
     return @"signature-123"; // TODO(alexey): Fix me.
 }
 
-+(TSecretKey *)generateKey {
++(TKSecretKey *)generateKey {
    NSString *privateKey = @"private-key"; // TODO(alexey): Fix me.
    NSString *publicKey = @"public-key"; // TODO(alexey): Fix me.
-   return [TSecretKey withPrivateKey:privateKey publicKey:publicKey];
+   return [TKSecretKey withPrivateKey:privateKey publicKey:publicKey];
 }
 
 @end
