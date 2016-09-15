@@ -18,6 +18,7 @@
 		ABA7B146DB22BC7AEFC45645 /* TKUnauthenticatedClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B3E5F56FB46986B464A7 /* TKUnauthenticatedClient.m */; };
 		ABA7B1AD5F6906B4AEDC1E08 /* TKClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B26A8007A1501DC7C162 /* TKClient.h */; };
 		ABA7B1EF56F05AB5E12A2AED /* TKClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B1F4FAC9444503F3E1F6 /* TKClient.m */; };
+		ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B30F0E5668621466B95A /* TKTestBase.h */; };
 		ABA7B4D21E5D45FEEB96A3C3 /* TKUnauthenticatedClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BFDC2B51CE3B618E1C65 /* TKUnauthenticatedClient.h */; };
 		ABA7B6A1D17A1A648E1899A1 /* TKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B3AAC7683A856259443E /* TKUtil.m */; };
 		ABA7B73B4441412ED4BD9BA1 /* TKSecretKey.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BFD29B595CD5902AA13B /* TKSecretKey.m */; };
@@ -25,6 +26,7 @@
 		ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */; };
 		ABA7BB3E5A68A4069E6BC527 /* TKUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BF0BAE4C2772D2149C8A /* TKUtil.h */; };
 		ABA7BBD5A99EB6B4D01397AB /* TKJson.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BA5A60DA1EF0F2DB525D /* TKJson.m */; };
+		ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */; };
 		ABA7BC7093E19A487A70F9C1 /* TKMember.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB6EE62AFEB28A17E850 /* TKMember.m */; };
 		ABA7BD517708F94CF7920FBE /* TKJson.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA23EDFA15283E0E2F0C /* TKJson.h */; };
 		ABA7BD793A2C20FB51EC9ABF /* TKMember.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B90C252FCBB5D3BE7F25 /* TKMember.h */; };
@@ -61,6 +63,7 @@
 		ABA7B14BFA81F25722FBAA19 /* TKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCrypto.m; sourceTree = "<group>"; };
 		ABA7B1F4FAC9444503F3E1F6 /* TKClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKClient.m; sourceTree = "<group>"; };
 		ABA7B26A8007A1501DC7C162 /* TKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKClient.h; sourceTree = "<group>"; };
+		ABA7B30F0E5668621466B95A /* TKTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestBase.h; sourceTree = "<group>"; };
 		ABA7B3AAC7683A856259443E /* TKUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUtil.m; sourceTree = "<group>"; };
 		ABA7B3E5F56FB46986B464A7 /* TKUnauthenticatedClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUnauthenticatedClient.m; sourceTree = "<group>"; };
 		ABA7B90C252FCBB5D3BE7F25 /* TKMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMember.h; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		ABA7BA5A60DA1EF0F2DB525D /* TKJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKJson.m; sourceTree = "<group>"; };
 		ABA7BB0B1D9125938B9468CE /* TKSecretKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecretKey.h; sourceTree = "<group>"; };
 		ABA7BB6EE62AFEB28A17E850 /* TKMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMember.m; sourceTree = "<group>"; };
+		ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestBase.m; sourceTree = "<group>"; };
 		ABA7BEF8862E38F796B5DC94 /* TKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCrypto.h; sourceTree = "<group>"; };
 		ABA7BF0BAE4C2772D2149C8A /* TKUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKUtil.h; sourceTree = "<group>"; };
 		ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKJsonTests.m; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
 				ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */,
+				ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */,
+				ABA7B30F0E5668621466B95A /* TKTestBase.h */,
 			);
 			path = sdkTests;
 			sourceTree = "<group>";
@@ -190,6 +196,7 @@
 				ABA7B946512AD5B26807844C /* TKSecretKey.h in Headers */,
 				ABA7BF55D4472057AD3CDB8C /* TKCrypto.h in Headers */,
 				ABA7BD517708F94CF7920FBE /* TKJson.h in Headers */,
+				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +397,7 @@
 			files = (
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
+				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
