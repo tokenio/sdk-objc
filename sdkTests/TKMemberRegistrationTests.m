@@ -86,4 +86,5 @@
         XCTAssertEqual(member.aliases.count, 1);
     }];
 }
+
 @end

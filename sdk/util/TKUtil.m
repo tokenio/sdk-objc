@@ -19,10 +19,16 @@
 }
 
 + (NSString *)base64EncodeData:(NSData *)data {
+    return [self base64EncodeData:data padding:false];
+}
+
++ (NSString *)base64EncodeData:(NSData *)data padding:(bool)padding {
     NSString *base64String = [data base64EncodedStringWithOptions:0];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
-    base64String = [base64String stringByReplacingOccurrencesOfString:@"=" withString:@""];
+    if (!padding) {
+        base64String = [base64String stringByReplacingOccurrencesOfString:@"=" withString:@""];
+    }
     return base64String;
 }
 

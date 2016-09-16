@@ -188,7 +188,7 @@
         case GPBDataTypeUInt32:
             return @(GPBGetMessageUInt32Field(message, field));
         case GPBDataTypeBytes:
-            return [TKUtil base64EncodeData:GPBGetMessageBytesField(message, field)];
+            return [TKUtil base64EncodeData:GPBGetMessageBytesField(message, field) padding:true];
         case GPBDataTypeString:
             return GPBGetMessageStringField(message, field);
         case GPBDataTypeEnum:

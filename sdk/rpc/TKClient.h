@@ -85,4 +85,22 @@
         onSuccess:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError;
 
+/**
+ * Links a funding bank account to Token.
+ *
+ * @param bankId bank id
+ * @param accountLinkPayload account link authorization payload generated
+ *                           by the bank
+ */
+- (void)linkAccounts:(NSString *)bankId
+             payload:(NSData *)accountLinkPayload
+           onSuccess:(OnSuccessWithAccounts)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Looks up linked member accounts.
+ */
+- (void)lookupAccounts:(OnSuccessWithAccounts)onSuccess
+               onError:(OnError)onError;
+
 @end

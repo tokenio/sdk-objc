@@ -113,6 +113,54 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self updateMember:update onSuccess:onSuccess onError:onError];
 }
 
+- (void)linkAccounts:(NSString *)bankId
+             payload:(NSData *)accountLinkPayload
+           onSuccess:(OnSuccessWithAccounts)onSuccess
+             onError:(OnError)onError {
+
+    LinkAccountRequest *request = [LinkAccountRequest message];
+    request.bankId = bankId;
+    request.accountLinkPayload = accountLinkPayload;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToLinkAccountWithRequest:request
+                                 handler:^(LinkAccountResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.accountsArray);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupAccounts:(OnSuccessWithAccounts)onSuccess
+               onError:(OnError)onError {
+
+    LookupAccountsRequest *request = [LookupAccountsRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupAccountsWithRequest:request
+                                   handler:^(LookupAccountsResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompleted(response);
+                                           onSuccess(response.accountsArray);
+                                       } else {
+                                           RpcLogError(error);
+                                           onError(error);
+                                       }
+                                   }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
 - (void)updateMember:(MemberUpdate *)update
            onSuccess:(OnSuccessWithMember)onSuccess
              onError:(OnError)onError {

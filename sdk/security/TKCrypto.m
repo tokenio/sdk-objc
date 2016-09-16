@@ -21,6 +21,7 @@
 
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
+
     ed25519_sign(signature, jsonData.bytes, jsonData.length, pk, sk);
 
     return [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
@@ -31,7 +32,8 @@
 
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return ed25519_verify(decodedSignature.bytes, jsonData.bytes, jsonData.length, key.bytes);
+
+    return ed25519_verify(decodedSignature.bytes, jsonData.bytes, jsonData.length, key.bytes) != 0;
 }
 
 +(TKSecretKey *)generateKey {

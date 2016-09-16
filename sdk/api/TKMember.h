@@ -49,6 +49,15 @@
              onSucess:(OnSuccess)onSuccess
               onError:(OnError)onError;
 
+- (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
+                          withPayload:(NSData *)payload;
+
+- (void)linkAccountAsync:(NSString *)bankId
+             withPayload:(NSData *)payload
+                onSucess:(OnSuccessWithTKAccounts)onSuccess
+                 onError:(OnError)onError;
+
+- (NSArray<TKAccount *> *)lookupAccounts;
 @end
 
 #endif
