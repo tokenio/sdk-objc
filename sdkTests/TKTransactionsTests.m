@@ -8,7 +8,6 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
-#import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Payment.pbobjc.h"
