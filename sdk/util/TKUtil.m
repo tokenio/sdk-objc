@@ -70,4 +70,26 @@
     return [shaString substringToIndex:16];
 }
 
++ (NSString *)snakeCaseToCamelCase:(NSString *)input {
+    NSArray *components = [input componentsSeparatedByString:@"_"];
+    NSMutableString *camelCaseString = [NSMutableString string];
+    [components enumerateObjectsUsingBlock:^(NSString *component, NSUInteger idx, BOOL *stop) {
+        [camelCaseString appendString:(idx == 0 ? component : [component capitalizedString])];
+    }];
+    return [camelCaseString copy];
+}
+
++ (NSString *)camelCaseToSnakeCase:(NSString *)input {
+    NSMutableString *output = [NSMutableString string];
+    NSCharacterSet *uppercase = [NSCharacterSet uppercaseLetterCharacterSet];
+    for (NSInteger idx = 0; idx < [input length]; idx += 1) {
+        unichar c = [input characterAtIndex:idx];
+        if ([uppercase characterIsMember:c]) {
+            [output appendFormat:@"_%@", [[NSString stringWithCharacters:&c length:1] lowercaseString]];
+        } else {
+            [output appendFormat:@"%C", c];
+        }
+    }
+    return output;}
+
 @end

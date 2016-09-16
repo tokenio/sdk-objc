@@ -40,6 +40,17 @@
 }
 
 /**
+ * Slashes mess up standard serializer. There is a hack in the code to fix it.
+ */
+- (void)testSlashes {
+    CreateMemberRequest *request = [CreateMemberRequest message];
+    request.nonce = @"123/45";
+
+    NSString *json = [TKJson serialize:request];
+    XCTAssertEqualObjects(json, @"{\"nonce\":\"123/45\"}");
+}
+
+/**
  * Repeated fields.
  */
 - (void)testRepeated {
@@ -124,7 +135,7 @@
     request.accountLinkPayload = [@"hello" dataUsingEncoding:NSUTF8StringEncoding];
 
     NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"accountLinkPayload\":\"aGVsbG8\"}");
+    XCTAssertEqualObjects(json, @"{\"accountLinkPayload\":\"aGVsbG8=\"}");
 }
 
 @end

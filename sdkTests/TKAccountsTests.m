@@ -26,7 +26,6 @@
     }];
 }
 
-
 - (void)testLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
         NSString *bankId = @"bank-id";
