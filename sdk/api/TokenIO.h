@@ -6,11 +6,14 @@
 #ifndef TokenIO_h
 #define TokenIO_h
 
+#import "TKTypedef.h"
+
 
 @class GatewayService;
 @class TokenIOBuilder;
 @class TKMember;
 @class TKSecretKey;
+
 
 @interface TokenIO : NSObject {}
 
@@ -18,18 +21,19 @@
 
 - (id)initWithHost:(NSString *)host port:(int)port;
 
-- (TKMember *)createMember;
+- (TKMember *)createMember:(NSString *)alias;
 
-- (void)createMemberAsync:(void(^)(TKMember *))onSuccess
-                  onError:(void(^)(NSError *))onError;
+- (void)createMemberAsync:(NSString *)alias
+                 onSucess:(OnSuccessWithTKMember)onSuccess
+                  onError:(OnError)onError;
 
 - (TKMember *)loginMember:(NSString *)memberId
                secretKey:(TKSecretKey *)secretKey;
 
 - (void)loginMemberAsync:(NSString *)memberId
                secretKey:(TKSecretKey *)key
-                onSucess:(void(^)(TKMember *member))onSuccess
-                 onError:(void(^)(NSError *))onError;
+                onSucess:(OnSuccessWithTKMember)onSuccess
+                 onError:(OnError)onError;
 
 @end
 

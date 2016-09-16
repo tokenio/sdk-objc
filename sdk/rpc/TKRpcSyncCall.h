@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TKTypedef.h"
 
 
 /**
@@ -42,6 +43,6 @@
  *
  * @param error error information
  */
-@property (readonly, retain) void(^onError)(NSError *);
+@property (readonly, retain) OnError onError;
 
 @end

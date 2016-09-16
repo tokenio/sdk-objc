@@ -6,6 +6,7 @@
 #import <XCTest/XCTest.h>
 
 @class TokenIO;
+@class TKMember;
 
 typedef void (^AsyncTestBlock)(TokenIO *);
 
@@ -27,5 +28,13 @@ typedef void (^AsyncTestBlock)(TokenIO *);
  * @param block block of code to execute
  */
 - (void)run:(AsyncTestBlock)block;
+
+/**
+ * Creates a new member with an auto generated alias and key.
+ *
+ * @param tokenIO
+ * @return
+ */
+- (TKMember *)createMember:(TokenIO *)tokenIO;
 
 @end
