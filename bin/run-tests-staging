@@ -1,0 +1,8 @@
+#!/bin/bash
+
+xcodebuild \
+    -workspace sdk.xcworkspace \
+    -scheme "All Tests - Staging" \
+    -sdk iphonesimulator \
+    -destination "platform=iOS Simulator,name=iPhone 6,OS=9.3" \
+    test
