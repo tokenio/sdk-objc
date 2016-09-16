@@ -11,8 +11,15 @@
 #import "TKMember.h"
 #import "TKAccount.h"
 #import "TKUtil.h"
-#import "Account.pbobjc.h"
 #import "bankapi/Fank.pbobjc.h"
+
+@interface HostAndPort : NSObject
+@property NSString *host;
+@property int port;
+@end
+
+@implementation HostAndPort
+@end
 
 
 @implementation TKTestBase {
@@ -23,13 +30,15 @@
 
 - (void)setUp {
     [super setUp];
+    HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
+    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:9100];
 
     TokenIOBuilder *builder = [TokenIO builder];
-    builder.host = @"localhost";
-    builder.port = 9000;
+    builder.host = gateway.host;
+    builder.port = gateway.port;
     tokenIO = [builder build];
-    bank = [TKBankClient bankClientWithHost:@"localhost"
-                                       port:9100];
+    bank = [TKBankClient bankClientWithHost:fank.host
+                                       port:fank.port];
 
     queue = dispatch_queue_create("io.token.Test", nil);
 }
@@ -107,6 +116,30 @@
                                               withPayload:linkPayload];
     XCTAssert(accounts.count == 1);
     return accounts[0];
+}
+
+- (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port {
+    NSString *override = [[[NSProcessInfo processInfo] environment] objectForKey:var];
+    NSArray<NSString *> *parts = [override componentsSeparatedByString:@":"];
+
+    HostAndPort *hostAndPort = [[HostAndPort alloc] init];
+    hostAndPort.host = @"localhost";
+    hostAndPort.port = port;
+
+    switch (parts.count) {
+        case 1:
+            hostAndPort.host = parts[0];
+            break;
+        case 2:
+            hostAndPort.host = parts[0];
+            hostAndPort.port = [parts[1] intValue];
+            break;
+        default:
+            break;
+    }
+
+    NSLog(@"Targeting %@: %@:%d", var, hostAndPort.host, hostAndPort.port);
+    return hostAndPort;
 }
 
 @end
