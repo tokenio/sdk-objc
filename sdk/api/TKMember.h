@@ -58,6 +58,7 @@
                  onError:(OnError)onError;
 
 - (NSArray<TKAccount *> *)lookupAccounts;
+
 @end
 
 #endif

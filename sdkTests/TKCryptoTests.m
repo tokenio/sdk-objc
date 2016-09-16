@@ -14,10 +14,7 @@
 
 @implementation TKCryptoTests
 
-/**
- * base64 encoding/decoding.
- */
-- (void)testSignAndVerify {
+- (void)testSignAndVerify_message {
     Token *token = [Token message];
     token.payment.amount = 100.23;
 
@@ -30,6 +27,29 @@
                                   forMessage:token
                               usingPublicKey:key.publicKey];
     XCTAssert(success);
+}
+
+- (void)testSignAndVerify_token {
+    Token *token = [Token message];
+    token.payment.amount = 100.23;
+
+    TKSecretKey *key = [TKCrypto generateKey];
+    NSString *signature = [TKCrypto sign:token
+                                  action:TokenSignature_Action_Endorsed
+                                usingKey:key];
+    XCTAssert(signature.length > 0);
+
+    bool success = [TKCrypto verifySignature:signature
+                                    forToken:token
+                                      action:TokenSignature_Action_Endorsed
+                              usingPublicKey:key.publicKey];
+    XCTAssert(success);
+
+    success = [TKCrypto verifySignature:signature
+                                    forToken:token
+                                      action:TokenSignature_Action_Declined
+                              usingPublicKey:key.publicKey];
+    XCTAssert(!success);
 }
 
 @end

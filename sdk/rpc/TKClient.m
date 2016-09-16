@@ -11,6 +11,9 @@
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
 #import "Account.pbobjc.h"
+#import "TKUtil.h"
+#import "Transfer.pbobjc.h"
+#import "Token.pbobjc.h"
 
 
 NSString *const kTokenRealm = @"Token";
@@ -156,6 +159,158 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                            onError(error);
                                        }
                                    }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)createPaymentToken:(PaymentToken *)paymentToken
+                 onSuccess:(OnSuccessWithToken)onSuccess
+                   onError:(OnError)onError {
+
+    CreatePaymentTokenRequest *request = [CreatePaymentTokenRequest message];
+    request.token = paymentToken;
+
+    GRPCProtoCall *call = [gateway
+            RPCToCreatePaymentTokenWithRequest:request
+                                   handler:^(CreatePaymentTokenResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompleted(response);
+                                           onSuccess(response.token);
+                                       } else {
+                                           RpcLogError(error);
+                                           onError(error);
+                                       }
+                                   }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupToken:(NSString *)tokenId
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+
+    LookupTokenRequest *request = [LookupTokenRequest message];
+    request.tokenId = tokenId;
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupTokenWithRequest:request
+                                handler:^(LookupTokenResponse *response, NSError *error) {
+                                    if (response) {
+                                        RpcLogCompleted(response);
+                                        onSuccess(response.token);
+                                    } else {
+                                        RpcLogError(error);
+                                        onError(error);
+                                    }
+                                }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupTokens:(int)offset
+               limit:(int)limit
+           onSuccess:(OnSuccessWithTokens)onSuccess
+             onError:(OnError)onError {
+
+    LookupTokensRequest *request = [LookupTokensRequest message];
+    request.offset = offset;
+    request.limit = limit;
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupTokensWithRequest:request
+                                handler:^(LookupTokensResponse *response, NSError *error) {
+                                    if (response) {
+                                        RpcLogCompleted(response);
+                                        onSuccess(response.tokensArray);
+                                    } else {
+                                        RpcLogError(error);
+                                        onError(error);
+                                    }
+                                }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)endorseToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)onSuccess
+             onError:(OnError)onError {
+
+    EndorseTokenRequest *request = [EndorseTokenRequest message];
+    request.tokenId = token.id_p;
+    request.signature.keyId = key.id;
+    request.signature.signature = [TKCrypto sign:token
+                                          action:TokenSignature_Action_Endorsed
+                                        usingKey:key];
+
+    GRPCProtoCall *call = [gateway
+            RPCToEndorseTokenWithRequest:request
+                                 handler:^(EndorseTokenResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.token);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)declineToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)onSuccess
+             onError:(OnError)onError {
+
+    DeclineTokenRequest *request = [DeclineTokenRequest message];
+    request.tokenId = token.id_p;
+    request.signature.keyId = key.id;
+    request.signature.signature = [TKCrypto sign:token
+                                          action:TokenSignature_Action_Declined
+                                        usingKey:key];
+
+    GRPCProtoCall *call = [gateway
+            RPCToDeclineTokenWithRequest:request
+                                 handler:^(DeclineTokenResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.token);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }
+    ];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)revokeToken:(Token *)token
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+
+    RevokeTokenRequest *request = [RevokeTokenRequest message];
+    request.tokenId = token.id_p;
+    request.signature.keyId = key.id;
+    request.signature.signature = [TKCrypto sign:token
+                                          action:TokenSignature_Action_Revoked
+                                        usingKey:key];
+
+    GRPCProtoCall *call = [gateway
+            RPCToRevokeTokenWithRequest:request
+                                 handler:^(RevokeTokenResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.token);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }
     ];
 
     [self startCall:call withRequest:request];

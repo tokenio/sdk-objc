@@ -34,6 +34,7 @@
 		ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF3C591D1A2AE3277E3D /* add_scalar.c */; };
 		ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B7A8D60CEEC0A95D195D /* precomp_data.h */; };
 		ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */ = {isa = PBXBuildFile; fileRef = ABA7B1E8CB2CAE853F4F9977 /* ed25519_64.dll */; };
+		ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */; };
 		ABA7B6FB78BFBC904EBBA4DE /* TKUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */; };
 		ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */ = {isa = PBXBuildFile; fileRef = ABA7BF98D0D666144252C84D /* ed25519_32.dll */; };
 		ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B15B05913DC313ECE3BF /* TKAccount.h */; };
@@ -133,6 +134,7 @@
 		ABA7BDCFD5AED8EBB4F32EC2 /* sha512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha512.h; sourceTree = "<group>"; };
 		ABA7BDE5D0F88461A97DCA5A /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
 		ABA7BE0106B24FCB0A9C556C /* key_exchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = key_exchange.c; sourceTree = "<group>"; };
+		ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKPaymentTokenTests.m; sourceTree = "<group>"; };
 		ABA7BEAF5A44E025586931AB /* sc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sc.c; sourceTree = "<group>"; };
 		ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestBase.m; sourceTree = "<group>"; };
 		ABA7BEE87D6C30096F9CADA3 /* TKJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKJson.h; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				ABA7B6A0C915116837349E69 /* TKUtilTests.m */,
 				ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */,
 				ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */,
+				ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */,
 			);
 			path = sdkTests;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
+				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

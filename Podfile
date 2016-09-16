@@ -4,7 +4,7 @@ target 'sdk' do
   pod 'protos', :path => '.'
   pod 'OrderedDictionary'
 
-  target 'TKMemberRegistrationTests' do
+  target 'sdkTests' do
     inherit! :search_paths
   end
 end

@@ -7,6 +7,7 @@
 
 @class TokenIO;
 @class TKMember;
+@class TKAccount;
 
 typedef void (^AsyncTestBlock)(TokenIO *);
 
@@ -36,5 +37,13 @@ typedef void (^AsyncTestBlock)(TokenIO *);
  * @return
  */
 - (TKMember *)createMember:(TokenIO *)tokenIO;
+
+/**
+ * Creates a new member/account.
+ *
+ * @param tokenIO
+ * @return
+ */
+- (TKAccount *)createAccount:(TokenIO *)tokenIO;
 
 @end

@@ -4,9 +4,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <protos/Token.pbobjc.h>
 
 @class TKSecretKey;
 @class GPBMessage;
+@class Token;
 
 
 /**
@@ -21,7 +23,20 @@
  * @param key key to sign with
  * @return signed message, Base64 encoded
  */
-+(NSString *)sign:(GPBMessage *)message usingKey:(TKSecretKey *)key;
++(NSString *)sign:(GPBMessage *)message
+         usingKey:(TKSecretKey *)key;
+
+/**
+ * Signs a token with the supplied secret key.
+ *
+ * @param token token to sign
+ * @param action action being signed on
+ * @param key key to sign with
+ * @return signed message, Base64 encoded
+ */
++ (NSString *)sign:(Token *)token
+            action:(TokenSignature_Action)action
+          usingKey:(TKSecretKey *)key;
 
 /**
  * Verifies a message signature.
@@ -31,7 +46,23 @@
  * @param key public key used to verify the signature
  * @return true if signature verifies
  */
-+(bool)verifySignature:(NSString *)signature forMessage:(GPBMessage *)message usingPublicKey:(NSData *)key;
++(bool)verifySignature:(NSString *)signature
+            forMessage:(GPBMessage *)message
+        usingPublicKey:(NSData *)key;
+
+/**
+ * Verifies a token signature.
+ *
+ * @param signature signature to verify
+ * @param token token to verify the signature for
+ * @param action action to verify the signature for
+ * @param key public key used to verify the signature
+ * @return true if signature verifies
+ */
++(bool)verifySignature:(NSString *)signature
+              forToken:(Token *)token
+                action:(TokenSignature_Action) action
+        usingPublicKey:(NSData *)key;
 
 /**
  * Generates a new key pair.

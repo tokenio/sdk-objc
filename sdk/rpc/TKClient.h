@@ -9,6 +9,7 @@
 @class Member;
 @class GatewayService;
 @class TKSecretKey;
+@class PaymentToken;
 
 
 /**
@@ -102,5 +103,64 @@
  */
 - (void)lookupAccounts:(OnSuccessWithAccounts)onSuccess
                onError:(OnError)onError;
+
+/**
+ * Creates a new payment token.
+ *
+ * @param amount payment amount
+ * @param currency currency code, e.g. "USD"
+ * @param redeemerAlias redeemer alias
+ * @param description payment description, optional
+ */
+- (void)createPaymentToken:(PaymentToken *)paymentToken
+                    onSuccess:(OnSuccessWithToken)onSuccess
+                      onError:(OnError)onError;
+
+/**
+ * Looks up an existing token.
+ *
+ * @param tokenId token id
+ */
+- (void)lookupToken:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithToken)onSuccess
+                   onError:(OnError)onError;
+
+/**
+ * Looks up token owned by the member.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ */
+- (void)lookupTokens:(int)offset
+               limit:(int)limit
+           onSuccess:(OnSuccessWithTokens)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Endorses a token.
+ *
+ * @param token token to endorse
+ */
+- (void)endorseToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)success
+             onError:(OnError)error;
+
+/**
+ * Declines a token.
+ *
+ * @param token token to endorse
+ */
+- (void)declineToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)success
+             onError:(OnError)error;
+
+/**
+ * Revokes a token.
+ *
+ * @param token token to endorse
+ */
+- (void)revokeToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)success
+             onError:(OnError)error;
 
 @end
