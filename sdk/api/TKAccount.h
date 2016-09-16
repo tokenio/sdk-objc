@@ -88,4 +88,9 @@
                onSuccess:(OnSuccessWithPayment)onSuccess
                  onError:(OnError)onError;
 
+- (Money *)lookupBalance;
+
+- (Transaction *)lookupTransaction:(NSString *)transactionId;
+
+- (NSArray<Payment *> *)lookupTransactionsOffset:(int)offset limit:(int)limit;
 @end
