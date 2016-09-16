@@ -57,7 +57,7 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: 3a8c5543115fb2183ed5624678e7ecbac5e9e4ad
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
-  protos: e8ab477037fabab2ed3fd80db76af158d1ce9d1b
+  protos: a05f5084cb058dc06d4f0fc07d88c43be8cc828b
 
 PODFILE CHECKSUM: 2d4f386957d7009f7e148dcd328985820ffc53f4
 

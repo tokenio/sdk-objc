@@ -10,6 +10,7 @@
 @class GatewayService;
 @class TKSecretKey;
 @class PaymentToken;
+@class PaymentPayload;
 
 
 /**
@@ -162,5 +163,36 @@
 - (void)revokeToken:(Token *)token
            onSuccess:(OnSuccessWithToken)success
              onError:(OnError)error;
+
+/**
+ * Redeems a payment token.
+ *
+ * @param payment payment parameters, such as amount, currency, etc
+ */
+- (void)redeemToken:(PaymentPayload *)payload
+          onSuccess:(OnSuccessWithPayment)onSuccess
+            onError:(OnError)onError;
+
+/**
+ * Looks up a token payment by id.
+ *
+ * @param paymentId payment id
+ */
+- (void)lookupPayment:(NSString *)paymentId
+            onSuccess:(OnSuccessWithPayment)onSuccess
+              onError:(OnError)onError;
+
+/**
+ * Looks up existing token payments.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @param tokenId optional token id to restrict the search
+ */
+- (void)lookupPaymentsOffset:(int)offset
+                       limit:(int)limit
+                     tokenId:(NSString *)tokenId
+                   onSuccess:(OnSuccessWithPayments)onSuccess
+                     onError:(OnError)onError;
 
 @end
