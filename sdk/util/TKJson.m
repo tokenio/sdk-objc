@@ -34,7 +34,11 @@
 
     NSError *error;
     NSData *json = [NSJSONSerialization dataWithJSONObject:result options:0 error:&error];
-    return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
+
+    // The NSJSONSerialization doesn't handle slashes correctly. Ugly hack to fix it...
+    // http://stackoverflow.com/questions/15794547/nsjsonserialization-serialization-of-a-string-containing-forward-slashes-and-h
+    NSString *jsonStr = [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
+    return [jsonStr stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
 }
 
 /**
@@ -50,8 +54,9 @@
 
     for (GPBFieldDescriptor *field in descriptor.fields) {
         if (GPBMessageHasFieldSet(message, field) && !field.hasDefaultValue) {
-            KeyValuePair *value = [self serialize:field forMessage:message];
-            result[value.key] = value.value;
+            NSString *key = [TKUtil snakeCaseToCamelCase:field.textFormatName];
+            NSObject *value = [self serialize:field forMessage:message];
+            result[key] = value;
         }
     }
 
@@ -65,7 +70,7 @@
  * @param message message containing the field
  * @return
  */
-+ (KeyValuePair *)serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.fieldType) {
         case GPBFieldTypeRepeated:
             return [self serializeRepeated:field forMessage:message];
@@ -88,21 +93,15 @@
  * @param message message containing the field
  * @return
  */
-+ (KeyValuePair *)serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSDictionary<NSObject*, NSString*> *valuesToKeys = GPBGetMessageMapField(message, field);
-
     MutableOrderedDictionary<NSString*, NSObject*> *keysToValues = [MutableOrderedDictionary dictionary];
     for (id value in valuesToKeys) {
         NSString *key = valuesToKeys[value];
         NSObject *serialized = [self serializeValue:value];
         [keysToValues setObject:serialized forKey:key];
     }
-
-    KeyValuePair *result = [[KeyValuePair alloc] init];
-    result.key = field.name;
-    result.value = keysToValues;
-
-    return result;
+    return keysToValues;
 }
 
 /**
@@ -112,21 +111,14 @@
  * @param message message containing the field
  * @return
  */
-+ (KeyValuePair *)serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
-    NSString *suffix = @"Array";
-
++ (NSObject *)serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSArray<NSObject*> *values = GPBGetMessageRepeatedField(message, field);
     NSMutableArray<NSObject*> *serializedValues = [NSMutableArray array];
     for (id value in values) {
         NSObject *o = [self serializeValue:value];
         [serializedValues addObject:o];
     }
-
-    KeyValuePair *result = [[KeyValuePair alloc] init];
-    result.key = [field.name substringWithRange:NSMakeRange(0, field.name.length - suffix.length)];
-    result.value = serializedValues;
-
-    return result;
+    return serializedValues;
 }
 
 /**
@@ -136,36 +128,7 @@
  * @param message message containing the field
  * @return
  */
-+ (KeyValuePair *)serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
-    KeyValuePair *value = [[KeyValuePair alloc] init];
-    value.key = field.name;
-    value.value = [self toObject:field forMessage:message];
-    return value;
-}
-
-/**
- * Serializes a value. The value is expected to either be a proto message or
- * of a primitive type.
- *
- * @param object object to serialize
- * @return
- */
-+ (NSObject *)serializeValue:(NSObject *)object {
-    if ([object isKindOfClass:[GPBMessage class]]) {
-        return [self serializeMessage:(GPBMessage *) object];
-    } else {
-        return object;
-    }
-}
-
-/**
- * Converts specified field into object.
- *
- * @param field field descriptor
- * @param message message containing the field
- * @return
- */
-+ (NSObject *)toObject:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.dataType) {
         case GPBDataTypeBool:
             return GPBGetMessageBoolField(message, field) == TRUE ? @"true" : @"false";
@@ -201,6 +164,21 @@
                     exceptionWithName:[NSString stringWithFormat:@"Unsupported field type: %@", field]
                                reason:nil
                              userInfo:nil];
+    }
+}
+
+/**
+ * Serializes a value. The value is expected to either be a proto message or
+ * of a primitive type.
+ *
+ * @param object object to serialize
+ * @return
+ */
++ (NSObject *)serializeValue:(NSObject *)object {
+    if ([object isKindOfClass:[GPBMessage class]]) {
+        return [self serializeMessage:(GPBMessage *) object];
+    } else {
+        return object;
     }
 }
 

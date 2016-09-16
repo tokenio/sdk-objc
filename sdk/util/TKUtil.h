@@ -79,4 +79,20 @@
  */
 + (NSString *)idForData:(NSData *)data;
 
+/**
+ * Converts string in the snake case to camel case.
+ *
+ * @param input input
+ * @return converted string
+ */
++ (NSString *)snakeCaseToCamelCase:(NSString *)input;
+
+/**
+ * Converts string in the camel case to snake case.
+ *
+ * @param string input
+ * @return converted string
+ */
++ (NSString *)camelCaseToSnakeCase:(NSString *)string;
+
 @end
