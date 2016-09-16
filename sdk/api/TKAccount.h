@@ -10,6 +10,7 @@
 @class TKMember;
 @class TKClient;
 @class Token;
+@class Payment;
 
 
 @interface TKAccount : NSObject
@@ -70,5 +71,21 @@
 - (void)asyncRevokeToken:(Token *)token
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError;
+
+- (Payment *)redeemToken:(Token *)token;
+
+- (Payment *)redeemToken:(Token *)token
+                  amount:(NSNumber *)amount
+                currency:(NSString *)currency;
+
+- (void)asyncRedeemToken:(Token *)token
+        onSuccess:(OnSuccessWithPayment)onSuccess
+          onError:(OnError)onError;
+
+- (void)asyncRedeemToken:(Token *)token
+                  amount:(NSNumber *)amount
+                currency:(NSString *)currency
+               onSuccess:(OnSuccessWithPayment)onSuccess
+                 onError:(OnError)onError;
 
 @end

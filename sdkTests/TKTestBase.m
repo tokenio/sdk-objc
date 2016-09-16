@@ -3,18 +3,21 @@
 //  Copyright © 2016 Token Inc. All rights reserved.#import "TKSdk.h"
 //
 
+#import <protos/Money.pbobjc.h>
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
-#import "TKJson.h"
+#import "TKBankClient.h"
 #import "TKMember.h"
-#import "TKUtil.h"
 #import "TKAccount.h"
+#import "TKUtil.h"
 #import "Account.pbobjc.h"
+#import "bankapi/Fank.pbobjc.h"
 
 
 @implementation TKTestBase {
-    TokenIO *sdk;
+    TokenIO *tokenIO;
+    TKBankClient *bank;
     dispatch_queue_t queue;
 }
 
@@ -24,8 +27,10 @@
     TokenIOBuilder *builder = [TokenIO builder];
     builder.host = @"localhost";
     builder.port = 9000;
+    tokenIO = [builder build];
+    bank = [TKBankClient bankClientWithHost:@"localhost"
+                                       port:9100];
 
-    sdk = [builder build];
     queue = dispatch_queue_create("io.token.Test", nil);
 }
 
@@ -35,7 +40,7 @@
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
     dispatch_async(queue, ^{
         @try {
-            block(sdk);
+            block(tokenIO);
         } @catch(NSException *e) {
             error = e;
         } @finally {
@@ -69,26 +74,37 @@
     }
 }
 
-- (TKMember *)createMember:(TokenIO *)tokenIO {
+- (TKMember *)createMember:(TokenIO *)token {
     NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
-    return [tokenIO createMember:alias];
+    return [token createMember:alias];
 }
 
-- (TKAccount *)createAccount:(TokenIO *)tokenIO {
-    TKMember *member = [self createMember:tokenIO];
+- (TKAccount *)createAccount:(TokenIO *)token {
+    TKMember *member = [self createMember:token];
 
-    AccountLinkPayload_NamedAccount *account = [AccountLinkPayload_NamedAccount message];
-    account.name = @"Checking";
-    account.accountNumber = @"iban:checking";
+    NSString *alias = member.firstAlias;
+    NSString *firstName = @"Test";
+    NSString *lastName = @"Testoff";
+    NSString *bankId = @"bank-id";
+    NSString *accountName = @"Checking";
+    NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
 
-    AccountLinkPayload *payload = [AccountLinkPayload message];
-    payload.alias = member.firstAlias;
+    FankMetadata_ClientAccount *account = [FankMetadata_ClientAccount message];
+    account.accountNumber = bankAccountNumber;
+    account.name = accountName;
+    account.balance.value = 1000000.00;
+    account.balance.currency = @"USD";
 
-    [payload.accountsArray addObject:account];
+    FankMetadata *metadata = [FankMetadata message];
+    metadata.client.firstName = firstName;
+    metadata.client.lastName = lastName;
+    [metadata.clientAccountsArray addObject:account];
 
-    NSData *payloadData = [[TKJson serialize:payload] dataUsingEncoding:NSASCIIStringEncoding];
-    NSArray<TKAccount *> *accounts = [member linkAccounts:@"bank-id"
-                                              withPayload:payloadData];
+    NSData *linkPayload = [bank startAccountsLinkingForAlias:alias
+                                              accountNumbers:@[bankAccountNumber]
+                                                    metadata:metadata];
+    NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
+                                              withPayload:linkPayload];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }

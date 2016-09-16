@@ -59,6 +59,30 @@
 
 - (NSArray<TKAccount *> *)lookupAccounts;
 
+- (Payment *)lookupPayment:(NSString *)paymentId;
+
+- (void)asyncLookupPayment:(NSString *)paymentId
+                 onSuccess:(OnSuccessWithPayment)onSuccess
+                   onError:(OnError)onError;
+
+- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+                                       limit:(int)limit;
+
+- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+                                       limit:(int)limit
+                                     tokenId:(NSString *)tokenId;
+
+- (void)asyncLookupPaymentsOffset:(int)offset
+                            limit:(int)limit
+                        onSuccess:(OnSuccessWithPayments)onSuccess
+                          onError:(OnError)onError;
+
+- (void)asyncLookupPaymentsOffset:(int)offset
+                            limit:(int)limit
+                          tokenId:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithPayments)onSuccess
+                          onError:(OnError)onError;
+
 @end
 
 #endif

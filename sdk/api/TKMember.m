@@ -187,6 +187,66 @@
                    onError:onError];
 }
 
+- (Payment *)lookupPayment:(NSString *)paymentId {
+    TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncLookupPayment:paymentId
+                onSuccess:call.onSuccess
+                     onError:call.onError];
+    }];
+}
+
+- (void)asyncLookupPayment:(NSString *)paymentId
+                 onSuccess:(OnSuccessWithPayment)onSuccess
+                   onError:(OnError)onError {
+    [client lookupPayment:paymentId
+                onSuccess:onSuccess
+                  onError:onError];
+}
+
+- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+                                       limit:(int)limit {
+    return [self lookupPaymentsOffset:offset
+                                limit:limit
+                              tokenId:nil];
+}
+
+- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+                                       limit:(int)limit
+                                     tokenId:(NSString *)tokenId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncLookupPaymentsOffset:offset
+                                  limit:limit
+                                tokenId:tokenId
+                              onSuccess:call.onSuccess
+                                onError:call.onError];
+    }];
+}
+
+- (void)asyncLookupPaymentsOffset:(int)offset
+                            limit:(int)limit
+                        onSuccess:(OnSuccessWithPayments)onSuccess
+                          onError:(OnError)onError {
+    [self asyncLookupPaymentsOffset:offset
+                              limit:limit
+                            tokenId:nil
+                          onSuccess:onSuccess
+                            onError:onError];
+}
+
+- (void)asyncLookupPaymentsOffset:(int)offset
+                            limit:(int)limit
+                          tokenId:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithPayments)onSuccess
+                          onError:(OnError)onError {
+    [client lookupPaymentsOffset:offset
+                           limit:limit
+                         tokenId:tokenId
+                       onSuccess:onSuccess
+                         onError:onError];
+}
+
 - (NSArray<TKAccount *> *)mapAccounts:(NSArray<Account *> *)accounts {
     NSMutableArray<TKAccount *> *result = [NSMutableArray array];
     for (Account *a in accounts) {

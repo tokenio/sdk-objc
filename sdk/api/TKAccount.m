@@ -4,6 +4,7 @@
 //
 
 #import <protos/Transfer.pbobjc.h>
+#import <protos/Money.pbobjc.h>
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "Account.pbobjc.h"
@@ -11,6 +12,7 @@
 #import "Token.pbobjc.h"
 #import "TKRpcSyncCall.h"
 #import "TKUtil.h"
+#import "Payment.pbobjc.h"
 
 
 @implementation TKAccount {
@@ -146,7 +148,7 @@
 }
 
 - (Token *)endorseToken:(Token *)token {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self asyncEndorseToken:token
                 onSuccess:call.onSuccess
@@ -164,7 +166,7 @@
 }
 
 - (Token *)declineToken:(Token *)token {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self asyncDeclineToken:token
                       onSuccess:call.onSuccess
@@ -178,11 +180,10 @@
     [client declineToken:token
                onSuccess:onSuccess
                  onError:onError];
-
 }
 
 - (Token *)revokeToken:(Token *)token {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self asyncRevokeToken:token
                       onSuccess:call.onSuccess
@@ -196,7 +197,55 @@
     [client revokeToken:token
                onSuccess:onSuccess
                  onError:onError];
+}
 
+- (Payment *)redeemToken:(Token *)token {
+    return [self redeemToken:token amount:nil currency:nil];
+}
+
+- (Payment *)redeemToken:(Token *)token
+                  amount:(NSNumber *)amount
+                currency:(NSString *)currency {
+    TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncRedeemToken:token
+                        amount:amount
+                      currency:currency
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
+- (void)asyncRedeemToken:(Token *)token
+               onSuccess:(OnSuccessWithPayment)onSuccess
+                 onError:(OnError)onError {
+    [self asyncRedeemToken:token
+                    amount:nil
+                  currency:nil
+                 onSuccess:onSuccess
+                   onError:onError];
+}
+
+- (void)asyncRedeemToken:(Token *)token
+                  amount:(NSNumber *)amount
+                currency:(NSString *)currency
+               onSuccess:(OnSuccessWithPayment)onSuccess
+                 onError:(OnError)onError {
+
+    PaymentPayload *payload = [PaymentPayload message];
+    payload.tokenId = token.id_p;
+    payload.nonce = [TKUtil nonce];
+
+    if (amount) {
+        payload.amount.value = amount.doubleValue;
+    }
+    if (currency) {
+        payload.amount.currency = currency;
+    }
+
+    [client redeemToken:payload
+              onSuccess:onSuccess
+                onError:onError];
 }
 
 @end
