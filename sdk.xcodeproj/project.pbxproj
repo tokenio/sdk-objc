@@ -42,6 +42,7 @@
 		ABA7BA9B13612439D753F584 /* TKJson.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B899E7F7DE3107CB62E1 /* TKJson.m */; };
 		ABA7BAB1261566AEE5E8422B /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF17BA41316C7B66823D /* readme.md */; };
 		ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BB5EAEB32937327F4192 /* ge.h */; };
+		ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */; };
 		ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B75B2E97AF95FBDEF4AD /* fe.h */; };
 		ABA7BB1317593EB8E79F3B17 /* TKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B0D240C12726391240B2 /* TKCrypto.m */; };
 		ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBBA445C30817501F927 /* TKMember.h */; };
@@ -115,6 +116,7 @@
 		ABA7BB639412CC7CAEA9EE8D /* TokenIOBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenIOBuilder.h; sourceTree = "<group>"; };
 		ABA7BBBA445C30817501F927 /* TKMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMember.h; sourceTree = "<group>"; };
 		ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcLog.h; sourceTree = "<group>"; };
+		ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTypedef.h; sourceTree = "<group>"; };
 		ABA7BC1286CBA07E69B30D14 /* fixedint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedint.h; sourceTree = "<group>"; };
 		ABA7BC1E54BAFDC11AA75D6D /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha512.c; sourceTree = "<group>"; };
 		ABA7BC2013ED8025D15A3E18 /* seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = seed.c; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				ABA7BA2C7E715C76574378AB /* TokenIO.m */,
 				ABA7BC8DA7F5DC3A1EEC68D7 /* TokenIOBuilder.m */,
 				ABA7BB639412CC7CAEA9EE8D /* TokenIOBuilder.h */,
+				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
+				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

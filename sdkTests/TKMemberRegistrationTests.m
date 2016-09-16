@@ -3,9 +3,12 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
+#import "TKCrypto.h"
 #import "TKMember.h"
-#import "TokenIO.h"
+#import "TKSecretKey.h"
 #import "TKTestBase.h"
+#import "TKUtil.h"
+#import "TokenIO.h"
 
 
 @interface TKMemberRegistrationTests : TKTestBase
@@ -15,15 +18,72 @@
 
 - (void)testCreateMember {
     [self run: ^(TokenIO *tokenIO) {
-        TKMember *member = [tokenIO createMember];
+        NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        TKMember *member = [tokenIO createMember:alias];
+        XCTAssert(member.id.length > 0);
+        XCTAssertEqualObjects(member.firstAlias, alias);
+        XCTAssertEqual(member.publicKeys.count, 1);
     }];
 }
 
 - (void)testLoginMember {
     [self run: ^(TokenIO *tokenIO) {
-        TKMember *created = [tokenIO createMember];
+        TKMember *created = [self createMember:tokenIO];
         TKMember *loggedIn = [tokenIO loginMember:created.id secretKey:created.key];
+        XCTAssert(loggedIn.id.length > 0);
+        XCTAssertEqual(loggedIn.publicKeys.count, 1);
     }];
 }
 
+- (void)testAddKey {
+    [self run: ^(TokenIO *tokenIO) {
+        TKSecretKey *key2 = [TKCrypto generateKey];
+        TKSecretKey *key3 = [TKCrypto generateKey];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member approveKey:key2];
+        [member approveKey:key3];
+
+        XCTAssertEqual(member.publicKeys.count, 3);
+    }];
+}
+
+- (void)testRemoveKey {
+    [self run: ^(TokenIO *tokenIO) {
+        TKSecretKey *key2 = [TKCrypto generateKey];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member approveKey:key2];
+        XCTAssertEqual(member.publicKeys.count, 2);
+
+        [member removeKey:key2.id];
+        XCTAssertEqual(member.publicKeys.count, 1);
+    }];
+}
+
+- (void)testAddAlias {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *alias2 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        NSString *alias3 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addAlias:alias2];
+        [member addAlias:alias3];
+
+        XCTAssertEqual(member.aliases.count, 3);
+    }];
+}
+
+- (void)testRemoveAlias {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *alias2 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addAlias:alias2];
+        XCTAssertEqual(member.aliases.count, 2);
+
+        [member removeAlias:alias2];
+        XCTAssertEqual(member.aliases.count, 1);
+    }];
+}
 @end

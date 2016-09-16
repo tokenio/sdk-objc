@@ -6,6 +6,8 @@
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
+#import "TKMember.h"
+#import "TKUtil.h"
 
 
 @implementation TKTestBase {
@@ -62,6 +64,11 @@
     if (error) {
         @throw error;
     }
+}
+
+- (TKMember *)createMember:(TokenIO *)tokenIO {
+    NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+    return [tokenIO createMember:alias];
 }
 
 @end

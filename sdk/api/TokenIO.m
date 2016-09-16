@@ -44,27 +44,40 @@
     return self;
 }
 
-- (TKMember *)createMember {
+- (TKMember *)createMember:(NSString *)alias {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self createMemberAsync:call.onSuccess
+        [self createMemberAsync:alias
+                       onSucess:call.onSuccess
                         onError:call.onError];
     }];
 }
 
-- (void)createMemberAsync:(void(^)(TKMember *))onSuccess onError:(void(^)(NSError *))onError {
+- (void)createMemberAsync:(NSString *)alias
+                 onSucess:(void(^)(TKMember *member))onSuccess
+                  onError:(void(^)(NSError *))onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
-    TKSecretKey *secretKey = [TKCrypto generateKey];
+    TKSecretKey *key = [TKCrypto generateKey];
 
     [client
             createMemberId:^(NSString *memberId) {
                 [client
-                        addFirstKey:secretKey
+                        addFirstKey:key
                           forMember:memberId
                           onSuccess:
                                   ^(Member *member) {
-                                      onSuccess([TKMember memberWithId:memberId
-                                                             secretKey:secretKey]);
+                                      TKClient *auth = [[TKClient alloc] initWithGateway:gateway
+                                                                                  memberId:memberId
+                                                                                 secretKey:key];
+                                      [auth addAlias:alias
+                                                  to:member
+                                           onSuccess:
+                                                   ^(Member *memberWithAlias) {
+                                                       onSuccess([TKMember member:memberWithAlias
+                                                                        secretKey:key
+                                                                        useClient:auth]);
+                                                   }
+                                              onError: onError];
                                   }
                             onError:onError];
             }
@@ -94,10 +107,9 @@
     [client
             getMember:
                     ^(Member *member) {
-                        onSuccess([TKMember memberWithId:memberId
-                                               secretKey:key]);
+                        onSuccess([TKMember member:member secretKey:key useClient:client]);
                     }
-              onError: onError];
+              onError:onError];
 }
 
 @end

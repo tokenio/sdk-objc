@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TKTypedef.h"
 
 @class Member;
 @class GatewayService;
@@ -32,7 +33,56 @@
  *
  * @return member information
  */
-- (void)getMember:(void(^)(Member*))onSuccess
-          onError:(void(^)(NSError *))onError;
+- (void)getMember:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError;
+
+/**
+ * Adds an alias for a given user.
+ *
+ * @param member member to add the alias to
+ * @param alias new unique alias to add
+ * @return member information
+ */
+- (void)addAlias:(NSString *)alias
+              to:(Member *)member
+       onSuccess:(OnSuccessWithMember)onSuccess
+         onError:(OnError)onError;
+
+
+/**
+ * Removes an alias for a given user.
+ *
+ * @param member member to remove the alias to
+ * @param alias alias to remove
+ * @return member information
+ */
+- (void)removeAlias:(NSString *)alias
+               from:(Member *)member
+          onSuccess:(OnSuccessWithMember)onSuccess
+            onError:(OnError)onError;
+
+/**
+ * Adds a public key to the list of approved keys for the specified member.
+ *
+ * @param key key to add
+ * @param member member to add the key to
+ * @param level key level
+ */
+- (void)addKey:(TKSecretKey *)key
+            to:(Member *)member
+         level:(NSUInteger)level
+     onSuccess:(OnSuccessWithMember)onSuccess
+       onError:(OnError)onError;
+
+/**
+ * Removes a public key from the list of approved keys for the specified member.
+ *
+ * @param key key to remove
+ * @param member member to remove the key for
+ */
+- (void)removeKey:(NSString *)keyId
+             from:(Member *)member
+        onSuccess:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError;
 
 @end
