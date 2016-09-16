@@ -166,6 +166,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
     CreatePaymentTokenRequest *request = [CreatePaymentTokenRequest message];
     request.token = paymentToken;
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToCreatePaymentTokenWithRequest:request
@@ -189,6 +190,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
     LookupTokenRequest *request = [LookupTokenRequest message];
     request.tokenId = tokenId;
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToLookupTokenWithRequest:request
@@ -214,6 +216,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     LookupTokensRequest *request = [LookupTokensRequest message];
     request.offset = offset;
     request.limit = limit;
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToLookupTokensWithRequest:request
@@ -241,6 +244,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     request.signature.signature = [TKCrypto sign:token
                                           action:TokenSignature_Action_Endorsed
                                         usingKey:key];
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToEndorseTokenWithRequest:request
@@ -268,6 +272,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     request.signature.signature = [TKCrypto sign:token
                                           action:TokenSignature_Action_Declined
                                         usingKey:key];
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToDeclineTokenWithRequest:request
@@ -295,6 +300,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     request.signature.signature = [TKCrypto sign:token
                                           action:TokenSignature_Action_Revoked
                                         usingKey:key];
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToRevokeTokenWithRequest:request
@@ -320,6 +326,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     request.payload = payload;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:payload usingKey:key];
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToRedeemPaymentTokenWithRequest:request
@@ -342,6 +349,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
               onError:(OnError)onError {
     LookupPaymentRequest *request = [LookupPaymentRequest message];
     request.paymentId = paymentId;
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToLookupPaymentWithRequest:request
@@ -368,6 +376,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     request.offset = offset;
     request.limit = limit;
     request.tokenId = tokenId;
+    RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
             RPCToLookupPaymentsWithRequest:request
@@ -376,6 +385,81 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                                    if (response) {
                                                        RpcLogCompleted(response);
                                                        onSuccess(response.paymentsArray);
+                                                   } else {
+                                                       RpcLogError(error);
+                                                       onError(error);
+                                                   }
+                                               }];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupBalance:(NSString *)accountId
+            onSuccess:(OnSuccessWithMoney)onSuccess
+              onError:(OnError)onError {
+    LookupBalanceRequest *request = [LookupBalanceRequest message];
+    request.accountId = accountId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupBalanceWithRequest:request
+                                  handler:
+                                          ^(LookupBalanceResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess(response.current);
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupTransaction:(NSString *)transactionId
+               forAccount:(NSString *)accountId
+                onSuccess:(OnSuccessWithTransaction)onSuccess
+                  onError:(OnError)onError {
+    LookupTransactionRequest *request = [LookupTransactionRequest message];
+    request.accountId = accountId;
+    request.transactionId = transactionId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupTransactionWithRequest:request
+                                  handler:
+                                          ^(LookupTransactionResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess(response.transaction);
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+
+    [self startCall:call withRequest:request];
+}
+
+- (void)lookupTransactionsOffset:(NSString *)accountId
+                          offset:(int)offset
+                           limit:(int)limit
+                       onSuccess:(OnSuccessWithTransactions)onSuccess
+                         onError:(OnError)onError {
+    LookupTransactionsRequest *request = [LookupTransactionsRequest message];
+    request.accountId = accountId;
+    request.offset = offset;
+    request.limit = limit;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToLookupTransactionsWithRequest:request
+                                       handler:
+                                               ^(LookupTransactionsResponse *response, NSError *error) {
+                                                   if (response) {
+                                                       RpcLogCompleted(response);
+                                                       onSuccess(response.transactionsArray);
                                                    } else {
                                                        RpcLogError(error);
                                                        onError(error);

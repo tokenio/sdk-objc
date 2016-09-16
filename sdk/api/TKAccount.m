@@ -248,4 +248,58 @@
                 onError:onError];
 }
 
+- (Money *)lookupBalance {
+    TKRpcSyncCall<Money *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncLookupBalance:call.onSuccess onError:call.onError];
+    }];
+}
+
+- (void)asyncLookupBalance:(OnSuccessWithMoney)onSuccess
+                   onError:(OnError)onError {
+    [client lookupBalance:account.id_p
+                onSuccess:onSuccess
+                  onError:onError];
+}
+
+- (Transaction *)lookupTransaction:(NSString *)transactionId {
+    TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncLookupTransaction:transactionId
+                           onSuccess:call.onSuccess
+                             onError:call.onError];
+    }];
+}
+
+- (void)asyncLookupTransaction:(NSString *)transactionId
+                     onSuccess:(OnSuccessWithTransaction)onSuccess
+                             onError:(OnError)onError {
+    [client lookupTransaction:transactionId
+                   forAccount:account.id_p
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (NSArray<Transaction *> *)lookupTransactionsOffset:(int)offset
+                                           limit:(int)limit {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self asyncLookupTransactionsOffset:offset
+                                      limit:limit
+                                  onSuccess:call.onSuccess
+                                    onError:call.onError];
+    }];
+}
+
+- (void)asyncLookupTransactionsOffset:(int)offset
+                                limit:(int)limit
+                            onSuccess:(OnSuccessWithTransactions)onSuccess
+                              onError:(OnError)onError {
+    return [client lookupTransactionsOffset:account.id_p
+                                     offset:offset
+                                      limit:limit
+                                  onSuccess:onSuccess
+                                    onError:onError];
+}
+
 @end

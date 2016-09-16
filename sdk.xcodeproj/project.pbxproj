@@ -68,6 +68,7 @@
 		ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B16EB35673E0ED34C018 /* TKUtil.m */; };
 		ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BDCFD5AED8EBB4F32EC2 /* sha512.h */; };
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
+		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		ABA7B6A0C915116837349E69 /* TKUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUtilTests.m; sourceTree = "<group>"; };
 		ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKPaymentRedemptionTests.m; sourceTree = "<group>"; };
 		ABA7B6D8EA5337CAD7ECE322 /* TKUnauthenticatedClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKUnauthenticatedClient.h; sourceTree = "<group>"; };
+		ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTransactionsTests.m; sourceTree = "<group>"; };
 		ABA7B71635A1A13440B4B70D /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sign.c; sourceTree = "<group>"; };
 		ABA7B75329B7D39384598938 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = verify.c; sourceTree = "<group>"; };
 		ABA7B75B2E97AF95FBDEF4AD /* fe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fe.h; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */,
 				ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */,
 				ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */,
+				ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */,
 			);
 			path = sdkTests;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
 				ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */,
+				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

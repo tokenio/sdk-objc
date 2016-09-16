@@ -195,4 +195,41 @@
                    onSuccess:(OnSuccessWithPayments)onSuccess
                      onError:(OnError)onError;
 
+/**
+ * Looks up account balance.
+ *
+ * @param accountId account id
+ * @return account balance
+ */
+- (void)lookupBalance:(NSString *)accountId
+            onSuccess:(OnSuccessWithMoney)onSuccess
+              onError:(OnError)onError;
+
+/**
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
+ *
+ * @param accountId ID of the account
+ * @param transactionId ID of the transaction
+ * @return transaction record
+ */
+- (void)lookupTransaction:(NSString *)transactionId
+               forAccount:(NSString *)accountId
+                onSuccess:(OnSuccessWithTransaction)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Looks up existing transactions. This is a full list of transactions with token payments
+ * being a subset.
+ *
+ * @param accountId ID of the account
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @return transaction record
+ */
+- (void)lookupTransactionsOffset:(NSString *)accountId
+                          offset:(int)offset
+                           limit:(int)limit
+                       onSuccess:(OnSuccessWithTransactions)onSuccess
+                         onError:(OnError)onError;
+
 @end

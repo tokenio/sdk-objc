@@ -1,4 +1,4 @@
-#import <protos/Money.pbobjc.h>//
+//
 //  Created by Alexey Kalinichenko on 9/13/16.
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
@@ -8,6 +8,7 @@
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "Account.pbobjc.h"
+#import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Payment.pbobjc.h"
 
