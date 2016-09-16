@@ -36,6 +36,15 @@
 + (NSString *)base64EncodeData:(NSData *)data;
 
 /**
+ * URL safe Base64 encoder implementation.
+ *
+ * @param data data to encode
+ * @param padding if false, padding is stripped (= or == at the end of the message)
+ * @return base64 encoded data
+ */
++ (NSString *)base64EncodeData:(NSData *)data padding:(bool)padding;
+
+/**
  * URL safe Base64 decoder implementation.
  *
  * @param base64String URL safe Base64 encoded string

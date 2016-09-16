@@ -4,6 +4,7 @@
 //
 
 #import <protos/Security.pbobjc.h>
+#import "TKAccount.h"
 #import "TKMember.h"
 #import "TKSecretKey.h"
 #import "Member.pbobjc.h"
@@ -143,6 +144,56 @@
                         onSuccess();
                     }
               onError:onError];
+}
+
+- (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
+         withPayload:(NSData *)payload {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self linkAccountAsync:bankId
+                   withPayload:payload
+                      onSucess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
+- (void)linkAccountAsync:(NSString *)bankId
+             withPayload:(NSData *)payload
+                onSucess:(OnSuccessWithTKAccounts)onSuccess
+                 onError:(OnError)onError {
+    [client linkAccounts:bankId
+                 payload:payload
+               onSuccess:
+                       ^(NSArray<Account *> *accounts) {
+                           onSuccess([self mapAccounts:accounts]);
+                       }
+                 onError:onError];
+}
+
+- (NSArray<TKAccount *> *)lookupAccounts {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self lookupAccounts:call.onSuccess
+                     onError:call.onError];
+    }];
+}
+
+- (void)lookupAccounts:(OnSuccessWithTKAccounts)onSuccess
+                 onError:(OnError)onError {
+    [client lookupAccounts:
+                    ^(NSArray<Account *> *accounts) {
+                        onSuccess([self mapAccounts:accounts]);
+                    }
+                   onError:onError];
+}
+
+- (NSArray<TKAccount *> *)mapAccounts:(NSArray<Account *> *)accounts {
+    NSMutableArray<TKAccount *> *result = [NSMutableArray array];
+    for (Account *a in accounts) {
+        TKAccount *tkAccount = [TKAccount account:a of:self useClient:client];
+        [result addObject:tkAccount];
+    }
+    return result;
 }
 
 @end

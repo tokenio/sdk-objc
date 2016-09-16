@@ -37,6 +37,20 @@
 }
 
 /**
+ * base64 encoding/decoding with padding.
+ */
+- (void)testBase64_differentLength_withPadding {
+    NSString *input = @"This is a very very very very very very very long input";
+    for (int i = 0; i < input.length; i++) {
+        NSString *original = [input substringToIndex:i];
+        NSString *encoded = [TKUtil base64EncodeData:[original dataUsingEncoding:NSASCIIStringEncoding] padding:true];
+        NSData *decodedData = [TKUtil base64DecodeString:encoded];
+        NSString *decoded = [[NSString alloc] initWithData:decodedData encoding:NSASCIIStringEncoding];
+        XCTAssertEqualObjects(original, decoded);
+    }
+}
+
+/**
  * ID generation.
  */
 - (void)testId {
