@@ -63,4 +63,33 @@
     }
 }
 
+/**
+ * Case conversion.
+ */
+- (void)testCaseConversion {
+    NSString *original = @"one_two_three";
+    NSString *camel = [TKUtil snakeCaseToCamelCase:original];
+    XCTAssertEqualObjects(camel, @"oneTwoThree");
+
+    NSString *snake = [TKUtil camelCaseToSnakeCase:camel];
+    XCTAssertEqualObjects(original, snake);
+}
+
+/**
+ * Case conversion.
+ */
+- (void)testCaseConversion_manyCases {
+    NSArray<NSString *> *input = @[
+            @"",
+            @"one_two",
+            @"one_two_three",
+    ];
+
+    for (NSString *s in input) {
+        NSString *camel = [TKUtil snakeCaseToCamelCase:s];
+        NSString *snake = [TKUtil camelCaseToSnakeCase:camel];
+        XCTAssertEqualObjects(s, snake);
+    }
+}
+
 @end

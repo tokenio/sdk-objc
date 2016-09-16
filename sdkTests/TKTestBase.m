@@ -6,8 +6,11 @@
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
+#import "TKJson.h"
 #import "TKMember.h"
 #import "TKUtil.h"
+#import "TKAccount.h"
+#import "Account.pbobjc.h"
 
 
 @implementation TKTestBase {
@@ -69,6 +72,25 @@
 - (TKMember *)createMember:(TokenIO *)tokenIO {
     NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
     return [tokenIO createMember:alias];
+}
+
+- (TKAccount *)createAccount:(TokenIO *)tokenIO {
+    TKMember *member = [self createMember:tokenIO];
+
+    AccountLinkPayload_NamedAccount *account = [AccountLinkPayload_NamedAccount message];
+    account.name = @"Checking";
+    account.accountNumber = @"iban:checking";
+
+    AccountLinkPayload *payload = [AccountLinkPayload message];
+    payload.alias = member.firstAlias;
+
+    [payload.accountsArray addObject:account];
+
+    NSData *payloadData = [[TKJson serialize:payload] dataUsingEncoding:NSASCIIStringEncoding];
+    NSArray<TKAccount *> *accounts = [member linkAccounts:@"bank-id"
+                                              withPayload:payloadData];
+    XCTAssert(accounts.count == 1);
+    return accounts[0];
 }
 
 @end
