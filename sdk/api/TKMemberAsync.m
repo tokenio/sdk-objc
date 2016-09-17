@@ -128,7 +128,7 @@
                  payload:payload
                onSuccess:
                        ^(NSArray<Account *> *accounts) {
-                           onSuccess([self mapAccounts:accounts]);
+                           onSuccess([self _mapAccounts:accounts]);
                        }
                  onError:onError];
 }
@@ -137,7 +137,7 @@
                onError:(OnError)onError {
     [client lookupAccounts:
                     ^(NSArray<Account *> *accounts) {
-                        onSuccess([self mapAccounts:accounts]);
+                        onSuccess([self _mapAccounts:accounts]);
                     }
                    onError:onError];
 }
@@ -173,7 +173,9 @@
                          onError:onError];
 }
 
-- (NSArray<TKAccountAsync *> *)mapAccounts:(NSArray<Account *> *)accounts {
+#pragma mark private
+
+- (NSArray<TKAccountAsync *> *)_mapAccounts:(NSArray<Account *> *)accounts {
     NSMutableArray<TKAccountAsync *> *result = [NSMutableArray array];
     for (Account *a in accounts) {
         TKAccountAsync *tkAccount = [TKAccountAsync account:a of:self.sync useClient:client];

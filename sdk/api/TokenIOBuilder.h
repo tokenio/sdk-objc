@@ -3,9 +3,6 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#ifndef TokenIOBuilder_h
-#define TokenIOBuilder_h
-
 #import <objc/NSObject.h>
 
 
@@ -24,5 +21,3 @@
 - (TokenIOAsync *)buildAsync;
 
 @end
-
-#endif

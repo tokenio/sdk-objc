@@ -37,7 +37,6 @@
     }];
 }
 
-
 - (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{

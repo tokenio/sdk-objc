@@ -3,9 +3,6 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#ifndef TokenIO_h
-#define TokenIO_h
-
 #import "TKTypedef.h"
 
 
@@ -29,5 +26,3 @@
 - (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey;
 
 @end
-
-#endif
