@@ -56,13 +56,15 @@
 - (void)approveKey:(TKSecretKey *)key {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self approveKeyAsync:key
-                     onSucess:^{ call.onSuccess(nil); }
+        [self asyncApproveKey:key
+                     onSucess:^{
+                         call.onSuccess(nil);
+                     }
                       onError:call.onError];
     }];
 }
 
-- (void)approveKeyAsync:(TKSecretKey *)key
+- (void)asyncApproveKey:(TKSecretKey *)key
                onSucess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
     [client addKey:key
@@ -80,15 +82,17 @@
 - (void)removeKey:(NSString *)keyId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self removeKeyAsync:keyId
-                    onSucess:^{ call.onSuccess(nil); }
+        [self asyncRemoveKey:keyId
+                    onSucess:^{
+                        call.onSuccess(nil);
+                    }
                      onError:call.onError];
     }];
 }
 
-- (void)removeKeyAsync:(NSString *)keyId
-               onSucess:(OnSuccess)onSuccess
-                onError:(OnError)onError {
+- (void)asyncRemoveKey:(NSString *)keyId
+              onSucess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
     [client removeKey:keyId
                  from:member
             onSuccess:
@@ -103,15 +107,17 @@
 - (void)addAlias:(NSString *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self addAliasAsync:alias
-                   onSucess:^{ call.onSuccess(nil); }
+        [self asyncAddAlias:alias
+                   onSucess:^{
+                       call.onSuccess(nil);
+                   }
                     onError:call.onError];
     }];
 }
 
-- (void)addAliasAsync:(NSString *)alias
-              onSucess:(OnSuccess)onSuccess
-               onError:(OnError)onError {
+- (void)asyncAddAlias:(NSString *)alias
+             onSucess:(OnSuccess)onSuccess
+              onError:(OnError)onError {
     [client addAlias:alias
                   to:member
            onSuccess:
@@ -126,15 +132,17 @@
 - (void)removeAlias:(NSString *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self removeAliasAsync:alias
-                   onSucess:^{ call.onSuccess(nil); }
-                    onError:call.onError];
+        [self asyncRemoveAlias:alias
+                      onSucess:^{
+                          call.onSuccess(nil);
+                      }
+                       onError:call.onError];
     }];
 }
 
-- (void)removeAliasAsync:(NSString *)alias
-             onSucess:(OnSuccess)onSuccess
-              onError:(OnError)onError {
+- (void)asyncRemoveAlias:(NSString *)alias
+                onSucess:(OnSuccess)onSuccess
+                 onError:(OnError)onError {
     [client removeAlias:alias
                  from:member
             onSuccess:
@@ -150,17 +158,17 @@
          withPayload:(NSData *)payload {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self linkAccountAsync:bankId
-                   withPayload:payload
-                      onSucess:call.onSuccess
-                       onError:call.onError];
+        [self asyncLinkAccounts:bankId
+                    withPayload:payload
+                       onSucess:call.onSuccess
+                        onError:call.onError];
     }];
 }
 
-- (void)linkAccountAsync:(NSString *)bankId
-             withPayload:(NSData *)payload
-                onSucess:(OnSuccessWithTKAccounts)onSuccess
-                 onError:(OnError)onError {
+- (void)asyncLinkAccounts:(NSString *)bankId
+              withPayload:(NSData *)payload
+                 onSucess:(OnSuccessWithTKAccounts)onSuccess
+                  onError:(OnError)onError {
     [client linkAccounts:bankId
                  payload:payload
                onSuccess:

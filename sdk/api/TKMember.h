@@ -27,35 +27,35 @@
 
 - (void)approveKey:(TKSecretKey *)key;
 
-- (void)approveKeyAsync:(TKSecretKey *)key
-                onSucess:(OnSuccess)onSuccess
-                 onError:(OnError)onError;
+- (void)asyncApproveKey:(TKSecretKey *)key
+               onSucess:(OnSuccess)onSuccess
+                onError:(OnError)onError;
 
 - (void)removeKey:(NSString *)keyId;
 
-- (void)removeKeyAsync:(NSString *)keyId
+- (void)asyncRemoveKey:(NSString *)keyId
               onSucess:(OnSuccess)onSuccess
                onError:(OnError)onError;
 
 - (void)addAlias:(NSString *)alias;
 
-- (void)addAliasAsync:(NSString *)alias
+- (void)asyncAddAlias:(NSString *)alias
              onSucess:(OnSuccess)onSuccess
               onError:(OnError)onError;
 
 - (void)removeAlias:(NSString *)alias;
 
-- (void)removeAliasAsync:(NSString *)alias
-             onSucess:(OnSuccess)onSuccess
-              onError:(OnError)onError;
+- (void)asyncRemoveAlias:(NSString *)alias
+                onSucess:(OnSuccess)onSuccess
+                 onError:(OnError)onError;
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
                           withPayload:(NSData *)payload;
 
-- (void)linkAccountAsync:(NSString *)bankId
-             withPayload:(NSData *)payload
-                onSucess:(OnSuccessWithTKAccounts)onSuccess
-                 onError:(OnError)onError;
+- (void)asyncLinkAccounts:(NSString *)bankId
+              withPayload:(NSData *)payload
+                 onSucess:(OnSuccessWithTKAccounts)onSuccess
+                  onError:(OnError)onError;
 
 - (NSArray<TKAccount *> *)lookupAccounts;
 

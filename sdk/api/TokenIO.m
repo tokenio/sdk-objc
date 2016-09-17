@@ -47,15 +47,15 @@
 - (TKMember *)createMember:(NSString *)alias {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self createMemberAsync:alias
+        [self asyncCreateMember:alias
                        onSucess:call.onSuccess
                         onError:call.onError];
     }];
 }
 
-- (void)createMemberAsync:(NSString *)alias
-                 onSucess:(void(^)(TKMember *member))onSuccess
-                  onError:(void(^)(NSError *))onError {
+- (void)asyncCreateMember:(NSString *)alias
+                 onSucess:(OnSuccessWithTKMember)onSuccess
+                  onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     TKSecretKey *key = [TKCrypto generateKey];
 
@@ -88,7 +88,7 @@
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self
-                loginMemberAsync:memberId
+                asyncLoginMember:memberId
                        secretKey:secretKey
                         onSucess:call.onSuccess
                          onError:call.onError
@@ -96,10 +96,10 @@
     }];
 }
 
-- (void)loginMemberAsync:(NSString *)memberId
+- (void)asyncLoginMember:(NSString *)memberId
                secretKey:(TKSecretKey *)key
-                onSucess:(void(^)(TKMember *member))onSuccess
-                 onError:(void(^)(NSError *))onError {
+                onSucess:(OnSuccessWithTKMember)onSuccess
+                 onError:(OnError)onError {
 
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
                                                 memberId:memberId

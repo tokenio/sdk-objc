@@ -37,7 +37,6 @@
                                       redeemerAlias:payee.member.firstAlias
                                         description:@"payment test"];
         token = [payer endorseToken:token];
-
         Payment *payment = [payee redeemToken:token];
 
         XCTAssertEqual(100.99, payment.payload.amount.value);

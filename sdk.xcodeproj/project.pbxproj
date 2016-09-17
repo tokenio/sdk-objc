@@ -11,6 +11,7 @@
 		8A9909191D890E820096A7FA /* sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* sdk.framework */; };
 		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
 		8E68CF1C41BC4A064EBAB707 /* libPods-sdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867CB9D057EBAA4E9BE6791 /* libPods-sdkTests.a */; };
+		ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */; };
 		ABA7B0303C146231D78BE96C /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC2013ED8025D15A3E18 /* seed.c */; };
 		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; };
 		ABA7B103B5929B86EF4C8689 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABA7BDE5D0F88461A97DCA5A /* license.txt */; };
@@ -41,6 +42,7 @@
 		ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */; };
 		ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B15B05913DC313ECE3BF /* TKAccount.h */; };
 		ABA7B847267CDA906A218BBB /* ge.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B25C7C21BC82E0F913A8 /* ge.c */; };
+		ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */; };
 		ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */; };
 		ABA7BA3DA0354DBB07146BE8 /* TKJson.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BEE87D6C30096F9CADA3 /* TKJson.h */; };
 		ABA7BA98793B0592D11A83BB /* sc.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BEAF5A44E025586931AB /* sc.c */; };
@@ -102,6 +104,7 @@
 		ABA7B1E8CB2CAE853F4F9977 /* ed25519_64.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; path = ed25519_64.dll; sourceTree = "<group>"; };
 		ABA7B25C7C21BC82E0F913A8 /* ge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ge.c; sourceTree = "<group>"; };
 		ABA7B2B002EB7F6F68C6DC25 /* TKRpcLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcLog.m; sourceTree = "<group>"; };
+		ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccountAsync.m; sourceTree = "<group>"; };
 		ABA7B30F0E5668621466B95A /* TKTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestBase.h; sourceTree = "<group>"; };
 		ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCryptoTests.m; sourceTree = "<group>"; };
 		ABA7B3B3B7497B3EC3C6F2F7 /* TKMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMember.m; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		ABA7BF3C591D1A2AE3277E3D /* add_scalar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = add_scalar.c; sourceTree = "<group>"; };
 		ABA7BF98D0D666144252C84D /* ed25519_32.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; path = ed25519_32.dll; sourceTree = "<group>"; };
 		ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKJsonTests.m; sourceTree = "<group>"; };
+		ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccountAsync.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,6 +254,8 @@
 				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
 				ABA7B9993BB80AAFAD3B1DC9 /* TKAccount.m */,
 				ABA7B15B05913DC313ECE3BF /* TKAccount.h */,
+				ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */,
+				ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -368,6 +374,7 @@
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
 				ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */,
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
+				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +585,7 @@
 				ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */,
 				ABA7BBB178DD0DBB9BF4DBA8 /* TKAccount.m in Sources */,
 				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,
+				ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,14 +23,14 @@
 
 - (TKMember *)createMember:(NSString *)alias;
 
-- (void)createMemberAsync:(NSString *)alias
+- (void)asyncCreateMember:(NSString *)alias
                  onSucess:(OnSuccessWithTKMember)onSuccess
                   onError:(OnError)onError;
 
 - (TKMember *)loginMember:(NSString *)memberId
                secretKey:(TKSecretKey *)secretKey;
 
-- (void)loginMemberAsync:(NSString *)memberId
+- (void)asyncLoginMember:(NSString *)memberId
                secretKey:(TKSecretKey *)key
                 onSucess:(OnSuccessWithTKMember)onSuccess
                  onError:(OnError)onError;
