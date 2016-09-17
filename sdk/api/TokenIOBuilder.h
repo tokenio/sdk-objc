@@ -10,6 +10,7 @@
 
 
 @class TokenIO;
+@class TokenIOAsync;
 
 @interface TokenIOBuilder : NSObject
 
@@ -17,7 +18,10 @@
 @property (readwrite) int port;
 
 - (id)init;
+
 - (TokenIO *)build;
+
+- (TokenIOAsync *)buildAsync;
 
 @end
 
