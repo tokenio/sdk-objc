@@ -82,7 +82,7 @@
 + (NSString *)camelCaseToSnakeCase:(NSString *)input {
     NSMutableString *output = [NSMutableString string];
     NSCharacterSet *uppercase = [NSCharacterSet uppercaseLetterCharacterSet];
-    for (NSInteger idx = 0; idx < [input length]; idx += 1) {
+    for (NSUInteger idx = 0; idx < [input length]; idx += 1) {
         unichar c = [input characterAtIndex:idx];
         if ([uppercase characterIsMember:c]) {
             [output appendFormat:@"_%@", [[NSString stringWithCharacters:&c length:1] lowercaseString]];

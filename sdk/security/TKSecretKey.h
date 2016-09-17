@@ -13,7 +13,6 @@
 @interface TKSecretKey : NSObject
 
 + (TKSecretKey *)withPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
-- (id)initWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSData *publicKey;

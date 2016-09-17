@@ -28,7 +28,6 @@
 
 - (void)createMemberId:(void(^)(NSString *memberId))onSuccess
                onError:(void(^)(NSError *))onError {
-
     CreateMemberRequest *request = [CreateMemberRequest message];
     request.nonce = [TKUtil nonce];
     RpcLogStart(request);
@@ -48,7 +47,6 @@
           forMember:(NSString *)memberId
           onSuccess:(void(^)(Member*))onSuccess
             onError:(void(^)(NSError *))onError {
-
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.addKey.level = 0;

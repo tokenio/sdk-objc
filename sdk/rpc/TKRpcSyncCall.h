@@ -36,7 +36,7 @@
  *
  * @param result RPC call result
  */
-@property (readonly, retain) void(^onSuccess)(id);
+@property (readonly, retain) void(^onSuccess)(T);
 
 /**
  * Invoked by the RPC block to signal that call completed with an error.
