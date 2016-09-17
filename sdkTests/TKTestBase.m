@@ -101,7 +101,7 @@
     FankMetadata_ClientAccount *account = [FankMetadata_ClientAccount message];
     account.accountNumber = bankAccountNumber;
     account.name = accountName;
-    account.balance.value = 1000000.00;
+    account.balance.value = @"1000000.00";
     account.balance.currency = @"USD";
 
     FankMetadata *metadata = [FankMetadata message];

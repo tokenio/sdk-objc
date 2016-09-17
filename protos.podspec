@@ -3,7 +3,7 @@
 # gRPC.
 #
 
-def Pod::tokenProtosVer; "0.0.72"; end
+def Pod::tokenProtosVer; "0.0.80"; end
 def Pod::tokenSdkVer; "0.0.1"; end
 
 

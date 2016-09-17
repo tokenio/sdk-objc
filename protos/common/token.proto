@@ -50,8 +50,8 @@ message PaymentToken {
   io.token.proto.common.transfer.Transfer transfer = 6; // Transfer instructions.
   TokenMember fees_paid_by = 7;                         // Payer or redeemer member id.
   string currency = 8;                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
-  double lifetime_amount = 9;                           // Optional: Token total lifetime amount.
-  double amount = 10;                                   // Optional: Single token charge request acceptable range.
+  string lifetime_amount = 9;                           // Optional: Token total lifetime amount. Double.
+  string amount = 10;                                   // Optional: Single token charge request acceptable range. Double.
   int64 effective_at_ms = 11;                           // Optional
   int64 expires_at_ms = 12;                             // Optional
   string description = 13;                              // Optional
@@ -74,17 +74,17 @@ message Var {
   TimePeriod period = 5;              // Amount per time period.
 }
 
-// A range of a double value, used for amounts.
+// A range of a double value, used for amounts. The doubles are sent as strings over the wire.
 message DoubleRange {
-  double min = 1;
-  double max = 2;
-  double default = 3;
+  string min = 1;
+  string max = 2;
+  string default = 3;
 }
 
 // Time period description for multi use payment tokens.
 message TimePeriod {
   string duration = 1;                // ISO8601 duration. E.g.: P1M for 1 month.
-  double max = 2;                     // Max amount for the given duration.
+  string max = 2;                     // Max amount for the given duration.
 }
 
 

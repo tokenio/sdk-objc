@@ -99,7 +99,7 @@
  */
 - (void)testMap_Message {
     PaymentToken *token = [PaymentToken message];
-    token.amount = 123.45;
+    token.amount = @"123.45";
     token.effectiveAtMs = 12345;
 
     Var *var1 = [Var message];
@@ -111,7 +111,7 @@
     token.vars = [@{var1: @"one", var2: @"two"} mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"amount\":123.45,\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");
+    XCTAssertEqualObjects(json, @"{\"amount\":\"123.45\",\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");
 }
 
 /**

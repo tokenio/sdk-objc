@@ -39,7 +39,7 @@
         token = [payer endorseToken:token];
         Payment *payment = [payee redeemToken:token];
 
-        XCTAssertEqual(100.99, payment.payload.amount.value);
+        XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
         XCTAssertEqual(2, payment.signatureArray_Count);
     }];
@@ -55,7 +55,7 @@
 
         Payment *payment = [payee redeemToken:token amount:@99.12 currency:@"USD"];
 
-        XCTAssertEqual(99.12, payment.payload.amount.value);
+        XCTAssertEqualObjects(@"99.12", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
         XCTAssertEqual(2, payment.signatureArray_Count);
     }];

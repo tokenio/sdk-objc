@@ -43,11 +43,50 @@ message GetMemberResponse {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Member PII/preferences management.
+// Member PII/addresses/preferences management.
 //
 
+message CreateAddressRequest {
+  string name = 1;
+  string data = 2;
+  string signature = 3;
+}
 
+message CreateAddressResponse {
+  io.token.proto.common.member.Address address = 1;
+}
 
+message GetAddressRequest {
+  string address_id = 1;
+}
+
+message GetAddressResponse {
+  io.token.proto.common.member.Address address = 1;
+}
+
+message GetAddressesRequest {}
+
+message GetAddressesResponse {
+  repeated io.token.proto.common.member.Address addresses = 1;
+}
+
+message DeleteAddressRequest {
+  string address_id = 1;
+}
+
+message DeleteAddressResponse {}
+
+message SetPreferenceRequest {
+  string preference = 1;
+}
+
+message SetPreferenceResponse {}
+
+message GetPreferenceRequest {}
+
+message GetPreferenceResponse {
+  string preference = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service device management
@@ -274,6 +313,41 @@ service GatewayService {
     };
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Member addresses and preferences
+  //
+
+  rpc CreateAddress (CreateAddressRequest) returns (CreateAddressResponse) {
+    option (google.api.http) = {
+        post: "/addresses"
+    };
+  }
+  rpc GetAddress (GetAddressRequest) returns (GetAddressResponse) {
+    option (google.api.http) = {
+        get: "/addresses/${address_id}"
+    };
+  }
+  rpc GetAddresses (GetAddressesRequest) returns (GetAddressesResponse) {
+    option (google.api.http) = {
+        get: "/addresses"
+    };
+  }
+  rpc DeleteAddress (DeleteAddressRequest) returns (DeleteAddressResponse) {
+    option (google.api.http) = {
+        delete: "/addresses/${address_id}"
+    };
+  }
+
+  rpc SetPreference (SetPreferenceRequest) returns (SetPreferenceResponse) {
+    option (google.api.http) = {
+        put: "/preferences"
+    };
+  }
+  rpc GetPreference (GetPreferenceRequest) returns (GetPreferenceResponse) {
+    option (google.api.http) = {
+        get: "/preferences"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Devices for notification service
@@ -281,21 +355,21 @@ service GatewayService {
 
   rpc SubscribeDevice (SubscribeDeviceRequest) returns (SubscribeDeviceResponse) {
     option (google.api.http) = {
-        post: "/notifications/devices"
+        post: "/devices"
         body: "*"
     };
   }
 
   rpc UnsubscribeDevice (UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse) {
     option (google.api.http) = {
-        post: "/notifications/devices/unsubscribe"
+        delete: "/devices/${device_id}"
         body: "*"
     };
   }
 
   rpc NotifyBankLinking (NotifyBankLinkingRequest) returns (NotifyBankLinkingResponse) {
     option (google.api.http) = {
-        post: "/notifications"
+        put: "/devices/notify"
         body: "*"
     };
   }
@@ -325,7 +399,7 @@ service GatewayService {
 
   rpc SetAccountName (SetAccountNameRequest) returns (SetAccountNameResponse) {
     option (google.api.http) = {
-        post: "/accounts/{account_id}?name={name}"
+        patch: "/accounts/{account_id}?name={name}"
     };
   }
 
@@ -337,7 +411,7 @@ service GatewayService {
 
   rpc LookupTransaction (LookupTransactionRequest) returns (LookupTransactionResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transaction/{transction_id}"
+        get: "/accounts/{account_id}/transactions/{transction_id}"
     };
   }
 
@@ -353,40 +427,40 @@ service GatewayService {
 
   rpc CreatePaymentToken (CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse) {
     option (google.api.http) = {
-        post: "/pay/tokens"
+        post: "/pay-tokens"
         body: "*"
     };
   }
 
   rpc LookupToken (LookupTokenRequest) returns (LookupTokenResponse) {
     option (google.api.http) = {
-        get: "/pay/tokens/{token_id}"
+        get: "/pay-tokens/{token_id}"
     };
   }
 
   rpc LookupTokens (LookupTokensRequest) returns (LookupTokensResponse) {
     option (google.api.http) = {
-        get: "/pay/tokens"
+        get: "/pay-tokens"
     };
   }
 
   rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
-        post: "/pay/tokens/{token_id}/endorse"
+        put: "/pay-tokens/{token_id}/endorse"
         body: "*"
     };
   }
 
   rpc DeclineToken (DeclineTokenRequest) returns (DeclineTokenResponse) {
     option (google.api.http) = {
-        post: "/pay/tokens/{token_id}/decline"
+        put: "/pay-tokens/{token_id}/decline"
         body: "*"
     };
   }
 
   rpc RevokeToken (RevokeTokenRequest) returns (RevokeTokenResponse) {
     option (google.api.http) = {
-        post: "/pay/tokens/{token_id}/revoke"
+        put: "/pay-tokens/{token_id}/revoke"
         body: "*"
     };
   }
@@ -397,20 +471,20 @@ service GatewayService {
 
   rpc RedeemPaymentToken (RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse) {
     option (google.api.http) = {
-        post: "/pay/payments"
+        post: "/payments"
         body: "*"
     };
   }
 
   rpc LookupPayment (LookupPaymentRequest) returns (LookupPaymentResponse) {
     option (google.api.http) = {
-        get: "/pay/payments/{payment_id}"
+        get: "/payments/{payment_id}"
     };
   }
 
   rpc LookupPayments (LookupPaymentsRequest) returns (LookupPaymentsResponse) {
     option (google.api.http) = {
-        get: "/pay/payments?token_id={token_id}&offset={offset}&limit={limit}"
+        get: "/payments?token_id={token_id}&offset={offset}&limit={limit}"
     };
   }
 }
