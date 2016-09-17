@@ -37,7 +37,7 @@
 }
 
 - (TKAccount *)sync {
-    return [[TKAccount alloc] initWithDelegate:self];
+    return [TKAccount account:self];
 }
 
 - (NSString *)id {

@@ -17,6 +17,7 @@
 #import "TKClient.h"
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
+#import "TKMemberAsync.h"
 
 @implementation TokenIOAsync {
     GatewayService *gateway;
@@ -46,7 +47,7 @@
 }
 
 - (void)createMember:(NSString *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
+            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     TKSecretKey *key = [TKCrypto generateKey];
@@ -65,7 +66,7 @@
                                                   to:member
                                            onSuccess:
                                                    ^(Member *memberWithAlias) {
-                                                       onSuccess([TKMember member:memberWithAlias
+                                                       onSuccess([TKMemberAsync member:memberWithAlias
                                                                         secretKey:key
                                                                         useClient:auth]);
                                                    }
@@ -78,7 +79,7 @@
 
 - (void)loginMember:(NSString *)memberId
           secretKey:(TKSecretKey *)key
-           onSucess:(OnSuccessWithTKMember)onSuccess
+           onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
 
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
@@ -87,7 +88,7 @@
     [client
             getMember:
                     ^(Member *member) {
-                        onSuccess([TKMember member:member secretKey:key useClient:client]);
+                        onSuccess([TKMemberAsync member:member secretKey:key useClient:client]);
                     }
               onError:onError];
 }

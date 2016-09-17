@@ -21,11 +21,7 @@
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSString *name;
 
-+ (TKAccount *)account:(Account *)account
-                    of:(TKMember *)member
-             useClient:(TKClient *)client;
-
-- (id)initWithDelegate:(TKAccountAsync *)delegate;
++ (TKAccount *)account:(TKAccountAsync *)delegate;
 
 - (Token *)createTokenWithAmount:(double)amount
                         currency:(NSString *)currency;

@@ -11,6 +11,7 @@
 #import "TokenIOAsync.h"
 #import "TKSecretKey.h"
 #import "TKRpcSyncCall.h"
+#import "TKMemberAsync.h"
 
 
 @implementation TokenIO
@@ -31,7 +32,7 @@
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createMember:alias
-                        onSucess:call.onSuccess
+                        onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                          onError:call.onError];
     }];
 }
@@ -43,7 +44,7 @@
         [self.async
                 loginMember:memberId
                   secretKey:secretKey
-                   onSucess:call.onSuccess
+                   onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                     onError:call.onError
         ];
     }];

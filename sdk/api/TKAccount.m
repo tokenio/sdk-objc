@@ -3,23 +3,15 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <protos/Transfer.pbobjc.h>
-#import <protos/Money.pbobjc.h>
 #import "TKAccount.h"
 #import "TKMember.h"
-#import "Account.pbobjc.h"
-#import "TKClient.h"
-#import "Token.pbobjc.h"
 #import "TKRpcSyncCall.h"
-#import "TKUtil.h"
-#import "Payment.pbobjc.h"
 #import "TKAccountAsync.h"
 
 
 @implementation TKAccount
 
-+ (TKAccount *)account:(Account *)account of:(TKMember *)member useClient:(TKClient *)client {
-    TKAccountAsync *delegate = [TKAccountAsync account:account of:member useClient:client];
++ (TKAccount *)account:(TKAccountAsync *)delegate {
     return [[TKAccount alloc] initWithDelegate:delegate];
 }
 

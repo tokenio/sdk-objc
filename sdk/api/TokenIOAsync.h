@@ -26,12 +26,12 @@
 - (id)initWithHost:(NSString *)host port:(int)port;
 
 - (void)createMember:(NSString *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
+            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError;
 
 - (void)loginMember:(NSString *)memberId
           secretKey:(TKSecretKey *)key
-           onSucess:(OnSuccessWithTKMember)onSuccess
+           onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError;
 
 @end

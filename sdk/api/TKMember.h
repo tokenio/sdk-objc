@@ -1,10 +1,7 @@
 //
-// Created by Alexey Kalinichenko on 9/13/16.
+/**/// Created by Alexey Kalinichenko on 9/13/16.
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
-
-#ifndef TokenMember_h
-#define TokenMember_h
 
 #import <Foundation/Foundation.h>
 #import "TKTypedef.h"
@@ -13,57 +10,34 @@
 @class TKSecretKey;
 @class Member;
 @class TKClient;
+@class TKMemberAsync;
 
 
 @interface TKMember : NSObject
 
+@property (readonly, retain) TKMemberAsync *async;
 @property (readonly, retain) NSString *id;
 @property (readonly, retain) NSString *firstAlias;
 @property (readonly, retain) NSArray<NSString*> *aliases;
 @property (readonly, retain) NSArray<NSString*> *publicKeys;
 @property (readonly, retain) TKSecretKey *key;
 
-+ (TKMember *)member:(Member *)member secretKey:(TKSecretKey *)key useClient:(TKClient *)client;
++ (TKMember *)member:(TKMemberAsync *)delegate;
 
 - (void)approveKey:(TKSecretKey *)key;
 
-- (void)asyncApproveKey:(TKSecretKey *)key
-               onSucess:(OnSuccess)onSuccess
-                onError:(OnError)onError;
-
 - (void)removeKey:(NSString *)keyId;
-
-- (void)asyncRemoveKey:(NSString *)keyId
-              onSucess:(OnSuccess)onSuccess
-               onError:(OnError)onError;
 
 - (void)addAlias:(NSString *)alias;
 
-- (void)asyncAddAlias:(NSString *)alias
-             onSucess:(OnSuccess)onSuccess
-              onError:(OnError)onError;
-
 - (void)removeAlias:(NSString *)alias;
-
-- (void)asyncRemoveAlias:(NSString *)alias
-                onSucess:(OnSuccess)onSuccess
-                 onError:(OnError)onError;
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
                           withPayload:(NSData *)payload;
 
-- (void)asyncLinkAccounts:(NSString *)bankId
-              withPayload:(NSData *)payload
-                 onSucess:(OnSuccessWithTKAccounts)onSuccess
-                  onError:(OnError)onError;
-
 - (NSArray<TKAccount *> *)lookupAccounts;
 
 - (Payment *)lookupPayment:(NSString *)paymentId;
-
-- (void)asyncLookupPayment:(NSString *)paymentId
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError;
 
 - (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
                                        limit:(int)limit;
@@ -72,17 +46,4 @@
                                        limit:(int)limit
                                      tokenId:(NSString *)tokenId;
 
-- (void)asyncLookupPaymentsOffset:(int)offset
-                            limit:(int)limit
-                        onSuccess:(OnSuccessWithPayments)onSuccess
-                          onError:(OnError)onError;
-
-- (void)asyncLookupPaymentsOffset:(int)offset
-                            limit:(int)limit
-                          tokenId:(NSString *)tokenId
-                        onSuccess:(OnSuccessWithPayments)onSuccess
-                          onError:(OnError)onError;
-
 @end
-
-#endif
