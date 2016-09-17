@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TokenIOBuilder.h"
 #import "TokenIO.h"
+#import "TokenIOAsync.h"
 
 @implementation TokenIOBuilder
 
@@ -16,7 +17,7 @@
     self = [super init];
 
     if (self) {
-        self.host = @"dev.api.token.io";
+        self.host = @"api.token.io";
         self.port = 9000;
     }
 
@@ -24,7 +25,12 @@
 }
 
 - (TokenIO *)build {
-    return [[TokenIO alloc] initWithHost:self.host port:self.port];
+    return [self buildAsync].sync;
+}
+
+
+- (TokenIOAsync *)buildAsync {
+    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port];
 }
 
 @end

@@ -29,10 +29,10 @@ message MemberUpdate {
   string prev_hash = 1;
   string member_id = 2;
   oneof operation {
-    MemberAddKeyOperation addKey = 3;
-    MemberRemoveKeyOperation removeKey = 4;
-    MemberAliasOperation addAlias = 5;
-    MemberAliasOperation removeAlias = 6;
+    MemberAddKeyOperation add_key = 3;
+    MemberRemoveKeyOperation remove_key = 4;
+    MemberAliasOperation add_alias = 5;
+    MemberAliasOperation remove_alias = 6;
   }
 }
 

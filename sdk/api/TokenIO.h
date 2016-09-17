@@ -13,27 +13,20 @@
 @class TokenIOBuilder;
 @class TKMember;
 @class TKSecretKey;
+@class TokenIOAsync;
 
 
-@interface TokenIO : NSObject {}
+@interface TokenIO : NSObject
+
+@property (readonly, retain) TokenIOAsync *async;
 
 + (TokenIOBuilder *)builder;
 
-- (id)initWithHost:(NSString *)host port:(int)port;
+- (id)initWithDelegate:(TokenIOAsync *)delegate;
 
 - (TKMember *)createMember:(NSString *)alias;
 
-- (void)createMemberAsync:(NSString *)alias
-                 onSucess:(OnSuccessWithTKMember)onSuccess
-                  onError:(OnError)onError;
-
-- (TKMember *)loginMember:(NSString *)memberId
-               secretKey:(TKSecretKey *)secretKey;
-
-- (void)loginMemberAsync:(NSString *)memberId
-               secretKey:(TKSecretKey *)key
-                onSucess:(OnSuccessWithTKMember)onSuccess
-                 onError:(OnError)onError;
+- (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey;
 
 @end
 
