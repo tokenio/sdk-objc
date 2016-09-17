@@ -52,45 +52,65 @@
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     TKSecretKey *key = [TKCrypto generateKey];
 
-    [client
-            createMemberId:^(NSString *memberId) {
-                [client
-                        addFirstKey:key
-                          forMember:memberId
-                          onSuccess:
-                                  ^(Member *member) {
-                                      TKClient *auth = [[TKClient alloc] initWithGateway:gateway
-                                                                                  memberId:memberId
-                                                                                 secretKey:key];
-                                      [auth addAlias:alias
-                                                  to:member
-                                           onSuccess:
-                                                   ^(Member *memberWithAlias) {
-                                                       onSuccess([TKMemberAsync member:memberWithAlias
-                                                                        secretKey:key
-                                                                        useClient:auth]);
-                                                   }
-                                              onError: onError];
-                                  }
-                            onError:onError];
-            }
-            onError:onError];
+    [client createMemberId:
+                    ^(NSString *memberId) {
+                        [self _addKeyAndAlias:client
+                                     memberId:memberId
+                                        alias:alias
+                                          key:key
+                                    onSuccess:onSuccess
+                                      onError:onError];
+                    }
+                   onError:onError];
 }
 
 - (void)loginMember:(NSString *)memberId
           secretKey:(TKSecretKey *)key
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
-
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
                                                 memberId:memberId
                                                secretKey:key];
-    [client
-            getMember:
+    [client getMember:
                     ^(Member *member) {
-                        onSuccess([TKMemberAsync member:member secretKey:key useClient:client]);
+                        onSuccess([TKMemberAsync
+                                member:member
+                             secretKey:key
+                             useClient:client]);
                     }
               onError:onError];
+}
+
+#pragma mark private
+
+- (void)_addKeyAndAlias:(TKUnauthenticatedClient *)client
+              memberId:(NSString *)memberId
+                 alias:(NSString *)alias
+                   key:(TKSecretKey *)key
+             onSuccess:(void(^)(TKMemberAsync *))onSuccess
+               onError:(OnError)onError {
+    [client
+            addFirstKey:key
+              forMember:memberId
+              onSuccess:
+                      ^(Member *member) {
+                          TKClient *authenticated = [[TKClient alloc]
+                                  initWithGateway:gateway
+                                         memberId:memberId
+                                        secretKey:key];
+
+                          [authenticated addAlias:alias
+                                               to:member
+                                        onSuccess:
+                                                ^(Member *m) {
+                                                    onSuccess([TKMemberAsync
+                                                            member:m
+                                                         secretKey:key
+                                                         useClient:authenticated]);
+                                                }
+                                          onError: onError];
+                      }
+                onError:onError];
 }
 
 @end

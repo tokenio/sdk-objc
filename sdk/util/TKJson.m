@@ -11,14 +11,6 @@
 #import "TKUtil.h"
 
 
-@interface KeyValuePair : NSObject
-@property (nonatomic, retain) NSString *key;
-@property (nonatomic, retain) NSObject *value;
-@end
-
-@implementation KeyValuePair
-@end
-
 @implementation TKJson
 
 /**
@@ -30,7 +22,7 @@
  * @return JSON formatted string
  */
 + (NSString *)serialize:(GPBMessage *)message {
-    NSDictionary<NSString*, NSObject*> *result = [self serializeMessage:message];
+    NSDictionary<NSString*, NSObject*> *result = [self _serializeMessage:message];
 
     NSError *error;
     NSData *json = [NSJSONSerialization dataWithJSONObject:result options:0 error:&error];
@@ -41,6 +33,8 @@
     return [jsonStr stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
 }
 
+#pragma mark private
+
 /**
  * Converts a proto message to a dictionary. The dictionary keys are in the
  * same order in which they are defined in the proto file.
@@ -48,14 +42,14 @@
  * @param message proto message
  * @return dictionary
  */
-+ (NSDictionary<NSString*, NSObject*> *)serializeMessage:(GPBMessage *)message {
++ (NSDictionary<NSString*, NSObject*> *)_serializeMessage:(GPBMessage *)message {
     GPBDescriptor *descriptor = [message descriptor];
     MutableOrderedDictionary *result = [MutableOrderedDictionary dictionary];
 
     for (GPBFieldDescriptor *field in descriptor.fields) {
         if (GPBMessageHasFieldSet(message, field) && !field.hasDefaultValue) {
             NSString *key = [TKUtil snakeCaseToCamelCase:field.textFormatName];
-            NSObject *value = [self serialize:field forMessage:message];
+            NSObject *value = [self _serialize:field forMessage:message];
             result[key] = value;
         }
     }
@@ -70,14 +64,14 @@
  * @param message message containing the field
  * @return
  */
-+ (NSObject *)serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)_serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.fieldType) {
         case GPBFieldTypeRepeated:
-            return [self serializeRepeated:field forMessage:message];
+            return [self _serializeRepeated:field forMessage:message];
         case GPBFieldTypeMap:
-            return [self serializeMap:field forMessage:message];
+            return [self _serializeMap:field forMessage:message];
         case GPBFieldTypeSingle:
-            return [self serializeSingle:field forMessage:message];
+            return [self _serializeSingle:field forMessage:message];
         default:
             [NSException
                     raise:NSInternalInconsistencyException
@@ -93,12 +87,12 @@
  * @param message message containing the field
  * @return
  */
-+ (NSObject *)serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)_serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSDictionary<NSObject*, NSString*> *valuesToKeys = GPBGetMessageMapField(message, field);
     MutableOrderedDictionary<NSString*, NSObject*> *keysToValues = [MutableOrderedDictionary dictionary];
     for (id value in valuesToKeys) {
         NSString *key = valuesToKeys[value];
-        NSObject *serialized = [self serializeValue:value];
+        NSObject *serialized = [self _serializeValue:value];
         [keysToValues setObject:serialized forKey:key];
     }
     return keysToValues;
@@ -111,11 +105,11 @@
  * @param message message containing the field
  * @return
  */
-+ (NSObject *)serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)_serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSArray<NSObject*> *values = GPBGetMessageRepeatedField(message, field);
     NSMutableArray<NSObject*> *serializedValues = [NSMutableArray array];
     for (id value in values) {
-        NSObject *o = [self serializeValue:value];
+        NSObject *o = [self _serializeValue:value];
         [serializedValues addObject:o];
     }
     return serializedValues;
@@ -128,7 +122,7 @@
  * @param message message containing the field
  * @return
  */
-+ (NSObject *)serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
++ (NSObject *)_serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.dataType) {
         case GPBDataTypeBool:
             return GPBGetMessageBoolField(message, field) == TRUE ? @"true" : @"false";
@@ -157,7 +151,7 @@
         case GPBDataTypeEnum:
             return [field.enumDescriptor textFormatNameForValue:GPBGetMessageEnumField(message, field)];
         case GPBDataTypeMessage:
-            return [self serializeMessage:GPBGetMessageMessageField(message, field)];
+            return [self _serializeMessage:GPBGetMessageMessageField(message, field)];
         case GPBDataTypeGroup:
         default:
             @throw [NSException
@@ -174,9 +168,9 @@
  * @param object object to serialize
  * @return
  */
-+ (NSObject *)serializeValue:(NSObject *)object {
++ (NSObject *)_serializeValue:(NSObject *)object {
     if ([object isKindOfClass:[GPBMessage class]]) {
-        return [self serializeMessage:(GPBMessage *) object];
+        return [self _serializeMessage:(GPBMessage *) object];
     } else {
         return object;
     }

@@ -49,9 +49,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async approveKey:key
-                      onSucess:^{
-                          call.onSuccess(nil);
-                      }
+                      onSucess:^{ call.onSuccess(nil); }
                        onError:call.onError];
     }];
 }
@@ -60,9 +58,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async removeKey:keyId
-                     onSucess:^{
-                         call.onSuccess(nil);
-                     }
+                     onSucess:^{ call.onSuccess(nil); }
                       onError:call.onError];
     }];
 }
@@ -71,10 +67,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async addAlias:alias
-                    onSucess:
-                            ^{
-                                call.onSuccess(nil);
-                            }
+                    onSucess:^{ call.onSuccess(nil); }
                      onError:call.onError];
     }];
 }
@@ -96,11 +89,7 @@
                      withPayload:payload
                         onSucess:
                                 ^(NSArray<TKAccountAsync *> *accounts) {
-                                    NSMutableArray<TKAccount *> *sync = [NSMutableArray array];
-                                    for (TKAccountAsync *a in accounts) {
-                                        [sync addObject:a.sync];
-                                    }
-                                    call.onSuccess(sync);
+                                    call.onSuccess([self _asyncToSync:accounts]);
                                 }
                          onError:call.onError];
     }];
@@ -112,11 +101,7 @@
         [self.async
                 lookupAccounts:
                         ^(NSArray<TKAccountAsync *> *accounts) {
-                            NSMutableArray<TKAccount *> *sync = [NSMutableArray array];
-                            for (TKAccountAsync *a in accounts) {
-                                [sync addObject:a.sync];
-                            }
-                            call.onSuccess(sync);
+                            call.onSuccess([self _asyncToSync:accounts]);
                         }
                        onError:call.onError];
     }];
@@ -149,6 +134,16 @@
                                onSuccess:call.onSuccess
                                  onError:call.onError];
     }];
+}
+
+#pragma mark private
+
+- (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {
+    NSMutableArray<TKAccount *> *sync = [NSMutableArray array];
+    for (TKAccountAsync *a in accounts) {
+        [sync addObject:a.sync];
+    }
+    return sync;
 }
 
 @end

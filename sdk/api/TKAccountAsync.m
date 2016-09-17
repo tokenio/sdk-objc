@@ -149,7 +149,6 @@
            currency:(NSString *)currency
           onSuccess:(OnSuccessWithPayment)onSuccess
             onError:(OnError)onError {
-
     PaymentPayload *payload = [PaymentPayload message];
     payload.tokenId = token.id_p;
     payload.nonce = [TKUtil nonce];
