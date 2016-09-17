@@ -5,5 +5,5 @@ option java_outer_classname = "MoneyProtos";
 
 message Money {
   string currency = 1;
-  double value = 2;
+  string value = 2;         // double amount in the string format.
 }

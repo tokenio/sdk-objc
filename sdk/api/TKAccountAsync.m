@@ -74,7 +74,7 @@
     paymentToken.scheme = @"Pay/1.0";
     paymentToken.nonce = [TKUtil nonce];
     paymentToken.payer = payer;
-    paymentToken.amount = amount;
+    paymentToken.amount = [NSString stringWithFormat:@"%g", amount];
     paymentToken.currency = currency;
     paymentToken.transfer.from.accountId = self.id;
 
@@ -154,7 +154,7 @@
     payload.nonce = [TKUtil nonce];
 
     if (amount) {
-        payload.amount.value = amount.doubleValue;
+        payload.amount.value = [amount stringValue];
     }
     if (currency) {
         payload.amount.currency = currency;

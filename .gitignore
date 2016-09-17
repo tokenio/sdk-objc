@@ -14,7 +14,6 @@ Pods/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
 *.xccheckout
 *.moved-aside
 DerivedData

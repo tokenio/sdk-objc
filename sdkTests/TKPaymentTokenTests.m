@@ -35,7 +35,7 @@
                                       redeemerAlias:payee.member.firstAlias
                                         description:@"Book purchase"];
 
-        XCTAssertEqual(100.99, token.payment.amount);
+        XCTAssertEqualObjects(@"100.99", token.payment.amount);
         XCTAssertEqualObjects(@"USD", token.payment.currency);
         XCTAssertEqualObjects(payee.member.firstAlias, token.payment.redeemer.alias);
         XCTAssertEqual(0, token.signaturesArray_Count);
@@ -68,7 +68,7 @@
 
         XCTAssertEqual(0, token.signaturesArray_Count);
 
-        XCTAssertEqual(100.11, endorsed.payment.amount);
+        XCTAssertEqualObjects(@"100.11", endorsed.payment.amount);
         XCTAssertEqualObjects(@"USD", endorsed.payment.currency);
         XCTAssertEqual(2, endorsed.signaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.signaturesArray[0].action);
@@ -82,7 +82,7 @@
 
         XCTAssertEqual(0, token.signaturesArray_Count);
 
-        XCTAssertEqual(100.11, declined.payment.amount);
+        XCTAssertEqualObjects(@"100.11", declined.payment.amount);
         XCTAssertEqualObjects(@"USD", declined.payment.currency);
         XCTAssertEqual(2, declined.signaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Declined, declined.signaturesArray[0].action);
@@ -98,7 +98,7 @@
         XCTAssertEqual(0, token.signaturesArray_Count);
         XCTAssertEqual(2, endorsed.signaturesArray_Count);
 
-        XCTAssertEqual(100.11, revoked.payment.amount);
+        XCTAssertEqualObjects(@"100.11", revoked.payment.amount);
         XCTAssertEqualObjects(@"USD", revoked.payment.currency);
         XCTAssertEqual(4, revoked.signaturesArray_Count);
     }];

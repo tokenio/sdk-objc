@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES"
+            buildForTesting = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8A9909171D890E820096A7FA"
+               BuildableName = "sdkTests.xctest"
+               BlueprintName = "sdkTests"
+               ReferencedContainer = "container:sdk.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug">
+      <Testables>
+         <TestableReference>
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8A9909171D890E820096A7FA"
+               BuildableName = "sdkTests.xctest"
+               BlueprintName = "sdkTests"
+               ReferencedContainer = "container:sdk.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TKCryptoTests">
+               </Test>
+               <Test
+                  Identifier = "TKJsonTests">
+               </Test>
+               <Test
+                  Identifier = "TKMemberRegistrationTests">
+               </Test>
+               <Test
+                  Identifier = "TKPaymentRedemptionTests">
+               </Test>
+               <Test
+                  Identifier = "TKPaymentTokenTests">
+               </Test>
+               <Test
+                  Identifier = "TKTestBase">
+               </Test>
+               <Test
+                  Identifier = "TKTransactionsTests">
+               </Test>
+               <Test
+                  Identifier = "TKUtilTests">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO">
+   </LaunchAction>
+</Scheme>

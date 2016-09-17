@@ -50,7 +50,6 @@
 		ABA7BA3DA0354DBB07146BE8 /* TKJson.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BEE87D6C30096F9CADA3 /* TKJson.h */; };
 		ABA7BA98793B0592D11A83BB /* sc.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BEAF5A44E025586931AB /* sc.c */; };
 		ABA7BA9B13612439D753F584 /* TKJson.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B899E7F7DE3107CB62E1 /* TKJson.m */; };
-		ABA7BAB1261566AEE5E8422B /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF17BA41316C7B66823D /* readme.md */; };
 		ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BB5EAEB32937327F4192 /* ge.h */; };
 		ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */; };
 		ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B75B2E97AF95FBDEF4AD /* fe.h */; };
@@ -595,7 +594,6 @@
 				ABA7B164177B8BB039D61458 /* keypair.c in Sources */,
 				ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */,
 				ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */,
-				ABA7BAB1261566AEE5E8422B /* readme.md in Sources */,
 				ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */,
 				ABA7BBB178DD0DBB9BF4DBA8 /* TKAccount.m in Sources */,
 				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,

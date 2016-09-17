@@ -49,7 +49,7 @@
 
         Transaction *transaction = [payer lookupTransaction:payment.referenceId];
 
-        XCTAssertEqual(100.99, transaction.amount.value);
+        XCTAssertEqualObjects(@"100.99", transaction.amount.value);
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);
         XCTAssertEqualObjects(token.id_p, transaction.tokenId);
         XCTAssertEqualObjects(payment.id_p, transaction.tokenPaymentId);
