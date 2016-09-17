@@ -19,5 +19,6 @@ Pods/
 DerivedData
 *.hmap
 *.ipa
+xcuserdata
 *.xcuserstate
 *.DS_Store
