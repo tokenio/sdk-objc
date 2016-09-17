@@ -38,7 +38,6 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 - (void)getMember:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError {
-
     GetMemberRequest *request = [GetMemberRequest message];
     RpcLogStart(request);
 
@@ -55,33 +54,31 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
             }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)addAlias:(NSString *)alias
               to:(Member *)member
         onSuccess:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError {
-
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.addAlias.alias = alias;
 
-    [self updateMember:update onSuccess:onSuccess onError:onError];
+    [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
 - (void)removeAlias:(NSString *)alias
                from:(Member *)member
           onSuccess:(OnSuccessWithMember)onSuccess
             onError:(OnError)onError {
-
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.removeAlias.alias = alias;
 
-    [self updateMember:update onSuccess:onSuccess onError:onError];
+    [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
 - (void)addKey:(TKSecretKey *)newKey
@@ -89,34 +86,31 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
          level:(NSUInteger)level
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError {
-
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.addKey.level = level;
     update.addKey.publicKey = newKey.publicKeyStr;
 
-    [self updateMember:update onSuccess:onSuccess onError:onError];
+    [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
 - (void)removeKey:(NSString *)keyId
              from:(Member *)member
         onSuccess:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError {
-
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.removeKey.keyId = keyId;
 
-    [self updateMember:update onSuccess:onSuccess onError:onError];
+    [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
 - (void)linkAccounts:(NSString *)bankId
              payload:(NSData *)accountLinkPayload
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError {
-
     LinkAccountRequest *request = [LinkAccountRequest message];
     request.bankId = bankId;
     request.accountLinkPayload = accountLinkPayload;
@@ -135,12 +129,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                  }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupAccounts:(OnSuccessWithAccounts)onSuccess
                onError:(OnError)onError {
-
     LookupAccountsRequest *request = [LookupAccountsRequest message];
     RpcLogStart(request);
 
@@ -157,13 +150,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                    }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)createPaymentToken:(PaymentToken *)paymentToken
                  onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
-
     CreatePaymentTokenRequest *request = [CreatePaymentTokenRequest message];
     request.token = paymentToken;
     RpcLogStart(request);
@@ -181,13 +173,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                    }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupToken:(NSString *)tokenId
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
-
     LookupTokenRequest *request = [LookupTokenRequest message];
     request.tokenId = tokenId;
     RpcLogStart(request);
@@ -205,14 +196,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                 }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupTokens:(int)offset
                limit:(int)limit
            onSuccess:(OnSuccessWithTokens)onSuccess
              onError:(OnError)onError {
-
     LookupTokensRequest *request = [LookupTokensRequest message];
     request.offset = offset;
     request.limit = limit;
@@ -231,13 +221,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                 }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)endorseToken:(Token *)token
            onSuccess:(OnSuccessWithToken)onSuccess
              onError:(OnError)onError {
-
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
@@ -259,13 +248,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                  }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)declineToken:(Token *)token
            onSuccess:(OnSuccessWithToken)onSuccess
              onError:(OnError)onError {
-
     DeclineTokenRequest *request = [DeclineTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
@@ -287,13 +275,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                  }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)revokeToken:(Token *)token
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
-
     RevokeTokenRequest *request = [RevokeTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
@@ -315,13 +302,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                  }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)redeemToken:(PaymentPayload *)payload
           onSuccess:(OnSuccessWithPayment)onSuccess
             onError:(OnError)onError {
-
     RedeemPaymentTokenRequest *request = [RedeemPaymentTokenRequest message];
     request.payload = payload;
     request.signature.keyId = key.id;
@@ -341,7 +327,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                                    }
                                                }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupPayment:(NSString *)paymentId
@@ -364,7 +350,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                                    }
                                                }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupPaymentsOffset:(int)offset
@@ -391,7 +377,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                                    }
                                                }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupBalance:(NSString *)accountId
@@ -414,7 +400,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                               }
                                           }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupTransaction:(NSString *)transactionId
@@ -439,7 +425,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                               }
                                           }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
 - (void)lookupTransactionsOffset:(NSString *)accountId
@@ -466,13 +452,14 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                                    }
                                                }];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
-- (void)updateMember:(MemberUpdate *)update
-           onSuccess:(OnSuccessWithMember)onSuccess
-             onError:(OnError)onError {
+#pragma mark private
 
+- (void)_updateMember:(MemberUpdate *)update
+            onSuccess:(OnSuccessWithMember)onSuccess
+              onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
     request.signature.keyId = key.id;
@@ -492,10 +479,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                  }
     ];
 
-    [self startCall:call withRequest:request];
+    [self _startCall:call withRequest:request];
 }
 
-- (void)startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
+- (void)_startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
     NSString *signature = [TKCrypto sign:request usingKey:key];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
