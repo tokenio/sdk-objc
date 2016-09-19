@@ -16,7 +16,7 @@ Most of the dependcies are managed with CocoaPods. Some use git submodules. So t
 ```
 git submodule init
 git submodule update
-pod install
+pod --repo-update install
 ```
 
 Run Tests
