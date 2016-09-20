@@ -49,5 +49,5 @@ message Address {
   string id = 1;        // Address id
   string name = 2;      // The display name of the address
   string data = 3;      // Country specific JSON address
-  string signature = 4; // member signature of the data
+  io.token.proto.common.security.Signature signature = 4; // member signature of the data
 }
