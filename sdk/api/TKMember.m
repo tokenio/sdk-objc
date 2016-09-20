@@ -136,6 +136,60 @@
     }];
 }
 
+- (Address *)createAddressName:(NSString *)name
+                      withData:(NSString *)data {
+    TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createAddressName:name
+                             withData:data
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
+- (Address *)getAddressById:(NSString *)addressId {
+    TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getAddressById:addressId
+                         onSuccess:call.onSuccess
+                           onError:call.onError];
+    }];
+}
+
+- (NSArray<Address *> *)getAddresses {
+    TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getAddresses:call.onSuccess
+                         onError:call.onError];
+    }];
+}
+
+- (void)deleteAddressById:(NSString *)addressId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async deleteAddressById:addressId
+                             onSucess:^{ call.onSuccess(nil); }
+                              onError:call.onError];
+    }];
+}
+
+- (void)setPreferences:(NSString *)preferences {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async setPreferences:preferences
+                          onSucess:^{ call.onSuccess(nil); }
+                           onError:call.onError];
+    }];
+}
+
+- (NSString *)getPreferences {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getPreferences:call.onSuccess
+                           onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {

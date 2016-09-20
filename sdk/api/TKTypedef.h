@@ -9,6 +9,7 @@
 @class Transaction;
 @class TKMemberAsync;
 @class TKAccountAsync;
+@class Address;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
@@ -29,3 +30,8 @@ typedef void (^OnSuccessWithMoney)(Money *);
 
 typedef void (^OnSuccessWithTransaction)(Transaction *);
 typedef void (^OnSuccessWithTransactions)(NSArray<Transaction *> *);
+
+typedef void (^OnSuccessWithAddress)(Address *);
+typedef void (^OnSuccessWithAddresses)(NSArray<Address *> *);
+
+typedef void (^OnSuccessWithPreferences)(NSString *);

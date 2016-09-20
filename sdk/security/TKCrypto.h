@@ -39,6 +39,16 @@
           usingKey:(TKSecretKey *)key;
 
 /**
+ * Signs the specified payload using given key
+ *
+ * @param key the key to be used for signing
+ * @param payload the payload to be signed
+ * @return a payload signature
+ */
++(NSString *)signPayload:(NSString *)payload
+                usingKey:(TKSecretKey *)key;
+
+/**
  * Verifies a message signature.
  *
  * @param signature signature to verify

@@ -173,6 +173,52 @@
                          onError:onError];
 }
 
+- (void)createAddressName:(NSString *)name
+                 withData:(NSString *)data
+                onSuccess:(OnSuccessWithAddress)onSuccess
+                  onError:(OnError)onError {
+    [client createAddressName:name
+                     withData:data
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (void)getAddressById:(NSString *)addressId
+             onSuccess:(OnSuccessWithAddress)onSuccess
+               onError:(OnError)onError {
+    [client getAddressById:addressId
+                 onSuccess:onSuccess
+                   onError:onError];
+}
+
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+               onError:(OnError)onError {
+    [client getAddresses:onSuccess
+                 onError:onError];
+}
+
+- (void)deleteAddressById:(NSString *)addressId
+                 onSucess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    [client deleteAddressById:addressId
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (void)setPreferences:(NSString *)preferences
+              onSucess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
+    [client setPreferences:preferences
+                 onSuccess:onSuccess
+                   onError:onError];
+}
+
+- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
+               onError:(OnError)onError {
+    [client getPreferences:onSuccess
+                   onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountAsync *> *)_mapAccounts:(NSArray<Account *> *)accounts {

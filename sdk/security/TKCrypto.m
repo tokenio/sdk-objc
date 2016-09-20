@@ -29,6 +29,12 @@
     return [self signData:payload usingKey:key];
 }
 
++(NSString *)signPayload:(NSString *)payload
+                usingKey:(TKSecretKey *)key {
+    return [self signData:[payload dataUsingEncoding:NSASCIIStringEncoding]
+                 usingKey:key];
+}
+
 +(bool)verifySignature:(NSString *)signature
             forMessage:(GPBMessage *)message
         usingPublicKey:(NSData *)key {

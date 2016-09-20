@@ -232,4 +232,60 @@
                        onSuccess:(OnSuccessWithTransactions)onSuccess
                          onError:(OnError)onError;
 
+/**
+ * Creates a new member address
+ *
+ * @param name the name of the address
+ * @param data the address json
+ * @return an address record created
+ */
+- (void)createAddressName:(NSString *)name
+                 withData:(NSString *)data
+                onSuccess:(OnSuccessWithAddress)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Looks up an address by id
+ *
+ * @param addressId the address id
+ * @return an address record
+ */
+- (void)getAddressById:(NSString *)addressId
+             onSuccess:(OnSuccessWithAddress)onSuccess
+               onError:(OnError)onError;
+
+/**
+ * Looks up member addresses
+ *
+ * @return a list of addresses
+ */
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Deletes a member address by its id
+ *
+ * @param addressId the id of the address
+ */
+- (void)deleteAddressById:(NSString *)addressId
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Sets member preferences
+ *
+ * @param preferences member json preferences
+ */
+- (void)setPreferences:(NSString *)preferences
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError;
+
+/**
+ * Looks up member preferences
+ *
+ * @return member preferences
+ */
+- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
+               onError:(OnError)onError;
+
 @end
