@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A9909171D890E820096A7FA"
-               BuildableName = "sdkTests"
+               BuildableName = "sdkTests.xctest"
                BlueprintName = "sdkTests"
                ReferencedContainer = "container:sdk.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A9909171D890E820096A7FA"
-               BuildableName = "sdkTests"
+               BuildableName = "sdkTests.xctest"
                BlueprintName = "sdkTests"
                ReferencedContainer = "container:sdk.xcodeproj">
             </BuildableReference>

@@ -12,7 +12,7 @@ message PaymentProcessed {
 }
 
 // A notification that a bank wants to be linked
-message LinkBank {
+message LinkAccounts {
     string bank_id = 1;
     bytes account_link_payload = 2;
 }

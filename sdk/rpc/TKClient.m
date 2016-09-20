@@ -462,7 +462,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     CreateAddressRequest *request = [CreateAddressRequest message];
     request.name = name;
     request.data_p = data;
-    request.signature = [TKCrypto signPayload:data usingKey:key];
+    request.signature.keyId = key.id;
+    request.signature.signature = [TKCrypto signPayload:data usingKey:key];
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway

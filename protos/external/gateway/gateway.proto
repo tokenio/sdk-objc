@@ -49,7 +49,7 @@ message GetMemberResponse {
 message CreateAddressRequest {
   string name = 1;
   string data = 2;
-  string signature = 3;
+  io.token.proto.common.security.Signature signature = 3;
 }
 
 message CreateAddressResponse {
@@ -111,7 +111,7 @@ message UnsubscribeDeviceResponse {
 }
 
 // Notify existing subscribers that a bank linking payload has been created
-message NotifyBankLinkingRequest {
+message NotifyLinkAccountsRequest {
   string alias = 1;
   string bank_id = 2;
 
@@ -119,8 +119,17 @@ message NotifyBankLinkingRequest {
   bytes account_link_payload = 3;
 }
 
-message NotifyBankLinkingResponse {
+message NotifyLinkAccountsResponse {
 }
+
+message NotifyAddKeyRequest {
+    string public_key = 1;
+    repeated string tags = 2;
+}
+
+message NotifyAddKeyResponse {
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,9 +376,16 @@ service GatewayService {
     };
   }
 
-  rpc NotifyBankLinking (NotifyBankLinkingRequest) returns (NotifyBankLinkingResponse) {
+  rpc NotifyLinkAccounts (NotifyLinkAccountsRequest) returns (NotifyLinkAccountsResponse) {
     option (google.api.http) = {
-        put: "/devices/notify"
+        put: "/devices/notifyLinkAccounts"
+        body: "*"
+    };
+  }
+
+  rpc NotifyAddKey (NotifyAddKeyRequest) returns (NotifyAddKeyResponse) {
+    option (google.api.http) = {
+        put: "/devices/notifyAddKey"
         body: "*"
     };
   }
