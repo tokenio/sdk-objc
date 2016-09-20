@@ -64,4 +64,27 @@
                    onSuccess:(OnSuccessWithPayments)onSuccess
                      onError:(OnError)onError;
 
+- (void)createAddressName:(NSString *)name
+                 withData:(NSString *)data
+                onSuccess:(OnSuccessWithAddress)onSuccess
+                  onError:(OnError)onError;
+
+- (void)getAddressById:(NSString *)addressId
+             onSuccess:(OnSuccessWithAddress)onSuccess
+               onError:(OnError)onError;
+
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+             onError:(OnError)onError;
+
+- (void)deleteAddressById:(NSString *)addressId
+                 onSucess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
+
+- (void)setPreferences:(NSString *)preferences
+              onSucess:(OnSuccess)onSuccess
+               onError:(OnError)onError;
+
+- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
+               onError:(OnError)onError;
+
 @end

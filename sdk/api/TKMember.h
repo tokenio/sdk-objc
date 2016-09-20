@@ -11,6 +11,7 @@
 @class Member;
 @class TKClient;
 @class TKMemberAsync;
+@class Address;
 
 
 @interface TKMember : NSObject
@@ -45,5 +46,18 @@
 - (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
                                        limit:(int)limit
                                      tokenId:(NSString *)tokenId;
+
+- (Address *)createAddressName:(NSString *)name
+                   withData:(NSString *)data;
+
+- (Address *)getAddressById:(NSString *)addressId;
+
+- (NSArray<Address *> *)getAddresses;
+
+- (void)deleteAddressById:(NSString *)addressId;
+
+- (void)setPreferences:(NSString *)preferences;
+
+- (NSString *)getPreferences;
 
 @end

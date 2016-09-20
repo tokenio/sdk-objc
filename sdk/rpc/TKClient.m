@@ -455,6 +455,137 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
+- (void)createAddressName:(NSString * )name
+                 withData:(NSString *)data
+                onSuccess:(OnSuccessWithAddress)onSuccess
+                  onError:(OnError)onError {
+    CreateAddressRequest *request = [CreateAddressRequest message];
+    request.name = name;
+    request.data_p = data;
+    request.signature = [TKCrypto signPayload:data usingKey:key];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToCreateAddressWithRequest:request
+                                  handler:
+                                          ^(CreateAddressResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess(response.address);
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getAddressById:(NSString *)addressId
+             onSuccess:(OnSuccessWithAddress)onSuccess
+               onError:(OnError)onError {
+    GetAddressRequest *request = [GetAddressRequest message];
+    request.addressId = addressId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToGetAddressWithRequest:request
+                                  handler:
+                                          ^(GetAddressResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess(response.address);
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+             onError:(OnError)onError {
+    GetAddressesRequest *request = [GetAddressesRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToGetAddressesWithRequest:request
+                               handler:
+                                       ^(GetAddressesResponse *response, NSError *error) {
+                                           if (response) {
+                                               RpcLogCompleted(response);
+                                               onSuccess(response.addressesArray);
+                                           } else {
+                                               RpcLogError(error);
+                                               onError(error);
+                                           }
+                                       }];
+    [self _startCall:call withRequest:request];
+}
+
+- (void)deleteAddressById:(NSString *)addressId
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    DeleteAddressRequest *request = [DeleteAddressRequest message];
+    request.addressId = addressId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToDeleteAddressWithRequest:request
+                                 handler:
+                                         ^(DeleteAddressResponse *response, NSError *error) {
+                                             if (response) {
+                                                 RpcLogCompleted(response);
+                                                 onSuccess();
+                                             } else {
+                                                 RpcLogError(error);
+                                                 onError(error);
+                                             }
+                                         }];
+    [self _startCall:call withRequest:request];
+}
+
+- (void)setPreferences:(NSString *)preferences
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
+    SetPreferenceRequest *request = [SetPreferenceRequest message];
+    request.preference = preferences;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToSetPreferenceWithRequest:request
+                                  handler:
+                                          ^(SetPreferenceResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess();
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
+               onError:(OnError)onError {
+    GetPreferenceRequest *request = [GetPreferenceRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToGetPreferenceWithRequest:request
+                                  handler:
+                                          ^(GetPreferenceResponse *response, NSError *error) {
+                                              if (response) {
+                                                  RpcLogCompleted(response);
+                                                  onSuccess(response.preference);
+                                              } else {
+                                                  RpcLogError(error);
+                                                  onError(error);
+                                              }
+                                          }];
+    [self _startCall:call withRequest:request];
+}
+
 #pragma mark private
 
 - (void)_updateMember:(MemberUpdate *)update
