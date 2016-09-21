@@ -3,9 +3,9 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <GPBMessage.h>
-#import <TokenSdk/Member.pbobjc.h>
-#import <TokenSdk/Security.pbobjc.h>
+#import <Protobuf/GPBMessage.h>
+#import <Member.pbobjc.h>
+#import <Security.pbobjc.h>
 
 #import "TKAccount.h"
 #import "TKMember.h"

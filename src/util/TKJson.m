@@ -3,11 +3,12 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+#import <Protobuf/GPBMessage.h>
+#import <Protobuf/GPBDescriptor.h>
+#import <Protobuf/GPBUtilities.h>
+#import <OrderedDictionary/OrderedDictionary.h>
+
 #import "TKJson.h"
-#import "GPBMessage.h"
-#import "GPBDescriptor.h"
-#import "GPBUtilities.h"
-#import "OrderedDictionary.h"
 #import "TKUtil.h"
 
 

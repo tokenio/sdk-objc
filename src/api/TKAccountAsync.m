@@ -3,11 +3,11 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <TokenSdk/Account.pbobjc.h>
-#import <TokenSdk/Money.pbobjc.h>
-#import <TokenSdk/Payment.pbobjc.h>
-#import <TokenSdk/Token.pbobjc.h>
-#import <TokenSdk/Transfer.pbobjc.h>
+#import <Account.pbobjc.h>
+#import <Money.pbobjc.h>
+#import <Payment.pbobjc.h>
+#import <Token.pbobjc.h>
+#import <Transfer.pbobjc.h>
 
 #import "TKMember.h"
 #import "TKClient.h"
