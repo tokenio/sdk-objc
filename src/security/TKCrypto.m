@@ -3,14 +3,14 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "ed25519.h"
+#import <GPBMessage.h>
+#import <TokenSdk/Token.pbobjc.h>
 
+#import "ed25519.h"
 #import "TKCrypto.h"
 #import "TKSecretKey.h"
-#import "GPBMessage.h"
 #import "TKJson.h"
 #import "TKUtil.h"
-#import "Token.pbobjc.h"
 
 
 @implementation TKCrypto

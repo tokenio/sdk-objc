@@ -1,9 +1,10 @@
 //
-/**/// Created by Alexey Kalinichenko on 9/13/16.
+// Created by Alexey Kalinichenko on 9/13/16.
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
 #import "TKTypedef.h"
 
 

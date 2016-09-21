@@ -3,7 +3,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import <protos/Transaction.pbobjc.h>
+#import <Transaction.pbobjc.h>
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKTestBase.h"

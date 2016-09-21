@@ -4,7 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "TKTypedef.h"
+
 
 @class Member;
 @class GatewayService;

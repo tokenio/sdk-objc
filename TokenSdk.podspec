@@ -49,7 +49,7 @@ end
 
 
 Pod::Spec.new do |s|
-    s.name     = "protos"
+    s.name     = "TokenSdk"
     s.version  = tokenSdkVer
     s.license  = "New BSD"
     s.authors  = { 'Token' => 'eng@token.io' }

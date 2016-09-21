@@ -6,8 +6,8 @@
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 #import <GRPCCLient/GRPCCall+Tests.h>
 
-#import <protos/bankapi/Bankapi.pbrpc.h>
-#import <protos/bankapi/Fank.pbobjc.h>
+#import <bankapi/Bankapi.pbrpc.h>
+#import <bankapi/Fank.pbobjc.h>
 
 #import "TKBankClient.h"
 #import "TKRpcSyncCall.h"

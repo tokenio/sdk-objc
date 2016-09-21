@@ -3,14 +3,15 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <protos/Transfer.pbobjc.h>
-#import <protos/Money.pbobjc.h>
+#import <TokenSdk/Account.pbobjc.h>
+#import <TokenSdk/Money.pbobjc.h>
+#import <TokenSdk/Payment.pbobjc.h>
+#import <TokenSdk/Token.pbobjc.h>
+#import <TokenSdk/Transfer.pbobjc.h>
+
 #import "TKMember.h"
-#import "Account.pbobjc.h"
 #import "TKClient.h"
-#import "Token.pbobjc.h"
 #import "TKUtil.h"
-#import "Payment.pbobjc.h"
 #import "TKAccountAsync.h"
 #import "TKAccount.h"
 
