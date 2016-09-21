@@ -14,9 +14,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A9909171D890E820096A7FA"
-               BuildableName = "sdkTests.xctest"
-               BlueprintName = "sdkTests"
-               ReferencedContainer = "container:sdk.xcodeproj">
+               BuildableName = "TokenSdk.xctest"
+               BlueprintName = "TokenSdkTests"
+               ReferencedContainer = "container:TokenSdk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,9 +32,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A9909171D890E820096A7FA"
-               BuildableName = "sdkTests.xctest"
-               BlueprintName = "sdkTests"
-               ReferencedContainer = "container:sdk.xcodeproj">
+               BuildableName = "TokenSdk.xctest"
+               BlueprintName = "TokenSdkTests"
+               ReferencedContainer = "container:TokenSdk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8A9909171D890E820096A7FA"
-            BuildableName = "sdkTests.xctest"
-            BlueprintName = "sdkTests"
-            ReferencedContainer = "container:sdk.xcodeproj">
+            BuildableName = "TokenSdk.xctest"
+            BlueprintName = "TokenSdkTests"
+            ReferencedContainer = "container:TokenSdk.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
