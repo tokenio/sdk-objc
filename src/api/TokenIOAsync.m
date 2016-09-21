@@ -6,8 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 #import <GRPCClient/GRPCCall+Tests.h>
-
-#import "gateway/Gateway.pbrpc.h"
+#import <TokenSdk/gateway/Gateway.pbrpc.h>
 
 #import "TKMember.h"
 #import "TokenIOAsync.h"

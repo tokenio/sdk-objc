@@ -3,7 +3,8 @@
 //  Copyright © 2016 Token Inc. All rights reserved.#import "TKSdk.h"
 //
 
-#import <protos/Money.pbobjc.h>
+#import <Money.pbobjc.h>
+
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"

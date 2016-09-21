@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class GatewayService;
 @class Member;
 @class TKSecretKey;

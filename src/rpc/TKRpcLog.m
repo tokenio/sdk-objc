@@ -3,8 +3,9 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+#import <GPBMessage.h>
+
 #import "TKRpcLog.h"
-#import "GPBMessage.h"
 
 
 void RpcLogStart(GPBMessage *request) {
