@@ -3,7 +3,7 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <GPBMessage.h>
+#import <Protobuf/GPBMessage.h>
 
 #import "TKRpcLog.h"
 

@@ -1,6 +1,6 @@
 //
 //  Created by Alexey Kalinichenko on 9/13/16.
-//  Copyright © 2016 Token Inc. All rights reserved.#import "TKSdk.h"
+//  Copyright © 2016 Token Inc. All rights reserved.
 //
 
 #import <Money.pbobjc.h>

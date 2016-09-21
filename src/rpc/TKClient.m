@@ -4,8 +4,8 @@
 //
 
 #import <ProtoRPC/ProtoRPC.h>
-#import <TokenSdk/Member.pbobjc.h>
-#import <TokenSdk/gateway/Gateway.pbrpc.h>
+#import <Member.pbobjc.h>
+#import <gateway/Gateway.pbrpc.h>
 
 #import "TKClient.h"
 #import "TKSecretKey.h"

@@ -3,7 +3,7 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <TokenSdk/gateway/Gateway.pbrpc.h>
+#import <gateway/Gateway.pbrpc.h>
 
 #import "TKUnauthenticatedClient.h"
 #import "TKUtil.h"

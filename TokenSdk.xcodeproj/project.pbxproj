@@ -100,7 +100,6 @@
 		8A9909181D890E820096A7FA /* TokenSdk.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokenSdk.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKMemberRegistrationTests.m; sourceTree = "<group>"; };
 		8A99091F1D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8A99093B1D891E6C0096A7FA /* sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdk.h; sourceTree = "<group>"; };
 		A0BD2260CD0EE1FB0E488C44 /* libPods-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBankClient.h; sourceTree = "<group>"; };
 		ABA7B0D240C12726391240B2 /* TKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCrypto.m; sourceTree = "<group>"; };
@@ -227,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				8A9909131D890E820096A7FA /* Info.plist */,
-				8A99093B1D891E6C0096A7FA /* sdk.h */,
 				ABA7B2281FEA7BCDBB7045C3 /* api */,
 				ABA7BA2FC59F6E7FF0F39F6C /* rpc */,
 				ABA7BFE70DA2E2ABED08CD7B /* security */,
