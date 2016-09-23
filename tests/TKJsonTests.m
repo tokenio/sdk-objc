@@ -63,7 +63,7 @@
     request.signature.signature = @"signature";
 
     NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"update\":{\"memberId\":\"m123\",\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]}},\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
+    XCTAssertEqualObjects(json, @"{\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"},\"update\":{\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]},\"memberId\":\"m123\"}}");
 }
 
 /**
@@ -87,11 +87,11 @@
  * Map fields.
  */
 - (void)testMap {
-    AccessTokenAcl *acl = [AccessTokenAcl message];
+    InformationTokenAcl *acl = [InformationTokenAcl message];
     acl.query = [@{@"q1": @"v1", @"q2": @"v2"} mutableCopy];
 
     NSString *json = [TKJson serialize:acl];
-    XCTAssertEqualObjects(json, @"{\"query\":{\"v2\":\"q2\",\"v1\":\"q1\"}}");
+    XCTAssertEqualObjects(json, @"{\"query\":{\"v1\":\"q1\",\"v2\":\"q2\"}}");
 }
 
 /**

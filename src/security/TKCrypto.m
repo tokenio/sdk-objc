@@ -18,6 +18,9 @@
 +(NSString *)sign:(GPBMessage *)message
          usingKey:(TKSecretKey *)key {
     NSString *json = [TKJson serialize:message];
+
+    NSLog(@"PAYLOAD FOR SIGNATURE: %@", json);
+
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
     return [self signData:jsonData usingKey:key];
 }

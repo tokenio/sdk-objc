@@ -210,9 +210,20 @@ message CreatePaymentTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Information Tokens.
+//
+
+message CreateInformationTokenRequest {
+  io.token.proto.common.token.InformationToken token = 1;
+}
+
+message CreateInformationTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Tokens (payment or info).
+// Tokens. (Generic)
 //
 
 message LookupTokenRequest {
@@ -448,38 +459,56 @@ service GatewayService {
     };
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Information Tokens.
+  //
+
+  rpc CreateInformationToken (CreateInformationTokenRequest) returns (CreateInformationTokenResponse) {
+    option (google.api.http) = {
+        post: "/info-tokens"
+        body: "*"
+    };
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Tokens. (Generic)
+  //
+
   rpc LookupToken (LookupTokenRequest) returns (LookupTokenResponse) {
     option (google.api.http) = {
-        get: "/pay-tokens/{token_id}"
+        get: "/tokens/{token_id}"
     };
   }
 
   rpc LookupTokens (LookupTokensRequest) returns (LookupTokensResponse) {
     option (google.api.http) = {
-        get: "/pay-tokens"
+        get: "/tokens"
     };
   }
 
   rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
-        put: "/pay-tokens/{token_id}/endorse"
+        put: "/tokens/{token_id}/endorse"
         body: "*"
     };
   }
 
   rpc DeclineToken (DeclineTokenRequest) returns (DeclineTokenResponse) {
     option (google.api.http) = {
-        put: "/pay-tokens/{token_id}/decline"
+        put: "/tokens/{token_id}/decline"
         body: "*"
     };
   }
 
   rpc RevokeToken (RevokeTokenRequest) returns (RevokeTokenResponse) {
     option (google.api.http) = {
-        put: "/pay-tokens/{token_id}/revoke"
+        put: "/tokens/{token_id}/revoke"
         body: "*"
     };
   }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Token Payments.

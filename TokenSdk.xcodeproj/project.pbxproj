@@ -737,6 +737,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
+					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
+					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
+					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
+					"\"${PODS_ROOT}/TokenSdk\"",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -754,6 +769,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
+					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
+					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
+					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
+					"\"${PODS_ROOT}/TokenSdk\"",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -773,6 +803,21 @@
 					"COCOAPODS=1",
 					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
+					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
+					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
+					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
+					"\"${PODS_ROOT}/TokenSdk\"",
+				);
 				INFOPLIST_FILE = tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdkTests;
@@ -788,6 +833,21 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
+					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
+					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
+					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
+					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
+					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
+					"\"${PODS_ROOT}/TokenSdk\"",
 				);
 				INFOPLIST_FILE = tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

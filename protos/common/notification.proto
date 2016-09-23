@@ -21,7 +21,7 @@ message LinkAccounts {
 message StepUp {
     oneof token {
         io.token.proto.common.token.PaymentToken payment_token = 1;
-        io.token.proto.common.token.AccessToken access_token = 2;
+        io.token.proto.common.token.InformationToken information_token = 2;
     }
 }
 
