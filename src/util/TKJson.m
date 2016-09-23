@@ -45,7 +45,7 @@
  */
 + (NSDictionary<NSString*, NSObject*> *)_serializeMessage:(GPBMessage *)message {
     GPBDescriptor *descriptor = [message descriptor];
-    MutableOrderedDictionary *result = [MutableOrderedDictionary dictionary];
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
     for (GPBFieldDescriptor *field in descriptor.fields) {
         if (GPBMessageHasFieldSet(message, field) && !field.hasDefaultValue) {
@@ -55,7 +55,7 @@
         }
     }
 
-    return result;
+    return [self sort:result];
 }
 
 /**
@@ -90,13 +90,13 @@
  */
 + (NSObject *)_serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSDictionary<NSObject*, NSString*> *valuesToKeys = GPBGetMessageMapField(message, field);
-    MutableOrderedDictionary<NSString*, NSObject*> *keysToValues = [MutableOrderedDictionary dictionary];
+    NSMutableDictionary<NSString*, NSObject*> *keysToValues = [NSMutableDictionary dictionary];
     for (id value in valuesToKeys) {
         NSString *key = valuesToKeys[value];
         NSObject *serialized = [self _serializeValue:value];
         [keysToValues setObject:serialized forKey:key];
     }
-    return keysToValues;
+    return [self sort:keysToValues];
 }
 
 /**
@@ -175,6 +175,16 @@
     } else {
         return object;
     }
+}
+
++ (OrderedDictionary<NSString*, NSObject*> *)sort:(NSDictionary *)dictionary  {
+    NSArray *sortedKeys = [[dictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
+
+    MutableOrderedDictionary<NSString*, NSObject*> *result = [MutableOrderedDictionary dictionary];
+    for (id key in sortedKeys) {
+        [result setObject:dictionary[key] forKey:key];
+    }
+    return result;
 }
 
 @end

@@ -2,5 +2,5 @@
 
 rm -Rf Pods
 rm -Rf Podfile.lock
-rm -Rf sdk.xcworkspace
+rm -Rf TokenSdk.xcworkspace
 pod install
