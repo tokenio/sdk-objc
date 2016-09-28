@@ -1,0 +1,14 @@
+#!/bin/bash
+
+rm -Rf Pods
+rm -Rf Podfile.lock
+rm -Rf TokenSdk.xcworkspace
+rm -Rf src/generated
+
+rm -Rf Samples/TKObjc/Pods
+rm -Rf Samples/TKObjc/Podfile.lock
+rm -Rf Samples/TKObjc/TokenSdk.xcworkspace
+
+rm -Rf Samples/TKSwift/Pods
+rm -Rf Samples/TKSwift/Podfile.lock
+rm -Rf Samples/TKSwift/TokenSdk.xcworkspace

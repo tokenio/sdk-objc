@@ -4,8 +4,8 @@
 //
 
 #import <Protobuf/GPBMessage.h>
-#import <Member.pbobjc.h>
-#import <Security.pbobjc.h>
+#import "Member.pbobjc.h"
+#import "Security.pbobjc.h"
 
 #import "TKAccount.h"
 #import "TKMember.h"

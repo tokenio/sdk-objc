@@ -33,7 +33,7 @@
     return [call run:^{
         [self.async createMember:alias
                         onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
-                         onError:call.onError];
+                         onError: call.onError];
     }];
 }
 

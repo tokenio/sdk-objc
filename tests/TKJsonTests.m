@@ -4,8 +4,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <Member.pbobjc.h>
-#import <Token.pbobjc.h>
+#import "Member.pbobjc.h"
+#import "Token.pbobjc.h"
 
 #import "TKJson.h"
 

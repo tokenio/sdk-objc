@@ -3,7 +3,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import <Account.pbobjc.h>
+#import "Account.pbobjc.h"
 
 #import "TKAccount.h"
 #import "TKJson.h"

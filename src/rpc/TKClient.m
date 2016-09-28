@@ -3,9 +3,9 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <ProtoRPC/ProtoRPC.h>
-#import <Member.pbobjc.h>
-#import <gateway/Gateway.pbrpc.h>
+#import "ProtoRPC/ProtoRPC.h"
+#import "Member.pbobjc.h"
+#import "gateway/Gateway.pbrpc.h"
 
 #import "TKClient.h"
 #import "TKSecretKey.h"

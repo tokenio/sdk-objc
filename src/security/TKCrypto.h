@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Token.pbobjc.h>
+#import "Token.pbobjc.h"
 
 @class TKSecretKey;
 @class GPBMessage;

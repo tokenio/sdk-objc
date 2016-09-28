@@ -3,8 +3,8 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import <Protobuf/GPBMessage.h>
-#import <Token.pbobjc.h>
+#import "Protobuf/GPBMessage.h"
+#import "Token.pbobjc.h"
 
 #import "ed25519.h"
 #import "TKCrypto.h"
