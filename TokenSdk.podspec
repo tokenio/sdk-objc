@@ -55,6 +55,7 @@ Pod::Spec.new do |s|
        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
        # Needed to find our generated headers that are quoted
        # The first entry is for local file system linked Pods. The second for Pods from a repo
-        'USER_HEADER_SEARCH_PATHS' => "\"#{currentdir}/#{gendir}\" \"Pods/#{s.name}/#{gendir}\""
+        'USER_HEADER_SEARCH_PATHS' => "\"#{currentdir}/#{gendir}\" \"${PODS_ROOT}/#{s.name}/#{gendir}\""
     }
 end
+"${PODS_ROOT}/TokenSdk/src/generated"
