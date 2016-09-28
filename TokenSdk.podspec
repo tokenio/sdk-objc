@@ -58,4 +58,3 @@ Pod::Spec.new do |s|
         'USER_HEADER_SEARCH_PATHS' => "\"#{currentdir}/#{gendir}\" \"${PODS_ROOT}/#{s.name}/#{gendir}\""
     }
 end
-"${PODS_ROOT}/TokenSdk/src/generated"
