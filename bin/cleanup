@@ -3,7 +3,9 @@
 rm -Rf Pods
 rm -Rf Podfile.lock
 rm -Rf TokenSdk.xcworkspace
-rm -Rf src/generated
+
+# This cleans up the generated files but these are needed if we use this git project directly as a private repo
+#rm -Rf src/generated
 
 rm -Rf Samples/TKObjc/Pods
 rm -Rf Samples/TKObjc/Podfile.lock
