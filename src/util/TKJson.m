@@ -76,8 +76,7 @@
         default:
             [NSException
                     raise:NSInternalInconsistencyException
-                   format:@"Unsupported field type: %@"
-                arguments:field.fieldType];
+                   format:@"Unsupported field type: %@", [field name]];
     }
 }
 

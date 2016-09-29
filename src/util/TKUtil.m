@@ -63,7 +63,7 @@
 
 + (NSString *)idForData:(NSData *)data {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH] = {0};
-    CC_SHA256(data.bytes, data.length, digest);
+    CC_SHA256(data.bytes, (int) data.length, digest);
 
     NSData *shaData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
     NSString *shaString = [self base64EncodeData:shaData];
