@@ -11,7 +11,16 @@ import TokenSdk
 
 class ViewController: UIViewController {
     var tokenIOAsync:TokenIOAsync?
-    
+    var tkmember:TKMemberAsync?
+    var client:TKClient?
+    var memberId:String?
+    var key:TKSecretKey?
+    let gatewayhost = "dev.api.token.io"
+    let gatewayport:Int32 = 90
+    //
+    @IBOutlet weak var memberLabel:UILabel!
+    @IBOutlet weak var aliasTextfield: UITextField!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -24,38 +33,64 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        createMember()
     }
     
     
-    func createMember() {
+    func info(title:String, message:String) {
+        let myAlert = UIAlertController(title: "Info", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        myAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { _ in
+        })
+        self.present(myAlert, animated: true, completion: nil)
+    }
+    
+    @IBAction func createMember(_ sender : AnyObject) {
         let builder = TokenIOBuilder()!
         print("builder is this \(builder)")
         
-        builder.host = "dev.api.token.io";
-        builder.port = 90;
+        builder.host = gatewayhost
+        builder.port = gatewayport
         
         tokenIOAsync = builder.buildAsync()
         print("tokenIOAsync is this \(tokenIOAsync)")
         
-        tokenIOAsync?.createMember("GREG982314",
+        tokenIOAsync?.createMember(nil,
                   onSucess: { (member) -> Void in
-                    print("member is this \(member)")
-                    print("member.firstAlias is this \(member?.firstAlias)")
+                    self.tkmember = member
+                    self.memberId = member?.id
+                    self.memberLabel.text = "Id: \(self.memberId)"
+                    print("member is this \(self.tkmember)")
+                    print("member.firstAlias should be nil is this \(self.tkmember?.firstAlias)")
             },
             onError: { (error) -> Void in
+                self.info(title:"Error",message:"\(error)")
                 print("createMember Error:\(error)")
             }
         )
     
     }
     
+    @IBAction func addAlias(_ sender : AnyObject) {
+        tkmember?.addAlias(aliasTextfield.text,
+                          onSucess: { (member) -> Void in
+                            self.info(title:"Info",message:"Done")
+           },
+                          onError: { (error) -> Void in
+                            self.info(title:"Error",message:"\(error)")
+                            print("addAlias Error:\(error)")
+        })
+    }
+    
+    @IBAction func removeAlias(_ sender : AnyObject) {
+        tkmember?.removeAlias(aliasTextfield.text,
+                           onSucess: { () -> Void in
+                            self.info(title:"Info",message:"Done")
+            },
+                           onError: { (error) -> Void in
+                            self.info(title:"Error",message:"\(error)")
+                            print("removeAlias Error:\(error)")
+        })
+    }
     
     
-    // dev.api.token.io 91 bank
-    
-    //let bank = TKBankClient.bankClientWithHost("dev.api.token.io",port:91)
-    
-
 }
 
