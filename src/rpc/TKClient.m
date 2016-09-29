@@ -90,7 +90,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addKey.level = level;
+    update.addKey.level = (int) level;
     update.addKey.publicKey = newKey.publicKeyStr;
 
     [self _updateMember:update onSuccess:onSuccess onError:onError];
