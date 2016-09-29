@@ -98,6 +98,8 @@
                                     initWithGateway:gateway
                                     memberId:memberId
                                     secretKey:key];
+         __weak typeof(authenticated) weakAuthenticated = authenticated;
+
          if(alias != nil) {
              [authenticated addAlias:alias
                                   to:member
@@ -106,7 +108,7 @@
                   onSuccess([TKMemberAsync
                              member:m
                              secretKey:key
-                             useClient:authenticated]);
+                             useClient:weakAuthenticated]);
               }
                              onError: onError];
          }

@@ -67,13 +67,15 @@
 - (void)approveKey:(TKSecretKey *)key
           onSucess:(OnSuccess)onSuccess
            onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+    
     [client addKey:key
                 to:member
              level:0
          onSuccess:
                  ^(Member *m) {
-                     [member clear];
-                     [member mergeFrom:m];
+                     [retainedMember clear];
+                     [retainedMember mergeFrom:m];
                      onSuccess();
                  }
            onError:onError];
@@ -96,12 +98,14 @@
 - (void)addAlias:(NSString *)alias
         onSucess:(OnSuccess)onSuccess
          onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+
     [client addAlias:alias
                   to:member
            onSuccess:
                    ^(Member *m) {
-                       [member clear];
-                       [member mergeFrom:m];
+                       [retainedMember clear];
+                       [retainedMember mergeFrom:m];
                        onSuccess();
                    }
              onError:onError];
