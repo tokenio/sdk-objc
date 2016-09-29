@@ -214,6 +214,18 @@
              responseClass:[NotifyAddKeyResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark NotifyLinkAccountsAndAddKey(NotifyLinkAccountsAndAddKeyRequest) returns (NotifyLinkAccountsAndAddKeyResponse)
+
+- (void)notifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToNotifyLinkAccountsAndAddKeyWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToNotifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"NotifyLinkAccountsAndAddKey"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[NotifyLinkAccountsAndAddKeyResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark LinkAccount(LinkAccountRequest) returns (LinkAccountResponse)
 
 /**
@@ -390,6 +402,18 @@
 // Returns a not-yet-started RPC object.
 - (GRPCProtoCall *)RPCToLookupTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LookupTokens"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[LookupTokensResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark LookupInformationTokens(LookupTokensRequest) returns (LookupTokensResponse)
+
+- (void)lookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLookupInformationTokensWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToLookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LookupInformationTokens"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[LookupTokensResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];

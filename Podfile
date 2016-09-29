@@ -1,7 +1,5 @@
 platform :ios, '8.0'
 
-
-
 target 'TokenSdk' do
   pod '!ProtoCompiler'
   pod '!ProtoCompiler-gRPCPlugin'
@@ -12,8 +10,6 @@ target 'TokenSdk' do
     inherit! :search_paths
   end
 end
-
-post_install do |installer|
 
 #
 # Generates Objective-C code for the protos.
@@ -56,8 +52,7 @@ def generateProtosCmd(path_to_protos, out_dir)
 end
 
 
-
-
+post_install do |installer|
     # Fetch the protos.
     fetchProtos();
 
@@ -71,6 +66,4 @@ end
         generateProtosCmd("external/bankapi", dir);
 
     system(gencommand)
-
 end
-
