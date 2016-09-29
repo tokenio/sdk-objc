@@ -54,6 +54,6 @@ Pod::Spec.new do |s|
        # This is needed by all pods that depend on gRPC-RxLibrary:
        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
        # Needed to find our generated headers that are quoted
-        'USER_HEADER_SEARCH_PATHS' => "#{currentdir}/#{gendir}"
+        'USER_HEADER_SEARCH_PATHS' => "'#{currentdir}/#{gendir}'"
     }
 end
