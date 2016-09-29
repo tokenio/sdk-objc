@@ -1,1101 +1,3619 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B211D989A930043345F /* Account.pbobjc.h */; };
-		37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B221D989A930043345F /* Account.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B4E1D989A930043345F /* Bankapi.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B241D989A930043345F /* Bankapi.pbobjc.h */; };
-		37637B4F1D989A930043345F /* Bankapi.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B251D989A930043345F /* Bankapi.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B501D989A930043345F /* Bankapi.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B261D989A930043345F /* Bankapi.pbrpc.h */; };
-		37637B511D989A930043345F /* Bankapi.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B271D989A930043345F /* Bankapi.pbrpc.m */; };
-		37637B521D989A930043345F /* Fank.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B281D989A930043345F /* Fank.pbobjc.h */; };
-		37637B531D989A930043345F /* Fank.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B291D989A930043345F /* Fank.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B541D989A930043345F /* Device.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B2A1D989A930043345F /* Device.pbobjc.h */; };
-		37637B551D989A930043345F /* Device.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B2B1D989A930043345F /* Device.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B561D989A930043345F /* Auth.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B2D1D989A930043345F /* Auth.pbobjc.h */; };
-		37637B571D989A930043345F /* Auth.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B2E1D989A930043345F /* Auth.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B2F1D989A930043345F /* Gateway.pbobjc.h */; };
-		37637B591D989A930043345F /* Gateway.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B301D989A930043345F /* Gateway.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B311D989A930043345F /* Gateway.pbrpc.h */; };
-		37637B5B1D989A930043345F /* Gateway.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B321D989A930043345F /* Gateway.pbrpc.m */; };
-		37637B5C1D989A930043345F /* Annotations.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B351D989A930043345F /* Annotations.pbobjc.h */; };
-		37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B361D989A930043345F /* Annotations.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B5E1D989A930043345F /* HTTP.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B371D989A930043345F /* HTTP.pbobjc.h */; };
-		37637B5F1D989A930043345F /* HTTP.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B381D989A930043345F /* HTTP.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B601D989A930043345F /* Descriptor.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B3A1D989A930043345F /* Descriptor.pbobjc.h */; };
-		37637B611D989A930043345F /* Descriptor.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B3B1D989A930043345F /* Descriptor.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B621D989A930043345F /* Member.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B3C1D989A930043345F /* Member.pbobjc.h */; };
-		37637B631D989A930043345F /* Member.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B3D1D989A930043345F /* Member.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B641D989A930043345F /* Money.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B3E1D989A930043345F /* Money.pbobjc.h */; };
-		37637B651D989A930043345F /* Money.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B3F1D989A930043345F /* Money.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B661D989A930043345F /* Notification.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B401D989A930043345F /* Notification.pbobjc.h */; };
-		37637B671D989A930043345F /* Notification.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B411D989A930043345F /* Notification.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B681D989A930043345F /* Payment.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B421D989A930043345F /* Payment.pbobjc.h */; };
-		37637B691D989A930043345F /* Payment.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B431D989A930043345F /* Payment.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B441D989A930043345F /* Security.pbobjc.h */; };
-		37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B451D989A930043345F /* Security.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B461D989A930043345F /* Token.pbobjc.h */; };
-		37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B471D989A930043345F /* Token.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B481D989A930043345F /* Transaction.pbobjc.h */; };
-		37637B6F1D989A930043345F /* Transaction.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B491D989A930043345F /* Transaction.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B4A1D989A930043345F /* Transfer.pbobjc.h */; };
-		37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B4B1D989A930043345F /* Transfer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3777163E1D99BF6800287239 /* TokenSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 3777163D1D99BF6800287239 /* TokenSdk.h */; };
-		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
-		8A9909191D890E820096A7FA /* TokenSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
-		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
-		ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */; };
-		ABA7B0303C146231D78BE96C /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC2013ED8025D15A3E18 /* seed.c */; };
-		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; };
-		ABA7B103B5929B86EF4C8689 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABA7BDE5D0F88461A97DCA5A /* license.txt */; };
-		ABA7B155594D4232CAF702FF /* TKMemberAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BD61CA7BB1D1369DC3B4 /* TKMemberAsync.h */; };
-		ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */; };
-		ABA7B164177B8BB039D61458 /* keypair.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B0F24C0DAA30675877A4 /* keypair.c */; };
-		ABA7B1759A41D7570F394BDA /* TKSecretKey.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B8DE03F950AD6FDF5743 /* TKSecretKey.m */; };
-		ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B1A3E2263090B97A6BCD /* ed25519.h */; };
-		ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B30F0E5668621466B95A /* TKTestBase.h */; };
-		ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC8DA7F5DC3A1EEC68D7 /* TokenIOBuilder.m */; };
-		ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC48C9A115AEEC7143CA /* TKUnauthenticatedClient.m */; };
-		ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B6D8EA5337CAD7ECE322 /* TKUnauthenticatedClient.h */; };
-		ABA7B31148B04774C33BF931 /* fixedint.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BC1286CBA07E69B30D14 /* fixedint.h */; };
-		ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B3B3B7497B3EC3C6F2F7 /* TKMember.m */; };
-		ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */; };
-		ABA7B396AEB29286AB91C613 /* sc.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BD5AE2B87B579AE072EB /* sc.h */; };
-		ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */; };
-		ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B71635A1A13440B4B70D /* sign.c */; };
-		ABA7B46027069D67CCC10553 /* TKRpcSyncCall.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BAE86AFFD5A7950556E9 /* TKRpcSyncCall.h */; };
-		ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BB639412CC7CAEA9EE8D /* TokenIOBuilder.h */; };
-		ABA7B5835408D6DD145BFCD0 /* TKClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BAD71645256D1FA06F7D /* TKClient.m */; };
-		ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BA2C7E715C76574378AB /* TokenIO.m */; };
-		ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF3C591D1A2AE3277E3D /* add_scalar.c */; };
-		ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B7A8D60CEEC0A95D195D /* precomp_data.h */; };
-		ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */ = {isa = PBXBuildFile; fileRef = ABA7B1E8CB2CAE853F4F9977 /* ed25519_64.dll */; };
-		ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */; };
-		ABA7B6FB78BFBC904EBBA4DE /* TKUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */; };
-		ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */ = {isa = PBXBuildFile; fileRef = ABA7BF98D0D666144252C84D /* ed25519_32.dll */; };
-		ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */; };
-		ABA7B7D66624F278B78581B1 /* TKMemberAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B5B2892CFF8B1E4F0EE0 /* TKMemberAsync.m */; };
-		ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B15B05913DC313ECE3BF /* TKAccount.h */; };
-		ABA7B847267CDA906A218BBB /* ge.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B25C7C21BC82E0F913A8 /* ge.c */; };
-		ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */; };
-		ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BADCF833317256FF6F8A /* TokenIOAsync.h */; };
-		ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */; };
-		ABA7BA3DA0354DBB07146BE8 /* TKJson.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BEE87D6C30096F9CADA3 /* TKJson.h */; };
-		ABA7BA98793B0592D11A83BB /* sc.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BEAF5A44E025586931AB /* sc.c */; };
-		ABA7BA9B13612439D753F584 /* TKJson.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B899E7F7DE3107CB62E1 /* TKJson.m */; };
-		ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BB5EAEB32937327F4192 /* ge.h */; };
-		ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */; };
-		ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B75B2E97AF95FBDEF4AD /* fe.h */; };
-		ABA7BB1317593EB8E79F3B17 /* TKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B0D240C12726391240B2 /* TKCrypto.m */; };
-		ABA7BBB178DD0DBB9BF4DBA8 /* TKAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B9993BB80AAFAD3B1DC9 /* TKAccount.m */; };
-		ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBBA445C30817501F927 /* TKMember.h */; };
-		ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */; };
-		ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6A0C915116837349E69 /* TKUtilTests.m */; };
-		ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B600FA6B997FDF5087F1 /* test.c */; };
-		ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA46096C815D0B7DBD95 /* TKClient.h */; };
-		ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */; };
-		ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B75329B7D39384598938 /* verify.c */; };
-		ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */; };
-		ABA7BE79C71E8822844965D3 /* TKSecretKey.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B84875368F06B5CD1416 /* TKSecretKey.h */; };
-		ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BE0106B24FCB0A9C556C /* key_exchange.c */; };
-		ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BC35315815FA7C52A197 /* TokenIO.h */; };
-		ABA7BEE68ED01F9216F1D387 /* TokenIOAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B5B3D15AD634892D98D4 /* TokenIOAsync.m */; };
-		ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2B002EB7F6F68C6DC25 /* TKRpcLog.m */; };
-		ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF342FAA1676FC1BC9EF /* TKRpcSyncCall.m */; };
-		ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B7A013686B576B8A78D1 /* TKCrypto.h */; };
-		ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B16EB35673E0ED34C018 /* TKUtil.m */; };
-		ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BDCFD5AED8EBB4F32EC2 /* sha512.h */; };
-		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
-		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
-		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		8A99091A1D890E820096A7FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A9909051D890E820096A7FA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8A99090D1D890E820096A7FA;
-			remoteInfo = sdk;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		0867CB9D057EBAA4E9BE6791 /* libPods-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		17987F26F8CA75E8D7FFFCFA /* Pods-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.release.xcconfig"; sourceTree = "<group>"; };
-		27932CCA173CAF159694397E /* libPods-TokenSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C88C1E343E1E5719F3A91FD /* Pods-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
-		33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.debug.xcconfig"; sourceTree = "<group>"; };
-		35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
-		37637B211D989A930043345F /* Account.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.pbobjc.h; sourceTree = "<group>"; };
-		37637B221D989A930043345F /* Account.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.pbobjc.m; sourceTree = "<group>"; };
-		37637B241D989A930043345F /* Bankapi.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankapi.pbobjc.h; sourceTree = "<group>"; };
-		37637B251D989A930043345F /* Bankapi.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankapi.pbobjc.m; sourceTree = "<group>"; };
-		37637B261D989A930043345F /* Bankapi.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankapi.pbrpc.h; sourceTree = "<group>"; };
-		37637B271D989A930043345F /* Bankapi.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankapi.pbrpc.m; sourceTree = "<group>"; };
-		37637B281D989A930043345F /* Fank.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbobjc.h; sourceTree = "<group>"; };
-		37637B291D989A930043345F /* Fank.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbobjc.m; sourceTree = "<group>"; };
-		37637B2A1D989A930043345F /* Device.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.pbobjc.h; sourceTree = "<group>"; };
-		37637B2B1D989A930043345F /* Device.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.pbobjc.m; sourceTree = "<group>"; };
-		37637B2D1D989A930043345F /* Auth.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Auth.pbobjc.h; sourceTree = "<group>"; };
-		37637B2E1D989A930043345F /* Auth.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Auth.pbobjc.m; sourceTree = "<group>"; };
-		37637B2F1D989A930043345F /* Gateway.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gateway.pbobjc.h; sourceTree = "<group>"; };
-		37637B301D989A930043345F /* Gateway.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gateway.pbobjc.m; sourceTree = "<group>"; };
-		37637B311D989A930043345F /* Gateway.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gateway.pbrpc.h; sourceTree = "<group>"; };
-		37637B321D989A930043345F /* Gateway.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gateway.pbrpc.m; sourceTree = "<group>"; };
-		37637B351D989A930043345F /* Annotations.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotations.pbobjc.h; sourceTree = "<group>"; };
-		37637B361D989A930043345F /* Annotations.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotations.pbobjc.m; sourceTree = "<group>"; };
-		37637B371D989A930043345F /* HTTP.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTP.pbobjc.h; sourceTree = "<group>"; };
-		37637B381D989A930043345F /* HTTP.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTP.pbobjc.m; sourceTree = "<group>"; };
-		37637B3A1D989A930043345F /* Descriptor.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Descriptor.pbobjc.h; sourceTree = "<group>"; };
-		37637B3B1D989A930043345F /* Descriptor.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Descriptor.pbobjc.m; sourceTree = "<group>"; };
-		37637B3C1D989A930043345F /* Member.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.pbobjc.h; sourceTree = "<group>"; };
-		37637B3D1D989A930043345F /* Member.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.pbobjc.m; sourceTree = "<group>"; };
-		37637B3E1D989A930043345F /* Money.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Money.pbobjc.h; sourceTree = "<group>"; };
-		37637B3F1D989A930043345F /* Money.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Money.pbobjc.m; sourceTree = "<group>"; };
-		37637B401D989A930043345F /* Notification.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.pbobjc.h; sourceTree = "<group>"; };
-		37637B411D989A930043345F /* Notification.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.pbobjc.m; sourceTree = "<group>"; };
-		37637B421D989A930043345F /* Payment.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.pbobjc.h; sourceTree = "<group>"; };
-		37637B431D989A930043345F /* Payment.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.pbobjc.m; sourceTree = "<group>"; };
-		37637B441D989A930043345F /* Security.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Security.pbobjc.h; sourceTree = "<group>"; };
-		37637B451D989A930043345F /* Security.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Security.pbobjc.m; sourceTree = "<group>"; };
-		37637B461D989A930043345F /* Token.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.pbobjc.h; sourceTree = "<group>"; };
-		37637B471D989A930043345F /* Token.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Token.pbobjc.m; sourceTree = "<group>"; };
-		37637B481D989A930043345F /* Transaction.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.pbobjc.h; sourceTree = "<group>"; };
-		37637B491D989A930043345F /* Transaction.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.pbobjc.m; sourceTree = "<group>"; };
-		37637B4A1D989A930043345F /* Transfer.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transfer.pbobjc.h; sourceTree = "<group>"; };
-		37637B4B1D989A930043345F /* Transfer.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transfer.pbobjc.m; sourceTree = "<group>"; };
-		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
-		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
-		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
-		8A99090E1D890E820096A7FA /* TokenSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TokenSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A9909131D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8A9909181D890E820096A7FA /* TokenSdk.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokenSdk.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKMemberRegistrationTests.m; sourceTree = "<group>"; };
-		8A99091F1D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0BD2260CD0EE1FB0E488C44 /* libPods-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBankClient.h; sourceTree = "<group>"; };
-		ABA7B0D240C12726391240B2 /* TKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCrypto.m; sourceTree = "<group>"; };
-		ABA7B0F24C0DAA30675877A4 /* keypair.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keypair.c; sourceTree = "<group>"; };
-		ABA7B15B05913DC313ECE3BF /* TKAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccount.h; sourceTree = "<group>"; };
-		ABA7B16EB35673E0ED34C018 /* TKUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUtil.m; sourceTree = "<group>"; };
-		ABA7B1A3E2263090B97A6BCD /* ed25519.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ed25519.h; sourceTree = "<group>"; };
-		ABA7B1E8CB2CAE853F4F9977 /* ed25519_64.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; path = ed25519_64.dll; sourceTree = "<group>"; };
-		ABA7B25C7C21BC82E0F913A8 /* ge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ge.c; sourceTree = "<group>"; };
-		ABA7B2B002EB7F6F68C6DC25 /* TKRpcLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcLog.m; sourceTree = "<group>"; };
-		ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccountAsync.m; sourceTree = "<group>"; };
-		ABA7B30F0E5668621466B95A /* TKTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestBase.h; sourceTree = "<group>"; };
-		ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCryptoTests.m; sourceTree = "<group>"; };
-		ABA7B3B3B7497B3EC3C6F2F7 /* TKMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMember.m; sourceTree = "<group>"; };
-		ABA7B5B2892CFF8B1E4F0EE0 /* TKMemberAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberAsync.m; sourceTree = "<group>"; };
-		ABA7B5B3D15AD634892D98D4 /* TokenIOAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenIOAsync.m; sourceTree = "<group>"; };
-		ABA7B600FA6B997FDF5087F1 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		ABA7B6A0C915116837349E69 /* TKUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUtilTests.m; sourceTree = "<group>"; };
-		ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKPaymentRedemptionTests.m; sourceTree = "<group>"; };
-		ABA7B6D8EA5337CAD7ECE322 /* TKUnauthenticatedClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKUnauthenticatedClient.h; sourceTree = "<group>"; };
-		ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTransactionsTests.m; sourceTree = "<group>"; };
-		ABA7B71635A1A13440B4B70D /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sign.c; sourceTree = "<group>"; };
-		ABA7B75329B7D39384598938 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = verify.c; sourceTree = "<group>"; };
-		ABA7B75B2E97AF95FBDEF4AD /* fe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fe.h; sourceTree = "<group>"; };
-		ABA7B7A013686B576B8A78D1 /* TKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKCrypto.h; sourceTree = "<group>"; };
-		ABA7B7A8D60CEEC0A95D195D /* precomp_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = precomp_data.h; sourceTree = "<group>"; };
-		ABA7B84875368F06B5CD1416 /* TKSecretKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecretKey.h; sourceTree = "<group>"; };
-		ABA7B899E7F7DE3107CB62E1 /* TKJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKJson.m; sourceTree = "<group>"; };
-		ABA7B8DE03F950AD6FDF5743 /* TKSecretKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecretKey.m; sourceTree = "<group>"; };
-		ABA7B9993BB80AAFAD3B1DC9 /* TKAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccount.m; sourceTree = "<group>"; };
-		ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKUtil.h; sourceTree = "<group>"; };
-		ABA7BA2C7E715C76574378AB /* TokenIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenIO.m; sourceTree = "<group>"; };
-		ABA7BA46096C815D0B7DBD95 /* TKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKClient.h; sourceTree = "<group>"; };
-		ABA7BAD71645256D1FA06F7D /* TKClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKClient.m; sourceTree = "<group>"; };
-		ABA7BADCF833317256FF6F8A /* TokenIOAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenIOAsync.h; sourceTree = "<group>"; };
-		ABA7BAE86AFFD5A7950556E9 /* TKRpcSyncCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcSyncCall.h; sourceTree = "<group>"; };
-		ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccountsTests.m; sourceTree = "<group>"; };
-		ABA7BB41B15B9C824D04376C /* fe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fe.c; sourceTree = "<group>"; };
-		ABA7BB5EAEB32937327F4192 /* ge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ge.h; sourceTree = "<group>"; };
-		ABA7BB639412CC7CAEA9EE8D /* TokenIOBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenIOBuilder.h; sourceTree = "<group>"; };
-		ABA7BBBA445C30817501F927 /* TKMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMember.h; sourceTree = "<group>"; };
-		ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcLog.h; sourceTree = "<group>"; };
-		ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTypedef.h; sourceTree = "<group>"; };
-		ABA7BC1286CBA07E69B30D14 /* fixedint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedint.h; sourceTree = "<group>"; };
-		ABA7BC1E54BAFDC11AA75D6D /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha512.c; sourceTree = "<group>"; };
-		ABA7BC2013ED8025D15A3E18 /* seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = seed.c; sourceTree = "<group>"; };
-		ABA7BC35315815FA7C52A197 /* TokenIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenIO.h; sourceTree = "<group>"; };
-		ABA7BC48C9A115AEEC7143CA /* TKUnauthenticatedClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUnauthenticatedClient.m; sourceTree = "<group>"; };
-		ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBankClient.m; sourceTree = "<group>"; };
-		ABA7BC8DA7F5DC3A1EEC68D7 /* TokenIOBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenIOBuilder.m; sourceTree = "<group>"; };
-		ABA7BD5AE2B87B579AE072EB /* sc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sc.h; sourceTree = "<group>"; };
-		ABA7BD61CA7BB1D1369DC3B4 /* TKMemberAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberAsync.h; sourceTree = "<group>"; };
-		ABA7BDCFD5AED8EBB4F32EC2 /* sha512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha512.h; sourceTree = "<group>"; };
-		ABA7BDE5D0F88461A97DCA5A /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
-		ABA7BE0106B24FCB0A9C556C /* key_exchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = key_exchange.c; sourceTree = "<group>"; };
-		ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKPaymentTokenTests.m; sourceTree = "<group>"; };
-		ABA7BEAF5A44E025586931AB /* sc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sc.c; sourceTree = "<group>"; };
-		ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestBase.m; sourceTree = "<group>"; };
-		ABA7BEE87D6C30096F9CADA3 /* TKJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKJson.h; sourceTree = "<group>"; };
-		ABA7BF17BA41316C7B66823D /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
-		ABA7BF342FAA1676FC1BC9EF /* TKRpcSyncCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcSyncCall.m; sourceTree = "<group>"; };
-		ABA7BF3C591D1A2AE3277E3D /* add_scalar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = add_scalar.c; sourceTree = "<group>"; };
-		ABA7BF98D0D666144252C84D /* ed25519_32.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; path = ed25519_32.dll; sourceTree = "<group>"; };
-		ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKJsonTests.m; sourceTree = "<group>"; };
-		ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccountAsync.h; sourceTree = "<group>"; };
-		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
-		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		8A99090A1D890E820096A7FA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8A9909151D890E820096A7FA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8A9909191D890E820096A7FA /* TokenSdk.framework in Frameworks */,
-				AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		37637B201D989A930043345F /* generated */ = {
-			isa = PBXGroup;
-			children = (
-				37637B211D989A930043345F /* Account.pbobjc.h */,
-				37637B221D989A930043345F /* Account.pbobjc.m */,
-				37637B231D989A930043345F /* bankapi */,
-				37637B2A1D989A930043345F /* Device.pbobjc.h */,
-				37637B2B1D989A930043345F /* Device.pbobjc.m */,
-				37637B2C1D989A930043345F /* gateway */,
-				37637B331D989A930043345F /* google */,
-				37637B3C1D989A930043345F /* Member.pbobjc.h */,
-				37637B3D1D989A930043345F /* Member.pbobjc.m */,
-				37637B3E1D989A930043345F /* Money.pbobjc.h */,
-				37637B3F1D989A930043345F /* Money.pbobjc.m */,
-				37637B401D989A930043345F /* Notification.pbobjc.h */,
-				37637B411D989A930043345F /* Notification.pbobjc.m */,
-				37637B421D989A930043345F /* Payment.pbobjc.h */,
-				37637B431D989A930043345F /* Payment.pbobjc.m */,
-				37637B441D989A930043345F /* Security.pbobjc.h */,
-				37637B451D989A930043345F /* Security.pbobjc.m */,
-				37637B461D989A930043345F /* Token.pbobjc.h */,
-				37637B471D989A930043345F /* Token.pbobjc.m */,
-				37637B481D989A930043345F /* Transaction.pbobjc.h */,
-				37637B491D989A930043345F /* Transaction.pbobjc.m */,
-				37637B4A1D989A930043345F /* Transfer.pbobjc.h */,
-				37637B4B1D989A930043345F /* Transfer.pbobjc.m */,
-			);
-			name = generated;
-			path = src/generated;
-			sourceTree = SOURCE_ROOT;
-		};
-		37637B231D989A930043345F /* bankapi */ = {
-			isa = PBXGroup;
-			children = (
-				37637B241D989A930043345F /* Bankapi.pbobjc.h */,
-				37637B251D989A930043345F /* Bankapi.pbobjc.m */,
-				37637B261D989A930043345F /* Bankapi.pbrpc.h */,
-				37637B271D989A930043345F /* Bankapi.pbrpc.m */,
-				37637B281D989A930043345F /* Fank.pbobjc.h */,
-				37637B291D989A930043345F /* Fank.pbobjc.m */,
-			);
-			path = bankapi;
-			sourceTree = "<group>";
-		};
-		37637B2C1D989A930043345F /* gateway */ = {
-			isa = PBXGroup;
-			children = (
-				37637B2D1D989A930043345F /* Auth.pbobjc.h */,
-				37637B2E1D989A930043345F /* Auth.pbobjc.m */,
-				37637B2F1D989A930043345F /* Gateway.pbobjc.h */,
-				37637B301D989A930043345F /* Gateway.pbobjc.m */,
-				37637B311D989A930043345F /* Gateway.pbrpc.h */,
-				37637B321D989A930043345F /* Gateway.pbrpc.m */,
-			);
-			path = gateway;
-			sourceTree = "<group>";
-		};
-		37637B331D989A930043345F /* google */ = {
-			isa = PBXGroup;
-			children = (
-				37637B341D989A930043345F /* api */,
-				37637B391D989A930043345F /* protobuf */,
-			);
-			path = google;
-			sourceTree = "<group>";
-		};
-		37637B341D989A930043345F /* api */ = {
-			isa = PBXGroup;
-			children = (
-				37637B351D989A930043345F /* Annotations.pbobjc.h */,
-				37637B361D989A930043345F /* Annotations.pbobjc.m */,
-				37637B371D989A930043345F /* HTTP.pbobjc.h */,
-				37637B381D989A930043345F /* HTTP.pbobjc.m */,
-			);
-			path = api;
-			sourceTree = "<group>";
-		};
-		37637B391D989A930043345F /* protobuf */ = {
-			isa = PBXGroup;
-			children = (
-				37637B3A1D989A930043345F /* Descriptor.pbobjc.h */,
-				37637B3B1D989A930043345F /* Descriptor.pbobjc.m */,
-			);
-			path = protobuf;
-			sourceTree = "<group>";
-		};
-		45A6D2E987A941A285DA25C4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A0BD2260CD0EE1FB0E488C44 /* libPods-sdk.a */,
-				0867CB9D057EBAA4E9BE6791 /* libPods-sdkTests.a */,
-				27932CCA173CAF159694397E /* libPods-TokenSdk.a */,
-				FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8A9909041D890E820096A7FA = {
-			isa = PBXGroup;
-			children = (
-				8A9909101D890E820096A7FA /* src */,
-				8A99091C1D890E820096A7FA /* tests */,
-				8A99090F1D890E820096A7FA /* Products */,
-				CC754FFC3CA010778232A1E9 /* Pods */,
-				45A6D2E987A941A285DA25C4 /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		8A99090F1D890E820096A7FA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8A99090E1D890E820096A7FA /* TokenSdk.framework */,
-				8A9909181D890E820096A7FA /* TokenSdk.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8A9909101D890E820096A7FA /* src */ = {
-			isa = PBXGroup;
-			children = (
-				8A9909131D890E820096A7FA /* Info.plist */,
-				ABA7B2281FEA7BCDBB7045C3 /* api */,
-				ABA7BA2FC59F6E7FF0F39F6C /* rpc */,
-				ABA7BFE70DA2E2ABED08CD7B /* security */,
-				ABA7B92556DD88305DE6EDC5 /* util */,
-				37637B201D989A930043345F /* generated */,
-				ABA7BAEECC1C790312E0C61B /* ed25519 */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		8A99091C1D890E820096A7FA /* tests */ = {
-			isa = PBXGroup;
-			children = (
-				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
-				8A99091F1D890E820096A7FA /* Info.plist */,
-				ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */,
-				ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */,
-				ABA7B30F0E5668621466B95A /* TKTestBase.h */,
-				ABA7B6A0C915116837349E69 /* TKUtilTests.m */,
-				ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */,
-				ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */,
-				ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */,
-				ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */,
-				ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */,
-				ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */,
-				ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */,
-			);
-			path = tests;
-			sourceTree = "<group>";
-		};
-		ABA7B2281FEA7BCDBB7045C3 /* api */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7BBBA445C30817501F927 /* TKMember.h */,
-				ABA7B3B3B7497B3EC3C6F2F7 /* TKMember.m */,
-				ABA7BC35315815FA7C52A197 /* TokenIO.h */,
-				ABA7BA2C7E715C76574378AB /* TokenIO.m */,
-				ABA7BC8DA7F5DC3A1EEC68D7 /* TokenIOBuilder.m */,
-				ABA7BB639412CC7CAEA9EE8D /* TokenIOBuilder.h */,
-				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
-				ABA7B9993BB80AAFAD3B1DC9 /* TKAccount.m */,
-				ABA7B15B05913DC313ECE3BF /* TKAccount.h */,
-				ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */,
-				ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */,
-				ABA7B5B3D15AD634892D98D4 /* TokenIOAsync.m */,
-				ABA7BADCF833317256FF6F8A /* TokenIOAsync.h */,
-				ABA7BD61CA7BB1D1369DC3B4 /* TKMemberAsync.h */,
-				ABA7B5B2892CFF8B1E4F0EE0 /* TKMemberAsync.m */,
-				3777163D1D99BF6800287239 /* TokenSdk.h */,
-			);
-			path = api;
-			sourceTree = "<group>";
-		};
-		ABA7B655319DBC254DA98A75 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7BB41B15B9C824D04376C /* fe.c */,
-				ABA7B75B2E97AF95FBDEF4AD /* fe.h */,
-				ABA7B25C7C21BC82E0F913A8 /* ge.c */,
-				ABA7BB5EAEB32937327F4192 /* ge.h */,
-				ABA7BEAF5A44E025586931AB /* sc.c */,
-				ABA7BD5AE2B87B579AE072EB /* sc.h */,
-				ABA7BC2013ED8025D15A3E18 /* seed.c */,
-				ABA7B71635A1A13440B4B70D /* sign.c */,
-				ABA7BC1E54BAFDC11AA75D6D /* sha512.c */,
-				ABA7BDCFD5AED8EBB4F32EC2 /* sha512.h */,
-				ABA7B75329B7D39384598938 /* verify.c */,
-				ABA7B1A3E2263090B97A6BCD /* ed25519.h */,
-				ABA7B0F24C0DAA30675877A4 /* keypair.c */,
-				ABA7BC1286CBA07E69B30D14 /* fixedint.h */,
-				ABA7BF3C591D1A2AE3277E3D /* add_scalar.c */,
-				ABA7BE0106B24FCB0A9C556C /* key_exchange.c */,
-				ABA7B7A8D60CEEC0A95D195D /* precomp_data.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		ABA7B92556DD88305DE6EDC5 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7B899E7F7DE3107CB62E1 /* TKJson.m */,
-				ABA7B16EB35673E0ED34C018 /* TKUtil.m */,
-				ABA7BEE87D6C30096F9CADA3 /* TKJson.h */,
-				ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
-		ABA7BA2FC59F6E7FF0F39F6C /* rpc */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7BA46096C815D0B7DBD95 /* TKClient.h */,
-				ABA7BAD71645256D1FA06F7D /* TKClient.m */,
-				ABA7B6D8EA5337CAD7ECE322 /* TKUnauthenticatedClient.h */,
-				ABA7BC48C9A115AEEC7143CA /* TKUnauthenticatedClient.m */,
-				ABA7BF342FAA1676FC1BC9EF /* TKRpcSyncCall.m */,
-				ABA7BAE86AFFD5A7950556E9 /* TKRpcSyncCall.h */,
-				ABA7B2B002EB7F6F68C6DC25 /* TKRpcLog.m */,
-				ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */,
-			);
-			path = rpc;
-			sourceTree = "<group>";
-		};
-		ABA7BAEECC1C790312E0C61B /* ed25519 */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7B655319DBC254DA98A75 /* src */,
-				ABA7BF98D0D666144252C84D /* ed25519_32.dll */,
-				ABA7B1E8CB2CAE853F4F9977 /* ed25519_64.dll */,
-				ABA7BDE5D0F88461A97DCA5A /* license.txt */,
-				ABA7BF17BA41316C7B66823D /* readme.md */,
-				ABA7B600FA6B997FDF5087F1 /* test.c */,
-			);
-			path = ed25519;
-			sourceTree = "<group>";
-		};
-		ABA7BFE70DA2E2ABED08CD7B /* security */ = {
-			isa = PBXGroup;
-			children = (
-				ABA7B7A013686B576B8A78D1 /* TKCrypto.h */,
-				ABA7B0D240C12726391240B2 /* TKCrypto.m */,
-				ABA7B8DE03F950AD6FDF5743 /* TKSecretKey.m */,
-				ABA7B84875368F06B5CD1416 /* TKSecretKey.h */,
-			);
-			path = security;
-			sourceTree = "<group>";
-		};
-		CC754FFC3CA010778232A1E9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */,
-				17987F26F8CA75E8D7FFFCFA /* Pods-sdk.release.xcconfig */,
-				CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */,
-				2C88C1E343E1E5719F3A91FD /* Pods-sdkTests.release.xcconfig */,
-				33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */,
-				78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */,
-				35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */,
-				CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		8A99090B1D890E820096A7FA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
-				ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */,
-				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
-				ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */,
-				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
-				37637B521D989A930043345F /* Fank.pbobjc.h in Headers */,
-				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
-				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
-				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
-				37637B5C1D989A930043345F /* Annotations.pbobjc.h in Headers */,
-				ABA7BE79C71E8822844965D3 /* TKSecretKey.h in Headers */,
-				37637B641D989A930043345F /* Money.pbobjc.h in Headers */,
-				ABA7BA3DA0354DBB07146BE8 /* TKJson.h in Headers */,
-				ABA7B6FB78BFBC904EBBA4DE /* TKUtil.h in Headers */,
-				37637B5E1D989A930043345F /* HTTP.pbobjc.h in Headers */,
-				ABA7B46027069D67CCC10553 /* TKRpcSyncCall.h in Headers */,
-				37637B661D989A930043345F /* Notification.pbobjc.h in Headers */,
-				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
-				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
-				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
-				37637B681D989A930043345F /* Payment.pbobjc.h in Headers */,
-				ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */,
-				ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */,
-				ABA7B396AEB29286AB91C613 /* sc.h in Headers */,
-				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
-				37637B501D989A930043345F /* Bankapi.pbrpc.h in Headers */,
-				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
-				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
-				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
-				3777163E1D99BF6800287239 /* TokenSdk.h in Headers */,
-				37637B601D989A930043345F /* Descriptor.pbobjc.h in Headers */,
-				37637B621D989A930043345F /* Member.pbobjc.h in Headers */,
-				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
-				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
-				37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */,
-				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
-				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
-				37637B541D989A930043345F /* Device.pbobjc.h in Headers */,
-				ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */,
-				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
-				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
-				ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */,
-				37637B4E1D989A930043345F /* Bankapi.pbobjc.h in Headers */,
-				37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */,
-				ABA7B155594D4232CAF702FF /* TKMemberAsync.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
-/* Begin PBXNativeTarget section */
-		8A99090D1D890E820096A7FA /* TokenSdk */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8A9909221D890E820096A7FA /* Build configuration list for PBXNativeTarget "TokenSdk" */;
-			buildPhases = (
-				598DAD75055FED68BA4A5752 /* [CP] Check Pods Manifest.lock */,
-				8A9909091D890E820096A7FA /* Sources */,
-				8A99090A1D890E820096A7FA /* Frameworks */,
-				8A99090B1D890E820096A7FA /* Headers */,
-				8A99090C1D890E820096A7FA /* Resources */,
-				92358EEBF311846E836E07B9 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TokenSdk;
-			productName = sdk;
-			productReference = 8A99090E1D890E820096A7FA /* TokenSdk.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		8A9909171D890E820096A7FA /* TokenSdkTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8A9909251D890E820096A7FA /* Build configuration list for PBXNativeTarget "TokenSdkTests" */;
-			buildPhases = (
-				3638CDEA9334A1620FAC5C16 /* [CP] Check Pods Manifest.lock */,
-				8A9909141D890E820096A7FA /* Sources */,
-				8A9909151D890E820096A7FA /* Frameworks */,
-				8A9909161D890E820096A7FA /* Resources */,
-				90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */,
-				47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8A99091B1D890E820096A7FA /* PBXTargetDependency */,
-			);
-			name = TokenSdkTests;
-			productName = sdkTests;
-			productReference = 8A9909181D890E820096A7FA /* TokenSdk.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		8A9909051D890E820096A7FA /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0730;
-				ORGANIZATIONNAME = "Token Inc";
-				TargetAttributes = {
-					8A99090D1D890E820096A7FA = {
-						CreatedOnToolsVersion = 7.3.1;
-					};
-					8A9909171D890E820096A7FA = {
-						CreatedOnToolsVersion = 7.3.1;
-					};
-				};
-			};
-			buildConfigurationList = 8A9909081D890E820096A7FA /* Build configuration list for PBXProject "TokenSdk" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = 8A9909041D890E820096A7FA;
-			productRefGroup = 8A99090F1D890E820096A7FA /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				8A99090D1D890E820096A7FA /* TokenSdk */,
-				8A9909171D890E820096A7FA /* TokenSdkTests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		8A99090C1D890E820096A7FA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */,
-				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,
-				ABA7B103B5929B86EF4C8689 /* license.txt in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8A9909161D890E820096A7FA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3638CDEA9334A1620FAC5C16 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		598DAD75055FED68BA4A5752 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		92358EEBF311846E836E07B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		8A9909091D890E820096A7FA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,
-				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,
-				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
-				37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */,
-				ABA7BB1317593EB8E79F3B17 /* TKCrypto.m in Sources */,
-				ABA7B5835408D6DD145BFCD0 /* TKClient.m in Sources */,
-				37637B5B1D989A930043345F /* Gateway.pbrpc.m in Sources */,
-				ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */,
-				37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */,
-				ABA7B1759A41D7570F394BDA /* TKSecretKey.m in Sources */,
-				ABA7BA9B13612439D753F584 /* TKJson.m in Sources */,
-				ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */,
-				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,
-				37637B531D989A930043345F /* Fank.pbobjc.m in Sources */,
-				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
-				ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */,
-				ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */,
-				ABA7B847267CDA906A218BBB /* ge.c in Sources */,
-				ABA7BA98793B0592D11A83BB /* sc.c in Sources */,
-				37637B671D989A930043345F /* Notification.pbobjc.m in Sources */,
-				ABA7B0303C146231D78BE96C /* seed.c in Sources */,
-				37637B571D989A930043345F /* Auth.pbobjc.m in Sources */,
-				ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */,
-				37637B691D989A930043345F /* Payment.pbobjc.m in Sources */,
-				ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */,
-				37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */,
-				37637B6F1D989A930043345F /* Transaction.pbobjc.m in Sources */,
-				37637B611D989A930043345F /* Descriptor.pbobjc.m in Sources */,
-				ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */,
-				ABA7B164177B8BB039D61458 /* keypair.c in Sources */,
-				ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */,
-				ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */,
-				37637B511D989A930043345F /* Bankapi.pbrpc.m in Sources */,
-				ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */,
-				37637B631D989A930043345F /* Member.pbobjc.m in Sources */,
-				37637B551D989A930043345F /* Device.pbobjc.m in Sources */,
-				ABA7BBB178DD0DBB9BF4DBA8 /* TKAccount.m in Sources */,
-				37637B651D989A930043345F /* Money.pbobjc.m in Sources */,
-				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,
-				37637B5F1D989A930043345F /* HTTP.pbobjc.m in Sources */,
-				37637B4F1D989A930043345F /* Bankapi.pbobjc.m in Sources */,
-				ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */,
-				ABA7BEE68ED01F9216F1D387 /* TokenIOAsync.m in Sources */,
-				37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */,
-				ABA7B7D66624F278B78581B1 /* TKMemberAsync.m in Sources */,
-				37637B591D989A930043345F /* Gateway.pbobjc.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8A9909141D890E820096A7FA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
-				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
-				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
-				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,
-				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
-				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
-				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
-				ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */,
-				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8A99091B1D890E820096A7FA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8A99090D1D890E820096A7FA /* TokenSdk */;
-			targetProxy = 8A99091A1D890E820096A7FA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin XCBuildConfiguration section */
-		8A9909201D890E820096A7FA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		8A9909211D890E820096A7FA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		8A9909231D890E820096A7FA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
-					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
-					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
-					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
-					src/generated,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "";
-				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdk;
-				PRODUCT_NAME = TokenSdk;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		8A9909241D890E820096A7FA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
-					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
-					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
-					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
-					src/generated,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "";
-				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdk;
-				PRODUCT_NAME = TokenSdk;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		8A9909261D890E820096A7FA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
-					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
-					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
-					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
-					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
-					"\"${PODS_ROOT}/TokenSdk\"",
-					src/generated,
-				);
-				INFOPLIST_FILE = tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdkTests;
-				PRODUCT_NAME = TokenSdk;
-			};
-			name = Debug;
-		};
-		8A9909271D890E820096A7FA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler\"",
-					"\"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin\"",
-					"\"${PODS_ROOT}/Headers/Public/BoringSSL\"",
-					"\"${PODS_ROOT}/Headers/Public/OrderedDictionary\"",
-					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
-					"\"${PODS_ROOT}/Headers/Public/TokenSdk\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC\"",
-					"\"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary\"",
-					"\"${PODS_ROOT}/TokenSdk\"",
-					src/generated,
-				);
-				INFOPLIST_FILE = tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdkTests;
-				PRODUCT_NAME = TokenSdk;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		8A9909081D890E820096A7FA /* Build configuration list for PBXProject "TokenSdk" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8A9909201D890E820096A7FA /* Debug */,
-				8A9909211D890E820096A7FA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8A9909221D890E820096A7FA /* Build configuration list for PBXNativeTarget "TokenSdk" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8A9909231D890E820096A7FA /* Debug */,
-				8A9909241D890E820096A7FA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8A9909251D890E820096A7FA /* Build configuration list for PBXNativeTarget "TokenSdkTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8A9909261D890E820096A7FA /* Debug */,
-				8A9909271D890E820096A7FA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 8A9909051D890E820096A7FA /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0867CB9D057EBAA4E9BE6791</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-sdkTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>17987F26F8CA75E8D7FFFCFA</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-sdk.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-sdk/Pods-sdk.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>27932CCA173CAF159694397E</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-TokenSdk.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>2C88C1E343E1E5719F3A91FD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-sdkTests.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>33CF3E1136B16B6D4B8B60A1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TokenSdk.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>35FC84ADBDD603291F3377B5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TokenSdkTests.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3638CDEA9334A1620FAC5C16</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>37637B201D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B211D989A930043345F</string>
+				<string>37637B221D989A930043345F</string>
+				<string>37637B231D989A930043345F</string>
+				<string>37637B2A1D989A930043345F</string>
+				<string>37637B2B1D989A930043345F</string>
+				<string>37637B2C1D989A930043345F</string>
+				<string>37637B331D989A930043345F</string>
+				<string>37637B3C1D989A930043345F</string>
+				<string>37637B3D1D989A930043345F</string>
+				<string>37637B3E1D989A930043345F</string>
+				<string>37637B3F1D989A930043345F</string>
+				<string>37637B401D989A930043345F</string>
+				<string>37637B411D989A930043345F</string>
+				<string>37637B421D989A930043345F</string>
+				<string>37637B431D989A930043345F</string>
+				<string>37637B441D989A930043345F</string>
+				<string>37637B451D989A930043345F</string>
+				<string>37637B461D989A930043345F</string>
+				<string>37637B471D989A930043345F</string>
+				<string>37637B481D989A930043345F</string>
+				<string>37637B491D989A930043345F</string>
+				<string>37637B4A1D989A930043345F</string>
+				<string>37637B4B1D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>generated</string>
+			<key>path</key>
+			<string>src/generated</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>37637B211D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Account.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B221D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Account.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B231D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B241D989A930043345F</string>
+				<string>37637B251D989A930043345F</string>
+				<string>37637B261D989A930043345F</string>
+				<string>37637B271D989A930043345F</string>
+				<string>37637B281D989A930043345F</string>
+				<string>37637B291D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>bankapi</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B241D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Bankapi.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B251D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Bankapi.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B261D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Bankapi.pbrpc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B271D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Bankapi.pbrpc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B281D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Fank.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B291D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Fank.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2A1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Device.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2B1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Device.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2C1D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B2D1D989A930043345F</string>
+				<string>37637B2E1D989A930043345F</string>
+				<string>37637B2F1D989A930043345F</string>
+				<string>37637B301D989A930043345F</string>
+				<string>37637B311D989A930043345F</string>
+				<string>37637B321D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>gateway</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2D1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Auth.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2E1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Auth.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B2F1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Gateway.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B301D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Gateway.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B311D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Gateway.pbrpc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B321D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Gateway.pbrpc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B331D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B341D989A930043345F</string>
+				<string>37637B391D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>google</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B341D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B351D989A930043345F</string>
+				<string>37637B361D989A930043345F</string>
+				<string>37637B371D989A930043345F</string>
+				<string>37637B381D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>api</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B351D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Annotations.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B361D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Annotations.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B371D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>HTTP.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B381D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>HTTP.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B391D989A930043345F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37637B3A1D989A930043345F</string>
+				<string>37637B3B1D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>protobuf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3A1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Descriptor.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3B1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Descriptor.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3C1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Member.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3D1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Member.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3E1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Money.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B3F1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Money.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B401D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Notification.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B411D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Notification.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B421D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Payment.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B431D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Payment.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B441D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Security.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B451D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Security.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B461D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Token.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B471D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Token.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B481D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Transaction.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B491D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Transaction.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B4A1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Transfer.pbobjc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B4B1D989A930043345F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Transfer.pbobjc.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37637B4C1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B211D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B4D1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B221D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B4E1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B241D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B4F1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B251D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B501D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B261D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B511D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B271D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B521D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B281D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B531D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B291D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B541D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B2A1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B551D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B2B1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B561D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B2D1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B571D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B2E1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B581D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B2F1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B591D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B301D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B5A1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B311D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B5B1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B321D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B5C1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B351D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B5D1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B361D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B5E1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B371D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B5F1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B381D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B601D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3A1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B611D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3B1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B621D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3C1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B631D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3D1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B641D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3E1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B651D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B3F1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B661D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B401D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B671D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B411D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B681D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B421D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B691D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B431D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B6A1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B441D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B6B1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B451D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B6C1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B461D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B6D1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B471D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B6E1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B481D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B6F1D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B491D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>37637B701D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B4A1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37637B711D989A930043345F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37637B4B1D989A930043345F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+		<key>3777163D1D99BF6800287239</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TokenSdk.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3777163E1D99BF6800287239</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3777163D1D99BF6800287239</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37B5D33C7D4E7E674C4F0E64</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-sdk.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>45A6D2E987A941A285DA25C4</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>A0BD2260CD0EE1FB0E488C44</string>
+				<string>0867CB9D057EBAA4E9BE6791</string>
+				<string>27932CCA173CAF159694397E</string>
+				<string>FAD1F6AE0F506D81FFD59B81</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>47707BB14A8AF42C2075C39B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>4B3C9963B59F1345B3F7B6C2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>27932CCA173CAF159694397E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>598DAD75055FED68BA4A5752</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>78A493511A3865317CD4D20A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TokenSdk.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909041D890E820096A7FA</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8A9909101D890E820096A7FA</string>
+				<string>8A99091C1D890E820096A7FA</string>
+				<string>8A99090F1D890E820096A7FA</string>
+				<string>CC754FFC3CA010778232A1E9</string>
+				<string>45A6D2E987A941A285DA25C4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909051D890E820096A7FA</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0730</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Token Inc</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>8A99090D1D890E820096A7FA</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.3.1</string>
+					</dict>
+					<key>8A9909171D890E820096A7FA</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.3.1</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>8A9909081D890E820096A7FA</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>8A9909041D890E820096A7FA</string>
+			<key>productRefGroup</key>
+			<string>8A99090F1D890E820096A7FA</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>8A99090D1D890E820096A7FA</string>
+				<string>8A9909171D890E820096A7FA</string>
+			</array>
+		</dict>
+		<key>8A9909081D890E820096A7FA</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>8A9909201D890E820096A7FA</string>
+				<string>8A9909211D890E820096A7FA</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>8A9909091D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ABA7B3247F83509D9AB5E5B5</string>
+				<string>ABA7B59E860E46C4B7EF7F58</string>
+				<string>ABA7B2B006484A1B045E42DB</string>
+				<string>37637B5D1D989A930043345F</string>
+				<string>ABA7BB1317593EB8E79F3B17</string>
+				<string>ABA7B5835408D6DD145BFCD0</string>
+				<string>37637B5B1D989A930043345F</string>
+				<string>ABA7B2CE9549E2939698431C</string>
+				<string>37637B6D1D989A930043345F</string>
+				<string>ABA7B1759A41D7570F394BDA</string>
+				<string>ABA7BA9B13612439D753F584</string>
+				<string>ABA7BF633D0F779DAEC4968F</string>
+				<string>ABA7BF1C7D227E9E69133874</string>
+				<string>37637B531D989A930043345F</string>
+				<string>37637B6B1D989A930043345F</string>
+				<string>ABA7BF199ADA616314789B0D</string>
+				<string>ABA7B100F91D557B0FCF8F28</string>
+				<string>ABA7B847267CDA906A218BBB</string>
+				<string>ABA7BA98793B0592D11A83BB</string>
+				<string>37637B671D989A930043345F</string>
+				<string>ABA7B0303C146231D78BE96C</string>
+				<string>37637B571D989A930043345F</string>
+				<string>ABA7B40904F1C32FD2F49C88</string>
+				<string>37637B691D989A930043345F</string>
+				<string>ABA7BFC5F675615FA58A5EE1</string>
+				<string>37637B711D989A930043345F</string>
+				<string>37637B6F1D989A930043345F</string>
+				<string>37637B611D989A930043345F</string>
+				<string>ABA7BD077F9C27D8BD8B1C8C</string>
+				<string>ABA7B164177B8BB039D61458</string>
+				<string>ABA7B5F5DCF3B29BB75B09E1</string>
+				<string>ABA7BEA330E88F4707EA089E</string>
+				<string>37637B511D989A930043345F</string>
+				<string>ABA7BCC6096C71A76B4DC7B0</string>
+				<string>37637B631D989A930043345F</string>
+				<string>37637B551D989A930043345F</string>
+				<string>ABA7BBB178DD0DBB9BF4DBA8</string>
+				<string>37637B651D989A930043345F</string>
+				<string>ABA7B7A9B8E01207CF18847A</string>
+				<string>37637B5F1D989A930043345F</string>
+				<string>37637B4F1D989A930043345F</string>
+				<string>ABA7B01411EF72BFC5345CEF</string>
+				<string>ABA7BEE68ED01F9216F1D387</string>
+				<string>37637B4D1D989A930043345F</string>
+				<string>ABA7B7D66624F278B78581B1</string>
+				<string>37637B591D989A930043345F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A99090A1D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>4B3C9963B59F1345B3F7B6C2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A99090B1D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ABA7B290C97F9D6136CA9D55</string>
+				<string>ABA7BC0BB1D940B3E988BEA2</string>
+				<string>37637B701D989A930043345F</string>
+				<string>ABA7BEAFFA13B3E10325E528</string>
+				<string>ABA7B57D2B7432D496CE2A6D</string>
+				<string>37637B521D989A930043345F</string>
+				<string>ABA7BF36682B8CEB2577E661</string>
+				<string>ABA7BCD36D7269863CBD7AB9</string>
+				<string>ABA7B2E2271AD00719ECDA53</string>
+				<string>37637B5C1D989A930043345F</string>
+				<string>ABA7BE79C71E8822844965D3</string>
+				<string>37637B641D989A930043345F</string>
+				<string>ABA7BA3DA0354DBB07146BE8</string>
+				<string>ABA7B6FB78BFBC904EBBA4DE</string>
+				<string>37637B5E1D989A930043345F</string>
+				<string>ABA7B46027069D67CCC10553</string>
+				<string>37637B661D989A930043345F</string>
+				<string>37637B6E1D989A930043345F</string>
+				<string>ABA7B38189FE91B2418918A2</string>
+				<string>37637B561D989A930043345F</string>
+				<string>37637B681D989A930043345F</string>
+				<string>ABA7BAEC959E3B2C59762FA6</string>
+				<string>ABA7BAC0AF3B2A9A22210B47</string>
+				<string>ABA7B396AEB29286AB91C613</string>
+				<string>37637B4C1D989A930043345F</string>
+				<string>37637B501D989A930043345F</string>
+				<string>ABA7BF75FDD4B92E5456300E</string>
+				<string>37637B6C1D989A930043345F</string>
+				<string>37637B6A1D989A930043345F</string>
+				<string>3777163E1D99BF6800287239</string>
+				<string>37637B601D989A930043345F</string>
+				<string>37637B621D989A930043345F</string>
+				<string>ABA7B17B4D029AB93711EE58</string>
+				<string>ABA7B31148B04774C33BF931</string>
+				<string>37637B581D989A930043345F</string>
+				<string>ABA7B6829AA83D345926CCE6</string>
+				<string>ABA7BAC58B65F8234911D47C</string>
+				<string>37637B541D989A930043345F</string>
+				<string>ABA7B8307EEF340231A27C67</string>
+				<string>ABA7B1621EE5B60FF933B3BD</string>
+				<string>ABA7B84C3E4141392B53FC47</string>
+				<string>ABA7B932650CECAE9F596A92</string>
+				<string>37637B4E1D989A930043345F</string>
+				<string>37637B5A1D989A930043345F</string>
+				<string>ABA7B155594D4232CAF702FF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A99090C1D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ABA7B75A2DEAAF27617C3E4F</string>
+				<string>ABA7B6C2664CFC0CB8A21F1A</string>
+				<string>ABA7B103B5929B86EF4C8689</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A99090D1D890E820096A7FA</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>8A9909221D890E820096A7FA</string>
+			<key>buildPhases</key>
+			<array>
+				<string>598DAD75055FED68BA4A5752</string>
+				<string>8A9909091D890E820096A7FA</string>
+				<string>8A99090A1D890E820096A7FA</string>
+				<string>8A99090B1D890E820096A7FA</string>
+				<string>8A99090C1D890E820096A7FA</string>
+				<string>92358EEBF311846E836E07B9</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>TokenSdk</string>
+			<key>productName</key>
+			<string>sdk</string>
+			<key>productReference</key>
+			<string>8A99090E1D890E820096A7FA</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>8A99090E1D890E820096A7FA</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TokenSdk.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>8A99090F1D890E820096A7FA</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8A99090E1D890E820096A7FA</string>
+				<string>8A9909181D890E820096A7FA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909101D890E820096A7FA</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8A9909131D890E820096A7FA</string>
+				<string>ABA7B2281FEA7BCDBB7045C3</string>
+				<string>ABA7BA2FC59F6E7FF0F39F6C</string>
+				<string>ABA7BFE70DA2E2ABED08CD7B</string>
+				<string>ABA7B92556DD88305DE6EDC5</string>
+				<string>37637B201D989A930043345F</string>
+				<string>ABA7BAEECC1C790312E0C61B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>src</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909131D890E820096A7FA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909141D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>8A99091E1D890E820096A7FA</string>
+				<string>ABA7BA3D671A14C6A6411B2D</string>
+				<string>ABA7BC12F2DE08B6AEEC7F35</string>
+				<string>ABA7BC619294DC52A32A3B4C</string>
+				<string>ABA7BDC1005207233E4CA2A6</string>
+				<string>ABA7B3CEB44D8A66CE4AA71B</string>
+				<string>ABA7B6E8993EBFEDD6FDFCE2</string>
+				<string>ABA7BCE18E38B97DB6EAF624</string>
+				<string>ABA7BFD1305D790B9C78F6A2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A9909151D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>8A9909191D890E820096A7FA</string>
+				<string>AF4BE1CEABBEB93F8B329347</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A9909161D890E820096A7FA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A9909171D890E820096A7FA</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>8A9909251D890E820096A7FA</string>
+			<key>buildPhases</key>
+			<array>
+				<string>3638CDEA9334A1620FAC5C16</string>
+				<string>8A9909141D890E820096A7FA</string>
+				<string>8A9909151D890E820096A7FA</string>
+				<string>8A9909161D890E820096A7FA</string>
+				<string>90C39706085657F07D914CE7</string>
+				<string>47707BB14A8AF42C2075C39B</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>8A99091B1D890E820096A7FA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>TokenSdkTests</string>
+			<key>productName</key>
+			<string>sdkTests</string>
+			<key>productReference</key>
+			<string>8A9909181D890E820096A7FA</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>8A9909181D890E820096A7FA</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>TokenSdk.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>8A9909191D890E820096A7FA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8A99090E1D890E820096A7FA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8A99091A1D890E820096A7FA</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>8A9909051D890E820096A7FA</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>8A99090D1D890E820096A7FA</string>
+			<key>remoteInfo</key>
+			<string>sdk</string>
+		</dict>
+		<key>8A99091B1D890E820096A7FA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>8A99090D1D890E820096A7FA</string>
+			<key>targetProxy</key>
+			<string>8A99091A1D890E820096A7FA</string>
+		</dict>
+		<key>8A99091C1D890E820096A7FA</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8A99091D1D890E820096A7FA</string>
+				<string>8A99091F1D890E820096A7FA</string>
+				<string>ABA7BF9EEFA4C28ABFD5834B</string>
+				<string>ABA7BED5AD0B16162777EBA0</string>
+				<string>ABA7B30F0E5668621466B95A</string>
+				<string>ABA7B6A0C915116837349E69</string>
+				<string>ABA7B3A49F325BBB3B506D1F</string>
+				<string>ABA7BB049B4A62BA1298FB44</string>
+				<string>ABA7BE6DB20F554716095C1D</string>
+				<string>ABA7B6D4261319EE62D05C22</string>
+				<string>ABA7BC8D1168FBC4BC96ADEE</string>
+				<string>ABA7B0A4EFC8BE48B74908A0</string>
+				<string>ABA7B6DD4C292426B677C39D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>tests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A99091D1D890E820096A7FA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKMemberRegistrationTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A99091E1D890E820096A7FA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8A99091D1D890E820096A7FA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8A99091F1D890E820096A7FA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A9909201D890E820096A7FA</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.3</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>8A9909211D890E820096A7FA</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.3</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>8A9909221D890E820096A7FA</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>8A9909231D890E820096A7FA</string>
+				<string>8A9909241D890E820096A7FA</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>8A9909231D890E820096A7FA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>33CF3E1136B16B6D4B8B60A1</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"${PODS_ROOT}/Headers/Public"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin"</string>
+					<string>"${PODS_ROOT}/Headers/Public/BoringSSL"</string>
+					<string>"${PODS_ROOT}/Headers/Public/OrderedDictionary"</string>
+					<string>"${PODS_ROOT}/Headers/Public/Protobuf"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-Core"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary"</string>
+					<string>src/generated</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>$(SRCROOT)/src/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>10.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>MODULEMAP_FILE</key>
+				<string></string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>token.io.sdk</string>
+				<key>PRODUCT_NAME</key>
+				<string>TokenSdk</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>8A9909241D890E820096A7FA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>78A493511A3865317CD4D20A</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"${PODS_ROOT}/Headers/Public"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin"</string>
+					<string>"${PODS_ROOT}/Headers/Public/BoringSSL"</string>
+					<string>"${PODS_ROOT}/Headers/Public/OrderedDictionary"</string>
+					<string>"${PODS_ROOT}/Headers/Public/Protobuf"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-Core"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary"</string>
+					<string>src/generated</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>$(SRCROOT)/src/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>10.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>MODULEMAP_FILE</key>
+				<string></string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>token.io.sdk</string>
+				<key>PRODUCT_NAME</key>
+				<string>TokenSdk</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>8A9909251D890E820096A7FA</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>8A9909261D890E820096A7FA</string>
+				<string>8A9909271D890E820096A7FA</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>8A9909261D890E820096A7FA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>35FC84ADBDD603291F3377B5</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>COCOAPODS=1</string>
+					<string>GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1</string>
+				</array>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"${PODS_ROOT}/Headers/Public"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin"</string>
+					<string>"${PODS_ROOT}/Headers/Public/BoringSSL"</string>
+					<string>"${PODS_ROOT}/Headers/Public/OrderedDictionary"</string>
+					<string>"${PODS_ROOT}/Headers/Public/Protobuf"</string>
+					<string>"${PODS_ROOT}/Headers/Public/TokenSdk"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-Core"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary"</string>
+					<string>"${PODS_ROOT}/TokenSdk"</string>
+					<string>src/generated</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>tests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>token.io.sdkTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>TokenSdk</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>8A9909271D890E820096A7FA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>CFBD31F10BE53E6F6DBFEDEF</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>COCOAPODS=1</string>
+					<string>GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1</string>
+				</array>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"${PODS_ROOT}/Headers/Public"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler"</string>
+					<string>"${PODS_ROOT}/Headers/Public/!ProtoCompiler-gRPCPlugin"</string>
+					<string>"${PODS_ROOT}/Headers/Public/BoringSSL"</string>
+					<string>"${PODS_ROOT}/Headers/Public/OrderedDictionary"</string>
+					<string>"${PODS_ROOT}/Headers/Public/Protobuf"</string>
+					<string>"${PODS_ROOT}/Headers/Public/TokenSdk"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-Core"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-ProtoRPC"</string>
+					<string>"${PODS_ROOT}/Headers/Public/gRPC-RxLibrary"</string>
+					<string>"${PODS_ROOT}/TokenSdk"</string>
+					<string>src/generated</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>tests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>token.io.sdkTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>TokenSdk</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>90C39706085657F07D914CE7</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>92358EEBF311846E836E07B9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>A0BD2260CD0EE1FB0E488C44</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-sdk.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>ABA7B01411EF72BFC5345CEF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B2E9BD235EDC507216BE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B0303C146231D78BE96C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC2013ED8025D15A3E18</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B0A4EFC8BE48B74908A0</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKBankClient.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B0D240C12726391240B2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKCrypto.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B0F24C0DAA30675877A4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>keypair.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B100F91D557B0FCF8F28</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BB41B15B9C824D04376C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B103B5929B86EF4C8689</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BDE5D0F88461A97DCA5A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B155594D4232CAF702FF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BD61CA7BB1D1369DC3B4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B15B05913DC313ECE3BF</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKAccount.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B1621EE5B60FF933B3BD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B0A4EFC8BE48B74908A0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B164177B8BB039D61458</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B0F24C0DAA30675877A4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B16EB35673E0ED34C018</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKUtil.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B1759A41D7570F394BDA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B8DE03F950AD6FDF5743</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B17B4D029AB93711EE58</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B1A3E2263090B97A6BCD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B1A3E2263090B97A6BCD</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ed25519.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B1E8CB2CAE853F4F9977</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.dll</string>
+			<key>path</key>
+			<string>ed25519_64.dll</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B2281FEA7BCDBB7045C3</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7BBBA445C30817501F927</string>
+				<string>ABA7B3B3B7497B3EC3C6F2F7</string>
+				<string>ABA7BC35315815FA7C52A197</string>
+				<string>ABA7BA2C7E715C76574378AB</string>
+				<string>ABA7BC8DA7F5DC3A1EEC68D7</string>
+				<string>ABA7BB639412CC7CAEA9EE8D</string>
+				<string>ABA7BBE03D06E8E8A1414155</string>
+				<string>ABA7B9993BB80AAFAD3B1DC9</string>
+				<string>ABA7B15B05913DC313ECE3BF</string>
+				<string>ABA7BFD0B8AF4A53D14F385F</string>
+				<string>ABA7B2E9BD235EDC507216BE</string>
+				<string>ABA7B5B3D15AD634892D98D4</string>
+				<string>ABA7BADCF833317256FF6F8A</string>
+				<string>ABA7BD61CA7BB1D1369DC3B4</string>
+				<string>ABA7B5B2892CFF8B1E4F0EE0</string>
+				<string>3777163D1D99BF6800287239</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>api</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B25C7C21BC82E0F913A8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>ge.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B290C97F9D6136CA9D55</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B30F0E5668621466B95A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B2B002EB7F6F68C6DC25</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKRpcLog.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B2B006484A1B045E42DB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC8DA7F5DC3A1EEC68D7</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B2CE9549E2939698431C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC48C9A115AEEC7143CA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B2E2271AD00719ECDA53</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B6D8EA5337CAD7ECE322</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B2E9BD235EDC507216BE</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKAccountAsync.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B30F0E5668621466B95A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKTestBase.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B31148B04774C33BF931</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC1286CBA07E69B30D14</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B3247F83509D9AB5E5B5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B3B3B7497B3EC3C6F2F7</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B38189FE91B2418918A2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BBCBD8380F94FCC8B8A4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B396AEB29286AB91C613</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BD5AE2B87B579AE072EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B3A49F325BBB3B506D1F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKCryptoTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B3B3B7497B3EC3C6F2F7</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKMember.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B3CEB44D8A66CE4AA71B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BB049B4A62BA1298FB44</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B40904F1C32FD2F49C88</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B71635A1A13440B4B70D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B46027069D67CCC10553</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BAE86AFFD5A7950556E9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B57D2B7432D496CE2A6D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BB639412CC7CAEA9EE8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B5835408D6DD145BFCD0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BAD71645256D1FA06F7D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B59E860E46C4B7EF7F58</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BA2C7E715C76574378AB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B5B2892CFF8B1E4F0EE0</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKMemberAsync.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B5B3D15AD634892D98D4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TokenIOAsync.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B5F5DCF3B29BB75B09E1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BF3C591D1A2AE3277E3D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B600FA6B997FDF5087F1</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>test.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B655319DBC254DA98A75</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7BB41B15B9C824D04376C</string>
+				<string>ABA7B75B2E97AF95FBDEF4AD</string>
+				<string>ABA7B25C7C21BC82E0F913A8</string>
+				<string>ABA7BB5EAEB32937327F4192</string>
+				<string>ABA7BEAF5A44E025586931AB</string>
+				<string>ABA7BD5AE2B87B579AE072EB</string>
+				<string>ABA7BC2013ED8025D15A3E18</string>
+				<string>ABA7B71635A1A13440B4B70D</string>
+				<string>ABA7BC1E54BAFDC11AA75D6D</string>
+				<string>ABA7BDCFD5AED8EBB4F32EC2</string>
+				<string>ABA7B75329B7D39384598938</string>
+				<string>ABA7B1A3E2263090B97A6BCD</string>
+				<string>ABA7B0F24C0DAA30675877A4</string>
+				<string>ABA7BC1286CBA07E69B30D14</string>
+				<string>ABA7BF3C591D1A2AE3277E3D</string>
+				<string>ABA7BE0106B24FCB0A9C556C</string>
+				<string>ABA7B7A8D60CEEC0A95D195D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>src</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B6829AA83D345926CCE6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B7A8D60CEEC0A95D195D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B6A0C915116837349E69</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKUtilTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B6C2664CFC0CB8A21F1A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B1E8CB2CAE853F4F9977</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B6D4261319EE62D05C22</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKPaymentRedemptionTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B6D8EA5337CAD7ECE322</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKUnauthenticatedClient.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B6DD4C292426B677C39D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKTransactionsTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B6E8993EBFEDD6FDFCE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BE6DB20F554716095C1D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B6FB78BFBC904EBBA4DE</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BA157D6E82BBEAF5AA3E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B71635A1A13440B4B70D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>sign.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B75329B7D39384598938</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>verify.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B75A2DEAAF27617C3E4F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BF98D0D666144252C84D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B75B2E97AF95FBDEF4AD</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>fe.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B7A013686B576B8A78D1</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKCrypto.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B7A8D60CEEC0A95D195D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>precomp_data.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B7A9B8E01207CF18847A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC8D1168FBC4BC96ADEE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B7D66624F278B78581B1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B5B2892CFF8B1E4F0EE0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B8307EEF340231A27C67</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B15B05913DC313ECE3BF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B847267CDA906A218BBB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B25C7C21BC82E0F913A8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B84875368F06B5CD1416</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKSecretKey.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B84C3E4141392B53FC47</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BFD0B8AF4A53D14F385F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B899E7F7DE3107CB62E1</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKJson.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B8DE03F950AD6FDF5743</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKSecretKey.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B92556DD88305DE6EDC5</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7B899E7F7DE3107CB62E1</string>
+				<string>ABA7B16EB35673E0ED34C018</string>
+				<string>ABA7BEE87D6C30096F9CADA3</string>
+				<string>ABA7BA157D6E82BBEAF5AA3E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>util</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7B932650CECAE9F596A92</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BADCF833317256FF6F8A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7B9993BB80AAFAD3B1DC9</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKAccount.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BA157D6E82BBEAF5AA3E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKUtil.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BA2C7E715C76574378AB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TokenIO.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BA2FC59F6E7FF0F39F6C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7BA46096C815D0B7DBD95</string>
+				<string>ABA7BAD71645256D1FA06F7D</string>
+				<string>ABA7B6D8EA5337CAD7ECE322</string>
+				<string>ABA7BC48C9A115AEEC7143CA</string>
+				<string>ABA7BF342FAA1676FC1BC9EF</string>
+				<string>ABA7BAE86AFFD5A7950556E9</string>
+				<string>ABA7B2B002EB7F6F68C6DC25</string>
+				<string>ABA7BBCBD8380F94FCC8B8A4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>rpc</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BA3D671A14C6A6411B2D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BF9EEFA4C28ABFD5834B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BA3DA0354DBB07146BE8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BEE87D6C30096F9CADA3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BA46096C815D0B7DBD95</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKClient.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BA98793B0592D11A83BB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BEAF5A44E025586931AB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BA9B13612439D753F584</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B899E7F7DE3107CB62E1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BAC0AF3B2A9A22210B47</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BB5EAEB32937327F4192</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BAC58B65F8234911D47C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BBE03D06E8E8A1414155</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BAD71645256D1FA06F7D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKClient.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BADCF833317256FF6F8A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TokenIOAsync.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BAE86AFFD5A7950556E9</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKRpcSyncCall.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BAEC959E3B2C59762FA6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B75B2E97AF95FBDEF4AD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BAEECC1C790312E0C61B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7B655319DBC254DA98A75</string>
+				<string>ABA7BF98D0D666144252C84D</string>
+				<string>ABA7B1E8CB2CAE853F4F9977</string>
+				<string>ABA7BDE5D0F88461A97DCA5A</string>
+				<string>ABA7BF17BA41316C7B66823D</string>
+				<string>ABA7B600FA6B997FDF5087F1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>ed25519</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BB049B4A62BA1298FB44</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKAccountsTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BB1317593EB8E79F3B17</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B0D240C12726391240B2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BB41B15B9C824D04376C</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>fe.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BB5EAEB32937327F4192</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ge.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BB639412CC7CAEA9EE8D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TokenIOBuilder.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BBB178DD0DBB9BF4DBA8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B9993BB80AAFAD3B1DC9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BBBA445C30817501F927</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKMember.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BBCBD8380F94FCC8B8A4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKRpcLog.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BBE03D06E8E8A1414155</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKTypedef.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC0BB1D940B3E988BEA2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BBBA445C30817501F927</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BC1286CBA07E69B30D14</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>fixedint.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC12F2DE08B6AEEC7F35</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BED5AD0B16162777EBA0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BC1E54BAFDC11AA75D6D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>sha512.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC2013ED8025D15A3E18</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>seed.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC35315815FA7C52A197</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TokenIO.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC48C9A115AEEC7143CA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKUnauthenticatedClient.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC619294DC52A32A3B4C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B6A0C915116837349E69</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BC8D1168FBC4BC96ADEE</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKBankClient.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BC8DA7F5DC3A1EEC68D7</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TokenIOBuilder.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BCC6096C71A76B4DC7B0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B600FA6B997FDF5087F1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BCD36D7269863CBD7AB9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BA46096C815D0B7DBD95</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BCE18E38B97DB6EAF624</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B6D4261319EE62D05C22</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BD077F9C27D8BD8B1C8C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B75329B7D39384598938</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BD5AE2B87B579AE072EB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>sc.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BD61CA7BB1D1369DC3B4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKMemberAsync.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BDC1005207233E4CA2A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B3A49F325BBB3B506D1F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BDCFD5AED8EBB4F32EC2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>sha512.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BDE5D0F88461A97DCA5A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>license.txt</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BE0106B24FCB0A9C556C</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>key_exchange.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BE6DB20F554716095C1D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKPaymentTokenTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BE79C71E8822844965D3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B84875368F06B5CD1416</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BEA330E88F4707EA089E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BE0106B24FCB0A9C556C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BEAF5A44E025586931AB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>sc.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BEAFFA13B3E10325E528</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC35315815FA7C52A197</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BED5AD0B16162777EBA0</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKTestBase.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BEE68ED01F9216F1D387</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B5B3D15AD634892D98D4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BEE87D6C30096F9CADA3</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKJson.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BF17BA41316C7B66823D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>net.daringfireball.markdown</string>
+			<key>path</key>
+			<string>readme.md</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BF199ADA616314789B0D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B2B002EB7F6F68C6DC25</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BF1C7D227E9E69133874</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BF342FAA1676FC1BC9EF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BF342FAA1676FC1BC9EF</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKRpcSyncCall.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BF36682B8CEB2577E661</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B7A013686B576B8A78D1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BF3C591D1A2AE3277E3D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.c</string>
+			<key>path</key>
+			<string>add_scalar.c</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BF633D0F779DAEC4968F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B16EB35673E0ED34C018</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BF75FDD4B92E5456300E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BDCFD5AED8EBB4F32EC2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BF98D0D666144252C84D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.dll</string>
+			<key>path</key>
+			<string>ed25519_32.dll</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BF9EEFA4C28ABFD5834B</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>TKJsonTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BFC5F675615FA58A5EE1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7BC1E54BAFDC11AA75D6D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BFD0B8AF4A53D14F385F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>TKAccountAsync.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABA7BFD1305D790B9C78F6A2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>ABA7B6DD4C292426B677C39D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABA7BFE70DA2E2ABED08CD7B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABA7B7A013686B576B8A78D1</string>
+				<string>ABA7B0D240C12726391240B2</string>
+				<string>ABA7B8DE03F950AD6FDF5743</string>
+				<string>ABA7B84875368F06B5CD1416</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>security</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AF4BE1CEABBEB93F8B329347</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FAD1F6AE0F506D81FFD59B81</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CC754FFC3CA010778232A1E9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>37B5D33C7D4E7E674C4F0E64</string>
+				<string>17987F26F8CA75E8D7FFFCFA</string>
+				<string>CF42EC24281AE183D82CB9A5</string>
+				<string>2C88C1E343E1E5719F3A91FD</string>
+				<string>33CF3E1136B16B6D4B8B60A1</string>
+				<string>78A493511A3865317CD4D20A</string>
+				<string>35FC84ADBDD603291F3377B5</string>
+				<string>CFBD31F10BE53E6F6DBFEDEF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF42EC24281AE183D82CB9A5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-sdkTests.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CFBD31F10BE53E6F6DBFEDEF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-TokenSdkTests.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD1F6AE0F506D81FFD59B81</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-TokenSdkTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>8A9909051D890E820096A7FA</string>
+</dict>
+</plist>

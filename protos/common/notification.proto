@@ -31,6 +31,12 @@ message AddKey {
     repeated string tags = 2;
 }
 
+// A notification that a bank wants to be linked, and keys want to be added
+message LinkAccountsAndAddKey {
+    LinkAccounts link_accounts = 1;
+    AddKey add_key = 2;
+}
+
 // A custom message with the specified payload
 message Custom {
     string payload = 1;

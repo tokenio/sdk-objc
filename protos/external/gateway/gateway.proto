@@ -123,13 +123,29 @@ message NotifyLinkAccountsResponse {
 }
 
 message NotifyAddKeyRequest {
-    string public_key = 1;
-    repeated string tags = 2;
+    string alias = 1;
+    string public_key = 2;
+    repeated string tags = 3;
 }
 
 message NotifyAddKeyResponse {
 }
 
+// Notify existing subscribers that a bank linking payload has been created
+//, as well as request a key to be added
+message NotifyLinkAccountsAndAddKeyRequest {
+  string alias = 1;
+  string bank_id = 2;
+
+  // encrypted AccountLinkPayload
+  bytes account_link_payload = 3;
+
+  string public_key = 4;
+  repeated string tags = 5;
+}
+
+message NotifyLinkAccountsAndAddKeyResponse {
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -316,14 +332,12 @@ service GatewayService {
   rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
     option (google.api.http) = {
         post: "/members"
-        body: "*"
     };
   }
 
   rpc UpdateMember (UpdateMemberRequest) returns (UpdateMemberResponse) {
     option (google.api.http) = {
         post: "/members/{update.member_id}"
-        body: "*"
     };
   }
 
@@ -340,6 +354,7 @@ service GatewayService {
   rpc CreateAddress (CreateAddressRequest) returns (CreateAddressResponse) {
     option (google.api.http) = {
         post: "/addresses"
+        body: "*"
     };
   }
   rpc GetAddress (GetAddressRequest) returns (GetAddressResponse) {
@@ -361,6 +376,7 @@ service GatewayService {
   rpc SetPreference (SetPreferenceRequest) returns (SetPreferenceResponse) {
     option (google.api.http) = {
         put: "/preferences"
+        body: "*"
     };
   }
   rpc GetPreference (GetPreferenceRequest) returns (GetPreferenceResponse) {
@@ -376,27 +392,30 @@ service GatewayService {
   rpc SubscribeDevice (SubscribeDeviceRequest) returns (SubscribeDeviceResponse) {
     option (google.api.http) = {
         post: "/devices"
-        body: "*"
     };
   }
 
   rpc UnsubscribeDevice (UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse) {
     option (google.api.http) = {
         delete: "/devices/${device_id}"
-        body: "*"
     };
   }
 
   rpc NotifyLinkAccounts (NotifyLinkAccountsRequest) returns (NotifyLinkAccountsResponse) {
     option (google.api.http) = {
         put: "/devices/notifyLinkAccounts"
-        body: "*"
     };
   }
 
   rpc NotifyAddKey (NotifyAddKeyRequest) returns (NotifyAddKeyResponse) {
     option (google.api.http) = {
         put: "/devices/notifyAddKey"
+    };
+  }
+
+  rpc NotifyLinkAccountsAndAddKey (NotifyLinkAccountsAndAddKeyRequest) returns (NotifyLinkAccountsAndAddKeyResponse) {
+    option (google.api.http) = {
+        put: "/devices/notifyLinkAccountsAndAddKey"
         body: "*"
     };
   }
@@ -408,7 +427,6 @@ service GatewayService {
   rpc LinkAccount (LinkAccountRequest) returns (LinkAccountResponse) {
     option (google.api.http) = {
         post: "/accounts"
-        body: "*"
     };
   }
 
@@ -438,7 +456,7 @@ service GatewayService {
 
   rpc LookupTransaction (LookupTransactionRequest) returns (LookupTransactionResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions/{transction_id}"
+        get: "/accounts/{account_id}/transactions/{transaction_id}"
     };
   }
 
@@ -455,7 +473,6 @@ service GatewayService {
   rpc CreatePaymentToken (CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse) {
     option (google.api.http) = {
         post: "/pay-tokens"
-        body: "*"
     };
   }
 
@@ -467,7 +484,6 @@ service GatewayService {
   rpc CreateInformationToken (CreateInformationTokenRequest) returns (CreateInformationTokenResponse) {
     option (google.api.http) = {
         post: "/info-tokens"
-        body: "*"
     };
   }
 
@@ -484,28 +500,32 @@ service GatewayService {
 
   rpc LookupTokens (LookupTokensRequest) returns (LookupTokensResponse) {
     option (google.api.http) = {
-        get: "/tokens"
+        get: "/pay-tokens?offset={offset}&limit={limit}"
+        body: "*"
+    };
+  }
+
+  rpc LookupInformationTokens (LookupTokensRequest) returns (LookupTokensResponse) {
+    option (google.api.http) = {
+        get: "/info-tokens"
     };
   }
 
   rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/endorse"
-        body: "*"
     };
   }
 
   rpc DeclineToken (DeclineTokenRequest) returns (DeclineTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/decline"
-        body: "*"
     };
   }
 
   rpc RevokeToken (RevokeTokenRequest) returns (RevokeTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/revoke"
-        body: "*"
     };
   }
 
@@ -517,7 +537,6 @@ service GatewayService {
   rpc RedeemPaymentToken (RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse) {
     option (google.api.http) = {
         post: "/payments"
-        body: "*"
     };
   }
 

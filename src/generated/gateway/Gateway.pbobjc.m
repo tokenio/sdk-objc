@@ -1111,11 +1111,13 @@ typedef struct NotifyLinkAccountsResponse__storage_ {
 
 @implementation NotifyAddKeyRequest
 
+@dynamic alias;
 @dynamic publicKey;
 @dynamic tagsArray, tagsArray_Count;
 
 typedef struct NotifyAddKeyRequest__storage_ {
   uint32_t _has_storage_[1];
+  NSString *alias;
   NSString *publicKey;
   NSMutableArray *tagsArray;
 } NotifyAddKeyRequest__storage_;
@@ -1127,10 +1129,19 @@ typedef struct NotifyAddKeyRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "alias",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyAddKeyRequest_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NotifyAddKeyRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "publicKey",
         .dataTypeSpecific.className = NULL,
         .number = NotifyAddKeyRequest_FieldNumber_PublicKey,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(NotifyAddKeyRequest__storage_, publicKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -1182,6 +1193,123 @@ typedef struct NotifyAddKeyResponse__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(NotifyAddKeyResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NotifyLinkAccountsAndAddKeyRequest
+
+@implementation NotifyLinkAccountsAndAddKeyRequest
+
+@dynamic alias;
+@dynamic bankId;
+@dynamic accountLinkPayload;
+@dynamic publicKey;
+@dynamic tagsArray, tagsArray_Count;
+
+typedef struct NotifyLinkAccountsAndAddKeyRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *alias;
+  NSString *bankId;
+  NSData *accountLinkPayload;
+  NSString *publicKey;
+  NSMutableArray *tagsArray;
+} NotifyLinkAccountsAndAddKeyRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyLinkAccountsAndAddKeyRequest_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NotifyLinkAccountsAndAddKeyRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyLinkAccountsAndAddKeyRequest_FieldNumber_BankId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(NotifyLinkAccountsAndAddKeyRequest__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accountLinkPayload",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyLinkAccountsAndAddKeyRequest_FieldNumber_AccountLinkPayload,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(NotifyLinkAccountsAndAddKeyRequest__storage_, accountLinkPayload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBytes,
+      },
+      {
+        .name = "publicKey",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyLinkAccountsAndAddKeyRequest_FieldNumber_PublicKey,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(NotifyLinkAccountsAndAddKeyRequest__storage_, publicKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tagsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyLinkAccountsAndAddKeyRequest_FieldNumber_TagsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(NotifyLinkAccountsAndAddKeyRequest__storage_, tagsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NotifyLinkAccountsAndAddKeyRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NotifyLinkAccountsAndAddKeyRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NotifyLinkAccountsAndAddKeyResponse
+
+@implementation NotifyLinkAccountsAndAddKeyResponse
+
+
+typedef struct NotifyLinkAccountsAndAddKeyResponse__storage_ {
+  uint32_t _has_storage_[1];
+} NotifyLinkAccountsAndAddKeyResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NotifyLinkAccountsAndAddKeyResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(NotifyLinkAccountsAndAddKeyResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
