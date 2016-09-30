@@ -1,6 +1,5 @@
 @class Member;
 @class NSError;
-@class TKMember;
 @class Account;
 @class Money;
 @class TKAccount;

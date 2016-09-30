@@ -147,29 +147,29 @@
     }];
 }
 
-- (Address *)getAddressById:(NSString *)addressId {
+- (Address *)lookupAddressWithId:(NSString *)addressId {
     TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getAddressById:addressId
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
+        [self.async lookupAddressWithId:addressId
+                              onSuccess:call.onSuccess
+                                onError:call.onError];
     }];
 }
 
-- (NSArray<Address *> *)getAddresses {
+- (NSArray<Address *> *)lookupAddresses {
     TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getAddresses:call.onSuccess
-                         onError:call.onError];
+        [self.async lookupAddresses:call.onSuccess
+                            onError:call.onError];
     }];
 }
 
-- (void)deleteAddressById:(NSString *)addressId {
+- (void)deleteAddressWithId:(NSString *)addressId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async deleteAddressById:addressId
-                             onSucess:^{ call.onSuccess(nil); }
-                              onError:call.onError];
+        [self.async deleteAddressWithId:addressId
+                               onSucess:^{ call.onSuccess(nil); }
+                                onError:call.onError];
     }];
 }
 
@@ -182,11 +182,11 @@
     }];
 }
 
-- (NSString *)getPreferences {
+- (NSString *)lookupPreferences {
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getPreferences:call.onSuccess
-                           onError:call.onError];
+        [self.async lookupPreferences:call.onSuccess
+                              onError:call.onError];
     }];
 }
 
