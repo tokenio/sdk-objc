@@ -25,30 +25,6 @@
 
 + (TKAccount *)account:(TKAccountAsync *)delegate;
 
-- (Token *)createTokenWithAmount:(double)amount
-                        currency:(NSString *)currency;
-
-- (Token *)createTokenWithAmount:(double)amount
-                        currency:(NSString *)currency
-                   redeemerAlias:(NSString *)redeemerAlias
-                     description:(NSString *)description;
-
-- (Token *)lookupToken:(NSString *)tokenId;
-
-- (NSArray<Token *> *)lookupTokensOffset:(int)i limit:(int)limit;
-
-- (Token *)endorseToken:(Token *)token;
-
-- (Token *)declineToken:(Token *)token;
-
-- (Token *)revokeToken:(Token *)token;
-
-- (Payment *)redeemToken:(Token *)token;
-
-- (Payment *)redeemToken:(Token *)token
-                  amount:(NSNumber *)amount
-                currency:(NSString *)currency;
-
 - (Money *)lookupBalance;
 
 - (Transaction *)lookupTransaction:(NSString *)transactionId;
