@@ -193,23 +193,23 @@
                       onError:onError];
 }
 
-- (void)getAddressById:(NSString *)addressId
-             onSuccess:(OnSuccessWithAddress)onSuccess
-               onError:(OnError)onError {
+- (void)lookupAddressWithId:(NSString *)addressId
+                  onSuccess:(OnSuccessWithAddress)onSuccess
+                    onError:(OnError)onError {
     [client getAddressById:addressId
                  onSuccess:onSuccess
                    onError:onError];
 }
 
-- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
-               onError:(OnError)onError {
+- (void)lookupAddresses:(OnSuccessWithAddresses)onSuccess
+                onError:(OnError)onError {
     [client getAddresses:onSuccess
                  onError:onError];
 }
 
-- (void)deleteAddressById:(NSString *)addressId
-                 onSucess:(OnSuccess)onSuccess
-                  onError:(OnError)onError {
+- (void)deleteAddressWithId:(NSString *)addressId
+                   onSucess:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
     [client deleteAddressById:addressId
                     onSuccess:onSuccess
                       onError:onError];
@@ -223,8 +223,8 @@
                    onError:onError];
 }
 
-- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
-               onError:(OnError)onError {
+- (void)lookupPreferences:(OnSuccessWithPreferences)onSuccess
+                  onError:(OnError)onError {
     [client getPreferences:onSuccess
                    onError:onError];
 }
