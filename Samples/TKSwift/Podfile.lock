@@ -1,0 +1,54 @@
+PODS:
+  - BoringSSL (6.0):
+    - BoringSSL/Implementation (= 6.0)
+    - BoringSSL/Interface (= 6.0)
+  - BoringSSL/Implementation (6.0):
+    - BoringSSL/Interface (= 6.0)
+  - BoringSSL/Interface (6.0)
+  - gRPC (1.0.0):
+    - gRPC-Core (= 1.0.0)
+    - gRPC-RxLibrary (= 1.0.0)
+  - gRPC-Core (1.0.0):
+    - gRPC-Core/Implementation (= 1.0.0)
+    - gRPC-Core/Interface (= 1.0.0)
+  - gRPC-Core/Implementation (1.0.0):
+    - BoringSSL (~> 6.0)
+    - gRPC-Core/Interface (= 1.0.0)
+  - gRPC-Core/Interface (1.0.0)
+  - gRPC-ProtoRPC (1.0.0):
+    - gRPC (= 1.0.0)
+    - gRPC-RxLibrary (= 1.0.0)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.0.0)
+  - OrderedDictionary (1.4)
+  - Protobuf (3.0.2)
+  - TokenSdk (0.0.3):
+    - TokenSdk/Implementation (= 0.0.3)
+    - TokenSdk/Messages (= 0.0.3)
+  - TokenSdk/Implementation (0.0.3):
+    - gRPC-ProtoRPC
+    - OrderedDictionary
+    - TokenSdk/Messages
+  - TokenSdk/Messages (0.0.3):
+    - Protobuf
+
+DEPENDENCIES:
+  - TokenSdk (from `../..`)
+
+EXTERNAL SOURCES:
+  TokenSdk:
+    :path: ../..
+
+SPEC CHECKSUMS:
+  BoringSSL: 8de34f3100d671c9cbc494e1a462004c486d7e34
+  gRPC: 2d6b82f7a8773f933465bcbdf519a7cf8ebef41c
+  gRPC-Core: 7ce9d18a7fb9fffc0f57646608d0741782b16996
+  gRPC-ProtoRPC: 51745b5ebe4a844dc6e1ecf767d74ae3d124ea1e
+  gRPC-RxLibrary: 3a8c5543115fb2183ed5624678e7ecbac5e9e4ad
+  OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
+  Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
+  TokenSdk: 1765c953382ce1fc6981b13362acc0f740ca590c
+
+PODFILE CHECKSUM: 9688a4cbd3b4deb51ebf9b3d1bd95a5556a89aad
+
+COCOAPODS: 1.1.0.rc.2
