@@ -51,7 +51,7 @@
 		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
 		ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */; };
 		ABA7B0303C146231D78BE96C /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC2013ED8025D15A3E18 /* seed.c */; };
-		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; };
+		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ABA7B103B5929B86EF4C8689 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABA7BDE5D0F88461A97DCA5A /* license.txt */; };
 		ABA7B155594D4232CAF702FF /* TKMemberAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BD61CA7BB1D1369DC3B4 /* TKMemberAsync.h */; };
 		ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */; };
@@ -96,7 +96,7 @@
 		ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BBBA445C30817501F927 /* TKMember.h */; };
 		ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */; };
 		ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6A0C915116837349E69 /* TKUtilTests.m */; };
-		ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B600FA6B997FDF5087F1 /* test.c */; };
+		ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B600FA6B997FDF5087F1 /* test.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA46096C815D0B7DBD95 /* TKClient.h */; };
 		ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */; };
 		ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B75329B7D39384598938 /* verify.c */; };
@@ -637,7 +637,7 @@
 		8A9909051D890E820096A7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Token Inc";
 				TargetAttributes = {
 					8A99090D1D890E820096A7FA = {
@@ -699,7 +699,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */ = {
@@ -729,7 +729,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */ = {
@@ -859,8 +859,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -907,8 +909,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -940,6 +944,7 @@
 			baseConfigurationReference = 33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -973,6 +978,7 @@
 			baseConfigurationReference = 78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

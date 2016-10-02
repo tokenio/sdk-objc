@@ -16,6 +16,14 @@
 @class TKAccountAsync;
 
 
+/**
+ * Represents a funding account in the Token system.
+ * 
+ * <p>
+ * The class provides synchronous API with `TKAccountAsync` providing a asynchronous
+ * version. `TKAccountAsync` instance can be obtained by calling `async` method.
+ * </p>
+ */
 @interface TKAccount : NSObject
 
 @property (atomic, readonly) TKAccountAsync *async;
@@ -25,34 +33,30 @@
 
 + (TKAccount *)account:(TKAccountAsync *)delegate;
 
-- (Token *)createTokenWithAmount:(double)amount
-                        currency:(NSString *)currency;
-
-- (Token *)createTokenWithAmount:(double)amount
-                        currency:(NSString *)currency
-                   redeemerAlias:(NSString *)redeemerAlias
-                     description:(NSString *)description;
-
-- (Token *)lookupToken:(NSString *)tokenId;
-
-- (NSArray<Token *> *)lookupTokensOffset:(int)i limit:(int)limit;
-
-- (Token *)endorseToken:(Token *)token;
-
-- (Token *)declineToken:(Token *)token;
-
-- (Token *)revokeToken:(Token *)token;
-
-- (Payment *)redeemToken:(Token *)token;
-
-- (Payment *)redeemToken:(Token *)token
-                  amount:(NSNumber *)amount
-                currency:(NSString *)currency;
-
+/**
+ * Looks up account balance.
+ *
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
 - (Money *)lookupBalance;
 
+/**
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
+ *
+ * @param transactionId ID of the transaction
+ * @return a looked up transaction
+ */
 - (Transaction *)lookupTransaction:(NSString *)transactionId;
 
+/**
+ * Looks up existing transactions. This is a full list of transactions with token payments
+ * being a subset.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @return a list of looked up transactions
+ */
 - (NSArray<Payment *> *)lookupTransactionsOffset:(int)offset
                                            limit:(int)limit;
 

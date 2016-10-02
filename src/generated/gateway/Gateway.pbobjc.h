@@ -352,11 +352,14 @@ typedef GPB_ENUM(NotifyLinkAccountsRequest_FieldNumber) {
 #pragma mark - NotifyAddKeyRequest
 
 typedef GPB_ENUM(NotifyAddKeyRequest_FieldNumber) {
-  NotifyAddKeyRequest_FieldNumber_PublicKey = 1,
-  NotifyAddKeyRequest_FieldNumber_TagsArray = 2,
+  NotifyAddKeyRequest_FieldNumber_Alias = 1,
+  NotifyAddKeyRequest_FieldNumber_PublicKey = 2,
+  NotifyAddKeyRequest_FieldNumber_TagsArray = 3,
 };
 
 @interface NotifyAddKeyRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
@@ -369,6 +372,41 @@ typedef GPB_ENUM(NotifyAddKeyRequest_FieldNumber) {
 #pragma mark - NotifyAddKeyResponse
 
 @interface NotifyAddKeyResponse : GPBMessage
+
+@end
+
+#pragma mark - NotifyLinkAccountsAndAddKeyRequest
+
+typedef GPB_ENUM(NotifyLinkAccountsAndAddKeyRequest_FieldNumber) {
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_Alias = 1,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_BankId = 2,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_AccountLinkPayload = 3,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_PublicKey = 4,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_TagsArray = 5,
+};
+
+/// Notify existing subscribers that a bank linking payload has been created
+///, as well as request a key to be added
+@interface NotifyLinkAccountsAndAddKeyRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/// encrypted AccountLinkPayload
+@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
+/// The number of items in @c tagsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger tagsArray_Count;
+
+@end
+
+#pragma mark - NotifyLinkAccountsAndAddKeyResponse
+
+@interface NotifyLinkAccountsAndAddKeyResponse : GPBMessage
 
 @end
 

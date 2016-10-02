@@ -45,7 +45,7 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
   HttpAuthPayload_FieldNumber_Method = 1,
   HttpAuthPayload_FieldNumber_UriHost = 2,
   HttpAuthPayload_FieldNumber_UriPath = 3,
-  HttpAuthPayload_FieldNumber_UriParamArray = 4,
+  HttpAuthPayload_FieldNumber_QueryString = 4,
   HttpAuthPayload_FieldNumber_RequestBody = 5,
 };
 
@@ -60,9 +60,7 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *uriPath;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *uriParamArray;
-/// The number of items in @c uriParamArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger uriParamArray_Count;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *requestBody;
 

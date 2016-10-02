@@ -272,6 +272,60 @@ typedef struct AddKey__storage_ {
 
 @end
 
+#pragma mark - LinkAccountsAndAddKey
+
+@implementation LinkAccountsAndAddKey
+
+@dynamic hasLinkAccounts, linkAccounts;
+@dynamic hasAddKey, addKey;
+
+typedef struct LinkAccountsAndAddKey__storage_ {
+  uint32_t _has_storage_[1];
+  LinkAccounts *linkAccounts;
+  AddKey *addKey;
+} LinkAccountsAndAddKey__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "linkAccounts",
+        .dataTypeSpecific.className = GPBStringifySymbol(LinkAccounts),
+        .number = LinkAccountsAndAddKey_FieldNumber_LinkAccounts,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(LinkAccountsAndAddKey__storage_, linkAccounts),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
+        .number = LinkAccountsAndAddKey_FieldNumber_AddKey,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(LinkAccountsAndAddKey__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[LinkAccountsAndAddKey class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(LinkAccountsAndAddKey__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - Custom
 
 @implementation Custom

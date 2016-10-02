@@ -146,6 +146,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToNotifyAddKeyWithRequest:(NotifyAddKeyRequest *)request handler:(void(^)(NotifyAddKeyResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark NotifyLinkAccountsAndAddKey(NotifyLinkAccountsAndAddKeyRequest) returns (NotifyLinkAccountsAndAddKeyResponse)
+
+- (void)notifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToNotifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark LinkAccount(LinkAccountRequest) returns (LinkAccountResponse)
 
 /**
@@ -269,6 +276,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)lookupTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToLookupTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LookupInformationTokens(LookupTokensRequest) returns (LookupTokensResponse)
+
+- (void)lookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToLookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)

@@ -1,5 +1,5 @@
+TOKEN_PROTOS_VER = "1.0.101"
 platform :ios, '8.0'
-
 
 
 target 'TokenSdk' do
@@ -13,22 +13,39 @@ target 'TokenSdk' do
   end
 end
 
-post_install do |installer|
+
+require 'open-uri'
 
 #
-# Generates Objective-C code for the protos.
+# Fetches specified proto files from the artifact repository.
 #
-def fetchProtos()
-    # TODO(alexey): Fetch protos from artifactory. They need to be in the public folder!
-    # For now we just assume that we have protoc repo at the same level!
-    system('cp -r ../lib-proto/common/src/main/proto/* protos/common/')
-    system('cp -r ../lib-proto/external/src/main/proto/* protos/external/')
+def fetch_protos()
+    def download(version, type)
+        file = "tokenio-proto-#{type}-#{version}.jar"
+        puts("Downloading #{file} ...")
+
+        url = "https://token.artifactoryonline.com/token/public-libs-release-local/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
+        open(file, 'wb') do |file|
+            file << open(url).read
+        end
+        file
+    end
+
+    file = download(TOKEN_PROTOS_VER, :external)
+    system("unzip -d protos/external -o #{file} 'bankapi/*.proto'")
+    system("unzip -d protos/external -o #{file} 'gateway/*.proto'")
+    system("rm -f #{file}");
+
+    file = download(TOKEN_PROTOS_VER, :common)
+    system("unzip -d protos/common -o #{file} '*.proto'")
+    system("unzip -d protos/common -o #{file} 'google/api/*.proto'")
+    system("rm -f #{file}");
 end
 
 #
 # Generates Objective-C code for the protos.
 #
-def generateProtosCmd(path_to_protos, out_dir)
+def generate_protos_cmd(path_to_protos, out_dir)
     # Base directory where the .proto files are.
     src = "./protos"
 
@@ -56,21 +73,18 @@ def generateProtosCmd(path_to_protos, out_dir)
 end
 
 
-
-
+post_install do |installer|
     # Fetch the protos.
-    fetchProtos();
+    fetch_protos();
 
     # Build the command that generates the protos.
     dir = "src/generated"
 
-    gencommand = generateProtosCmd("common", dir) +
-        generateProtosCmd("common/google/api", dir) + 
-        generateProtosCmd("common/google/protobuf", dir) +
-        generateProtosCmd("external/gateway", dir) +
-        generateProtosCmd("external/bankapi", dir);
+    gencommand = generate_protos_cmd("common", dir) +
+        generate_protos_cmd("common/google/api", dir) + 
+        generate_protos_cmd("common/google/protobuf", dir) +
+        generate_protos_cmd("external/gateway", dir) +
+        generate_protos_cmd("external/bankapi", dir);
 
     system(gencommand)
-
 end
-

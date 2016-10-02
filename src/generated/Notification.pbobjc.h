@@ -24,7 +24,9 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AddKey;
 @class InformationToken;
+@class LinkAccounts;
 @class Payment;
 @class PaymentToken;
 
@@ -116,6 +118,26 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
 /// The number of items in @c tagsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
+
+@end
+
+#pragma mark - LinkAccountsAndAddKey
+
+typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
+  LinkAccountsAndAddKey_FieldNumber_LinkAccounts = 1,
+  LinkAccountsAndAddKey_FieldNumber_AddKey = 2,
+};
+
+/// A notification that a bank wants to be linked, and keys want to be added
+@interface LinkAccountsAndAddKey : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
+/// Test to see if @c linkAccounts has been set.
+@property(nonatomic, readwrite) BOOL hasLinkAccounts;
+
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+/// Test to see if @c addKey has been set.
+@property(nonatomic, readwrite) BOOL hasAddKey;
 
 @end
 

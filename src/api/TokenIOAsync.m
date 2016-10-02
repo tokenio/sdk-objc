@@ -98,15 +98,19 @@
                                     initWithGateway:gateway
                                     memberId:memberId
                                     secretKey:key];
-         if(alias != nil) {
+         if (alias != nil) {
              [authenticated addAlias:alias
                                   to:member
                            onSuccess:
               ^(Member *m) {
+                  TKClient *newClient = [[TKClient alloc]
+                                         initWithGateway:gateway
+                                         memberId:memberId
+                                         secretKey:key];
                   onSuccess([TKMemberAsync
                              member:m
                              secretKey:key
-                             useClient:authenticated]);
+                             useClient:newClient]);
               }
                              onError: onError];
          }
