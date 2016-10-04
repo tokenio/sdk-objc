@@ -82,7 +82,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
-- (void)addKey:(TKSecretKey *)newKey
+- (void)addKey:(NSString *)newPublicKey
             to:(Member *)member
          level:(NSUInteger)level
      onSuccess:(OnSuccessWithMember)onSuccess
@@ -91,7 +91,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.addKey.level = (int) level;
-    update.addKey.publicKey = newKey.publicKeyStr;
+    update.addKey.publicKey = newPublicKey;
 
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
