@@ -72,9 +72,17 @@
 - (void)approveKey:(TKSecretKey *)key
           onSucess:(OnSuccess)onSuccess
            onError:(OnError)onError {
+    [self approvePublicKey:key.publicKeyStr
+                  onSucess:onSuccess
+                   onError:onError];
+}
+
+- (void)approvePublicKey:(NSString *)publicKey
+                onSucess:(OnSuccess)onSuccess
+                 onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
     
-    [client addKey:key
+    [client addKey:publicKey
                 to:member
              level:0
          onSuccess:
