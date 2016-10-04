@@ -72,7 +72,7 @@
  * @param member member to add the key to
  * @param level key level
  */
-- (void)addKey:(TKSecretKey *)key
+- (void)addKey:(NSString *)newPublicKey
             to:(Member *)member
          level:(NSUInteger)level
      onSuccess:(OnSuccessWithMember)onSuccess

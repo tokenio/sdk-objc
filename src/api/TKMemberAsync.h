@@ -52,6 +52,18 @@
            onError:(OnError)onError;
 
 /**
+ * Approves a public key owned by this member. The key is added to the list
+ * of valid keys for the member.
+ *
+ * @param key to add to the approved list
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)approvePublicKey:(NSString *)publicKey
+                onSucess:(OnSuccess)onSuccess
+                 onError:(OnError)onError;
+
+/**
  * Removes a key owned by this member.
  *
  * @param keyId key ID of the key to remove
