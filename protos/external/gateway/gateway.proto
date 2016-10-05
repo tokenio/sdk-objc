@@ -116,7 +116,7 @@ message NotifyLinkAccountsRequest {
   string bank_id = 2;
 
   // encrypted AccountLinkPayload
-  bytes account_link_payload = 3;
+  string account_link_payload = 3;
 }
 
 message NotifyLinkAccountsResponse {
@@ -138,7 +138,7 @@ message NotifyLinkAccountsAndAddKeyRequest {
   string bank_id = 2;
 
   // encrypted AccountLinkPayload
-  bytes account_link_payload = 3;
+  string account_link_payload = 3;
 
   string public_key = 4;
   repeated string tags = 5;
@@ -155,7 +155,7 @@ message NotifyLinkAccountsAndAddKeyResponse {
 message LinkAccountRequest {
   string bank_id = 1;
   // encrypted AccountLinkPayload
-  bytes account_link_payload = 2;
+  string account_link_payload = 2;
 }
 
 message LinkAccountResponse {
@@ -219,71 +219,111 @@ message LookupTransactionsResponse {
 //
 
 message CreatePaymentTokenRequest {
-  io.token.proto.common.token.PaymentToken token = 1;
+  io.token.proto.common.token.PaymentToken.Payload payload = 1;
 }
 
 message CreatePaymentTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+  io.token.proto.common.token.PaymentToken token = 1;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Information Tokens.
-//
-
-message CreateInformationTokenRequest {
-  io.token.proto.common.token.InformationToken token = 1;
+message LookupPaymentTokenRequest {
+   string token_id = 2;
 }
 
-message CreateInformationTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+message LookupPaymentTokenResponse {
+  io.token.proto.common.token.PaymentToken token = 1;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Tokens. (Generic)
-//
-
-message LookupTokenRequest {
-  string token_id = 2;
-}
-
-message LookupTokenResponse {
-  io.token.proto.common.token.Token token = 1;
-}
-
-message LookupTokensRequest {
+message LookupPaymentTokensRequest {
   int32 offset = 1;      // Optional token offset, used for paging.
   int32 limit = 2;       // Optional token limit, used for paging.
 }
 
-message LookupTokensResponse {
-  repeated io.token.proto.common.token.Token tokens = 1;
+message LookupPaymentTokensResponse {
+  repeated io.token.proto.common.token.PaymentToken tokens = 1;
 }
 
-message EndorseTokenRequest {
+message EndorsePaymentTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message EndorseTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+message EndorsePaymentTokenResponse {
+  io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message DeclineTokenRequest {
+message RevokePaymentTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message DeclineTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+message RevokePaymentTokenResponse {
+  io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message RevokeTokenRequest {
+message DeclinePaymentTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message RevokeTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+message DeclinePaymentTokenResponse {
+  io.token.proto.common.token.PaymentToken token = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// AccessTokens.
+//
+
+message CreateAccessTokenRequest {
+  io.token.proto.common.token.AccessToken.Payload payload = 1;
+}
+
+message CreateAccessTokenResponse {
+  io.token.proto.common.token.AccessToken token = 1;
+}
+
+message LookupAccessTokenRequest {
+  string token_id = 2;
+}
+
+message LookupAccessTokenResponse {
+  io.token.proto.common.token.AccessToken token = 1;
+}
+
+message LookupAccessTokensRequest {
+  int32 offset = 1;      // Optional token offset, used for paging.
+  int32 limit = 2;       // Optional token limit, used for paging.
+}
+
+message LookupAccessTokensResponse {
+  repeated io.token.proto.common.token.AccessToken tokens = 1;
+}
+
+message EndorseAccessTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message EndorseAccessTokenResponse {
+  io.token.proto.common.token.AccessToken token = 1;
+}
+
+message RevokeAccessTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message RevokeAccessTokenResponse {
+  io.token.proto.common.token.AccessToken token = 1;
+}
+
+message DeclineAccessTokenRequest {
+  string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+message DeclineAccessTokenResponse {
+  io.token.proto.common.token.AccessToken token = 1;
 }
 
 
@@ -473,59 +513,78 @@ service GatewayService {
 
   rpc CreatePaymentToken (CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse) {
     option (google.api.http) = {
-        post: "/pay-tokens"
+        post: "/payment-tokens"
+    };
+  }
+
+  rpc LookupPaymentToken (LookupPaymentTokenRequest) returns (LookupPaymentTokenResponse) {
+    option (google.api.http) = {
+        get: "/payment-tokens/{token_id}"
+    };
+  }
+
+  rpc LookupPaymentTokens (LookupPaymentTokensRequest) returns (LookupPaymentTokensResponse) {
+    option (google.api.http) = {
+        get: "/payment-tokens?offset={offset}&limit={limit}"
+    };
+  }
+
+  rpc EndorsePaymentToken (EndorsePaymentTokenRequest) returns (EndorsePaymentTokenResponse) {
+    option (google.api.http) = {
+        put: "/payment-tokens/{token_id}/endorse"
+    };
+  }
+
+  rpc RevokePaymentToken (RevokePaymentTokenRequest) returns (RevokePaymentTokenResponse) {
+    option (google.api.http) = {
+        put: "/payment-tokens/{token_id}/revoke"
+    };
+  }
+
+  rpc DeclinePaymentToken (DeclinePaymentTokenRequest) returns (DeclinePaymentTokenResponse) {
+    option (google.api.http) = {
+        put: "/payment-tokens/{token_id}/decline"
     };
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Information Tokens.
+  // Access Tokens.
   //
 
-  rpc CreateInformationToken (CreateInformationTokenRequest) returns (CreateInformationTokenResponse) {
+  rpc CreateAccessToken (CreateAccessTokenRequest) returns (CreateAccessTokenResponse) {
     option (google.api.http) = {
-        post: "/info-tokens"
+        post: "/access-tokens"
     };
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Tokens. (Generic)
-  //
-
-  rpc LookupToken (LookupTokenRequest) returns (LookupTokenResponse) {
+  rpc LookupAccessToken (LookupAccessTokenRequest) returns (LookupAccessTokenResponse) {
     option (google.api.http) = {
-        get: "/tokens/{token_id}"
+        get: "/access-tokens/{token_id}"
     };
   }
 
-  rpc LookupTokens (LookupTokensRequest) returns (LookupTokensResponse) {
+  rpc LookupAccessTokens (LookupAccessTokensRequest) returns (LookupAccessTokensResponse) {
     option (google.api.http) = {
-        get: "/pay-tokens?offset={offset}&limit={limit}"
+        get: "/access-tokens?offset={offset}&limit={limit}"
     };
   }
 
-  rpc LookupInformationTokens (LookupTokensRequest) returns (LookupTokensResponse) {
+  rpc EndorseAccessToken (EndorseAccessTokenRequest) returns (EndorseAccessTokenResponse) {
     option (google.api.http) = {
-        get: "/info-tokens"
+        put: "/access-tokens/{token_id}/endorse"
     };
   }
 
-  rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
+  rpc RevokeAccessToken (RevokeAccessTokenRequest) returns (RevokeAccessTokenResponse) {
     option (google.api.http) = {
-        put: "/tokens/{token_id}/endorse"
+        put: "/access-tokens/{token_id}/revoke"
     };
   }
 
-  rpc DeclineToken (DeclineTokenRequest) returns (DeclineTokenResponse) {
+  rpc DeclineAccessToken (DeclineAccessTokenRequest) returns (DeclineAccessTokenResponse) {
     option (google.api.http) = {
-        put: "/tokens/{token_id}/decline"
-    };
-  }
-
-  rpc RevokeToken (RevokeTokenRequest) returns (RevokeTokenResponse) {
-    option (google.api.http) = {
-        put: "/tokens/{token_id}/revoke"
+        put: "/access-tokens/{token_id}/decline"
     };
   }
 

@@ -40,9 +40,9 @@
 
         [payload.accountsArray addObject:account];
 
-        NSData *payloadData = [[TKJson serialize:payload] dataUsingEncoding:NSASCIIStringEncoding];
+        NSString *payloadBase64 = [TKJson serializeBase64:payload];
         NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                                 withPayload:payloadData];
+                                                  withPayload:payloadBase64];
 
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);

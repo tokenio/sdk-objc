@@ -64,7 +64,7 @@ message StartLinkBankRequest {
 }
 
 message StartLinkBankResponse {
-  bytes account_link_payload = 1;
+  string account_link_payload = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

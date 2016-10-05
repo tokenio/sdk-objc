@@ -36,10 +36,10 @@
     return self;
 }
 
-- (NSData *)startAccountsLinkingForAlias:(NSString *)alias
-                          accountNumbers:(NSArray<NSString *> *)accountNumbers
-                                metadata:(FankMetadata *)metadata {
-    TKRpcSyncCall<NSData *> *call = [TKRpcSyncCall create];
+- (NSString *)startAccountsLinkingForAlias:(NSString *)alias
+                            accountNumbers:(NSArray<NSString *> *)accountNumbers
+                                  metadata:(FankMetadata *)metadata {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     return [call run:^{
         GPBAny *meta = [GPBAny message];
         meta.typeURL = [@"type.googleapis.com/" stringByAppendingFormat:@"%@.%@",

@@ -51,7 +51,7 @@ typedef GPB_ENUM(FankMetadata_FieldNumber) {
 };
 
 /// A helper proto to serialize Fake Bank metadata.
-/// This payload is intendet to be used with LinkAccountRequest
+/// This payload is intended to be used with LinkAccountRequest
 /// as a serialized json inside the payload.
 @interface FankMetadata : GPBMessage
 
@@ -91,7 +91,7 @@ typedef GPB_ENUM(FankMetadata_ClientAccount_FieldNumber) {
 };
 
 /// Instruction for FakeBank to create a client account
-/// if diesn't already exist
+/// if doesn't already exist
 @interface FankMetadata_ClientAccount : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;

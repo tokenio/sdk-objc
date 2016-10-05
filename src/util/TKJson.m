@@ -34,6 +34,12 @@
     return [jsonStr stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
 }
 
++ (NSString *)serializeBase64:(GPBMessage *)message {
+    NSString *serialized = [self serialize:message];
+    NSData *serializedData = [serialized dataUsingEncoding:NSUTF8StringEncoding];
+    return [TKUtil base64EncodeData:serializedData];
+}
+
 #pragma mark private
 
 /**

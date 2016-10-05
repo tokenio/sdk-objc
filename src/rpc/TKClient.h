@@ -12,6 +12,7 @@
 @class GatewayService;
 @class TKSecretKey;
 @class PaymentToken;
+@class PaymentToken_Payload;
 @class PaymentPayload;
 
 
@@ -97,7 +98,7 @@
  *                           by the bank
  */
 - (void)linkAccounts:(NSString *)bankId
-             payload:(NSData *)accountLinkPayload
+             payload:(NSString *)accountLinkPayload
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError;
 
@@ -110,22 +111,19 @@
 /**
  * Creates a new payment token.
  *
- * @param amount payment amount
- * @param currency currency code, e.g. "USD"
- * @param redeemerAlias redeemer alias
- * @param description payment description, optional
+ * @param payload payment token payload
  */
-- (void)createPaymentToken:(PaymentToken *)paymentToken
-                    onSuccess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
+- (void)createPaymentToken:(PaymentToken_Payload *)payload
+                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up an existing token.
  *
  * @param tokenId token id
  */
-- (void)lookupToken:(NSString *)tokenId
-                 onSuccess:(OnSuccessWithToken)onSuccess
+- (void)lookupPaymentToken:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
                    onError:(OnError)onError;
 
 /**
@@ -134,46 +132,46 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (void)lookupTokens:(int)offset
-               limit:(int)limit
-           onSuccess:(OnSuccessWithTokens)onSuccess
-             onError:(OnError)onError;
+- (void)lookupPaymentTokens:(int)offset
+                      limit:(int)limit
+                  onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+                    onError:(OnError)onError;
 
 /**
- * Endorses a token.
+ * Endorses a payment token.
  *
  * @param token token to endorse
  */
-- (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)success
-             onError:(OnError)error;
+- (void)endorsePaymentToken:(PaymentToken *)token
+                  onSuccess:(OnSuccessWithPaymentToken)success
+                    onError:(OnError)error;
 
 /**
- * Declines a token.
+ * Declines a payment token.
  *
  * @param token token to endorse
  */
-- (void)declineToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)success
-             onError:(OnError)error;
+- (void)declinePaymentToken:(PaymentToken *)token
+                  onSuccess:(OnSuccessWithPaymentToken)success
+                    onError:(OnError)error;
 
 /**
- * Revokes a token.
+ * Revokes a payment token.
  *
  * @param token token to endorse
  */
-- (void)revokeToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)success
-             onError:(OnError)error;
+- (void)revokePaymentToken:(PaymentToken *)token
+                 onSuccess:(OnSuccessWithPaymentToken)success
+                   onError:(OnError)error;
 
 /**
  * Redeems a payment token.
  *
  * @param payment payment parameters, such as amount, currency, etc
  */
-- (void)redeemToken:(PaymentPayload *)payload
-          onSuccess:(OnSuccessWithPayment)onSuccess
-            onError:(OnError)onError;
+- (void)redeemPaymentToken:(PaymentPayload *)payload
+                 onSuccess:(OnSuccessWithPayment)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up a token payment by id.
