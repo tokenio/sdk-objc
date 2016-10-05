@@ -84,36 +84,19 @@
     }];
 }
 
-- (void)testDeclineToken {
+- (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
         PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.11
                                                          currency:@"USD"];
-        PaymentToken *declined = [payer declinePaymentToken:token];
+        PaymentToken *cancelled = [payer cancelPaymentToken:token];
 
         XCTAssertEqual(0, token.signaturesArray_Count);
 
-        XCTAssertEqualObjects(@"100.11", declined.payload.amount);
-        XCTAssertEqualObjects(@"USD", declined.payload.currency);
-        XCTAssertEqual(2, declined.signaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Declined, declined.signaturesArray[0].action);
-    }];
-}
-
-- (void)testRevokeToken {
-    [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
-                                                           amount:100.11
-                                                         currency:@"USD"];
-        PaymentToken *endorsed = [payer endorsePaymentToken:token];
-        PaymentToken *revoked = [payer revokePaymentToken:endorsed];
-
-        XCTAssertEqual(0, token.signaturesArray_Count);
-        XCTAssertEqual(2, endorsed.signaturesArray_Count);
-
-        XCTAssertEqualObjects(@"100.11", revoked.payload.amount);
-        XCTAssertEqualObjects(@"USD", revoked.payload.currency);
-        XCTAssertEqual(4, revoked.signaturesArray_Count);
+        XCTAssertEqualObjects(@"100.11", cancelled.payload.amount);
+        XCTAssertEqualObjects(@"USD", cancelled.payload.currency);
+        XCTAssertEqual(2, cancelled.signaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.signaturesArray[0].action);
     }];
 }
 

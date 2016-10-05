@@ -310,20 +310,12 @@
 
 }
 
-- (void)declinePaymentToken:(PaymentToken *)token
+- (void)cancelPaymentToken:(PaymentToken *)token
                   onSuccess:(OnSuccessWithPaymentToken)onSuccess
                     onError:(OnError)onError {
-    [client declinePaymentToken:token
+    [client cancelPaymentToken:token
                       onSuccess:onSuccess
                         onError:onError];
-}
-
-- (void)revokePaymentToken:(PaymentToken *)token
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
-                   onError:(OnError)onError {
-    [client revokePaymentToken:token
-                     onSuccess:onSuccess
-                       onError:onError];
 }
 
 - (void)redeemPaymentToken:(PaymentToken *)token

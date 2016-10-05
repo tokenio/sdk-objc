@@ -382,28 +382,16 @@
              responseClass:[EndorsePaymentTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark RevokePaymentToken(RevokePaymentTokenRequest) returns (RevokePaymentTokenResponse)
+#pragma mark CancelPaymentToken(CancelPaymentTokenRequest) returns (CancelPaymentTokenResponse)
 
-- (void)revokePaymentTokenWithRequest:(RevokePaymentTokenRequest *)request handler:(void(^)(RevokePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToRevokePaymentTokenWithRequest:request handler:handler] start];
+- (void)cancelPaymentTokenWithRequest:(CancelPaymentTokenRequest *)request handler:(void(^)(CancelPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCancelPaymentTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRevokePaymentTokenWithRequest:(RevokePaymentTokenRequest *)request handler:(void(^)(RevokePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"RevokePaymentToken"
+- (GRPCProtoCall *)RPCToCancelPaymentTokenWithRequest:(CancelPaymentTokenRequest *)request handler:(void(^)(CancelPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CancelPaymentToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[RevokePaymentTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark DeclinePaymentToken(DeclinePaymentTokenRequest) returns (DeclinePaymentTokenResponse)
-
-- (void)declinePaymentTokenWithRequest:(DeclinePaymentTokenRequest *)request handler:(void(^)(DeclinePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToDeclinePaymentTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToDeclinePaymentTokenWithRequest:(DeclinePaymentTokenRequest *)request handler:(void(^)(DeclinePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"DeclinePaymentToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[DeclinePaymentTokenResponse class]
+             responseClass:[CancelPaymentTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
@@ -466,28 +454,16 @@
              responseClass:[EndorseAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark RevokeAccessToken(RevokeAccessTokenRequest) returns (RevokeAccessTokenResponse)
+#pragma mark CancelAccessToken(CancelAccessTokenRequest) returns (CancelAccessTokenResponse)
 
-- (void)revokeAccessTokenWithRequest:(RevokeAccessTokenRequest *)request handler:(void(^)(RevokeAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToRevokeAccessTokenWithRequest:request handler:handler] start];
+- (void)cancelAccessTokenWithRequest:(CancelAccessTokenRequest *)request handler:(void(^)(CancelAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCancelAccessTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRevokeAccessTokenWithRequest:(RevokeAccessTokenRequest *)request handler:(void(^)(RevokeAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"RevokeAccessToken"
+- (GRPCProtoCall *)RPCToCancelAccessTokenWithRequest:(CancelAccessTokenRequest *)request handler:(void(^)(CancelAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CancelAccessToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[RevokeAccessTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark DeclineAccessToken(DeclineAccessTokenRequest) returns (DeclineAccessTokenResponse)
-
-- (void)declineAccessTokenWithRequest:(DeclineAccessTokenRequest *)request handler:(void(^)(DeclineAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToDeclineAccessTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToDeclineAccessTokenWithRequest:(DeclineAccessTokenRequest *)request handler:(void(^)(DeclineAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"DeclineAccessToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[DeclineAccessTokenResponse class]
+             responseClass:[CancelAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark RedeemPaymentToken(RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse)

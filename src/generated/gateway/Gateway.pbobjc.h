@@ -726,14 +726,14 @@ typedef GPB_ENUM(EndorsePaymentTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - RevokePaymentTokenRequest
+#pragma mark - CancelPaymentTokenRequest
 
-typedef GPB_ENUM(RevokePaymentTokenRequest_FieldNumber) {
-  RevokePaymentTokenRequest_FieldNumber_TokenId = 1,
-  RevokePaymentTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(CancelPaymentTokenRequest_FieldNumber) {
+  CancelPaymentTokenRequest_FieldNumber_TokenId = 1,
+  CancelPaymentTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface RevokePaymentTokenRequest : GPBMessage
+@interface CancelPaymentTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -743,44 +743,13 @@ typedef GPB_ENUM(RevokePaymentTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - RevokePaymentTokenResponse
+#pragma mark - CancelPaymentTokenResponse
 
-typedef GPB_ENUM(RevokePaymentTokenResponse_FieldNumber) {
-  RevokePaymentTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CancelPaymentTokenResponse_FieldNumber) {
+  CancelPaymentTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface RevokePaymentTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - DeclinePaymentTokenRequest
-
-typedef GPB_ENUM(DeclinePaymentTokenRequest_FieldNumber) {
-  DeclinePaymentTokenRequest_FieldNumber_TokenId = 1,
-  DeclinePaymentTokenRequest_FieldNumber_Signature = 2,
-};
-
-@interface DeclinePaymentTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
-
-@end
-
-#pragma mark - DeclinePaymentTokenResponse
-
-typedef GPB_ENUM(DeclinePaymentTokenResponse_FieldNumber) {
-  DeclinePaymentTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface DeclinePaymentTokenResponse : GPBMessage
+@interface CancelPaymentTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
 /// Test to see if @c token has been set.
@@ -904,14 +873,14 @@ typedef GPB_ENUM(EndorseAccessTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - RevokeAccessTokenRequest
+#pragma mark - CancelAccessTokenRequest
 
-typedef GPB_ENUM(RevokeAccessTokenRequest_FieldNumber) {
-  RevokeAccessTokenRequest_FieldNumber_TokenId = 1,
-  RevokeAccessTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(CancelAccessTokenRequest_FieldNumber) {
+  CancelAccessTokenRequest_FieldNumber_TokenId = 1,
+  CancelAccessTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface RevokeAccessTokenRequest : GPBMessage
+@interface CancelAccessTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -921,44 +890,13 @@ typedef GPB_ENUM(RevokeAccessTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - RevokeAccessTokenResponse
+#pragma mark - CancelAccessTokenResponse
 
-typedef GPB_ENUM(RevokeAccessTokenResponse_FieldNumber) {
-  RevokeAccessTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CancelAccessTokenResponse_FieldNumber) {
+  CancelAccessTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface RevokeAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - DeclineAccessTokenRequest
-
-typedef GPB_ENUM(DeclineAccessTokenRequest_FieldNumber) {
-  DeclineAccessTokenRequest_FieldNumber_TokenId = 1,
-  DeclineAccessTokenRequest_FieldNumber_Signature = 2,
-};
-
-@interface DeclineAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
-
-@end
-
-#pragma mark - DeclineAccessTokenResponse
-
-typedef GPB_ENUM(DeclineAccessTokenResponse_FieldNumber) {
-  DeclineAccessTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface DeclineAccessTokenResponse : GPBMessage
+@interface CancelAccessTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
 /// Test to see if @c token has been set.

@@ -248,46 +248,20 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)declinePaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
-                    onError:(OnError)onError {
-    DeclinePaymentTokenRequest *request = [DeclinePaymentTokenRequest message];
-    request.tokenId = token.id_p;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:token
-                                          action:TokenSignature_Action_Declined
-                                        usingKey:key];
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-                           RPCToDeclinePaymentTokenWithRequest:request
-                           handler:^(DeclinePaymentTokenResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.token);
-                               } else {
-                                   RpcLogError(error);
-                                   onError(error);
-                               }
-                           }];
-
-    [self _startCall:call withRequest:request];
-}
-
-- (void)revokePaymentToken:(PaymentToken *)token
+- (void)cancelPaymentToken:(PaymentToken *)token
                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
                    onError:(OnError)onError {
-    RevokePaymentTokenRequest *request = [RevokePaymentTokenRequest message];
+    CancelPaymentTokenRequest *request = [CancelPaymentTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:token
-                                          action:TokenSignature_Action_Revoked
+                                          action:TokenSignature_Action_Cancelled
                                         usingKey:key];
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToRevokePaymentTokenWithRequest:request
-                           handler:^(RevokePaymentTokenResponse *response, NSError *error) {
+                           RPCToCancelPaymentTokenWithRequest:request
+                           handler:^(CancelPaymentTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);

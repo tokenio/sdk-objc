@@ -13,8 +13,7 @@ message TokenSignature {
   enum Action {
     INVALID   = 0;
     ENDORSED  = 1;                                        // Endorses token. Both payer and payer bank co-endorse the token.
-    REVOKED   = 2;                                        // Revokes the token, executed by payer.
-    DECLINED  = 3;                                        // Declines the token, executed by payer or issuer.
+    CANCELLED = 2;                                        // Revoked by the payer or declined by the redeemer.
   }
 
   Action action = 1;

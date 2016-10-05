@@ -54,11 +54,8 @@ typedef GPB_ENUM(TokenSignature_Action) {
   /// Endorses token. Both payer and payer bank co-endorse the token.
   TokenSignature_Action_Endorsed = 1,
 
-  /// Revokes the token, executed by payer.
-  TokenSignature_Action_Revoked = 2,
-
-  /// Declines the token, executed by payer or issuer.
-  TokenSignature_Action_Declined = 3,
+  /// Revoked by the payer or declined by the redeemer.
+  TokenSignature_Action_Cancelled = 2,
 };
 
 GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void);

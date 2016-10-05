@@ -293,26 +293,14 @@
              onError:(OnError)onError;
 
 /**
- * Declines the payment token by signing it. The signature is persisted
+ * Cancels the payment token by signing it. The signature is persisted
  * along with the token.
  *
- * @param token token to decline
+ * @param token token to cancel
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)declinePaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Revokes the payment token by signing it. The signature is persisted
- * along with the token. Only applicable to endorsed tokens.
- *
- * @param token token to endorse
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)revokePaymentToken:(PaymentToken *)token
+- (void)cancelPaymentToken:(PaymentToken *)token
                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
                    onError:(OnError)onError;
 

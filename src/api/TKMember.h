@@ -214,22 +214,13 @@
 - (PaymentToken *)endorsePaymentToken:(PaymentToken *)token;
 
 /**
- * Declines the payment token by signing it. The signature is persisted 
+ * Cancels the payment token by signing it. The signature is persisted 
  * along with the token.
  *
- * @param token token to decline
- * @return declined token
+ * @param token token to cancel
+ * @return cancelled token
  */
-- (PaymentToken *)declinePaymentToken:(PaymentToken *)token;
-
-/**
- * Revokes the payment token by signing it. The signature is persisted 
- * along with the token. Only applicable to endorsed tokens.
- *
- * @param token token to endorse
- * @return endorsed token
- */
-- (PaymentToken *)revokePaymentToken:(PaymentToken *)token;
+- (PaymentToken *)cancelPaymentToken:(PaymentToken *)token;
 
 /**
  * Redeems a payment token.

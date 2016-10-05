@@ -252,23 +252,15 @@ message EndorsePaymentTokenResponse {
   io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message RevokePaymentTokenRequest {
+message CancelPaymentTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message RevokePaymentTokenResponse {
+message CancelPaymentTokenResponse {
   io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message DeclinePaymentTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
-}
-
-message DeclinePaymentTokenResponse {
-  io.token.proto.common.token.PaymentToken token = 1;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // AccessTokens.
@@ -308,21 +300,12 @@ message EndorseAccessTokenResponse {
   io.token.proto.common.token.AccessToken token = 1;
 }
 
-message RevokeAccessTokenRequest {
+message CancelAccessTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message RevokeAccessTokenResponse {
-  io.token.proto.common.token.AccessToken token = 1;
-}
-
-message DeclineAccessTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
-}
-
-message DeclineAccessTokenResponse {
+message CancelAccessTokenResponse {
   io.token.proto.common.token.AccessToken token = 1;
 }
 
@@ -535,15 +518,9 @@ service GatewayService {
     };
   }
 
-  rpc RevokePaymentToken (RevokePaymentTokenRequest) returns (RevokePaymentTokenResponse) {
+  rpc CancelPaymentToken (CancelPaymentTokenRequest) returns (CancelPaymentTokenResponse) {
     option (google.api.http) = {
-        put: "/payment-tokens/{token_id}/revoke"
-    };
-  }
-
-  rpc DeclinePaymentToken (DeclinePaymentTokenRequest) returns (DeclinePaymentTokenResponse) {
-    option (google.api.http) = {
-        put: "/payment-tokens/{token_id}/decline"
+        put: "/payment-tokens/{token_id}/cancel"
     };
   }
 
@@ -576,15 +553,9 @@ service GatewayService {
     };
   }
 
-  rpc RevokeAccessToken (RevokeAccessTokenRequest) returns (RevokeAccessTokenResponse) {
+  rpc CancelAccessToken (CancelAccessTokenRequest) returns (CancelAccessTokenResponse) {
     option (google.api.http) = {
-        put: "/access-tokens/{token_id}/revoke"
-    };
-  }
-
-  rpc DeclineAccessToken (DeclineAccessTokenRequest) returns (DeclineAccessTokenResponse) {
-    option (google.api.http) = {
-        put: "/access-tokens/{token_id}/decline"
+        put: "/access-tokens/{token_id}/cancel"
     };
   }
 

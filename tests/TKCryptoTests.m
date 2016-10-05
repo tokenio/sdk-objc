@@ -47,7 +47,7 @@
 
     success = [TKCrypto verifySignature:signature
                                     forToken:token
-                                      action:TokenSignature_Action_Declined
+                                      action:TokenSignature_Action_Cancelled
                               usingPublicKey:key.publicKey];
     XCTAssert(!success);
 }

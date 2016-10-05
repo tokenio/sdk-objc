@@ -134,12 +134,11 @@ GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Invalid\000Endorsed\000Revoked\000Declined\000";
+        "Invalid\000Endorsed\000Cancelled\000";
     static const int32_t values[] = {
         TokenSignature_Action_Invalid,
         TokenSignature_Action_Endorsed,
-        TokenSignature_Action_Revoked,
-        TokenSignature_Action_Declined,
+        TokenSignature_Action_Cancelled,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TokenSignature_Action)
@@ -158,8 +157,7 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value__) {
   switch (value__) {
     case TokenSignature_Action_Invalid:
     case TokenSignature_Action_Endorsed:
-    case TokenSignature_Action_Revoked:
-    case TokenSignature_Action_Declined:
+    case TokenSignature_Action_Cancelled:
       return YES;
     default:
       return NO;

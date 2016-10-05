@@ -74,13 +74,13 @@
     s1.action = TokenSignature_Action_Endorsed;
 
     TokenSignature *s2 = [TokenSignature message];
-    s2.action = TokenSignature_Action_Declined;
+    s2.action = TokenSignature_Action_Cancelled;
 
     PaymentToken *token = [PaymentToken message];
     token.signaturesArray = [@[s1, s2] mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"DECLINED\"}]}");
+    XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"CANCELLED\"}]}");
 }
 
 /**
