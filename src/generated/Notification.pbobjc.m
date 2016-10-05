@@ -108,7 +108,7 @@ typedef struct PaymentProcessed__storage_ {
 typedef struct LinkAccounts__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
-  NSData *accountLinkPayload;
+  NSString *accountLinkPayload;
 } LinkAccounts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -133,7 +133,7 @@ typedef struct LinkAccounts__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountLinkPayload),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBytes,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -158,12 +158,12 @@ typedef struct LinkAccounts__storage_ {
 
 @dynamic tokenOneOfCase;
 @dynamic paymentToken;
-@dynamic informationToken;
+@dynamic accessToken;
 
 typedef struct StepUp__storage_ {
   uint32_t _has_storage_[2];
   PaymentToken *paymentToken;
-  InformationToken *informationToken;
+  AccessToken *accessToken;
 } StepUp__storage_;
 
 // This method is threadsafe because it is initially called
@@ -182,11 +182,11 @@ typedef struct StepUp__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "informationToken",
-        .dataTypeSpecific.className = GPBStringifySymbol(InformationToken),
-        .number = StepUp_FieldNumber_InformationToken,
+        .name = "accessToken",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .number = StepUp_FieldNumber_AccessToken,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(StepUp__storage_, informationToken),
+        .offset = (uint32_t)offsetof(StepUp__storage_, accessToken),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

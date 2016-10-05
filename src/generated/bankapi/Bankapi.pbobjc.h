@@ -218,7 +218,7 @@ typedef GPB_ENUM(StartLinkBankResponse_FieldNumber) {
 
 @interface StartLinkBankResponse : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountLinkPayload;
 
 @end
 

@@ -233,77 +233,93 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToCreatePaymentTokenWithRequest:(CreatePaymentTokenRequest *)request handler:(void(^)(CreatePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CreateInformationToken(CreateInformationTokenRequest) returns (CreateInformationTokenResponse)
+#pragma mark LookupPaymentToken(LookupPaymentTokenRequest) returns (LookupPaymentTokenResponse)
+
+- (void)lookupPaymentTokenWithRequest:(LookupPaymentTokenRequest *)request handler:(void(^)(LookupPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToLookupPaymentTokenWithRequest:(LookupPaymentTokenRequest *)request handler:(void(^)(LookupPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LookupPaymentTokens(LookupPaymentTokensRequest) returns (LookupPaymentTokensResponse)
+
+- (void)lookupPaymentTokensWithRequest:(LookupPaymentTokensRequest *)request handler:(void(^)(LookupPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToLookupPaymentTokensWithRequest:(LookupPaymentTokensRequest *)request handler:(void(^)(LookupPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EndorsePaymentToken(EndorsePaymentTokenRequest) returns (EndorsePaymentTokenResponse)
+
+- (void)endorsePaymentTokenWithRequest:(EndorsePaymentTokenRequest *)request handler:(void(^)(EndorsePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEndorsePaymentTokenWithRequest:(EndorsePaymentTokenRequest *)request handler:(void(^)(EndorsePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RevokePaymentToken(RevokePaymentTokenRequest) returns (RevokePaymentTokenResponse)
+
+- (void)revokePaymentTokenWithRequest:(RevokePaymentTokenRequest *)request handler:(void(^)(RevokePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRevokePaymentTokenWithRequest:(RevokePaymentTokenRequest *)request handler:(void(^)(RevokePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark DeclinePaymentToken(DeclinePaymentTokenRequest) returns (DeclinePaymentTokenResponse)
+
+- (void)declinePaymentTokenWithRequest:(DeclinePaymentTokenRequest *)request handler:(void(^)(DeclinePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToDeclinePaymentTokenWithRequest:(DeclinePaymentTokenRequest *)request handler:(void(^)(DeclinePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Information Tokens.
+ * Access Tokens.
  * 
  * 
  */
-- (void)createInformationTokenWithRequest:(CreateInformationTokenRequest *)request handler:(void(^)(CreateInformationTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Information Tokens.
+ * Access Tokens.
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreateInformationTokenWithRequest:(CreateInformationTokenRequest *)request handler:(void(^)(CreateInformationTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark LookupToken(LookupTokenRequest) returns (LookupTokenResponse)
+#pragma mark LookupAccessToken(LookupAccessTokenRequest) returns (LookupAccessTokenResponse)
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Tokens. (Generic)
- * 
- * 
- */
-- (void)lookupTokenWithRequest:(LookupTokenRequest *)request handler:(void(^)(LookupTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)lookupAccessTokenWithRequest:(LookupAccessTokenRequest *)request handler:(void(^)(LookupAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Tokens. (Generic)
- * 
- * 
- */
-- (GRPCProtoCall *)RPCToLookupTokenWithRequest:(LookupTokenRequest *)request handler:(void(^)(LookupTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToLookupAccessTokenWithRequest:(LookupAccessTokenRequest *)request handler:(void(^)(LookupAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark LookupTokens(LookupTokensRequest) returns (LookupTokensResponse)
+#pragma mark LookupAccessTokens(LookupAccessTokensRequest) returns (LookupAccessTokensResponse)
 
-- (void)lookupTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)lookupAccessTokensWithRequest:(LookupAccessTokensRequest *)request handler:(void(^)(LookupAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToLookupTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark LookupInformationTokens(LookupTokensRequest) returns (LookupTokensResponse)
-
-- (void)lookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToLookupInformationTokensWithRequest:(LookupTokensRequest *)request handler:(void(^)(LookupTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToLookupAccessTokensWithRequest:(LookupAccessTokensRequest *)request handler:(void(^)(LookupAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
+#pragma mark EndorseAccessToken(EndorseAccessTokenRequest) returns (EndorseAccessTokenResponse)
 
-- (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)endorseAccessTokenWithRequest:(EndorseAccessTokenRequest *)request handler:(void(^)(EndorseAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark DeclineToken(DeclineTokenRequest) returns (DeclineTokenResponse)
-
-- (void)declineTokenWithRequest:(DeclineTokenRequest *)request handler:(void(^)(DeclineTokenResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToDeclineTokenWithRequest:(DeclineTokenRequest *)request handler:(void(^)(DeclineTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToEndorseAccessTokenWithRequest:(EndorseAccessTokenRequest *)request handler:(void(^)(EndorseAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RevokeToken(RevokeTokenRequest) returns (RevokeTokenResponse)
+#pragma mark RevokeAccessToken(RevokeAccessTokenRequest) returns (RevokeAccessTokenResponse)
 
-- (void)revokeTokenWithRequest:(RevokeTokenRequest *)request handler:(void(^)(RevokeTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)revokeAccessTokenWithRequest:(RevokeAccessTokenRequest *)request handler:(void(^)(RevokeAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRevokeTokenWithRequest:(RevokeTokenRequest *)request handler:(void(^)(RevokeTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRevokeAccessTokenWithRequest:(RevokeAccessTokenRequest *)request handler:(void(^)(RevokeAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark DeclineAccessToken(DeclineAccessTokenRequest) returns (DeclineAccessTokenResponse)
+
+- (void)declineAccessTokenWithRequest:(DeclineAccessTokenRequest *)request handler:(void(^)(DeclineAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToDeclineAccessTokenWithRequest:(DeclineAccessTokenRequest *)request handler:(void(^)(DeclineAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark RedeemPaymentToken(RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse)

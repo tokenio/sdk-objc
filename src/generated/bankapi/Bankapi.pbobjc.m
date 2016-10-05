@@ -591,7 +591,7 @@ typedef struct StartLinkBankRequest__storage_ {
 
 typedef struct StartLinkBankResponse__storage_ {
   uint32_t _has_storage_[1];
-  NSData *accountLinkPayload;
+  NSString *accountLinkPayload;
 } StartLinkBankResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -607,7 +607,7 @@ typedef struct StartLinkBankResponse__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(StartLinkBankResponse__storage_, accountLinkPayload),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBytes,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

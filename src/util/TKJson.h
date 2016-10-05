@@ -24,4 +24,12 @@
  */
 + (NSString *)serialize:(GPBMessage *)message;
 
+/**
+ * Converts proto buffer message into Base64 encoded JSON string.
+ *
+ * @param message proto buffer message
+ * @return JSON string
+ */
++ (NSString *)serializeBase64:(GPBMessage *)message;
+
 @end

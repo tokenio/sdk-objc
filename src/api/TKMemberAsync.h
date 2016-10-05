@@ -106,7 +106,7 @@
  * @param onError callback invoked on error
  */
 - (void)linkAccounts:(NSString *)bankId
-         withPayload:(NSData *)payload
+         withPayload:(NSString *)payload
             onSucess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError;
 
@@ -231,11 +231,11 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTokenForAccount:(NSString *)accountId
-                       amount:(double)amount
-                     currency:(NSString *)currency
-                     onSucess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
+- (void)createPaymentTokenForAccount:(NSString *)accountId
+                              amount:(double)amount
+                            currency:(NSString *)currency
+                            onSucess:(OnSuccessWithPaymentToken)onSuccess
+                             onError:(OnError)onError;
 
 /**
  * Creates a new payment token.
@@ -248,73 +248,73 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTokenForAccount:(NSString *)accountId
-                       amount:(double)amount
-                     currency:(NSString *)currency
-                redeemerAlias:(NSString *)redeemerAlias
-                  description:(NSString *)description
-                     onSucess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
+- (void)createPaymentTokenForAccount:(NSString *)accountId
+                              amount:(double)amount
+                            currency:(NSString *)currency
+                       redeemerAlias:(NSString *)redeemerAlias
+                         description:(NSString *)description
+                            onSucess:(OnSuccessWithPaymentToken)onSuccess
+                             onError:(OnError)onError;
 
 /**
- * Looks up a existing token.
+ * Looks up a existing payment token.
  *
  * @param tokenId token id
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupToken:(NSString *)tokenId
-           onSucess:(OnSuccessWithToken)onSuccess
-            onError:(OnError)onError;
+- (void)lookupPaymentToken:(NSString *)tokenId
+                  onSucess:(OnSuccessWithPaymentToken)onSuccess
+                   onError:(OnError)onError;
 
 /**
- * Looks up tokens owned by the member.
+ * Looks up payment tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupTokensOffset:(int)offset
-                     limit:(int)limit
-                 onSuccess:(OnSuccessWithTokens)onSuccess
-                   onError:(OnError)onError;
+- (void)lookupPaymentTokensOffset:(int)offset
+                            limit:(int)limit
+                        onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+                          onError:(OnError)onError;
 
 /**
- * Endorses the token by signing it. The signature is persisted along
- * with the token.
+ * Endorses the payment token by signing it. The signature is persisted 
+ * along with the token.
  *
  * @param token token to endorse
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)onSuccess
+- (void)endorsePaymentToken:(PaymentToken *)token
+           onSuccess:(OnSuccessWithPaymentToken)onSuccess
              onError:(OnError)onError;
 
 /**
- * Declines the token by signing it. The signature is persisted along
- * with the token.
+ * Declines the payment token by signing it. The signature is persisted
+ * along with the token.
  *
  * @param token token to decline
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)declineToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)onSuccess
-             onError:(OnError)onError;
+- (void)declinePaymentToken:(PaymentToken *)token
+                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                    onError:(OnError)onError;
 
 /**
- * Revokes the token by signing it. The signature is persisted along
- * with the token. Only applicable to endorsed tokens.
+ * Revokes the payment token by signing it. The signature is persisted
+ * along with the token. Only applicable to endorsed tokens.
  *
  * @param token token to endorse
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)revokeToken:(Token *)token
-          onSuccess:(OnSuccessWithToken)onSuccess
-            onError:(OnError)onError;
+- (void)revokePaymentToken:(PaymentToken *)token
+                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Redeems a payment token.
@@ -323,9 +323,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemToken:(Token *)token
-          onSuccess:(OnSuccessWithPayment)onSuccess
-            onError:(OnError)onError;
+- (void)redeemPaymentToken:(PaymentToken *)token
+                 onSuccess:(OnSuccessWithPayment)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Redeems a payment token.
@@ -336,10 +336,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemToken:(Token *)token
-             amount:(NSNumber *)amount
-           currency:(NSString *)currency
-          onSuccess:(OnSuccessWithPayment)onSuccess
-            onError:(OnError)onError;
+- (void)redeemPaymentToken:(PaymentToken *)token
+                    amount:(NSNumber *)amount
+                  currency:(NSString *)currency
+                 onSuccess:(OnSuccessWithPayment)onSuccess
+                   onError:(OnError)onError;
 
 @end
