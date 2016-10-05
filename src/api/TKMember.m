@@ -246,19 +246,10 @@
     }];
 }
 
-- (PaymentToken *)declinePaymentToken:(PaymentToken *)token {
+- (PaymentToken *)cancelPaymentToken:(PaymentToken *)token {
     TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async declinePaymentToken:token
-                              onSuccess:call.onSuccess
-                                onError:call.onError];
-    }];
-}
-
-- (PaymentToken *)revokePaymentToken:(PaymentToken *)token {
-    TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async revokePaymentToken:token
+        [self.async cancelPaymentToken:token
                              onSuccess:call.onSuccess
                                onError:call.onError];
     }];

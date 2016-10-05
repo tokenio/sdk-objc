@@ -147,22 +147,13 @@
                     onError:(OnError)error;
 
 /**
- * Declines a payment token.
+ * Cancels a payment token.
  *
  * @param token token to endorse
  */
-- (void)declinePaymentToken:(PaymentToken *)token
+- (void)cancelPaymentToken:(PaymentToken *)token
                   onSuccess:(OnSuccessWithPaymentToken)success
                     onError:(OnError)error;
-
-/**
- * Revokes a payment token.
- *
- * @param token token to endorse
- */
-- (void)revokePaymentToken:(PaymentToken *)token
-                 onSuccess:(OnSuccessWithPaymentToken)success
-                   onError:(OnError)error;
 
 /**
  * Redeems a payment token.
