@@ -70,7 +70,7 @@
              responseClass:[GetMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark CreateAddress(CreateAddressRequest) returns (CreateAddressResponse)
+#pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,8 +78,8 @@
  * 
  * 
  */
-- (void)createAddressWithRequest:(CreateAddressRequest *)request handler:(void(^)(CreateAddressResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCreateAddressWithRequest:request handler:handler] start];
+- (void)addAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAddAddressWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -88,10 +88,10 @@
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreateAddressWithRequest:(CreateAddressRequest *)request handler:(void(^)(CreateAddressResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CreateAddress"
+- (GRPCProtoCall *)RPCToAddAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AddAddress"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CreateAddressResponse class]
+             responseClass:[AddAddressResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark GetAddress(GetAddressRequest) returns (GetAddressResponse)
@@ -128,30 +128,6 @@
   return [self RPCToMethod:@"DeleteAddress"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[DeleteAddressResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark SetPreference(SetPreferenceRequest) returns (SetPreferenceResponse)
-
-- (void)setPreferenceWithRequest:(SetPreferenceRequest *)request handler:(void(^)(SetPreferenceResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSetPreferenceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetPreferenceWithRequest:(SetPreferenceRequest *)request handler:(void(^)(SetPreferenceResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SetPreference"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SetPreferenceResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark GetPreference(GetPreferenceRequest) returns (GetPreferenceResponse)
-
-- (void)getPreferenceWithRequest:(GetPreferenceRequest *)request handler:(void(^)(GetPreferenceResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetPreferenceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetPreferenceWithRequest:(GetPreferenceRequest *)request handler:(void(^)(GetPreferenceResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetPreference"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetPreferenceResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark SubscribeDevice(SubscribeDeviceRequest) returns (SubscribeDeviceResponse)
@@ -226,7 +202,7 @@
              responseClass:[NotifyLinkAccountsAndAddKeyResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LinkAccount(LinkAccountRequest) returns (LinkAccountResponse)
+#pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,8 +210,8 @@
  * 
  * 
  */
-- (void)linkAccountWithRequest:(LinkAccountRequest *)request handler:(void(^)(LinkAccountResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLinkAccountWithRequest:request handler:handler] start];
+- (void)linkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLinkAccountsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -244,34 +220,34 @@
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToLinkAccountWithRequest:(LinkAccountRequest *)request handler:(void(^)(LinkAccountResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LinkAccount"
+- (GRPCProtoCall *)RPCToLinkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LinkAccounts"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LinkAccountResponse class]
+             responseClass:[LinkAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupAccount(LookupAccountRequest) returns (LookupAccountResponse)
+#pragma mark GetAccount(GetAccountRequest) returns (GetAccountResponse)
 
-- (void)lookupAccountWithRequest:(LookupAccountRequest *)request handler:(void(^)(LookupAccountResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupAccountWithRequest:request handler:handler] start];
+- (void)getAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupAccountWithRequest:(LookupAccountRequest *)request handler:(void(^)(LookupAccountResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupAccount"
+- (GRPCProtoCall *)RPCToGetAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupAccountResponse class]
+             responseClass:[GetAccountResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupAccounts(LookupAccountsRequest) returns (LookupAccountsResponse)
+#pragma mark GetAccounts(GetAccountsRequest) returns (GetAccountsResponse)
 
-- (void)lookupAccountsWithRequest:(LookupAccountsRequest *)request handler:(void(^)(LookupAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupAccountsWithRequest:request handler:handler] start];
+- (void)getAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAccountsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupAccountsWithRequest:(LookupAccountsRequest *)request handler:(void(^)(LookupAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupAccounts"
+- (GRPCProtoCall *)RPCToGetAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAccounts"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupAccountsResponse class]
+             responseClass:[GetAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark SetAccountName(SetAccountNameRequest) returns (SetAccountNameResponse)
@@ -286,40 +262,40 @@
              responseClass:[SetAccountNameResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupBalance(LookupBalanceRequest) returns (LookupBalanceResponse)
+#pragma mark GetBalance(GetBalanceRequest) returns (GetBalanceResponse)
 
-- (void)lookupBalanceWithRequest:(LookupBalanceRequest *)request handler:(void(^)(LookupBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupBalanceWithRequest:request handler:handler] start];
+- (void)getBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBalanceWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupBalanceWithRequest:(LookupBalanceRequest *)request handler:(void(^)(LookupBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupBalance"
+- (GRPCProtoCall *)RPCToGetBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBalance"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupBalanceResponse class]
+             responseClass:[GetBalanceResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupTransaction(LookupTransactionRequest) returns (LookupTransactionResponse)
+#pragma mark GetTransaction(GetTransactionRequest) returns (GetTransactionResponse)
 
-- (void)lookupTransactionWithRequest:(LookupTransactionRequest *)request handler:(void(^)(LookupTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupTransactionWithRequest:request handler:handler] start];
+- (void)getTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTransactionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupTransactionWithRequest:(LookupTransactionRequest *)request handler:(void(^)(LookupTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupTransaction"
+- (GRPCProtoCall *)RPCToGetTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTransaction"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupTransactionResponse class]
+             responseClass:[GetTransactionResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupTransactions(LookupTransactionsRequest) returns (LookupTransactionsResponse)
+#pragma mark GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse)
 
-- (void)lookupTransactionsWithRequest:(LookupTransactionsRequest *)request handler:(void(^)(LookupTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupTransactionsWithRequest:request handler:handler] start];
+- (void)getTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTransactionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupTransactionsWithRequest:(LookupTransactionsRequest *)request handler:(void(^)(LookupTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupTransactions"
+- (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTransactions"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupTransactionsResponse class]
+             responseClass:[GetTransactionsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreatePaymentToken(CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse)
@@ -346,28 +322,28 @@
              responseClass:[CreatePaymentTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupPaymentToken(LookupPaymentTokenRequest) returns (LookupPaymentTokenResponse)
+#pragma mark GetPaymentToken(GetPaymentTokenRequest) returns (GetPaymentTokenResponse)
 
-- (void)lookupPaymentTokenWithRequest:(LookupPaymentTokenRequest *)request handler:(void(^)(LookupPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupPaymentTokenWithRequest:request handler:handler] start];
+- (void)getPaymentTokenWithRequest:(GetPaymentTokenRequest *)request handler:(void(^)(GetPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPaymentTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupPaymentTokenWithRequest:(LookupPaymentTokenRequest *)request handler:(void(^)(LookupPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupPaymentToken"
+- (GRPCProtoCall *)RPCToGetPaymentTokenWithRequest:(GetPaymentTokenRequest *)request handler:(void(^)(GetPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetPaymentToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupPaymentTokenResponse class]
+             responseClass:[GetPaymentTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupPaymentTokens(LookupPaymentTokensRequest) returns (LookupPaymentTokensResponse)
+#pragma mark GetPaymentTokens(GetPaymentTokensRequest) returns (GetPaymentTokensResponse)
 
-- (void)lookupPaymentTokensWithRequest:(LookupPaymentTokensRequest *)request handler:(void(^)(LookupPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupPaymentTokensWithRequest:request handler:handler] start];
+- (void)getPaymentTokensWithRequest:(GetPaymentTokensRequest *)request handler:(void(^)(GetPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPaymentTokensWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupPaymentTokensWithRequest:(LookupPaymentTokensRequest *)request handler:(void(^)(LookupPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupPaymentTokens"
+- (GRPCProtoCall *)RPCToGetPaymentTokensWithRequest:(GetPaymentTokensRequest *)request handler:(void(^)(GetPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetPaymentTokens"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupPaymentTokensResponse class]
+             responseClass:[GetPaymentTokensResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark EndorsePaymentToken(EndorsePaymentTokenRequest) returns (EndorsePaymentTokenResponse)
@@ -418,28 +394,28 @@
              responseClass:[CreateAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupAccessToken(LookupAccessTokenRequest) returns (LookupAccessTokenResponse)
+#pragma mark GetAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse)
 
-- (void)lookupAccessTokenWithRequest:(LookupAccessTokenRequest *)request handler:(void(^)(LookupAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupAccessTokenWithRequest:request handler:handler] start];
+- (void)getAccessTokenWithRequest:(GetAccessTokenRequest *)request handler:(void(^)(GetAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAccessTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupAccessTokenWithRequest:(LookupAccessTokenRequest *)request handler:(void(^)(LookupAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupAccessToken"
+- (GRPCProtoCall *)RPCToGetAccessTokenWithRequest:(GetAccessTokenRequest *)request handler:(void(^)(GetAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAccessToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupAccessTokenResponse class]
+             responseClass:[GetAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupAccessTokens(LookupAccessTokensRequest) returns (LookupAccessTokensResponse)
+#pragma mark GetAccessTokens(GetAccessTokensRequest) returns (GetAccessTokensResponse)
 
-- (void)lookupAccessTokensWithRequest:(LookupAccessTokensRequest *)request handler:(void(^)(LookupAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupAccessTokensWithRequest:request handler:handler] start];
+- (void)getAccessTokensWithRequest:(GetAccessTokensRequest *)request handler:(void(^)(GetAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAccessTokensWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupAccessTokensWithRequest:(LookupAccessTokensRequest *)request handler:(void(^)(LookupAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupAccessTokens"
+- (GRPCProtoCall *)RPCToGetAccessTokensWithRequest:(GetAccessTokensRequest *)request handler:(void(^)(GetAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAccessTokens"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupAccessTokensResponse class]
+             responseClass:[GetAccessTokensResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark EndorseAccessToken(EndorseAccessTokenRequest) returns (EndorseAccessTokenResponse)
@@ -490,28 +466,28 @@
              responseClass:[RedeemPaymentTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupPayment(LookupPaymentRequest) returns (LookupPaymentResponse)
+#pragma mark GetPayment(GetPaymentRequest) returns (GetPaymentResponse)
 
-- (void)lookupPaymentWithRequest:(LookupPaymentRequest *)request handler:(void(^)(LookupPaymentResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupPaymentWithRequest:request handler:handler] start];
+- (void)getPaymentWithRequest:(GetPaymentRequest *)request handler:(void(^)(GetPaymentResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPaymentWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupPaymentWithRequest:(LookupPaymentRequest *)request handler:(void(^)(LookupPaymentResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupPayment"
+- (GRPCProtoCall *)RPCToGetPaymentWithRequest:(GetPaymentRequest *)request handler:(void(^)(GetPaymentResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetPayment"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupPaymentResponse class]
+             responseClass:[GetPaymentResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark LookupPayments(LookupPaymentsRequest) returns (LookupPaymentsResponse)
+#pragma mark GetPayments(GetPaymentsRequest) returns (GetPaymentsResponse)
 
-- (void)lookupPaymentsWithRequest:(LookupPaymentsRequest *)request handler:(void(^)(LookupPaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLookupPaymentsWithRequest:request handler:handler] start];
+- (void)getPaymentsWithRequest:(GetPaymentsRequest *)request handler:(void(^)(GetPaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPaymentsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLookupPaymentsWithRequest:(LookupPaymentsRequest *)request handler:(void(^)(LookupPaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LookupPayments"
+- (GRPCProtoCall *)RPCToGetPaymentsWithRequest:(GetPaymentsRequest *)request handler:(void(^)(GetPaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetPayments"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LookupPaymentsResponse class]
+             responseClass:[GetPaymentsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 @end

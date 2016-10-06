@@ -21,4 +21,5 @@ message PaymentPayload {
   string token_id = 2;                                  // Token id.
   io.token.proto.common.money.Money amount = 3;         // Amount and currency.
   io.token.proto.common.transfer.Transfer transfer = 5; // Transfer instructions.
+  string description = 6;                               // Optional
 }

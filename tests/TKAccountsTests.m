@@ -31,11 +31,11 @@
     [self run: ^(TokenIO *tokenIO) {
         NSString *bankId = @"bank-id";
 
-        AccountLinkPayload_NamedAccount *account = [AccountLinkPayload_NamedAccount message];
+        AccountsLinkPayload_NamedAccount *account = [AccountsLinkPayload_NamedAccount message];
         account.name = @"Checking";
         account.accountNumber = @"iban:checking";
 
-        AccountLinkPayload *payload = [AccountLinkPayload message];
+        AccountsLinkPayload *payload = [AccountsLinkPayload message];
         payload.alias = member.firstAlias;
 
         [payload.accountsArray addObject:account];
@@ -53,7 +53,7 @@
     [self testLinkAccounts];
 
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<TKAccount *> *accounts = [member lookupAccounts];
+        NSArray<TKAccount *> *accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
     }];

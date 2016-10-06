@@ -83,7 +83,7 @@
  *
  * @return list of accounts
  */
-- (NSArray<TKAccount *> *)lookupAccounts;
+- (NSArray<TKAccount *> *)getAccounts;
 
 /**
  * Looks up an existing token payment.
@@ -91,7 +91,7 @@
  * @param paymentId ID of the payment record
  * @return payment record
  */
-- (Payment *)lookupPayment:(NSString *)paymentId;
+- (Payment *)getPayment:(NSString *)paymentId;
 
 /**
  * Looks up existing token payments.
@@ -99,7 +99,7 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit;
 
 /**
@@ -109,9 +109,9 @@
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
-                                       limit:(int)limit
-                                     tokenId:(NSString *)tokenId;
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
+                                    limit:(int)limit
+                                  tokenId:(NSString *)tokenId;
 
 /**
  * Creates a new member address.
@@ -120,8 +120,8 @@
  * @param address the address json
  * @return the address record created
  */
-- (Address *)createAddressName:(NSString *)name
-                      withData:(NSString *)data;
+- (Address *)addAddressWithName:(NSString *)name
+                       withData:(NSString *)data;
 
 /**
  * Looks up an address by id.
@@ -129,14 +129,14 @@
  * @param addressId the address id
  * @return an address record
  */
-- (Address *)lookupAddressWithId:(NSString *)addressId;
+- (Address *)getAddressWithId:(NSString *)addressId;
 
 /**
  * Looks up member addresses.
  *
  * @return a list of addresses
  */
-- (NSArray<Address *> *)lookupAddresses;
+- (NSArray<Address *> *)getAddresses;
 
 /**
  * Deletes a member address by its id.
@@ -144,20 +144,6 @@
  * @param addressId the id of the address
  */
 - (void)deleteAddressWithId:(NSString *)addressId;
-
-/**
- * Sets member preferences.
- *
- * @param preferences member json preferences
- */
-- (void)setPreferences:(NSString *)preferences;
-
-/**
- * Looks up member preferences.
- *
- * @return member preferences
- */
-- (NSString *)lookupPreferences;
 
 /**
  * Creates a new payment token.
@@ -193,7 +179,7 @@
  * @param tokenId token id
  * @return payment token returned by the server
  */
-- (PaymentToken *)lookupPaymentToken:(NSString *)tokenId;
+- (PaymentToken *)getPaymentToken:(NSString *)tokenId;
 
 /**
  * Looks up payment tokens owned by the member.
@@ -202,7 +188,7 @@
  * @param limit max number of records to return
  * @return payment tokens owned by the member
  */
-- (NSArray<PaymentToken *> *)lookupPaymentTokensOffset:(int)i limit:(int)limit;
+- (NSArray<PaymentToken *> *)getPaymentTokensOffset:(int)i limit:(int)limit;
 
 /**
  * Endorses the payment token by signing it. The signature is persisted 
@@ -239,7 +225,7 @@
  * @return payment record
  */
 - (Payment *)redeemPaymentToken:(PaymentToken *)token
-                  amount:(NSNumber *)amount
-                currency:(NSString *)currency;
+                         amount:(NSNumber *)amount
+                       currency:(NSString *)currency;
 
 @end

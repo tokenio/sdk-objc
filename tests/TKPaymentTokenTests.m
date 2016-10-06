@@ -52,7 +52,7 @@
         PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"];
-        PaymentToken *lookedUp = [payer lookupPaymentToken:token.id_p];
+        PaymentToken *lookedUp = [payer getPaymentToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
     }];
 }
@@ -63,7 +63,7 @@
         [payer createPaymentTokenForAccount:payerAccount.id amount:100.22 currency:@"USD"];
         [payer createPaymentTokenForAccount:payerAccount.id amount:100.33 currency:@"USD"];
 
-        NSArray<PaymentToken *> *lookedUp = [payer lookupPaymentTokensOffset:0 limit:100];
+        NSArray<PaymentToken *> *lookedUp = [payer getPaymentTokensOffset:0 limit:100];
         XCTAssertEqual(lookedUp.count, 3);
     }];
 }

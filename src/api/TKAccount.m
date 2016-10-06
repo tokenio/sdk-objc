@@ -35,30 +35,30 @@
     return self.async.member;
 }
 
-- (Money *)lookupBalance {
+- (Money *)getBalance {
     TKRpcSyncCall<Money *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupBalance:call.onSuccess onError:call.onError];
+        [self.async getBalance:call.onSuccess onError:call.onError];
     }];
 }
 
-- (Transaction *)lookupTransaction:(NSString *)transactionId {
+- (Transaction *)getTransaction:(NSString *)transactionId {
     TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupTransaction:transactionId
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async getTransaction:transactionId
+                         onSuccess:call.onSuccess
+                           onError:call.onError];
     }];
 }
 
-- (NSArray<Transaction *> *)lookupTransactionsOffset:(int)offset
-                                               limit:(int)limit {
+- (NSArray<Transaction *> *)getTransactionsOffset:(int)offset
+                                            limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupTransactionsOffset:offset
-                                       limit:limit
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
+        [self.async getTransactionsOffset:offset
+                                    limit:limit
+                                onSuccess:call.onSuccess
+                                  onError:call.onError];
     }];
 }
 

@@ -45,9 +45,11 @@ static GPBFileDescriptor *SecurityRoot_FileDescriptor(void) {
 
 @dynamic id_p;
 @dynamic publicKey;
+@dynamic level;
 
 typedef struct Key__storage_ {
   uint32_t _has_storage_[1];
+  Key_Level level;
   NSString *id_p;
   NSString *publicKey;
 } Key__storage_;
@@ -76,6 +78,15 @@ typedef struct Key__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "level",
+        .dataTypeSpecific.enumDescFunc = Key_Level_EnumDescriptor,
+        .number = Key_FieldNumber_Level,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Key__storage_, level),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Key class]
@@ -92,6 +103,54 @@ typedef struct Key__storage_ {
 }
 
 @end
+
+int32_t Key_Level_RawValue(Key *message) {
+  GPBDescriptor *descriptor = [Key descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Level];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetKey_Level_RawValue(Key *message, int32_t value) {
+  GPBDescriptor *descriptor = [Key descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Level];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Key_Level
+
+GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Privileged\000Standard\000Low\000";
+    static const int32_t values[] = {
+        Key_Level_Privileged,
+        Key_Level_Standard,
+        Key_Level_Low,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Key_Level)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Key_Level_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Key_Level_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Key_Level_Privileged:
+    case Key_Level_Standard:
+    case Key_Level_Low:
+      return YES;
+    default:
+      return NO;
+  }
+}
 
 #pragma mark - Signature
 

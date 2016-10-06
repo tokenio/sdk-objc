@@ -14,7 +14,7 @@ message PaymentProcessed {
 // A notification that a bank wants to be linked
 message LinkAccounts {
     string bank_id = 1;
-    string account_link_payload = 2;
+    string accounts_link_payload = 2;
 }
 
 // A notification to step up / endorse a token

@@ -63,7 +63,7 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
 
 typedef struct MemberAddKeyOperation__storage_ {
   uint32_t _has_storage_[1];
-  int32_t level;
+  Key_Level level;
   NSString *publicKey;
   NSMutableArray *tagsArray;
 } MemberAddKeyOperation__storage_;
@@ -85,12 +85,12 @@ typedef struct MemberAddKeyOperation__storage_ {
       },
       {
         .name = "level",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.enumDescFunc = Key_Level_EnumDescriptor,
         .number = MemberAddKeyOperation_FieldNumber_Level,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, level),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
       },
       {
         .name = "tagsArray",
@@ -117,6 +117,18 @@ typedef struct MemberAddKeyOperation__storage_ {
 }
 
 @end
+
+int32_t MemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message) {
+  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Level];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetMemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message, int32_t value) {
+  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Level];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - MemberRemoveKeyOperation
 

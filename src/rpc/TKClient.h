@@ -105,7 +105,7 @@
 /**
  * Looks up linked member accounts.
  */
-- (void)lookupAccounts:(OnSuccessWithAccounts)onSuccess
+- (void)getAccounts:(OnSuccessWithAccounts)onSuccess
                onError:(OnError)onError;
 
 /**
@@ -122,9 +122,9 @@
  *
  * @param tokenId token id
  */
-- (void)lookupPaymentToken:(NSString *)tokenId
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
-                   onError:(OnError)onError;
+- (void)getPaymentToken:(NSString *)tokenId
+              onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                onError:(OnError)onError;
 
 /**
  * Looks up token owned by the member.
@@ -132,9 +132,9 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (void)lookupPaymentTokens:(int)offset
-                      limit:(int)limit
-                  onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+- (void)getPaymentTokens:(int)offset
+                   limit:(int)limit
+               onSuccess:(OnSuccessWithPaymentTokens)onSuccess
                     onError:(OnError)onError;
 
 /**
@@ -169,9 +169,9 @@
  *
  * @param paymentId payment id
  */
-- (void)lookupPayment:(NSString *)paymentId
-            onSuccess:(OnSuccessWithPayment)onSuccess
-              onError:(OnError)onError;
+- (void)getPayment:(NSString *)paymentId
+         onSuccess:(OnSuccessWithPayment)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up existing token payments.
@@ -180,11 +180,11 @@
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (void)lookupPaymentsOffset:(int)offset
-                       limit:(int)limit
-                     tokenId:(NSString *)tokenId
-                   onSuccess:(OnSuccessWithPayments)onSuccess
-                     onError:(OnError)onError;
+- (void)getPaymentsOffset:(int)offset
+                    limit:(int)limit
+                  tokenId:(NSString *)tokenId
+                onSuccess:(OnSuccessWithPayments)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Looks up account balance.
@@ -192,9 +192,9 @@
  * @param accountId account id
  * @return account balance
  */
-- (void)lookupBalance:(NSString *)accountId
-            onSuccess:(OnSuccessWithMoney)onSuccess
-              onError:(OnError)onError;
+- (void)getBalance:(NSString *)accountId
+         onSuccess:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
@@ -203,10 +203,10 @@
  * @param transactionId ID of the transaction
  * @return transaction record
  */
-- (void)lookupTransaction:(NSString *)transactionId
-               forAccount:(NSString *)accountId
-                onSuccess:(OnSuccessWithTransaction)onSuccess
-                  onError:(OnError)onError;
+- (void)getTransaction:(NSString *)transactionId
+            forAccount:(NSString *)accountId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up existing transactions. This is a full list of transactions with token payments
@@ -217,11 +217,11 @@
  * @param limit max number of records to return
  * @return transaction record
  */
-- (void)lookupTransactionsOffset:(NSString *)accountId
-                          offset:(int)offset
-                           limit:(int)limit
-                       onSuccess:(OnSuccessWithTransactions)onSuccess
-                         onError:(OnError)onError;
+- (void)getTransactionsOffset:(NSString *)accountId
+                       offset:(int)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Creates a new member address
@@ -230,10 +230,10 @@
  * @param data the address json
  * @return an address record created
  */
-- (void)createAddressName:(NSString *)name
-                 withData:(NSString *)data
-                onSuccess:(OnSuccessWithAddress)onSuccess
-                  onError:(OnError)onError;
+- (void)addAddressWithName:(NSString *)name
+                  withData:(NSString *)data
+                 onSuccess:(OnSuccessWithAddress)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up an address by id
@@ -261,22 +261,5 @@
 - (void)deleteAddressById:(NSString *)addressId
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
-
-/**
- * Sets member preferences
- *
- * @param preferences member json preferences
- */
-- (void)setPreferences:(NSString *)preferences
-             onSuccess:(OnSuccess)onSuccess
-               onError:(OnError)onError;
-
-/**
- * Looks up member preferences
- *
- * @return member preferences
- */
-- (void)getPreferences:(OnSuccessWithPreferences)onSuccess
-               onError:(OnError)onError;
 
 @end

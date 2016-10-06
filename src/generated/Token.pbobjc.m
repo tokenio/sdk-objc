@@ -759,7 +759,7 @@ typedef struct AccessToken__storage_ {
 @dynamic nonce;
 @dynamic hasMember, member;
 @dynamic hasRedeemer, redeemer;
-@dynamic accessesArray, accessesArray_Count;
+@dynamic resourcesArray, resourcesArray_Count;
 @dynamic effectiveAtMs;
 @dynamic expiresAtMs;
 @dynamic description_p;
@@ -770,7 +770,7 @@ typedef struct AccessToken_Payload__storage_ {
   NSString *nonce;
   TokenMember *member;
   TokenMember *redeemer;
-  NSMutableArray *accessesArray;
+  NSMutableArray *resourcesArray;
   NSString *description_p;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
@@ -819,11 +819,11 @@ typedef struct AccessToken_Payload__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "accessesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Access),
-        .number = AccessToken_Payload_FieldNumber_AccessesArray,
+        .name = "resourcesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource),
+        .number = AccessToken_Payload_FieldNumber_ResourcesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, accessesArray),
+        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, resourcesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -871,21 +871,21 @@ typedef struct AccessToken_Payload__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Access
+#pragma mark - AccessToken_Resource
 
-@implementation AccessToken_Access
+@implementation AccessToken_Resource
 
-@dynamic accessOneOfCase;
+@dynamic resourceOneOfCase;
 @dynamic address;
 @dynamic account;
 @dynamic transaction;
 
-typedef struct AccessToken_Access__storage_ {
+typedef struct AccessToken_Resource__storage_ {
   uint32_t _has_storage_[2];
-  AccessToken_Access_AddressAccess *address;
-  AccessToken_Access_AccountAccess *account;
-  AccessToken_Access_TransactionAccess *transaction;
-} AccessToken_Access__storage_;
+  AccessToken_Resource_Address *address;
+  AccessToken_Resource_Account *account;
+  AccessToken_Resource_Transaction *transaction;
+} AccessToken_Resource__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -895,42 +895,42 @@ typedef struct AccessToken_Access__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Access_AddressAccess),
-        .number = AccessToken_Access_FieldNumber_Address,
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Address),
+        .number = AccessToken_Resource_FieldNumber_Address,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Access__storage_, address),
+        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, address),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Access_AccountAccess),
-        .number = AccessToken_Access_FieldNumber_Account,
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Account),
+        .number = AccessToken_Resource_FieldNumber_Account,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Access__storage_, account),
+        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, account),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "transaction",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Access_TransactionAccess),
-        .number = AccessToken_Access_FieldNumber_Transaction,
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Transaction),
+        .number = AccessToken_Resource_FieldNumber_Transaction,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Access__storage_, transaction),
+        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, transaction),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Access class]
+        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Access__storage_)
+                                   storageSize:sizeof(AccessToken_Resource__storage_)
                                          flags:0];
     static const char *oneofs[] = {
-      "access",
+      "resource",
     };
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
@@ -943,21 +943,21 @@ typedef struct AccessToken_Access__storage_ {
 
 @end
 
-void AccessToken_Access_ClearAccessOneOfCase(AccessToken_Access *message) {
+void AccessToken_Resource_ClearResourceOneOfCase(AccessToken_Resource *message) {
   GPBDescriptor *descriptor = [message descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
-#pragma mark - AccessToken_Access_AddressAccess
+#pragma mark - AccessToken_Resource_Address
 
-@implementation AccessToken_Access_AddressAccess
+@implementation AccessToken_Resource_Address
 
 @dynamic addressId;
 
-typedef struct AccessToken_Access_AddressAccess__storage_ {
+typedef struct AccessToken_Resource_Address__storage_ {
   uint32_t _has_storage_[1];
   NSString *addressId;
-} AccessToken_Access_AddressAccess__storage_;
+} AccessToken_Resource_Address__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -968,20 +968,20 @@ typedef struct AccessToken_Access_AddressAccess__storage_ {
       {
         .name = "addressId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Access_AddressAccess_FieldNumber_AddressId,
+        .number = AccessToken_Resource_Address_FieldNumber_AddressId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Access_AddressAccess__storage_, addressId),
+        .offset = (uint32_t)offsetof(AccessToken_Resource_Address__storage_, addressId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Access_AddressAccess class]
+        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Address class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Access_AddressAccess__storage_)
+                                   storageSize:sizeof(AccessToken_Resource_Address__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -991,16 +991,16 @@ typedef struct AccessToken_Access_AddressAccess__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Access_AccountAccess
+#pragma mark - AccessToken_Resource_Account
 
-@implementation AccessToken_Access_AccountAccess
+@implementation AccessToken_Resource_Account
 
 @dynamic accountId;
 
-typedef struct AccessToken_Access_AccountAccess__storage_ {
+typedef struct AccessToken_Resource_Account__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-} AccessToken_Access_AccountAccess__storage_;
+} AccessToken_Resource_Account__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1011,20 +1011,20 @@ typedef struct AccessToken_Access_AccountAccess__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Access_AccountAccess_FieldNumber_AccountId,
+        .number = AccessToken_Resource_Account_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Access_AccountAccess__storage_, accountId),
+        .offset = (uint32_t)offsetof(AccessToken_Resource_Account__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Access_AccountAccess class]
+        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Account class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Access_AccountAccess__storage_)
+                                   storageSize:sizeof(AccessToken_Resource_Account__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1034,16 +1034,16 @@ typedef struct AccessToken_Access_AccountAccess__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Access_TransactionAccess
+#pragma mark - AccessToken_Resource_Transaction
 
-@implementation AccessToken_Access_TransactionAccess
+@implementation AccessToken_Resource_Transaction
 
 @dynamic accountId;
 
-typedef struct AccessToken_Access_TransactionAccess__storage_ {
+typedef struct AccessToken_Resource_Transaction__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-} AccessToken_Access_TransactionAccess__storage_;
+} AccessToken_Resource_Transaction__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1054,20 +1054,20 @@ typedef struct AccessToken_Access_TransactionAccess__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Access_TransactionAccess_FieldNumber_AccountId,
+        .number = AccessToken_Resource_Transaction_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Access_TransactionAccess__storage_, accountId),
+        .offset = (uint32_t)offsetof(AccessToken_Resource_Transaction__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Access_TransactionAccess class]
+        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Transaction class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Access_TransactionAccess__storage_)
+                                   storageSize:sizeof(AccessToken_Resource_Transaction__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

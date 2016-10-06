@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B211D989A930043345F /* Account.pbobjc.h */; };
 		37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B221D989A930043345F /* Account.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B4E1D989A930043345F /* Bankapi.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B241D989A930043345F /* Bankapi.pbobjc.h */; };
-		37637B4F1D989A930043345F /* Bankapi.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B251D989A930043345F /* Bankapi.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B501D989A930043345F /* Bankapi.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B261D989A930043345F /* Bankapi.pbrpc.h */; };
-		37637B511D989A930043345F /* Bankapi.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B271D989A930043345F /* Bankapi.pbrpc.m */; };
 		37637B521D989A930043345F /* Fank.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B281D989A930043345F /* Fank.pbobjc.h */; };
 		37637B531D989A930043345F /* Fank.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B291D989A930043345F /* Fank.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B541D989A930043345F /* Device.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B2A1D989A930043345F /* Device.pbobjc.h */; };
@@ -47,6 +43,10 @@
 		37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B4B1D989A930043345F /* Transfer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3777163E1D99BF6800287239 /* TokenSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 3777163D1D99BF6800287239 /* TokenSdk.h */; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
+		8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */; };
+		8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */; };
+		8A8404A71DA60C5F0015A6F4 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A9909191D890E820096A7FA /* TokenSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
 		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
 		ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */; };
@@ -134,10 +134,6 @@
 		35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		37637B211D989A930043345F /* Account.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.pbobjc.h; sourceTree = "<group>"; };
 		37637B221D989A930043345F /* Account.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.pbobjc.m; sourceTree = "<group>"; };
-		37637B241D989A930043345F /* Bankapi.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankapi.pbobjc.h; sourceTree = "<group>"; };
-		37637B251D989A930043345F /* Bankapi.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankapi.pbobjc.m; sourceTree = "<group>"; };
-		37637B261D989A930043345F /* Bankapi.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankapi.pbrpc.h; sourceTree = "<group>"; };
-		37637B271D989A930043345F /* Bankapi.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankapi.pbrpc.m; sourceTree = "<group>"; };
 		37637B281D989A930043345F /* Fank.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbobjc.h; sourceTree = "<group>"; };
 		37637B291D989A930043345F /* Fank.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbobjc.m; sourceTree = "<group>"; };
 		37637B2A1D989A930043345F /* Device.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.pbobjc.h; sourceTree = "<group>"; };
@@ -173,6 +169,10 @@
 		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
 		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
+		8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
+		8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbrpc.h; sourceTree = "<group>"; };
+		8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbrpc.m; sourceTree = "<group>"; };
+		8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbobjc.h; sourceTree = "<group>"; };
 		8A99090E1D890E820096A7FA /* TokenSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TokenSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A9909131D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A9909181D890E820096A7FA /* TokenSdk.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokenSdk.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,10 +303,10 @@
 		37637B231D989A930043345F /* bankapi */ = {
 			isa = PBXGroup;
 			children = (
-				37637B241D989A930043345F /* Bankapi.pbobjc.h */,
-				37637B251D989A930043345F /* Bankapi.pbobjc.m */,
-				37637B261D989A930043345F /* Bankapi.pbrpc.h */,
-				37637B271D989A930043345F /* Bankapi.pbrpc.m */,
+				8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */,
+				8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */,
+				8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */,
+				8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */,
 				37637B281D989A930043345F /* Fank.pbobjc.h */,
 				37637B291D989A930043345F /* Fank.pbobjc.m */,
 			);
@@ -564,7 +564,7 @@
 				ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */,
 				ABA7B396AEB29286AB91C613 /* sc.h in Headers */,
 				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
-				37637B501D989A930043345F /* Bankapi.pbrpc.h in Headers */,
+				8A8404A71DA60C5F0015A6F4 /* Banklink.pbobjc.h in Headers */,
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
@@ -573,6 +573,7 @@
 				37637B621D989A930043345F /* Member.pbobjc.h in Headers */,
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
+				8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */,
 				37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */,
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
@@ -581,7 +582,6 @@
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
 				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
 				ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */,
-				37637B4E1D989A930043345F /* Bankapi.pbobjc.h in Headers */,
 				37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */,
 				ABA7B155594D4232CAF702FF /* TKMemberAsync.h in Headers */,
 			);
@@ -779,6 +779,8 @@
 				ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */,
 				37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */,
 				ABA7B1759A41D7570F394BDA /* TKSecretKey.m in Sources */,
+				8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */,
+				8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */,
 				ABA7BA9B13612439D753F584 /* TKJson.m in Sources */,
 				ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */,
 				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,
@@ -801,7 +803,6 @@
 				ABA7B164177B8BB039D61458 /* keypair.c in Sources */,
 				ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */,
 				ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */,
-				37637B511D989A930043345F /* Bankapi.pbrpc.m in Sources */,
 				ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */,
 				37637B631D989A930043345F /* Member.pbobjc.m in Sources */,
 				37637B551D989A930043345F /* Device.pbobjc.m in Sources */,
@@ -809,7 +810,6 @@
 				37637B651D989A930043345F /* Money.pbobjc.m in Sources */,
 				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,
 				37637B5F1D989A930043345F /* HTTP.pbobjc.m in Sources */,
-				37637B4F1D989A930043345F /* Bankapi.pbobjc.m in Sources */,
 				ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */,
 				ABA7BEE68ED01F9216F1D387 /* TokenIOAsync.m in Sources */,
 				37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */,
