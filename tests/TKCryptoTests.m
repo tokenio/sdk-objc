@@ -15,8 +15,8 @@
 @implementation TKCryptoTests
 
 - (void)testSignAndVerify_message {
-    Token *token = [Token message];
-    token.payment.amount = @"100.23";
+    PaymentToken *token = [PaymentToken message];
+    token.payload.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token
@@ -30,8 +30,8 @@
 }
 
 - (void)testSignAndVerify_token {
-    Token *token = [Token message];
-    token.payment.amount = @"100.23";
+    PaymentToken *token = [PaymentToken message];
+    token.payload.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token
@@ -47,7 +47,7 @@
 
     success = [TKCrypto verifySignature:signature
                                     forToken:token
-                                      action:TokenSignature_Action_Declined
+                                      action:TokenSignature_Action_Cancelled
                               usingPublicKey:key.publicKey];
     XCTAssert(!success);
 }

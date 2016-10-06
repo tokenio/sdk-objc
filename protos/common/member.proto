@@ -9,7 +9,7 @@ import "security.proto";
 // Adds member key to the directory.
 message MemberAddKeyOperation {
   string public_key = 1;                               // Base64url encoded public key.
-  int32 level = 2;
+  io.token.proto.common.security.Key.Level level = 2;
   repeated string tags = 3;
 }
 

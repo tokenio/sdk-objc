@@ -74,31 +74,20 @@
     s1.action = TokenSignature_Action_Endorsed;
 
     TokenSignature *s2 = [TokenSignature message];
-    s2.action = TokenSignature_Action_Declined;
+    s2.action = TokenSignature_Action_Cancelled;
 
-    Token *token = [Token message];
+    PaymentToken *token = [PaymentToken message];
     token.signaturesArray = [@[s1, s2] mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"DECLINED\"}]}");
-}
-
-/**
- * Map fields.
- */
-- (void)testMap {
-    InformationTokenAcl *acl = [InformationTokenAcl message];
-    acl.query = [@{@"q1": @"v1", @"q2": @"v2"} mutableCopy];
-
-    NSString *json = [TKJson serialize:acl];
-    XCTAssertEqualObjects(json, @"{\"query\":{\"v1\":\"q1\",\"v2\":\"q2\"}}");
+    XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"CANCELLED\"}]}");
 }
 
 /**
  * Map fields, each field is proto message.
  */
 - (void)testMap_Message {
-    PaymentToken *token = [PaymentToken message];
+    PaymentToken_Payload *token = [PaymentToken_Payload message];
     token.amount = @"123.45";
     token.effectiveAtMs = 12345;
 
@@ -125,17 +114,6 @@
 
     NSString *json = [TKJson serialize:signature];
     XCTAssertEqualObjects(json, @"{\"action\":\"ENDORSED\",\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
-}
-
-/**
- * Bytes fields.
- */
-- (void)testBytes {
-    LinkAccountRequest *request = [LinkAccountRequest message];
-    request.accountLinkPayload = [@"hello" dataUsingEncoding:NSUTF8StringEncoding];
-
-    NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"accountLinkPayload\":\"aGVsbG8=\"}");
 }
 
 @end

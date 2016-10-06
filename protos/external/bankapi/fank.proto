@@ -1,10 +1,12 @@
 syntax = "proto3";
 package io.token.proto.bankapi;
 
+import "google/protobuf/any.proto";
+
 import "money.proto";
 
 // A helper proto to serialize Fake Bank metadata.
-// This payload is intendet to be used with LinkAccountRequest
+// This payload is intended to be used with LinkAccountRequest
 // as a serialized json inside the payload.
 message FankMetadata {
   Client client = 1;
@@ -18,7 +20,7 @@ message FankMetadata {
   }
 
   // Instruction for FakeBank to create a client account
-  // if diesn't already exist
+  // if doesn't already exist
   message ClientAccount {
     string name = 1;
     string account_number = 2;

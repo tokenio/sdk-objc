@@ -29,6 +29,7 @@ CF_EXTERN_C_BEGIN
 @class MemberAliasOperation;
 @class MemberRemoveKeyOperation;
 @class Signature;
+GPB_ENUM_FWD_DECLARE(Key_Level);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -59,13 +60,21 @@ typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
 /// Base64url encoded public key.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
-@property(nonatomic, readwrite) int32_t level;
+@property(nonatomic, readwrite) enum Key_Level level;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
 /// The number of items in @c tagsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
+
+/// Fetches the raw value of a @c MemberAddKeyOperation's @c level property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t MemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message);
+/// Sets the raw value of an @c MemberAddKeyOperation's @c level property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetMemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message, int32_t value);
 
 #pragma mark - MemberRemoveKeyOperation
 

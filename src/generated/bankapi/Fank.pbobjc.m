@@ -13,6 +13,12 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
+#if GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS
+ #import <Protobuf/Any.pbobjc.h>
+#else
+ #import "google/protobuf/Any.pbobjc.h"
+#endif
+
  #import "bankapi/Fank.pbobjc.h"
  #import "Money.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -31,6 +37,7 @@
   if (!registry) {
     GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[GPBAnyRoot extensionRegistry]];
     [registry addExtensions:[MoneyRoot extensionRegistry]];
   }
   return registry;

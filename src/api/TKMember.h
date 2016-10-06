@@ -76,14 +76,14 @@
  *                by the bank
  */
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayload:(NSData *)payload;
+                          withPayload:(NSString *)payload;
 
 /**
  * Looks up funding bank accounts linked to Token.
  *
  * @return list of accounts
  */
-- (NSArray<TKAccount *> *)lookupAccounts;
+- (NSArray<TKAccount *> *)getAccounts;
 
 /**
  * Looks up an existing token payment.
@@ -91,7 +91,7 @@
  * @param paymentId ID of the payment record
  * @return payment record
  */
-- (Payment *)lookupPayment:(NSString *)paymentId;
+- (Payment *)getPayment:(NSString *)paymentId;
 
 /**
  * Looks up existing token payments.
@@ -99,7 +99,7 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit;
 
 /**
@@ -109,9 +109,9 @@
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
-                                       limit:(int)limit
-                                     tokenId:(NSString *)tokenId;
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
+                                    limit:(int)limit
+                                  tokenId:(NSString *)tokenId;
 
 /**
  * Creates a new member address.
@@ -120,8 +120,8 @@
  * @param address the address json
  * @return the address record created
  */
-- (Address *)createAddressName:(NSString *)name
-                      withData:(NSString *)data;
+- (Address *)addAddressWithName:(NSString *)name
+                       withData:(NSString *)data;
 
 /**
  * Looks up an address by id.
@@ -129,14 +129,14 @@
  * @param addressId the address id
  * @return an address record
  */
-- (Address *)lookupAddressWithId:(NSString *)addressId;
+- (Address *)getAddressWithId:(NSString *)addressId;
 
 /**
  * Looks up member addresses.
  *
  * @return a list of addresses
  */
-- (NSArray<Address *> *)lookupAddresses;
+- (NSArray<Address *> *)getAddresses;
 
 /**
  * Deletes a member address by its id.
@@ -146,20 +146,6 @@
 - (void)deleteAddressWithId:(NSString *)addressId;
 
 /**
- * Sets member preferences.
- *
- * @param preferences member json preferences
- */
-- (void)setPreferences:(NSString *)preferences;
-
-/**
- * Looks up member preferences.
- *
- * @return member preferences
- */
-- (NSString *)lookupPreferences;
-
-/**
  * Creates a new payment token.
  *
  * @param accountId the funding account id
@@ -167,9 +153,9 @@
  * @param currency currency code, e.g. "USD"
  * @return payment token returned by the server
  */
-- (Token *)createTokenForAccount:(NSString *)accountId
-                          amount:(double)amount
-                        currency:(NSString *)currency;
+- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+                                        amount:(double)amount
+                                      currency:(NSString *)currency;
 
 /**
  * Creates a new payment token.
@@ -181,55 +167,46 @@
  * @param description payment description, optional
  * @return payment token returned by the server
  */
-- (Token *)createTokenForAccount:(NSString *)accountId
-                          amount:(double)amount
-                        currency:(NSString *)currency
-                   redeemerAlias:(NSString *)redeemerAlias
-                     description:(NSString *)description;
+- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+                                        amount:(double)amount
+                                      currency:(NSString *)currency
+                                 redeemerAlias:(NSString *)redeemerAlias
+                                   description:(NSString *)description;
 
 /**
- * Looks up a existing token.
+ * Looks up a existing payment token.
  *
  * @param tokenId token id
  * @return payment token returned by the server
  */
-- (Token *)lookupToken:(NSString *)tokenId;
+- (PaymentToken *)getPaymentToken:(NSString *)tokenId;
 
 /**
- * Looks up tokens owned by the member.
+ * Looks up payment tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @return payment tokens owned by the member
  */
-- (NSArray<Token *> *)lookupTokensOffset:(int)i limit:(int)limit;
+- (NSArray<PaymentToken *> *)getPaymentTokensOffset:(int)i limit:(int)limit;
 
 /**
- * Endorses the token by signing it. The signature is persisted along
- * with the token.
+ * Endorses the payment token by signing it. The signature is persisted 
+ * along with the token.
  *
  * @param token token to endorse
  * @return endorsed token
  */
-- (Token *)endorseToken:(Token *)token;
+- (PaymentToken *)endorsePaymentToken:(PaymentToken *)token;
 
 /**
- * Declines the token by signing it. The signature is persisted along
- * with the token.
+ * Cancels the payment token by signing it. The signature is persisted 
+ * along with the token.
  *
- * @param token token to decline
- * @return declined token
+ * @param token token to cancel
+ * @return cancelled token
  */
-- (Token *)declineToken:(Token *)token;
-
-/**
- * Revokes the token by signing it. The signature is persisted along
- * with the token. Only applicable to endorsed tokens.
- *
- * @param token token to endorse
- * @return endorsed token
- */
-- (Token *)revokeToken:(Token *)token;
+- (PaymentToken *)cancelPaymentToken:(PaymentToken *)token;
 
 /**
  * Redeems a payment token.
@@ -237,7 +214,7 @@
  * @param token payment token to redeem
  * @return payment record
  */
-- (Payment *)redeemToken:(Token *)token;
+- (Payment *)redeemPaymentToken:(PaymentToken *)token;
 
 /**
  * Redeems a payment token.
@@ -247,8 +224,8 @@
  * @param currency payment currency code, e.g. "EUR"
  * @return payment record
  */
-- (Payment *)redeemToken:(Token *)token
-                  amount:(NSNumber *)amount
-                currency:(NSString *)currency;
+- (Payment *)redeemPaymentToken:(PaymentToken *)token
+                         amount:(NSNumber *)amount
+                       currency:(NSString *)currency;
 
 @end

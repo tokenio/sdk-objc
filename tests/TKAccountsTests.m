@@ -31,18 +31,18 @@
     [self run: ^(TokenIO *tokenIO) {
         NSString *bankId = @"bank-id";
 
-        AccountLinkPayload_NamedAccount *account = [AccountLinkPayload_NamedAccount message];
+        AccountsLinkPayload_NamedAccount *account = [AccountsLinkPayload_NamedAccount message];
         account.name = @"Checking";
         account.accountNumber = @"iban:checking";
 
-        AccountLinkPayload *payload = [AccountLinkPayload message];
+        AccountsLinkPayload *payload = [AccountsLinkPayload message];
         payload.alias = member.firstAlias;
 
         [payload.accountsArray addObject:account];
 
-        NSData *payloadData = [[TKJson serialize:payload] dataUsingEncoding:NSASCIIStringEncoding];
+        NSString *payloadBase64 = [TKJson serializeBase64:payload];
         NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                                 withPayload:payloadData];
+                                                  withPayload:payloadBase64];
 
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
@@ -53,7 +53,7 @@
     [self testLinkAccounts];
 
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<TKAccount *> *accounts = [member lookupAccounts];
+        NSArray<TKAccount *> *accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
     }];

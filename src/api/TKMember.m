@@ -82,7 +82,7 @@
 }
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayload:(NSData *)payload {
+                          withPayload:(NSString *)payload {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async linkAccounts:bankId
@@ -95,11 +95,11 @@
     }];
 }
 
-- (NSArray<TKAccount *> *)lookupAccounts {
+- (NSArray<TKAccount *> *)getAccounts {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
-                lookupAccounts:
+                getAccounts:
                         ^(NSArray<TKAccountAsync *> *accounts) {
                             call.onSuccess([self _asyncToSync:accounts]);
                         }
@@ -107,28 +107,28 @@
     }];
 }
 
-- (Payment *)lookupPayment:(NSString *)paymentId {
+- (Payment *)getPayment:(NSString *)paymentId {
     TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPayment:paymentId
+        [self.async getPayment:paymentId
                         onSuccess:call.onSuccess
                           onError:call.onError];
     }];
 }
 
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit {
-    return [self lookupPaymentsOffset:offset
+    return [self getPaymentsOffset:offset
                                 limit:limit
                               tokenId:nil];
 }
 
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit
                                      tokenId:(NSString *)tokenId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPaymentsOffset:offset
+        [self.async getPaymentsOffset:offset
                                    limit:limit
                                  tokenId:tokenId
                                onSuccess:call.onSuccess
@@ -136,30 +136,30 @@
     }];
 }
 
-- (Address *)createAddressName:(NSString *)name
-                      withData:(NSString *)data {
+- (Address *)addAddressWithName:(NSString *)name
+                       withData:(NSString *)data {
     TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAddressName:name
-                             withData:data
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async addAddressWithName:name
+                              withData:data
+                             onSuccess:call.onSuccess
+                               onError:call.onError];
     }];
 }
 
-- (Address *)lookupAddressWithId:(NSString *)addressId {
+- (Address *)getAddressWithId:(NSString *)addressId {
     TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupAddressWithId:addressId
+        [self.async getAddressWithId:addressId
                               onSuccess:call.onSuccess
                                 onError:call.onError];
     }];
 }
 
-- (NSArray<Address *> *)lookupAddresses {
+- (NSArray<Address *> *)getAddresses {
     TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupAddresses:call.onSuccess
+        [self.async getAddresses:call.onSuccess
                             onError:call.onError];
     }];
 }
@@ -173,113 +173,87 @@
     }];
 }
 
-- (void)setPreferences:(NSString *)preferences {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async setPreferences:preferences
-                          onSucess:^{ call.onSuccess(nil); }
-                           onError:call.onError];
-    }];
+- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+                                        amount:(double)amount
+                                      currency:(NSString *)currency {
+    return [self createPaymentTokenForAccount:accountId
+                                       amount:amount
+                                     currency:currency
+                                redeemerAlias:nil
+                                  description:nil];
 }
 
-- (NSString *)lookupPreferences {
-    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+                                        amount:(double)amount
+                                      currency:(NSString *)currency
+                                 redeemerAlias:(NSString *)redeemerAlias
+                                   description:(NSString *)description {
+    TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPreferences:call.onSuccess
-                              onError:call.onError];
+        [self.async createPaymentTokenForAccount:accountId
+                                          amount:amount
+                                        currency:currency
+                                   redeemerAlias:redeemerAlias
+                                     description:description
+                                        onSucess:call.onSuccess
+                                         onError:call.onError];
     }];
 }
 
-- (Token *)createTokenForAccount:(NSString *)accountId
-                          amount:(double)amount
-                        currency:(NSString *)currency {
-    return [self createTokenForAccount:accountId
-                                amount:amount
-                              currency:currency
-                         redeemerAlias:nil
-                           description:nil];
-}
-
-- (Token *)createTokenForAccount:(NSString *)accountId
-                          amount:(double)amount
-                        currency:(NSString *)currency
-                   redeemerAlias:(NSString *)redeemerAlias
-                     description:(NSString *)description {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+- (PaymentToken *)getPaymentToken:(NSString *)tokenId {
+    TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createTokenForAccount:accountId
-                                   amount:amount
-                                 currency:currency
-                            redeemerAlias:redeemerAlias
-                              description:description
-                                 onSucess:call.onSuccess
-                                  onError:call.onError];
+        [self.async getPaymentToken:tokenId
+                              onSucess:call.onSuccess
+                               onError:call.onError];
     }];
 }
 
-- (Token *)lookupToken:(NSString *)tokenId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async lookupToken:tokenId
-                       onSucess:call.onSuccess
-                        onError:call.onError];
-    }];
-}
-
-- (NSArray<Token *> *)lookupTokensOffset:(int)offset
-                                   limit:(int)limit {
+- (NSArray<PaymentToken *> *)getPaymentTokensOffset:(int)offset
+                                                 limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupTokensOffset:offset
-                                 limit:limit
+        [self.async getPaymentTokensOffset:offset
+                                        limit:limit
+                                    onSuccess:call.onSuccess
+                                      onError:call.onError];
+    }];
+}
+
+- (PaymentToken *)endorsePaymentToken:(PaymentToken *)token {
+    TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async endorsePaymentToken:token
+                              onSuccess:call.onSuccess
+                                onError:call.onError];
+    }];
+}
+
+- (PaymentToken *)cancelPaymentToken:(PaymentToken *)token {
+    TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async cancelPaymentToken:token
                              onSuccess:call.onSuccess
                                onError:call.onError];
     }];
 }
 
-- (Token *)endorseToken:(Token *)token {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async endorseToken:token
-                       onSuccess:call.onSuccess
-                         onError:call.onError];
-    }];
+- (Payment *)redeemPaymentToken:(PaymentToken *)token {
+    return [self redeemPaymentToken:token
+                             amount:nil
+                           currency:nil];
 }
 
-- (Token *)declineToken:(Token *)token {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async declineToken:token
-                       onSuccess:call.onSuccess
-                         onError:call.onError];
-    }];
-}
-
-- (Token *)revokeToken:(Token *)token {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async revokeToken:token
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
-    }];
-}
-
-- (Payment *)redeemToken:(Token *)token {
-    return [self redeemToken:token
-                      amount:nil
-                    currency:nil];
-}
-
-- (Payment *)redeemToken:(Token *)token
-                  amount:(NSNumber *)amount
-                currency:(NSString *)currency {
+- (Payment *)redeemPaymentToken:(PaymentToken *)token
+                         amount:(NSNumber *)amount
+                       currency:(NSString *)currency {
     TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async redeemToken:token
-                         amount:amount
-                       currency:currency
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
+        [self.async redeemPaymentToken:token
+                                amount:amount
+                              currency:currency
+                             onSuccess:call.onSuccess
+                               onError:call.onError];
     }];
 }
 

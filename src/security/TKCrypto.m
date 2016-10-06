@@ -22,7 +22,7 @@
     return [self signData:jsonData usingKey:key];
 }
 
-+ (NSString *)sign:(Token *)token
++ (NSString *)sign:(PaymentToken *)token
             action:(TokenSignature_Action)action
           usingKey:(TKSecretKey *)key {
     NSData *payload = [self payloadFor:token action:action];
@@ -44,7 +44,7 @@
 }
 
 +(bool)verifySignature:(NSString *)signature
-              forToken:(Token *)token
+              forToken:(PaymentToken *)token
                 action:(TokenSignature_Action) action
         usingPublicKey:(NSData *)key {
     NSData *payload = [self payloadFor:token action:action];
@@ -85,10 +85,10 @@
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, key.bytes) != 0;
 }
 
-+ (NSData *)payloadFor:(Token *)token
++ (NSData *)payloadFor:(PaymentToken *)token
                   action:(TokenSignature_Action)action {
     NSString *actionName = [TokenSignature_Action_EnumDescriptor() textFormatNameForValue:action];
-    NSString *jsonToken = [TKJson serialize:token.payment];
+    NSString *jsonToken = [TKJson serialize:token.payload];
     NSString *payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
     return [payload dataUsingEncoding:NSASCIIStringEncoding];
 }

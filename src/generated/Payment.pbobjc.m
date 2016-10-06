@@ -140,6 +140,7 @@ typedef struct Payment__storage_ {
 @dynamic tokenId;
 @dynamic hasAmount, amount;
 @dynamic hasTransfer, transfer;
+@dynamic description_p;
 
 typedef struct PaymentPayload__storage_ {
   uint32_t _has_storage_[1];
@@ -147,6 +148,7 @@ typedef struct PaymentPayload__storage_ {
   NSString *tokenId;
   Money *amount;
   Transfer *transfer;
+  NSString *description_p;
 } PaymentPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -190,6 +192,15 @@ typedef struct PaymentPayload__storage_ {
         .offset = (uint32_t)offsetof(PaymentPayload__storage_, transfer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "description_p",
+        .dataTypeSpecific.className = NULL,
+        .number = PaymentPayload_FieldNumber_Description_p,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(PaymentPayload__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

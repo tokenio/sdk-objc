@@ -47,31 +47,31 @@
     return account.name;
 }
 
-- (void)lookupBalance:(OnSuccessWithMoney)onSuccess
-              onError:(OnError)onError {
-    [client lookupBalance:account.id_p
-                onSuccess:onSuccess
-                  onError:onError];
+- (void)getBalance:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError {
+    [client getBalance:account.id_p
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (void)lookupTransaction:(NSString *)transactionId
-                onSuccess:(OnSuccessWithTransaction)onSuccess
-                  onError:(OnError)onError {
-    [client lookupTransaction:transactionId
-                   forAccount:account.id_p
-                    onSuccess:onSuccess
-                      onError:onError];
+- (void)getTransaction:(NSString *)transactionId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError {
+    [client getTransaction:transactionId
+                forAccount:account.id_p
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (void)lookupTransactionsOffset:(int)offset
-                           limit:(int)limit
-                       onSuccess:(OnSuccessWithTransactions)onSuccess
-                         onError:(OnError)onError {
-    return [client lookupTransactionsOffset:account.id_p
-                                     offset:offset
-                                      limit:limit
-                                  onSuccess:onSuccess
-                                    onError:onError];
+- (void)getTransactionsOffset:(int)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError {
+    return [client getTransactionsOffset:account.id_p
+                                  offset:offset
+                                   limit:limit
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 @end

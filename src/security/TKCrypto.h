@@ -34,7 +34,7 @@
  * @param key key to sign with
  * @return signed message, Base64 encoded
  */
-+ (NSString *)sign:(Token *)token
++ (NSString *)sign:(PaymentToken *)token
             action:(TokenSignature_Action)action
           usingKey:(TKSecretKey *)key;
 
@@ -70,7 +70,7 @@
  * @return true if signature verifies
  */
 +(bool)verifySignature:(NSString *)signature
-              forToken:(Token *)token
+              forToken:(PaymentToken *)token
                 action:(TokenSignature_Action) action
         usingPublicKey:(NSData *)key;
 

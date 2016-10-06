@@ -6,7 +6,15 @@ option java_outer_classname = "SecurityProtos";
 
 message Key {
   string id = 1;
-  string public_key = 2;                      // Base64url encoded public key.
+  string public_key = 2;     // Base64url encoded public key.
+
+  enum Level {
+    PRIVILEGED = 0;
+    STANDARD = 1;
+    LOW = 2;
+  }
+
+  Level level = 3;
 }
 
 message Signature {

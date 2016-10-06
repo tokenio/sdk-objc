@@ -24,8 +24,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccessToken;
 @class AddKey;
-@class InformationToken;
 @class LinkAccounts;
 @class Payment;
 @class PaymentToken;
@@ -64,7 +64,7 @@ typedef GPB_ENUM(PaymentProcessed_FieldNumber) {
 
 typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_BankId = 1,
-  LinkAccounts_FieldNumber_AccountLinkPayload = 2,
+  LinkAccounts_FieldNumber_AccountsLinkPayload = 2,
 };
 
 /// A notification that a bank wants to be linked
@@ -72,7 +72,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
 
 @end
 
@@ -80,13 +80,13 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 typedef GPB_ENUM(StepUp_FieldNumber) {
   StepUp_FieldNumber_PaymentToken = 1,
-  StepUp_FieldNumber_InformationToken = 2,
+  StepUp_FieldNumber_AccessToken = 2,
 };
 
 typedef GPB_ENUM(StepUp_Token_OneOfCase) {
   StepUp_Token_OneOfCase_GPBUnsetOneOfCase = 0,
   StepUp_Token_OneOfCase_PaymentToken = 1,
-  StepUp_Token_OneOfCase_InformationToken = 2,
+  StepUp_Token_OneOfCase_AccessToken = 2,
 };
 
 /// A notification to step up / endorse a token
@@ -96,7 +96,7 @@ typedef GPB_ENUM(StepUp_Token_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) PaymentToken *paymentToken;
 
-@property(nonatomic, readwrite, strong, null_resettable) InformationToken *informationToken;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *accessToken;
 
 @end
 
