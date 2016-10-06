@@ -4,7 +4,7 @@ option java_outer_classname = "AccountProtos";
 
 // The payload of the account linking request. Used for serialization only.
 // The value of the payload is encrypted as a serialized JSON object.
-message AccountLinkPayload {
+message AccountsLinkPayload {
   // A tuple containing the internal bak account number and its friendly name.
   message NamedAccount {
     string name = 1;

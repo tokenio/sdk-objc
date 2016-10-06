@@ -46,13 +46,13 @@ message GetMemberResponse {
 // Member PII/addresses/preferences management.
 //
 
-message CreateAddressRequest {
+message AddAddressRequest {
   string name = 1;
   string data = 2;
   io.token.proto.common.security.Signature signature = 3;
 }
 
-message CreateAddressResponse {
+message AddAddressResponse {
   io.token.proto.common.member.Address address = 1;
 }
 
@@ -75,18 +75,6 @@ message DeleteAddressRequest {
 }
 
 message DeleteAddressResponse {}
-
-message SetPreferenceRequest {
-  string preference = 1;
-}
-
-message SetPreferenceResponse {}
-
-message GetPreferenceRequest {}
-
-message GetPreferenceResponse {
-  string preference = 1;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service device management
@@ -115,8 +103,8 @@ message NotifyLinkAccountsRequest {
   string alias = 1;
   string bank_id = 2;
 
-  // encrypted AccountLinkPayload
-  string account_link_payload = 3;
+  // encrypted AccountsLinkPayload
+  string accounts_link_payload = 3;
 }
 
 message NotifyLinkAccountsResponse {
@@ -137,8 +125,8 @@ message NotifyLinkAccountsAndAddKeyRequest {
   string alias = 1;
   string bank_id = 2;
 
-  // encrypted AccountLinkPayload
-  string account_link_payload = 3;
+  // encrypted AccountsLinkPayload
+  string accounts_link_payload = 3;
 
   string public_key = 4;
   repeated string tags = 5;
@@ -152,28 +140,28 @@ message NotifyLinkAccountsAndAddKeyResponse {
 // Bank account management and information access.
 //
 
-message LinkAccountRequest {
+message LinkAccountsRequest {
   string bank_id = 1;
-  // encrypted AccountLinkPayload
-  string account_link_payload = 2;
+  // encrypted AccountsLinkPayload
+  string accounts_link_payload = 2;
 }
 
-message LinkAccountResponse {
+message LinkAccountsResponse {
   repeated io.token.proto.common.account.Account accounts = 1;
 }
 
-message LookupAccountRequest {
+message GetAccountRequest {
   string account_id = 1;
 }
 
-message LookupAccountResponse {
+message GetAccountResponse {
   io.token.proto.common.account.Account account = 1;
 }
 
-message LookupAccountsRequest {
+message GetAccountsRequest {
 }
 
-message LookupAccountsResponse {
+message GetAccountsResponse {
   repeated io.token.proto.common.account.Account accounts = 1;
 }
 
@@ -186,31 +174,31 @@ message SetAccountNameResponse {
   io.token.proto.common.account.Account account = 1;
 }
 
-message LookupBalanceRequest {
+message GetBalanceRequest {
   string account_id = 1;
 }
 
-message LookupBalanceResponse {
+message GetBalanceResponse {
   io.token.proto.common.money.Money current = 1;
   io.token.proto.common.money.Money available = 2;
 }
 
-message LookupTransactionRequest {
+message GetTransactionRequest {
   string account_id = 1;
   string transaction_id = 2;
 }
 
-message LookupTransactionResponse {
+message GetTransactionResponse {
   io.token.proto.common.transaction.Transaction transaction = 1;
 }
 
-message LookupTransactionsRequest {
+message GetTransactionsRequest {
   string account_id = 1;
   int32 offset = 2;                       // Optional token offset, used for paging.
   int32 limit = 3;                        // Optional token limit, used for paging.
 }
 
-message LookupTransactionsResponse {
+message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
 }
 
@@ -226,20 +214,20 @@ message CreatePaymentTokenResponse {
   io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message LookupPaymentTokenRequest {
+message GetPaymentTokenRequest {
    string token_id = 2;
 }
 
-message LookupPaymentTokenResponse {
+message GetPaymentTokenResponse {
   io.token.proto.common.token.PaymentToken token = 1;
 }
 
-message LookupPaymentTokensRequest {
+message GetPaymentTokensRequest {
   int32 offset = 1;      // Optional token offset, used for paging.
   int32 limit = 2;       // Optional token limit, used for paging.
 }
 
-message LookupPaymentTokensResponse {
+message GetPaymentTokensResponse {
   repeated io.token.proto.common.token.PaymentToken tokens = 1;
 }
 
@@ -274,20 +262,20 @@ message CreateAccessTokenResponse {
   io.token.proto.common.token.AccessToken token = 1;
 }
 
-message LookupAccessTokenRequest {
+message GetAccessTokenRequest {
   string token_id = 2;
 }
 
-message LookupAccessTokenResponse {
+message GetAccessTokenResponse {
   io.token.proto.common.token.AccessToken token = 1;
 }
 
-message LookupAccessTokensRequest {
+message GetAccessTokensRequest {
   int32 offset = 1;      // Optional token offset, used for paging.
   int32 limit = 2;       // Optional token limit, used for paging.
 }
 
-message LookupAccessTokensResponse {
+message GetAccessTokensResponse {
   repeated io.token.proto.common.token.AccessToken tokens = 1;
 }
 
@@ -323,21 +311,21 @@ message RedeemPaymentTokenResponse {
   io.token.proto.common.payment.Payment payment = 1;
 }
 
-message LookupPaymentRequest {
+message GetPaymentRequest {
   string payment_id = 1;
 }
 
-message LookupPaymentResponse {
+message GetPaymentResponse {
   io.token.proto.common.payment.Payment payment = 1;
 }
 
-message LookupPaymentsRequest {
+message GetPaymentsRequest {
   string token_id = 1;                    // Optional token_id to filter payments by.
   int32 offset = 2;                       // Optional token offset, used for paging.
   int32 limit = 3;                        // Optional token limit, used for paging.
 }
 
-message LookupPaymentsResponse {
+message GetPaymentsResponse {
   repeated io.token.proto.common.payment.Payment payments = 1;    // List of payments.
 }
 
@@ -374,7 +362,7 @@ service GatewayService {
   // Member addresses and preferences
   //
 
-  rpc CreateAddress (CreateAddressRequest) returns (CreateAddressResponse) {
+  rpc AddAddress (AddAddressRequest) returns (AddAddressResponse) {
     option (google.api.http) = {
         post: "/addresses"
     };
@@ -398,17 +386,6 @@ service GatewayService {
     };
   }
 
-  rpc SetPreference (SetPreferenceRequest) returns (SetPreferenceResponse) {
-    option (google.api.http) = {
-        put: "/preferences"
-    };
-  }
-
-  rpc GetPreference (GetPreferenceRequest) returns (GetPreferenceResponse) {
-    option (google.api.http) = {
-        get: "/preferences"
-    };
-  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Devices for notification service
@@ -448,19 +425,19 @@ service GatewayService {
   // Bank accounts.
   //
 
-  rpc LinkAccount (LinkAccountRequest) returns (LinkAccountResponse) {
+  rpc LinkAccounts (LinkAccountsRequest) returns (LinkAccountsResponse) {
     option (google.api.http) = {
         post: "/accounts"
     };
   }
 
-  rpc LookupAccount (LookupAccountRequest) returns (LookupAccountResponse) {
+  rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}"
     };
   }
 
-  rpc LookupAccounts (LookupAccountsRequest) returns (LookupAccountsResponse) {
+  rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {
     option (google.api.http) = {
         get: "/accounts"
     };
@@ -472,19 +449,19 @@ service GatewayService {
     };
   }
 
-  rpc LookupBalance (LookupBalanceRequest) returns (LookupBalanceResponse) {
+  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}/balance"
     };
   }
 
-  rpc LookupTransaction (LookupTransactionRequest) returns (LookupTransactionResponse) {
+  rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}/transactions/{transaction_id}"
     };
   }
 
-  rpc LookupTransactions (LookupTransactionsRequest) returns (LookupTransactionsResponse) {
+  rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}/transactions?offset={offset}&limit={limit}"
     };
@@ -500,13 +477,13 @@ service GatewayService {
     };
   }
 
-  rpc LookupPaymentToken (LookupPaymentTokenRequest) returns (LookupPaymentTokenResponse) {
+  rpc GetPaymentToken (GetPaymentTokenRequest) returns (GetPaymentTokenResponse) {
     option (google.api.http) = {
         get: "/payment-tokens/{token_id}"
     };
   }
 
-  rpc LookupPaymentTokens (LookupPaymentTokensRequest) returns (LookupPaymentTokensResponse) {
+  rpc GetPaymentTokens (GetPaymentTokensRequest) returns (GetPaymentTokensResponse) {
     option (google.api.http) = {
         get: "/payment-tokens?offset={offset}&limit={limit}"
     };
@@ -535,13 +512,13 @@ service GatewayService {
     };
   }
 
-  rpc LookupAccessToken (LookupAccessTokenRequest) returns (LookupAccessTokenResponse) {
+  rpc GetAccessToken (GetAccessTokenRequest) returns (GetAccessTokenResponse) {
     option (google.api.http) = {
         get: "/access-tokens/{token_id}"
     };
   }
 
-  rpc LookupAccessTokens (LookupAccessTokensRequest) returns (LookupAccessTokensResponse) {
+  rpc GetAccessTokens (GetAccessTokensRequest) returns (GetAccessTokensResponse) {
     option (google.api.http) = {
         get: "/access-tokens?offset={offset}&limit={limit}"
     };
@@ -570,13 +547,13 @@ service GatewayService {
     };
   }
 
-  rpc LookupPayment (LookupPaymentRequest) returns (LookupPaymentResponse) {
+  rpc GetPayment (GetPaymentRequest) returns (GetPaymentResponse) {
     option (google.api.http) = {
         get: "/payments/{payment_id}"
     };
   }
 
-  rpc LookupPayments (LookupPaymentsRequest) returns (LookupPaymentsResponse) {
+  rpc GetPayments (GetPaymentsRequest) returns (GetPaymentsResponse) {
     option (google.api.http) = {
         get: "/payments?token_id={token_id}&offset={offset}&limit={limit}"
     };

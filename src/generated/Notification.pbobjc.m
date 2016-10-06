@@ -103,12 +103,12 @@ typedef struct PaymentProcessed__storage_ {
 @implementation LinkAccounts
 
 @dynamic bankId;
-@dynamic accountLinkPayload;
+@dynamic accountsLinkPayload;
 
 typedef struct LinkAccounts__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
-  NSString *accountLinkPayload;
+  NSString *accountsLinkPayload;
 } LinkAccounts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -127,11 +127,11 @@ typedef struct LinkAccounts__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accountLinkPayload",
+        .name = "accountsLinkPayload",
         .dataTypeSpecific.className = NULL,
-        .number = LinkAccounts_FieldNumber_AccountLinkPayload,
+        .number = LinkAccounts_FieldNumber_AccountsLinkPayload,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountLinkPayload),
+        .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountsLinkPayload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

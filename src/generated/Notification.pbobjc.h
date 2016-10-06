@@ -64,7 +64,7 @@ typedef GPB_ENUM(PaymentProcessed_FieldNumber) {
 
 typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_BankId = 1,
-  LinkAccounts_FieldNumber_AccountLinkPayload = 2,
+  LinkAccounts_FieldNumber_AccountsLinkPayload = 2,
 };
 
 /// A notification that a bank wants to be linked
@@ -72,7 +72,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountLinkPayload;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
 
 @end
 

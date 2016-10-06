@@ -26,6 +26,24 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum Key_Level
+
+typedef GPB_ENUM(Key_Level) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  Key_Level_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Key_Level_Privileged = 0,
+  Key_Level_Standard = 1,
+  Key_Level_Low = 2,
+};
+
+GPBEnumDescriptor *Key_Level_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL Key_Level_IsValidValue(int32_t value);
+
 #pragma mark - SecurityRoot
 
 /// Exposes the extension registry for this file.
@@ -44,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(Key_FieldNumber) {
   Key_FieldNumber_Id_p = 1,
   Key_FieldNumber_PublicKey = 2,
+  Key_FieldNumber_Level = 3,
 };
 
 @interface Key : GPBMessage
@@ -53,7 +72,17 @@ typedef GPB_ENUM(Key_FieldNumber) {
 /// Base64url encoded public key.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
+@property(nonatomic, readwrite) Key_Level level;
+
 @end
+
+/// Fetches the raw value of a @c Key's @c level property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t Key_Level_RawValue(Key *message);
+/// Sets the raw value of an @c Key's @c level property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetKey_Level_RawValue(Key *message, int32_t value);
 
 #pragma mark - Signature
 

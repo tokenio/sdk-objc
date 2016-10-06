@@ -24,7 +24,7 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccountLinkPayload_NamedAccount;
+@class AccountsLinkPayload_NamedAccount;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,37 +41,37 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AccountRoot : GPBRootObject
 @end
 
-#pragma mark - AccountLinkPayload
+#pragma mark - AccountsLinkPayload
 
-typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
-  AccountLinkPayload_FieldNumber_Alias = 1,
-  AccountLinkPayload_FieldNumber_Secret = 2,
-  AccountLinkPayload_FieldNumber_AccountsArray = 3,
+typedef GPB_ENUM(AccountsLinkPayload_FieldNumber) {
+  AccountsLinkPayload_FieldNumber_Alias = 1,
+  AccountsLinkPayload_FieldNumber_Secret = 2,
+  AccountsLinkPayload_FieldNumber_AccountsArray = 3,
 };
 
 /// The payload of the account linking request. Used for serialization only.
 /// The value of the payload is encrypted as a serialized JSON object.
-@interface AccountLinkPayload : GPBMessage
+@interface AccountsLinkPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *secret;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountLinkPayload_NamedAccount*> *accountsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountsLinkPayload_NamedAccount*> *accountsArray;
 /// The number of items in @c accountsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
 
 @end
 
-#pragma mark - AccountLinkPayload_NamedAccount
+#pragma mark - AccountsLinkPayload_NamedAccount
 
-typedef GPB_ENUM(AccountLinkPayload_NamedAccount_FieldNumber) {
-  AccountLinkPayload_NamedAccount_FieldNumber_Name = 1,
-  AccountLinkPayload_NamedAccount_FieldNumber_AccountNumber = 2,
+typedef GPB_ENUM(AccountsLinkPayload_NamedAccount_FieldNumber) {
+  AccountsLinkPayload_NamedAccount_FieldNumber_Name = 1,
+  AccountsLinkPayload_NamedAccount_FieldNumber_AccountNumber = 2,
 };
 
 /// A tuple containing the internal bak account number and its friendly name.
-@interface AccountLinkPayload_NamedAccount : GPBMessage
+@interface AccountsLinkPayload_NamedAccount : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 

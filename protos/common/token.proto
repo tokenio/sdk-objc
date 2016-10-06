@@ -90,30 +90,31 @@ message AccessToken {
     string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
     TokenMember member = 3;                               // member_id/optional[FriendlyName]
     TokenMember redeemer = 4;                             // member_id/optional[FriendlyName]
-    repeated Access accesses = 5;                         // Each entry defines an access level
+    repeated Resource resources = 5;                      // Each entry defines an resources level
     int64 effective_at_ms = 6;                            // Optional
     int64 expires_at_ms = 7;                              // Optional
     string description = 8;                               // Optional
   }
 
-  message Access {
-    oneof access {
-      AddressAccess address = 1;
-      AccountAccess account = 2;
-      TransactionAccess transaction = 3;
+  message Resource {
+    oneof resource {
+      Address address = 1;
+      Account account = 2;
+      Transaction transaction = 3;
     }
 
     // Provides Access to member address information
-    message AddressAccess {
+    message Address {
       string address_id = 1;                              // Optional
     }
 
     // Provides access to member account balance
-    message AccountAccess {
+    message Account {
       string account_id = 1;                              // Optional
     }
 
-    message TransactionAccess {
+    // Provides access to account transactions
+    message Transaction {
       string account_id = 1;                              // Optional
     }
   }

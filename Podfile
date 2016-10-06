@@ -1,4 +1,4 @@
-TOKEN_PROTOS_VER = "1.0.106"
+TOKEN_PROTOS_VER = "1.0.112"
 platform :ios, '8.0'
 
 
@@ -32,7 +32,8 @@ def fetch_protos()
     end
 
     file = download(TOKEN_PROTOS_VER, :external)
-    system("unzip -d protos/external -o #{file} 'bankapi/*.proto'")
+    system("unzip -d protos/external -o #{file} 'bankapi/banklink.proto'")
+    system("unzip -d protos/external -o #{file} 'bankapi/fank.proto'")
     system("unzip -d protos/external -o #{file} 'gateway/*.proto'")
     system("rm -f #{file}");
 

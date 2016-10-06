@@ -24,11 +24,11 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccessToken_Access;
-@class AccessToken_Access_AccountAccess;
-@class AccessToken_Access_AddressAccess;
-@class AccessToken_Access_TransactionAccess;
 @class AccessToken_Payload;
+@class AccessToken_Resource;
+@class AccessToken_Resource_Account;
+@class AccessToken_Resource_Address;
+@class AccessToken_Resource_Transaction;
 @class DoubleRange;
 @class PaymentToken_Payload;
 @class Signature;
@@ -327,7 +327,7 @@ typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
   AccessToken_Payload_FieldNumber_Nonce = 2,
   AccessToken_Payload_FieldNumber_Member = 3,
   AccessToken_Payload_FieldNumber_Redeemer = 4,
-  AccessToken_Payload_FieldNumber_AccessesArray = 5,
+  AccessToken_Payload_FieldNumber_ResourcesArray = 5,
   AccessToken_Payload_FieldNumber_EffectiveAtMs = 6,
   AccessToken_Payload_FieldNumber_ExpiresAtMs = 7,
   AccessToken_Payload_FieldNumber_Description_p = 8,
@@ -351,10 +351,10 @@ typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
 /// Test to see if @c redeemer has been set.
 @property(nonatomic, readwrite) BOOL hasRedeemer;
 
-/// Each entry defines an access level
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken_Access*> *accessesArray;
-/// The number of items in @c accessesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger accessesArray_Count;
+/// Each entry defines an resources level
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken_Resource*> *resourcesArray;
+/// The number of items in @c resourcesArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger resourcesArray_Count;
 
 /// Optional
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
@@ -367,71 +367,72 @@ typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
 
 @end
 
-#pragma mark - AccessToken_Access
+#pragma mark - AccessToken_Resource
 
-typedef GPB_ENUM(AccessToken_Access_FieldNumber) {
-  AccessToken_Access_FieldNumber_Address = 1,
-  AccessToken_Access_FieldNumber_Account = 2,
-  AccessToken_Access_FieldNumber_Transaction = 3,
+typedef GPB_ENUM(AccessToken_Resource_FieldNumber) {
+  AccessToken_Resource_FieldNumber_Address = 1,
+  AccessToken_Resource_FieldNumber_Account = 2,
+  AccessToken_Resource_FieldNumber_Transaction = 3,
 };
 
-typedef GPB_ENUM(AccessToken_Access_Access_OneOfCase) {
-  AccessToken_Access_Access_OneOfCase_GPBUnsetOneOfCase = 0,
-  AccessToken_Access_Access_OneOfCase_Address = 1,
-  AccessToken_Access_Access_OneOfCase_Account = 2,
-  AccessToken_Access_Access_OneOfCase_Transaction = 3,
+typedef GPB_ENUM(AccessToken_Resource_Resource_OneOfCase) {
+  AccessToken_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
+  AccessToken_Resource_Resource_OneOfCase_Address = 1,
+  AccessToken_Resource_Resource_OneOfCase_Account = 2,
+  AccessToken_Resource_Resource_OneOfCase_Transaction = 3,
 };
 
-@interface AccessToken_Access : GPBMessage
+@interface AccessToken_Resource : GPBMessage
 
-@property(nonatomic, readonly) AccessToken_Access_Access_OneOfCase accessOneOfCase;
+@property(nonatomic, readonly) AccessToken_Resource_Resource_OneOfCase resourceOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Access_AddressAccess *address;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Address *address;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Access_AccountAccess *account;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Account *account;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Access_TransactionAccess *transaction;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Transaction *transaction;
 
 @end
 
-/// Clears whatever value was set for the oneof 'access'.
-void AccessToken_Access_ClearAccessOneOfCase(AccessToken_Access *message);
+/// Clears whatever value was set for the oneof 'resource'.
+void AccessToken_Resource_ClearResourceOneOfCase(AccessToken_Resource *message);
 
-#pragma mark - AccessToken_Access_AddressAccess
+#pragma mark - AccessToken_Resource_Address
 
-typedef GPB_ENUM(AccessToken_Access_AddressAccess_FieldNumber) {
-  AccessToken_Access_AddressAccess_FieldNumber_AddressId = 1,
+typedef GPB_ENUM(AccessToken_Resource_Address_FieldNumber) {
+  AccessToken_Resource_Address_FieldNumber_AddressId = 1,
 };
 
 /// Provides Access to member address information
-@interface AccessToken_Access_AddressAccess : GPBMessage
+@interface AccessToken_Resource_Address : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
 
-#pragma mark - AccessToken_Access_AccountAccess
+#pragma mark - AccessToken_Resource_Account
 
-typedef GPB_ENUM(AccessToken_Access_AccountAccess_FieldNumber) {
-  AccessToken_Access_AccountAccess_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(AccessToken_Resource_Account_FieldNumber) {
+  AccessToken_Resource_Account_FieldNumber_AccountId = 1,
 };
 
 /// Provides access to member account balance
-@interface AccessToken_Access_AccountAccess : GPBMessage
+@interface AccessToken_Resource_Account : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - AccessToken_Access_TransactionAccess
+#pragma mark - AccessToken_Resource_Transaction
 
-typedef GPB_ENUM(AccessToken_Access_TransactionAccess_FieldNumber) {
-  AccessToken_Access_TransactionAccess_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(AccessToken_Resource_Transaction_FieldNumber) {
+  AccessToken_Resource_Transaction_FieldNumber_AccountId = 1,
 };
 
-@interface AccessToken_Access_TransactionAccess : GPBMessage
+/// Provides access to account transactions
+@interface AccessToken_Resource_Transaction : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
