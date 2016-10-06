@@ -40,8 +40,8 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)lookupBalance:(OnSuccessWithMoney)onSuccess
-              onError:(OnError)onError;
+- (void)getBalance:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
@@ -50,9 +50,9 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)lookupTransaction:(NSString *)transactionId
-                onSuccess:(OnSuccessWithTransaction)onSuccess
-                  onError:(OnError)onError;
+- (void)getTransaction:(NSString *)transactionId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up existing transactions. This is a full list of transactions with token payments
@@ -63,9 +63,9 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)lookupTransactionsOffset:(int)offset
-                           limit:(int)limit
-                       onSuccess:(OnSuccessWithTransactions)onSuccess
-                         onError:(OnError)onError;
+- (void)getTransactionsOffset:(int)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError;
 
 @end

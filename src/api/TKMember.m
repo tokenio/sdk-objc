@@ -95,11 +95,11 @@
     }];
 }
 
-- (NSArray<TKAccount *> *)lookupAccounts {
+- (NSArray<TKAccount *> *)getAccounts {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
-                lookupAccounts:
+                getAccounts:
                         ^(NSArray<TKAccountAsync *> *accounts) {
                             call.onSuccess([self _asyncToSync:accounts]);
                         }
@@ -107,28 +107,28 @@
     }];
 }
 
-- (Payment *)lookupPayment:(NSString *)paymentId {
+- (Payment *)getPayment:(NSString *)paymentId {
     TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPayment:paymentId
+        [self.async getPayment:paymentId
                         onSuccess:call.onSuccess
                           onError:call.onError];
     }];
 }
 
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit {
-    return [self lookupPaymentsOffset:offset
+    return [self getPaymentsOffset:offset
                                 limit:limit
                               tokenId:nil];
 }
 
-- (NSArray<Payment *> *)lookupPaymentsOffset:(int)offset
+- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
                                        limit:(int)limit
                                      tokenId:(NSString *)tokenId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPaymentsOffset:offset
+        [self.async getPaymentsOffset:offset
                                    limit:limit
                                  tokenId:tokenId
                                onSuccess:call.onSuccess
@@ -136,30 +136,30 @@
     }];
 }
 
-- (Address *)createAddressName:(NSString *)name
-                      withData:(NSString *)data {
+- (Address *)addAddressWithName:(NSString *)name
+                       withData:(NSString *)data {
     TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAddressName:name
-                             withData:data
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async addAddressWithName:name
+                              withData:data
+                             onSuccess:call.onSuccess
+                               onError:call.onError];
     }];
 }
 
-- (Address *)lookupAddressWithId:(NSString *)addressId {
+- (Address *)getAddressWithId:(NSString *)addressId {
     TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupAddressWithId:addressId
+        [self.async getAddressWithId:addressId
                               onSuccess:call.onSuccess
                                 onError:call.onError];
     }];
 }
 
-- (NSArray<Address *> *)lookupAddresses {
+- (NSArray<Address *> *)getAddresses {
     TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupAddresses:call.onSuccess
+        [self.async getAddresses:call.onSuccess
                             onError:call.onError];
     }];
 }
@@ -170,23 +170,6 @@
         [self.async deleteAddressWithId:addressId
                                onSucess:^{ call.onSuccess(nil); }
                                 onError:call.onError];
-    }];
-}
-
-- (void)setPreferences:(NSString *)preferences {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async setPreferences:preferences
-                          onSucess:^{ call.onSuccess(nil); }
-                           onError:call.onError];
-    }];
-}
-
-- (NSString *)lookupPreferences {
-    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async lookupPreferences:call.onSuccess
-                              onError:call.onError];
     }];
 }
 
@@ -217,20 +200,20 @@
     }];
 }
 
-- (PaymentToken *)lookupPaymentToken:(NSString *)tokenId {
+- (PaymentToken *)getPaymentToken:(NSString *)tokenId {
     TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPaymentToken:tokenId
+        [self.async getPaymentToken:tokenId
                               onSucess:call.onSuccess
                                onError:call.onError];
     }];
 }
 
-- (NSArray<PaymentToken *> *)lookupPaymentTokensOffset:(int)offset
+- (NSArray<PaymentToken *> *)getPaymentTokensOffset:(int)offset
                                                  limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async lookupPaymentTokensOffset:offset
+        [self.async getPaymentTokensOffset:offset
                                         limit:limit
                                     onSuccess:call.onSuccess
                                       onError:call.onError];

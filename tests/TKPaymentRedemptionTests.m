@@ -77,7 +77,7 @@
         token = [payer endorsePaymentToken:token];
 
         Payment *payment = [payee redeemPaymentToken:token amount:@99.12 currency:@"USD"];
-        Payment *lookedUp = [payer lookupPayment:payment.id_p];
+        Payment *lookedUp = [payer getPayment:payment.id_p];
 
         XCTAssertEqualObjects(payment, lookedUp);
     }];
@@ -96,10 +96,9 @@
         [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
         [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
 
-        NSArray<Payment *> *lookedUp = [payer
-                lookupPaymentsOffset:0
-                               limit:100
-                             tokenId:token.id_p];
+        NSArray<Payment *> *lookedUp = [payer getPaymentsOffset:0
+                                                          limit:100
+                                                        tokenId:token.id_p];
 
         XCTAssertEqual(3, lookedUp.count);
     }];

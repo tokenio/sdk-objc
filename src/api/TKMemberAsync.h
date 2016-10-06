@@ -116,8 +116,8 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
-               onError:(OnError)onError;
+- (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Looks up an existing token payment.
@@ -126,9 +126,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupPayment:(NSString *)paymentId
-            onSuccess:(OnSuccessWithPayment)onSuccess
-              onError:(OnError)onError;
+- (void)getPayment:(NSString *)paymentId
+         onSuccess:(OnSuccessWithPayment)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up existing token payments.
@@ -138,10 +138,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupPaymentsOffset:(int)offset
-                       limit:(int)limit
-                   onSuccess:(OnSuccessWithPayments)onSuccess
-                     onError:(OnError)onError;
+- (void)getPaymentsOffset:(int)offset
+                    limit:(int)limit
+                onSuccess:(OnSuccessWithPayments)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Looks up existing token payments.
@@ -152,11 +152,11 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupPaymentsOffset:(int)offset
-                       limit:(int)limit
-                     tokenId:(NSString *)tokenId
-                   onSuccess:(OnSuccessWithPayments)onSuccess
-                     onError:(OnError)onError;
+- (void)getPaymentsOffset:(int)offset
+                    limit:(int)limit
+                  tokenId:(NSString *)tokenId
+                onSuccess:(OnSuccessWithPayments)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Creates a new member address.
@@ -166,10 +166,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createAddressName:(NSString *)name
-                 withData:(NSString *)data
-                onSuccess:(OnSuccessWithAddress)onSuccess
-                  onError:(OnError)onError;
+- (void)addAddressWithName:(NSString *)name
+                  withData:(NSString *)data
+                 onSuccess:(OnSuccessWithAddress)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up an address by id.
@@ -178,9 +178,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupAddressWithId:(NSString *)addressId
-             onSuccess:(OnSuccessWithAddress)onSuccess
-               onError:(OnError)onError;
+- (void)getAddressWithId:(NSString *)addressId
+               onSuccess:(OnSuccessWithAddress)onSuccess
+                 onError:(OnError)onError;
 
 /**
  * Looks up member addresses.
@@ -188,7 +188,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupAddresses:(OnSuccessWithAddresses)onSuccess
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -199,28 +199,8 @@
  * @param onError callback invoked on error
  */
 - (void)deleteAddressWithId:(NSString *)addressId
-                 onSucess:(OnSuccess)onSuccess
-                  onError:(OnError)onError;
-
-/**
- * Sets member preferences.
- *
- * @param preferences member json preferences
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)setPreferences:(NSString *)preferences
-              onSucess:(OnSuccess)onSuccess
-               onError:(OnError)onError;
-
-/**
- * Looks up member preferences.
- *
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)lookupPreferences:(OnSuccessWithPreferences)onSuccess
-                  onError:(OnError)onError;
+                   onSucess:(OnSuccess)onSuccess
+                    onError:(OnError)onError;
 
 /**
  * Creates a new payment token.
@@ -263,9 +243,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupPaymentToken:(NSString *)tokenId
-                  onSucess:(OnSuccessWithPaymentToken)onSuccess
-                   onError:(OnError)onError;
+- (void)getPaymentToken:(NSString *)tokenId
+               onSucess:(OnSuccessWithPaymentToken)onSuccess
+                onError:(OnError)onError;
 
 /**
  * Looks up payment tokens owned by the member.
@@ -275,10 +255,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)lookupPaymentTokensOffset:(int)offset
-                            limit:(int)limit
-                        onSuccess:(OnSuccessWithPaymentTokens)onSuccess
-                          onError:(OnError)onError;
+- (void)getPaymentTokensOffset:(int)offset
+                         limit:(int)limit
+                     onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+                       onError:(OnError)onError;
 
 /**
  * Endorses the payment token by signing it. The signature is persisted 
@@ -289,8 +269,8 @@
  * @param onError callback invoked on error
  */
 - (void)endorsePaymentToken:(PaymentToken *)token
-           onSuccess:(OnSuccessWithPaymentToken)onSuccess
-             onError:(OnError)onError;
+                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                    onError:(OnError)onError;
 
 /**
  * Cancels the payment token by signing it. The signature is persisted

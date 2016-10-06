@@ -6,15 +6,15 @@
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 #import <GRPCCLient/GRPCCall+Tests.h>
 
-#import "bankapi/Bankapi.pbrpc.h"
 #import "bankapi/Fank.pbobjc.h"
+#import "bankapi/Banklink.pbrpc.h"
 
 #import "TKBankClient.h"
 #import "TKRpcSyncCall.h"
 
 
 @implementation TKBankClient {
-    AccountService *accounts;
+    AccountLinkingService *accounts;
 }
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port {
@@ -30,15 +30,15 @@
         [GRPCCall useInsecureConnectionsForHost:address];
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
-        accounts = [AccountService serviceWithHost:address];
+        accounts = [AccountLinkingService serviceWithHost:address];
     }
 
     return self;
 }
 
-- (NSString *)startAccountsLinkingForAlias:(NSString *)alias
-                            accountNumbers:(NSArray<NSString *> *)accountNumbers
-                                  metadata:(FankMetadata *)metadata {
+- (NSString *)authorizeAccountLinkingFor:(NSString *)alias
+                    accountNumbers:(NSArray<NSString *> *)accountNumbers
+                          metadata:(FankMetadata *)metadata {
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     return [call run:^{
         GPBAny *meta = [GPBAny message];
@@ -47,17 +47,17 @@
                         metadata.descriptor.name];
         meta.value = [metadata data];
 
-        StartLinkBankRequest *request = [StartLinkBankRequest message];
+        AuthorizeLinkAccountsRequest *request = [AuthorizeLinkAccountsRequest message];
         request.alias = alias;
         request.secret = @"";
         request.metadata = meta;
         [request.accountsArray addObjectsFromArray:accountNumbers];
 
-        [accounts startLinkBankWithRequest:request
+        [accounts authorizeLinkAccountsWithRequest:request
                                    handler:
-                                           ^(StartLinkBankResponse *response, NSError *error) {
+                                           ^(AuthorizeLinkAccountsResponse *response, NSError *error) {
                                                if (response) {
-                                                   call.onSuccess(response.accountLinkPayload);
+                                                   call.onSuccess(response.accountsLinkPayload);
                                                } else {
                                                    call.onError(error);
                                                }

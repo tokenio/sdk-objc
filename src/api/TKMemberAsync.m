@@ -151,57 +151,57 @@
                  onError:onError];
 }
 
-- (void)lookupAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
+- (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
                onError:(OnError)onError {
-    [client lookupAccounts:
+    [client getAccounts:
                     ^(NSArray<Account *> *accounts) {
                         onSuccess([self _mapAccounts:accounts]);
                     }
                    onError:onError];
 }
 
-- (void)lookupPayment:(NSString *)paymentId
+- (void)getPayment:(NSString *)paymentId
             onSuccess:(OnSuccessWithPayment)onSuccess
               onError:(OnError)onError {
-    [client lookupPayment:paymentId
+    [client getPayment:paymentId
                 onSuccess:onSuccess
                   onError:onError];
 }
 
-- (void)lookupPaymentsOffset:(int)offset
+- (void)getPaymentsOffset:(int)offset
                        limit:(int)limit
                    onSuccess:(OnSuccessWithPayments)onSuccess
                      onError:(OnError)onError {
-    [self lookupPaymentsOffset:offset
+    [self getPaymentsOffset:offset
                          limit:limit
                        tokenId:nil
                      onSuccess:onSuccess
                        onError:onError];
 }
 
-- (void)lookupPaymentsOffset:(int)offset
+- (void)getPaymentsOffset:(int)offset
                        limit:(int)limit
                      tokenId:(NSString *)tokenId
                    onSuccess:(OnSuccessWithPayments)onSuccess
                      onError:(OnError)onError {
-    [client lookupPaymentsOffset:offset
+    [client getPaymentsOffset:offset
                            limit:limit
                          tokenId:tokenId
                        onSuccess:onSuccess
                          onError:onError];
 }
 
-- (void)createAddressName:(NSString *)name
+- (void)addAddressWithName:(NSString *)name
                  withData:(NSString *)data
                 onSuccess:(OnSuccessWithAddress)onSuccess
                   onError:(OnError)onError {
-    [client createAddressName:name
-                     withData:data
-                    onSuccess:onSuccess
-                      onError:onError];
+    [client addAddressWithName:name
+                      withData:data
+                     onSuccess:onSuccess
+                       onError:onError];
 }
 
-- (void)lookupAddressWithId:(NSString *)addressId
+- (void)getAddressWithId:(NSString *)addressId
                   onSuccess:(OnSuccessWithAddress)onSuccess
                     onError:(OnError)onError {
     [client getAddressById:addressId
@@ -209,7 +209,7 @@
                    onError:onError];
 }
 
-- (void)lookupAddresses:(OnSuccessWithAddresses)onSuccess
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
                 onError:(OnError)onError {
     [client getAddresses:onSuccess
                  onError:onError];
@@ -221,20 +221,6 @@
     [client deleteAddressById:addressId
                     onSuccess:onSuccess
                       onError:onError];
-}
-
-- (void)setPreferences:(NSString *)preferences
-              onSucess:(OnSuccess)onSuccess
-               onError:(OnError)onError {
-    [client setPreferences:preferences
-                 onSuccess:onSuccess
-                   onError:onError];
-}
-
-- (void)lookupPreferences:(OnSuccessWithPreferences)onSuccess
-                  onError:(OnError)onError {
-    [client getPreferences:onSuccess
-                   onError:onError];
 }
 
 - (void)createPaymentTokenForAccount:(NSString *)accountId
@@ -283,19 +269,19 @@
                        onError:onError];
 }
 
-- (void)lookupPaymentToken:(NSString *)tokenId
+- (void)getPaymentToken:(NSString *)tokenId
                   onSucess:(OnSuccessWithPaymentToken)onSuccess
                    onError:(OnError)onError {
-    [client lookupPaymentToken:tokenId
+    [client getPaymentToken:tokenId
                      onSuccess:onSuccess
                        onError:onError];
 }
 
-- (void)lookupPaymentTokensOffset:(int)offset
+- (void)getPaymentTokensOffset:(int)offset
                             limit:(int)limit
                         onSuccess:(OnSuccessWithPaymentTokens)onSuccess
                           onError:(OnError)onError {
-    [client lookupPaymentTokens:offset
+    [client getPaymentTokens:offset
                           limit:limit
                       onSuccess:onSuccess
                         onError:onError];
