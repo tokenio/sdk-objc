@@ -240,7 +240,7 @@
 }
 
 /**
- * Deserializes a single field in the GPBMessage object from value.
+ * Deserializes a field in the GPBMessage object from value.
  *
  * @param field field descriptor
  * @param message message containing the field
