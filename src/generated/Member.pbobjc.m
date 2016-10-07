@@ -409,14 +409,14 @@ typedef struct Member__storage_ {
 @dynamic id_p;
 @dynamic name;
 @dynamic data_p;
-@dynamic hasSignature, signature;
+@dynamic hasDataSignature, dataSignature;
 
 typedef struct Address__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *name;
   NSString *data_p;
-  Signature *signature;
+  Signature *dataSignature;
 } Address__storage_;
 
 // This method is threadsafe because it is initially called
@@ -453,11 +453,11 @@ typedef struct Address__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "signature",
+        .name = "dataSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = Address_FieldNumber_Signature,
+        .number = Address_FieldNumber_DataSignature,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Address__storage_, signature),
+        .offset = (uint32_t)offsetof(Address__storage_, dataSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

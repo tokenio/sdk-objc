@@ -63,14 +63,14 @@ static GPBFileDescriptor *PaymentRoot_FileDescriptor(void) {
 @dynamic id_p;
 @dynamic referenceId;
 @dynamic hasPayload, payload;
-@dynamic signatureArray, signatureArray_Count;
+@dynamic payloadSignatureArray, payloadSignatureArray_Count;
 
 typedef struct Payment__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *referenceId;
   PaymentPayload *payload;
-  NSMutableArray *signatureArray;
+  NSMutableArray *payloadSignatureArray;
 } Payment__storage_;
 
 // This method is threadsafe because it is initially called
@@ -107,11 +107,11 @@ typedef struct Payment__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "signatureArray",
+        .name = "payloadSignatureArray",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = Payment_FieldNumber_SignatureArray,
+        .number = Payment_FieldNumber_PayloadSignatureArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Payment__storage_, signatureArray),
+        .offset = (uint32_t)offsetof(Payment__storage_, payloadSignatureArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

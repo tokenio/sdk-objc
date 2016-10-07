@@ -50,7 +50,7 @@ typedef GPB_ENUM(Payment_FieldNumber) {
   Payment_FieldNumber_Id_p = 1,
   Payment_FieldNumber_ReferenceId = 2,
   Payment_FieldNumber_Payload = 3,
-  Payment_FieldNumber_SignatureArray = 4,
+  Payment_FieldNumber_PayloadSignatureArray = 4,
 };
 
 /// A payment record as persisted on the ledger.
@@ -66,9 +66,9 @@ typedef GPB_ENUM(Payment_FieldNumber) {
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *signatureArray;
-/// The number of items in @c signatureArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger signatureArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *payloadSignatureArray;
+/// The number of items in @c payloadSignatureArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger payloadSignatureArray_Count;
 
 @end
 
