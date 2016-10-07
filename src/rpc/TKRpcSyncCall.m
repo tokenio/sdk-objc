@@ -21,13 +21,15 @@
 
     if (self) {
         isDone = dispatch_semaphore_create(0);
+        
+        dispatch_semaphore_t semaphore = isDone;
         _onSuccess = ^(id result_) {
             result = result_;
-            dispatch_semaphore_signal(isDone);
+            dispatch_semaphore_signal(semaphore);
         };
         _onError = ^(NSError *error_) {
             error = error_;
-            dispatch_semaphore_signal(isDone);
+            dispatch_semaphore_signal(semaphore);
         };
     }
 

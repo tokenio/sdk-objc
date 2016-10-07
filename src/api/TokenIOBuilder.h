@@ -9,6 +9,11 @@
 @class TokenIO;
 @class TokenIOAsync;
 
+
+/**
+ * A builder that is used to customize and create `TokenIO` and 
+ * `TokenIOAsync` instances that serve as the Token API entry points.
+ */
 @interface TokenIOBuilder : NSObject
 
 @property (readwrite, copy) NSString *host;
@@ -16,8 +21,16 @@
 
 - (id)init;
 
+/**
+ * Creates a synchronous Token client object that is used as the 
+ * entry point to the Token API.
+ */
 - (TokenIO *)build;
 
+/**
+ * Creates an asynchronous Token client object that is used as the
+ * entry point to the Token API.
+ */
 - (TokenIOAsync *)buildAsync;
 
 @end

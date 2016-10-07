@@ -17,27 +17,32 @@
 @end
 
 @implementation TKPaymentRedemptionTests {
-    TKAccount *payer;
-    TKAccount *payee;
+    TKAccount *payerAccount;
+    TKMember *payer;
+    TKAccount *payeeAccount;
+    TKMember *payee;
 }
 
 - (void)setUp {
     [super setUp];
 
     [self run: ^(TokenIO *tokenIO) {
-        payer = [self createAccount:tokenIO];
-        payee = [self createAccount:tokenIO];
+        payerAccount = [self createAccount:tokenIO];
+        payer = payerAccount.member;
+        payeeAccount = [self createAccount:tokenIO];
+        payee = payeeAccount.member;
     }];
 }
 
 - (void)testRedeemToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenWithAmount:100.99
-                                           currency:@"USD"
-                                      redeemerAlias:payee.member.firstAlias
-                                        description:@"payment test"];
-        token = [payer endorseToken:token];
-        Payment *payment = [payee redeemToken:token];
+        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                           amount:100.99
+                                                         currency:@"USD"
+                                                    redeemerAlias:payee.firstAlias
+                                                      description:@"payment test"];
+        token = [payer endorsePaymentToken:token];
+        Payment *payment = [payee redeemPaymentToken:token];
 
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
@@ -47,13 +52,14 @@
 
 - (void)testRedeemToken_withParams {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenWithAmount:100.99
-                                           currency:@"USD"
-                                      redeemerAlias:payee.member.firstAlias
-                                        description:@"payment test"];
-        token = [payer endorseToken:token];
+        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                           amount:100.99
+                                                         currency:@"USD"
+                                                    redeemerAlias:payee.firstAlias
+                                                      description:@"payment test"];
+        token = [payer endorsePaymentToken:token];
 
-        Payment *payment = [payee redeemToken:token amount:@99.12 currency:@"USD"];
+        Payment *payment = [payee redeemPaymentToken:token amount:@99.12 currency:@"USD"];
 
         XCTAssertEqualObjects(@"99.12", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
@@ -63,14 +69,15 @@
 
 - (void)testLookupPayment {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenWithAmount:100.99
-                                           currency:@"USD"
-                                      redeemerAlias:payee.member.firstAlias
-                                        description:@"payment test"];
-        token = [payer endorseToken:token];
+        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                           amount:100.99
+                                                         currency:@"USD"
+                                                    redeemerAlias:payee.firstAlias
+                                                      description:@"payment test"];
+        token = [payer endorsePaymentToken:token];
 
-        Payment *payment = [payee redeemToken:token amount:@99.12 currency:@"USD"];
-        Payment *lookedUp = [payer.member lookupPayment:payment.id_p];
+        Payment *payment = [payee redeemPaymentToken:token amount:@99.12 currency:@"USD"];
+        Payment *lookedUp = [payer getPayment:payment.id_p];
 
         XCTAssertEqualObjects(payment, lookedUp);
     }];
@@ -78,20 +85,20 @@
 
 - (void)testLookupPayments {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenWithAmount:100.99
-                                           currency:@"USD"
-                                      redeemerAlias:payee.member.firstAlias
-                                        description:@"payment test"];
-        token = [payer endorseToken:token];
+        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                           amount:100.99
+                                                         currency:@"USD"
+                                                    redeemerAlias:payee.firstAlias
+                                                      description:@"payment test"];
+        token = [payer endorsePaymentToken:token];
 
-        [payee redeemToken:token amount:@11.11 currency:@"USD"];
-        [payee redeemToken:token amount:@11.11 currency:@"USD"];
-        [payee redeemToken:token amount:@11.11 currency:@"USD"];
+        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
+        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
+        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
 
-        NSArray<Payment *> *lookedUp = [payer.member
-                lookupPaymentsOffset:0
-                               limit:100
-                             tokenId:token.id_p];
+        NSArray<Payment *> *lookedUp = [payer getPaymentsOffset:0
+                                                          limit:100
+                                                        tokenId:token.id_p];
 
         XCTAssertEqual(3, lookedUp.count);
     }];

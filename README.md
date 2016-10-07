@@ -39,3 +39,18 @@ Staging environment:
 ```
 ./bin/run-tests-staging
 ```
+
+Client Usage
+------------
+
+The SDK can be added to a client directly from git.
+
+```
+  pod 'TokenSdk',  :git => 'https://bitbucket.org/tokenio/sdk-objc',:submodules => true
+```
+
+or referenced locally in a Podfile
+
+```
+  pod 'TokenSdk', :path => '../..'
+```

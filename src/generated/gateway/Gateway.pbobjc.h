@@ -24,17 +24,18 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccessToken;
+@class AccessToken_Payload;
 @class Account;
 @class Address;
-@class InformationToken;
 @class Member;
 @class MemberUpdate;
 @class Money;
 @class Payment;
 @class PaymentPayload;
 @class PaymentToken;
+@class PaymentToken_Payload;
 @class Signature;
-@class Token;
 @class Transaction;
 GPB_ENUM_FWD_DECLARE(Platform);
 
@@ -130,15 +131,15 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @end
 
-#pragma mark - CreateAddressRequest
+#pragma mark - AddAddressRequest
 
-typedef GPB_ENUM(CreateAddressRequest_FieldNumber) {
-  CreateAddressRequest_FieldNumber_Name = 1,
-  CreateAddressRequest_FieldNumber_Data_p = 2,
-  CreateAddressRequest_FieldNumber_Signature = 3,
+typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
+  AddAddressRequest_FieldNumber_Name = 1,
+  AddAddressRequest_FieldNumber_Data_p = 2,
+  AddAddressRequest_FieldNumber_Signature = 3,
 };
 
-@interface CreateAddressRequest : GPBMessage
+@interface AddAddressRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
@@ -150,13 +151,13 @@ typedef GPB_ENUM(CreateAddressRequest_FieldNumber) {
 
 @end
 
-#pragma mark - CreateAddressResponse
+#pragma mark - AddAddressResponse
 
-typedef GPB_ENUM(CreateAddressResponse_FieldNumber) {
-  CreateAddressResponse_FieldNumber_Address = 1,
+typedef GPB_ENUM(AddAddressResponse_FieldNumber) {
+  AddAddressResponse_FieldNumber_Address = 1,
 };
 
-@interface CreateAddressResponse : GPBMessage
+@interface AddAddressResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Address *address;
 /// Test to see if @c address has been set.
@@ -228,42 +229,6 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 
 @end
 
-#pragma mark - SetPreferenceRequest
-
-typedef GPB_ENUM(SetPreferenceRequest_FieldNumber) {
-  SetPreferenceRequest_FieldNumber_Preference = 1,
-};
-
-@interface SetPreferenceRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *preference;
-
-@end
-
-#pragma mark - SetPreferenceResponse
-
-@interface SetPreferenceResponse : GPBMessage
-
-@end
-
-#pragma mark - GetPreferenceRequest
-
-@interface GetPreferenceRequest : GPBMessage
-
-@end
-
-#pragma mark - GetPreferenceResponse
-
-typedef GPB_ENUM(GetPreferenceResponse_FieldNumber) {
-  GetPreferenceResponse_FieldNumber_Preference = 1,
-};
-
-@interface GetPreferenceResponse : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *preference;
-
-@end
-
 #pragma mark - SubscribeDeviceRequest
 
 typedef GPB_ENUM(SubscribeDeviceRequest_FieldNumber) {
@@ -328,7 +293,7 @@ typedef GPB_ENUM(UnsubscribeDeviceRequest_FieldNumber) {
 typedef GPB_ENUM(NotifyLinkAccountsRequest_FieldNumber) {
   NotifyLinkAccountsRequest_FieldNumber_Alias = 1,
   NotifyLinkAccountsRequest_FieldNumber_BankId = 2,
-  NotifyLinkAccountsRequest_FieldNumber_AccountLinkPayload = 3,
+  NotifyLinkAccountsRequest_FieldNumber_AccountsLinkPayload = 3,
 };
 
 /// Notify existing subscribers that a bank linking payload has been created
@@ -338,8 +303,8 @@ typedef GPB_ENUM(NotifyLinkAccountsRequest_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-/// encrypted AccountLinkPayload
-@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+/// encrypted AccountsLinkPayload
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
 
 @end
 
@@ -352,11 +317,14 @@ typedef GPB_ENUM(NotifyLinkAccountsRequest_FieldNumber) {
 #pragma mark - NotifyAddKeyRequest
 
 typedef GPB_ENUM(NotifyAddKeyRequest_FieldNumber) {
-  NotifyAddKeyRequest_FieldNumber_PublicKey = 1,
-  NotifyAddKeyRequest_FieldNumber_TagsArray = 2,
+  NotifyAddKeyRequest_FieldNumber_Alias = 1,
+  NotifyAddKeyRequest_FieldNumber_PublicKey = 2,
+  NotifyAddKeyRequest_FieldNumber_TagsArray = 3,
 };
 
 @interface NotifyAddKeyRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
@@ -372,29 +340,64 @@ typedef GPB_ENUM(NotifyAddKeyRequest_FieldNumber) {
 
 @end
 
-#pragma mark - LinkAccountRequest
+#pragma mark - NotifyLinkAccountsAndAddKeyRequest
 
-typedef GPB_ENUM(LinkAccountRequest_FieldNumber) {
-  LinkAccountRequest_FieldNumber_BankId = 1,
-  LinkAccountRequest_FieldNumber_AccountLinkPayload = 2,
+typedef GPB_ENUM(NotifyLinkAccountsAndAddKeyRequest_FieldNumber) {
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_Alias = 1,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_BankId = 2,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_AccountsLinkPayload = 3,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_PublicKey = 4,
+  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_TagsArray = 5,
 };
 
-@interface LinkAccountRequest : GPBMessage
+/// Notify existing subscribers that a bank linking payload has been created
+///, as well as request a key to be added
+@interface NotifyLinkAccountsAndAddKeyRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-/// encrypted AccountLinkPayload
-@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+/// encrypted AccountsLinkPayload
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
+/// The number of items in @c tagsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 
-#pragma mark - LinkAccountResponse
+#pragma mark - NotifyLinkAccountsAndAddKeyResponse
 
-typedef GPB_ENUM(LinkAccountResponse_FieldNumber) {
-  LinkAccountResponse_FieldNumber_AccountsArray = 1,
+@interface NotifyLinkAccountsAndAddKeyResponse : GPBMessage
+
+@end
+
+#pragma mark - LinkAccountsRequest
+
+typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
+  LinkAccountsRequest_FieldNumber_BankId = 1,
+  LinkAccountsRequest_FieldNumber_AccountsLinkPayload = 2,
 };
 
-@interface LinkAccountResponse : GPBMessage
+@interface LinkAccountsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/// encrypted AccountsLinkPayload
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
+
+@end
+
+#pragma mark - LinkAccountsResponse
+
+typedef GPB_ENUM(LinkAccountsResponse_FieldNumber) {
+  LinkAccountsResponse_FieldNumber_AccountsArray = 1,
+};
+
+@interface LinkAccountsResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Account*> *accountsArray;
 /// The number of items in @c accountsArray without causing the array to be created.
@@ -402,25 +405,25 @@ typedef GPB_ENUM(LinkAccountResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupAccountRequest
+#pragma mark - GetAccountRequest
 
-typedef GPB_ENUM(LookupAccountRequest_FieldNumber) {
-  LookupAccountRequest_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(GetAccountRequest_FieldNumber) {
+  GetAccountRequest_FieldNumber_AccountId = 1,
 };
 
-@interface LookupAccountRequest : GPBMessage
+@interface GetAccountRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - LookupAccountResponse
+#pragma mark - GetAccountResponse
 
-typedef GPB_ENUM(LookupAccountResponse_FieldNumber) {
-  LookupAccountResponse_FieldNumber_Account = 1,
+typedef GPB_ENUM(GetAccountResponse_FieldNumber) {
+  GetAccountResponse_FieldNumber_Account = 1,
 };
 
-@interface LookupAccountResponse : GPBMessage
+@interface GetAccountResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Account *account;
 /// Test to see if @c account has been set.
@@ -428,19 +431,19 @@ typedef GPB_ENUM(LookupAccountResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupAccountsRequest
+#pragma mark - GetAccountsRequest
 
-@interface LookupAccountsRequest : GPBMessage
+@interface GetAccountsRequest : GPBMessage
 
 @end
 
-#pragma mark - LookupAccountsResponse
+#pragma mark - GetAccountsResponse
 
-typedef GPB_ENUM(LookupAccountsResponse_FieldNumber) {
-  LookupAccountsResponse_FieldNumber_AccountsArray = 1,
+typedef GPB_ENUM(GetAccountsResponse_FieldNumber) {
+  GetAccountsResponse_FieldNumber_AccountsArray = 1,
 };
 
-@interface LookupAccountsResponse : GPBMessage
+@interface GetAccountsResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Account*> *accountsArray;
 /// The number of items in @c accountsArray without causing the array to be created.
@@ -477,26 +480,26 @@ typedef GPB_ENUM(SetAccountNameResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupBalanceRequest
+#pragma mark - GetBalanceRequest
 
-typedef GPB_ENUM(LookupBalanceRequest_FieldNumber) {
-  LookupBalanceRequest_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(GetBalanceRequest_FieldNumber) {
+  GetBalanceRequest_FieldNumber_AccountId = 1,
 };
 
-@interface LookupBalanceRequest : GPBMessage
+@interface GetBalanceRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - LookupBalanceResponse
+#pragma mark - GetBalanceResponse
 
-typedef GPB_ENUM(LookupBalanceResponse_FieldNumber) {
-  LookupBalanceResponse_FieldNumber_Current = 1,
-  LookupBalanceResponse_FieldNumber_Available = 2,
+typedef GPB_ENUM(GetBalanceResponse_FieldNumber) {
+  GetBalanceResponse_FieldNumber_Current = 1,
+  GetBalanceResponse_FieldNumber_Available = 2,
 };
 
-@interface LookupBalanceResponse : GPBMessage
+@interface GetBalanceResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Money *current;
 /// Test to see if @c current has been set.
@@ -508,14 +511,14 @@ typedef GPB_ENUM(LookupBalanceResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupTransactionRequest
+#pragma mark - GetTransactionRequest
 
-typedef GPB_ENUM(LookupTransactionRequest_FieldNumber) {
-  LookupTransactionRequest_FieldNumber_AccountId = 1,
-  LookupTransactionRequest_FieldNumber_TransactionId = 2,
+typedef GPB_ENUM(GetTransactionRequest_FieldNumber) {
+  GetTransactionRequest_FieldNumber_AccountId = 1,
+  GetTransactionRequest_FieldNumber_TransactionId = 2,
 };
 
-@interface LookupTransactionRequest : GPBMessage
+@interface GetTransactionRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
@@ -523,13 +526,13 @@ typedef GPB_ENUM(LookupTransactionRequest_FieldNumber) {
 
 @end
 
-#pragma mark - LookupTransactionResponse
+#pragma mark - GetTransactionResponse
 
-typedef GPB_ENUM(LookupTransactionResponse_FieldNumber) {
-  LookupTransactionResponse_FieldNumber_Transaction = 1,
+typedef GPB_ENUM(GetTransactionResponse_FieldNumber) {
+  GetTransactionResponse_FieldNumber_Transaction = 1,
 };
 
-@interface LookupTransactionResponse : GPBMessage
+@interface GetTransactionResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Transaction *transaction;
 /// Test to see if @c transaction has been set.
@@ -537,15 +540,15 @@ typedef GPB_ENUM(LookupTransactionResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupTransactionsRequest
+#pragma mark - GetTransactionsRequest
 
-typedef GPB_ENUM(LookupTransactionsRequest_FieldNumber) {
-  LookupTransactionsRequest_FieldNumber_AccountId = 1,
-  LookupTransactionsRequest_FieldNumber_Offset = 2,
-  LookupTransactionsRequest_FieldNumber_Limit = 3,
+typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
+  GetTransactionsRequest_FieldNumber_AccountId = 1,
+  GetTransactionsRequest_FieldNumber_Offset = 2,
+  GetTransactionsRequest_FieldNumber_Limit = 3,
 };
 
-@interface LookupTransactionsRequest : GPBMessage
+@interface GetTransactionsRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
@@ -557,13 +560,13 @@ typedef GPB_ENUM(LookupTransactionsRequest_FieldNumber) {
 
 @end
 
-#pragma mark - LookupTransactionsResponse
+#pragma mark - GetTransactionsResponse
 
-typedef GPB_ENUM(LookupTransactionsResponse_FieldNumber) {
-  LookupTransactionsResponse_FieldNumber_TransactionsArray = 1,
+typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
+  GetTransactionsResponse_FieldNumber_TransactionsArray = 1,
 };
 
-@interface LookupTransactionsResponse : GPBMessage
+@interface GetTransactionsResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Transaction*> *transactionsArray;
 /// The number of items in @c transactionsArray without causing the array to be created.
@@ -574,14 +577,14 @@ typedef GPB_ENUM(LookupTransactionsResponse_FieldNumber) {
 #pragma mark - CreatePaymentTokenRequest
 
 typedef GPB_ENUM(CreatePaymentTokenRequest_FieldNumber) {
-  CreatePaymentTokenRequest_FieldNumber_Token = 1,
+  CreatePaymentTokenRequest_FieldNumber_Payload = 1,
 };
 
 @interface CreatePaymentTokenRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
+@property(nonatomic, readwrite, strong, null_resettable) PaymentToken_Payload *payload;
+/// Test to see if @c payload has been set.
+@property(nonatomic, readwrite) BOOL hasPayload;
 
 @end
 
@@ -593,74 +596,46 @@ typedef GPB_ENUM(CreatePaymentTokenResponse_FieldNumber) {
 
 @interface CreatePaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @end
 
-#pragma mark - CreateInformationTokenRequest
+#pragma mark - GetPaymentTokenRequest
 
-typedef GPB_ENUM(CreateInformationTokenRequest_FieldNumber) {
-  CreateInformationTokenRequest_FieldNumber_Token = 1,
+typedef GPB_ENUM(GetPaymentTokenRequest_FieldNumber) {
+  GetPaymentTokenRequest_FieldNumber_TokenId = 2,
 };
 
-@interface CreateInformationTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) InformationToken *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - CreateInformationTokenResponse
-
-typedef GPB_ENUM(CreateInformationTokenResponse_FieldNumber) {
-  CreateInformationTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface CreateInformationTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - LookupTokenRequest
-
-typedef GPB_ENUM(LookupTokenRequest_FieldNumber) {
-  LookupTokenRequest_FieldNumber_TokenId = 2,
-};
-
-@interface LookupTokenRequest : GPBMessage
+@interface GetPaymentTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
 
-#pragma mark - LookupTokenResponse
+#pragma mark - GetPaymentTokenResponse
 
-typedef GPB_ENUM(LookupTokenResponse_FieldNumber) {
-  LookupTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(GetPaymentTokenResponse_FieldNumber) {
+  GetPaymentTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface LookupTokenResponse : GPBMessage
+@interface GetPaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @end
 
-#pragma mark - LookupTokensRequest
+#pragma mark - GetPaymentTokensRequest
 
-typedef GPB_ENUM(LookupTokensRequest_FieldNumber) {
-  LookupTokensRequest_FieldNumber_Offset = 1,
-  LookupTokensRequest_FieldNumber_Limit = 2,
+typedef GPB_ENUM(GetPaymentTokensRequest_FieldNumber) {
+  GetPaymentTokensRequest_FieldNumber_Offset = 1,
+  GetPaymentTokensRequest_FieldNumber_Limit = 2,
 };
 
-@interface LookupTokensRequest : GPBMessage
+@interface GetPaymentTokensRequest : GPBMessage
 
 /// Optional token offset, used for paging.
 @property(nonatomic, readwrite) int32_t offset;
@@ -670,28 +645,28 @@ typedef GPB_ENUM(LookupTokensRequest_FieldNumber) {
 
 @end
 
-#pragma mark - LookupTokensResponse
+#pragma mark - GetPaymentTokensResponse
 
-typedef GPB_ENUM(LookupTokensResponse_FieldNumber) {
-  LookupTokensResponse_FieldNumber_TokensArray = 1,
+typedef GPB_ENUM(GetPaymentTokensResponse_FieldNumber) {
+  GetPaymentTokensResponse_FieldNumber_TokensArray = 1,
 };
 
-@interface LookupTokensResponse : GPBMessage
+@interface GetPaymentTokensResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PaymentToken*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
 
 @end
 
-#pragma mark - EndorseTokenRequest
+#pragma mark - EndorsePaymentTokenRequest
 
-typedef GPB_ENUM(EndorseTokenRequest_FieldNumber) {
-  EndorseTokenRequest_FieldNumber_TokenId = 1,
-  EndorseTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(EndorsePaymentTokenRequest_FieldNumber) {
+  EndorsePaymentTokenRequest_FieldNumber_TokenId = 1,
+  EndorsePaymentTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface EndorseTokenRequest : GPBMessage
+@interface EndorsePaymentTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -701,28 +676,28 @@ typedef GPB_ENUM(EndorseTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - EndorseTokenResponse
+#pragma mark - EndorsePaymentTokenResponse
 
-typedef GPB_ENUM(EndorseTokenResponse_FieldNumber) {
-  EndorseTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(EndorsePaymentTokenResponse_FieldNumber) {
+  EndorsePaymentTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface EndorseTokenResponse : GPBMessage
+@interface EndorsePaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @end
 
-#pragma mark - DeclineTokenRequest
+#pragma mark - CancelPaymentTokenRequest
 
-typedef GPB_ENUM(DeclineTokenRequest_FieldNumber) {
-  DeclineTokenRequest_FieldNumber_TokenId = 1,
-  DeclineTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(CancelPaymentTokenRequest_FieldNumber) {
+  CancelPaymentTokenRequest_FieldNumber_TokenId = 1,
+  CancelPaymentTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface DeclineTokenRequest : GPBMessage
+@interface CancelPaymentTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -732,28 +707,113 @@ typedef GPB_ENUM(DeclineTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - DeclineTokenResponse
+#pragma mark - CancelPaymentTokenResponse
 
-typedef GPB_ENUM(DeclineTokenResponse_FieldNumber) {
-  DeclineTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CancelPaymentTokenResponse_FieldNumber) {
+  CancelPaymentTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface DeclineTokenResponse : GPBMessage
+@interface CancelPaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @end
 
-#pragma mark - RevokeTokenRequest
+#pragma mark - CreateAccessTokenRequest
 
-typedef GPB_ENUM(RevokeTokenRequest_FieldNumber) {
-  RevokeTokenRequest_FieldNumber_TokenId = 1,
-  RevokeTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
+  CreateAccessTokenRequest_FieldNumber_Payload = 1,
 };
 
-@interface RevokeTokenRequest : GPBMessage
+@interface CreateAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Payload *payload;
+/// Test to see if @c payload has been set.
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
+#pragma mark - CreateAccessTokenResponse
+
+typedef GPB_ENUM(CreateAccessTokenResponse_FieldNumber) {
+  CreateAccessTokenResponse_FieldNumber_Token = 1,
+};
+
+@interface CreateAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+/// Test to see if @c token has been set.
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@end
+
+#pragma mark - GetAccessTokenRequest
+
+typedef GPB_ENUM(GetAccessTokenRequest_FieldNumber) {
+  GetAccessTokenRequest_FieldNumber_TokenId = 2,
+};
+
+@interface GetAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@end
+
+#pragma mark - GetAccessTokenResponse
+
+typedef GPB_ENUM(GetAccessTokenResponse_FieldNumber) {
+  GetAccessTokenResponse_FieldNumber_Token = 1,
+};
+
+@interface GetAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+/// Test to see if @c token has been set.
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@end
+
+#pragma mark - GetAccessTokensRequest
+
+typedef GPB_ENUM(GetAccessTokensRequest_FieldNumber) {
+  GetAccessTokensRequest_FieldNumber_Offset = 1,
+  GetAccessTokensRequest_FieldNumber_Limit = 2,
+};
+
+@interface GetAccessTokensRequest : GPBMessage
+
+/// Optional token offset, used for paging.
+@property(nonatomic, readwrite) int32_t offset;
+
+/// Optional token limit, used for paging.
+@property(nonatomic, readwrite) int32_t limit;
+
+@end
+
+#pragma mark - GetAccessTokensResponse
+
+typedef GPB_ENUM(GetAccessTokensResponse_FieldNumber) {
+  GetAccessTokensResponse_FieldNumber_TokensArray = 1,
+};
+
+@interface GetAccessTokensResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken*> *tokensArray;
+/// The number of items in @c tokensArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger tokensArray_Count;
+
+@end
+
+#pragma mark - EndorseAccessTokenRequest
+
+typedef GPB_ENUM(EndorseAccessTokenRequest_FieldNumber) {
+  EndorseAccessTokenRequest_FieldNumber_TokenId = 1,
+  EndorseAccessTokenRequest_FieldNumber_Signature = 2,
+};
+
+@interface EndorseAccessTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -763,15 +823,46 @@ typedef GPB_ENUM(RevokeTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - RevokeTokenResponse
+#pragma mark - EndorseAccessTokenResponse
 
-typedef GPB_ENUM(RevokeTokenResponse_FieldNumber) {
-  RevokeTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(EndorseAccessTokenResponse_FieldNumber) {
+  EndorseAccessTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface RevokeTokenResponse : GPBMessage
+@interface EndorseAccessTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+/// Test to see if @c token has been set.
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@end
+
+#pragma mark - CancelAccessTokenRequest
+
+typedef GPB_ENUM(CancelAccessTokenRequest_FieldNumber) {
+  CancelAccessTokenRequest_FieldNumber_TokenId = 1,
+  CancelAccessTokenRequest_FieldNumber_Signature = 2,
+};
+
+@interface CancelAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/// Test to see if @c signature has been set.
+@property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
+#pragma mark - CancelAccessTokenResponse
+
+typedef GPB_ENUM(CancelAccessTokenResponse_FieldNumber) {
+  CancelAccessTokenResponse_FieldNumber_Token = 1,
+};
+
+@interface CancelAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -810,25 +901,25 @@ typedef GPB_ENUM(RedeemPaymentTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupPaymentRequest
+#pragma mark - GetPaymentRequest
 
-typedef GPB_ENUM(LookupPaymentRequest_FieldNumber) {
-  LookupPaymentRequest_FieldNumber_PaymentId = 1,
+typedef GPB_ENUM(GetPaymentRequest_FieldNumber) {
+  GetPaymentRequest_FieldNumber_PaymentId = 1,
 };
 
-@interface LookupPaymentRequest : GPBMessage
+@interface GetPaymentRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *paymentId;
 
 @end
 
-#pragma mark - LookupPaymentResponse
+#pragma mark - GetPaymentResponse
 
-typedef GPB_ENUM(LookupPaymentResponse_FieldNumber) {
-  LookupPaymentResponse_FieldNumber_Payment = 1,
+typedef GPB_ENUM(GetPaymentResponse_FieldNumber) {
+  GetPaymentResponse_FieldNumber_Payment = 1,
 };
 
-@interface LookupPaymentResponse : GPBMessage
+@interface GetPaymentResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Payment *payment;
 /// Test to see if @c payment has been set.
@@ -836,15 +927,15 @@ typedef GPB_ENUM(LookupPaymentResponse_FieldNumber) {
 
 @end
 
-#pragma mark - LookupPaymentsRequest
+#pragma mark - GetPaymentsRequest
 
-typedef GPB_ENUM(LookupPaymentsRequest_FieldNumber) {
-  LookupPaymentsRequest_FieldNumber_TokenId = 1,
-  LookupPaymentsRequest_FieldNumber_Offset = 2,
-  LookupPaymentsRequest_FieldNumber_Limit = 3,
+typedef GPB_ENUM(GetPaymentsRequest_FieldNumber) {
+  GetPaymentsRequest_FieldNumber_TokenId = 1,
+  GetPaymentsRequest_FieldNumber_Offset = 2,
+  GetPaymentsRequest_FieldNumber_Limit = 3,
 };
 
-@interface LookupPaymentsRequest : GPBMessage
+@interface GetPaymentsRequest : GPBMessage
 
 /// Optional token_id to filter payments by.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
@@ -857,13 +948,13 @@ typedef GPB_ENUM(LookupPaymentsRequest_FieldNumber) {
 
 @end
 
-#pragma mark - LookupPaymentsResponse
+#pragma mark - GetPaymentsResponse
 
-typedef GPB_ENUM(LookupPaymentsResponse_FieldNumber) {
-  LookupPaymentsResponse_FieldNumber_PaymentsArray = 1,
+typedef GPB_ENUM(GetPaymentsResponse_FieldNumber) {
+  GetPaymentsResponse_FieldNumber_PaymentsArray = 1,
 };
 
-@interface LookupPaymentsResponse : GPBMessage
+@interface GetPaymentsResponse : GPBMessage
 
 /// List of payments.
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Payment*> *paymentsArray;

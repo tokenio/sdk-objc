@@ -110,7 +110,7 @@
     metadata.client.lastName = lastName;
     [metadata.clientAccountsArray addObject:account];
 
-    NSData *linkPayload = [bank startAccountsLinkingForAlias:alias
+    NSString *linkPayload = [bank authorizeAccountLinkingFor:alias
                                               accountNumbers:@[bankAccountNumber]
                                                     metadata:metadata];
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId

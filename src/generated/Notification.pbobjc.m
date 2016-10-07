@@ -103,12 +103,12 @@ typedef struct PaymentProcessed__storage_ {
 @implementation LinkAccounts
 
 @dynamic bankId;
-@dynamic accountLinkPayload;
+@dynamic accountsLinkPayload;
 
 typedef struct LinkAccounts__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
-  NSData *accountLinkPayload;
+  NSString *accountsLinkPayload;
 } LinkAccounts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -127,13 +127,13 @@ typedef struct LinkAccounts__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accountLinkPayload",
+        .name = "accountsLinkPayload",
         .dataTypeSpecific.className = NULL,
-        .number = LinkAccounts_FieldNumber_AccountLinkPayload,
+        .number = LinkAccounts_FieldNumber_AccountsLinkPayload,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountLinkPayload),
+        .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountsLinkPayload),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBytes,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -158,12 +158,12 @@ typedef struct LinkAccounts__storage_ {
 
 @dynamic tokenOneOfCase;
 @dynamic paymentToken;
-@dynamic informationToken;
+@dynamic accessToken;
 
 typedef struct StepUp__storage_ {
   uint32_t _has_storage_[2];
   PaymentToken *paymentToken;
-  InformationToken *informationToken;
+  AccessToken *accessToken;
 } StepUp__storage_;
 
 // This method is threadsafe because it is initially called
@@ -182,11 +182,11 @@ typedef struct StepUp__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "informationToken",
-        .dataTypeSpecific.className = GPBStringifySymbol(InformationToken),
-        .number = StepUp_FieldNumber_InformationToken,
+        .name = "accessToken",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .number = StepUp_FieldNumber_AccessToken,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(StepUp__storage_, informationToken),
+        .offset = (uint32_t)offsetof(StepUp__storage_, accessToken),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -263,6 +263,60 @@ typedef struct AddKey__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AddKey__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - LinkAccountsAndAddKey
+
+@implementation LinkAccountsAndAddKey
+
+@dynamic hasLinkAccounts, linkAccounts;
+@dynamic hasAddKey, addKey;
+
+typedef struct LinkAccountsAndAddKey__storage_ {
+  uint32_t _has_storage_[1];
+  LinkAccounts *linkAccounts;
+  AddKey *addKey;
+} LinkAccountsAndAddKey__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "linkAccounts",
+        .dataTypeSpecific.className = GPBStringifySymbol(LinkAccounts),
+        .number = LinkAccountsAndAddKey_FieldNumber_LinkAccounts,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(LinkAccountsAndAddKey__storage_, linkAccounts),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
+        .number = LinkAccountsAndAddKey_FieldNumber_AddKey,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(LinkAccountsAndAddKey__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[LinkAccountsAndAddKey class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(LinkAccountsAndAddKey__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

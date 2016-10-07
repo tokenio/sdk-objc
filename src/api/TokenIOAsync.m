@@ -28,16 +28,16 @@
 
 - (id)initWithHost:(NSString *)host port:(int)port {
     self = [super init];
-
+    
     if (self) {
         NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
-
+        
         [GRPCCall useInsecureConnectionsForHost:address];
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
-
+        
         gateway = [GatewayService serviceWithHost:address];
     }
-
+    
     return self;
 }
 
@@ -50,16 +50,16 @@
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     TKSecretKey *key = [TKCrypto generateKey];
-
+    
     [client createMemberId:
-                    ^(NSString *memberId) {
-                        [self _addKeyAndAlias:client
-                                     memberId:memberId
-                                        alias:alias
-                                          key:key
-                                    onSuccess:onSuccess
-                                      onError:onError];
-                    }
+     ^(NSString *memberId) {
+         [self _addKeyAndAlias:client
+                      memberId:memberId
+                         alias:alias
+                           key:key
+                     onSuccess:onSuccess
+                       onError:onError];
+     }
                    onError:onError];
 }
 
@@ -71,45 +71,57 @@
                                                 memberId:memberId
                                                secretKey:key];
     [client getMember:
-                    ^(Member *member) {
-                        onSuccess([TKMemberAsync
-                                member:member
-                             secretKey:key
-                             useClient:client]);
-                    }
+     ^(Member *member) {
+         onSuccess([TKMemberAsync
+                    member:member
+                    secretKey:key
+                    useClient:client]);
+     }
               onError:onError];
 }
 
 #pragma mark private
 
+// alias can be nil. In this case only add the key.
 - (void)_addKeyAndAlias:(TKUnauthenticatedClient *)client
-              memberId:(NSString *)memberId
-                 alias:(NSString *)alias
-                   key:(TKSecretKey *)key
-             onSuccess:(void(^)(TKMemberAsync *))onSuccess
-               onError:(OnError)onError {
+               memberId:(NSString *)memberId
+                  alias:(NSString *)alias
+                    key:(TKSecretKey *)key
+              onSuccess:(void(^)(TKMemberAsync *))onSuccess
+                onError:(OnError)onError {
     [client
-            addFirstKey:key
-              forMember:memberId
-              onSuccess:
-                      ^(Member *member) {
-                          TKClient *authenticated = [[TKClient alloc]
-                                  initWithGateway:gateway
+     addFirstKey:key
+     forMember:memberId
+     onSuccess:
+     ^(Member *member) {
+         TKClient *authenticated = [[TKClient alloc]
+                                    initWithGateway:gateway
+                                    memberId:memberId
+                                    secretKey:key];
+         if (alias != nil) {
+             [authenticated addAlias:alias
+                                  to:member
+                           onSuccess:
+              ^(Member *m) {
+                  TKClient *newClient = [[TKClient alloc]
+                                         initWithGateway:gateway
                                          memberId:memberId
-                                        secretKey:key];
-
-                          [authenticated addAlias:alias
-                                               to:member
-                                        onSuccess:
-                                                ^(Member *m) {
-                                                    onSuccess([TKMemberAsync
-                                                            member:m
-                                                         secretKey:key
-                                                         useClient:authenticated]);
-                                                }
-                                          onError: onError];
-                      }
-                onError:onError];
+                                         secretKey:key];
+                  onSuccess([TKMemberAsync
+                             member:m
+                             secretKey:key
+                             useClient:newClient]);
+              }
+                             onError: onError];
+         }
+         else {
+             onSuccess([TKMemberAsync
+                        member:member
+                        secretKey:key
+                        useClient:authenticated]);
+         }
+     }
+     onError:onError];
 }
 
 @end

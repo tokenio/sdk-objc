@@ -24,7 +24,9 @@
 
 CF_EXTERN_C_BEGIN
 
-@class InformationToken;
+@class AccessToken;
+@class AddKey;
+@class LinkAccounts;
 @class Payment;
 @class PaymentToken;
 
@@ -62,7 +64,7 @@ typedef GPB_ENUM(PaymentProcessed_FieldNumber) {
 
 typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_BankId = 1,
-  LinkAccounts_FieldNumber_AccountLinkPayload = 2,
+  LinkAccounts_FieldNumber_AccountsLinkPayload = 2,
 };
 
 /// A notification that a bank wants to be linked
@@ -70,7 +72,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSData *accountLinkPayload;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
 
 @end
 
@@ -78,13 +80,13 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 typedef GPB_ENUM(StepUp_FieldNumber) {
   StepUp_FieldNumber_PaymentToken = 1,
-  StepUp_FieldNumber_InformationToken = 2,
+  StepUp_FieldNumber_AccessToken = 2,
 };
 
 typedef GPB_ENUM(StepUp_Token_OneOfCase) {
   StepUp_Token_OneOfCase_GPBUnsetOneOfCase = 0,
   StepUp_Token_OneOfCase_PaymentToken = 1,
-  StepUp_Token_OneOfCase_InformationToken = 2,
+  StepUp_Token_OneOfCase_AccessToken = 2,
 };
 
 /// A notification to step up / endorse a token
@@ -94,7 +96,7 @@ typedef GPB_ENUM(StepUp_Token_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) PaymentToken *paymentToken;
 
-@property(nonatomic, readwrite, strong, null_resettable) InformationToken *informationToken;
+@property(nonatomic, readwrite, strong, null_resettable) AccessToken *accessToken;
 
 @end
 
@@ -116,6 +118,26 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
 /// The number of items in @c tagsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
+
+@end
+
+#pragma mark - LinkAccountsAndAddKey
+
+typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
+  LinkAccountsAndAddKey_FieldNumber_LinkAccounts = 1,
+  LinkAccountsAndAddKey_FieldNumber_AddKey = 2,
+};
+
+/// A notification that a bank wants to be linked, and keys want to be added
+@interface LinkAccountsAndAddKey : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
+/// Test to see if @c linkAccounts has been set.
+@property(nonatomic, readwrite) BOOL hasLinkAccounts;
+
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+/// Test to see if @c addKey has been set.
+@property(nonatomic, readwrite) BOOL hasAddKey;
 
 @end
 

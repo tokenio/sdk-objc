@@ -46,7 +46,7 @@ static GPBFileDescriptor *AuthRoot_FileDescriptor(void) {
 @dynamic method;
 @dynamic uriHost;
 @dynamic uriPath;
-@dynamic uriParamArray, uriParamArray_Count;
+@dynamic queryString;
 @dynamic requestBody;
 
 typedef struct HttpAuthPayload__storage_ {
@@ -54,7 +54,7 @@ typedef struct HttpAuthPayload__storage_ {
   NSString *method;
   NSString *uriHost;
   NSString *uriPath;
-  NSMutableArray *uriParamArray;
+  NSString *queryString;
   NSString *requestBody;
 } HttpAuthPayload__storage_;
 
@@ -92,19 +92,19 @@ typedef struct HttpAuthPayload__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "uriParamArray",
+        .name = "queryString",
         .dataTypeSpecific.className = NULL,
-        .number = HttpAuthPayload_FieldNumber_UriParamArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, uriParamArray),
-        .flags = GPBFieldRepeated,
+        .number = HttpAuthPayload_FieldNumber_QueryString,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, queryString),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "requestBody",
         .dataTypeSpecific.className = NULL,
         .number = HttpAuthPayload_FieldNumber_RequestBody,
-        .hasIndex = 3,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, requestBody),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,

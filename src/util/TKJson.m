@@ -34,6 +34,12 @@
     return [jsonStr stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
 }
 
++ (NSString *)serializeBase64:(GPBMessage *)message {
+    NSString *serialized = [self serialize:message];
+    NSData *serializedData = [serialized dataUsingEncoding:NSUTF8StringEncoding];
+    return [TKUtil base64EncodeData:serializedData];
+}
+
 #pragma mark private
 
 /**
@@ -76,8 +82,7 @@
         default:
             [NSException
                     raise:NSInternalInconsistencyException
-                   format:@"Unsupported field type: %@"
-                arguments:field.fieldType];
+                   format:@"Unsupported field type: %@", [field name]];
     }
 }
 

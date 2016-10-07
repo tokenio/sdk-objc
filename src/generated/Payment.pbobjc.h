@@ -79,6 +79,7 @@ typedef GPB_ENUM(PaymentPayload_FieldNumber) {
   PaymentPayload_FieldNumber_TokenId = 2,
   PaymentPayload_FieldNumber_Amount = 3,
   PaymentPayload_FieldNumber_Transfer = 5,
+  PaymentPayload_FieldNumber_Description_p = 6,
 };
 
 @interface PaymentPayload : GPBMessage
@@ -98,6 +99,9 @@ typedef GPB_ENUM(PaymentPayload_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /// Test to see if @c transfer has been set.
 @property(nonatomic, readwrite) BOOL hasTransfer;
+
+/// Optional
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 @end
 

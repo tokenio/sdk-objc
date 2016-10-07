@@ -14,14 +14,14 @@ message PaymentProcessed {
 // A notification that a bank wants to be linked
 message LinkAccounts {
     string bank_id = 1;
-    bytes account_link_payload = 2;
+    string accounts_link_payload = 2;
 }
 
 // A notification to step up / endorse a token
 message StepUp {
     oneof token {
         io.token.proto.common.token.PaymentToken payment_token = 1;
-        io.token.proto.common.token.InformationToken information_token = 2;
+        io.token.proto.common.token.AccessToken access_token = 2;
     }
 }
 
@@ -29,6 +29,12 @@ message StepUp {
 message AddKey {
     string public_key = 1;
     repeated string tags = 2;
+}
+
+// A notification that a bank wants to be linked, and keys want to be added
+message LinkAccountsAndAddKey {
+    LinkAccounts link_accounts = 1;
+    AddKey add_key = 2;
 }
 
 // A custom message with the specified payload

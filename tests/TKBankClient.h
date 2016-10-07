@@ -17,8 +17,8 @@
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port;
 
-- (NSData *)startAccountsLinkingForAlias:(NSString *)alias
-                          accountNumbers:(NSArray<NSString *> *)accountNumbers
-                                metadata:(FankMetadata *)metadata;
+- (NSString *)authorizeAccountLinkingFor:(NSString *)alias
+                    accountNumbers:(NSArray<NSString *> *)accountNumbers
+                          metadata:(FankMetadata *)metadata;
 
 @end

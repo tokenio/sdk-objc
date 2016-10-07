@@ -1,11 +1,10 @@
 @class Member;
 @class NSError;
-@class TKMember;
 @class Account;
 @class Money;
 @class TKAccount;
-@class Token;
 @class Payment;
+@class PaymentToken;
 @class Transaction;
 @class TKMemberAsync;
 @class TKAccountAsync;
@@ -20,8 +19,8 @@ typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync *);
 typedef void (^OnSuccessWithAccounts)(NSArray<Account *> *);
 typedef void (^OnSuccessWithTKAccountsAsync)(NSArray<TKAccountAsync *> *);
 
-typedef void (^OnSuccessWithToken)(Token *);
-typedef void (^OnSuccessWithTokens)(NSArray<Token *> *);
+typedef void (^OnSuccessWithPaymentToken)(PaymentToken *);
+typedef void (^OnSuccessWithPaymentTokens)(NSArray<PaymentToken *> *);
 
 typedef void (^OnSuccessWithPayment)(Payment *);
 typedef void (^OnSuccessWithPayments)(NSArray<Payment *> *);

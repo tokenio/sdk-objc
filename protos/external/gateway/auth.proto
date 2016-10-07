@@ -8,6 +8,6 @@ message HttpAuthPayload {
   string method = 1;
   string uri_host = 2;
   string uri_path = 3;
-  repeated string uri_param = 4;
+  string query_string = 4;
   string request_body = 5;
 }
