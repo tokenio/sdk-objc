@@ -159,12 +159,12 @@ typedef struct CreateMemberResponse__storage_ {
 @implementation UpdateMemberRequest
 
 @dynamic hasUpdate, update;
-@dynamic hasSignature, signature;
+@dynamic hasUpdateSignature, updateSignature;
 
 typedef struct UpdateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
   MemberUpdate *update;
-  Signature *signature;
+  Signature *updateSignature;
 } UpdateMemberRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -183,11 +183,11 @@ typedef struct UpdateMemberRequest__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "signature",
+        .name = "updateSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = UpdateMemberRequest_FieldNumber_Signature,
+        .number = UpdateMemberRequest_FieldNumber_UpdateSignature,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateMemberRequest__storage_, signature),
+        .offset = (uint32_t)offsetof(UpdateMemberRequest__storage_, updateSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -330,13 +330,13 @@ typedef struct GetMemberResponse__storage_ {
 
 @dynamic name;
 @dynamic data_p;
-@dynamic hasSignature, signature;
+@dynamic hasDataSignature, dataSignature;
 
 typedef struct AddAddressRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *name;
   NSString *data_p;
-  Signature *signature;
+  Signature *dataSignature;
 } AddAddressRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -364,11 +364,11 @@ typedef struct AddAddressRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "signature",
+        .name = "dataSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = AddAddressRequest_FieldNumber_Signature,
+        .number = AddAddressRequest_FieldNumber_DataSignature,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, signature),
+        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, dataSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2759,12 +2759,12 @@ typedef struct CancelAccessTokenResponse__storage_ {
 @implementation RedeemPaymentTokenRequest
 
 @dynamic hasPayload, payload;
-@dynamic hasSignature, signature;
+@dynamic hasPayloadSignature, payloadSignature;
 
 typedef struct RedeemPaymentTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   PaymentPayload *payload;
-  Signature *signature;
+  Signature *payloadSignature;
 } RedeemPaymentTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2783,11 +2783,11 @@ typedef struct RedeemPaymentTokenRequest__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "signature",
+        .name = "payloadSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = RedeemPaymentTokenRequest_FieldNumber_Signature,
+        .number = RedeemPaymentTokenRequest_FieldNumber_PayloadSignature,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RedeemPaymentTokenRequest__storage_, signature),
+        .offset = (uint32_t)offsetof(RedeemPaymentTokenRequest__storage_, payloadSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

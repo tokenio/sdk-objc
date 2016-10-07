@@ -235,13 +235,13 @@ typedef struct TokenMember__storage_ {
 
 @dynamic id_p;
 @dynamic hasPayload, payload;
-@dynamic signaturesArray, signaturesArray_Count;
+@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 
 typedef struct PaymentToken__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   PaymentToken_Payload *payload;
-  NSMutableArray *signaturesArray;
+  NSMutableArray *payloadSignaturesArray;
 } PaymentToken__storage_;
 
 // This method is threadsafe because it is initially called
@@ -269,11 +269,11 @@ typedef struct PaymentToken__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "signaturesArray",
+        .name = "payloadSignaturesArray",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenSignature),
-        .number = PaymentToken_FieldNumber_SignaturesArray,
+        .number = PaymentToken_FieldNumber_PayloadSignaturesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(PaymentToken__storage_, signaturesArray),
+        .offset = (uint32_t)offsetof(PaymentToken__storage_, payloadSignaturesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -692,13 +692,13 @@ typedef struct TimePeriod__storage_ {
 
 @dynamic id_p;
 @dynamic hasPayload, payload;
-@dynamic signaturesArray, signaturesArray_Count;
+@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 
 typedef struct AccessToken__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   AccessToken_Payload *payload;
-  NSMutableArray *signaturesArray;
+  NSMutableArray *payloadSignaturesArray;
 } AccessToken__storage_;
 
 // This method is threadsafe because it is initially called
@@ -726,11 +726,11 @@ typedef struct AccessToken__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "signaturesArray",
+        .name = "payloadSignaturesArray",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenSignature),
-        .number = AccessToken_FieldNumber_SignaturesArray,
+        .number = AccessToken_FieldNumber_PayloadSignaturesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccessToken__storage_, signaturesArray),
+        .offset = (uint32_t)offsetof(AccessToken__storage_, payloadSignaturesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
