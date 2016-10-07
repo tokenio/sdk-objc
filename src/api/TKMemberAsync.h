@@ -120,6 +120,15 @@
             onError:(OnError)onError;
 
 /**
+ * Looks up a funding bank account linked to Token.
+ *
+ * @param accountId account id
+ */
+- (void)getAccount:(NSString *)accountId
+         onSuccess:(OnSuccessWithTKAccountAsync)onSuccess
+           onError:(OnError)onError;
+
+/**
  * Looks up an existing token payment.
  *
  * @param paymentId ID of the payment record

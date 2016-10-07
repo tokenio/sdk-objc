@@ -152,6 +152,28 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
+- (void)getAccount:(NSString *)accountId
+          onSuccess:(OnSuccessWithAccount)onSuccess
+           onError:(OnError)onError {
+    GetAccountRequest *request = [GetAccountRequest message];
+    request.accountId = accountId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetAccountWithRequest:request
+                           handler:^(GetAccountResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.account);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+
+    [self _startCall:call withRequest:request];
+}
+
 - (void)createPaymentToken:(PaymentToken_Payload *)payload
                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
                    onError:(OnError)onError {

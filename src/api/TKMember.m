@@ -107,6 +107,19 @@
     }];
 }
 
+- (TKAccount *)getAccount:(NSString *)accountId {
+    TKRpcSyncCall<TKAccount *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async
+                 getAccount:accountId
+                  onSuccess:
+                         ^(TKAccountAsync *account) {
+                             call.onSuccess(account.sync);
+                         }
+                   onError:call.onError];
+    }];
+}
+
 - (Payment *)getPayment:(NSString *)paymentId {
     TKRpcSyncCall<Payment *> *call = [TKRpcSyncCall create];
     return [call run:^{

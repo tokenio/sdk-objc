@@ -160,6 +160,16 @@
                    onError:onError];
 }
 
+- (void)getAccount:(NSString *)accountId
+                onSuccess:(OnSuccessWithTKAccountAsync)onSuccess
+                  onError:(OnError)onError {
+    [client getAccount:accountId
+                    onSuccess:^(Account * account) {
+                        onSuccess([self _mapAccount:account]);
+                    }
+               onError:onError];
+}
+
 - (void)getPayment:(NSString *)paymentId
             onSuccess:(OnSuccessWithPayment)onSuccess
               onError:(OnError)onError {
@@ -344,6 +354,10 @@
         [result addObject:tkAccount];
     }
     return result;
+}
+
+- (TKAccountAsync *)_mapAccount:(Account *)account {
+    return [TKAccountAsync account:account of:self.sync useClient:client];
 }
 
 @end
