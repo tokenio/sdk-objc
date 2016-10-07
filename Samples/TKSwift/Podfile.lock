@@ -22,14 +22,14 @@ PODS:
   - gRPC-RxLibrary (1.0.0)
   - OrderedDictionary (1.4)
   - Protobuf (3.0.2)
-  - TokenSdk (0.0.3):
-    - TokenSdk/Implementation (= 0.0.3)
-    - TokenSdk/Messages (= 0.0.3)
-  - TokenSdk/Implementation (0.0.3):
+  - TokenSdk (0.0.2):
+    - TokenSdk/Implementation (= 0.0.2)
+    - TokenSdk/Messages (= 0.0.2)
+  - TokenSdk/Implementation (0.0.2):
     - gRPC-ProtoRPC
     - OrderedDictionary
     - TokenSdk/Messages
-  - TokenSdk/Messages (0.0.3):
+  - TokenSdk/Messages (0.0.2):
     - Protobuf
 
 DEPENDENCIES:
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: 3a8c5543115fb2183ed5624678e7ecbac5e9e4ad
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
-  TokenSdk: 1765c953382ce1fc6981b13362acc0f740ca590c
+  TokenSdk: a1964ff00bda6c04bb1a77cc011fb306bba2d7e4
 
 PODFILE CHECKSUM: 9688a4cbd3b4deb51ebf9b3d1bd95a5556a89aad
 
