@@ -218,7 +218,7 @@
     return result;
 }
 
-//MARK: Deserialization
+#pragma mark- Deserialization
 
 /**
  * Deserializes GPBMessage object fomm Dictionary created from JSON.

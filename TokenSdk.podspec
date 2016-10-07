@@ -23,8 +23,8 @@ Pod::Spec.new do |s|
     # Where the gRPC and proto generated files were placed
     gendir = "src/generated"
 
-       # Non arc protoc *.m files and all generated headers
-       # These headers need the directory structure preserved
+    # Non arc protoc *.m files and all generated headers
+    # These headers need the directory structure preserved
     s.subspec "Messages" do |ss|
         ss.public_header_files = gendir
         ss.header_mappings_dir = gendir
@@ -54,6 +54,6 @@ Pod::Spec.new do |s|
        # This is needed by all pods that depend on gRPC-RxLibrary:
        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
        # Needed to find our generated headers that are quoted
-        'USER_HEADER_SEARCH_PATHS' => "'#{currentdir}/#{gendir}'"
+       'USER_HEADER_SEARCH_PATHS' => "'#{currentdir}/#{gendir}'"
     }
 end
