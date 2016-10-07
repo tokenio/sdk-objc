@@ -97,7 +97,7 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
 
-    token.vars = [@{var1: @"one", var2: @"two"} mutableCopy];
+    token.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
 
     NSString *json = [TKJson serialize:token];
     XCTAssertEqualObjects(json, @"{\"amount\":\"123.45\",\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");

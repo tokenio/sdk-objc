@@ -40,6 +40,10 @@
     return [TKUtil base64EncodeData:serializedData];
 }
 
++ (id)deserializeJSON:(NSString*)jsonString toMessageOfClass:(Class)aClass {
+    return [NSObject new];
+}
+
 #pragma mark private
 
 /**
@@ -94,14 +98,11 @@
  * @return
  */
 + (NSObject *)_serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
-    NSDictionary<NSObject*, NSString*> *valuesToKeys = GPBGetMessageMapField(message, field);
-    NSMutableDictionary<NSString*, NSObject*> *keysToValues = [NSMutableDictionary dictionary];
-    for (id value in valuesToKeys) {
-        NSString *key = valuesToKeys[value];
-        NSObject *serialized = [self _serializeValue:value];
-        [keysToValues setObject:serialized forKey:key];
-    }
-    return [self sort:keysToValues];
+    NSMutableDictionary<NSString*, NSObject*> *keysToValues = GPBGetMessageMapField(message, field);     NSMutableDictionary<NSString*, NSObject*> *serializedKeysToValues = [NSMutableDictionary dictionary];
+    [keysToValues enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSObject * _Nonnull obj, BOOL * _Nonnull stop) {
+        [serializedKeysToValues setValue:[self _serializeValue:obj] forKey:key];
+    }];
+    return [self sort:serializedKeysToValues];
 }
 
 /**
