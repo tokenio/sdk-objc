@@ -59,11 +59,11 @@
     request.update.addKey.level = 0;
     request.update.addKey.tagsArray = [@[@"one", @"two"] mutableCopy];
     request.update.addKey.publicKey = @"public-key";
-    request.signature.keyId = @"key-id";
-    request.signature.signature = @"signature";
+    request.updateSignature.keyId = @"key-id";
+    request.updateSignature.signature = @"signature";
 
     NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"},\"update\":{\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]},\"memberId\":\"m123\"}}");
+    XCTAssertEqualObjects(json, @"{\"update\":{\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]},\"memberId\":\"m123\"},\"updateSignature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
 
 /**
@@ -77,10 +77,10 @@
     s2.action = TokenSignature_Action_Cancelled;
 
     PaymentToken *token = [PaymentToken message];
-    token.signaturesArray = [@[s1, s2] mutableCopy];
+    token.payloadSignaturesArray = [@[s1, s2] mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"CANCELLED\"}]}");
+    XCTAssertEqualObjects(json, @"{\"payloadSignatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"CANCELLED\"}]}");
 }
 
 /**

@@ -43,7 +43,7 @@
         XCTAssertEqualObjects(@"100.99", token.payload.amount);
         XCTAssertEqualObjects(@"USD", token.payload.currency);
         XCTAssertEqualObjects(payee.firstAlias, token.payload.redeemer.alias);
-        XCTAssertEqual(0, token.signaturesArray_Count);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
 }
 
@@ -75,12 +75,12 @@
                                                          currency:@"USD"];
         PaymentToken *endorsed = [payer endorsePaymentToken:token];
 
-        XCTAssertEqual(0, token.signaturesArray_Count);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
 
         XCTAssertEqualObjects(@"100.11", endorsed.payload.amount);
         XCTAssertEqualObjects(@"USD", endorsed.payload.currency);
-        XCTAssertEqual(2, endorsed.signaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.signaturesArray[0].action);
+        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
     }];
 }
 
@@ -91,12 +91,12 @@
                                                          currency:@"USD"];
         PaymentToken *cancelled = [payer cancelPaymentToken:token];
 
-        XCTAssertEqual(0, token.signaturesArray_Count);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
 
         XCTAssertEqualObjects(@"100.11", cancelled.payload.amount);
         XCTAssertEqualObjects(@"USD", cancelled.payload.currency);
-        XCTAssertEqual(2, cancelled.signaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.signaturesArray[0].action);
+        XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
     }];
 }
 

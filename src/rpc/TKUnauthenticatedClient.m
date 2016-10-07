@@ -51,8 +51,8 @@
     request.update.memberId = memberId;
     request.update.addKey.level = 0;
     request.update.addKey.publicKey = key.publicKeyStr;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:request.update usingKey:key];
+    request.updateSignature.keyId = key.id;
+    request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);
 
     [gateway updateMemberWithRequest:request handler:^(UpdateMemberResponse *response, NSError *error) {

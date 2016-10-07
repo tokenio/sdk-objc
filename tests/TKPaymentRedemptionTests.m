@@ -46,7 +46,7 @@
 
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
-        XCTAssertEqual(2, payment.signatureArray_Count);
+        XCTAssertEqual(2, payment.payloadSignatureArray_Count);
     }];
 }
 
@@ -63,7 +63,7 @@
 
         XCTAssertEqualObjects(@"99.12", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
-        XCTAssertEqual(2, payment.signatureArray_Count);
+        XCTAssertEqual(2, payment.payloadSignatureArray_Count);
     }];
 }
 
