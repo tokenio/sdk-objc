@@ -46,8 +46,8 @@ message Member {
 
 // A member address record
 message Address {
-  string id = 1;        // Address id
-  string name = 2;      // The display name of the address
-  string data = 3;      // Country specific JSON address
-  io.token.proto.common.security.Signature signature = 4; // member signature of the data
+  string id = 1; // Address id
+  string name = 2; // The display name of the address
+  string data = 3; // Country specific JSON address
+  io.token.proto.common.security.Signature data_signature = 4; // member signature of the data
 }

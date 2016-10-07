@@ -279,8 +279,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
             onError:(OnError)onError {
     RedeemPaymentTokenRequest *request = [RedeemPaymentTokenRequest message];
     request.payload = payload;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:payload usingKey:key];
+    request.payloadSignature.keyId = key.id;
+    request.payloadSignature.signature = [TKCrypto sign:payload usingKey:key];
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -431,8 +431,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.data_p = data;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto signPayload:data usingKey:key];
+    request.dataSignature.keyId = key.id;
+    request.dataSignature.signature = [TKCrypto signPayload:data usingKey:key];
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -525,8 +525,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
               onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:request.update usingKey:key];
+    request.updateSignature.keyId = key.id;
+    request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

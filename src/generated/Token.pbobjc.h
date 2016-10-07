@@ -125,7 +125,7 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 typedef GPB_ENUM(PaymentToken_FieldNumber) {
   PaymentToken_FieldNumber_Id_p = 1,
   PaymentToken_FieldNumber_Payload = 2,
-  PaymentToken_FieldNumber_SignaturesArray = 3,
+  PaymentToken_FieldNumber_PayloadSignaturesArray = 3,
 };
 
 @interface PaymentToken : GPBMessage
@@ -133,15 +133,15 @@ typedef GPB_ENUM(PaymentToken_FieldNumber) {
 /// Computed as sha(token).
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/// PaymentTokenPayload
+/// PaymentToken.Payload.
 @property(nonatomic, readwrite, strong, null_resettable) PaymentToken_Payload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
-/// Payload signature
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *signaturesArray;
-/// The number of items in @c signaturesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger signaturesArray_Count;
+/// Payload signatures.
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
+/// The number of items in @c payloadSignaturesArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
 @end
 
@@ -300,7 +300,7 @@ typedef GPB_ENUM(TimePeriod_FieldNumber) {
 typedef GPB_ENUM(AccessToken_FieldNumber) {
   AccessToken_FieldNumber_Id_p = 1,
   AccessToken_FieldNumber_Payload = 2,
-  AccessToken_FieldNumber_SignaturesArray = 3,
+  AccessToken_FieldNumber_PayloadSignaturesArray = 3,
 };
 
 @interface AccessToken : GPBMessage
@@ -308,15 +308,15 @@ typedef GPB_ENUM(AccessToken_FieldNumber) {
 /// Computed as sha(token).
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/// PaymentTokenPayload
+/// PaymentToken.Payload.
 @property(nonatomic, readwrite, strong, null_resettable) AccessToken_Payload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
-/// Payload signature
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *signaturesArray;
-/// The number of items in @c signaturesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger signaturesArray_Count;
+/// Payload signature.
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
+/// The number of items in @c payloadSignaturesArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
 @end
 

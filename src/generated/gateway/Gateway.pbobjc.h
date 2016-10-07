@@ -82,7 +82,7 @@ typedef GPB_ENUM(CreateMemberResponse_FieldNumber) {
 
 typedef GPB_ENUM(UpdateMemberRequest_FieldNumber) {
   UpdateMemberRequest_FieldNumber_Update = 1,
-  UpdateMemberRequest_FieldNumber_Signature = 2,
+  UpdateMemberRequest_FieldNumber_UpdateSignature = 2,
 };
 
 @interface UpdateMemberRequest : GPBMessage
@@ -91,9 +91,9 @@ typedef GPB_ENUM(UpdateMemberRequest_FieldNumber) {
 /// Test to see if @c update has been set.
 @property(nonatomic, readwrite) BOOL hasUpdate;
 
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
+@property(nonatomic, readwrite, strong, null_resettable) Signature *updateSignature;
+/// Test to see if @c updateSignature has been set.
+@property(nonatomic, readwrite) BOOL hasUpdateSignature;
 
 @end
 
@@ -136,7 +136,7 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
   AddAddressRequest_FieldNumber_Name = 1,
   AddAddressRequest_FieldNumber_Data_p = 2,
-  AddAddressRequest_FieldNumber_Signature = 3,
+  AddAddressRequest_FieldNumber_DataSignature = 3,
 };
 
 @interface AddAddressRequest : GPBMessage
@@ -145,9 +145,9 @@ typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *data_p;
 
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
+@property(nonatomic, readwrite, strong, null_resettable) Signature *dataSignature;
+/// Test to see if @c dataSignature has been set.
+@property(nonatomic, readwrite) BOOL hasDataSignature;
 
 @end
 
@@ -872,7 +872,7 @@ typedef GPB_ENUM(CancelAccessTokenResponse_FieldNumber) {
 
 typedef GPB_ENUM(RedeemPaymentTokenRequest_FieldNumber) {
   RedeemPaymentTokenRequest_FieldNumber_Payload = 1,
-  RedeemPaymentTokenRequest_FieldNumber_Signature = 2,
+  RedeemPaymentTokenRequest_FieldNumber_PayloadSignature = 2,
 };
 
 @interface RedeemPaymentTokenRequest : GPBMessage
@@ -881,9 +881,9 @@ typedef GPB_ENUM(RedeemPaymentTokenRequest_FieldNumber) {
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
+@property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
+/// Test to see if @c payloadSignature has been set.
+@property(nonatomic, readwrite) BOOL hasPayloadSignature;
 
 @end
 
