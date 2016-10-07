@@ -59,4 +59,17 @@
     }];
 }
 
+- (void)testLookupAccount {
+    [self testLinkAccounts];
+
+    [self run: ^(TokenIO *tokenIO) {
+        NSArray<TKAccount *> *accounts = [member getAccounts];
+        XCTAssert(accounts.count == 1);
+        XCTAssertEqualObjects(@"Checking", accounts[0].name);
+        
+        TKAccount *account = [member getAccount:accounts[0].id];
+        XCTAssertEqualObjects(@"Checking", account.name);
+    }];
+}
+
 @end

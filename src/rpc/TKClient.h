@@ -109,6 +109,13 @@
                onError:(OnError)onError;
 
 /**
+ * Looks up a linked member account.
+ */
+- (void)getAccount:(NSString *)accountId
+          onSuccess:(OnSuccessWithAccount)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Creates a new payment token.
  *
  * @param payload payment token payload
