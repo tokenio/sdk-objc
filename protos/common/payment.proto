@@ -13,7 +13,7 @@ message Payment {
   string id = 1;                               // Computed as the hash of the payment payload.
   string reference_id = 2;                     // Bank transaction reference id.
   PaymentPayload payload = 3;
-  repeated io.token.proto.common.security.Signature payload_signature = 4;
+  repeated io.token.proto.common.security.Signature payload_signatures = 4;
 }
 
 message PaymentPayload {
