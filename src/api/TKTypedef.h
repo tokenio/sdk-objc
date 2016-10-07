@@ -19,6 +19,9 @@ typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync *);
 typedef void (^OnSuccessWithAccounts)(NSArray<Account *> *);
 typedef void (^OnSuccessWithTKAccountsAsync)(NSArray<TKAccountAsync *> *);
 
+typedef void (^OnSuccessWithAccount)(Account *);
+typedef void (^OnSuccessWithTKAccountAsync)(TKAccountAsync *);
+
 typedef void (^OnSuccessWithPaymentToken)(PaymentToken *);
 typedef void (^OnSuccessWithPaymentTokens)(NSArray<PaymentToken *> *);
 

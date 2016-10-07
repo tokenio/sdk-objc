@@ -86,6 +86,14 @@
 - (NSArray<TKAccount *> *)getAccounts;
 
 /**
+ * Looks up a funding bank account linked to Token.
+ *
+ * @param accountId account id
+ * @return list of accounts
+ */
+- (TKAccount *)getAccount:(NSString *)accountId;
+
+/**
  * Looks up an existing token payment.
  *
  * @param paymentId ID of the payment record
