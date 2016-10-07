@@ -32,4 +32,22 @@
  */
 + (NSString *)serializeBase64:(GPBMessage *)message;
 
+/**
+ * Deserializes proto message from JSON string.
+ *
+ * @param aClass proto message class
+ * @param jsonString json string to parse/deserialize
+ * @return initialized instance of proto message
+ */
++ (id)deserializeMessageOfClass:(Class)aClass fromJSON:(NSString*)jsonString;
+
+/**
+ * Deserializes proto message from Dictionary.
+ *
+ * @param aClass proto message class
+ * @param dictionary disctionary to deserialize from
+ * @return initialized instance of proto message
+ */
++ (id)deserializeMessageOfClass:(Class)aClass fromDictionary:(NSDictionary*)dictionary;
+
 @end

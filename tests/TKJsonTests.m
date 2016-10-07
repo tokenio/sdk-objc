@@ -97,7 +97,7 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
 
-    token.vars = [@{var1: @"one", var2: @"two"} mutableCopy];
+    token.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
 
     NSString *json = [TKJson serialize:token];
     XCTAssertEqualObjects(json, @"{\"amount\":\"123.45\",\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");
@@ -115,5 +115,84 @@
     NSString *json = [TKJson serialize:signature];
     XCTAssertEqualObjects(json, @"{\"action\":\"ENDORSED\",\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
+
+/**
+ * Deserialize Simple message.
+ */
+- (void)testDeserializeSimple {
+    NSString* json = @"{\"nonce\":\"12345\"}";
+    CreateMemberRequest *request = [TKJson deserializeMessageOfClass:[CreateMemberRequest class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:request];
+    XCTAssertEqualObjects(json,serializedJson);
+}
+
+/**
+ * Deserialize Empty message.
+ */
+- (void)testDeserializeEmpty {
+    NSString* json = @"{}";
+    GetMemberRequest *request = [TKJson deserializeMessageOfClass:[GetMemberRequest class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:request];
+    XCTAssertEqualObjects(json, serializedJson);
+}
+
+/**
+ * Slashes mess up standard serializer. There is a hack in the code to fix it.
+ */
+- (void)testDeserializeSlashes {
+    NSString* json = @"{\"nonce\":\"123/45\"}";
+    CreateMemberRequest *request = [TKJson deserializeMessageOfClass:[CreateMemberRequest class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:request];
+    XCTAssertEqualObjects(json,serializedJson);
+}
+
+/**
+ * Deserialize Repeated fields.
+ */
+- (void)testDeserialzeRepeated {
+    NSString* json = @"{\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"},\"update\":{\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]},\"memberId\":\"m123\"}}";
+    UpdateMemberRequest *request = [TKJson deserializeMessageOfClass:[UpdateMemberRequest class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:request];
+    XCTAssertEqualObjects(json, serializedJson);
+}
+
+/**
+ * Deserialise Repeated fields, proto message.
+ */
+- (void)testDeserializeRepeated_Message {
+    NSString* json = @"{\"signatures\":[{\"action\":\"ENDORSED\"},{\"action\":\"CANCELLED\"}]}";
+    PaymentToken *token = [TKJson deserializeMessageOfClass:[PaymentToken class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:token];
+    XCTAssertEqualObjects(json, serializedJson);
+}
+
+/**
+ * Deserialize Map fields, each field is proto message.
+ */
+- (void)testDeserializeMap_Message {
+    NSString* json = @"{\"amount\":\"123.45\",\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}";
+    PaymentToken_Payload *token = [TKJson deserializeMessageOfClass:[PaymentToken_Payload class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:token];
+    XCTAssertEqualObjects(json, serializedJson);
+}
+
+/**
+ * Deserialize Enum fields.
+ */
+- (void)testDeserializeEnum {
+    NSString* json = @"{\"action\":\"ENDORSED\",\"signature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}";
+    TokenSignature *signature = [TKJson deserializeMessageOfClass:[TokenSignature class] fromJSON:json];
+    
+    NSString *serializedJson = [TKJson serialize:signature];
+    XCTAssertEqualObjects(json, serializedJson);
+}
+
+
 
 @end
