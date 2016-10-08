@@ -45,10 +45,12 @@
     return self.async.key;
 }
 
-- (void)approveKey:(TKSecretKey *)key {
+- (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level{
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async approveKey:key
+                         level:level
                       onSucess:^{ call.onSuccess(nil); }
                        onError:call.onError];
     }];

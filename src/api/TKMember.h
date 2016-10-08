@@ -7,7 +7,7 @@
 
 #import "TKTypedef.h"
 #import "Device.pbobjc.h"
-
+#import "Security.pbobjc.h"
 
 
 @class TKSecretKey;
@@ -47,7 +47,8 @@
  *
  * @param key to add to the approved list
  */
-- (void)approveKey:(TKSecretKey *)key;
+- (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level;
 
 /**
  * Removes a key owned by this member.

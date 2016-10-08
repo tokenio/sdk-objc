@@ -7,7 +7,7 @@
 
 #import "TKTypedef.h"
 #import "Device.pbobjc.h"
-
+#import "Security.pbobjc.h"
 
 
 @class TKSecretKey;
@@ -51,6 +51,7 @@
  * @param onError callback invoked on error
  */
 - (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level
           onSucess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 
@@ -63,6 +64,7 @@
  * @param onError callback invoked on error
  */
 - (void)approvePublicKey:(NSString *)publicKey
+                   level:(Key_Level)level
                 onSucess:(OnSuccess)onSuccess
                  onError:(OnError)onError;
 
