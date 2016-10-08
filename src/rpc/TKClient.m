@@ -108,6 +108,55 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
+- (void)subscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+               platform:(Platform)platform
+                   tags:(NSMutableArray<NSString*> *)tags
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    SubscribeDeviceRequest *request = [SubscribeDeviceRequest message];
+    request.provider = provider;
+    request.notificationUri = notificationUri;
+    request.platform = platform;
+    request.tagsArray = tags;
+    GRPCProtoCall *call = [gateway
+                           RPCToSubscribeDeviceWithRequest:request
+                           handler:^(SubscribeDeviceResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)unsubscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    UnsubscribeDeviceRequest *request = [UnsubscribeDeviceRequest message];
+    request.provider = provider;
+    request.notificationUri = notificationUri;
+    GRPCProtoCall *call = [gateway
+                           RPCToUnsubscribeDeviceWithRequest:request
+                           handler:^(UnsubscribeDeviceResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+
 - (void)linkAccounts:(NSString *)bankId
              payload:(NSString *)accountLinkPayload
            onSuccess:(OnSuccessWithAccounts)onSuccess

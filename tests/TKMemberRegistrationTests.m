@@ -9,6 +9,8 @@
 #import "TKTestBase.h"
 #import "TKUtil.h"
 #import "TokenIO.h"
+#import "Security.pbobjc.h"
+
 
 
 @interface TKMemberRegistrationTests : TKTestBase
@@ -41,8 +43,8 @@
         TKSecretKey *key3 = [TKCrypto generateKey];
 
         TKMember *member = [self createMember:tokenIO];
-        [member approveKey:key2];
-        [member approveKey:key3];
+        [member approveKey:key2 level:Key_Level_Standard];
+        [member approveKey:key3 level:Key_Level_Low];
 
         XCTAssertEqual(member.publicKeys.count, 3);
     }];
@@ -53,7 +55,7 @@
         TKSecretKey *key2 = [TKCrypto generateKey];
 
         TKMember *member = [self createMember:tokenIO];
-        [member approveKey:key2];
+        [member approveKey:key2 level:Key_Level_Privileged];
         XCTAssertEqual(member.publicKeys.count, 2);
 
         [member removeKey:key2.id];

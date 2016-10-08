@@ -6,6 +6,8 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
+#import "Device.pbobjc.h"
+#import "Security.pbobjc.h"
 
 
 @class TKSecretKey;
@@ -45,7 +47,8 @@
  *
  * @param key to add to the approved list
  */
-- (void)approveKey:(TKSecretKey *)key;
+- (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level;
 
 /**
  * Removes a key owned by this member.
@@ -67,6 +70,30 @@
  * @param alias alias, e.g. 'john'
  */
 - (void)removeAlias:(NSString *)alias;
+
+/**
+ * Subscribes a device to receive push notifications
+ *
+ * @param provider push notification provider (default @"Token")
+ * @param notificationUri to send push to (push token)
+ * @param platform target platform for notification (e.g. Platform_Ios)
+ * @param tags optional tags to identify the device
+ */
+- (void)subscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+               platform:(Platform)platform
+                   tags:(NSMutableArray<NSString*> *)tags;
+
+/**
+ * Unsubscribes a device from push notifications
+ *
+ * @param provider push notification provider (default @"Token")
+ * @param notificationUri to send push to (push token)
+ */
+- (void)unsubscribeDevice:(NSString *)provider
+          notificationUri:(NSString *)notificationUri;
+
+
 
 /**
  * Links a funding bank account to Token and returns it to the caller.

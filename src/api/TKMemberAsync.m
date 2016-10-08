@@ -70,21 +70,24 @@
 }
 
 - (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level
           onSucess:(OnSuccess)onSuccess
            onError:(OnError)onError {
     [self approvePublicKey:key.publicKeyStr
+                     level:level
                   onSucess:onSuccess
                    onError:onError];
 }
 
 - (void)approvePublicKey:(NSString *)publicKey
+                   level:(Key_Level)level
                 onSucess:(OnSuccess)onSuccess
                  onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
     
     [client addKey:publicKey
                 to:member
-             level:0
+             level:level
          onSuccess:
                  ^(Member *m) {
                      [retainedMember clear];
@@ -137,6 +140,31 @@
                       }
                 onError:onError];
 }
+
+- (void)subscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+               platform:(Platform)platform
+                   tags:(NSMutableArray<NSString*> *)tags
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    [client subscribeDevice:provider
+            notificationUri:notificationUri
+                   platform:platform
+                       tags:tags
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)unsubscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    [client unsubscribeDevice:provider
+            notificationUri:notificationUri
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
 
 - (void)linkAccounts:(NSString *)bankId
          withPayload:(NSString *)payload

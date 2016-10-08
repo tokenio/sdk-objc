@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */; };
 		37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B211D989A930043345F /* Account.pbobjc.h */; };
 		37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B221D989A930043345F /* Account.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B521D989A930043345F /* Fank.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B281D989A930043345F /* Fank.pbobjc.h */; };
@@ -128,6 +129,7 @@
 /* Begin PBXFileReference section */
 		0867CB9D057EBAA4E9BE6791 /* libPods-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17987F26F8CA75E8D7FFFCFA /* Pods-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.release.xcconfig"; sourceTree = "<group>"; };
+		1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKNotificationsTests.m; sourceTree = "<group>"; };
 		27932CCA173CAF159694397E /* libPods-TokenSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C88C1E343E1E5719F3A91FD /* Pods-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.debug.xcconfig"; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */,
 				ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */,
 				ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */,
+				1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 			files = (
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
+				1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */,
 				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
 				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
