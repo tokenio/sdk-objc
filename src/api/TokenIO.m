@@ -49,4 +49,53 @@
     }];
 }
 
+- (void)notifyLinkAccounts:(NSString * )alias
+                    bankId:(NSString *)bankId
+       accountsLinkPayload:(NSString *) accountsLinkPayload {
+    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async notifyLinkAccounts:alias
+                                bankId:bankId
+                   accountsLinkPayload:accountsLinkPayload
+                             onSuccess:^(void) {call.onSuccess(nil);}
+                               onError:call.onError
+         ];
+    }];
+}
+
+- (void)notifyAddKey:(NSString * )alias
+           publicKey:(NSString *)publicKey
+                tags:(NSMutableArray<NSString*> *)tags {
+    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async notifyAddKey:alias
+                       publicKey:publicKey
+                            tags:tags
+                             onSuccess:^(void) {call.onSuccess(nil);}
+                               onError:call.onError
+         ];
+    }];
+}
+
+- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+                             bankId:(NSString *)bankId
+                accountsLinkPayload:(NSString *) accountsLinkPayload
+                          publicKey:(NSString *)publicKey
+                               tags:(NSMutableArray<NSString*> *)tags {
+    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async notifyLinkAccountsAndAddKey:alias
+                          bankId:bankId
+             accountsLinkPayload:accountsLinkPayload
+                       publicKey:publicKey
+                            tags:tags
+                       onSuccess:^(void) {call.onSuccess(nil);}
+                         onError:call.onError
+         ];
+    }];
+}
+
+
+
+
 @end

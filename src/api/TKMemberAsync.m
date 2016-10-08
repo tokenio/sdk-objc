@@ -138,6 +138,31 @@
                 onError:onError];
 }
 
+- (void)subscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+               platform:(Platform)platform
+                   tags:(NSMutableArray<NSString*> *)tags
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    [client subscribeDevice:provider
+            notificationUri:notificationUri
+                   platform:platform
+                       tags:tags
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)unsubscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    [client unsubscribeDevice:provider
+            notificationUri:notificationUri
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+
 - (void)linkAccounts:(NSString *)bankId
          withPayload:(NSString *)payload
             onSucess:(OnSuccessWithTKAccountsAsync)onSuccess

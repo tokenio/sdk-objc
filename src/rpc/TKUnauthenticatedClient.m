@@ -43,6 +43,7 @@
     }];
 }
 
+
 - (void)addFirstKey:(TKSecretKey *)key
           forMember:(NSString *)memberId
           onSuccess:(void(^)(Member*))onSuccess
@@ -55,7 +56,8 @@
     request.signature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);
 
-    [gateway updateMemberWithRequest:request handler:^(UpdateMemberResponse *response, NSError *error) {
+    [gateway updateMemberWithRequest:request
+                             handler:^(UpdateMemberResponse *response, NSError *error) {
         if (response) {
             RpcLogCompleted(response);
             onSuccess(response.member);
@@ -64,6 +66,79 @@
             onError(error);
         }
     }];
+}
+
+- (void)notifyLinkAccounts:(NSString *)alias
+                    bankId:(NSString *)bankId
+       accountsLinkPayload:(NSString *)accountsLinkPayload
+                 onSuccess:(void (^)())onSuccess
+                   onError:(void (^)(NSError *))onError {
+    NotifyLinkAccountsRequest *request = [NotifyLinkAccountsRequest message];
+    request.alias = alias;
+    request.bankId = bankId;
+    request.accountsLinkPayload = accountsLinkPayload;
+    RpcLogStart(request);
+    
+    [gateway notifyLinkAccountsWithRequest:request
+                                   handler:^(NotifyLinkAccountsResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompleted(response);
+                                           onSuccess();
+                                       } else {
+                                           RpcLogError(error);
+                                           onError(error);
+                                       }
+                                   }];
+}
+
+- (void)notifyAddKey:(NSString * )alias
+           publicKey:(NSString *) publicKey
+                tags:(NSMutableArray<NSString*> *)tags
+           onSuccess:(void(^)())onSuccess
+             onError:(void(^)(NSError *))onError {
+    NotifyAddKeyRequest *request = [NotifyAddKeyRequest message];
+    request.alias = alias;
+    request.publicKey = publicKey;
+    request.tagsArray = tags;
+    RpcLogStart(request);
+    
+    [gateway notifyAddKeyWithRequest:request
+                             handler:^(NotifyAddKeyResponse *response, NSError *error) {
+                                 if (response) {
+                                     RpcLogCompleted(response);
+                                     onSuccess();
+                                 } else {
+                                     RpcLogError(error);
+                                     onError(error);
+                                 }
+                             }];
+}
+
+- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+                             bankId:(NSString *)bankId
+                accountsLinkPayload:(NSString *) accountsLinkPayload
+                          publicKey:(NSString *) publicKey
+                               tags:(NSMutableArray<NSString*> *)tags
+                          onSuccess:(void(^)())onSuccess
+                            onError:(void(^)(NSError *))onError {
+    NotifyLinkAccountsAndAddKeyRequest *request = [NotifyLinkAccountsAndAddKeyRequest message];
+    request.alias = alias;
+    request.bankId = bankId;
+    request.accountsLinkPayload = accountsLinkPayload;
+    request.publicKey = publicKey;
+    request.tagsArray = tags;
+    RpcLogStart(request);
+    
+    [gateway notifyLinkAccountsAndAddKeyWithRequest:request
+                                            handler:^(NotifyLinkAccountsAndAddKeyResponse *response, NSError *error) {
+                                                if (response) {
+                                                    RpcLogCompleted(response);
+                                                    onSuccess();
+                                                } else {
+                                                    RpcLogError(error);
+                                                    onError(error);
+                                                }
+                                            }];
 }
 
 @end

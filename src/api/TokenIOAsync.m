@@ -63,6 +63,7 @@
                    onError:onError];
 }
 
+
 - (void)loginMember:(NSString *)memberId
           secretKey:(TKSecretKey *)key
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
@@ -79,6 +80,52 @@
      }
               onError:onError];
 }
+
+- (void)notifyLinkAccounts:(NSString * )alias
+                    bankId:(NSString *)bankId
+       accountsLinkPayload:(NSString *) accountsLinkPayload
+                 onSuccess:(OnSuccess)onSuccess
+                   onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    [client notifyLinkAccounts:alias
+                        bankId:bankId
+           accountsLinkPayload:accountsLinkPayload
+                     onSuccess:onSuccess
+                       onError:onError];
+}
+
+
+- (void)notifyAddKey:(NSString * )alias
+           publicKey:(NSString *)publicKey
+                tags:(NSMutableArray<NSString*> *) tags
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    [client notifyAddKey:alias
+               publicKey:publicKey
+                    tags:tags
+                     onSuccess:onSuccess
+                       onError:onError];
+}
+
+
+- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+                             bankId:(NSString *)bankId
+                accountsLinkPayload:(NSString *) accountsLinkPayload
+                          publicKey:(NSString *)publicKey
+                               tags:(NSMutableArray<NSString*> *)tags
+                          onSuccess:(OnSuccess)onSuccess
+                            onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    [client notifyLinkAccountsAndAddKey:alias
+                                 bankId:bankId
+                    accountsLinkPayload:accountsLinkPayload
+                              publicKey:publicKey
+                                   tags:tags
+                              onSuccess:onSuccess
+                                onError:onError];
+}
+
 
 #pragma mark private
 

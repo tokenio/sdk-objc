@@ -57,4 +57,44 @@
  */
 - (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey;
 
+/**
+ * Sends a notification to request linking of accounts
+ *
+ * @param alias alias to notify
+ * @param bankId bank id to link
+ * @param accountsLinkPayload payload retrieved from bank
+ */
+- (void)notifyLinkAccounts:(NSString * )alias
+                    bankId:(NSString *)bankId
+       accountsLinkPayload:(NSString *) accountsLinkPayload;
+
+/**
+ * Sends a notification to request adding of a key
+ *
+ * @param alias alias to notify
+ * @param publicKey key in string form
+ * @param tags optional list of tags for the key
+ */
+- (void)notifyAddKey:(NSString * )alias
+           publicKey:(NSString *)publicKey
+                tags:(NSMutableArray<NSString*> *)tags;
+
+/**
+ * Sends a notification to request linking of accounts and adding of a key
+ *
+ * @param alias alias to notify
+ * @param bankId bank id to link
+ * @param accountsLinkPayload payload retrieved from bank
+ * @param publicKey key in string form
+ * @param tags optional list of tags for the key
+ */
+- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+                             bankId:(NSString *)bankId
+                accountsLinkPayload:(NSString *) accountsLinkPayload
+                          publicKey:(NSString *)publicKey
+                               tags:(NSMutableArray<NSString*> *)tags;
+
+
+
+
 @end
