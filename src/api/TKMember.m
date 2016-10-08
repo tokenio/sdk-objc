@@ -45,10 +45,12 @@
     return self.async.key;
 }
 
-- (void)approveKey:(TKSecretKey *)key {
+- (void)approveKey:(TKSecretKey *)key
+             level:(Key_Level)level{
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async approveKey:key
+                         level:level
                       onSucess:^{ call.onSuccess(nil); }
                        onError:call.onError];
     }];
@@ -80,6 +82,35 @@
                         onError:call.onError];
     }];
 }
+
+- (void)subscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri
+               platform:(Platform)platform
+                   tags:(NSMutableArray<NSString*> *)tags {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async subscribeDevice:provider
+                    notificationUri:notificationUri
+                           platform:platform
+                               tags:tags
+                          onSuccess:^{ call.onSuccess(nil); }
+                            onError:call.onError];
+    }];
+}
+
+
+- (void)unsubscribeDevice:(NSString *)provider
+        notificationUri:(NSString *)notificationUri {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async unsubscribeDevice:provider
+                    notificationUri:notificationUri
+                          onSuccess:^{ call.onSuccess(nil); }
+                            onError:call.onError];
+    }];
+}
+
+
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
                           withPayload:(NSString *)payload {
