@@ -36,13 +36,18 @@
 
 - (void)testRedeemToken {
     [self run: ^(TokenIO *tokenIO) {
+        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
+        [tags addObject:@"iphone"];
+        [payer subscribeDevice:@"Token"
+               notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"
+                      platform:Platform_Ios
+                          tags:tags];
         PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
-                                                           amount:10
+                                                           amount:100
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias
                                                       description:@"payment test"];
         token = [payer endorsePaymentToken:token];
-        Payment *payment = [payee redeemPaymentToken:token amount:@100 currency:@"USD"];
     }];
 
 }

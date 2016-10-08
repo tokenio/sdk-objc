@@ -56,7 +56,6 @@
         
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
-        XCTAssertEqual(2, payment.signatureArray_Count);
         
         [payer unsubscribeDevice:@"Token" notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"];
         

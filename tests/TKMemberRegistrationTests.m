@@ -43,8 +43,8 @@
         TKSecretKey *key3 = [TKCrypto generateKey];
 
         TKMember *member = [self createMember:tokenIO];
-        [member approveKey:key2 level:Key_Level_Privileged];
-        [member approveKey:key3 level:Key_Level_Privileged];
+        [member approveKey:key2 level:Key_Level_Standard];
+        [member approveKey:key3 level:Key_Level_Low];
 
         XCTAssertEqual(member.publicKeys.count, 3);
     }];
