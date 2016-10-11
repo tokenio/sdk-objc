@@ -58,6 +58,29 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithAliasExists)onSuccess
+            onError:(OnError)onError {
+    AliasExistsRequest *request = [AliasExistsRequest message];
+    request.alias = alias;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToAliasExistsWithRequest:request
+                           handler:
+                           ^(AliasExistsResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess([NSNumber numberWithBool:response.exists]);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
 - (void)addAlias:(NSString *)alias
               to:(Member *)member
         onSuccess:(OnSuccessWithMember)onSuccess

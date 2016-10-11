@@ -43,6 +43,16 @@
           onError:(OnError)onError;
 
 /**
+ * Checks if a given alias already exists.
+ *
+ * @param alias alias to check
+ * @return true if alias already exists, false otherwise
+ */
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithAliasExists)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Adds an alias for a given user.
  *
  * @param member member to add the alias to

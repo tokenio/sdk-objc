@@ -324,6 +324,91 @@ typedef struct GetMemberResponse__storage_ {
 
 @end
 
+#pragma mark - AliasExistsRequest
+
+@implementation AliasExistsRequest
+
+@dynamic alias;
+
+typedef struct AliasExistsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *alias;
+} AliasExistsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = NULL,
+        .number = AliasExistsRequest_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AliasExistsRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AliasExistsRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AliasExistsRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AliasExistsResponse
+
+@implementation AliasExistsResponse
+
+@dynamic exists;
+
+typedef struct AliasExistsResponse__storage_ {
+  uint32_t _has_storage_[1];
+} AliasExistsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "exists",
+        .dataTypeSpecific.className = NULL,
+        .number = AliasExistsResponse_FieldNumber_Exists,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AliasExistsResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AliasExistsResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AddAddressRequest
 
 @implementation AddAddressRequest

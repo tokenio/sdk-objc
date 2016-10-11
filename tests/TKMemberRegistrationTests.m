@@ -63,6 +63,17 @@
     }];
 }
 
+- (void)testAliasExists {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        TKMember *member = [self createMember:tokenIO];
+        
+        XCTAssertEqual([member aliasExists:alias], @(NO));
+        [member addAlias:alias];
+        XCTAssertEqual([member aliasExists:alias], @(YES));
+    }];
+}
+
 - (void)testAddAlias {
     [self run: ^(TokenIO *tokenIO) {
         NSString *alias2 = [@"alias-" stringByAppendingString:[TKUtil nonce]];

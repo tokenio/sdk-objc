@@ -51,16 +51,25 @@
     [call run:^{
         [self.async approveKey:key
                          level:level
-                      onSucess:^{ call.onSuccess(nil); }
+                      onSuccess:^{ call.onSuccess(nil); }
                        onError:call.onError];
     }];
+}
+
+- (NSNumber *)aliasExists:(NSString *)alias {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async aliasExists:alias
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
+        }];
 }
 
 - (void)removeKey:(NSString *)keyId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async removeKey:keyId
-                     onSucess:^{ call.onSuccess(nil); }
+                    onSuccess:^{ call.onSuccess(nil); }
                       onError:call.onError];
     }];
 }
@@ -69,7 +78,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async addAlias:alias
-                    onSucess:^{ call.onSuccess(nil); }
+                   onSuccess:^{ call.onSuccess(nil); }
                      onError:call.onError];
     }];
 }
@@ -78,7 +87,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async removeAlias:alias
-                       onSucess:^{ call.onSuccess(nil); }
+                      onSuccess:^{ call.onSuccess(nil); }
                         onError:call.onError];
     }];
 }
@@ -100,7 +109,7 @@
 
 
 - (void)unsubscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri {
+          notificationUri:(NSString *)notificationUri {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async unsubscribeDevice:provider
@@ -118,7 +127,7 @@
     return [call run:^{
         [self.async linkAccounts:bankId
                      withPayload:payload
-                        onSucess:
+                       onSuccess:
                                 ^(NSArray<TKAccountAsync *> *accounts) {
                                     call.onSuccess([self _asyncToSync:accounts]);
                                 }
@@ -161,22 +170,22 @@
 }
 
 - (NSArray<Payment *> *)getPaymentsOffset:(int)offset
-                                       limit:(int)limit {
+                                    limit:(int)limit {
     return [self getPaymentsOffset:offset
                                 limit:limit
                               tokenId:nil];
 }
 
 - (NSArray<Payment *> *)getPaymentsOffset:(int)offset
-                                       limit:(int)limit
-                                     tokenId:(NSString *)tokenId {
+                                    limit:(int)limit
+                                  tokenId:(NSString *)tokenId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getPaymentsOffset:offset
-                                   limit:limit
-                                 tokenId:tokenId
-                               onSuccess:call.onSuccess
-                                 onError:call.onError];
+                                limit:limit
+                              tokenId:tokenId
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
     }];
 }
 
@@ -204,7 +213,7 @@
     TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getAddresses:call.onSuccess
-                            onError:call.onError];
+                        onError:call.onError];
     }];
 }
 
@@ -212,7 +221,7 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async deleteAddressWithId:addressId
-                               onSucess:^{ call.onSuccess(nil); }
+                              onSuccess:^{ call.onSuccess(nil); }
                                 onError:call.onError];
     }];
 }
@@ -239,7 +248,7 @@
                                         currency:currency
                                    redeemerAlias:redeemerAlias
                                      description:description
-                                        onSucess:call.onSuccess
+                                        onSuccess:call.onSuccess
                                          onError:call.onError];
     }];
 }
@@ -248,8 +257,8 @@
     TKRpcSyncCall<PaymentToken *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getPaymentToken:tokenId
-                              onSucess:call.onSuccess
-                               onError:call.onError];
+                          onSuccess:call.onSuccess
+                            onError:call.onError];
     }];
 }
 
@@ -258,9 +267,9 @@
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getPaymentTokensOffset:offset
-                                        limit:limit
-                                    onSuccess:call.onSuccess
-                                      onError:call.onError];
+                                     limit:limit
+                                 onSuccess:call.onSuccess
+                                   onError:call.onError];
     }];
 }
 

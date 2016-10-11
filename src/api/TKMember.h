@@ -58,6 +58,14 @@
 - (void)removeKey:(NSString *)keyId;
 
 /**
+ * Checks if a given alias already exists.
+ *
+ * @param alias alias to check
+ * @return true if alias already exists, false otherwise
+ */
+- (NSNumber *)aliasExists:(NSString *)alias;
+
+/**
  * Adds a new alias for the member.
  *
  * @param alias alias, e.g. 'john', must be unique

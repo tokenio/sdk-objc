@@ -131,6 +131,30 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @end
 
+#pragma mark - AliasExistsRequest
+
+typedef GPB_ENUM(AliasExistsRequest_FieldNumber) {
+  AliasExistsRequest_FieldNumber_Alias = 1,
+};
+
+@interface AliasExistsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+
+@end
+
+#pragma mark - AliasExistsResponse
+
+typedef GPB_ENUM(AliasExistsResponse_FieldNumber) {
+  AliasExistsResponse_FieldNumber_Exists = 1,
+};
+
+@interface AliasExistsResponse : GPBMessage
+
+@property(nonatomic, readwrite) BOOL exists;
+
+@end
+
 #pragma mark - AddAddressRequest
 
 typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
