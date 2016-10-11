@@ -49,7 +49,7 @@
  * @return true if alias already exists, false otherwise
  */
 - (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithAliasExists)onSuccess
+          onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError;
 
 /**

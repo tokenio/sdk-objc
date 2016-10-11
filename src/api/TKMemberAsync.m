@@ -98,7 +98,7 @@
 }
 
 - (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithAliasExists)onSuccess
+          onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
     [client aliasExists:alias
               onSuccess:onSuccess

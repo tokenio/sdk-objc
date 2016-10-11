@@ -59,7 +59,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithAliasExists)onSuccess
+          onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
     AliasExistsRequest *request = [AliasExistsRequest message];
     request.alias = alias;

@@ -85,7 +85,7 @@
  * @param alias alias to check
  */
 - (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithAliasExists)onSuccess
+          onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError;
 /**
  * Adds a new alias for the member.
