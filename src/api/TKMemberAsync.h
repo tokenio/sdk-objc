@@ -80,14 +80,6 @@
           onError:(OnError)onError;
 
 /**
- * Checks if a given alias already exists.
- *
- * @param alias alias to check
- */
-- (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithBoolean)onSuccess
-            onError:(OnError)onError;
-/**
  * Adds a new alias for the member.
  *
  * @param alias alias, e.g. 'john', must be unique

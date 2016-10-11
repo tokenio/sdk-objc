@@ -56,15 +56,6 @@
     }];
 }
 
-- (NSNumber *)aliasExists:(NSString *)alias {
-    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async aliasExists:alias
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
-        }];
-}
-
 - (void)removeKey:(NSString *)keyId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{

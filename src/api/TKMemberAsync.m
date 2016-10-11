@@ -97,14 +97,6 @@
            onError:onError];
 }
 
-- (void)aliasExists:(NSString *)alias
-          onSuccess:(OnSuccessWithBoolean)onSuccess
-            onError:(OnError)onError {
-    [client aliasExists:alias
-              onSuccess:onSuccess
-                onError:onError];
-}
-
 - (void)removeKey:(NSString *)keyId
         onSuccess:(OnSuccess)onSuccess
           onError:(OnError)onError {

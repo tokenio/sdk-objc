@@ -53,6 +53,14 @@
             onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError;
 
+/**
+ * Checks if a given alias already exists.
+ *
+ * @param alias alias to check
+ */
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithBoolean)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Logs in an existing member to the system.
