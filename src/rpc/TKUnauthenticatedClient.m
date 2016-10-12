@@ -80,7 +80,7 @@
                             handler:^(AliasExistsResponse *response, NSError *error) {
         if (response) {
             RpcLogCompleted(response);
-            onSuccess([NSNumber numberWithBool:response.exists]);
+            onSuccess(response.exists);
         } else {
             RpcLogError(error);
             onError(error);

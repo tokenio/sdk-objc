@@ -45,7 +45,7 @@
  * @param alias alias to check
  * @return true if alias already exists, false otherwise
  */
-- (NSNumber *)aliasExists:(NSString *)alias;
+- (BOOL)aliasExists:(NSString *)alias;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the
