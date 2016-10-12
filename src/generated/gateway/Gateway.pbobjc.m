@@ -16,13 +16,14 @@
  #import "gateway/Gateway.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
  #import "Account.pbobjc.h"
+ #import "Device.pbobjc.h"
  #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
- #import "Security.pbobjc.h"
+ #import "Paging.pbobjc.h"
  #import "Payment.pbobjc.h"
+ #import "Security.pbobjc.h"
  #import "Token.pbobjc.h"
  #import "Transaction.pbobjc.h"
- #import "Device.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -41,13 +42,14 @@
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
     [registry addExtensions:[AccountRoot extensionRegistry]];
+    [registry addExtensions:[DeviceRoot extensionRegistry]];
     [registry addExtensions:[MemberRoot extensionRegistry]];
     [registry addExtensions:[MoneyRoot extensionRegistry]];
-    [registry addExtensions:[SecurityRoot extensionRegistry]];
+    [registry addExtensions:[PagingRoot extensionRegistry]];
     [registry addExtensions:[PaymentRoot extensionRegistry]];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
     [registry addExtensions:[TokenRoot extensionRegistry]];
     [registry addExtensions:[TransactionRoot extensionRegistry]];
-    [registry addExtensions:[DeviceRoot extensionRegistry]];
   }
   return registry;
 }
@@ -1810,14 +1812,12 @@ typedef struct GetTransactionResponse__storage_ {
 @implementation GetTransactionsRequest
 
 @dynamic accountId;
-@dynamic offset;
-@dynamic limit;
+@dynamic hasPage, page;
 
 typedef struct GetTransactionsRequest__storage_ {
   uint32_t _has_storage_[1];
-  int32_t offset;
-  int32_t limit;
   NSString *accountId;
+  Page *page;
 } GetTransactionsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1836,22 +1836,13 @@ typedef struct GetTransactionsRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "offset",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionsRequest_FieldNumber_Offset,
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetTransactionsRequest_FieldNumber_Page,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, offset),
+        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, page),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "limit",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionsRequest_FieldNumber_Limit,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, limit),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1875,10 +1866,12 @@ typedef struct GetTransactionsRequest__storage_ {
 @implementation GetTransactionsResponse
 
 @dynamic transactionsArray, transactionsArray_Count;
+@dynamic offset;
 
 typedef struct GetTransactionsResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *transactionsArray;
+  NSString *offset;
 } GetTransactionsResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1895,6 +1888,15 @@ typedef struct GetTransactionsResponse__storage_ {
         .offset = (uint32_t)offsetof(GetTransactionsResponse__storage_, transactionsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransactionsResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetTransactionsResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2089,13 +2091,11 @@ typedef struct GetPaymentTokenResponse__storage_ {
 
 @implementation GetPaymentTokensRequest
 
-@dynamic offset;
-@dynamic limit;
+@dynamic hasPage, page;
 
 typedef struct GetPaymentTokensRequest__storage_ {
   uint32_t _has_storage_[1];
-  int32_t offset;
-  int32_t limit;
+  Page *page;
 } GetPaymentTokensRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2105,22 +2105,13 @@ typedef struct GetPaymentTokensRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "offset",
-        .dataTypeSpecific.className = NULL,
-        .number = GetPaymentTokensRequest_FieldNumber_Offset,
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetPaymentTokensRequest_FieldNumber_Page,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentTokensRequest__storage_, offset),
+        .offset = (uint32_t)offsetof(GetPaymentTokensRequest__storage_, page),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "limit",
-        .dataTypeSpecific.className = NULL,
-        .number = GetPaymentTokensRequest_FieldNumber_Limit,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetPaymentTokensRequest__storage_, limit),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2144,10 +2135,12 @@ typedef struct GetPaymentTokensRequest__storage_ {
 @implementation GetPaymentTokensResponse
 
 @dynamic tokensArray, tokensArray_Count;
+@dynamic offset;
 
 typedef struct GetPaymentTokensResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *tokensArray;
+  NSString *offset;
 } GetPaymentTokensResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2164,6 +2157,15 @@ typedef struct GetPaymentTokensResponse__storage_ {
         .offset = (uint32_t)offsetof(GetPaymentTokensResponse__storage_, tokensArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetPaymentTokensResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetPaymentTokensResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2552,13 +2554,11 @@ typedef struct GetAccessTokenResponse__storage_ {
 
 @implementation GetAccessTokensRequest
 
-@dynamic offset;
-@dynamic limit;
+@dynamic hasPage, page;
 
 typedef struct GetAccessTokensRequest__storage_ {
   uint32_t _has_storage_[1];
-  int32_t offset;
-  int32_t limit;
+  Page *page;
 } GetAccessTokensRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2568,22 +2568,13 @@ typedef struct GetAccessTokensRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "offset",
-        .dataTypeSpecific.className = NULL,
-        .number = GetAccessTokensRequest_FieldNumber_Offset,
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetAccessTokensRequest_FieldNumber_Page,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetAccessTokensRequest__storage_, offset),
+        .offset = (uint32_t)offsetof(GetAccessTokensRequest__storage_, page),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "limit",
-        .dataTypeSpecific.className = NULL,
-        .number = GetAccessTokensRequest_FieldNumber_Limit,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetAccessTokensRequest__storage_, limit),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2607,10 +2598,12 @@ typedef struct GetAccessTokensRequest__storage_ {
 @implementation GetAccessTokensResponse
 
 @dynamic tokensArray, tokensArray_Count;
+@dynamic offset;
 
 typedef struct GetAccessTokensResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *tokensArray;
+  NSString *offset;
 } GetAccessTokensResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2627,6 +2620,15 @@ typedef struct GetAccessTokensResponse__storage_ {
         .offset = (uint32_t)offsetof(GetAccessTokensResponse__storage_, tokensArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetAccessTokensResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetAccessTokensResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3027,14 +3029,12 @@ typedef struct GetPaymentResponse__storage_ {
 @implementation GetPaymentsRequest
 
 @dynamic tokenId;
-@dynamic offset;
-@dynamic limit;
+@dynamic hasPage, page;
 
 typedef struct GetPaymentsRequest__storage_ {
   uint32_t _has_storage_[1];
-  int32_t offset;
-  int32_t limit;
   NSString *tokenId;
+  Page *page;
 } GetPaymentsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3053,22 +3053,13 @@ typedef struct GetPaymentsRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "offset",
-        .dataTypeSpecific.className = NULL,
-        .number = GetPaymentsRequest_FieldNumber_Offset,
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetPaymentsRequest_FieldNumber_Page,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetPaymentsRequest__storage_, offset),
+        .offset = (uint32_t)offsetof(GetPaymentsRequest__storage_, page),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "limit",
-        .dataTypeSpecific.className = NULL,
-        .number = GetPaymentsRequest_FieldNumber_Limit,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetPaymentsRequest__storage_, limit),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3092,10 +3083,12 @@ typedef struct GetPaymentsRequest__storage_ {
 @implementation GetPaymentsResponse
 
 @dynamic paymentsArray, paymentsArray_Count;
+@dynamic offset;
 
 typedef struct GetPaymentsResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *paymentsArray;
+  NSString *offset;
 } GetPaymentsResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3112,6 +3105,15 @@ typedef struct GetPaymentsResponse__storage_ {
         .offset = (uint32_t)offsetof(GetPaymentsResponse__storage_, paymentsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetPaymentsResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetPaymentsResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

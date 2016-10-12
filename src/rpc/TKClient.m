@@ -266,12 +266,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)getPaymentTokens:(int)offset
-               limit:(int)limit
-           onSuccess:(OnSuccessWithPaymentTokens)onSuccess
-             onError:(OnError)onError {
+                   limit:(int)limit
+               onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+                 onError:(OnError)onError {
     GetPaymentTokensRequest *request = [GetPaymentTokensRequest message];
-    request.offset = offset;
-    request.limit = limit;
+    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.limit = limit;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -395,8 +395,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                 onSuccess:(OnSuccessWithPayments)onSuccess
                   onError:(OnError)onError {
     GetPaymentsRequest *request = [GetPaymentsRequest message];
-    request.offset = offset;
-    request.limit = limit;
+    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.limit = limit;
     request.tokenId = tokenId;
     RpcLogStart(request);
 
@@ -465,14 +465,14 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)getTransactionsOffset:(NSString *)accountId
-                          offset:(int)offset
-                           limit:(int)limit
-                       onSuccess:(OnSuccessWithTransactions)onSuccess
-                         onError:(OnError)onError {
+                       offset:(int)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
     request.accountId = accountId;
-    request.offset = offset;
-    request.limit = limit;
+    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.limit = limit;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway

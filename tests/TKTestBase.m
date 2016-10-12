@@ -98,21 +98,16 @@
     NSString *bankId = @"bank-id";
     NSString *accountName = @"Checking";
     NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
-
-    FankMetadata_ClientAccount *account = [FankMetadata_ClientAccount message];
-    account.accountNumber = bankAccountNumber;
-    account.name = accountName;
-    account.balance.value = @"1000000.00";
-    account.balance.currency = @"USD";
-
-    FankMetadata *metadata = [FankMetadata message];
-    metadata.client.firstName = firstName;
-    metadata.client.lastName = lastName;
-    [metadata.clientAccountsArray addObject:account];
-
+    
+    FankClient *fankClient = [bank addClientWithFirstName:firstName lastName:lastName];
+    [bank addAccountWithName:accountName
+                   forClient:fankClient
+           withAccountNumber:bankAccountNumber
+                      amount:@"1000000.00"
+                    currency:@"USD"];
     NSString *linkPayload = [bank authorizeAccountLinkingFor:alias
-                                              accountNumbers:@[bankAccountNumber]
-                                                    metadata:metadata];
+                                              accountNumbers:@[bankAccountNumber]];
+                             
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
                                               withPayload:linkPayload];
     XCTAssert(accounts.count == 1);

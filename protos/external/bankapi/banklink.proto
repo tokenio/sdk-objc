@@ -1,16 +1,14 @@
 syntax = "proto3";
 package io.token.proto.bankapi;
 
-import "google/protobuf/any.proto";
-
-import "money.proto";
+import "google/api/annotations.proto";
 
 
 message AuthorizeLinkAccountsRequest {
-  string alias = 1;
-  string secret = 2;
-  repeated string accounts = 3;
-  google.protobuf.Any metadata = 4;
+  string client_id = 1;
+  string alias = 2;
+  string secret = 3;
+  repeated string accounts = 4;
 }
 
 message AuthorizeLinkAccountsResponse {
@@ -23,6 +21,10 @@ message AuthorizeLinkAccountsResponse {
 //
 
 service AccountLinkingService {
-  rpc AuthorizeLinkAccounts (AuthorizeLinkAccountsRequest) returns (AuthorizeLinkAccountsResponse) {}
+  rpc AuthorizeLinkAccounts (AuthorizeLinkAccountsRequest) returns (AuthorizeLinkAccountsResponse) {
+    option (google.api.http) = {
+        put: "/clients/{client_id}/link-accounts"
+    };
+  }
 }
 
