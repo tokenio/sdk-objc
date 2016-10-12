@@ -31,12 +31,14 @@ CF_EXTERN_C_BEGIN
 @class Member;
 @class MemberUpdate;
 @class Money;
+@class Notification;
 @class Page;
 @class Payment;
 @class PaymentPayload;
 @class PaymentToken;
 @class PaymentToken_Payload;
 @class Signature;
+@class Subscriber;
 @class Transaction;
 GPB_ENUM_FWD_DECLARE(Platform);
 
@@ -254,149 +256,131 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 
 @end
 
-#pragma mark - SubscribeDeviceRequest
+#pragma mark - SubscribeToNotificationsRequest
 
-typedef GPB_ENUM(SubscribeDeviceRequest_FieldNumber) {
-  SubscribeDeviceRequest_FieldNumber_Provider = 1,
-  SubscribeDeviceRequest_FieldNumber_NotificationUri = 2,
-  SubscribeDeviceRequest_FieldNumber_Platform = 3,
-  SubscribeDeviceRequest_FieldNumber_TagsArray = 4,
+typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
+  SubscribeToNotificationsRequest_FieldNumber_Provider = 1,
+  SubscribeToNotificationsRequest_FieldNumber_Target = 2,
+  SubscribeToNotificationsRequest_FieldNumber_Platform = 3,
 };
 
-@interface SubscribeDeviceRequest : GPBMessage
+@interface SubscribeToNotificationsRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
 
-/// device_id
-@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationUri;
+/// e.g push token
+@property(nonatomic, readwrite, copy, null_resettable) NSString *target;
 
 @property(nonatomic, readwrite) enum Platform platform;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
-/// The number of items in @c tagsArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
-
 @end
 
-/// Fetches the raw value of a @c SubscribeDeviceRequest's @c platform property, even
+/// Fetches the raw value of a @c SubscribeToNotificationsRequest's @c platform property, even
 /// if the value was not defined by the enum at the time the code was generated.
-int32_t SubscribeDeviceRequest_Platform_RawValue(SubscribeDeviceRequest *message);
-/// Sets the raw value of an @c SubscribeDeviceRequest's @c platform property, allowing
+int32_t SubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message);
+/// Sets the raw value of an @c SubscribeToNotificationsRequest's @c platform property, allowing
 /// it to be set to a value that was not defined by the enum at the time the code
 /// was generated.
-void SetSubscribeDeviceRequest_Platform_RawValue(SubscribeDeviceRequest *message, int32_t value);
+void SetSubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message, int32_t value);
 
-#pragma mark - SubscribeDeviceResponse
+#pragma mark - SubscribeToNotificationsResponse
 
-@interface SubscribeDeviceResponse : GPBMessage
-
-@end
-
-#pragma mark - UnsubscribeDeviceRequest
-
-typedef GPB_ENUM(UnsubscribeDeviceRequest_FieldNumber) {
-  UnsubscribeDeviceRequest_FieldNumber_Provider = 1,
-  UnsubscribeDeviceRequest_FieldNumber_NotificationUri = 2,
+typedef GPB_ENUM(SubscribeToNotificationsResponse_FieldNumber) {
+  SubscribeToNotificationsResponse_FieldNumber_Subscriber = 1,
 };
 
-@interface UnsubscribeDeviceRequest : GPBMessage
+@interface SubscribeToNotificationsResponse : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationUri;
-
-@end
-
-#pragma mark - UnsubscribeDeviceResponse
-
-@interface UnsubscribeDeviceResponse : GPBMessage
+@property(nonatomic, readwrite, strong, null_resettable) Subscriber *subscriber;
+/// Test to see if @c subscriber has been set.
+@property(nonatomic, readwrite) BOOL hasSubscriber;
 
 @end
 
-#pragma mark - NotifyLinkAccountsRequest
+#pragma mark - GetSubscribersRequest
 
-typedef GPB_ENUM(NotifyLinkAccountsRequest_FieldNumber) {
-  NotifyLinkAccountsRequest_FieldNumber_Alias = 1,
-  NotifyLinkAccountsRequest_FieldNumber_BankId = 2,
-  NotifyLinkAccountsRequest_FieldNumber_AccountsLinkPayload = 3,
+@interface GetSubscribersRequest : GPBMessage
+
+@end
+
+#pragma mark - GetSubscribersResponse
+
+typedef GPB_ENUM(GetSubscribersResponse_FieldNumber) {
+  GetSubscribersResponse_FieldNumber_SubscribersArray = 1,
 };
 
-/// Notify existing subscribers that a bank linking payload has been created
-@interface NotifyLinkAccountsRequest : GPBMessage
+@interface GetSubscribersResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Subscriber*> *subscribersArray;
+/// The number of items in @c subscribersArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger subscribersArray_Count;
+
+@end
+
+#pragma mark - GetSubscriberRequest
+
+typedef GPB_ENUM(GetSubscriberRequest_FieldNumber) {
+  GetSubscriberRequest_FieldNumber_SubscriberId = 1,
+};
+
+@interface GetSubscriberRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@end
+
+#pragma mark - GetSubscriberResponse
+
+typedef GPB_ENUM(GetSubscriberResponse_FieldNumber) {
+  GetSubscriberResponse_FieldNumber_Subscriber = 1,
+};
+
+@interface GetSubscriberResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Subscriber *subscriber;
+/// Test to see if @c subscriber has been set.
+@property(nonatomic, readwrite) BOOL hasSubscriber;
+
+@end
+
+#pragma mark - UnsubscribeFromNotificationsRequest
+
+typedef GPB_ENUM(UnsubscribeFromNotificationsRequest_FieldNumber) {
+  UnsubscribeFromNotificationsRequest_FieldNumber_SubscriberId = 1,
+};
+
+@interface UnsubscribeFromNotificationsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@end
+
+#pragma mark - UnsubscribeFromNotificationsResponse
+
+@interface UnsubscribeFromNotificationsResponse : GPBMessage
+
+@end
+
+#pragma mark - NotifyRequest
+
+typedef GPB_ENUM(NotifyRequest_FieldNumber) {
+  NotifyRequest_FieldNumber_Alias = 1,
+  NotifyRequest_FieldNumber_Notification = 2,
+};
+
+@interface NotifyRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
-
-/// encrypted AccountsLinkPayload
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
-
-@end
-
-#pragma mark - NotifyLinkAccountsResponse
-
-@interface NotifyLinkAccountsResponse : GPBMessage
+@property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
+/// Test to see if @c notification has been set.
+@property(nonatomic, readwrite) BOOL hasNotification;
 
 @end
 
-#pragma mark - NotifyAddKeyRequest
+#pragma mark - NotifyResponse
 
-typedef GPB_ENUM(NotifyAddKeyRequest_FieldNumber) {
-  NotifyAddKeyRequest_FieldNumber_Alias = 1,
-  NotifyAddKeyRequest_FieldNumber_PublicKey = 2,
-  NotifyAddKeyRequest_FieldNumber_TagsArray = 3,
-};
-
-@interface NotifyAddKeyRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
-/// The number of items in @c tagsArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
-
-@end
-
-#pragma mark - NotifyAddKeyResponse
-
-@interface NotifyAddKeyResponse : GPBMessage
-
-@end
-
-#pragma mark - NotifyLinkAccountsAndAddKeyRequest
-
-typedef GPB_ENUM(NotifyLinkAccountsAndAddKeyRequest_FieldNumber) {
-  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_Alias = 1,
-  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_BankId = 2,
-  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_AccountsLinkPayload = 3,
-  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_PublicKey = 4,
-  NotifyLinkAccountsAndAddKeyRequest_FieldNumber_TagsArray = 5,
-};
-
-/// Notify existing subscribers that a bank linking payload has been created
-///, as well as request a key to be added
-@interface NotifyLinkAccountsAndAddKeyRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
-
-/// encrypted AccountsLinkPayload
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
-/// The number of items in @c tagsArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
-
-@end
-
-#pragma mark - NotifyLinkAccountsAndAddKeyResponse
-
-@interface NotifyLinkAccountsAndAddKeyResponse : GPBMessage
+@interface NotifyResponse : GPBMessage
 
 @end
 

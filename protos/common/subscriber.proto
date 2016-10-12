@@ -1,0 +1,15 @@
+syntax = "proto3";
+package io.token.proto.common.subscriber;
+option java_outer_classname = "SubscriberProtos";
+
+enum Platform {
+    IOS = 0;
+    ANDROID = 1;
+    TEST = 2;
+}
+
+message Subscriber {
+    string id = 1;
+    string target = 2; // e.g push token
+    io.token.proto.common.subscriber.Platform platform = 3;
+}

@@ -24,11 +24,11 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccessToken;
 @class AddKey;
 @class LinkAccounts;
-@class Payment;
-@class PaymentToken;
+@class LinkAccountsAndAddKey;
+@class PaymentProcessed;
+@class StepUp;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,15 +48,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - PaymentProcessed
 
 typedef GPB_ENUM(PaymentProcessed_FieldNumber) {
-  PaymentProcessed_FieldNumber_Payment = 1,
+  PaymentProcessed_FieldNumber_PaymentId = 1,
 };
 
-/// A notification that a payment was sucecssfully processed
+/// A notification that a payment was successfully processed
 @interface PaymentProcessed : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Payment *payment;
-/// Test to see if @c payment has been set.
-@property(nonatomic, readwrite) BOOL hasPayment;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *paymentId;
 
 @end
 
@@ -79,35 +77,21 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 #pragma mark - StepUp
 
 typedef GPB_ENUM(StepUp_FieldNumber) {
-  StepUp_FieldNumber_PaymentToken = 1,
-  StepUp_FieldNumber_AccessToken = 2,
-};
-
-typedef GPB_ENUM(StepUp_Token_OneOfCase) {
-  StepUp_Token_OneOfCase_GPBUnsetOneOfCase = 0,
-  StepUp_Token_OneOfCase_PaymentToken = 1,
-  StepUp_Token_OneOfCase_AccessToken = 2,
+  StepUp_FieldNumber_TokenId = 1,
 };
 
 /// A notification to step up / endorse a token
 @interface StepUp : GPBMessage
 
-@property(nonatomic, readonly) StepUp_Token_OneOfCase tokenOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *paymentToken;
-
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *accessToken;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
-
-/// Clears whatever value was set for the oneof 'token'.
-void StepUp_ClearTokenOneOfCase(StepUp *message);
 
 #pragma mark - AddKey
 
 typedef GPB_ENUM(AddKey_FieldNumber) {
   AddKey_FieldNumber_PublicKey = 1,
-  AddKey_FieldNumber_TagsArray = 2,
+  AddKey_FieldNumber_Name = 2,
 };
 
 /// A notification that a key wants to be added to a member
@@ -115,9 +99,7 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
-/// The number of items in @c tagsArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @end
 
@@ -141,18 +123,43 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
 
 @end
 
-#pragma mark - Custom
+#pragma mark - Notification
 
-typedef GPB_ENUM(Custom_FieldNumber) {
-  Custom_FieldNumber_Payload = 1,
+typedef GPB_ENUM(Notification_FieldNumber) {
+  Notification_FieldNumber_PaymentProcessed = 1,
+  Notification_FieldNumber_LinkAccounts = 2,
+  Notification_FieldNumber_StepUp = 3,
+  Notification_FieldNumber_AddKey = 4,
+  Notification_FieldNumber_LinkAccountsAndAddKey = 5,
 };
 
-/// A custom message with the specified payload
-@interface Custom : GPBMessage
+typedef GPB_ENUM(Notification_Notification_OneOfCase) {
+  Notification_Notification_OneOfCase_GPBUnsetOneOfCase = 0,
+  Notification_Notification_OneOfCase_PaymentProcessed = 1,
+  Notification_Notification_OneOfCase_LinkAccounts = 2,
+  Notification_Notification_OneOfCase_StepUp = 3,
+  Notification_Notification_OneOfCase_AddKey = 4,
+  Notification_Notification_OneOfCase_LinkAccountsAndAddKey = 5,
+};
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+@interface Notification : GPBMessage
+
+@property(nonatomic, readonly) Notification_Notification_OneOfCase notificationOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) PaymentProcessed *paymentProcessed;
+
+@property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
+
+@property(nonatomic, readwrite, strong, null_resettable) StepUp *stepUp;
+
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) LinkAccountsAndAddKey *linkAccountsAndAddKey;
 
 @end
+
+/// Clears whatever value was set for the oneof 'notification'.
+void Notification_ClearNotificationOneOfCase(Notification *message);
 
 NS_ASSUME_NONNULL_END
 

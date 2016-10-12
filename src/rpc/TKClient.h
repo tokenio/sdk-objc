@@ -107,11 +107,9 @@
 /**
  * Unsubscribes a device from push notifications
  *
- * @param provider push notification provider (default @"Token")
- * @param notificationUri to send push to (push token)
+ * @param subscriberId id of subscriber to remove
  */
-- (void)unsubscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError;
 

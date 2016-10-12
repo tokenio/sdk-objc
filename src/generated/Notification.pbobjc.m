@@ -14,8 +14,6 @@
 #endif
 
  #import "Notification.pbobjc.h"
- #import "Payment.pbobjc.h"
- #import "Token.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -25,19 +23,6 @@
 #pragma mark - NotificationRoot
 
 @implementation NotificationRoot
-
-+ (GPBExtensionRegistry*)extensionRegistry {
-  // This is called by +initialize so there is no need to worry
-  // about thread safety and initialization of registry.
-  static GPBExtensionRegistry* registry = nil;
-  if (!registry) {
-    GPBDebugCheckRuntimeVersion();
-    registry = [[GPBExtensionRegistry alloc] init];
-    [registry addExtensions:[PaymentRoot extensionRegistry]];
-    [registry addExtensions:[TokenRoot extensionRegistry]];
-  }
-  return registry;
-}
 
 @end
 
@@ -59,11 +44,11 @@ static GPBFileDescriptor *NotificationRoot_FileDescriptor(void) {
 
 @implementation PaymentProcessed
 
-@dynamic hasPayment, payment;
+@dynamic paymentId;
 
 typedef struct PaymentProcessed__storage_ {
   uint32_t _has_storage_[1];
-  Payment *payment;
+  NSString *paymentId;
 } PaymentProcessed__storage_;
 
 // This method is threadsafe because it is initially called
@@ -73,13 +58,13 @@ typedef struct PaymentProcessed__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "payment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Payment),
-        .number = PaymentProcessed_FieldNumber_Payment,
+        .name = "paymentId",
+        .dataTypeSpecific.className = NULL,
+        .number = PaymentProcessed_FieldNumber_PaymentId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(PaymentProcessed__storage_, payment),
+        .offset = (uint32_t)offsetof(PaymentProcessed__storage_, paymentId),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -156,14 +141,11 @@ typedef struct LinkAccounts__storage_ {
 
 @implementation StepUp
 
-@dynamic tokenOneOfCase;
-@dynamic paymentToken;
-@dynamic accessToken;
+@dynamic tokenId;
 
 typedef struct StepUp__storage_ {
-  uint32_t _has_storage_[2];
-  PaymentToken *paymentToken;
-  AccessToken *accessToken;
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
 } StepUp__storage_;
 
 // This method is threadsafe because it is initially called
@@ -173,22 +155,13 @@ typedef struct StepUp__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "paymentToken",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
-        .number = StepUp_FieldNumber_PaymentToken,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(StepUp__storage_, paymentToken),
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = StepUp_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(StepUp__storage_, tokenId),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "accessToken",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
-        .number = StepUp_FieldNumber_AccessToken,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(StepUp__storage_, accessToken),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -199,12 +172,6 @@ typedef struct StepUp__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(StepUp__storage_)
                                          flags:0];
-    static const char *oneofs[] = {
-      "token",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -213,22 +180,17 @@ typedef struct StepUp__storage_ {
 
 @end
 
-void StepUp_ClearTokenOneOfCase(StepUp *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
 #pragma mark - AddKey
 
 @implementation AddKey
 
 @dynamic publicKey;
-@dynamic tagsArray, tagsArray_Count;
+@dynamic name;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
   NSString *publicKey;
-  NSMutableArray *tagsArray;
+  NSString *name;
 } AddKey__storage_;
 
 // This method is threadsafe because it is initially called
@@ -247,12 +209,12 @@ typedef struct AddKey__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "tagsArray",
+        .name = "name",
         .dataTypeSpecific.className = NULL,
-        .number = AddKey_FieldNumber_TagsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AddKey__storage_, tagsArray),
-        .flags = GPBFieldRepeated,
+        .number = AddKey_FieldNumber_Name,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(AddKey__storage_, name),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
@@ -326,16 +288,25 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 
 @end
 
-#pragma mark - Custom
+#pragma mark - Notification
 
-@implementation Custom
+@implementation Notification
 
-@dynamic payload;
+@dynamic notificationOneOfCase;
+@dynamic paymentProcessed;
+@dynamic linkAccounts;
+@dynamic stepUp;
+@dynamic addKey;
+@dynamic linkAccountsAndAddKey;
 
-typedef struct Custom__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *payload;
-} Custom__storage_;
+typedef struct Notification__storage_ {
+  uint32_t _has_storage_[2];
+  PaymentProcessed *paymentProcessed;
+  LinkAccounts *linkAccounts;
+  StepUp *stepUp;
+  AddKey *addKey;
+  LinkAccountsAndAddKey *linkAccountsAndAddKey;
+} Notification__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -344,23 +315,65 @@ typedef struct Custom__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "payload",
-        .dataTypeSpecific.className = NULL,
-        .number = Custom_FieldNumber_Payload,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Custom__storage_, payload),
+        .name = "paymentProcessed",
+        .dataTypeSpecific.className = GPBStringifySymbol(PaymentProcessed),
+        .number = Notification_FieldNumber_PaymentProcessed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Notification__storage_, paymentProcessed),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "linkAccounts",
+        .dataTypeSpecific.className = GPBStringifySymbol(LinkAccounts),
+        .number = Notification_FieldNumber_LinkAccounts,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Notification__storage_, linkAccounts),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "stepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(StepUp),
+        .number = Notification_FieldNumber_StepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Notification__storage_, stepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
+        .number = Notification_FieldNumber_AddKey,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Notification__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "linkAccountsAndAddKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(LinkAccountsAndAddKey),
+        .number = Notification_FieldNumber_LinkAccountsAndAddKey,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Notification__storage_, linkAccountsAndAddKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Custom class]
+        [GPBDescriptor allocDescriptorForClass:[Notification class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Custom__storage_)
+                                   storageSize:sizeof(Notification__storage_)
                                          flags:0];
+    static const char *oneofs[] = {
+      "notification",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -369,6 +382,11 @@ typedef struct Custom__storage_ {
 
 @end
 
+void Notification_ClearNotificationOneOfCase(Notification *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
 
 #pragma clang diagnostic pop
 

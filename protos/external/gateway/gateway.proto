@@ -4,14 +4,15 @@ package io.token.proto.gateway;
 import "google/api/annotations.proto";
 
 import "account.proto";
-import "device.proto";
 import "member.proto";
 import "money.proto";
+import "notification.proto";
+import "security.proto";
 import "paging.proto";
 import "payment.proto";
-import "security.proto";
 import "token.proto";
 import "transaction.proto";
+import "subscriber.proto";
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,63 +86,45 @@ message DeleteAddressRequest {
 message DeleteAddressResponse {}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Notification service device management
+// Notification service
 //
 
-message SubscribeDeviceRequest {
+message SubscribeToNotificationsRequest {
     string provider = 1;
-    string notification_uri = 2;   // device_id
-    io.token.proto.common.device.Platform platform = 3;
-    repeated string tags = 4;
+    string target = 2;   // e.g push token
+    io.token.proto.common.subscriber.Platform platform = 3;
 }
 
-message SubscribeDeviceResponse {
+message SubscribeToNotificationsResponse {
+  io.token.proto.common.subscriber.Subscriber subscriber = 1;
 }
 
-message UnsubscribeDeviceRequest {
-    string provider = 1;
-    string notification_uri = 2;
+message GetSubscribersRequest {}
+
+message GetSubscribersResponse {
+    repeated io.token.proto.common.subscriber.Subscriber subscribers = 1;
 }
 
-message UnsubscribeDeviceResponse {
+message GetSubscriberRequest {
+    string subscriber_id = 1;
 }
 
-// Notify existing subscribers that a bank linking payload has been created
-message NotifyLinkAccountsRequest {
+message GetSubscriberResponse {
+    io.token.proto.common.subscriber.Subscriber subscriber = 1;
+}
+
+message UnsubscribeFromNotificationsRequest {
+    string subscriber_id = 1;
+}
+
+message UnsubscribeFromNotificationsResponse {}
+
+message NotifyRequest {
   string alias = 1;
-  string bank_id = 2;
-
-  // encrypted AccountsLinkPayload
-  string accounts_link_payload = 3;
+  io.token.proto.common.notification.Notification notification = 2;
 }
 
-message NotifyLinkAccountsResponse {
-}
-
-message NotifyAddKeyRequest {
-    string alias = 1;
-    string public_key = 2;
-    repeated string tags = 3;
-}
-
-message NotifyAddKeyResponse {
-}
-
-// Notify existing subscribers that a bank linking payload has been created
-//, as well as request a key to be added
-message NotifyLinkAccountsAndAddKeyRequest {
-  string alias = 1;
-  string bank_id = 2;
-
-  // encrypted AccountsLinkPayload
-  string accounts_link_payload = 3;
-
-  string public_key = 4;
-  repeated string tags = 5;
-}
-
-message NotifyLinkAccountsAndAddKeyResponse {
-}
+message NotifyResponse {}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,7 +192,6 @@ message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Payment Tokens.
 //
@@ -405,33 +387,36 @@ service GatewayService {
   // Devices for notification service
   //
 
-  rpc SubscribeDevice (SubscribeDeviceRequest) returns (SubscribeDeviceResponse) {
+  rpc SubscribeToNotifications (SubscribeToNotificationsRequest)
+  returns (SubscribeToNotificationsResponse) {
     option (google.api.http) = {
-        post: "/devices"
+        post: "/subscribers"
     };
   }
 
-  rpc UnsubscribeDevice (UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse) {
+  rpc GetSubscribers (GetSubscribersRequest) returns (GetSubscribersResponse) {
     option (google.api.http) = {
-        delete: "/devices/{device_id}"
+        get: "/subscribers"
     };
   }
 
-  rpc NotifyLinkAccounts (NotifyLinkAccountsRequest) returns (NotifyLinkAccountsResponse) {
+
+  rpc GetSubscriber (GetSubscriberRequest) returns (GetSubscriberResponse) {
     option (google.api.http) = {
-        put: "/devices/notifyLinkAccounts"
+        get: "/subscribers/{subscriber_id}"
     };
   }
 
-  rpc NotifyAddKey (NotifyAddKeyRequest) returns (NotifyAddKeyResponse) {
+  rpc UnsubscribeFromNotifications (UnsubscribeFromNotificationsRequest)
+  returns (UnsubscribeFromNotificationsResponse) {
     option (google.api.http) = {
-        put: "/devices/notifyAddKey"
+        delete: "/subscribers/{subscriber_id}"
     };
   }
 
-  rpc NotifyLinkAccountsAndAddKey (NotifyLinkAccountsAndAddKeyRequest) returns (NotifyLinkAccountsAndAddKeyResponse) {
+  rpc Notify (NotifyRequest) returns (NotifyResponse) {
     option (google.api.http) = {
-        put: "/devices/notifyLinkAccountsAndAddKey"
+        post: "/notify"
     };
   }
 
@@ -477,7 +462,7 @@ service GatewayService {
 
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions?offset={offset}&limit={limit}"
+        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}"
     };
   }
 
@@ -499,7 +484,7 @@ service GatewayService {
 
   rpc GetPaymentTokens (GetPaymentTokensRequest) returns (GetPaymentTokensResponse) {
     option (google.api.http) = {
-        get: "/payment-tokens?offset={offset}&limit={limit}"
+        get: "/payment-tokens?offset={page.offset}&limit={page.limit}"
     };
   }
 
@@ -534,7 +519,7 @@ service GatewayService {
 
   rpc GetAccessTokens (GetAccessTokensRequest) returns (GetAccessTokensResponse) {
     option (google.api.http) = {
-        get: "/access-tokens?offset={offset}&limit={limit}"
+        get: "/access-tokens?offset={page.offset}&limit={page.limit}"
     };
   }
 
@@ -569,7 +554,7 @@ service GatewayService {
 
   rpc GetPayments (GetPaymentsRequest) returns (GetPaymentsResponse) {
     option (google.api.http) = {
-        get: "/payments?token_id={token_id}&offset={offset}&limit={limit}"
+        get: "/payments?token_id={token_id}&offset={page.offset}&limit={page.limit}"
     };
   }
 }

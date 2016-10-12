@@ -41,10 +41,9 @@
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
         
-        [payer subscribeDevice:@"Token"
-               notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
-                      platform:Platform_Ios
-                          tags:tags];
+        Subscriber *s = [payer subscribeToNotifications:@"Token"
+               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+                      platform:Platform_Ios];
 
         PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
@@ -57,7 +56,7 @@
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
         
-        [payer unsubscribeDevice:@"Token" notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"];
+        [payer unsubscribeDevice:@"Token" target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"];
         
         PaymentToken *token2 = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
@@ -75,7 +74,7 @@
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
         [payer subscribeDevice:@"Token"
-               notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
                       platform:Platform_Ios
                           tags:tags];
 
@@ -90,7 +89,7 @@
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
         [payer subscribeDevice:@"Token"
-               notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
                       platform:Platform_Ios
                           tags:tags];
 
@@ -106,7 +105,7 @@
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
         [payer subscribeDevice:@"Token"
-               notificationUri:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
                       platform:Platform_Ios
                           tags:tags];
         

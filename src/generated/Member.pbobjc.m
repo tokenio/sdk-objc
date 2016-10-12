@@ -59,13 +59,11 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
 
 @dynamic publicKey;
 @dynamic level;
-@dynamic tagsArray, tagsArray_Count;
 
 typedef struct MemberAddKeyOperation__storage_ {
   uint32_t _has_storage_[1];
   Key_Level level;
   NSString *publicKey;
-  NSMutableArray *tagsArray;
 } MemberAddKeyOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -91,15 +89,6 @@ typedef struct MemberAddKeyOperation__storage_ {
         .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, level),
         .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "tagsArray",
-        .dataTypeSpecific.className = NULL,
-        .number = MemberAddKeyOperation_FieldNumber_TagsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, tagsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

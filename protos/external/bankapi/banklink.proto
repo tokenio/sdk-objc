@@ -3,7 +3,6 @@ package io.token.proto.bankapi;
 
 import "google/api/annotations.proto";
 
-
 message AuthorizeLinkAccountsRequest {
   string client_id = 1;
   string alias = 2;

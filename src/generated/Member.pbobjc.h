@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
   MemberAddKeyOperation_FieldNumber_PublicKey = 1,
   MemberAddKeyOperation_FieldNumber_Level = 2,
-  MemberAddKeyOperation_FieldNumber_TagsArray = 3,
 };
 
 /// Adds member key to the directory.
@@ -61,10 +60,6 @@ typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
 @property(nonatomic, readwrite) enum Key_Level level;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *tagsArray;
-/// The number of items in @c tagsArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 

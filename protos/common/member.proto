@@ -10,7 +10,6 @@ import "security.proto";
 message MemberAddKeyOperation {
   string public_key = 1;                               // Base64url encoded public key.
   io.token.proto.common.security.Key.Level level = 2;
-  repeated string tags = 3;
 }
 
 // Removes member key from the directory.

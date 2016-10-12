@@ -83,28 +83,24 @@
     }];
 }
 
-- (void)subscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
-               platform:(Platform)platform
-                   tags:(NSMutableArray<NSString*> *)tags {
+- (void)subscribeToNotifications:(NSString *)provider
+                          target:(NSString *)target
+                        platform:(Platform)platform {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async subscribeDevice:provider
-                    notificationUri:notificationUri
-                           platform:platform
-                               tags:tags
-                          onSuccess:^{ call.onSuccess(nil); }
+        [self.async subscribeToNotifications:provider
+                                      target:target
+                                    platform:platform
+                                   onSuccess:^{ call.onSuccess(nil); }
                             onError:call.onError];
     }];
 }
 
 
-- (void)unsubscribeDevice:(NSString *)provider
-          notificationUri:(NSString *)notificationUri {
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async unsubscribeDevice:provider
-                    notificationUri:notificationUri
+        [self.async unsubscribeFromNotifications:subscriberId
                           onSuccess:^{ call.onSuccess(nil); }
                             onError:call.onError];
     }];

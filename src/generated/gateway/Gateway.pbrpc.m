@@ -142,7 +142,7 @@
              responseClass:[DeleteAddressResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark SubscribeDevice(SubscribeDeviceRequest) returns (SubscribeDeviceResponse)
+#pragma mark SubscribeToNotifications(SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +150,8 @@
  * 
  * 
  */
-- (void)subscribeDeviceWithRequest:(SubscribeDeviceRequest *)request handler:(void(^)(SubscribeDeviceResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSubscribeDeviceWithRequest:request handler:handler] start];
+- (void)subscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSubscribeToNotificationsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -160,58 +160,58 @@
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToSubscribeDeviceWithRequest:(SubscribeDeviceRequest *)request handler:(void(^)(SubscribeDeviceResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SubscribeDevice"
+- (GRPCProtoCall *)RPCToSubscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SubscribeToNotifications"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SubscribeDeviceResponse class]
+             responseClass:[SubscribeToNotificationsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark UnsubscribeDevice(UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse)
+#pragma mark GetSubscribers(GetSubscribersRequest) returns (GetSubscribersResponse)
 
-- (void)unsubscribeDeviceWithRequest:(UnsubscribeDeviceRequest *)request handler:(void(^)(UnsubscribeDeviceResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToUnsubscribeDeviceWithRequest:request handler:handler] start];
+- (void)getSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetSubscribersWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnsubscribeDeviceWithRequest:(UnsubscribeDeviceRequest *)request handler:(void(^)(UnsubscribeDeviceResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"UnsubscribeDevice"
+- (GRPCProtoCall *)RPCToGetSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetSubscribers"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[UnsubscribeDeviceResponse class]
+             responseClass:[GetSubscribersResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark NotifyLinkAccounts(NotifyLinkAccountsRequest) returns (NotifyLinkAccountsResponse)
+#pragma mark GetSubscriber(GetSubscriberRequest) returns (GetSubscriberResponse)
 
-- (void)notifyLinkAccountsWithRequest:(NotifyLinkAccountsRequest *)request handler:(void(^)(NotifyLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToNotifyLinkAccountsWithRequest:request handler:handler] start];
+- (void)getSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetSubscriberWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyLinkAccountsWithRequest:(NotifyLinkAccountsRequest *)request handler:(void(^)(NotifyLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"NotifyLinkAccounts"
+- (GRPCProtoCall *)RPCToGetSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetSubscriber"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[NotifyLinkAccountsResponse class]
+             responseClass:[GetSubscriberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark NotifyAddKey(NotifyAddKeyRequest) returns (NotifyAddKeyResponse)
+#pragma mark UnsubscribeFromNotifications(UnsubscribeFromNotificationsRequest) returns (UnsubscribeFromNotificationsResponse)
 
-- (void)notifyAddKeyWithRequest:(NotifyAddKeyRequest *)request handler:(void(^)(NotifyAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToNotifyAddKeyWithRequest:request handler:handler] start];
+- (void)unsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUnsubscribeFromNotificationsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyAddKeyWithRequest:(NotifyAddKeyRequest *)request handler:(void(^)(NotifyAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"NotifyAddKey"
+- (GRPCProtoCall *)RPCToUnsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UnsubscribeFromNotifications"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[NotifyAddKeyResponse class]
+             responseClass:[UnsubscribeFromNotificationsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark NotifyLinkAccountsAndAddKey(NotifyLinkAccountsAndAddKeyRequest) returns (NotifyLinkAccountsAndAddKeyResponse)
+#pragma mark Notify(NotifyRequest) returns (NotifyResponse)
 
-- (void)notifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToNotifyLinkAccountsAndAddKeyWithRequest:request handler:handler] start];
+- (void)notifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToNotifyWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyLinkAccountsAndAddKeyWithRequest:(NotifyLinkAccountsAndAddKeyRequest *)request handler:(void(^)(NotifyLinkAccountsAndAddKeyResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"NotifyLinkAccountsAndAddKey"
+- (GRPCProtoCall *)RPCToNotifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"Notify"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[NotifyLinkAccountsAndAddKeyResponse class]
+             responseClass:[NotifyResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)

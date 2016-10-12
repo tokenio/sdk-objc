@@ -3,12 +3,9 @@ package io.token.proto.common.notification;
 
 option java_outer_classname = "NotificationProtos";
 
-import "payment.proto";
-import "token.proto";
-
-// A notification that a payment was sucecssfully processed
+// A notification that a payment was successfully processed
 message PaymentProcessed {
-    io.token.proto.common.payment.Payment payment = 1;
+    string payment_id = 1;
 }
 
 // A notification that a bank wants to be linked
@@ -19,16 +16,13 @@ message LinkAccounts {
 
 // A notification to step up / endorse a token
 message StepUp {
-    oneof token {
-        io.token.proto.common.token.PaymentToken payment_token = 1;
-        io.token.proto.common.token.AccessToken access_token = 2;
-    }
+    string token_id = 1;
 }
 
 // A notification that a key wants to be added to a member
 message AddKey {
     string public_key = 1;
-    repeated string tags = 2;
+    string name = 2;
 }
 
 // A notification that a bank wants to be linked, and keys want to be added
@@ -37,7 +31,12 @@ message LinkAccountsAndAddKey {
     AddKey add_key = 2;
 }
 
-// A custom message with the specified payload
-message Custom {
-    string payload = 1;
+message Notification {
+    oneof notification {
+        io.token.proto.common.notification.PaymentProcessed payment_processed = 1;
+        io.token.proto.common.notification.LinkAccounts link_accounts = 2;
+        io.token.proto.common.notification.StepUp step_up = 3;
+        io.token.proto.common.notification.AddKey add_key = 4;
+        io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
+    }
 }
