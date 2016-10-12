@@ -70,6 +70,18 @@
              responseClass:[GetMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark AliasExists(AliasExistsRequest) returns (AliasExistsResponse)
+
+- (void)aliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAliasExistsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToAliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AliasExists"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[AliasExistsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**

@@ -325,8 +325,8 @@ typedef GPB_ENUM(AccessToken_FieldNumber) {
 typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
   AccessToken_Payload_FieldNumber_Version = 1,
   AccessToken_Payload_FieldNumber_Nonce = 2,
-  AccessToken_Payload_FieldNumber_Member = 3,
-  AccessToken_Payload_FieldNumber_Redeemer = 4,
+  AccessToken_Payload_FieldNumber_Grantor = 3,
+  AccessToken_Payload_FieldNumber_Grantee = 4,
   AccessToken_Payload_FieldNumber_ResourcesArray = 5,
   AccessToken_Payload_FieldNumber_EffectiveAtMs = 6,
   AccessToken_Payload_FieldNumber_ExpiresAtMs = 7,
@@ -342,14 +342,14 @@ typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 /// member_id/optional[FriendlyName]
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *member;
-/// Test to see if @c member has been set.
-@property(nonatomic, readwrite) BOOL hasMember;
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *grantor;
+/// Test to see if @c grantor has been set.
+@property(nonatomic, readwrite) BOOL hasGrantor;
 
 /// member_id/optional[FriendlyName]
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer;
-/// Test to see if @c redeemer has been set.
-@property(nonatomic, readwrite) BOOL hasRedeemer;
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *grantee;
+/// Test to see if @c grantee has been set.
+@property(nonatomic, readwrite) BOOL hasGrantee;
 
 /// Each entry defines an resources level
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken_Resource*> *resourcesArray;

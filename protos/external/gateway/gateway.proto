@@ -41,6 +41,13 @@ message GetMemberResponse {
   io.token.proto.common.member.Member member = 1;
 }
 
+message AliasExistsRequest {
+  string alias = 1;
+}
+
+message AliasExistsResponse {
+  bool exists = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member PII/addresses/preferences management.
@@ -358,6 +365,12 @@ service GatewayService {
     };
   }
 
+  rpc AliasExists (AliasExistsRequest) returns (AliasExistsResponse) {
+    option (google.api.http) = {
+      get: "/alias-exists?alias={alias}"
+    };
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Member addresses and preferences
   //
@@ -370,7 +383,7 @@ service GatewayService {
 
   rpc GetAddress (GetAddressRequest) returns (GetAddressResponse) {
     option (google.api.http) = {
-        get: "/addresses/${address_id}"
+        get: "/addresses/{address_id}"
     };
   }
 
@@ -382,7 +395,7 @@ service GatewayService {
 
   rpc DeleteAddress (DeleteAddressRequest) returns (DeleteAddressResponse) {
     option (google.api.http) = {
-        delete: "/addresses/${address_id}"
+        delete: "/addresses/{address_id}"
     };
   }
 
@@ -399,7 +412,7 @@ service GatewayService {
 
   rpc UnsubscribeDevice (UnsubscribeDeviceRequest) returns (UnsubscribeDeviceResponse) {
     option (google.api.http) = {
-        delete: "/devices/${device_id}"
+        delete: "/devices/{device_id}"
     };
   }
 

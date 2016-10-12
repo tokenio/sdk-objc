@@ -88,8 +88,8 @@ message AccessToken {
   message Payload {
     string version = 1;                                   // 1.0
     string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
-    TokenMember member = 3;                               // member_id/optional[FriendlyName]
-    TokenMember redeemer = 4;                             // member_id/optional[FriendlyName]
+    TokenMember grantor = 3;                              // member_id/optional[FriendlyName]
+    TokenMember grantee = 4;                              // member_id/optional[FriendlyName]
     repeated Resource resources = 5;                      // Each entry defines an resources level
     int64 effective_at_ms = 6;                            // Optional
     int64 expires_at_ms = 7;                              // Optional

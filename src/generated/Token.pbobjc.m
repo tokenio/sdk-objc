@@ -757,8 +757,8 @@ typedef struct AccessToken__storage_ {
 
 @dynamic version;
 @dynamic nonce;
-@dynamic hasMember, member;
-@dynamic hasRedeemer, redeemer;
+@dynamic hasGrantor, grantor;
+@dynamic hasGrantee, grantee;
 @dynamic resourcesArray, resourcesArray_Count;
 @dynamic effectiveAtMs;
 @dynamic expiresAtMs;
@@ -768,8 +768,8 @@ typedef struct AccessToken_Payload__storage_ {
   uint32_t _has_storage_[1];
   NSString *version;
   NSString *nonce;
-  TokenMember *member;
-  TokenMember *redeemer;
+  TokenMember *grantor;
+  TokenMember *grantee;
   NSMutableArray *resourcesArray;
   NSString *description_p;
   int64_t effectiveAtMs;
@@ -801,20 +801,20 @@ typedef struct AccessToken_Payload__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "member",
+        .name = "grantor",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = AccessToken_Payload_FieldNumber_Member,
+        .number = AccessToken_Payload_FieldNumber_Grantor,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, member),
+        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, grantor),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "redeemer",
+        .name = "grantee",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = AccessToken_Payload_FieldNumber_Redeemer,
+        .number = AccessToken_Payload_FieldNumber_Grantee,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, redeemer),
+        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, grantee),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

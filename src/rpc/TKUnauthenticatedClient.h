@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "TKTypedef.h"
 
 @class GatewayService;
 @class Member;
@@ -44,6 +45,16 @@
           forMember:(NSString *)memberId
           onSuccess:(void(^)(Member*))onSuccess
             onError:(void(^)(NSError *))onError;
+
+/**
+ * Checks if a given alias already exists.
+ *
+ * @param alias alias to check
+ * @return true if alias already exists, false otherwise
+ */
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithBoolean)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts

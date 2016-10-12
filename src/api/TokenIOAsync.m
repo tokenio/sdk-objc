@@ -63,6 +63,14 @@
                    onError:onError];
 }
 
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithBoolean)onSuccess
+            onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    [client aliasExists:alias
+              onSuccess:onSuccess
+                onError:onError];
+}
 
 - (void)loginMember:(NSString *)memberId
           secretKey:(TKSecretKey *)key

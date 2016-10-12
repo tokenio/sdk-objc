@@ -40,6 +40,14 @@
 - (id)initWithDelegate:(TokenIOAsync *)delegate;
 
 /**
+ * Checks if a given alias already exists.
+ *
+ * @param alias alias to check
+ * @return true if alias already exists, false otherwise
+ */
+- (NSNumber *)aliasExists:(NSString *)alias;
+
+/**
  * Creates a new Token member with a pair of auto generated keys and the
  * given alias.
  *

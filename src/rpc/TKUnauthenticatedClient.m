@@ -10,6 +10,7 @@
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
+#import "TKTypedef.h"
 
 
 @implementation TKUnauthenticatedClient {
@@ -61,6 +62,25 @@
         if (response) {
             RpcLogCompleted(response);
             onSuccess(response.member);
+        } else {
+            RpcLogError(error);
+            onError(error);
+        }
+    }];
+}
+
+- (void)aliasExists:(NSString *)alias
+          onSuccess:(OnSuccessWithBoolean)onSuccess
+            onError:(OnError)onError {
+    AliasExistsRequest *request = [AliasExistsRequest message];
+    request.alias = alias;
+    RpcLogStart(request);
+    
+    [gateway aliasExistsWithRequest:request
+                            handler:^(AliasExistsResponse *response, NSError *error) {
+        if (response) {
+            RpcLogCompleted(response);
+            onSuccess([NSNumber numberWithBool:response.exists]);
         } else {
             RpcLogError(error);
             onError(error);

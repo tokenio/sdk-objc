@@ -13,6 +13,8 @@
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
 
+typedef void (^OnSuccessWithBoolean)(NSNumber *);
+
 typedef void (^OnSuccessWithMember)(Member *);
 typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync *);
 
@@ -37,3 +39,4 @@ typedef void (^OnSuccessWithAddress)(Address *);
 typedef void (^OnSuccessWithAddresses)(NSArray<Address *> *);
 
 typedef void (^OnSuccessWithPreferences)(NSString *);
+

@@ -52,7 +52,7 @@
  */
 - (void)approveKey:(TKSecretKey *)key
              level:(Key_Level)level
-          onSucess:(OnSuccess)onSuccess
+         onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 
 /**
@@ -65,7 +65,7 @@
  */
 - (void)approvePublicKey:(NSString *)publicKey
                    level:(Key_Level)level
-                onSucess:(OnSuccess)onSuccess
+               onSuccess:(OnSuccess)onSuccess
                  onError:(OnError)onError;
 
 /**
@@ -76,7 +76,7 @@
  * @param onError callback invoked on error
  */
 - (void)removeKey:(NSString *)keyId
-         onSucess:(OnSuccess)onSuccess
+        onSuccess:(OnSuccess)onSuccess
           onError:(OnError)onError;
 
 /**
@@ -87,7 +87,7 @@
  * @param onError callback invoked on error
  */
 - (void)addAlias:(NSString *)alias
-        onSucess:(OnSuccess)onSuccess
+       onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
 
 /**
@@ -98,7 +98,7 @@
  * @param onError callback invoked on error
  */
 - (void)removeAlias:(NSString *)alias
-           onSucess:(OnSuccess)onSuccess
+          onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
 
@@ -140,7 +140,7 @@
  */
 - (void)linkAccounts:(NSString *)bankId
          withPayload:(NSString *)payload
-            onSucess:(OnSuccessWithTKAccountsAsync)onSuccess
+           onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -241,7 +241,7 @@
  * @param onError callback invoked on error
  */
 - (void)deleteAddressWithId:(NSString *)addressId
-                   onSucess:(OnSuccess)onSuccess
+                  onSuccess:(OnSuccess)onSuccess
                     onError:(OnError)onError;
 
 /**
@@ -256,7 +256,7 @@
 - (void)createPaymentTokenForAccount:(NSString *)accountId
                               amount:(double)amount
                             currency:(NSString *)currency
-                            onSucess:(OnSuccessWithPaymentToken)onSuccess
+                           onSuccess:(OnSuccessWithPaymentToken)onSuccess
                              onError:(OnError)onError;
 
 /**
@@ -275,7 +275,7 @@
                             currency:(NSString *)currency
                        redeemerAlias:(NSString *)redeemerAlias
                          description:(NSString *)description
-                            onSucess:(OnSuccessWithPaymentToken)onSuccess
+                           onSuccess:(OnSuccessWithPaymentToken)onSuccess
                              onError:(OnError)onError;
 
 /**
@@ -286,7 +286,7 @@
  * @param onError callback invoked on error
  */
 - (void)getPaymentToken:(NSString *)tokenId
-               onSucess:(OnSuccessWithPaymentToken)onSuccess
+              onSuccess:(OnSuccessWithPaymentToken)onSuccess
                 onError:(OnError)onError;
 
 /**
