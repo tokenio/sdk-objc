@@ -24,8 +24,6 @@
 
 CF_EXTERN_C_BEGIN
 
-@class GPBAny;
-
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - BanklinkRoot
@@ -44,13 +42,15 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - AuthorizeLinkAccountsRequest
 
 typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
-  AuthorizeLinkAccountsRequest_FieldNumber_Alias = 1,
-  AuthorizeLinkAccountsRequest_FieldNumber_Secret = 2,
-  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 3,
-  AuthorizeLinkAccountsRequest_FieldNumber_Metadata = 4,
+  AuthorizeLinkAccountsRequest_FieldNumber_ClientId = 1,
+  AuthorizeLinkAccountsRequest_FieldNumber_Alias = 2,
+  AuthorizeLinkAccountsRequest_FieldNumber_Secret = 3,
+  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 4,
 };
 
 @interface AuthorizeLinkAccountsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
 
@@ -59,10 +59,6 @@ typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountsArray;
 /// The number of items in @c accountsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBAny *metadata;
-/// Test to see if @c metadata has been set.
-@property(nonatomic, readwrite) BOOL hasMetadata;
 
 @end
 
