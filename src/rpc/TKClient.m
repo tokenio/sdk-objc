@@ -108,20 +108,18 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
-- (void)subscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
-               platform:(Platform)platform
-                   tags:(NSMutableArray<NSString*> *)tags
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError {
-    SubscribeDeviceRequest *request = [SubscribeDeviceRequest message];
+- (void)subscribeToNotifications:(NSString *)provider
+                          target:(NSString *)target
+                        platform:(Platform)platform
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError {
+    SubscribeToNotificationsRequest *request = [SubscribeToNotificationsRequest message];
     request.provider = provider;
-    request.notificationUri = notificationUri;
+    request.target = target;
     request.platform = platform;
-    request.tagsArray = tags;
     GRPCProtoCall *call = [gateway
-                           RPCToSubscribeDeviceWithRequest:request
-                           handler:^(SubscribeDeviceResponse *response, NSError *error) {
+                           RPCToSubscribeToNotificationsWithRequest:request
+                           handler:^(SubscribeToNotificationsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess();
@@ -134,16 +132,14 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)unsubscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
-    UnsubscribeDeviceRequest *request = [UnsubscribeDeviceRequest message];
-    request.provider = provider;
-    request.notificationUri = notificationUri;
+    UnsubscribeFromNotificationsRequest *request = [UnsubscribeFromNotificationsRequest message];
+    request.subscriberId = subscriberId;
     GRPCProtoCall *call = [gateway
-                           RPCToUnsubscribeDeviceWithRequest:request
-                           handler:^(UnsubscribeDeviceResponse *response, NSError *error) {
+                           RPCToUnsubscribeFromNotificationsWithRequest:request
+                           handler:^(UnsubscribeFromNotificationsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess();

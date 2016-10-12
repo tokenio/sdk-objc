@@ -141,26 +141,22 @@
                 onError:onError];
 }
 
-- (void)subscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
+- (void)subscribeToNotifications:(NSString *)provider
+        target:(NSString *)target
                platform:(Platform)platform
-                   tags:(NSMutableArray<NSString*> *)tags
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
-    [client subscribeDevice:provider
-            notificationUri:notificationUri
-                   platform:platform
-                       tags:tags
-                  onSuccess:onSuccess
-                    onError:onError];
+    [client subscribeToNotifications:provider
+                              target:target
+                            platform:platform
+                           onSuccess:onSuccess
+                             onError:onError];
 }
 
-- (void)unsubscribeDevice:(NSString *)provider
-        notificationUri:(NSString *)notificationUri
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
-    [client unsubscribeDevice:provider
-              notificationUri:notificationUri
+    [client unsubscribeFromNotifications:subscriberId
                     onSuccess:onSuccess
                       onError:onError];
 }
