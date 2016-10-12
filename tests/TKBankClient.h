@@ -5,7 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class FankMetadata;
+@class FankAccount;
+@class FankClient;
 
 
 /**
@@ -17,8 +18,16 @@
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port;
 
+
+- (FankClient *)addClientWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
+
+- (FankAccount *)addAccountWithName:(NSString *)name
+                          forClient:(FankClient *)client
+                  withAccountNumber:(NSString *)accountNumber
+                             amount:(NSString *)amount
+                           currency:(NSString *)currency;
+
 - (NSString *)authorizeAccountLinkingFor:(NSString *)alias
-                    accountNumbers:(NSArray<NSString *> *)accountNumbers
-                          metadata:(FankMetadata *)metadata;
+                          accountNumbers:(NSArray<NSString *> *)accountNumbers;
 
 @end

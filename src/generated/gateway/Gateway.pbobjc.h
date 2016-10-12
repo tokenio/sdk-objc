@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class Member;
 @class MemberUpdate;
 @class Money;
+@class Page;
 @class Payment;
 @class PaymentPayload;
 @class PaymentToken;
@@ -568,19 +569,17 @@ typedef GPB_ENUM(GetTransactionResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
   GetTransactionsRequest_FieldNumber_AccountId = 1,
-  GetTransactionsRequest_FieldNumber_Offset = 2,
-  GetTransactionsRequest_FieldNumber_Limit = 3,
+  GetTransactionsRequest_FieldNumber_Page = 2,
 };
 
 @interface GetTransactionsRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
-/// Optional token offset, used for paging.
-@property(nonatomic, readwrite) int32_t offset;
-
-/// Optional token limit, used for paging.
-@property(nonatomic, readwrite) int32_t limit;
+/// Optional paging settings.
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/// Test to see if @c page has been set.
+@property(nonatomic, readwrite) BOOL hasPage;
 
 @end
 
@@ -588,6 +587,7 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
 
 typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
   GetTransactionsResponse_FieldNumber_TransactionsArray = 1,
+  GetTransactionsResponse_FieldNumber_Offset = 2,
 };
 
 @interface GetTransactionsResponse : GPBMessage
@@ -595,6 +595,9 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Transaction*> *transactionsArray;
 /// The number of items in @c transactionsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger transactionsArray_Count;
+
+/// Optional offset state for the client to roundtrip.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @end
 
@@ -655,17 +658,15 @@ typedef GPB_ENUM(GetPaymentTokenResponse_FieldNumber) {
 #pragma mark - GetPaymentTokensRequest
 
 typedef GPB_ENUM(GetPaymentTokensRequest_FieldNumber) {
-  GetPaymentTokensRequest_FieldNumber_Offset = 1,
-  GetPaymentTokensRequest_FieldNumber_Limit = 2,
+  GetPaymentTokensRequest_FieldNumber_Page = 1,
 };
 
 @interface GetPaymentTokensRequest : GPBMessage
 
-/// Optional token offset, used for paging.
-@property(nonatomic, readwrite) int32_t offset;
-
-/// Optional token limit, used for paging.
-@property(nonatomic, readwrite) int32_t limit;
+/// Optional paging settings.
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/// Test to see if @c page has been set.
+@property(nonatomic, readwrite) BOOL hasPage;
 
 @end
 
@@ -673,6 +674,7 @@ typedef GPB_ENUM(GetPaymentTokensRequest_FieldNumber) {
 
 typedef GPB_ENUM(GetPaymentTokensResponse_FieldNumber) {
   GetPaymentTokensResponse_FieldNumber_TokensArray = 1,
+  GetPaymentTokensResponse_FieldNumber_Offset = 2,
 };
 
 @interface GetPaymentTokensResponse : GPBMessage
@@ -680,6 +682,9 @@ typedef GPB_ENUM(GetPaymentTokensResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PaymentToken*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
+
+/// Optional offset state for the client to roundtrip.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @end
 
@@ -802,17 +807,15 @@ typedef GPB_ENUM(GetAccessTokenResponse_FieldNumber) {
 #pragma mark - GetAccessTokensRequest
 
 typedef GPB_ENUM(GetAccessTokensRequest_FieldNumber) {
-  GetAccessTokensRequest_FieldNumber_Offset = 1,
-  GetAccessTokensRequest_FieldNumber_Limit = 2,
+  GetAccessTokensRequest_FieldNumber_Page = 1,
 };
 
 @interface GetAccessTokensRequest : GPBMessage
 
-/// Optional token offset, used for paging.
-@property(nonatomic, readwrite) int32_t offset;
-
-/// Optional token limit, used for paging.
-@property(nonatomic, readwrite) int32_t limit;
+/// Optional paging settings.
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/// Test to see if @c page has been set.
+@property(nonatomic, readwrite) BOOL hasPage;
 
 @end
 
@@ -820,6 +823,7 @@ typedef GPB_ENUM(GetAccessTokensRequest_FieldNumber) {
 
 typedef GPB_ENUM(GetAccessTokensResponse_FieldNumber) {
   GetAccessTokensResponse_FieldNumber_TokensArray = 1,
+  GetAccessTokensResponse_FieldNumber_Offset = 2,
 };
 
 @interface GetAccessTokensResponse : GPBMessage
@@ -827,6 +831,9 @@ typedef GPB_ENUM(GetAccessTokensResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
+
+/// Optional offset state for the client to roundtrip.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @end
 
@@ -955,8 +962,7 @@ typedef GPB_ENUM(GetPaymentResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetPaymentsRequest_FieldNumber) {
   GetPaymentsRequest_FieldNumber_TokenId = 1,
-  GetPaymentsRequest_FieldNumber_Offset = 2,
-  GetPaymentsRequest_FieldNumber_Limit = 3,
+  GetPaymentsRequest_FieldNumber_Page = 2,
 };
 
 @interface GetPaymentsRequest : GPBMessage
@@ -964,11 +970,10 @@ typedef GPB_ENUM(GetPaymentsRequest_FieldNumber) {
 /// Optional token_id to filter payments by.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
-/// Optional token offset, used for paging.
-@property(nonatomic, readwrite) int32_t offset;
-
-/// Optional token limit, used for paging.
-@property(nonatomic, readwrite) int32_t limit;
+/// Optional paging settings.
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/// Test to see if @c page has been set.
+@property(nonatomic, readwrite) BOOL hasPage;
 
 @end
 
@@ -976,6 +981,7 @@ typedef GPB_ENUM(GetPaymentsRequest_FieldNumber) {
 
 typedef GPB_ENUM(GetPaymentsResponse_FieldNumber) {
   GetPaymentsResponse_FieldNumber_PaymentsArray = 1,
+  GetPaymentsResponse_FieldNumber_Offset = 2,
 };
 
 @interface GetPaymentsResponse : GPBMessage
@@ -984,6 +990,9 @@ typedef GPB_ENUM(GetPaymentsResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Payment*> *paymentsArray;
 /// The number of items in @c paymentsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger paymentsArray_Count;
+
+/// Optional offset state for the client to roundtrip.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @end
 

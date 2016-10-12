@@ -4,12 +4,7 @@
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
-#if GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS
-  #import <Protobuf/Any.pbobjc.h>
-#else
-  #import "google/protobuf/Any.pbobjc.h"
-#endif
-#import "Money.pbobjc.h"
+#import "google/api/Annotations.pbobjc.h"
 
 
 NS_ASSUME_NONNULL_BEGIN

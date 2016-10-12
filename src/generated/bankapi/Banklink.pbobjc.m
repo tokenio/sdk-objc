@@ -13,14 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
-#if GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS
- #import <Protobuf/Any.pbobjc.h>
-#else
- #import "google/protobuf/Any.pbobjc.h"
-#endif
-
  #import "bankapi/Banklink.pbobjc.h"
- #import "Money.pbobjc.h"
+ #import "google/api/Annotations.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -37,8 +31,7 @@
   if (!registry) {
     GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
-    [registry addExtensions:[GPBAnyRoot extensionRegistry]];
-    [registry addExtensions:[MoneyRoot extensionRegistry]];
+    [registry addExtensions:[AnnotationsRoot extensionRegistry]];
   }
   return registry;
 }
@@ -63,17 +56,17 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
 
 @implementation AuthorizeLinkAccountsRequest
 
+@dynamic clientId;
 @dynamic alias;
 @dynamic secret;
 @dynamic accountsArray, accountsArray_Count;
-@dynamic hasMetadata, metadata;
 
 typedef struct AuthorizeLinkAccountsRequest__storage_ {
   uint32_t _has_storage_[1];
+  NSString *clientId;
   NSString *alias;
   NSString *secret;
   NSMutableArray *accountsArray;
-  GPBAny *metadata;
 } AuthorizeLinkAccountsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -83,10 +76,19 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "clientId",
+        .dataTypeSpecific.className = NULL,
+        .number = AuthorizeLinkAccountsRequest_FieldNumber_ClientId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, clientId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "alias",
         .dataTypeSpecific.className = NULL,
         .number = AuthorizeLinkAccountsRequest_FieldNumber_Alias,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, alias),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -95,7 +97,7 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
         .name = "secret",
         .dataTypeSpecific.className = NULL,
         .number = AuthorizeLinkAccountsRequest_FieldNumber_Secret,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, secret),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -108,15 +110,6 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, accountsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "metadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBAny),
-        .number = AuthorizeLinkAccountsRequest_FieldNumber_Metadata,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, metadata),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

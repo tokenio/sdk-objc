@@ -1,29 +1,111 @@
 syntax = "proto3";
 package io.token.proto.bankapi;
+option objc_class_prefix = "Fank";
 
-import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
 
 import "money.proto";
 
-// A helper proto to serialize Fake Bank metadata.
-// This payload is intended to be used with LinkAccountRequest
-// as a serialized json inside the payload.
-message FankMetadata {
-  Client client = 1;
-  repeated ClientAccount clientAccounts = 2;
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Common data structures.
+//
 
-  // Instruction for FakeBank to create a client
-  // with the specified name (if doesn't already exist)
-  message Client {
-    string first_name = 1;
-    string last_name = 2;
+//
+// A bank client, such as John Doe. Client can have multiple accounts.
+//
+message Client {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+message Account {
+  string name = 2;
+  string account_number = 3;
+  io.token.proto.common.money.Money balance = 4;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Requests/Responses for the API.
+//
+
+message AddClientRequest {
+  string first_name = 1;
+  string last_name = 2;
+}
+
+message AddClientResponse {
+  Client client = 1;
+}
+
+message GetClientRequest {
+  string client_id = 1;
+}
+
+message GetClientResponse {
+  Client client = 1;
+}
+
+message AddAccountRequest {
+  string client_id = 1;
+  string name = 2;
+  string account_number = 3;
+  io.token.proto.common.money.Money balance = 4;
+}
+
+message AddAccountResponse {
+  Account account = 1;
+}
+
+message GetAccountsRequest {
+  string client_id = 1;
+}
+
+message GetAccountsResponse {
+  repeated Account account = 1;
+}
+
+message GetAccountRequest {
+  string client_id = 1;
+  string account_number = 2;
+}
+
+message GetAccountResponse {
+  Account account = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fank testing API, used to create accounts on the fly. Used for testing.
+//
+
+service FankService {
+  rpc AddClient (AddClientRequest) returns (AddClientResponse) {
+    option (google.api.http) = {
+        put: "/clients"
+    };
   }
 
-  // Instruction for FakeBank to create a client account
-  // if doesn't already exist
-  message ClientAccount {
-    string name = 1;
-    string account_number = 2;
-    io.token.proto.common.money.Money balance = 3;
+  rpc GetClient (GetClientRequest) returns (GetClientResponse) {
+    option (google.api.http) = {
+        get: "/clients/{client_id}"
+    };
+  }
+
+  rpc AddAccount (AddAccountRequest) returns (AddAccountResponse) {
+    option (google.api.http) = {
+        put: "/clients/{client_id}/accounts"
+    };
+  }
+
+  rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {
+    option (google.api.http) = {
+        get: "/clients/{client_id}/accounts"
+    };
+  }
+
+  rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
+    option (google.api.http) = {
+        get: "/clients/{client_id}/accounts/{account_number}"
+    };
   }
 }

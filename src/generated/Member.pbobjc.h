@@ -175,8 +175,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
 typedef GPB_ENUM(Address_FieldNumber) {
   Address_FieldNumber_Id_p = 1,
   Address_FieldNumber_Name = 2,
-  Address_FieldNumber_Data_p = 3,
-  Address_FieldNumber_DataSignature = 4,
+  Address_FieldNumber_Payload = 3,
+  Address_FieldNumber_PayloadSignature = 4,
 };
 
 /// A member address record
@@ -189,12 +189,12 @@ typedef GPB_ENUM(Address_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 /// Country specific JSON address
-@property(nonatomic, readwrite, copy, null_resettable) NSString *data_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
 
 /// member signature of the data
-@property(nonatomic, readwrite, strong, null_resettable) Signature *dataSignature;
-/// Test to see if @c dataSignature has been set.
-@property(nonatomic, readwrite) BOOL hasDataSignature;
+@property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
+/// Test to see if @c payloadSignature has been set.
+@property(nonatomic, readwrite) BOOL hasPayloadSignature;
 
 @end
 
