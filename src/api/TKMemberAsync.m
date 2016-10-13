@@ -274,7 +274,7 @@
 - (void)createPaymentTokenForAccount:(NSString *)accountId
                               amount:(double)amount
                             currency:(NSString *)currency
-                           onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                           onSuccess:(OnSuccessWithToken)onSuccess
                              onError:(OnError)onError {
     [self createPaymentTokenForAccount:accountId
                                 amount:amount
@@ -290,22 +290,22 @@
                             currency:(NSString *)currency
                        redeemerAlias:(NSString *)redeemerAlias
                          description:(NSString *)description
-                           onSuccess:(OnSuccessWithPaymentToken)onSuccess
+                           onSuccess:(OnSuccessWithToken)onSuccess
                              onError:(OnError)onError {
     
     TokenMember *payer = [TokenMember message];
     payer.id_p = self.id;
     
-    PaymentToken_Payload *payload = [PaymentToken_Payload message];
+    TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
     payload.nonce = [TKUtil nonce];
-    payload.payer = payer;
-    payload.amount = [NSString stringWithFormat:@"%g", amount];
-    payload.currency = currency;
-    payload.transfer.from.accountId = accountId;
+    payload.from = payer;
+    payload.bankTransfer.amount = [NSString stringWithFormat:@"%g", amount];
+    payload.bankTransfer.currency = currency;
+    payload.bankTransfer.transfer.source.accountId = accountId;
 
     if (redeemerAlias) {
-        payload.redeemer.alias = redeemerAlias;
+        payload.bankTransfer.redeemer.alias = redeemerAlias;
     }
 
     if (description) {
@@ -313,12 +313,12 @@
     }
 
     [client createPaymentToken:payload
-                     onSuccess:^(PaymentToken *token) { onSuccess(token); }
+                     onSuccess:^(Token *token) { onSuccess(token); }
                        onError:onError];
 }
 
 - (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithPaymentToken)onSuccess
+              onSuccess:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError {
     [client getPaymentToken:tokenId
                   onSuccess:onSuccess
@@ -327,7 +327,7 @@
 
 - (void)getPaymentTokensOffset:(int)offset
                          limit:(int)limit
-                     onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+                     onSuccess:(OnSuccessWithTokens)onSuccess
                        onError:(OnError)onError {
     [client getPaymentTokens:offset
                        limit:limit
@@ -335,8 +335,8 @@
                      onError:onError];
 }
 
-- (void)endorsePaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)endorsePaymentToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
     [client endorsePaymentToken:token
                       onSuccess:onSuccess
@@ -344,15 +344,15 @@
 
 }
 
-- (void)cancelPaymentToken:(PaymentToken *)token
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)cancelPaymentToken:(Token *)token
+                 onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
     [client cancelPaymentToken:token
                       onSuccess:onSuccess
                         onError:onError];
 }
 
-- (void)redeemPaymentToken:(PaymentToken *)token
+- (void)redeemPaymentToken:(Token *)token
                  onSuccess:(OnSuccessWithPayment)onSuccess
                    onError:(OnError)onError {
     [self redeemPaymentToken:token
@@ -362,7 +362,7 @@
                      onError:onError];
 }
 
-- (void)redeemPaymentToken:(PaymentToken *)token
+- (void)redeemPaymentToken:(Token *)token
                     amount:(NSNumber *)amount
                   currency:(NSString *)currency
                  onSuccess:(OnSuccessWithPayment)onSuccess

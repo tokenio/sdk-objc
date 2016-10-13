@@ -259,8 +259,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)createPaymentToken:(PaymentToken_Payload *)payload
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)createPaymentToken:(TokenPayload *)payload
+                 onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
     CreatePaymentTokenRequest *request = [CreatePaymentTokenRequest message];
     request.payload = payload;
@@ -283,7 +283,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithPaymentToken)onSuccess
+              onSuccess:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError {
     GetPaymentTokenRequest *request = [GetPaymentTokenRequest message];
     request.tokenId = tokenId;
@@ -307,7 +307,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 - (void)getPaymentTokens:(int)offset
                    limit:(int)limit
-               onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+               onSuccess:(OnSuccessWithTokens)onSuccess
                  onError:(OnError)onError {
     GetPaymentTokensRequest *request = [GetPaymentTokensRequest message];
     request.page.offset = @"0"; // TODO(maxim): fix me
@@ -329,8 +329,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)endorsePaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)endorsePaymentToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
     EndorsePaymentTokenRequest *request = [EndorsePaymentTokenRequest message];
     request.tokenId = token.id_p;
@@ -355,8 +355,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)cancelPaymentToken:(PaymentToken *)token
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)cancelPaymentToken:(Token *)token
+                 onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
     CancelPaymentTokenRequest *request = [CancelPaymentTokenRequest message];
     request.tokenId = token.id_p;

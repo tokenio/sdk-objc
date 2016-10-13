@@ -62,6 +62,71 @@ static GPBFileDescriptor *TokenRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Token
+
+@implementation Token
+
+@dynamic id_p;
+@dynamic hasPayload, payload;
+@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
+
+typedef struct Token__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *id_p;
+  TokenPayload *payload;
+  NSMutableArray *payloadSignaturesArray;
+} Token__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Token_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Token__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = Token_FieldNumber_Payload,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Token__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "payloadSignaturesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenSignature),
+        .number = Token_FieldNumber_PayloadSignaturesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Token__storage_, payloadSignaturesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Token class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Token__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - TokenSignature
 
 @implementation TokenSignature
@@ -229,107 +294,35 @@ typedef struct TokenMember__storage_ {
 
 @end
 
-#pragma mark - PaymentToken
+#pragma mark - TokenPayload
 
-@implementation PaymentToken
+@implementation TokenPayload
 
-@dynamic id_p;
-@dynamic hasPayload, payload;
-@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
-
-typedef struct PaymentToken__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *id_p;
-  PaymentToken_Payload *payload;
-  NSMutableArray *payloadSignaturesArray;
-} PaymentToken__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "id_p",
-        .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_FieldNumber_Id_p,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(PaymentToken__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken_Payload),
-        .number = PaymentToken_FieldNumber_Payload,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(PaymentToken__storage_, payload),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "payloadSignaturesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenSignature),
-        .number = PaymentToken_FieldNumber_PayloadSignaturesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(PaymentToken__storage_, payloadSignaturesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[PaymentToken class]
-                                     rootClass:[TokenRoot class]
-                                          file:TokenRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(PaymentToken__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - PaymentToken_Payload
-
-@implementation PaymentToken_Payload
-
+@dynamic bodyOneOfCase;
 @dynamic version;
 @dynamic nonce;
 @dynamic hasIssuer, issuer;
-@dynamic hasPayer, payer;
-@dynamic hasRedeemer, redeemer;
-@dynamic hasTransfer, transfer;
-@dynamic hasFeesPaidBy, feesPaidBy;
-@dynamic currency;
-@dynamic lifetimeAmount;
-@dynamic amount;
+@dynamic hasFrom, from;
+@dynamic hasTo, to;
 @dynamic effectiveAtMs;
 @dynamic expiresAtMs;
 @dynamic description_p;
-@dynamic vars, vars_Count;
+@dynamic bankTransfer;
+@dynamic access;
 
-typedef struct PaymentToken_Payload__storage_ {
-  uint32_t _has_storage_[1];
+typedef struct TokenPayload__storage_ {
+  uint32_t _has_storage_[2];
   NSString *version;
   NSString *nonce;
   TokenMember *issuer;
-  TokenMember *payer;
-  TokenMember *redeemer;
-  Transfer *transfer;
-  TokenMember *feesPaidBy;
-  NSString *currency;
-  NSString *lifetimeAmount;
-  NSString *amount;
+  TokenMember *from;
+  TokenMember *to;
   NSString *description_p;
-  NSMutableDictionary *vars;
+  BankTransfer *bankTransfer;
+  Access *access;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
-} PaymentToken_Payload__storage_;
+} TokenPayload__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -340,137 +333,221 @@ typedef struct PaymentToken_Payload__storage_ {
       {
         .name = "version",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_Version,
+        .number = TokenPayload_FieldNumber_Version,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, version),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, version),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "nonce",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_Nonce,
+        .number = TokenPayload_FieldNumber_Nonce,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, nonce),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, nonce),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "issuer",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = PaymentToken_Payload_FieldNumber_Issuer,
+        .number = TokenPayload_FieldNumber_Issuer,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, issuer),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, issuer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "payer",
+        .name = "from",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = PaymentToken_Payload_FieldNumber_Payer,
+        .number = TokenPayload_FieldNumber_From,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, payer),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, from),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "redeemer",
+        .name = "to",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = PaymentToken_Payload_FieldNumber_Redeemer,
+        .number = TokenPayload_FieldNumber_To,
         .hasIndex = 4,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, redeemer),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, to),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "transfer",
-        .dataTypeSpecific.className = GPBStringifySymbol(Transfer),
-        .number = PaymentToken_Payload_FieldNumber_Transfer,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, transfer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "feesPaidBy",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = PaymentToken_Payload_FieldNumber_FeesPaidBy,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, feesPaidBy),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "currency",
-        .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_Currency,
-        .hasIndex = 7,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, currency),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "lifetimeAmount",
-        .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_LifetimeAmount,
-        .hasIndex = 8,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, lifetimeAmount),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "amount",
-        .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_Amount,
-        .hasIndex = 9,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, amount),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
       },
       {
         .name = "effectiveAtMs",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_EffectiveAtMs,
-        .hasIndex = 10,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, effectiveAtMs),
+        .number = TokenPayload_FieldNumber_EffectiveAtMs,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, effectiveAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "expiresAtMs",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_ExpiresAtMs,
-        .hasIndex = 11,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, expiresAtMs),
+        .number = TokenPayload_FieldNumber_ExpiresAtMs,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, expiresAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentToken_Payload_FieldNumber_Description_p,
-        .hasIndex = 12,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, description_p),
+        .number = TokenPayload_FieldNumber_Description_p,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankTransfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankTransfer),
+        .number = TokenPayload_FieldNumber_BankTransfer,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, bankTransfer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "access",
+        .dataTypeSpecific.className = GPBStringifySymbol(Access),
+        .number = TokenPayload_FieldNumber_Access,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, access),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TokenPayload class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TokenPayload__storage_)
+                                         flags:0];
+    static const char *oneofs[] = {
+      "body",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - BankTransfer
+
+@implementation BankTransfer
+
+@dynamic hasRedeemer, redeemer;
+@dynamic hasTransfer, transfer;
+@dynamic hasFeesPaidBy, feesPaidBy;
+@dynamic currency;
+@dynamic lifetimeAmount;
+@dynamic amount;
+@dynamic vars, vars_Count;
+
+typedef struct BankTransfer__storage_ {
+  uint32_t _has_storage_[1];
+  TokenMember *redeemer;
+  Transfer *transfer;
+  TokenMember *feesPaidBy;
+  NSString *currency;
+  NSString *lifetimeAmount;
+  NSString *amount;
+  NSMutableDictionary *vars;
+} BankTransfer__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "redeemer",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
+        .number = BankTransfer_FieldNumber_Redeemer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, redeemer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer),
+        .number = BankTransfer_FieldNumber_Transfer,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, transfer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "feesPaidBy",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
+        .number = BankTransfer_FieldNumber_FeesPaidBy,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, feesPaidBy),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = BankTransfer_FieldNumber_Currency,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "lifetimeAmount",
+        .dataTypeSpecific.className = NULL,
+        .number = BankTransfer_FieldNumber_LifetimeAmount,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, lifetimeAmount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = NULL,
+        .number = BankTransfer_FieldNumber_Amount,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, amount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "vars",
         .dataTypeSpecific.className = GPBStringifySymbol(Var),
-        .number = PaymentToken_Payload_FieldNumber_Vars,
+        .number = BankTransfer_FieldNumber_Vars,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(PaymentToken_Payload__storage_, vars),
+        .offset = (uint32_t)offsetof(BankTransfer__storage_, vars),
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[PaymentToken_Payload class]
+        [GPBDescriptor allocDescriptorForClass:[BankTransfer class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(PaymentToken_Payload__storage_)
+                                   storageSize:sizeof(BankTransfer__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -686,95 +763,16 @@ typedef struct TimePeriod__storage_ {
 
 @end
 
-#pragma mark - AccessToken
+#pragma mark - Access
 
-@implementation AccessToken
+@implementation Access
 
-@dynamic id_p;
-@dynamic hasPayload, payload;
-@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
-
-typedef struct AccessToken__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *id_p;
-  AccessToken_Payload *payload;
-  NSMutableArray *payloadSignaturesArray;
-} AccessToken__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "id_p",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_FieldNumber_Id_p,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Payload),
-        .number = AccessToken_FieldNumber_Payload,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccessToken__storage_, payload),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "payloadSignaturesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenSignature),
-        .number = AccessToken_FieldNumber_PayloadSignaturesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccessToken__storage_, payloadSignaturesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken class]
-                                     rootClass:[TokenRoot class]
-                                          file:TokenRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - AccessToken_Payload
-
-@implementation AccessToken_Payload
-
-@dynamic version;
-@dynamic nonce;
-@dynamic hasGrantor, grantor;
-@dynamic hasGrantee, grantee;
 @dynamic resourcesArray, resourcesArray_Count;
-@dynamic effectiveAtMs;
-@dynamic expiresAtMs;
-@dynamic description_p;
 
-typedef struct AccessToken_Payload__storage_ {
+typedef struct Access__storage_ {
   uint32_t _has_storage_[1];
-  NSString *version;
-  NSString *nonce;
-  TokenMember *grantor;
-  TokenMember *grantee;
   NSMutableArray *resourcesArray;
-  NSString *description_p;
-  int64_t effectiveAtMs;
-  int64_t expiresAtMs;
-} AccessToken_Payload__storage_;
+} Access__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -782,86 +780,23 @@ typedef struct AccessToken_Payload__storage_ {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "version",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Payload_FieldNumber_Version,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, version),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "nonce",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Payload_FieldNumber_Nonce,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, nonce),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "grantor",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = AccessToken_Payload_FieldNumber_Grantor,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, grantor),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "grantee",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = AccessToken_Payload_FieldNumber_Grantee,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, grantee),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
       {
         .name = "resourcesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource),
-        .number = AccessToken_Payload_FieldNumber_ResourcesArray,
+        .dataTypeSpecific.className = GPBStringifySymbol(Access_Resource),
+        .number = Access_FieldNumber_ResourcesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, resourcesArray),
+        .offset = (uint32_t)offsetof(Access__storage_, resourcesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
-      {
-        .name = "effectiveAtMs",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Payload_FieldNumber_EffectiveAtMs,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, effectiveAtMs),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "expiresAtMs",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Payload_FieldNumber_ExpiresAtMs,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, expiresAtMs),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "description_p",
-        .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Payload_FieldNumber_Description_p,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(AccessToken_Payload__storage_, description_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Payload class]
+        [GPBDescriptor allocDescriptorForClass:[Access class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Payload__storage_)
+                                   storageSize:sizeof(Access__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -871,21 +806,21 @@ typedef struct AccessToken_Payload__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Resource
+#pragma mark - Access_Resource
 
-@implementation AccessToken_Resource
+@implementation Access_Resource
 
 @dynamic resourceOneOfCase;
 @dynamic address;
 @dynamic account;
 @dynamic transaction;
 
-typedef struct AccessToken_Resource__storage_ {
+typedef struct Access_Resource__storage_ {
   uint32_t _has_storage_[2];
-  AccessToken_Resource_Address *address;
-  AccessToken_Resource_Account *account;
-  AccessToken_Resource_Transaction *transaction;
-} AccessToken_Resource__storage_;
+  Access_Resource_Address *address;
+  Access_Resource_Account *account;
+  Access_Resource_Transaction *transaction;
+} Access_Resource__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -895,39 +830,39 @@ typedef struct AccessToken_Resource__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Address),
-        .number = AccessToken_Resource_FieldNumber_Address,
+        .dataTypeSpecific.className = GPBStringifySymbol(Access_Resource_Address),
+        .number = Access_Resource_FieldNumber_Address,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, address),
+        .offset = (uint32_t)offsetof(Access_Resource__storage_, address),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Account),
-        .number = AccessToken_Resource_FieldNumber_Account,
+        .dataTypeSpecific.className = GPBStringifySymbol(Access_Resource_Account),
+        .number = Access_Resource_FieldNumber_Account,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, account),
+        .offset = (uint32_t)offsetof(Access_Resource__storage_, account),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "transaction",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Resource_Transaction),
-        .number = AccessToken_Resource_FieldNumber_Transaction,
+        .dataTypeSpecific.className = GPBStringifySymbol(Access_Resource_Transaction),
+        .number = Access_Resource_FieldNumber_Transaction,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessToken_Resource__storage_, transaction),
+        .offset = (uint32_t)offsetof(Access_Resource__storage_, transaction),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource class]
+        [GPBDescriptor allocDescriptorForClass:[Access_Resource class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Resource__storage_)
+                                   storageSize:sizeof(Access_Resource__storage_)
                                          flags:0];
     static const char *oneofs[] = {
       "resource",
@@ -943,21 +878,21 @@ typedef struct AccessToken_Resource__storage_ {
 
 @end
 
-void AccessToken_Resource_ClearResourceOneOfCase(AccessToken_Resource *message) {
+void Access_Resource_ClearResourceOneOfCase(Access_Resource *message) {
   GPBDescriptor *descriptor = [message descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
-#pragma mark - AccessToken_Resource_Address
+#pragma mark - Access_Resource_Address
 
-@implementation AccessToken_Resource_Address
+@implementation Access_Resource_Address
 
 @dynamic addressId;
 
-typedef struct AccessToken_Resource_Address__storage_ {
+typedef struct Access_Resource_Address__storage_ {
   uint32_t _has_storage_[1];
   NSString *addressId;
-} AccessToken_Resource_Address__storage_;
+} Access_Resource_Address__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -968,20 +903,20 @@ typedef struct AccessToken_Resource_Address__storage_ {
       {
         .name = "addressId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Resource_Address_FieldNumber_AddressId,
+        .number = Access_Resource_Address_FieldNumber_AddressId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Resource_Address__storage_, addressId),
+        .offset = (uint32_t)offsetof(Access_Resource_Address__storage_, addressId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Address class]
+        [GPBDescriptor allocDescriptorForClass:[Access_Resource_Address class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Resource_Address__storage_)
+                                   storageSize:sizeof(Access_Resource_Address__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -991,16 +926,16 @@ typedef struct AccessToken_Resource_Address__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Resource_Account
+#pragma mark - Access_Resource_Account
 
-@implementation AccessToken_Resource_Account
+@implementation Access_Resource_Account
 
 @dynamic accountId;
 
-typedef struct AccessToken_Resource_Account__storage_ {
+typedef struct Access_Resource_Account__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-} AccessToken_Resource_Account__storage_;
+} Access_Resource_Account__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1011,20 +946,20 @@ typedef struct AccessToken_Resource_Account__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Resource_Account_FieldNumber_AccountId,
+        .number = Access_Resource_Account_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Resource_Account__storage_, accountId),
+        .offset = (uint32_t)offsetof(Access_Resource_Account__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Account class]
+        [GPBDescriptor allocDescriptorForClass:[Access_Resource_Account class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Resource_Account__storage_)
+                                   storageSize:sizeof(Access_Resource_Account__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1034,16 +969,16 @@ typedef struct AccessToken_Resource_Account__storage_ {
 
 @end
 
-#pragma mark - AccessToken_Resource_Transaction
+#pragma mark - Access_Resource_Transaction
 
-@implementation AccessToken_Resource_Transaction
+@implementation Access_Resource_Transaction
 
 @dynamic accountId;
 
-typedef struct AccessToken_Resource_Transaction__storage_ {
+typedef struct Access_Resource_Transaction__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-} AccessToken_Resource_Transaction__storage_;
+} Access_Resource_Transaction__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1054,20 +989,20 @@ typedef struct AccessToken_Resource_Transaction__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessToken_Resource_Transaction_FieldNumber_AccountId,
+        .number = Access_Resource_Transaction_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessToken_Resource_Transaction__storage_, accountId),
+        .offset = (uint32_t)offsetof(Access_Resource_Transaction__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessToken_Resource_Transaction class]
+        [GPBDescriptor allocDescriptorForClass:[Access_Resource_Transaction class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessToken_Resource_Transaction__storage_)
+                                   storageSize:sizeof(Access_Resource_Transaction__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

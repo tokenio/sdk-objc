@@ -5,8 +5,8 @@ option java_outer_classname = "TransferProtos";
 
 // Money transfer instructions.
 message Transfer {
-  Source from = 1;                    // From transferDest.
-  repeated Destination to = 2;        // To transferDest, could be an array of options.
+  Source source = 1;                           // Transfer source.
+  repeated Destination destination = 2;        // Transfer desitination.
 }
 
 // Money transfer source. This could be an transferDest id assigned by Token or

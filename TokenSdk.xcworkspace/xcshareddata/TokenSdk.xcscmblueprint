@@ -7,7 +7,7 @@
     "898A30139186D79A50BCCE5290195A2483838282" : 9223372036854775807,
     "13811C548DDF1B6866B16DDDA04263527F58A06E" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A238AA6B-60DC-4539-A884-6442FEEF9F43",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A73BEC38-2AC8-4AFF-BFAF-D69D208B3409",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "898A30139186D79A50BCCE5290195A2483838282" : "sdk-objc\/",
     "13811C548DDF1B6866B16DDDA04263527F58A06E" : "sdk-objc\/src\/ed25519\/"
@@ -22,7 +22,7 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "13811C548DDF1B6866B16DDDA04263527F58A06E"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:tokenio\/sdk-objc.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/bitbucket.org\/tokenio\/sdk-objc",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "898A30139186D79A50BCCE5290195A2483838282"
     }

@@ -36,7 +36,7 @@
 
 - (void)testRedeemToken {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias
@@ -52,7 +52,7 @@
 
 - (void)testRedeemToken_withParams {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias
@@ -69,7 +69,7 @@
 
 - (void)testLookupPayment {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias
@@ -85,7 +85,7 @@
 
 - (void)testLookupPayments {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias

@@ -44,13 +44,13 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 
 @implementation Transfer
 
-@dynamic hasFrom, from;
-@dynamic toArray, toArray_Count;
+@dynamic hasSource, source;
+@dynamic destinationArray, destinationArray_Count;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
-  Source *from;
-  NSMutableArray *toArray;
+  Source *source;
+  NSMutableArray *destinationArray;
 } Transfer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -60,20 +60,20 @@ typedef struct Transfer__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "from",
+        .name = "source",
         .dataTypeSpecific.className = GPBStringifySymbol(Source),
-        .number = Transfer_FieldNumber_From,
+        .number = Transfer_FieldNumber_Source,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Transfer__storage_, from),
+        .offset = (uint32_t)offsetof(Transfer__storage_, source),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "toArray",
+        .name = "destinationArray",
         .dataTypeSpecific.className = GPBStringifySymbol(Destination),
-        .number = Transfer_FieldNumber_ToArray,
+        .number = Transfer_FieldNumber_DestinationArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Transfer__storage_, toArray),
+        .offset = (uint32_t)offsetof(Transfer__storage_, destinationArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

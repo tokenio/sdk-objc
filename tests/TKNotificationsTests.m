@@ -45,11 +45,11 @@
                target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                       platform:Platform_Ios];
         
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
-                                                           amount:100.99
-                                                         currency:@"USD"
-                                                    redeemerAlias:payee.firstAlias
-                                                      description:@"payment t est"];
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                    amount:100.99
+                                                  currency:@"USD"
+                                             redeemerAlias:payee.firstAlias
+                                               description:@"payment t est"];
         token = [payer endorsePaymentToken:token];
         Payment *payment = [payee redeemPaymentToken:token];
         
@@ -58,7 +58,7 @@
         
         [payer unsubscribeFromNotifications:s.id_p];
         
-        PaymentToken *token2 = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token2 = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
                                                     redeemerAlias:payee.firstAlias

@@ -15,8 +15,8 @@
 @implementation TKCryptoTests
 
 - (void)testSignAndVerify_message {
-    PaymentToken *token = [PaymentToken message];
-    token.payload.amount = @"100.23";
+    Token *token = [Token message];
+    token.payload.bankTransfer.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token
@@ -30,8 +30,8 @@
 }
 
 - (void)testSignAndVerify_token {
-    PaymentToken *token = [PaymentToken message];
-    token.payload.amount = @"100.23";
+    Token *token = [Token message];
+    token.payload.bankTransfer.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token

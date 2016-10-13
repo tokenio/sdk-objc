@@ -24,8 +24,6 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccessToken;
-@class AccessToken_Payload;
 @class Account;
 @class Address;
 @class Member;
@@ -35,10 +33,10 @@ CF_EXTERN_C_BEGIN
 @class Page;
 @class Payment;
 @class PaymentPayload;
-@class PaymentToken;
-@class PaymentToken_Payload;
 @class Signature;
 @class Subscriber;
+@class Token;
+@class TokenPayload;
 @class Transaction;
 GPB_ENUM_FWD_DECLARE(Platform);
 
@@ -593,7 +591,7 @@ typedef GPB_ENUM(CreatePaymentTokenRequest_FieldNumber) {
 
 @interface CreatePaymentTokenRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken_Payload *payload;
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
@@ -607,7 +605,7 @@ typedef GPB_ENUM(CreatePaymentTokenResponse_FieldNumber) {
 
 @interface CreatePaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -633,7 +631,7 @@ typedef GPB_ENUM(GetPaymentTokenResponse_FieldNumber) {
 
 @interface GetPaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -663,7 +661,7 @@ typedef GPB_ENUM(GetPaymentTokensResponse_FieldNumber) {
 
 @interface GetPaymentTokensResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PaymentToken*> *tokensArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
 
@@ -697,7 +695,7 @@ typedef GPB_ENUM(EndorsePaymentTokenResponse_FieldNumber) {
 
 @interface EndorsePaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -728,7 +726,7 @@ typedef GPB_ENUM(CancelPaymentTokenResponse_FieldNumber) {
 
 @interface CancelPaymentTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -742,7 +740,7 @@ typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
 
 @interface CreateAccessTokenRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Payload *payload;
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
@@ -756,7 +754,7 @@ typedef GPB_ENUM(CreateAccessTokenResponse_FieldNumber) {
 
 @interface CreateAccessTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -782,7 +780,7 @@ typedef GPB_ENUM(GetAccessTokenResponse_FieldNumber) {
 
 @interface GetAccessTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -812,7 +810,7 @@ typedef GPB_ENUM(GetAccessTokensResponse_FieldNumber) {
 
 @interface GetAccessTokensResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken*> *tokensArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
 
@@ -846,7 +844,7 @@ typedef GPB_ENUM(EndorseAccessTokenResponse_FieldNumber) {
 
 @interface EndorseAccessTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 
@@ -877,7 +875,7 @@ typedef GPB_ENUM(CancelAccessTokenResponse_FieldNumber) {
 
 @interface CancelAccessTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken *token;
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
 @property(nonatomic, readwrite) BOOL hasToken;
 

@@ -44,11 +44,11 @@
 
 - (void)testLookupTransaction {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
-                                                           amount:100.99
-                                                         currency:@"USD"
-                                                    redeemerAlias:payee.firstAlias
-                                                      description:@"payment test"];
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                    amount:100.99
+                                                  currency:@"USD"
+                                             redeemerAlias:payee.firstAlias
+                                               description:@"payment test"];
         token = [payer endorsePaymentToken:token];
         Payment *payment = [payee redeemPaymentToken:token];
 
@@ -63,11 +63,11 @@
 
 - (void)testLookupTransactions {
     [self run: ^(TokenIO *tokenIO) {
-        PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
-                                                           amount:100.99
-                                                         currency:@"USD"
-                                                    redeemerAlias:payee.firstAlias
-                                                      description:@"payment test"];
+        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
+                                                    amount:100.99
+                                                  currency:@"USD"
+                                             redeemerAlias:payee.firstAlias
+                                               description:@"payment test"];
         token = [payer endorsePaymentToken:token];
         [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
         [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];

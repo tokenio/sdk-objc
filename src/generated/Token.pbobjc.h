@@ -24,16 +24,17 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccessToken_Payload;
-@class AccessToken_Resource;
-@class AccessToken_Resource_Account;
-@class AccessToken_Resource_Address;
-@class AccessToken_Resource_Transaction;
+@class Access;
+@class Access_Resource;
+@class Access_Resource_Account;
+@class Access_Resource_Address;
+@class Access_Resource_Transaction;
+@class BankTransfer;
 @class DoubleRange;
-@class PaymentToken_Payload;
 @class Signature;
 @class TimePeriod;
 @class TokenMember;
+@class TokenPayload;
 @class TokenSignature;
 @class Transfer;
 @class Var;
@@ -75,6 +76,33 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value);
 /// which is a @c GPBExtensionRegistry that includes all the extensions defined by
 /// this file and all files that it depends on.
 @interface TokenRoot : GPBRootObject
+@end
+
+#pragma mark - Token
+
+typedef GPB_ENUM(Token_FieldNumber) {
+  Token_FieldNumber_Id_p = 1,
+  Token_FieldNumber_Payload = 2,
+  Token_FieldNumber_PayloadSignaturesArray = 3,
+};
+
+///
+/// Generic token envelope definition.
+@interface Token : GPBMessage
+
+/// Computed as sha(token).
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/// Token payload, being signed.
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/// Test to see if @c payload has been set.
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+/// Payload signatures.
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
+/// The number of items in @c payloadSignaturesArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
+
 @end
 
 #pragma mark - TokenSignature
@@ -120,51 +148,28 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 
 @end
 
-#pragma mark - PaymentToken
+#pragma mark - TokenPayload
 
-typedef GPB_ENUM(PaymentToken_FieldNumber) {
-  PaymentToken_FieldNumber_Id_p = 1,
-  PaymentToken_FieldNumber_Payload = 2,
-  PaymentToken_FieldNumber_PayloadSignaturesArray = 3,
+typedef GPB_ENUM(TokenPayload_FieldNumber) {
+  TokenPayload_FieldNumber_Version = 1,
+  TokenPayload_FieldNumber_Nonce = 2,
+  TokenPayload_FieldNumber_Issuer = 3,
+  TokenPayload_FieldNumber_From = 4,
+  TokenPayload_FieldNumber_To = 5,
+  TokenPayload_FieldNumber_EffectiveAtMs = 6,
+  TokenPayload_FieldNumber_ExpiresAtMs = 7,
+  TokenPayload_FieldNumber_Description_p = 8,
+  TokenPayload_FieldNumber_BankTransfer = 9,
+  TokenPayload_FieldNumber_Access = 10,
 };
 
-@interface PaymentToken : GPBMessage
-
-/// Computed as sha(token).
-@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
-
-/// PaymentToken.Payload.
-@property(nonatomic, readwrite, strong, null_resettable) PaymentToken_Payload *payload;
-/// Test to see if @c payload has been set.
-@property(nonatomic, readwrite) BOOL hasPayload;
-
-/// Payload signatures.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
-/// The number of items in @c payloadSignaturesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
-
-@end
-
-#pragma mark - PaymentToken_Payload
-
-typedef GPB_ENUM(PaymentToken_Payload_FieldNumber) {
-  PaymentToken_Payload_FieldNumber_Version = 1,
-  PaymentToken_Payload_FieldNumber_Nonce = 2,
-  PaymentToken_Payload_FieldNumber_Issuer = 3,
-  PaymentToken_Payload_FieldNumber_Payer = 4,
-  PaymentToken_Payload_FieldNumber_Redeemer = 5,
-  PaymentToken_Payload_FieldNumber_Transfer = 6,
-  PaymentToken_Payload_FieldNumber_FeesPaidBy = 7,
-  PaymentToken_Payload_FieldNumber_Currency = 8,
-  PaymentToken_Payload_FieldNumber_LifetimeAmount = 9,
-  PaymentToken_Payload_FieldNumber_Amount = 10,
-  PaymentToken_Payload_FieldNumber_EffectiveAtMs = 11,
-  PaymentToken_Payload_FieldNumber_ExpiresAtMs = 12,
-  PaymentToken_Payload_FieldNumber_Description_p = 13,
-  PaymentToken_Payload_FieldNumber_Vars = 14,
+typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
+  TokenPayload_Body_OneOfCase_GPBUnsetOneOfCase = 0,
+  TokenPayload_Body_OneOfCase_BankTransfer = 9,
+  TokenPayload_Body_OneOfCase_Access = 10,
 };
 
-@interface PaymentToken_Payload : GPBMessage
+@interface TokenPayload : GPBMessage
 
 /// 1.0
 @property(nonatomic, readwrite, copy, null_resettable) NSString *version;
@@ -178,9 +183,49 @@ typedef GPB_ENUM(PaymentToken_Payload_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasIssuer;
 
 /// Payer member.
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *payer;
-/// Test to see if @c payer has been set.
-@property(nonatomic, readwrite) BOOL hasPayer;
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *from;
+/// Test to see if @c from has been set.
+@property(nonatomic, readwrite) BOOL hasFrom;
+
+/// Payee member.
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
+/// Test to see if @c to has been set.
+@property(nonatomic, readwrite) BOOL hasTo;
+
+/// Optional
+@property(nonatomic, readwrite) int64_t effectiveAtMs;
+
+/// Optional
+@property(nonatomic, readwrite) int64_t expiresAtMs;
+
+/// Optional
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@property(nonatomic, readonly) TokenPayload_Body_OneOfCase bodyOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankTransfer *bankTransfer;
+
+@property(nonatomic, readwrite, strong, null_resettable) Access *access;
+
+@end
+
+/// Clears whatever value was set for the oneof 'body'.
+void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
+
+#pragma mark - BankTransfer
+
+typedef GPB_ENUM(BankTransfer_FieldNumber) {
+  BankTransfer_FieldNumber_Redeemer = 1,
+  BankTransfer_FieldNumber_Transfer = 2,
+  BankTransfer_FieldNumber_FeesPaidBy = 3,
+  BankTransfer_FieldNumber_Currency = 4,
+  BankTransfer_FieldNumber_LifetimeAmount = 5,
+  BankTransfer_FieldNumber_Amount = 6,
+  BankTransfer_FieldNumber_Vars = 7,
+};
+
+/// Represents a bank transfer.
+@interface BankTransfer : GPBMessage
 
 /// Redeemer member.
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer;
@@ -205,15 +250,6 @@ typedef GPB_ENUM(PaymentToken_Payload_FieldNumber) {
 
 /// Optional: Single token charge request acceptable range. Double.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
-
-/// Optional
-@property(nonatomic, readwrite) int64_t effectiveAtMs;
-
-/// Optional
-@property(nonatomic, readwrite) int64_t expiresAtMs;
-
-/// Optional
-@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 /// Optional: token variables.
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, Var*> *vars;
@@ -295,144 +331,87 @@ typedef GPB_ENUM(TimePeriod_FieldNumber) {
 
 @end
 
-#pragma mark - AccessToken
+#pragma mark - Access
 
-typedef GPB_ENUM(AccessToken_FieldNumber) {
-  AccessToken_FieldNumber_Id_p = 1,
-  AccessToken_FieldNumber_Payload = 2,
-  AccessToken_FieldNumber_PayloadSignaturesArray = 3,
+typedef GPB_ENUM(Access_FieldNumber) {
+  Access_FieldNumber_ResourcesArray = 5,
 };
 
-@interface AccessToken : GPBMessage
-
-/// Computed as sha(token).
-@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
-
-/// PaymentToken.Payload.
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Payload *payload;
-/// Test to see if @c payload has been set.
-@property(nonatomic, readwrite) BOOL hasPayload;
-
-/// Payload signature.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
-/// The number of items in @c payloadSignaturesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
-
-@end
-
-#pragma mark - AccessToken_Payload
-
-typedef GPB_ENUM(AccessToken_Payload_FieldNumber) {
-  AccessToken_Payload_FieldNumber_Version = 1,
-  AccessToken_Payload_FieldNumber_Nonce = 2,
-  AccessToken_Payload_FieldNumber_Grantor = 3,
-  AccessToken_Payload_FieldNumber_Grantee = 4,
-  AccessToken_Payload_FieldNumber_ResourcesArray = 5,
-  AccessToken_Payload_FieldNumber_EffectiveAtMs = 6,
-  AccessToken_Payload_FieldNumber_ExpiresAtMs = 7,
-  AccessToken_Payload_FieldNumber_Description_p = 8,
-};
-
-@interface AccessToken_Payload : GPBMessage
-
-/// 1.0
-@property(nonatomic, readwrite, copy, null_resettable) NSString *version;
-
-/// nonce, random string used to de-dupe tokens, set by client.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
-
-/// member_id/optional[FriendlyName]
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *grantor;
-/// Test to see if @c grantor has been set.
-@property(nonatomic, readwrite) BOOL hasGrantor;
-
-/// member_id/optional[FriendlyName]
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *grantee;
-/// Test to see if @c grantee has been set.
-@property(nonatomic, readwrite) BOOL hasGrantee;
+@interface Access : GPBMessage
 
 /// Each entry defines an resources level
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessToken_Resource*> *resourcesArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Access_Resource*> *resourcesArray;
 /// The number of items in @c resourcesArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger resourcesArray_Count;
 
-/// Optional
-@property(nonatomic, readwrite) int64_t effectiveAtMs;
-
-/// Optional
-@property(nonatomic, readwrite) int64_t expiresAtMs;
-
-/// Optional
-@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
-
 @end
 
-#pragma mark - AccessToken_Resource
+#pragma mark - Access_Resource
 
-typedef GPB_ENUM(AccessToken_Resource_FieldNumber) {
-  AccessToken_Resource_FieldNumber_Address = 1,
-  AccessToken_Resource_FieldNumber_Account = 2,
-  AccessToken_Resource_FieldNumber_Transaction = 3,
+typedef GPB_ENUM(Access_Resource_FieldNumber) {
+  Access_Resource_FieldNumber_Address = 1,
+  Access_Resource_FieldNumber_Account = 2,
+  Access_Resource_FieldNumber_Transaction = 3,
 };
 
-typedef GPB_ENUM(AccessToken_Resource_Resource_OneOfCase) {
-  AccessToken_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
-  AccessToken_Resource_Resource_OneOfCase_Address = 1,
-  AccessToken_Resource_Resource_OneOfCase_Account = 2,
-  AccessToken_Resource_Resource_OneOfCase_Transaction = 3,
+typedef GPB_ENUM(Access_Resource_Resource_OneOfCase) {
+  Access_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
+  Access_Resource_Resource_OneOfCase_Address = 1,
+  Access_Resource_Resource_OneOfCase_Account = 2,
+  Access_Resource_Resource_OneOfCase_Transaction = 3,
 };
 
-@interface AccessToken_Resource : GPBMessage
+@interface Access_Resource : GPBMessage
 
-@property(nonatomic, readonly) AccessToken_Resource_Resource_OneOfCase resourceOneOfCase;
+@property(nonatomic, readonly) Access_Resource_Resource_OneOfCase resourceOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Address *address;
+@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Address *address;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Account *account;
+@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Account *account;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessToken_Resource_Transaction *transaction;
+@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Transaction *transaction;
 
 @end
 
 /// Clears whatever value was set for the oneof 'resource'.
-void AccessToken_Resource_ClearResourceOneOfCase(AccessToken_Resource *message);
+void Access_Resource_ClearResourceOneOfCase(Access_Resource *message);
 
-#pragma mark - AccessToken_Resource_Address
+#pragma mark - Access_Resource_Address
 
-typedef GPB_ENUM(AccessToken_Resource_Address_FieldNumber) {
-  AccessToken_Resource_Address_FieldNumber_AddressId = 1,
+typedef GPB_ENUM(Access_Resource_Address_FieldNumber) {
+  Access_Resource_Address_FieldNumber_AddressId = 1,
 };
 
 /// Provides Access to member address information
-@interface AccessToken_Resource_Address : GPBMessage
+@interface Access_Resource_Address : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
 
-#pragma mark - AccessToken_Resource_Account
+#pragma mark - Access_Resource_Account
 
-typedef GPB_ENUM(AccessToken_Resource_Account_FieldNumber) {
-  AccessToken_Resource_Account_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(Access_Resource_Account_FieldNumber) {
+  Access_Resource_Account_FieldNumber_AccountId = 1,
 };
 
 /// Provides access to member account balance
-@interface AccessToken_Resource_Account : GPBMessage
+@interface Access_Resource_Account : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - AccessToken_Resource_Transaction
+#pragma mark - Access_Resource_Transaction
 
-typedef GPB_ENUM(AccessToken_Resource_Transaction_FieldNumber) {
-  AccessToken_Resource_Transaction_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(Access_Resource_Transaction_FieldNumber) {
+  Access_Resource_Transaction_FieldNumber_AccountId = 1,
 };
 
 /// Provides access to account transactions
-@interface AccessToken_Resource_Transaction : GPBMessage
+@interface Access_Resource_Transaction : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
