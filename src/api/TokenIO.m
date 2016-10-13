@@ -37,13 +37,14 @@
     }];
 }
 
-- (NSNumber *)aliasExists:(NSString *)alias {
+- (BOOL)aliasExists:(NSString *)alias {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
-    return [call run:^{
+    NSNumber *result = [call run:^{
         [self.async aliasExists:alias
-                      onSuccess:call.onSuccess
+                      onSuccess:^(BOOL exists) { call.onSuccess([NSNumber numberWithBool:exists]); }
                         onError:call.onError];
     }];
+    return [result boolValue];
 }
 
 - (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey {

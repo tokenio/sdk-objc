@@ -68,9 +68,9 @@
         NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
         TKMember *member = [self createMember:tokenIO];
         
-        XCTAssertEqual([tokenIO aliasExists:alias], @(NO));
+        XCTAssertEqual([tokenIO aliasExists:alias], NO);
         [member addAlias:alias];
-        XCTAssertEqual([tokenIO aliasExists:alias], @(YES));
+        XCTAssertEqual([tokenIO aliasExists:alias], YES);
     }];
 }
 
