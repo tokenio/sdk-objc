@@ -78,9 +78,23 @@
  * @param target target to send push to (push token)
  * @param platform target platform for notification (e.g. Platform_Ios)
  */
-- (void)subscribeToNotifications:(NSString *)provider
+- (Subscriber *)subscribeToNotifications:(NSString *)provider
                           target:(NSString *)target
                         platform:(Platform)platform;
+
+/**
+ * Get all subscribers
+ *
+ */
+- (NSArray<Subscriber *> *)getSubscribers;
+
+/**
+ * Get a subscriber by Id
+ *
+ * @param subscriberId id of subscriber to get
+ */
+- (Subscriber *)getSubscriber:(NSString *)subscriberId;
+
 
 /**
  * Unsubscribes a device from push notifications

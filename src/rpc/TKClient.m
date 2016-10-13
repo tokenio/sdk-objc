@@ -111,7 +111,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 - (void)subscribeToNotifications:(NSString *)provider
                           target:(NSString *)target
                         platform:(Platform)platform
-                       onSuccess:(OnSuccess)onSuccess
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
     SubscribeToNotificationsRequest *request = [SubscribeToNotificationsRequest message];
     request.provider = provider;
@@ -122,7 +122,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            handler:^(SubscribeToNotificationsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess();
+                                   onSuccess(response.subscriber);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -131,6 +131,46 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     
     [self _startCall:call withRequest:request];
 }
+
+- (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
+              onError:(OnError)onError {
+    GetSubscribersRequest *request = [GetSubscribersRequest message];
+    GRPCProtoCall *call = [gateway
+                           RPCToGetSubscribersWithRequest:request
+                           handler:^(GetSubscribersResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.subscribersArray);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+
+- (void)getSubscriber:(NSString *)subscriberId
+                           onSuccess:(OnSuccessWithSubscriber)onSuccess
+                             onError:(OnError)onError {
+    GetSubscriberRequest *request = [GetSubscriberRequest message];
+    request.subscriberId = subscriberId;
+    GRPCProtoCall *call = [gateway
+                           RPCToGetSubscriberWithRequest:request
+                           handler:^(GetSubscriberResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.subscriber);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
               onSuccess:(OnSuccess)onSuccess

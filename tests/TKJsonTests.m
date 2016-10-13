@@ -57,13 +57,12 @@
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = @"m123";
     request.update.addKey.level = 0;
-    request.update.addKey.tagsArray = [@[@"one", @"two"] mutableCopy];
     request.update.addKey.publicKey = @"public-key";
     request.updateSignature.keyId = @"key-id";
     request.updateSignature.signature = @"signature";
 
     NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"update\":{\"addKey\":{\"publicKey\":\"public-key\",\"tags\":[\"one\",\"two\"]},\"memberId\":\"m123\"},\"updateSignature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
+    XCTAssertEqualObjects(json, @"{\"update\":{\"addKey\":{\"publicKey\":\"public-key\"},\"memberId\":\"m123\"},\"updateSignature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
 
 /**
@@ -164,7 +163,6 @@
     UpdateMemberRequest *request1 = [UpdateMemberRequest message];
     request1.update.memberId = @"m123";
     request1.update.addKey.level = 0;
-    request1.update.addKey.tagsArray = [@[@"one", @"two"] mutableCopy];
     request1.update.addKey.publicKey = @"public-key";
     request1.updateSignature.keyId = @"key-id";
     request1.updateSignature.signature = @"signature";

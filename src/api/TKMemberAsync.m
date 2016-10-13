@@ -144,13 +144,27 @@
 - (void)subscribeToNotifications:(NSString *)provider
         target:(NSString *)target
                platform:(Platform)platform
-              onSuccess:(OnSuccess)onSuccess
+              onSuccess:(OnSuccessWithSubscriber)onSuccess
                 onError:(OnError)onError {
     [client subscribeToNotifications:provider
                               target:target
                             platform:platform
                            onSuccess:onSuccess
                              onError:onError];
+}
+
+- (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
+                             onError:(OnError)onError {
+    [client getSubscribers:onSuccess
+                                 onError:onError];
+}
+
+- (void)getSubscriber:(NSString *)subscriberId
+                           onSuccess:(OnSuccessWithSubscriber)onSuccess
+                             onError:(OnError)onError {
+    [client getSubscriber:subscriberId
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId

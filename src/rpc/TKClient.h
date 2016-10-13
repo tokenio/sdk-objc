@@ -101,8 +101,26 @@
 - (void)subscribeToNotifications:(NSString *)provider
              target:(NSString *)target
                     platform:(Platform)platform
-                   onSuccess:(OnSuccess)onSuccess
+                   onSuccess:(OnSuccessWithSubscriber)onSuccess
                      onError:(OnError)onError;
+
+/**
+ * Get all subscribers
+ *
+ */
+- (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
+                             onError:(OnError)onError;
+
+
+/**
+ * Get a subscriber by Id
+ *
+ * @param subscriberId id of subscriber to get
+ */
+- (void)getSubscriber:(NSString *)subscriberId
+                           onSuccess:(OnSuccessWithSubscriber)onSuccess
+                             onError:(OnError)onError;
+
 
 /**
  * Unsubscribes a device from push notifications

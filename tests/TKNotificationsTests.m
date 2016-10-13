@@ -42,9 +42,9 @@
     [self run: ^(TokenIO *tokenIO) {
         
         Subscriber *s = [payer subscribeToNotifications:@"Token"
-               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+               target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                       platform:Platform_Ios];
-
+        
         PaymentToken *token = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
                                                          currency:@"USD"
@@ -56,7 +56,7 @@
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
         
-        [payer unsubscribeDevice:s.id];
+        [payer unsubscribeFromNotifications:s.id_p];
         
         PaymentToken *token2 = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
@@ -71,8 +71,8 @@
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeDevice:@"Token"
-               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+        [payer subscribeToNotifications:@"Token"
+               target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                       platform:Platform_Ios];
 
         [tokenIO notifyLinkAccounts:payer.firstAlias
@@ -81,24 +81,26 @@
     }];
 }
 
+
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
 
-        [payer subscribeDevice:@"Token"
-               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+        [payer subscribeToNotifications:@"Token"
+               target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                       platform:Platform_Ios];
 
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyAddKey:payer.firstAlias
                     publicKey:key.publicKeyStr
-                         name:@"Chrom 53.0"];
+                         name:@"Chrome 53.0"];
     }];
 }
 
+
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeDevice:@"Token"
-                        target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+        [payer subscribeToNotifications:@"Token"
+                        target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                       platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
@@ -106,7 +108,23 @@
                                       bankId:@"bank-id"
                          accountsLinkPayload:@"12345"
                                    publicKey:key.publicKeyStr
-                                        name:@"Chrom 53.0"];
+                                        name:@"Chrome 53.0"];
+    }];
+}
+
+- (void)testGetSubscribers {
+    [self run: ^(TokenIO *tokenIO) {
+        
+        Subscriber * subscriber = [payer subscribeToNotifications:@"Token"
+                                 target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+                               platform:Platform_Test];
+        
+        [payer getSubscribers];
+        XCTAssert([payer getSubscribers].count == 1);
+        Subscriber * subscriber2 = [payer getSubscriber:subscriber.id_p];
+        XCTAssert([subscriber.id_p isEqualToString:subscriber2.id_p]);
+        XCTAssert([subscriber.target isEqualToString:subscriber2.target]);
+        XCTAssert(subscriber.platform == subscriber2.platform);
     }];
 }
 
