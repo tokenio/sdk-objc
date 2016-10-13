@@ -81,11 +81,11 @@
  *
  * @param alias alias to notify
  * @param publicKey key in string form
- * @param tags optional list of tags for the key
+ * @param name optional name of key
  */
 - (void)notifyAddKey:(NSString * )alias
            publicKey:(NSString *)publicKey
-                tags:(NSMutableArray<NSString*> *)tags;
+                name:(NSString *)name;
 
 /**
  * Sends a notification to request linking of accounts and adding of a key
@@ -94,13 +94,13 @@
  * @param bankId bank id to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param publicKey key in string form
- * @param tags optional list of tags for the key
+ * @param name optional name of key
  */
 - (void)notifyLinkAccountsAndAddKey:(NSString * )alias
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey
-                               tags:(NSMutableArray<NSString*> *)tags;
+                               name:(NSString *)name;
 
 
 

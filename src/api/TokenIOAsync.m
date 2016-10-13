@@ -105,13 +105,13 @@
 
 - (void)notifyAddKey:(NSString * )alias
            publicKey:(NSString *)publicKey
-                tags:(NSMutableArray<NSString*> *) tags
+                name:(NSString *) name
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     [client notifyAddKey:alias
                publicKey:publicKey
-                    tags:tags
+                    name:name
                      onSuccess:onSuccess
                        onError:onError];
 }
@@ -121,7 +121,7 @@
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey
-                               tags:(NSMutableArray<NSString*> *)tags
+                               name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
@@ -129,7 +129,7 @@
                                  bankId:bankId
                     accountsLinkPayload:accountsLinkPayload
                               publicKey:publicKey
-                                   tags:tags
+                                   name:name
                               onSuccess:onSuccess
                                 onError:onError];
 }

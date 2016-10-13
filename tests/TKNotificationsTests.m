@@ -13,6 +13,8 @@
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Payment.pbobjc.h"
+#import "Subscriber.pbobjc.h"
+
 
 
 @interface TKNotificationsTests : TKTestBase
@@ -38,8 +40,6 @@
 
 - (void)testSubscribeAndUnsubscribe {
     [self run: ^(TokenIO *tokenIO) {
-        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
-        [tags addObject:@"iphone"];
         
         Subscriber *s = [payer subscribeToNotifications:@"Token"
                target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
@@ -56,7 +56,7 @@
         XCTAssertEqualObjects(@"100.99", payment.payload.amount.value);
         XCTAssertEqualObjects(@"USD", payment.payload.amount.currency);
         
-        [payer unsubscribeDevice:@"Token" target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"];
+        [payer unsubscribeDevice:s.id];
         
         PaymentToken *token2 = [payer createPaymentTokenForAccount:payerAccount.id
                                                            amount:100.99
@@ -71,12 +71,9 @@
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
-        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
-        [tags addObject:@"iphone"];
         [payer subscribeDevice:@"Token"
                target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
-                      platform:Platform_Ios
-                          tags:tags];
+                      platform:Platform_Ios];
 
         [tokenIO notifyLinkAccounts:payer.firstAlias
                              bankId:@"bank-id"
@@ -86,35 +83,30 @@
 
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
-        [tags addObject:@"iphone"];
+
         [payer subscribeDevice:@"Token"
                target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
-                      platform:Platform_Ios
-                          tags:tags];
+                      platform:Platform_Ios];
 
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyAddKey:payer.firstAlias
                     publicKey:key.publicKeyStr
-                         tags:tags];
+                         name:@"Chrom 53.0"];
     }];
 }
 
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
-        [tags addObject:@"iphone"];
         [payer subscribeDevice:@"Token"
-               target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
-                      platform:Platform_Ios
-                          tags:tags];
+                        target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f97900"
+                      platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstAlias
                                       bankId:@"bank-id"
                          accountsLinkPayload:@"12345"
-                    publicKey:key.publicKeyStr
-                         tags:tags];
+                                   publicKey:key.publicKeyStr
+                                        name:@"Chrom 53.0"];
     }];
 }
 

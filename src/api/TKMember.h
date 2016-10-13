@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
-#import "Device.pbobjc.h"
+#import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 
 

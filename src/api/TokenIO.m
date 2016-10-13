@@ -74,12 +74,12 @@
 
 - (void)notifyAddKey:(NSString * )alias
            publicKey:(NSString *)publicKey
-                tags:(NSMutableArray<NSString*> *)tags {
+                name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyAddKey:alias
                        publicKey:publicKey
-                            tags:tags
+                            name:name
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
          ];
@@ -90,14 +90,14 @@
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey
-                               tags:(NSMutableArray<NSString*> *)tags {
+                               name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccountsAndAddKey:alias
                           bankId:bankId
              accountsLinkPayload:accountsLinkPayload
                        publicKey:publicKey
-                            tags:tags
+                            name:name
                        onSuccess:^(void) {call.onSuccess(nil);}
                          onError:call.onError
          ];

@@ -75,13 +75,13 @@
  *
  * @param alias alias to notify
  * @param publicKey key in string form
- * @param tags optional list of tags for the key
+ * @param name optional key name
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
 - (void)notifyAddKey:(NSString * )alias
                 publicKey:(NSString *) publicKey
-                tags:(NSMutableArray<NSString*> *)tags
+                name:(NSString*)name
                  onSuccess:(void(^)())onSuccess
                    onError:(void(^)(NSError *))onError;
 
@@ -92,7 +92,7 @@
  * @param bankId bank id to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param publicKey key in string form
- * @param tags optional list of tags for the key
+ * @param name optional key name
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
@@ -100,7 +100,7 @@
               bankId:(NSString *)bankId
  accountsLinkPayload:(NSString *) accountsLinkPayload
            publicKey:(NSString *) publicKey
-                tags:(NSMutableArray<NSString*> *)tags
+                name:(NSString*)name
            onSuccess:(void(^)())onSuccess
              onError:(void(^)(NSError *))onError;
 

@@ -93,14 +93,14 @@
        accountsLinkPayload:(NSString *)accountsLinkPayload
                  onSuccess:(void (^)())onSuccess
                    onError:(void (^)(NSError *))onError {
-    NotifyLinkAccountsRequest *request = [NotifyLinkAccountsRequest message];
+    NotifyRequest *request = [NotifyRequest message];
     request.alias = alias;
-    request.bankId = bankId;
-    request.accountsLinkPayload = accountsLinkPayload;
+    request.notification.linkAccounts.bankId = bankId;
+    request.notification.linkAccounts.accountsLinkPayload = accountsLinkPayload;
     RpcLogStart(request);
     
-    [gateway notifyLinkAccountsWithRequest:request
-                                   handler:^(NotifyLinkAccountsResponse *response, NSError *error) {
+    [gateway notifyWithRequest:request
+                                   handler:^(NotifyResponse *response, NSError *error) {
                                        if (response) {
                                            RpcLogCompleted(response);
                                            onSuccess();
@@ -113,17 +113,17 @@
 
 - (void)notifyAddKey:(NSString * )alias
            publicKey:(NSString *) publicKey
-                tags:(NSMutableArray<NSString*> *)tags
+                name:(NSString*)name
            onSuccess:(void(^)())onSuccess
              onError:(void(^)(NSError *))onError {
-    NotifyAddKeyRequest *request = [NotifyAddKeyRequest message];
+    NotifyRequest *request = [NotifyRequest message];
     request.alias = alias;
-    request.publicKey = publicKey;
-    request.tagsArray = tags;
+    request.notification.addKey.publicKey = publicKey;
+    request.notification.addKey.name = name;
     RpcLogStart(request);
     
-    [gateway notifyAddKeyWithRequest:request
-                             handler:^(NotifyAddKeyResponse *response, NSError *error) {
+    [gateway notifyWithRequest:request
+                             handler:^(NotifyResponse *response, NSError *error) {
                                  if (response) {
                                      RpcLogCompleted(response);
                                      onSuccess();
@@ -138,19 +138,19 @@
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *) publicKey
-                               tags:(NSMutableArray<NSString*> *)tags
+                               name:(NSString *)name
                           onSuccess:(void(^)())onSuccess
                             onError:(void(^)(NSError *))onError {
-    NotifyLinkAccountsAndAddKeyRequest *request = [NotifyLinkAccountsAndAddKeyRequest message];
+    NotifyRequest *request = [NotifyRequest message];
     request.alias = alias;
-    request.bankId = bankId;
-    request.accountsLinkPayload = accountsLinkPayload;
-    request.publicKey = publicKey;
-    request.tagsArray = tags;
+    request.notification.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
+    request.notification.linkAccountsAndAddKey.linkAccounts.accountsLinkPayload = accountsLinkPayload;
+    request.notification.linkAccountsAndAddKey.addKey.publicKey = publicKey;
+    request.notification.linkAccountsAndAddKey.addKey.name = name;
     RpcLogStart(request);
     
-    [gateway notifyLinkAccountsAndAddKeyWithRequest:request
-                                            handler:^(NotifyLinkAccountsAndAddKeyResponse *response, NSError *error) {
+    [gateway notifyWithRequest:request
+                                            handler:^(NotifyResponse *response, NSError *error) {
                                                 if (response) {
                                                     RpcLogCompleted(response);
                                                     onSuccess();
