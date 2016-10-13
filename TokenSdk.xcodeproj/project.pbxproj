@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */; };
 		1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C72251DAF128600E9FC84 /* Subscriber.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1B7C72281DAF136C00E9FC84 /* Subscriber.pbobjc.h in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */; };
 		1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */; };
 		37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B211D989A930043345F /* Account.pbobjc.h */; };
 		37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B221D989A930043345F /* Account.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -787,7 +786,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B7C72281DAF136C00E9FC84 /* Subscriber.pbobjc.h in Sources */,
 				1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */,
 				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,

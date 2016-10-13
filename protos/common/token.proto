@@ -7,6 +7,16 @@ import "google/protobuf/wrappers.proto";
 import "security.proto";
 import "transfer.proto";
 
+
+//
+// Generic token envelope definition.
+//
+message Token {
+  string id = 1;                                          // Computed as sha(token).
+  TokenPayload payload = 2;                               // Token payload, being signed.
+  repeated TokenSignature payload_signatures = 3;         // Payload signatures.
+}
+
 message TokenSignature {
   // List of valid actions that one can perform on the Token. We use lowercase string value
   // of the action when computing a signature.
@@ -30,27 +40,33 @@ message TokenMember {
 // Payment Token
 //
 
-message PaymentToken {
-  string id = 1;                                          // Computed as sha(token).
-  Payload payload = 2;                                    // PaymentToken.Payload.
-  repeated TokenSignature payload_signatures = 3;         // Payload signatures.
+message TokenPayload {
+  string version = 1;                                   // 1.0
+  string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
 
-  message Payload {
-    string version = 1;                                   // 1.0
-    string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
-    TokenMember issuer = 3;                               // Token issuer, bank.
-    TokenMember payer = 4;                                // Payer member.
-    TokenMember redeemer = 5;                             // Redeemer member.
-    io.token.proto.common.transfer.Transfer transfer = 6; // Transfer instructions.
-    TokenMember fees_paid_by = 7;                         // Payer or redeemer member id.
-    string currency = 8;                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
-    string lifetime_amount = 9;                           // Optional: Token total lifetime amount. Double.
-    string amount = 10;                                   // Optional: Single token charge request acceptable range. Double.
-    int64 effective_at_ms = 11;                           // Optional
-    int64 expires_at_ms = 12;                             // Optional
-    string description = 13;                              // Optional
-    map<string, Var> vars = 14;                           // Optional: token variables.
+  TokenMember issuer = 3;                               // Token issuer, bank.
+  TokenMember from = 4;                                 // Payer member.
+  TokenMember to = 5;                                   // Payee member.
+
+  int64 effective_at_ms = 6;                            // Optional
+  int64 expires_at_ms = 7;                              // Optional
+  string description = 8;                               // Optional
+
+  oneof body {
+    BankTransfer bank_transfer = 9;
+    Access access = 10;
   }
+}
+
+// Represents a bank transfer.
+message BankTransfer {
+  TokenMember redeemer = 1;                             // Redeemer member.
+  io.token.proto.common.transfer.Transfer transfer = 2; // Transfer instructions.
+  TokenMember fees_paid_by = 3;                         // Payer or redeemer member id.
+  string currency = 4;                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+  string lifetime_amount = 5;                           // Optional: Token total lifetime amount. Double.
+  string amount = 6;                                    // Optional: Single token charge request acceptable range. Double.
+  map<string, Var> vars = 7;                            // Optional: token variables.
 }
 
 // Describes a single variable value. Only one of the fields is set.
@@ -80,21 +96,8 @@ message TimePeriod {
 // Access Token
 //
 
-message AccessToken {
-  string id = 1;                                          // Computed as sha(token).
-  Payload payload = 2;                                    // PaymentToken.Payload.
-  repeated TokenSignature payload_signatures = 3;         // Payload signature.
-
-  message Payload {
-    string version = 1;                                   // 1.0
-    string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
-    TokenMember grantor = 3;                              // member_id/optional[FriendlyName]
-    TokenMember grantee = 4;                              // member_id/optional[FriendlyName]
-    repeated Resource resources = 5;                      // Each entry defines an resources level
-    int64 effective_at_ms = 6;                            // Optional
-    int64 expires_at_ms = 7;                              // Optional
-    string description = 8;                               // Optional
-  }
+message Access {
+  repeated Resource resources = 5;                      // Each entry defines an resources level
 
   message Resource {
     oneof resource {

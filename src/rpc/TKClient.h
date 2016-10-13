@@ -11,8 +11,8 @@
 @class Member;
 @class GatewayService;
 @class TKSecretKey;
-@class PaymentToken;
-@class PaymentToken_Payload;
+@class Token;
+@class TokenPayload;
 @class PaymentPayload;
 
 
@@ -162,8 +162,8 @@
  *
  * @param payload payment token payload
  */
-- (void)createPaymentToken:(PaymentToken_Payload *)payload
-                 onSuccess:(OnSuccessWithPaymentToken)onSuccess
+- (void)createPaymentToken:(TokenPayload *)payload
+                 onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError;
 
 /**
@@ -172,7 +172,7 @@
  * @param tokenId token id
  */
 - (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithPaymentToken)onSuccess
+              onSuccess:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError;
 
 /**
@@ -183,7 +183,7 @@
  */
 - (void)getPaymentTokens:(int)offset
                    limit:(int)limit
-               onSuccess:(OnSuccessWithPaymentTokens)onSuccess
+               onSuccess:(OnSuccessWithTokens)onSuccess
                     onError:(OnError)onError;
 
 /**
@@ -191,8 +191,8 @@
  *
  * @param token token to endorse
  */
-- (void)endorsePaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)success
+- (void)endorsePaymentToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)success
                     onError:(OnError)error;
 
 /**
@@ -200,8 +200,8 @@
  *
  * @param token token to endorse
  */
-- (void)cancelPaymentToken:(PaymentToken *)token
-                  onSuccess:(OnSuccessWithPaymentToken)success
+- (void)cancelPaymentToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)success
                     onError:(OnError)error;
 
 /**

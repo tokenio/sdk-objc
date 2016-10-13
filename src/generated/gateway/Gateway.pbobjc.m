@@ -1852,7 +1852,7 @@ typedef struct GetTransactionsResponse__storage_ {
 
 typedef struct CreatePaymentTokenRequest__storage_ {
   uint32_t _has_storage_[1];
-  PaymentToken_Payload *payload;
+  TokenPayload *payload;
 } CreatePaymentTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1863,7 +1863,7 @@ typedef struct CreatePaymentTokenRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken_Payload),
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
         .number = CreatePaymentTokenRequest_FieldNumber_Payload,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreatePaymentTokenRequest__storage_, payload),
@@ -1895,7 +1895,7 @@ typedef struct CreatePaymentTokenRequest__storage_ {
 
 typedef struct CreatePaymentTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  PaymentToken *token;
+  Token *token;
 } CreatePaymentTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1906,7 +1906,7 @@ typedef struct CreatePaymentTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = CreatePaymentTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreatePaymentTokenResponse__storage_, token),
@@ -1981,7 +1981,7 @@ typedef struct GetPaymentTokenRequest__storage_ {
 
 typedef struct GetPaymentTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  PaymentToken *token;
+  Token *token;
 } GetPaymentTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1992,7 +1992,7 @@ typedef struct GetPaymentTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = GetPaymentTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetPaymentTokenResponse__storage_, token),
@@ -2080,7 +2080,7 @@ typedef struct GetPaymentTokensResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "tokensArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = GetPaymentTokensResponse_FieldNumber_TokensArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetPaymentTokensResponse__storage_, tokensArray),
@@ -2175,7 +2175,7 @@ typedef struct EndorsePaymentTokenRequest__storage_ {
 
 typedef struct EndorsePaymentTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  PaymentToken *token;
+  Token *token;
 } EndorsePaymentTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2186,7 +2186,7 @@ typedef struct EndorsePaymentTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = EndorsePaymentTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(EndorsePaymentTokenResponse__storage_, token),
@@ -2272,7 +2272,7 @@ typedef struct CancelPaymentTokenRequest__storage_ {
 
 typedef struct CancelPaymentTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  PaymentToken *token;
+  Token *token;
 } CancelPaymentTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2283,7 +2283,7 @@ typedef struct CancelPaymentTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = CancelPaymentTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CancelPaymentTokenResponse__storage_, token),
@@ -2315,7 +2315,7 @@ typedef struct CancelPaymentTokenResponse__storage_ {
 
 typedef struct CreateAccessTokenRequest__storage_ {
   uint32_t _has_storage_[1];
-  AccessToken_Payload *payload;
+  TokenPayload *payload;
 } CreateAccessTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2326,7 +2326,7 @@ typedef struct CreateAccessTokenRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken_Payload),
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
         .number = CreateAccessTokenRequest_FieldNumber_Payload,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreateAccessTokenRequest__storage_, payload),
@@ -2358,7 +2358,7 @@ typedef struct CreateAccessTokenRequest__storage_ {
 
 typedef struct CreateAccessTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  AccessToken *token;
+  Token *token;
 } CreateAccessTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2369,7 +2369,7 @@ typedef struct CreateAccessTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = CreateAccessTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreateAccessTokenResponse__storage_, token),
@@ -2444,7 +2444,7 @@ typedef struct GetAccessTokenRequest__storage_ {
 
 typedef struct GetAccessTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  AccessToken *token;
+  Token *token;
 } GetAccessTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2455,7 +2455,7 @@ typedef struct GetAccessTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = GetAccessTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetAccessTokenResponse__storage_, token),
@@ -2543,7 +2543,7 @@ typedef struct GetAccessTokensResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "tokensArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = GetAccessTokensResponse_FieldNumber_TokensArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetAccessTokensResponse__storage_, tokensArray),
@@ -2638,7 +2638,7 @@ typedef struct EndorseAccessTokenRequest__storage_ {
 
 typedef struct EndorseAccessTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  AccessToken *token;
+  Token *token;
 } EndorseAccessTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2649,7 +2649,7 @@ typedef struct EndorseAccessTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = EndorseAccessTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(EndorseAccessTokenResponse__storage_, token),
@@ -2735,7 +2735,7 @@ typedef struct CancelAccessTokenRequest__storage_ {
 
 typedef struct CancelAccessTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  AccessToken *token;
+  Token *token;
 } CancelAccessTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2746,7 +2746,7 @@ typedef struct CancelAccessTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessToken),
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
         .number = CancelAccessTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CancelAccessTokenResponse__storage_, token),

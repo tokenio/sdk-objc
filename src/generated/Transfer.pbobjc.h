@@ -66,22 +66,22 @@ BOOL DestinationIban_Method_IsValidValue(int32_t value);
 #pragma mark - Transfer
 
 typedef GPB_ENUM(Transfer_FieldNumber) {
-  Transfer_FieldNumber_From = 1,
-  Transfer_FieldNumber_ToArray = 2,
+  Transfer_FieldNumber_Source = 1,
+  Transfer_FieldNumber_DestinationArray = 2,
 };
 
 /// Money transfer instructions.
 @interface Transfer : GPBMessage
 
-/// From transferDest.
-@property(nonatomic, readwrite, strong, null_resettable) Source *from;
-/// Test to see if @c from has been set.
-@property(nonatomic, readwrite) BOOL hasFrom;
+/// Transfer source.
+@property(nonatomic, readwrite, strong, null_resettable) Source *source;
+/// Test to see if @c source has been set.
+@property(nonatomic, readwrite) BOOL hasSource;
 
-/// To transferDest, could be an array of options.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *toArray;
-/// The number of items in @c toArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger toArray_Count;
+/// Transfer desitination.
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationArray;
+/// The number of items in @c destinationArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger destinationArray_Count;
 
 @end
 

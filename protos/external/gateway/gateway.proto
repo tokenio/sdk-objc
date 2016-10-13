@@ -192,16 +192,17 @@ message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Payment Tokens.
 //
 
 message CreatePaymentTokenRequest {
-  io.token.proto.common.token.PaymentToken.Payload payload = 1;
+  io.token.proto.common.token.TokenPayload payload = 1;
 }
 
 message CreatePaymentTokenResponse {
-  io.token.proto.common.token.PaymentToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message GetPaymentTokenRequest {
@@ -209,7 +210,7 @@ message GetPaymentTokenRequest {
 }
 
 message GetPaymentTokenResponse {
-  io.token.proto.common.token.PaymentToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message GetPaymentTokensRequest {
@@ -217,7 +218,7 @@ message GetPaymentTokensRequest {
 }
 
 message GetPaymentTokensResponse {
-  repeated io.token.proto.common.token.PaymentToken tokens = 1;
+  repeated io.token.proto.common.token.Token tokens = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
@@ -227,7 +228,7 @@ message EndorsePaymentTokenRequest {
 }
 
 message EndorsePaymentTokenResponse {
-  io.token.proto.common.token.PaymentToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message CancelPaymentTokenRequest {
@@ -236,7 +237,7 @@ message CancelPaymentTokenRequest {
 }
 
 message CancelPaymentTokenResponse {
-  io.token.proto.common.token.PaymentToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 
@@ -245,11 +246,11 @@ message CancelPaymentTokenResponse {
 //
 
 message CreateAccessTokenRequest {
-  io.token.proto.common.token.AccessToken.Payload payload = 1;
+  io.token.proto.common.token.TokenPayload payload = 1;
 }
 
 message CreateAccessTokenResponse {
-  io.token.proto.common.token.AccessToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message GetAccessTokenRequest {
@@ -257,7 +258,7 @@ message GetAccessTokenRequest {
 }
 
 message GetAccessTokenResponse {
-  io.token.proto.common.token.AccessToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message GetAccessTokensRequest {
@@ -265,7 +266,7 @@ message GetAccessTokensRequest {
 }
 
 message GetAccessTokensResponse {
-  repeated io.token.proto.common.token.AccessToken tokens = 1;
+  repeated io.token.proto.common.token.Token tokens = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
@@ -275,7 +276,7 @@ message EndorseAccessTokenRequest {
 }
 
 message EndorseAccessTokenResponse {
-  io.token.proto.common.token.AccessToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 message CancelAccessTokenRequest {
@@ -284,7 +285,7 @@ message CancelAccessTokenRequest {
 }
 
 message CancelAccessTokenResponse {
-  io.token.proto.common.token.AccessToken token = 1;
+  io.token.proto.common.token.Token token = 1;
 }
 
 

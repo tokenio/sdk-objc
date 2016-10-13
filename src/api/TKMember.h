@@ -198,7 +198,7 @@
  * @param currency currency code, e.g. "USD"
  * @return payment token returned by the server
  */
-- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+- (Token *)createPaymentTokenForAccount:(NSString *)accountId
                                         amount:(double)amount
                                       currency:(NSString *)currency;
 
@@ -212,7 +212,7 @@
  * @param description payment description, optional
  * @return payment token returned by the server
  */
-- (PaymentToken *)createPaymentTokenForAccount:(NSString *)accountId
+- (Token *)createPaymentTokenForAccount:(NSString *)accountId
                                         amount:(double)amount
                                       currency:(NSString *)currency
                                  redeemerAlias:(NSString *)redeemerAlias
@@ -224,7 +224,7 @@
  * @param tokenId token id
  * @return payment token returned by the server
  */
-- (PaymentToken *)getPaymentToken:(NSString *)tokenId;
+- (Token *)getPaymentToken:(NSString *)tokenId;
 
 /**
  * Looks up payment tokens owned by the member.
@@ -233,7 +233,7 @@
  * @param limit max number of records to return
  * @return payment tokens owned by the member
  */
-- (NSArray<PaymentToken *> *)getPaymentTokensOffset:(int)i limit:(int)limit;
+- (NSArray<Token *> *)getPaymentTokensOffset:(int)i limit:(int)limit;
 
 /**
  * Endorses the payment token by signing it. The signature is persisted 
@@ -242,7 +242,7 @@
  * @param token token to endorse
  * @return endorsed token
  */
-- (PaymentToken *)endorsePaymentToken:(PaymentToken *)token;
+- (Token *)endorsePaymentToken:(Token *)token;
 
 /**
  * Cancels the payment token by signing it. The signature is persisted 
@@ -251,7 +251,7 @@
  * @param token token to cancel
  * @return cancelled token
  */
-- (PaymentToken *)cancelPaymentToken:(PaymentToken *)token;
+- (Token *)cancelPaymentToken:(Token *)token;
 
 /**
  * Redeems a payment token.
@@ -259,7 +259,7 @@
  * @param token payment token to redeem
  * @return payment record
  */
-- (Payment *)redeemPaymentToken:(PaymentToken *)token;
+- (Payment *)redeemPaymentToken:(Token *)token;
 
 /**
  * Redeems a payment token.
@@ -269,7 +269,7 @@
  * @param currency payment currency code, e.g. "EUR"
  * @return payment record
  */
-- (Payment *)redeemPaymentToken:(PaymentToken *)token
+- (Payment *)redeemPaymentToken:(Token *)token
                          amount:(NSNumber *)amount
                        currency:(NSString *)currency;
 

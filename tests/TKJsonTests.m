@@ -75,7 +75,7 @@
     TokenSignature *s2 = [TokenSignature message];
     s2.action = TokenSignature_Action_Cancelled;
 
-    PaymentToken *token = [PaymentToken message];
+    Token *token = [Token message];
     token.payloadSignaturesArray = [@[s1, s2] mutableCopy];
 
     NSString *json = [TKJson serialize:token];
@@ -86,9 +86,9 @@
  * Map fields, each field is proto message.
  */
 - (void)testMap_Message {
-    PaymentToken_Payload *token = [PaymentToken_Payload message];
-    token.amount = @"123.45";
+    TokenPayload *token = [TokenPayload message];
     token.effectiveAtMs = 12345;
+    token.bankTransfer.amount = @"123.45";
 
     Var *var1 = [Var message];
     var1.value = @"one";
@@ -96,10 +96,10 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
 
-    token.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
+    token.bankTransfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"amount\":\"123.45\",\"effectiveAtMs\":12345,\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}");
+    XCTAssertEqualObjects(json, @"{\"bankTransfer\":{\"amount\":\"123.45\",\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}},\"effectiveAtMs\":12345}");
 }
 
 /**
@@ -184,11 +184,11 @@
     TokenSignature *s2 = [TokenSignature message];
     s2.action = TokenSignature_Action_Cancelled;
     
-    PaymentToken *token1 = [PaymentToken message];
+    Token *token1 = [Token message];
     token1.payloadSignaturesArray = [@[s1, s2] mutableCopy];
     
     NSString *json1 = [TKJson serialize:token1];
-    PaymentToken *token2  = [TKJson deserializeMessageOfClass:[PaymentToken class] fromJSON:json1];
+    Token *token2  = [TKJson deserializeMessageOfClass:[Token class] fromJSON:json1];
     NSString* json2 = [TKJson serialize:token2];
     
     XCTAssertEqualObjects(json1, json2);
@@ -198,8 +198,8 @@
  * Deserialize Map fields, each field is proto message.
  */
 - (void)testDeserializeMap_Message {
-    PaymentToken_Payload *token1 = [PaymentToken_Payload message];
-    token1.amount = @"123.45";
+    TokenPayload *token1 = [TokenPayload message];
+    token1.bankTransfer.amount = @"123.45";
     token1.effectiveAtMs = 12345;
     
     Var *var1 = [Var message];
@@ -208,10 +208,10 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
     
-    token1.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
+    token1.bankTransfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
     
     NSString *json1 = [TKJson serialize:token1];
-    PaymentToken_Payload *token2  = [TKJson deserializeMessageOfClass:[PaymentToken_Payload class] fromJSON:json1];
+    TokenPayload *token2  = [TKJson deserializeMessageOfClass:[TokenPayload class] fromJSON:json1];
     NSString* json2 = [TKJson serialize:token2];
     
     XCTAssertEqualObjects(json1, json2);
@@ -232,7 +232,6 @@
     
     XCTAssertEqualObjects(json1, json2);
 }
-
 
 
 @end
