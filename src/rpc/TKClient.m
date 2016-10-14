@@ -259,16 +259,16 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)createPaymentToken:(TokenPayload *)payload
+- (void)createTransferToken:(TokenPayload *)payload
                  onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
-    CreatePaymentTokenRequest *request = [CreatePaymentTokenRequest message];
+    CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-            RPCToCreatePaymentTokenWithRequest:request
-                                   handler:^(CreatePaymentTokenResponse *response, NSError *error) {
+            RPCToCreateTransferTokenWithRequest:request
+                                   handler:^(CreateTransferTokenResponse *response, NSError *error) {
                                        if (response) {
                                            RpcLogCompleted(response);
                                            onSuccess(response.token);
@@ -282,16 +282,16 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getPaymentToken:(NSString *)tokenId
+- (void)getTransferToken:(NSString *)tokenId
               onSuccess:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError {
-    GetPaymentTokenRequest *request = [GetPaymentTokenRequest message];
+    GetTransferTokenRequest *request = [GetTransferTokenRequest message];
     request.tokenId = tokenId;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToGetPaymentTokenWithRequest:request
-                           handler:^(GetPaymentTokenResponse *response, NSError *error) {
+                           RPCToGetTransferTokenWithRequest:request
+                           handler:^(GetTransferTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
@@ -305,18 +305,18 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getPaymentTokens:(int)offset
+- (void)getTransferTokens:(int)offset
                    limit:(int)limit
                onSuccess:(OnSuccessWithTokens)onSuccess
                  onError:(OnError)onError {
-    GetPaymentTokensRequest *request = [GetPaymentTokensRequest message];
+    GetTransferTokensRequest *request = [GetTransferTokensRequest message];
     request.page.offset = @"0"; // TODO(maxim): fix me
     request.page.limit = limit;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToGetPaymentTokensWithRequest:request
-                           handler:^(GetPaymentTokensResponse *response, NSError *error) {
+                           RPCToGetTransferTokensWithRequest:request
+                           handler:^(GetTransferTokensResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.tokensArray);
@@ -329,10 +329,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)endorsePaymentToken:(Token *)token
+- (void)endorseTransferToken:(Token *)token
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
-    EndorsePaymentTokenRequest *request = [EndorsePaymentTokenRequest message];
+    EndorseTransferTokenRequest *request = [EndorseTransferTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:token
@@ -341,8 +341,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToEndorsePaymentTokenWithRequest:request
-                           handler:^(EndorsePaymentTokenResponse *response, NSError *error) {
+                           RPCToEndorseTransferTokenWithRequest:request
+                           handler:^(EndorseTransferTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
@@ -355,10 +355,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)cancelPaymentToken:(Token *)token
+- (void)cancelTransferToken:(Token *)token
                  onSuccess:(OnSuccessWithToken)onSuccess
                    onError:(OnError)onError {
-    CancelPaymentTokenRequest *request = [CancelPaymentTokenRequest message];
+    CancelTransferTokenRequest *request = [CancelTransferTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:token
@@ -367,8 +367,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToCancelPaymentTokenWithRequest:request
-                           handler:^(CancelPaymentTokenResponse *response, NSError *error) {
+                           RPCToCancelTransferTokenWithRequest:request
+                           handler:^(CancelTransferTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
@@ -381,22 +381,22 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)redeemPaymentToken:(PaymentPayload *)payload
-          onSuccess:(OnSuccessWithPayment)onSuccess
+- (void)redeemTransferToken:(Transfer_Payload *)payload
+          onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError {
-    RedeemPaymentTokenRequest *request = [RedeemPaymentTokenRequest message];
+    RedeemTransferTokenRequest *request = [RedeemTransferTokenRequest message];
     request.payload = payload;
     request.payloadSignature.keyId = key.id;
     request.payloadSignature.signature = [TKCrypto sign:payload usingKey:key];
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToRedeemPaymentTokenWithRequest:request
+                           RPCToRedeemTransferTokenWithRequest:request
                            handler:
-                           ^(RedeemPaymentTokenResponse *response, NSError *error) {
+                           ^(RedeemTransferTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.payment);
+                                   onSuccess(response.transfer);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -406,20 +406,20 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getPayment:(NSString *)paymentId
-         onSuccess:(OnSuccessWithPayment)onSuccess
+- (void)getTransfer:(NSString *)transferId
+         onSuccess:(OnSuccessWithTransfer)onSuccess
            onError:(OnError)onError {
-    GetPaymentRequest *request = [GetPaymentRequest message];
-    request.paymentId = paymentId;
+    GetTransferRequest *request = [GetTransferRequest message];
+    request.transferId = transferId;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToGetPaymentWithRequest:request
+                           RPCToGetTransferWithRequest:request
                            handler:
-                           ^(GetPaymentResponse *response, NSError *error) {
+                           ^(GetTransferResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.payment);
+                                   onSuccess(response.transfer);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -429,24 +429,24 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getPaymentsOffset:(int)offset
+- (void)getTransfersOffset:(int)offset
                     limit:(int)limit
                   tokenId:(NSString *)tokenId
-                onSuccess:(OnSuccessWithPayments)onSuccess
+                onSuccess:(OnSuccessWithTransfers)onSuccess
                   onError:(OnError)onError {
-    GetPaymentsRequest *request = [GetPaymentsRequest message];
+    GetTransfersRequest *request = [GetTransfersRequest message];
     request.page.offset = @"0"; // TODO(maxim): fix me
     request.page.limit = limit;
     request.tokenId = tokenId;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-                           RPCToGetPaymentsWithRequest:request
+                           RPCToGetTransfersWithRequest:request
                            handler:
-                           ^(GetPaymentsResponse *response, NSError *error) {
+                           ^(GetTransfersResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.paymentsArray);
+                                   onSuccess(response.transfersArray);
                                } else {
                                    RpcLogError(error);
                                    onError(error);

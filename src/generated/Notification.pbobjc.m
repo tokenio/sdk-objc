@@ -40,16 +40,16 @@ static GPBFileDescriptor *NotificationRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - PaymentProcessed
+#pragma mark - TransferProcessed
 
-@implementation PaymentProcessed
+@implementation TransferProcessed
 
-@dynamic paymentId;
+@dynamic transferId;
 
-typedef struct PaymentProcessed__storage_ {
+typedef struct TransferProcessed__storage_ {
   uint32_t _has_storage_[1];
-  NSString *paymentId;
-} PaymentProcessed__storage_;
+  NSString *transferId;
+} TransferProcessed__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -58,22 +58,22 @@ typedef struct PaymentProcessed__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "paymentId",
+        .name = "transferId",
         .dataTypeSpecific.className = NULL,
-        .number = PaymentProcessed_FieldNumber_PaymentId,
+        .number = TransferProcessed_FieldNumber_TransferId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(PaymentProcessed__storage_, paymentId),
+        .offset = (uint32_t)offsetof(TransferProcessed__storage_, transferId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[PaymentProcessed class]
+        [GPBDescriptor allocDescriptorForClass:[TransferProcessed class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(PaymentProcessed__storage_)
+                                   storageSize:sizeof(TransferProcessed__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -293,7 +293,7 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 @implementation Notification
 
 @dynamic notificationOneOfCase;
-@dynamic paymentProcessed;
+@dynamic transferProcessed;
 @dynamic linkAccounts;
 @dynamic stepUp;
 @dynamic addKey;
@@ -301,7 +301,7 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 
 typedef struct Notification__storage_ {
   uint32_t _has_storage_[2];
-  PaymentProcessed *paymentProcessed;
+  TransferProcessed *transferProcessed;
   LinkAccounts *linkAccounts;
   StepUp *stepUp;
   AddKey *addKey;
@@ -315,11 +315,11 @@ typedef struct Notification__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "paymentProcessed",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentProcessed),
-        .number = Notification_FieldNumber_PaymentProcessed,
+        .name = "transferProcessed",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferProcessed),
+        .number = Notification_FieldNumber_TransferProcessed,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, paymentProcessed),
+        .offset = (uint32_t)offsetof(Notification__storage_, transferProcessed),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

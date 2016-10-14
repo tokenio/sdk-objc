@@ -88,7 +88,7 @@
 - (void)testMap_Message {
     TokenPayload *token = [TokenPayload message];
     token.effectiveAtMs = 12345;
-    token.bankTransfer.amount = @"123.45";
+    token.transfer.amount = @"123.45";
 
     Var *var1 = [Var message];
     var1.value = @"one";
@@ -96,10 +96,10 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
 
-    token.bankTransfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
+    token.transfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
 
     NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"bankTransfer\":{\"amount\":\"123.45\",\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}},\"effectiveAtMs\":12345}");
+    XCTAssertEqualObjects(json, @"{\"effectiveAtMs\":12345,\"transfer\":{\"amount\":\"123.45\",\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}}");
 }
 
 /**
@@ -199,7 +199,7 @@
  */
 - (void)testDeserializeMap_Message {
     TokenPayload *token1 = [TokenPayload message];
-    token1.bankTransfer.amount = @"123.45";
+    token1.transfer.amount = @"123.45";
     token1.effectiveAtMs = 12345;
     
     Var *var1 = [Var message];
@@ -208,7 +208,7 @@
     Var *var2 = [Var message];
     var2.regex = @"two";
     
-    token1.bankTransfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
+    token1.transfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
     
     NSString *json1 = [TKJson serialize:token1];
     TokenPayload *token2  = [TKJson deserializeMessageOfClass:[TokenPayload class] fromJSON:json1];

@@ -35,13 +35,13 @@
            secretKey:(TKSecretKey *)key
            useClient:(TKClient *)client_ {
     self = [super init];
-
+    
     if (self) {
         _key = key;
         member = member_;
         client = client_;
     }
-
+    
     return self;
 }
 
@@ -75,7 +75,7 @@
            onError:(OnError)onError {
     [self approvePublicKey:key.publicKeyStr
                      level:level
-                  onSuccess:onSuccess
+                 onSuccess:onSuccess
                    onError:onError];
 }
 
@@ -89,11 +89,11 @@
                 to:member
              level:level
          onSuccess:
-                 ^(Member *m) {
-                     [retainedMember clear];
-                     [retainedMember mergeFrom:m];
-                     onSuccess();
-                 }
+     ^(Member *m) {
+         [retainedMember clear];
+         [retainedMember mergeFrom:m];
+         onSuccess();
+     }
            onError:onError];
 }
 
@@ -103,11 +103,11 @@
     [client removeKey:keyId
                  from:member
             onSuccess:
-                    ^(Member *m) {
-                        [member clear];
-                        [member mergeFrom:m];
-                        onSuccess();
-                    }
+     ^(Member *m) {
+         [member clear];
+         [member mergeFrom:m];
+         onSuccess();
+     }
               onError:onError];
 }
 
@@ -115,15 +115,15 @@
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
-
+    
     [client addAlias:alias
                   to:member
            onSuccess:
-                   ^(Member *m) {
-                       [retainedMember clear];
-                       [retainedMember mergeFrom:m];
-                       onSuccess();
-                   }
+     ^(Member *m) {
+         [retainedMember clear];
+         [retainedMember mergeFrom:m];
+         onSuccess();
+     }
              onError:onError];
 }
 
@@ -133,19 +133,19 @@
     [client removeAlias:alias
                    from:member
               onSuccess:
-                      ^(Member *m) {
-                          [member clear];
-                          [member mergeFrom:m];
-                          onSuccess();
-                      }
+     ^(Member *m) {
+         [member clear];
+         [member mergeFrom:m];
+         onSuccess();
+     }
                 onError:onError];
 }
 
 - (void)subscribeToNotifications:(NSString *)provider
-        target:(NSString *)target
-               platform:(Platform)platform
-              onSuccess:(OnSuccessWithSubscriber)onSuccess
-                onError:(OnError)onError {
+                          target:(NSString *)target
+                        platform:(Platform)platform
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
+                         onError:(OnError)onError {
     [client subscribeToNotifications:provider
                               target:target
                             platform:platform
@@ -154,25 +154,25 @@
 }
 
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
-                             onError:(OnError)onError {
+               onError:(OnError)onError {
     [client getSubscribers:onSuccess
-                                 onError:onError];
+                   onError:onError];
 }
 
 - (void)getSubscriber:(NSString *)subscriberId
-                           onSuccess:(OnSuccessWithSubscriber)onSuccess
-                             onError:(OnError)onError {
+            onSuccess:(OnSuccessWithSubscriber)onSuccess
+              onError:(OnError)onError {
     [client getSubscriber:subscriberId
-                               onSuccess:onSuccess
-                                 onError:onError];
+                onSuccess:onSuccess
+                  onError:onError];
 }
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError {
+                           onSuccess:(OnSuccess)onSuccess
+                             onError:(OnError)onError {
     [client unsubscribeFromNotifications:subscriberId
-                    onSuccess:onSuccess
-                      onError:onError];
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 
@@ -183,60 +183,60 @@
     [client linkAccounts:bankId
                  payload:payload
                onSuccess:
-                       ^(NSArray<Account *> *accounts) {
-                           onSuccess([self _mapAccounts:accounts]);
-                       }
+     ^(NSArray<Account *> *accounts) {
+         onSuccess([self _mapAccounts:accounts]);
+     }
                  onError:onError];
 }
 
 - (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
             onError:(OnError)onError {
     [client getAccounts:
-                    ^(NSArray<Account *> *accounts) {
-                        onSuccess([self _mapAccounts:accounts]);
-                    }
-                   onError:onError];
+     ^(NSArray<Account *> *accounts) {
+         onSuccess([self _mapAccounts:accounts]);
+     }
+                onError:onError];
 }
 
 - (void)getAccount:(NSString *)accountId
          onSuccess:(OnSuccessWithTKAccountAsync)onSuccess
            onError:(OnError)onError {
     [client getAccount:accountId
-                    onSuccess:^(Account * account) {
-                        onSuccess([self _mapAccount:account]);
-                    }
+             onSuccess:^(Account * account) {
+                 onSuccess([self _mapAccount:account]);
+             }
                onError:onError];
 }
 
-- (void)getPayment:(NSString *)paymentId
-         onSuccess:(OnSuccessWithPayment)onSuccess
-           onError:(OnError)onError {
-    [client getPayment:paymentId
-             onSuccess:onSuccess
-               onError:onError];
+- (void)getTransfer:(NSString *)transferId
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError {
+    [client getTransfer:transferId
+              onSuccess:onSuccess
+                onError:onError];
 }
 
-- (void)getPaymentsOffset:(int)offset
-                    limit:(int)limit
-                onSuccess:(OnSuccessWithPayments)onSuccess
-                  onError:(OnError)onError {
-    [self getPaymentsOffset:offset
-                      limit:limit
-                    tokenId:nil
-                  onSuccess:onSuccess
-                    onError:onError];
+- (void)getTransfersOffset:(int)offset
+                     limit:(int)limit
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError {
+    [self getTransfersOffset:offset
+                       limit:limit
+                     tokenId:nil
+                   onSuccess:onSuccess
+                     onError:onError];
 }
 
-- (void)getPaymentsOffset:(int)offset
-                    limit:(int)limit
-                  tokenId:(NSString *)tokenId
-                onSuccess:(OnSuccessWithPayments)onSuccess
-                  onError:(OnError)onError {
-    [client getPaymentsOffset:offset
-                        limit:limit
-                      tokenId:tokenId
-                    onSuccess:onSuccess
-                      onError:onError];
+- (void)getTransfersOffset:(int)offset
+                     limit:(int)limit
+                   tokenId:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError {
+    [client getTransfersOffset:offset
+                         limit:limit
+                       tokenId:tokenId
+                     onSuccess:onSuccess
+                       onError:onError];
 }
 
 - (void)addAddressWithName:(NSString *)name
@@ -271,27 +271,27 @@
                       onError:onError];
 }
 
-- (void)createPaymentTokenForAccount:(NSString *)accountId
-                              amount:(double)amount
-                            currency:(NSString *)currency
-                           onSuccess:(OnSuccessWithToken)onSuccess
-                             onError:(OnError)onError {
-    [self createPaymentTokenForAccount:accountId
-                                amount:amount
-                              currency:currency
-                         redeemerAlias:nil
-                           description:nil
-                             onSuccess:onSuccess
-                               onError:onError];
+- (void)createTransferTokenForAccount:(NSString *)accountId
+                               amount:(double)amount
+                             currency:(NSString *)currency
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError {
+    [self createTransferTokenForAccount:accountId
+                                 amount:amount
+                               currency:currency
+                          redeemerAlias:nil
+                            description:nil
+                              onSuccess:onSuccess
+                                onError:onError];
 }
 
-- (void)createPaymentTokenForAccount:(NSString *)accountId
-                              amount:(double)amount
-                            currency:(NSString *)currency
-                       redeemerAlias:(NSString *)redeemerAlias
-                         description:(NSString *)description
-                           onSuccess:(OnSuccessWithToken)onSuccess
-                             onError:(OnError)onError {
+- (void)createTransferTokenForAccount:(NSString *)accountId
+                               amount:(double)amount
+                             currency:(NSString *)currency
+                        redeemerAlias:(NSString *)redeemerAlias
+                          description:(NSString *)description
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError {
     
     TokenMember *payer = [TokenMember message];
     payer.id_p = self.id;
@@ -300,87 +300,87 @@
     payload.version = @"1.0";
     payload.nonce = [TKUtil nonce];
     payload.from = payer;
-    payload.bankTransfer.amount = [NSString stringWithFormat:@"%g", amount];
-    payload.bankTransfer.currency = currency;
-    payload.bankTransfer.transfer.source.accountId = accountId;
-
+    payload.transfer.amount = [NSString stringWithFormat:@"%g", amount];
+    payload.transfer.currency = currency;
+    payload.transfer.instructions.source.accountId = accountId;
+    
     if (redeemerAlias) {
-        payload.bankTransfer.redeemer.alias = redeemerAlias;
+        payload.transfer.redeemer.alias = redeemerAlias;
     }
-
+    
     if (description) {
         payload.description_p = description;
     }
-
-    [client createPaymentToken:payload
-                     onSuccess:^(Token *token) { onSuccess(token); }
-                       onError:onError];
+    
+    [client createTransferToken:payload
+                      onSuccess:^(Token *token) { onSuccess(token); }
+                        onError:onError];
 }
 
-- (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithToken)onSuccess
-                onError:(OnError)onError {
-    [client getPaymentToken:tokenId
-                  onSuccess:onSuccess
-                    onError:onError];
-}
-
-- (void)getPaymentTokensOffset:(int)offset
-                         limit:(int)limit
-                     onSuccess:(OnSuccessWithTokens)onSuccess
-                       onError:(OnError)onError {
-    [client getPaymentTokens:offset
-                       limit:limit
+- (void)getTransferToken:(NSString *)tokenId
+               onSuccess:(OnSuccessWithToken)onSuccess
+                 onError:(OnError)onError {
+    [client getTransferToken:tokenId
                    onSuccess:onSuccess
                      onError:onError];
 }
 
-- (void)endorsePaymentToken:(Token *)token
+- (void)getTransferTokensOffset:(int)offset
+                          limit:(int)limit
+                      onSuccess:(OnSuccessWithTokens)onSuccess
+                        onError:(OnError)onError {
+    [client getTransferTokens:offset
+                        limit:limit
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (void)endorseTransferToken:(Token *)token
+                   onSuccess:(OnSuccessWithToken)onSuccess
+                     onError:(OnError)onError {
+    [client endorseTransferToken:token
+                       onSuccess:onSuccess
+                         onError:onError];
+    
+}
+
+- (void)cancelTransferToken:(Token *)token
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
-    [client endorsePaymentToken:token
-                      onSuccess:onSuccess
-                        onError:onError];
-
-}
-
-- (void)cancelPaymentToken:(Token *)token
-                 onSuccess:(OnSuccessWithToken)onSuccess
-                   onError:(OnError)onError {
-    [client cancelPaymentToken:token
+    [client cancelTransferToken:token
                       onSuccess:onSuccess
                         onError:onError];
 }
 
-- (void)redeemPaymentToken:(Token *)token
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError {
-    [self redeemPaymentToken:token
-                      amount:nil
-                    currency:nil
-                   onSuccess:onSuccess
-                     onError:onError];
+- (void)redeemTransferToken:(Token *)token
+                  onSuccess:(OnSuccessWithTransfer)onSuccess
+                    onError:(OnError)onError {
+    [self redeemTransferToken:token
+                       amount:nil
+                     currency:nil
+                    onSuccess:onSuccess
+                      onError:onError];
 }
 
-- (void)redeemPaymentToken:(Token *)token
-                    amount:(NSNumber *)amount
-                  currency:(NSString *)currency
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError {
-    PaymentPayload *payload = [PaymentPayload message];
+- (void)redeemTransferToken:(Token *)token
+                     amount:(NSNumber *)amount
+                   currency:(NSString *)currency
+                  onSuccess:(OnSuccessWithTransfer)onSuccess
+                    onError:(OnError)onError {
+    Transfer_Payload *payload = [Transfer_Payload message];
     payload.tokenId = token.id_p;
     payload.nonce = [TKUtil nonce];
-
+    
     if (amount) {
         payload.amount.value = [amount stringValue];
     }
     if (currency) {
         payload.amount.currency = currency;
     }
-
-    [client redeemPaymentToken:payload
-                     onSuccess:onSuccess
-                       onError:onError];
+    
+    [client redeemTransferToken:payload
+                      onSuccess:onSuccess
+                        onError:onError];
 }
 
 #pragma mark private

@@ -87,7 +87,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
   Transaction_FieldNumber_Amount = 4,
   Transaction_FieldNumber_Description_p = 5,
   Transaction_FieldNumber_TokenId = 6,
-  Transaction_FieldNumber_TokenPaymentId = 7,
+  Transaction_FieldNumber_TokenTransferId = 7,
 };
 
 @interface Transaction : GPBMessage
@@ -107,8 +107,8 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 /// Points to the token, only set for Token transactions.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
-/// Points to the token payment, only set for Token transactions.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenPaymentId;
+/// Points to the token transfer, only set for Token transactions.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenTransferId;
 
 @end
 

@@ -9,9 +9,9 @@ import "money.proto";
 import "notification.proto";
 import "security.proto";
 import "paging.proto";
-import "payment.proto";
 import "token.proto";
 import "transaction.proto";
+import "transfer.proto";
 import "subscriber.proto";
 
 
@@ -194,49 +194,49 @@ message GetTransactionsResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Payment Tokens.
+// Bank Transfer Tokens.
 //
 
-message CreatePaymentTokenRequest {
+message CreateTransferTokenRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
 }
 
-message CreatePaymentTokenResponse {
+message CreateTransferTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message GetPaymentTokenRequest {
+message GetTransferTokenRequest {
    string token_id = 2;
 }
 
-message GetPaymentTokenResponse {
+message GetTransferTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message GetPaymentTokensRequest {
+message GetTransferTokensRequest {
   io.token.proto.common.paging.Page page = 1; // Optional paging settings.
 }
 
-message GetPaymentTokensResponse {
+message GetTransferTokensResponse {
   repeated io.token.proto.common.token.Token tokens = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
-message EndorsePaymentTokenRequest {
+message EndorseTransferTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message EndorsePaymentTokenResponse {
+message EndorseTransferTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message CancelPaymentTokenRequest {
+message CancelTransferTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message CancelPaymentTokenResponse {
+message CancelTransferTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
@@ -290,33 +290,33 @@ message CancelAccessTokenResponse {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Payments.
+// Transfers.
 //
 
-message RedeemPaymentTokenRequest {
-  io.token.proto.common.payment.PaymentPayload payload = 1;
+message RedeemTransferTokenRequest {
+  io.token.proto.common.transfer.Transfer.Payload payload = 1;
   io.token.proto.common.security.Signature payload_signature = 2;
 }
 
-message RedeemPaymentTokenResponse {
-  io.token.proto.common.payment.Payment payment = 1;
+message RedeemTransferTokenResponse {
+  io.token.proto.common.transfer.Transfer transfer = 1;
 }
 
-message GetPaymentRequest {
-  string payment_id = 1;
+message GetTransferRequest {
+  string transfer_id = 1;
 }
 
-message GetPaymentResponse {
-  io.token.proto.common.payment.Payment payment = 1;
+message GetTransferResponse {
+  io.token.proto.common.transfer.Transfer transfer = 1;
 }
 
-message GetPaymentsRequest {
-  string token_id = 1;                    // Optional token_id to filter payments by.
+message GetTransfersRequest {
+  string token_id = 1;                    // Optional token_id to filter transfers by.
   io.token.proto.common.paging.Page page = 2; // Optional paging settings.
 }
 
-message GetPaymentsResponse {
-  repeated io.token.proto.common.payment.Payment payments = 1;    // List of payments.
+message GetTransfersResponse {
+  repeated io.token.proto.common.transfer.Transfer transfers = 1;    // List of transfers.
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
@@ -345,7 +345,7 @@ service GatewayService {
 
   rpc GetMember (GetMemberRequest) returns (GetMemberResponse) {
     option (google.api.http) = {
-        get: "/member"
+        get: "/members"
     };
   }
 
@@ -468,36 +468,36 @@ service GatewayService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Payment Tokens.
+  // Transfer Tokens.
   //
 
-  rpc CreatePaymentToken (CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse) {
+  rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
     option (google.api.http) = {
-        post: "/payment-tokens"
+        post: "/transfer-tokens"
     };
   }
 
-  rpc GetPaymentToken (GetPaymentTokenRequest) returns (GetPaymentTokenResponse) {
+  rpc GetTransferToken (GetTransferTokenRequest) returns (GetTransferTokenResponse) {
     option (google.api.http) = {
-        get: "/payment-tokens/{token_id}"
+        get: "/transfer-tokens/{token_id}"
     };
   }
 
-  rpc GetPaymentTokens (GetPaymentTokensRequest) returns (GetPaymentTokensResponse) {
+  rpc GetTransferTokens (GetTransferTokensRequest) returns (GetTransferTokensResponse) {
     option (google.api.http) = {
-        get: "/payment-tokens?offset={page.offset}&limit={page.limit}"
+        get: "/transfer-tokens?offset={page.offset}&limit={page.limit}"
     };
   }
 
-  rpc EndorsePaymentToken (EndorsePaymentTokenRequest) returns (EndorsePaymentTokenResponse) {
+  rpc EndorseTransferToken (EndorseTransferTokenRequest) returns (EndorseTransferTokenResponse) {
     option (google.api.http) = {
-        put: "/payment-tokens/{token_id}/endorse"
+        put: "/transfer-tokens/{token_id}/endorse"
     };
   }
 
-  rpc CancelPaymentToken (CancelPaymentTokenRequest) returns (CancelPaymentTokenResponse) {
+  rpc CancelTransferToken (CancelTransferTokenRequest) returns (CancelTransferTokenResponse) {
     option (google.api.http) = {
-        put: "/payment-tokens/{token_id}/cancel"
+        put: "/transfer-tokens/{token_id}/cancel"
     };
   }
 
@@ -538,24 +538,24 @@ service GatewayService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Token Payments.
+  // Token Transfers.
   //
 
-  rpc RedeemPaymentToken (RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse) {
+  rpc RedeemTransferToken (RedeemTransferTokenRequest) returns (RedeemTransferTokenResponse) {
     option (google.api.http) = {
-        post: "/payments"
+        post: "/transfers"
     };
   }
 
-  rpc GetPayment (GetPaymentRequest) returns (GetPaymentResponse) {
+  rpc GetTransfer (GetTransferRequest) returns (GetTransferResponse) {
     option (google.api.http) = {
-        get: "/payments/{payment_id}"
+        get: "/transfers/{transfer_id}"
     };
   }
 
-  rpc GetPayments (GetPaymentsRequest) returns (GetPaymentsResponse) {
+  rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
-        get: "/payments?token_id={token_id}&offset={page.offset}&limit={page.limit}"
+        get: "/transfers?token_id={token_id}&offset={page.offset}&limit={page.limit}"
     };
   }
 }

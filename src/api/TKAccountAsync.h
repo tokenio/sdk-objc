@@ -44,7 +44,7 @@
            onError:(OnError)onError;
 
 /**
- * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
  *
  * @param transactionId ID of the transaction
  * @param onSuccess invoked on success
@@ -55,7 +55,7 @@
                onError:(OnError)onError;
 
 /**
- * Looks up existing transactions. This is a full list of transactions with token payments
+ * Looks up existing transactions. This is a full list of transactions with token transfers
  * being a subset.
  *
  * @param offset offset to start at

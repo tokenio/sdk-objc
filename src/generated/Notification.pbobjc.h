@@ -27,8 +27,8 @@ CF_EXTERN_C_BEGIN
 @class AddKey;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
-@class PaymentProcessed;
 @class StepUp;
+@class TransferProcessed;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,16 +45,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NotificationRoot : GPBRootObject
 @end
 
-#pragma mark - PaymentProcessed
+#pragma mark - TransferProcessed
 
-typedef GPB_ENUM(PaymentProcessed_FieldNumber) {
-  PaymentProcessed_FieldNumber_PaymentId = 1,
+typedef GPB_ENUM(TransferProcessed_FieldNumber) {
+  TransferProcessed_FieldNumber_TransferId = 1,
 };
 
-/// A notification that a payment was successfully processed
-@interface PaymentProcessed : GPBMessage
+/// A notification that a transfer was successfully processed.
+@interface TransferProcessed : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *paymentId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
 
@@ -65,7 +65,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_AccountsLinkPayload = 2,
 };
 
-/// A notification that a bank wants to be linked
+/// A notification that a bank wants to be linked.
 @interface LinkAccounts : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
@@ -80,7 +80,7 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
   StepUp_FieldNumber_TokenId = 1,
 };
 
-/// A notification to step up / endorse a token
+/// A notification to step up / endorse a token.
 @interface StepUp : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
@@ -94,7 +94,7 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
   AddKey_FieldNumber_Name = 2,
 };
 
-/// A notification that a key wants to be added to a member
+/// A notification that a key wants to be added to a member.
 @interface AddKey : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
@@ -110,7 +110,7 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
   LinkAccountsAndAddKey_FieldNumber_AddKey = 2,
 };
 
-/// A notification that a bank wants to be linked, and keys want to be added
+/// A notification that a bank wants to be linked, and keys want to be added.
 @interface LinkAccountsAndAddKey : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
@@ -126,7 +126,7 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
 #pragma mark - Notification
 
 typedef GPB_ENUM(Notification_FieldNumber) {
-  Notification_FieldNumber_PaymentProcessed = 1,
+  Notification_FieldNumber_TransferProcessed = 1,
   Notification_FieldNumber_LinkAccounts = 2,
   Notification_FieldNumber_StepUp = 3,
   Notification_FieldNumber_AddKey = 4,
@@ -135,7 +135,7 @@ typedef GPB_ENUM(Notification_FieldNumber) {
 
 typedef GPB_ENUM(Notification_Notification_OneOfCase) {
   Notification_Notification_OneOfCase_GPBUnsetOneOfCase = 0,
-  Notification_Notification_OneOfCase_PaymentProcessed = 1,
+  Notification_Notification_OneOfCase_TransferProcessed = 1,
   Notification_Notification_OneOfCase_LinkAccounts = 2,
   Notification_Notification_OneOfCase_StepUp = 3,
   Notification_Notification_OneOfCase_AddKey = 4,
@@ -146,7 +146,7 @@ typedef GPB_ENUM(Notification_Notification_OneOfCase) {
 
 @property(nonatomic, readonly) Notification_Notification_OneOfCase notificationOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) PaymentProcessed *paymentProcessed;
+@property(nonatomic, readwrite, strong, null_resettable) TransferProcessed *transferProcessed;
 
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
 

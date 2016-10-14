@@ -26,5 +26,5 @@ message Transaction {
   string description = 5;
 
   string token_id = 6;                             // Points to the token, only set for Token transactions.
-  string token_payment_id = 7;                     // Points to the token payment, only set for Token transactions.
+  string token_transfer_id = 7;                    // Points to the token transfer, only set for Token transactions.
 }
