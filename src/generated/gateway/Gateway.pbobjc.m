@@ -21,9 +21,9 @@
  #import "Notification.pbobjc.h"
  #import "Security.pbobjc.h"
  #import "Paging.pbobjc.h"
- #import "Payment.pbobjc.h"
  #import "Token.pbobjc.h"
  #import "Transaction.pbobjc.h"
+ #import "Transfer.pbobjc.h"
  #import "Subscriber.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -48,9 +48,9 @@
     [registry addExtensions:[NotificationRoot extensionRegistry]];
     [registry addExtensions:[SecurityRoot extensionRegistry]];
     [registry addExtensions:[PagingRoot extensionRegistry]];
-    [registry addExtensions:[PaymentRoot extensionRegistry]];
     [registry addExtensions:[TokenRoot extensionRegistry]];
     [registry addExtensions:[TransactionRoot extensionRegistry]];
+    [registry addExtensions:[TransferRoot extensionRegistry]];
     [registry addExtensions:[SubscriberRoot extensionRegistry]];
   }
   return registry;
@@ -1844,16 +1844,16 @@ typedef struct GetTransactionsResponse__storage_ {
 
 @end
 
-#pragma mark - CreatePaymentTokenRequest
+#pragma mark - CreateTransferTokenRequest
 
-@implementation CreatePaymentTokenRequest
+@implementation CreateTransferTokenRequest
 
 @dynamic hasPayload, payload;
 
-typedef struct CreatePaymentTokenRequest__storage_ {
+typedef struct CreateTransferTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   TokenPayload *payload;
-} CreatePaymentTokenRequest__storage_;
+} CreateTransferTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1864,20 +1864,20 @@ typedef struct CreatePaymentTokenRequest__storage_ {
       {
         .name = "payload",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
-        .number = CreatePaymentTokenRequest_FieldNumber_Payload,
+        .number = CreateTransferTokenRequest_FieldNumber_Payload,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(CreatePaymentTokenRequest__storage_, payload),
+        .offset = (uint32_t)offsetof(CreateTransferTokenRequest__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[CreatePaymentTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[CreateTransferTokenRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(CreatePaymentTokenRequest__storage_)
+                                   storageSize:sizeof(CreateTransferTokenRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1887,16 +1887,16 @@ typedef struct CreatePaymentTokenRequest__storage_ {
 
 @end
 
-#pragma mark - CreatePaymentTokenResponse
+#pragma mark - CreateTransferTokenResponse
 
-@implementation CreatePaymentTokenResponse
+@implementation CreateTransferTokenResponse
 
 @dynamic hasToken, token;
 
-typedef struct CreatePaymentTokenResponse__storage_ {
+typedef struct CreateTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
   Token *token;
-} CreatePaymentTokenResponse__storage_;
+} CreateTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1907,20 +1907,20 @@ typedef struct CreatePaymentTokenResponse__storage_ {
       {
         .name = "token",
         .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = CreatePaymentTokenResponse_FieldNumber_Token,
+        .number = CreateTransferTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(CreatePaymentTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(CreateTransferTokenResponse__storage_, token),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[CreatePaymentTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[CreateTransferTokenResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(CreatePaymentTokenResponse__storage_)
+                                   storageSize:sizeof(CreateTransferTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1930,16 +1930,16 @@ typedef struct CreatePaymentTokenResponse__storage_ {
 
 @end
 
-#pragma mark - GetPaymentTokenRequest
+#pragma mark - GetTransferTokenRequest
 
-@implementation GetPaymentTokenRequest
+@implementation GetTransferTokenRequest
 
 @dynamic tokenId;
 
-typedef struct GetPaymentTokenRequest__storage_ {
+typedef struct GetTransferTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
-} GetPaymentTokenRequest__storage_;
+} GetTransferTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1950,20 +1950,20 @@ typedef struct GetPaymentTokenRequest__storage_ {
       {
         .name = "tokenId",
         .dataTypeSpecific.className = NULL,
-        .number = GetPaymentTokenRequest_FieldNumber_TokenId,
+        .number = GetTransferTokenRequest_FieldNumber_TokenId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentTokenRequest__storage_, tokenId),
+        .offset = (uint32_t)offsetof(GetTransferTokenRequest__storage_, tokenId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferTokenRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentTokenRequest__storage_)
+                                   storageSize:sizeof(GetTransferTokenRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1973,16 +1973,16 @@ typedef struct GetPaymentTokenRequest__storage_ {
 
 @end
 
-#pragma mark - GetPaymentTokenResponse
+#pragma mark - GetTransferTokenResponse
 
-@implementation GetPaymentTokenResponse
+@implementation GetTransferTokenResponse
 
 @dynamic hasToken, token;
 
-typedef struct GetPaymentTokenResponse__storage_ {
+typedef struct GetTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
   Token *token;
-} GetPaymentTokenResponse__storage_;
+} GetTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1993,20 +1993,20 @@ typedef struct GetPaymentTokenResponse__storage_ {
       {
         .name = "token",
         .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = GetPaymentTokenResponse_FieldNumber_Token,
+        .number = GetTransferTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(GetTransferTokenResponse__storage_, token),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferTokenResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentTokenResponse__storage_)
+                                   storageSize:sizeof(GetTransferTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2016,16 +2016,16 @@ typedef struct GetPaymentTokenResponse__storage_ {
 
 @end
 
-#pragma mark - GetPaymentTokensRequest
+#pragma mark - GetTransferTokensRequest
 
-@implementation GetPaymentTokensRequest
+@implementation GetTransferTokensRequest
 
 @dynamic hasPage, page;
 
-typedef struct GetPaymentTokensRequest__storage_ {
+typedef struct GetTransferTokensRequest__storage_ {
   uint32_t _has_storage_[1];
   Page *page;
-} GetPaymentTokensRequest__storage_;
+} GetTransferTokensRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2036,20 +2036,20 @@ typedef struct GetPaymentTokensRequest__storage_ {
       {
         .name = "page",
         .dataTypeSpecific.className = GPBStringifySymbol(Page),
-        .number = GetPaymentTokensRequest_FieldNumber_Page,
+        .number = GetTransferTokensRequest_FieldNumber_Page,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentTokensRequest__storage_, page),
+        .offset = (uint32_t)offsetof(GetTransferTokensRequest__storage_, page),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentTokensRequest class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferTokensRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentTokensRequest__storage_)
+                                   storageSize:sizeof(GetTransferTokensRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2059,18 +2059,18 @@ typedef struct GetPaymentTokensRequest__storage_ {
 
 @end
 
-#pragma mark - GetPaymentTokensResponse
+#pragma mark - GetTransferTokensResponse
 
-@implementation GetPaymentTokensResponse
+@implementation GetTransferTokensResponse
 
 @dynamic tokensArray, tokensArray_Count;
 @dynamic offset;
 
-typedef struct GetPaymentTokensResponse__storage_ {
+typedef struct GetTransferTokensResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *tokensArray;
   NSString *offset;
-} GetPaymentTokensResponse__storage_;
+} GetTransferTokensResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2081,29 +2081,29 @@ typedef struct GetPaymentTokensResponse__storage_ {
       {
         .name = "tokensArray",
         .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = GetPaymentTokensResponse_FieldNumber_TokensArray,
+        .number = GetTransferTokensResponse_FieldNumber_TokensArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetPaymentTokensResponse__storage_, tokensArray),
+        .offset = (uint32_t)offsetof(GetTransferTokensResponse__storage_, tokensArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "offset",
         .dataTypeSpecific.className = NULL,
-        .number = GetPaymentTokensResponse_FieldNumber_Offset,
+        .number = GetTransferTokensResponse_FieldNumber_Offset,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentTokensResponse__storage_, offset),
+        .offset = (uint32_t)offsetof(GetTransferTokensResponse__storage_, offset),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentTokensResponse class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferTokensResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentTokensResponse__storage_)
+                                   storageSize:sizeof(GetTransferTokensResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2113,18 +2113,18 @@ typedef struct GetPaymentTokensResponse__storage_ {
 
 @end
 
-#pragma mark - EndorsePaymentTokenRequest
+#pragma mark - EndorseTransferTokenRequest
 
-@implementation EndorsePaymentTokenRequest
+@implementation EndorseTransferTokenRequest
 
 @dynamic tokenId;
 @dynamic hasSignature, signature;
 
-typedef struct EndorsePaymentTokenRequest__storage_ {
+typedef struct EndorseTransferTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
   Signature *signature;
-} EndorsePaymentTokenRequest__storage_;
+} EndorseTransferTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2135,29 +2135,29 @@ typedef struct EndorsePaymentTokenRequest__storage_ {
       {
         .name = "tokenId",
         .dataTypeSpecific.className = NULL,
-        .number = EndorsePaymentTokenRequest_FieldNumber_TokenId,
+        .number = EndorseTransferTokenRequest_FieldNumber_TokenId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(EndorsePaymentTokenRequest__storage_, tokenId),
+        .offset = (uint32_t)offsetof(EndorseTransferTokenRequest__storage_, tokenId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = EndorsePaymentTokenRequest_FieldNumber_Signature,
+        .number = EndorseTransferTokenRequest_FieldNumber_Signature,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(EndorsePaymentTokenRequest__storage_, signature),
+        .offset = (uint32_t)offsetof(EndorseTransferTokenRequest__storage_, signature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[EndorsePaymentTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[EndorseTransferTokenRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(EndorsePaymentTokenRequest__storage_)
+                                   storageSize:sizeof(EndorseTransferTokenRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2167,16 +2167,16 @@ typedef struct EndorsePaymentTokenRequest__storage_ {
 
 @end
 
-#pragma mark - EndorsePaymentTokenResponse
+#pragma mark - EndorseTransferTokenResponse
 
-@implementation EndorsePaymentTokenResponse
+@implementation EndorseTransferTokenResponse
 
 @dynamic hasToken, token;
 
-typedef struct EndorsePaymentTokenResponse__storage_ {
+typedef struct EndorseTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
   Token *token;
-} EndorsePaymentTokenResponse__storage_;
+} EndorseTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2187,20 +2187,20 @@ typedef struct EndorsePaymentTokenResponse__storage_ {
       {
         .name = "token",
         .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = EndorsePaymentTokenResponse_FieldNumber_Token,
+        .number = EndorseTransferTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(EndorsePaymentTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(EndorseTransferTokenResponse__storage_, token),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[EndorsePaymentTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[EndorseTransferTokenResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(EndorsePaymentTokenResponse__storage_)
+                                   storageSize:sizeof(EndorseTransferTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2210,18 +2210,18 @@ typedef struct EndorsePaymentTokenResponse__storage_ {
 
 @end
 
-#pragma mark - CancelPaymentTokenRequest
+#pragma mark - CancelTransferTokenRequest
 
-@implementation CancelPaymentTokenRequest
+@implementation CancelTransferTokenRequest
 
 @dynamic tokenId;
 @dynamic hasSignature, signature;
 
-typedef struct CancelPaymentTokenRequest__storage_ {
+typedef struct CancelTransferTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
   Signature *signature;
-} CancelPaymentTokenRequest__storage_;
+} CancelTransferTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2232,29 +2232,29 @@ typedef struct CancelPaymentTokenRequest__storage_ {
       {
         .name = "tokenId",
         .dataTypeSpecific.className = NULL,
-        .number = CancelPaymentTokenRequest_FieldNumber_TokenId,
+        .number = CancelTransferTokenRequest_FieldNumber_TokenId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(CancelPaymentTokenRequest__storage_, tokenId),
+        .offset = (uint32_t)offsetof(CancelTransferTokenRequest__storage_, tokenId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = CancelPaymentTokenRequest_FieldNumber_Signature,
+        .number = CancelTransferTokenRequest_FieldNumber_Signature,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(CancelPaymentTokenRequest__storage_, signature),
+        .offset = (uint32_t)offsetof(CancelTransferTokenRequest__storage_, signature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[CancelPaymentTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[CancelTransferTokenRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(CancelPaymentTokenRequest__storage_)
+                                   storageSize:sizeof(CancelTransferTokenRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2264,16 +2264,16 @@ typedef struct CancelPaymentTokenRequest__storage_ {
 
 @end
 
-#pragma mark - CancelPaymentTokenResponse
+#pragma mark - CancelTransferTokenResponse
 
-@implementation CancelPaymentTokenResponse
+@implementation CancelTransferTokenResponse
 
 @dynamic hasToken, token;
 
-typedef struct CancelPaymentTokenResponse__storage_ {
+typedef struct CancelTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
   Token *token;
-} CancelPaymentTokenResponse__storage_;
+} CancelTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2284,20 +2284,20 @@ typedef struct CancelPaymentTokenResponse__storage_ {
       {
         .name = "token",
         .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = CancelPaymentTokenResponse_FieldNumber_Token,
+        .number = CancelTransferTokenResponse_FieldNumber_Token,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(CancelPaymentTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(CancelTransferTokenResponse__storage_, token),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[CancelPaymentTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[CancelTransferTokenResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(CancelPaymentTokenResponse__storage_)
+                                   storageSize:sizeof(CancelTransferTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2770,18 +2770,18 @@ typedef struct CancelAccessTokenResponse__storage_ {
 
 @end
 
-#pragma mark - RedeemPaymentTokenRequest
+#pragma mark - RedeemTransferTokenRequest
 
-@implementation RedeemPaymentTokenRequest
+@implementation RedeemTransferTokenRequest
 
 @dynamic hasPayload, payload;
 @dynamic hasPayloadSignature, payloadSignature;
 
-typedef struct RedeemPaymentTokenRequest__storage_ {
+typedef struct RedeemTransferTokenRequest__storage_ {
   uint32_t _has_storage_[1];
-  PaymentPayload *payload;
+  Transfer_Payload *payload;
   Signature *payloadSignature;
-} RedeemPaymentTokenRequest__storage_;
+} RedeemTransferTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2791,30 +2791,30 @@ typedef struct RedeemPaymentTokenRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentPayload),
-        .number = RedeemPaymentTokenRequest_FieldNumber_Payload,
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer_Payload),
+        .number = RedeemTransferTokenRequest_FieldNumber_Payload,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RedeemPaymentTokenRequest__storage_, payload),
+        .offset = (uint32_t)offsetof(RedeemTransferTokenRequest__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "payloadSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = RedeemPaymentTokenRequest_FieldNumber_PayloadSignature,
+        .number = RedeemTransferTokenRequest_FieldNumber_PayloadSignature,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RedeemPaymentTokenRequest__storage_, payloadSignature),
+        .offset = (uint32_t)offsetof(RedeemTransferTokenRequest__storage_, payloadSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RedeemPaymentTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RedeemTransferTokenRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RedeemPaymentTokenRequest__storage_)
+                                   storageSize:sizeof(RedeemTransferTokenRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2824,16 +2824,16 @@ typedef struct RedeemPaymentTokenRequest__storage_ {
 
 @end
 
-#pragma mark - RedeemPaymentTokenResponse
+#pragma mark - RedeemTransferTokenResponse
 
-@implementation RedeemPaymentTokenResponse
+@implementation RedeemTransferTokenResponse
 
-@dynamic hasPayment, payment;
+@dynamic hasTransfer, transfer;
 
-typedef struct RedeemPaymentTokenResponse__storage_ {
+typedef struct RedeemTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  Payment *payment;
-} RedeemPaymentTokenResponse__storage_;
+  Transfer *transfer;
+} RedeemTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2842,22 +2842,22 @@ typedef struct RedeemPaymentTokenResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "payment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Payment),
-        .number = RedeemPaymentTokenResponse_FieldNumber_Payment,
+        .name = "transfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer),
+        .number = RedeemTransferTokenResponse_FieldNumber_Transfer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RedeemPaymentTokenResponse__storage_, payment),
+        .offset = (uint32_t)offsetof(RedeemTransferTokenResponse__storage_, transfer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RedeemPaymentTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[RedeemTransferTokenResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RedeemPaymentTokenResponse__storage_)
+                                   storageSize:sizeof(RedeemTransferTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2867,16 +2867,16 @@ typedef struct RedeemPaymentTokenResponse__storage_ {
 
 @end
 
-#pragma mark - GetPaymentRequest
+#pragma mark - GetTransferRequest
 
-@implementation GetPaymentRequest
+@implementation GetTransferRequest
 
-@dynamic paymentId;
+@dynamic transferId;
 
-typedef struct GetPaymentRequest__storage_ {
+typedef struct GetTransferRequest__storage_ {
   uint32_t _has_storage_[1];
-  NSString *paymentId;
-} GetPaymentRequest__storage_;
+  NSString *transferId;
+} GetTransferRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2885,22 +2885,22 @@ typedef struct GetPaymentRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "paymentId",
+        .name = "transferId",
         .dataTypeSpecific.className = NULL,
-        .number = GetPaymentRequest_FieldNumber_PaymentId,
+        .number = GetTransferRequest_FieldNumber_TransferId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentRequest__storage_, paymentId),
+        .offset = (uint32_t)offsetof(GetTransferRequest__storage_, transferId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentRequest class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentRequest__storage_)
+                                   storageSize:sizeof(GetTransferRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2910,16 +2910,16 @@ typedef struct GetPaymentRequest__storage_ {
 
 @end
 
-#pragma mark - GetPaymentResponse
+#pragma mark - GetTransferResponse
 
-@implementation GetPaymentResponse
+@implementation GetTransferResponse
 
-@dynamic hasPayment, payment;
+@dynamic hasTransfer, transfer;
 
-typedef struct GetPaymentResponse__storage_ {
+typedef struct GetTransferResponse__storage_ {
   uint32_t _has_storage_[1];
-  Payment *payment;
-} GetPaymentResponse__storage_;
+  Transfer *transfer;
+} GetTransferResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2928,22 +2928,22 @@ typedef struct GetPaymentResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "payment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Payment),
-        .number = GetPaymentResponse_FieldNumber_Payment,
+        .name = "transfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer),
+        .number = GetTransferResponse_FieldNumber_Transfer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentResponse__storage_, payment),
+        .offset = (uint32_t)offsetof(GetTransferResponse__storage_, transfer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentResponse class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransferResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentResponse__storage_)
+                                   storageSize:sizeof(GetTransferResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -2953,18 +2953,18 @@ typedef struct GetPaymentResponse__storage_ {
 
 @end
 
-#pragma mark - GetPaymentsRequest
+#pragma mark - GetTransfersRequest
 
-@implementation GetPaymentsRequest
+@implementation GetTransfersRequest
 
 @dynamic tokenId;
 @dynamic hasPage, page;
 
-typedef struct GetPaymentsRequest__storage_ {
+typedef struct GetTransfersRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
   Page *page;
-} GetPaymentsRequest__storage_;
+} GetTransfersRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2975,29 +2975,29 @@ typedef struct GetPaymentsRequest__storage_ {
       {
         .name = "tokenId",
         .dataTypeSpecific.className = NULL,
-        .number = GetPaymentsRequest_FieldNumber_TokenId,
+        .number = GetTransfersRequest_FieldNumber_TokenId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentsRequest__storage_, tokenId),
+        .offset = (uint32_t)offsetof(GetTransfersRequest__storage_, tokenId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "page",
         .dataTypeSpecific.className = GPBStringifySymbol(Page),
-        .number = GetPaymentsRequest_FieldNumber_Page,
+        .number = GetTransfersRequest_FieldNumber_Page,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetPaymentsRequest__storage_, page),
+        .offset = (uint32_t)offsetof(GetTransfersRequest__storage_, page),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransfersRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentsRequest__storage_)
+                                   storageSize:sizeof(GetTransfersRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -3007,18 +3007,18 @@ typedef struct GetPaymentsRequest__storage_ {
 
 @end
 
-#pragma mark - GetPaymentsResponse
+#pragma mark - GetTransfersResponse
 
-@implementation GetPaymentsResponse
+@implementation GetTransfersResponse
 
-@dynamic paymentsArray, paymentsArray_Count;
+@dynamic transfersArray, transfersArray_Count;
 @dynamic offset;
 
-typedef struct GetPaymentsResponse__storage_ {
+typedef struct GetTransfersResponse__storage_ {
   uint32_t _has_storage_[1];
-  NSMutableArray *paymentsArray;
+  NSMutableArray *transfersArray;
   NSString *offset;
-} GetPaymentsResponse__storage_;
+} GetTransfersResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -3027,31 +3027,31 @@ typedef struct GetPaymentsResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "paymentsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Payment),
-        .number = GetPaymentsResponse_FieldNumber_PaymentsArray,
+        .name = "transfersArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer),
+        .number = GetTransfersResponse_FieldNumber_TransfersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetPaymentsResponse__storage_, paymentsArray),
+        .offset = (uint32_t)offsetof(GetTransfersResponse__storage_, transfersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "offset",
         .dataTypeSpecific.className = NULL,
-        .number = GetPaymentsResponse_FieldNumber_Offset,
+        .number = GetTransfersResponse_FieldNumber_Offset,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetPaymentsResponse__storage_, offset),
+        .offset = (uint32_t)offsetof(GetTransfersResponse__storage_, offset),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetPaymentsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[GetTransfersResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetPaymentsResponse__storage_)
+                                   storageSize:sizeof(GetTransfersResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

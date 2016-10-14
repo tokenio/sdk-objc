@@ -137,7 +137,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
 @dynamic hasAmount, amount;
 @dynamic description_p;
 @dynamic tokenId;
-@dynamic tokenPaymentId;
+@dynamic tokenTransferId;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -147,7 +147,7 @@ typedef struct Transaction__storage_ {
   Money *amount;
   NSString *description_p;
   NSString *tokenId;
-  NSString *tokenPaymentId;
+  NSString *tokenTransferId;
 } Transaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -211,11 +211,11 @@ typedef struct Transaction__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "tokenPaymentId",
+        .name = "tokenTransferId",
         .dataTypeSpecific.className = NULL,
-        .number = Transaction_FieldNumber_TokenPaymentId,
+        .number = Transaction_FieldNumber_TokenTransferId,
         .hasIndex = 6,
-        .offset = (uint32_t)offsetof(Transaction__storage_, tokenPaymentId),
+        .offset = (uint32_t)offsetof(Transaction__storage_, tokenTransferId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

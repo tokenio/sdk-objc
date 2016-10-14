@@ -10,7 +10,7 @@
 #import "TokenIO.h"
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
-#import "Payment.pbobjc.h"
+#import "Transfer.pbobjc.h"
 
 
 @interface TKTransactionsTests : TKTestBase
@@ -44,36 +44,36 @@
 
 - (void)testLookupTransaction {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createTransferTokenForAccount:payerAccount.id
                                                     amount:100.99
                                                   currency:@"USD"
                                              redeemerAlias:payee.firstAlias
-                                               description:@"payment test"];
-        token = [payer endorsePaymentToken:token];
-        Payment *payment = [payee redeemPaymentToken:token];
+                                               description:@"transfer test"];
+        token = [payer endorseTransferToken:token];
+        Transfer *transfer = [payee redeemTransferToken:token];
 
-        Transaction *transaction = [payerAccount getTransaction:payment.referenceId];
+        Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
 
         XCTAssertEqualObjects(@"100.99", transaction.amount.value);
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);
         XCTAssertEqualObjects(token.id_p, transaction.tokenId);
-        XCTAssertEqualObjects(payment.id_p, transaction.tokenPaymentId);
+        XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
     }];
 }
 
 - (void)testLookupTransactions {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createPaymentTokenForAccount:payerAccount.id
+        Token *token = [payer createTransferTokenForAccount:payerAccount.id
                                                     amount:100.99
                                                   currency:@"USD"
                                              redeemerAlias:payee.firstAlias
-                                               description:@"payment test"];
-        token = [payer endorsePaymentToken:token];
-        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
-        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
-        [payee redeemPaymentToken:token amount:@11.11 currency:@"USD"];
+                                               description:@"transfer test"];
+        token = [payer endorseTransferToken:token];
+        [payee redeemTransferToken:token amount:@11.11 currency:@"USD"];
+        [payee redeemTransferToken:token amount:@11.11 currency:@"USD"];
+        [payee redeemTransferToken:token amount:@11.11 currency:@"USD"];
 
-        NSArray<Payment *> *lookedUp = [payerAccount getTransactionsOffset:0 limit:3];
+        NSArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:0 limit:3];
         XCTAssertEqual(3, lookedUp.count);
     }];
 }

@@ -26,10 +26,10 @@
         NSString *name = @"address_name";
         NSString *data = @"address_data";
 
-        Address *address = [member createAddressName:name withData:data];
+        Address *address = [member addAddressWithName:name withData:data];
 
         XCTAssertEqualObjects(name, address.name);
-        XCTAssertEqualObjects(data, address.data_p);
+        XCTAssertEqualObjects(data, address.payload);
     }];
 }
 
@@ -38,8 +38,8 @@
         NSString *name = @"address_name";
         NSString *data = @"address_data";
 
-        Address *address = [member createAddressName:name withData:data];
-        Address *result = [member getAddressById:address.id_p];
+        Address *address = [member addAddressWithName:name withData:data];
+        Address *result = [member getAddressWithId:address.id_p];
 
         XCTAssertEqualObjects(address, result);
     }];
@@ -52,8 +52,8 @@
         NSString *name_2 = @"address_name_2";
         NSString *data_2 = @"address_data_2";
 
-        Address *address_1 = [member createAddressName:name_1 withData:data_1];
-        Address *address_2 = [member createAddressName:name_2 withData:data_2];
+        Address *address_1 = [member addAddressWithName:name_1 withData:data_1];
+        Address *address_2 = [member addAddressWithName:name_2 withData:data_2];
 
         NSArray<Address *> *result = [member getAddresses];
 
@@ -72,8 +72,7 @@
 
 - (void)testGetAddress_NotFound {
     [self run: ^(TokenIO *tokenIO) {
-        XCTAssertThrows(
-                [member getAddressById:@"invalidAddressId"]);
+        XCTAssertThrows([member getAddressWithId:@"invalidAddressId"]);
 
     }];
 }
@@ -83,15 +82,15 @@
         NSString *name = @"address_name";
         NSString *data = @"address_data";
 
-        Address *address = [member createAddressName:name withData:data];
-        Address *result = [member getAddressById:address.id_p];
+        Address *address = [member addAddressWithName:name withData:data];
+        Address *result = [member getAddressWithId:address.id_p];
 
         XCTAssertEqualObjects(address, result);
 
-        [member deleteAddressById:address.id_p];
+        [member deleteAddressWithId:address.id_p];
 
         XCTAssertThrows(
-                [member getAddressById:address.id_p]);
+                [member getAddressWithId:address.id_p]);
 
     }];
 }
@@ -99,7 +98,7 @@
 - (void)testDeleteAddress_NotFound {
     [self run: ^(TokenIO *tokenIO) {
         XCTAssertThrows(
-                [member deleteAddressById:@"invalidAddressId"]);
+                [member deleteAddressWithId:@"invalidAddressId"]);
     }];
 }
 

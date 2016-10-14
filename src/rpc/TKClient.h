@@ -13,8 +13,8 @@
 @class TKSecretKey;
 @class Token;
 @class TokenPayload;
-@class PaymentPayload;
-
+@class Transfer;
+@class Transfer_Payload;
 
 
 /**
@@ -99,17 +99,17 @@
  * @param platform target platform for notification (e.g. Platform_Ios)
  */
 - (void)subscribeToNotifications:(NSString *)provider
-             target:(NSString *)target
-                    platform:(Platform)platform
-                   onSuccess:(OnSuccessWithSubscriber)onSuccess
-                     onError:(OnError)onError;
+                          target:(NSString *)target
+                        platform:(Platform)platform
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Get all subscribers
  *
  */
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
-                             onError:(OnError)onError;
+               onError:(OnError)onError;
 
 
 /**
@@ -118,8 +118,8 @@
  * @param subscriberId id of subscriber to get
  */
 - (void)getSubscriber:(NSString *)subscriberId
-                           onSuccess:(OnSuccessWithSubscriber)onSuccess
-                             onError:(OnError)onError;
+            onSuccess:(OnSuccessWithSubscriber)onSuccess
+              onError:(OnError)onError;
 
 
 /**
@@ -128,8 +128,8 @@
  * @param subscriberId id of subscriber to remove
  */
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError;
+                           onSuccess:(OnSuccess)onSuccess
+                             onError:(OnError)onError;
 
 
 /**
@@ -148,32 +148,32 @@
  * Looks up linked member accounts.
  */
 - (void)getAccounts:(OnSuccessWithAccounts)onSuccess
-               onError:(OnError)onError;
+            onError:(OnError)onError;
 
 /**
  * Looks up a linked member account.
  */
 - (void)getAccount:(NSString *)accountId
-          onSuccess:(OnSuccessWithAccount)onSuccess
-               onError:(OnError)onError;
+         onSuccess:(OnSuccessWithAccount)onSuccess
+           onError:(OnError)onError;
 
 /**
- * Creates a new payment token.
+ * Creates a new transfer token.
  *
- * @param payload payment token payload
+ * @param payload transfer token payload
  */
-- (void)createPaymentToken:(TokenPayload *)payload
-                 onSuccess:(OnSuccessWithToken)onSuccess
-                   onError:(OnError)onError;
+- (void)createTransferToken:(TokenPayload *)payload
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError;
 
 /**
  * Looks up an existing token.
  *
  * @param tokenId token id
  */
-- (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithToken)onSuccess
-                onError:(OnError)onError;
+- (void)getTransferToken:(NSString *)tokenId
+               onSuccess:(OnSuccessWithToken)onSuccess
+                 onError:(OnError)onError;
 
 /**
  * Looks up token owned by the member.
@@ -181,59 +181,59 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (void)getPaymentTokens:(int)offset
-                   limit:(int)limit
-               onSuccess:(OnSuccessWithTokens)onSuccess
+- (void)getTransferTokens:(int)offset
+                    limit:(int)limit
+                onSuccess:(OnSuccessWithTokens)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Endorses a transfer token.
+ *
+ * @param token token to endorse
+ */
+- (void)endorseTransferToken:(Token *)token
+                   onSuccess:(OnSuccessWithToken)success
+                     onError:(OnError)error;
+
+/**
+ * Cancels a transfer token.
+ *
+ * @param token token to endorse
+ */
+- (void)cancelTransferToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)success
+                    onError:(OnError)error;
+
+/**
+ * Redeems a transfer token.
+ *
+ * @param transfer transfer parameters, such as amount, currency, etc
+ */
+- (void)redeemTransferToken:(Transfer_Payload *)payload
+                  onSuccess:(OnSuccessWithTransfer)onSuccess
                     onError:(OnError)onError;
 
 /**
- * Endorses a payment token.
+ * Looks up a token transfer by id.
  *
- * @param token token to endorse
+ * @param transferId transfer id
  */
-- (void)endorsePaymentToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)success
-                    onError:(OnError)error;
+- (void)getTransfer:(NSString *)transferId
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError;
 
 /**
- * Cancels a payment token.
- *
- * @param token token to endorse
- */
-- (void)cancelPaymentToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)success
-                    onError:(OnError)error;
-
-/**
- * Redeems a payment token.
- *
- * @param payment payment parameters, such as amount, currency, etc
- */
-- (void)redeemPaymentToken:(PaymentPayload *)payload
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError;
-
-/**
- * Looks up a token payment by id.
- *
- * @param paymentId payment id
- */
-- (void)getPayment:(NSString *)paymentId
-         onSuccess:(OnSuccessWithPayment)onSuccess
-           onError:(OnError)onError;
-
-/**
- * Looks up existing token payments.
+ * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (void)getPaymentsOffset:(int)offset
-                    limit:(int)limit
-                  tokenId:(NSString *)tokenId
-                onSuccess:(OnSuccessWithPayments)onSuccess
-                  onError:(OnError)onError;
+- (void)getTransfersOffset:(int)offset
+                     limit:(int)limit
+                   tokenId:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up account balance.
@@ -246,7 +246,7 @@
            onError:(OnError)onError;
 
 /**
- * Looks up an existing transaction. Doesn't have to be a transaction for a token payment.
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
  *
  * @param accountId ID of the account
  * @param transactionId ID of the transaction
@@ -258,7 +258,7 @@
                onError:(OnError)onError;
 
 /**
- * Looks up existing transactions. This is a full list of transactions with token payments
+ * Looks up existing transactions. This is a full list of transactions with token transfers
  * being a subset.
  *
  * @param accountId ID of the account

@@ -3,7 +3,6 @@ package io.token.proto.common.token;
 
 option java_outer_classname = "TokenProtos";
 
-import "google/protobuf/wrappers.proto";
 import "security.proto";
 import "transfer.proto";
 
@@ -36,10 +35,6 @@ message TokenMember {
   string name = 3;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Payment Token
-//
-
 message TokenPayload {
   string version = 1;                                   // 1.0
   string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
@@ -53,20 +48,24 @@ message TokenPayload {
   string description = 8;                               // Optional
 
   oneof body {
-    BankTransfer bank_transfer = 9;
-    Access access = 10;
+    TransferBody transfer = 9;
+    AccessBody access = 10;
   }
 }
 
-// Represents a bank transfer.
-message BankTransfer {
-  TokenMember redeemer = 1;                             // Redeemer member.
-  io.token.proto.common.transfer.Transfer transfer = 2; // Transfer instructions.
-  TokenMember fees_paid_by = 3;                         // Payer or redeemer member id.
-  string currency = 4;                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
-  string lifetime_amount = 5;                           // Optional: Token total lifetime amount. Double.
-  string amount = 6;                                    // Optional: Single token charge request acceptable range. Double.
-  map<string, Var> vars = 7;                            // Optional: token variables.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Transfer Token
+//
+
+message TransferBody {
+  TokenMember redeemer = 1;                                             // Redeemer member.
+  io.token.proto.common.transfer.TransferInstructions instructions = 2; // Transfer instructions.
+  TokenMember fees_paid_by = 3;                                         // Payer or redeemer member id.
+  string currency = 4;                                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+  string lifetime_amount = 5;                                           // Optional: Token total lifetime amount. Double.
+  string amount = 6;                                                    // Optional: Single token charge request acceptable range. Double.
+  map<string, Var> vars = 7;                                            // Optional: token variables.
 }
 
 // Describes a single variable value. Only one of the fields is set.
@@ -85,7 +84,7 @@ message DoubleRange {
   string default = 3;
 }
 
-// Time period description for multi use payment tokens.
+// Time period description for multi use transfer tokens.
 message TimePeriod {
   string duration = 1;                                    // ISO8601 duration. E.g.: P1M for 1 month.
   string max = 2;                                         // Max amount for the given duration.
@@ -96,7 +95,7 @@ message TimePeriod {
 // Access Token
 //
 
-message Access {
+message AccessBody {
   repeated Resource resources = 5;                      // Each entry defines an resources level
 
   message Resource {

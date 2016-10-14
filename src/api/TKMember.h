@@ -79,8 +79,8 @@
  * @param platform target platform for notification (e.g. Platform_Ios)
  */
 - (Subscriber *)subscribeToNotifications:(NSString *)provider
-                          target:(NSString *)target
-                        platform:(Platform)platform;
+                                  target:(NSString *)target
+                                platform:(Platform)platform;
 
 /**
  * Get all subscribers
@@ -131,32 +131,32 @@
 - (TKAccount *)getAccount:(NSString *)accountId;
 
 /**
- * Looks up an existing token payment.
+ * Looks up an existing token transfer.
  *
- * @param paymentId ID of the payment record
- * @return payment record
+ * @param transferId ID of the transfer record
+ * @return transfer record
  */
-- (Payment *)getPayment:(NSString *)paymentId;
+- (Transfer *)getTransfer:(NSString *)transferId;
 
 /**
- * Looks up existing token payments.
+ * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
-                                       limit:(int)limit;
+- (NSArray<Transfer *> *)getTransfersOffset:(int)offset
+                                      limit:(int)limit;
 
 /**
- * Looks up existing token payments.
+ * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (NSArray<Payment *> *)getPaymentsOffset:(int)offset
-                                    limit:(int)limit
-                                  tokenId:(NSString *)tokenId;
+- (NSArray<Transfer *> *)getTransfersOffset:(int)offset
+                                      limit:(int)limit
+                                    tokenId:(NSString *)tokenId;
 
 /**
  * Creates a new member address.
@@ -191,86 +191,86 @@
 - (void)deleteAddressWithId:(NSString *)addressId;
 
 /**
- * Creates a new payment token.
+ * Creates a new transfer token.
  *
  * @param accountId the funding account id
- * @param amount payment amount
+ * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
- * @return payment token returned by the server
+ * @return transfer token returned by the server
  */
-- (Token *)createPaymentTokenForAccount:(NSString *)accountId
-                                        amount:(double)amount
-                                      currency:(NSString *)currency;
+- (Token *)createTransferTokenForAccount:(NSString *)accountId
+                                  amount:(double)amount
+                                currency:(NSString *)currency;
 
 /**
- * Creates a new payment token.
+ * Creates a new transfer token.
  *
  * @param accountId the funding account id
- * @param amount payment amount
+ * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
  * @param redeemer redeemer alias
- * @param description payment description, optional
- * @return payment token returned by the server
+ * @param description transfer description, optional
+ * @return transfer token returned by the server
  */
-- (Token *)createPaymentTokenForAccount:(NSString *)accountId
-                                        amount:(double)amount
-                                      currency:(NSString *)currency
-                                 redeemerAlias:(NSString *)redeemerAlias
-                                   description:(NSString *)description;
+- (Token *)createTransferTokenForAccount:(NSString *)accountId
+                                  amount:(double)amount
+                                currency:(NSString *)currency
+                           redeemerAlias:(NSString *)redeemerAlias
+                             description:(NSString *)description;
 
 /**
- * Looks up a existing payment token.
+ * Looks up a existing transfer token.
  *
  * @param tokenId token id
- * @return payment token returned by the server
+ * @return transfer token returned by the server
  */
-- (Token *)getPaymentToken:(NSString *)tokenId;
+- (Token *)getTransferToken:(NSString *)tokenId;
 
 /**
- * Looks up payment tokens owned by the member.
+ * Looks up transfer tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
- * @return payment tokens owned by the member
+ * @return transfer tokens owned by the member
  */
-- (NSArray<Token *> *)getPaymentTokensOffset:(int)i limit:(int)limit;
+- (NSArray<Token *> *)getTransferTokensOffset:(int)i limit:(int)limit;
 
 /**
- * Endorses the payment token by signing it. The signature is persisted 
+ * Endorses the transfer token by signing it. The signature is persisted 
  * along with the token.
  *
  * @param token token to endorse
  * @return endorsed token
  */
-- (Token *)endorsePaymentToken:(Token *)token;
+- (Token *)endorseTransferToken:(Token *)token;
 
 /**
- * Cancels the payment token by signing it. The signature is persisted 
+ * Cancels the transfer token by signing it. The signature is persisted 
  * along with the token.
  *
  * @param token token to cancel
  * @return cancelled token
  */
-- (Token *)cancelPaymentToken:(Token *)token;
+- (Token *)cancelTransferToken:(Token *)token;
 
 /**
- * Redeems a payment token.
+ * Redeems a transfer token.
  *
- * @param token payment token to redeem
- * @return payment record
+ * @param token transfer token to redeem
+ * @return transfer record
  */
-- (Payment *)redeemPaymentToken:(Token *)token;
+- (Transfer *)redeemTransferToken:(Token *)token;
 
 /**
- * Redeems a payment token.
+ * Redeems a transfer token.
  *
- * @param token payment token to redeem
- * @param amount payment amount
- * @param currency payment currency code, e.g. "EUR"
- * @return payment record
+ * @param token transfer token to redeem
+ * @param amount transfer amount
+ * @param currency transfer currency code, e.g. "EUR"
+ * @return transfer record
  */
-- (Payment *)redeemPaymentToken:(Token *)token
-                         amount:(NSNumber *)amount
-                       currency:(NSString *)currency;
+- (Transfer *)redeemTransferToken:(Token *)token
+                           amount:(NSNumber *)amount
+                         currency:(NSString *)currency;
 
 @end

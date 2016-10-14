@@ -16,7 +16,7 @@
 
 - (void)testSignAndVerify_message {
     Token *token = [Token message];
-    token.payload.bankTransfer.amount = @"100.23";
+    token.payload.transfer.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token
@@ -31,7 +31,7 @@
 
 - (void)testSignAndVerify_token {
     Token *token = [Token message];
-    token.payload.bankTransfer.amount = @"100.23";
+    token.payload.transfer.amount = @"100.23";
 
     TKSecretKey *key = [TKCrypto generateKey];
     NSString *signature = [TKCrypto sign:token

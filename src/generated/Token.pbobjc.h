@@ -24,19 +24,19 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Access;
-@class Access_Resource;
-@class Access_Resource_Account;
-@class Access_Resource_Address;
-@class Access_Resource_Transaction;
-@class BankTransfer;
+@class AccessBody;
+@class AccessBody_Resource;
+@class AccessBody_Resource_Account;
+@class AccessBody_Resource_Address;
+@class AccessBody_Resource_Transaction;
 @class DoubleRange;
 @class Signature;
 @class TimePeriod;
 @class TokenMember;
 @class TokenPayload;
 @class TokenSignature;
-@class Transfer;
+@class TransferBody;
+@class TransferInstructions;
 @class Var;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -159,13 +159,13 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_EffectiveAtMs = 6,
   TokenPayload_FieldNumber_ExpiresAtMs = 7,
   TokenPayload_FieldNumber_Description_p = 8,
-  TokenPayload_FieldNumber_BankTransfer = 9,
+  TokenPayload_FieldNumber_Transfer = 9,
   TokenPayload_FieldNumber_Access = 10,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
   TokenPayload_Body_OneOfCase_GPBUnsetOneOfCase = 0,
-  TokenPayload_Body_OneOfCase_BankTransfer = 9,
+  TokenPayload_Body_OneOfCase_Transfer = 9,
   TokenPayload_Body_OneOfCase_Access = 10,
 };
 
@@ -203,29 +203,28 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @property(nonatomic, readonly) TokenPayload_Body_OneOfCase bodyOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) BankTransfer *bankTransfer;
+@property(nonatomic, readwrite, strong, null_resettable) TransferBody *transfer;
 
-@property(nonatomic, readwrite, strong, null_resettable) Access *access;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
 
 @end
 
 /// Clears whatever value was set for the oneof 'body'.
 void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
 
-#pragma mark - BankTransfer
+#pragma mark - TransferBody
 
-typedef GPB_ENUM(BankTransfer_FieldNumber) {
-  BankTransfer_FieldNumber_Redeemer = 1,
-  BankTransfer_FieldNumber_Transfer = 2,
-  BankTransfer_FieldNumber_FeesPaidBy = 3,
-  BankTransfer_FieldNumber_Currency = 4,
-  BankTransfer_FieldNumber_LifetimeAmount = 5,
-  BankTransfer_FieldNumber_Amount = 6,
-  BankTransfer_FieldNumber_Vars = 7,
+typedef GPB_ENUM(TransferBody_FieldNumber) {
+  TransferBody_FieldNumber_Redeemer = 1,
+  TransferBody_FieldNumber_Instructions = 2,
+  TransferBody_FieldNumber_FeesPaidBy = 3,
+  TransferBody_FieldNumber_Currency = 4,
+  TransferBody_FieldNumber_LifetimeAmount = 5,
+  TransferBody_FieldNumber_Amount = 6,
+  TransferBody_FieldNumber_Vars = 7,
 };
 
-/// Represents a bank transfer.
-@interface BankTransfer : GPBMessage
+@interface TransferBody : GPBMessage
 
 /// Redeemer member.
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer;
@@ -233,9 +232,9 @@ typedef GPB_ENUM(BankTransfer_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasRedeemer;
 
 /// Transfer instructions.
-@property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
-/// Test to see if @c transfer has been set.
-@property(nonatomic, readwrite) BOOL hasTransfer;
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
+/// Test to see if @c instructions has been set.
+@property(nonatomic, readwrite) BOOL hasInstructions;
 
 /// Payer or redeemer member id.
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *feesPaidBy;
@@ -320,7 +319,7 @@ typedef GPB_ENUM(TimePeriod_FieldNumber) {
   TimePeriod_FieldNumber_Max = 2,
 };
 
-/// Time period description for multi use payment tokens.
+/// Time period description for multi use transfer tokens.
 @interface TimePeriod : GPBMessage
 
 /// ISO8601 duration. E.g.: P1M for 1 month.
@@ -331,87 +330,87 @@ typedef GPB_ENUM(TimePeriod_FieldNumber) {
 
 @end
 
-#pragma mark - Access
+#pragma mark - AccessBody
 
-typedef GPB_ENUM(Access_FieldNumber) {
-  Access_FieldNumber_ResourcesArray = 5,
+typedef GPB_ENUM(AccessBody_FieldNumber) {
+  AccessBody_FieldNumber_ResourcesArray = 5,
 };
 
-@interface Access : GPBMessage
+@interface AccessBody : GPBMessage
 
 /// Each entry defines an resources level
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Access_Resource*> *resourcesArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessBody_Resource*> *resourcesArray;
 /// The number of items in @c resourcesArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger resourcesArray_Count;
 
 @end
 
-#pragma mark - Access_Resource
+#pragma mark - AccessBody_Resource
 
-typedef GPB_ENUM(Access_Resource_FieldNumber) {
-  Access_Resource_FieldNumber_Address = 1,
-  Access_Resource_FieldNumber_Account = 2,
-  Access_Resource_FieldNumber_Transaction = 3,
+typedef GPB_ENUM(AccessBody_Resource_FieldNumber) {
+  AccessBody_Resource_FieldNumber_Address = 1,
+  AccessBody_Resource_FieldNumber_Account = 2,
+  AccessBody_Resource_FieldNumber_Transaction = 3,
 };
 
-typedef GPB_ENUM(Access_Resource_Resource_OneOfCase) {
-  Access_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
-  Access_Resource_Resource_OneOfCase_Address = 1,
-  Access_Resource_Resource_OneOfCase_Account = 2,
-  Access_Resource_Resource_OneOfCase_Transaction = 3,
+typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
+  AccessBody_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
+  AccessBody_Resource_Resource_OneOfCase_Address = 1,
+  AccessBody_Resource_Resource_OneOfCase_Account = 2,
+  AccessBody_Resource_Resource_OneOfCase_Transaction = 3,
 };
 
-@interface Access_Resource : GPBMessage
+@interface AccessBody_Resource : GPBMessage
 
-@property(nonatomic, readonly) Access_Resource_Resource_OneOfCase resourceOneOfCase;
+@property(nonatomic, readonly) AccessBody_Resource_Resource_OneOfCase resourceOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Address *address;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address;
 
-@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Account *account;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Account *account;
 
-@property(nonatomic, readwrite, strong, null_resettable) Access_Resource_Transaction *transaction;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Transaction *transaction;
 
 @end
 
 /// Clears whatever value was set for the oneof 'resource'.
-void Access_Resource_ClearResourceOneOfCase(Access_Resource *message);
+void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message);
 
-#pragma mark - Access_Resource_Address
+#pragma mark - AccessBody_Resource_Address
 
-typedef GPB_ENUM(Access_Resource_Address_FieldNumber) {
-  Access_Resource_Address_FieldNumber_AddressId = 1,
+typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
+  AccessBody_Resource_Address_FieldNumber_AddressId = 1,
 };
 
 /// Provides Access to member address information
-@interface Access_Resource_Address : GPBMessage
+@interface AccessBody_Resource_Address : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
 
-#pragma mark - Access_Resource_Account
+#pragma mark - AccessBody_Resource_Account
 
-typedef GPB_ENUM(Access_Resource_Account_FieldNumber) {
-  Access_Resource_Account_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
+  AccessBody_Resource_Account_FieldNumber_AccountId = 1,
 };
 
 /// Provides access to member account balance
-@interface Access_Resource_Account : GPBMessage
+@interface AccessBody_Resource_Account : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - Access_Resource_Transaction
+#pragma mark - AccessBody_Resource_Transaction
 
-typedef GPB_ENUM(Access_Resource_Transaction_FieldNumber) {
-  Access_Resource_Transaction_FieldNumber_AccountId = 1,
+typedef GPB_ENUM(AccessBody_Resource_Transaction_FieldNumber) {
+  AccessBody_Resource_Transaction_FieldNumber_AccountId = 1,
 };
 
 /// Provides access to account transactions
-@interface Access_Resource_Transaction : GPBMessage
+@interface AccessBody_Resource_Transaction : GPBMessage
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;

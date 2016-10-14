@@ -11,9 +11,9 @@
 #import "Notification.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Paging.pbobjc.h"
-#import "Payment.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
+#import "Transfer.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 
 
@@ -209,51 +209,51 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CreatePaymentToken(CreatePaymentTokenRequest) returns (CreatePaymentTokenResponse)
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Payment Tokens.
+ * Transfer Tokens.
  * 
  * 
  */
-- (void)createPaymentTokenWithRequest:(CreatePaymentTokenRequest *)request handler:(void(^)(CreatePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Payment Tokens.
+ * Transfer Tokens.
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreatePaymentTokenWithRequest:(CreatePaymentTokenRequest *)request handler:(void(^)(CreatePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetPaymentToken(GetPaymentTokenRequest) returns (GetPaymentTokenResponse)
+#pragma mark GetTransferToken(GetTransferTokenRequest) returns (GetTransferTokenResponse)
 
-- (void)getPaymentTokenWithRequest:(GetPaymentTokenRequest *)request handler:(void(^)(GetPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getTransferTokenWithRequest:(GetTransferTokenRequest *)request handler:(void(^)(GetTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetPaymentTokenWithRequest:(GetPaymentTokenRequest *)request handler:(void(^)(GetPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetPaymentTokens(GetPaymentTokensRequest) returns (GetPaymentTokensResponse)
-
-- (void)getPaymentTokensWithRequest:(GetPaymentTokensRequest *)request handler:(void(^)(GetPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToGetPaymentTokensWithRequest:(GetPaymentTokensRequest *)request handler:(void(^)(GetPaymentTokensResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetTransferTokenWithRequest:(GetTransferTokenRequest *)request handler:(void(^)(GetTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark EndorsePaymentToken(EndorsePaymentTokenRequest) returns (EndorsePaymentTokenResponse)
+#pragma mark GetTransferTokens(GetTransferTokensRequest) returns (GetTransferTokensResponse)
 
-- (void)endorsePaymentTokenWithRequest:(EndorsePaymentTokenRequest *)request handler:(void(^)(EndorsePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getTransferTokensWithRequest:(GetTransferTokensRequest *)request handler:(void(^)(GetTransferTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToEndorsePaymentTokenWithRequest:(EndorsePaymentTokenRequest *)request handler:(void(^)(EndorsePaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetTransferTokensWithRequest:(GetTransferTokensRequest *)request handler:(void(^)(GetTransferTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CancelPaymentToken(CancelPaymentTokenRequest) returns (CancelPaymentTokenResponse)
+#pragma mark EndorseTransferToken(EndorseTransferTokenRequest) returns (EndorseTransferTokenResponse)
 
-- (void)cancelPaymentTokenWithRequest:(CancelPaymentTokenRequest *)request handler:(void(^)(CancelPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)endorseTransferTokenWithRequest:(EndorseTransferTokenRequest *)request handler:(void(^)(EndorseTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToCancelPaymentTokenWithRequest:(CancelPaymentTokenRequest *)request handler:(void(^)(CancelPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToEndorseTransferTokenWithRequest:(EndorseTransferTokenRequest *)request handler:(void(^)(EndorseTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CancelTransferToken(CancelTransferTokenRequest) returns (CancelTransferTokenResponse)
+
+- (void)cancelTransferTokenWithRequest:(CancelTransferTokenRequest *)request handler:(void(^)(CancelTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCancelTransferTokenWithRequest:(CancelTransferTokenRequest *)request handler:(void(^)(CancelTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
@@ -303,37 +303,37 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToCancelAccessTokenWithRequest:(CancelAccessTokenRequest *)request handler:(void(^)(CancelAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RedeemPaymentToken(RedeemPaymentTokenRequest) returns (RedeemPaymentTokenResponse)
+#pragma mark RedeemTransferToken(RedeemTransferTokenRequest) returns (RedeemTransferTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Token Payments.
+ * Token Transfers.
  * 
  * 
  */
-- (void)redeemPaymentTokenWithRequest:(RedeemPaymentTokenRequest *)request handler:(void(^)(RedeemPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)redeemTransferTokenWithRequest:(RedeemTransferTokenRequest *)request handler:(void(^)(RedeemTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Token Payments.
+ * Token Transfers.
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToRedeemPaymentTokenWithRequest:(RedeemPaymentTokenRequest *)request handler:(void(^)(RedeemPaymentTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRedeemTransferTokenWithRequest:(RedeemTransferTokenRequest *)request handler:(void(^)(RedeemTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetPayment(GetPaymentRequest) returns (GetPaymentResponse)
+#pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
-- (void)getPaymentWithRequest:(GetPaymentRequest *)request handler:(void(^)(GetPaymentResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetPaymentWithRequest:(GetPaymentRequest *)request handler:(void(^)(GetPaymentResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetPayments(GetPaymentsRequest) returns (GetPaymentsResponse)
+#pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
-- (void)getPaymentsWithRequest:(GetPaymentsRequest *)request handler:(void(^)(GetPaymentsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetPaymentsWithRequest:(GetPaymentsRequest *)request handler:(void(^)(GetPaymentsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

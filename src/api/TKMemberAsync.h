@@ -110,17 +110,17 @@
  * @param platform target platform for notification (e.g. Platform_Ios)
  */
 - (void)subscribeToNotifications:(NSString *)provider
-        target:(NSString *)target
-               platform:(Platform)platform
-              onSuccess:(OnSuccessWithSubscriber)onSuccess
-                onError:(OnError)onError;
+                          target:(NSString *)target
+                        platform:(Platform)platform
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Get all subscribers 
  *
  */
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
-                             onError:(OnError)onError;
+               onError:(OnError)onError;
 
 /**
  * Get a subscriber by Id
@@ -128,8 +128,8 @@
  * @param subscriberId id of subscriber to get
  */
 - (void)getSubscriber:(NSString *)subscriberId
-                           onSuccess:(OnSuccessWithSubscriber)onSuccess
-                             onError:(OnError)onError;
+            onSuccess:(OnSuccessWithSubscriber)onSuccess
+              onError:(OnError)onError;
 
 /**
  * Unsubscribes a device from push notifications
@@ -137,8 +137,8 @@
  * @param subscriberId if of subscriber to remove
  */
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError;
+                           onSuccess:(OnSuccess)onSuccess
+                             onError:(OnError)onError;
 
 
 /**
@@ -174,31 +174,31 @@
            onError:(OnError)onError;
 
 /**
- * Looks up an existing token payment.
+ * Looks up an existing token transfer.
  *
- * @param paymentId ID of the payment record
+ * @param transferId ID of the transfer record
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getPayment:(NSString *)paymentId
-         onSuccess:(OnSuccessWithPayment)onSuccess
-           onError:(OnError)onError;
+- (void)getTransfer:(NSString *)transferId
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError;
 
 /**
- * Looks up existing token payments.
+ * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getPaymentsOffset:(int)offset
-                    limit:(int)limit
-                onSuccess:(OnSuccessWithPayments)onSuccess
-                  onError:(OnError)onError;
+- (void)getTransfersOffset:(int)offset
+                     limit:(int)limit
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError;
 
 /**
- * Looks up existing token payments.
+ * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
@@ -206,11 +206,11 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getPaymentsOffset:(int)offset
-                    limit:(int)limit
-                  tokenId:(NSString *)tokenId
-                onSuccess:(OnSuccessWithPayments)onSuccess
-                  onError:(OnError)onError;
+- (void)getTransfersOffset:(int)offset
+                     limit:(int)limit
+                   tokenId:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Creates a new member address.
@@ -257,111 +257,111 @@
                     onError:(OnError)onError;
 
 /**
- * Creates a new payment token.
+ * Creates a new transfer token.
  *
  * @param accountId the funding account id
- * @param amount payment amount
+ * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createPaymentTokenForAccount:(NSString *)accountId
-                              amount:(double)amount
-                            currency:(NSString *)currency
-                           onSuccess:(OnSuccessWithToken)onSuccess
-                             onError:(OnError)onError;
+- (void)createTransferTokenForAccount:(NSString *)accountId
+                               amount:(double)amount
+                             currency:(NSString *)currency
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError;
 
 /**
- * Creates a new payment token.
+ * Creates a new transfer token.
  *
  * @param accountId the funding account id
- * @param amount payment amount
+ * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
  * @param redeemer redeemer alias
- * @param description payment description, optional
+ * @param description transfer description, optional
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createPaymentTokenForAccount:(NSString *)accountId
-                              amount:(double)amount
-                            currency:(NSString *)currency
-                       redeemerAlias:(NSString *)redeemerAlias
-                         description:(NSString *)description
-                           onSuccess:(OnSuccessWithToken)onSuccess
-                             onError:(OnError)onError;
+- (void)createTransferTokenForAccount:(NSString *)accountId
+                               amount:(double)amount
+                             currency:(NSString *)currency
+                        redeemerAlias:(NSString *)redeemerAlias
+                          description:(NSString *)description
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError;
 
 /**
- * Looks up a existing payment token.
+ * Looks up a existing transfer token.
  *
  * @param tokenId token id
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getPaymentToken:(NSString *)tokenId
-              onSuccess:(OnSuccessWithToken)onSuccess
-                onError:(OnError)onError;
+- (void)getTransferToken:(NSString *)tokenId
+               onSuccess:(OnSuccessWithToken)onSuccess
+                 onError:(OnError)onError;
 
 /**
- * Looks up payment tokens owned by the member.
+ * Looks up transfer tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getPaymentTokensOffset:(int)offset
-                         limit:(int)limit
-                     onSuccess:(OnSuccessWithTokens)onSuccess
-                       onError:(OnError)onError;
+- (void)getTransferTokensOffset:(int)offset
+                          limit:(int)limit
+                      onSuccess:(OnSuccessWithTokens)onSuccess
+                        onError:(OnError)onError;
 
 /**
- * Endorses the payment token by signing it. The signature is persisted 
+ * Endorses the transfer token by signing it. The signature is persisted 
  * along with the token.
  *
  * @param token token to endorse
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)endorsePaymentToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
+- (void)endorseTransferToken:(Token *)token
+                   onSuccess:(OnSuccessWithToken)onSuccess
+                     onError:(OnError)onError;
 
 /**
- * Cancels the payment token by signing it. The signature is persisted
+ * Cancels the transfer token by signing it. The signature is persisted
  * along with the token.
  *
  * @param token token to cancel
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)cancelPaymentToken:(Token *)token
-                 onSuccess:(OnSuccessWithToken)onSuccess
-                   onError:(OnError)onError;
+- (void)cancelTransferToken:(Token *)token
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError;
 
 /**
- * Redeems a payment token.
+ * Redeems a transfer token.
  *
- * @param token payment token to redeem
+ * @param token transfer token to redeem
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemPaymentToken:(Token *)token
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError;
+- (void)redeemTransferToken:(Token *)token
+                  onSuccess:(OnSuccessWithTransfer)onSuccess
+                    onError:(OnError)onError;
 
 /**
- * Redeems a payment token.
+ * Redeems a transfer token.
  *
- * @param token payment token to redeem
- * @param amount payment amount
- * @param currency payment currency code, e.g. "EUR"
+ * @param token transfer token to redeem
+ * @param amount transfer amount
+ * @param currency transfer currency code, e.g. "EUR"
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemPaymentToken:(Token *)token
-                    amount:(NSNumber *)amount
-                  currency:(NSString *)currency
-                 onSuccess:(OnSuccessWithPayment)onSuccess
-                   onError:(OnError)onError;
+- (void)redeemTransferToken:(Token *)token
+                     amount:(NSNumber *)amount
+                   currency:(NSString *)currency
+                  onSuccess:(OnSuccessWithTransfer)onSuccess
+                    onError:(OnError)onError;
 
 @end

@@ -14,6 +14,8 @@
 #endif
 
  #import "Transfer.pbobjc.h"
+ #import "Money.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,6 +25,19 @@
 #pragma mark - TransferRoot
 
 @implementation TransferRoot
+
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPBDebugCheckRuntimeVersion();
+    registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[MoneyRoot extensionRegistry]];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -44,13 +59,17 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 
 @implementation Transfer
 
-@dynamic hasSource, source;
-@dynamic destinationArray, destinationArray_Count;
+@dynamic id_p;
+@dynamic referenceId;
+@dynamic hasPayload, payload;
+@dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
-  Source *source;
-  NSMutableArray *destinationArray;
+  NSString *id_p;
+  NSString *referenceId;
+  Transfer_Payload *payload;
+  NSMutableArray *payloadSignaturesArray;
 } Transfer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -60,20 +79,38 @@ typedef struct Transfer__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "source",
-        .dataTypeSpecific.className = GPBStringifySymbol(Source),
-        .number = Transfer_FieldNumber_Source,
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_Id_p,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Transfer__storage_, source),
+        .offset = (uint32_t)offsetof(Transfer__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "referenceId",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_ReferenceId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Transfer__storage_, referenceId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(Transfer_Payload),
+        .number = Transfer_FieldNumber_Payload,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Transfer__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "destinationArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
-        .number = Transfer_FieldNumber_DestinationArray,
+        .name = "payloadSignaturesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = Transfer_FieldNumber_PayloadSignaturesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Transfer__storage_, destinationArray),
+        .offset = (uint32_t)offsetof(Transfer__storage_, payloadSignaturesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -85,6 +122,147 @@ typedef struct Transfer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Transfer__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Transfer_Payload
+
+@implementation Transfer_Payload
+
+@dynamic nonce;
+@dynamic tokenId;
+@dynamic hasAmount, amount;
+@dynamic hasInstructions, instructions;
+@dynamic description_p;
+
+typedef struct Transfer_Payload__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *nonce;
+  NSString *tokenId;
+  Money *amount;
+  TransferInstructions *instructions;
+  NSString *description_p;
+} Transfer_Payload__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "nonce",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_Payload_FieldNumber_Nonce,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, nonce),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_Payload_FieldNumber_TokenId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = Transfer_Payload_FieldNumber_Amount,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "instructions",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions),
+        .number = Transfer_Payload_FieldNumber_Instructions,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, instructions),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "description_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_Payload_FieldNumber_Description_p,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Transfer_Payload class]
+                                     rootClass:[TransferRoot class]
+                                          file:TransferRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Transfer_Payload__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - TransferInstructions
+
+@implementation TransferInstructions
+
+@dynamic hasSource, source;
+@dynamic destinationArray, destinationArray_Count;
+
+typedef struct TransferInstructions__storage_ {
+  uint32_t _has_storage_[1];
+  Source *source;
+  NSMutableArray *destinationArray;
+} TransferInstructions__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "source",
+        .dataTypeSpecific.className = GPBStringifySymbol(Source),
+        .number = TransferInstructions_FieldNumber_Source,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, source),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "destinationArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
+        .number = TransferInstructions_FieldNumber_DestinationArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransferInstructions class]
+                                     rootClass:[TransferRoot class]
+                                          file:TransferRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransferInstructions__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

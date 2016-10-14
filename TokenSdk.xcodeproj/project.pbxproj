@@ -48,6 +48,8 @@
 		8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */; };
 		8A1FA0D71DAEE9A400DFB258 /* Paging.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D51DAEE9A400DFB258 /* Paging.pbobjc.h */; };
 		8A1FA0D81DAEE9A400DFB258 /* Paging.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D61DAEE9A400DFB258 /* Paging.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */; };
+		8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */; };
 		8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */; };
 		8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */; };
@@ -179,6 +181,8 @@
 		8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbrpc.m; sourceTree = "<group>"; };
 		8A1FA0D51DAEE9A400DFB258 /* Paging.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paging.pbobjc.h; sourceTree = "<group>"; };
 		8A1FA0D61DAEE9A400DFB258 /* Paging.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Paging.pbobjc.m; sourceTree = "<group>"; };
+		8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKStepUpTests.m; sourceTree = "<group>"; };
+		8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAddressTests.m; sourceTree = "<group>"; };
 		8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
 		8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbrpc.h; sourceTree = "<group>"; };
 		8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbrpc.m; sourceTree = "<group>"; };
@@ -417,6 +421,8 @@
 		8A99091C1D890E820096A7FA /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */,
+				8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
 				ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */,
@@ -842,6 +848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
+				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
 				1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */,
 				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
@@ -850,6 +857,7 @@
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
 				ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */,
+				8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */,
 				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,9 +3,9 @@
 @class Account;
 @class Money;
 @class TKAccount;
-@class Payment;
 @class Token;
 @class Transaction;
+@class Transfer;
 @class TKMemberAsync;
 @class TKAccountAsync;
 @class Address;
@@ -28,8 +28,8 @@ typedef void (^OnSuccessWithTKAccountAsync)(TKAccountAsync *);
 typedef void (^OnSuccessWithToken)(Token *);
 typedef void (^OnSuccessWithTokens)(NSArray<Token *> *);
 
-typedef void (^OnSuccessWithPayment)(Payment *);
-typedef void (^OnSuccessWithPayments)(NSArray<Payment *> *);
+typedef void (^OnSuccessWithTransfer)(Transfer *);
+typedef void (^OnSuccessWithTransfers)(NSArray<Transfer *> *);
 
 typedef void (^OnSuccessWithMoney)(Money *);
 

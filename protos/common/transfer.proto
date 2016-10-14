@@ -3,13 +3,33 @@ package io.token.proto.common.transfer;
 
 option java_outer_classname = "TransferProtos";
 
-// Money transfer instructions.
+import "money.proto";
+import "security.proto";
+
+
+// A transferInstructions record as persisted on the ledger.
 message Transfer {
+  string id = 1;                               // Computed as the hash of the transfer payload.
+  string reference_id = 2;                     // Bank transaction reference id.
+  Payload payload = 3;
+  repeated io.token.proto.common.security.Signature payload_signatures = 4;
+
+  message Payload {
+    string nonce = 1;                                                     // Client assigned unique request id.
+    string token_id = 2;                                                  // Token id.
+    io.token.proto.common.money.Money amount = 3;                         // Amount and currency.
+    io.token.proto.common.transfer.TransferInstructions instructions = 5; // Transfer instructions.
+    string description = 6;                                               // Optional
+  }
+}
+
+// Money transferInstructions instructions.
+message TransferInstructions {
   Source source = 1;                           // Transfer source.
   repeated Destination destination = 2;        // Transfer desitination.
 }
 
-// Money transfer source. This could be an transferDest id assigned by Token or
+// Money transferInstructions source. This could be an transferDest id assigned by Token or
 // real bank transferDest number.
 message Source {
   oneof source {
@@ -18,8 +38,8 @@ message Source {
   }
 }
 
-// Money transfer destination. The desitination is described differently
-// depending on the transfer method being used.
+// Money transferInstructions destination. The desitination is described differently
+// depending on the transferInstructions method being used.
 message Destination {
   oneof destination {
     DestinationBic swift = 1;
@@ -28,13 +48,13 @@ message Destination {
   }
 }
 
-// SWIFT transfer destination.
+// SWIFT transferInstructions destination.
 message DestinationBic {
   string bic = 1;
   string account = 2;
 }
 
-// IBAN transfer destination, can be used with different transfer methods.
+// IBAN transferInstructions destination, can be used with different transferInstructions methods.
 message DestinationIban {
   enum Method { INVALID = 0; SWIFT = 1; SEPA = 2; }
 
@@ -43,7 +63,7 @@ message DestinationIban {
   string name = 3;
 }
 
-// ACH transfer destination.
+// ACH transferInstructions destination.
 message DestinationAch {
   string routing = 1;
   string account = 2;
