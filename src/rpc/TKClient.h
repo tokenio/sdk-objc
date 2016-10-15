@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
+#import "gateway/Gateway.pbrpc.h"
 
 
 @class Member;
@@ -162,56 +163,58 @@
  *
  * @param payload transfer token payload
  */
-- (void)createTransferToken:(TokenPayload *)payload
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
+- (void)createToken:(TokenPayload *)payload
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Looks up an existing token.
  *
  * @param tokenId token id
  */
-- (void)getTransferToken:(NSString *)tokenId
-               onSuccess:(OnSuccessWithToken)onSuccess
-                 onError:(OnError)onError;
+- (void)getToken:(NSString *)tokenId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError;
 
 /**
  * Looks up token owned by the member.
  *
+ * @param type token type
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (void)getTransferTokens:(int)offset
-                    limit:(int)limit
-                onSuccess:(OnSuccessWithTokens)onSuccess
-                  onError:(OnError)onError;
+- (void)getTokensOfType:(GetTokensRequest_Type)type
+                 offset:(int)offset
+                  limit:(int)limit
+              onSuccess:(OnSuccessWithTokens)onSuccess
+                onError:(OnError)onError;
 
 /**
  * Endorses a transfer token.
  *
  * @param token token to endorse
  */
-- (void)endorseTransferToken:(Token *)token
-                   onSuccess:(OnSuccessWithToken)success
-                     onError:(OnError)error;
+- (void)endorseToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)success
+             onError:(OnError)error;
 
 /**
  * Cancels a transfer token.
  *
  * @param token token to endorse
  */
-- (void)cancelTransferToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)success
-                    onError:(OnError)error;
+- (void)cancelToken:(Token *)token
+          onSuccess:(OnSuccessWithToken)success
+            onError:(OnError)error;
 
 /**
  * Redeems a transfer token.
  *
  * @param transfer transfer parameters, such as amount, currency, etc
  */
-- (void)redeemTransferToken:(Transfer_Payload *)payload
-                  onSuccess:(OnSuccessWithTransfer)onSuccess
-                    onError:(OnError)onError;
+- (void)createTransfer:(Transfer_Payload *)payload
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up a token transfer by id.

@@ -45,26 +45,26 @@
                                                  target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                                platform:Platform_Ios];
         
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                    amount:100.99
-                                                  currency:@"USD"
-                                             redeemerAlias:payee.firstAlias
-                                               description:@"transfer test"];
-        token = [payer endorseTransferToken:token];
-        Transfer *transfer = [payee redeemTransferToken:token];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.99
+                                           currency:@"USD"
+                                      redeemerAlias:payee.firstAlias
+                                        description:@"transfer test"];
+        token = [payer endorseToken:token];
+        Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         
         [payer unsubscribeFromNotifications:s.id_p];
         
-        Token *token2 = [payer createTransferTokenForAccount:payerAccount.id
-                                                      amount:100.99
-                                                    currency:@"USD"
-                                               redeemerAlias:payee.firstAlias
-                                                 description:@"transfer test"];
-        token = [payer endorseTransferToken:token2];
-        [payee redeemTransferToken:token];
+        Token *token2 = [payer createTokenForAccount:payerAccount.id
+                                              amount:100.99
+                                            currency:@"USD"
+                                       redeemerAlias:payee.firstAlias
+                                         description:@"transfer test"];
+        token = [payer endorseToken:token2];
+        [payee createTransfer:token];
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
     }];
 }
@@ -74,7 +74,7 @@
         [payer subscribeToNotifications:@"Token"
                                  target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
-
+        
         [tokenIO notifyLinkAccounts:payer.firstAlias
                              bankId:@"bank-id"
                 accountsLinkPayload:@"12345"];
@@ -84,11 +84,11 @@
 
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
-
+        
         [payer subscribeToNotifications:@"Token"
                                  target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
-
+        
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyAddKey:payer.firstAlias
                     publicKey:key.publicKeyStr
@@ -137,13 +137,13 @@
                                  target:@"notificationUri"
                                platform:Platform_Ios];
         
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100.99
-                                                   currency:@"USD"
-                                              redeemerAlias:payee.firstAlias
-                                                description:@"transfer test"];
-        token = [payer endorseTransferToken:token];
-        Transfer *transfer = [payee redeemTransferToken:token];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.99
+                                           currency:@"USD"
+                                      redeemerAlias:payee.firstAlias
+                                        description:@"transfer test"];
+        token = [payer endorseToken:token];
+        Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);

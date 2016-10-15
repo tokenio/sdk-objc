@@ -198,7 +198,7 @@
  * @param currency currency code, e.g. "USD"
  * @return transfer token returned by the server
  */
-- (Token *)createTransferTokenForAccount:(NSString *)accountId
+- (Token *)createTokenForAccount:(NSString *)accountId
                                   amount:(double)amount
                                 currency:(NSString *)currency;
 
@@ -212,7 +212,7 @@
  * @param description transfer description, optional
  * @return transfer token returned by the server
  */
-- (Token *)createTransferTokenForAccount:(NSString *)accountId
+- (Token *)createTokenForAccount:(NSString *)accountId
                                   amount:(double)amount
                                 currency:(NSString *)currency
                            redeemerAlias:(NSString *)redeemerAlias
@@ -224,7 +224,7 @@
  * @param tokenId token id
  * @return transfer token returned by the server
  */
-- (Token *)getTransferToken:(NSString *)tokenId;
+- (Token *)getToken:(NSString *)tokenId;
 
 /**
  * Looks up transfer tokens owned by the member.
@@ -233,7 +233,7 @@
  * @param limit max number of records to return
  * @return transfer tokens owned by the member
  */
-- (NSArray<Token *> *)getTransferTokensOffset:(int)i limit:(int)limit;
+- (NSArray<Token *> *)getTransferTokensOffset:(int)offset limit:(int)limit;
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
@@ -242,7 +242,7 @@
  * @param token token to endorse
  * @return endorsed token
  */
-- (Token *)endorseTransferToken:(Token *)token;
+- (Token *)endorseToken:(Token *)token;
 
 /**
  * Cancels the transfer token by signing it. The signature is persisted 
@@ -251,7 +251,7 @@
  * @param token token to cancel
  * @return cancelled token
  */
-- (Token *)cancelTransferToken:(Token *)token;
+- (Token *)cancelToken:(Token *)token;
 
 /**
  * Redeems a transfer token.
@@ -259,7 +259,7 @@
  * @param token transfer token to redeem
  * @return transfer record
  */
-- (Transfer *)redeemTransferToken:(Token *)token;
+- (Transfer *)createTransfer:(Token *)token;
 
 /**
  * Redeems a transfer token.
@@ -269,8 +269,8 @@
  * @param currency transfer currency code, e.g. "EUR"
  * @return transfer record
  */
-- (Transfer *)redeemTransferToken:(Token *)token
-                           amount:(NSNumber *)amount
-                         currency:(NSString *)currency;
+- (Transfer *)createTransfer:(Token *)token
+                      amount:(NSNumber *)amount
+                    currency:(NSString *)currency;
 
 @end

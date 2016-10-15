@@ -231,39 +231,39 @@
     }];
 }
 
-- (Token *)createTransferTokenForAccount:(NSString *)accountId
-                                  amount:(double)amount
-                                currency:(NSString *)currency {
-    return [self createTransferTokenForAccount:accountId
-                                        amount:amount
-                                      currency:currency
-                                 redeemerAlias:nil
-                                   description:nil];
+- (Token *)createTokenForAccount:(NSString *)accountId
+                          amount:(double)amount
+                        currency:(NSString *)currency {
+    return [self createTokenForAccount:accountId
+                                amount:amount
+                              currency:currency
+                         redeemerAlias:nil
+                           description:nil];
 }
 
-- (Token *)createTransferTokenForAccount:(NSString *)accountId
-                                  amount:(double)amount
-                                currency:(NSString *)currency
-                           redeemerAlias:(NSString *)redeemerAlias
-                             description:(NSString *)description {
+- (Token *)createTokenForAccount:(NSString *)accountId
+                          amount:(double)amount
+                        currency:(NSString *)currency
+                   redeemerAlias:(NSString *)redeemerAlias
+                     description:(NSString *)description {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createTransferTokenForAccount:accountId
-                                           amount:amount
-                                         currency:currency
-                                    redeemerAlias:redeemerAlias
-                                      description:description
-                                        onSuccess:call.onSuccess
-                                          onError:call.onError];
+        [self.async createTokenForAccount:accountId
+                                   amount:amount
+                                 currency:currency
+                            redeemerAlias:redeemerAlias
+                              description:description
+                                onSuccess:call.onSuccess
+                                  onError:call.onError];
     }];
 }
 
-- (Token *)getTransferToken:(NSString *)tokenId {
+- (Token *)getToken:(NSString *)tokenId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getTransferToken:tokenId
-                           onSuccess:call.onSuccess
-                             onError:call.onError];
+        [self.async getToken:tokenId
+                   onSuccess:call.onSuccess
+                     onError:call.onError];
     }];
 }
 
@@ -278,40 +278,40 @@
     }];
 }
 
-- (Token *)endorseTransferToken:(Token *)token {
+- (Token *)endorseToken:(Token *)token {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async endorseTransferToken:token
-                               onSuccess:call.onSuccess
-                                 onError:call.onError];
+        [self.async endorseToken:token
+                       onSuccess:call.onSuccess
+                         onError:call.onError];
     }];
 }
 
-- (Token *)cancelTransferToken:(Token *)token {
+- (Token *)cancelToken:(Token *)token {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async cancelTransferToken:token
-                              onSuccess:call.onSuccess
-                                onError:call.onError];
+        [self.async cancelToken:token
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
     }];
 }
 
-- (Transfer *)redeemTransferToken:(Token *)token {
-    return [self redeemTransferToken:token
-                              amount:nil
-                            currency:nil];
+- (Transfer *)createTransfer:(Token *)token {
+    return [self createTransfer:token
+                         amount:nil
+                       currency:nil];
 }
 
-- (Transfer *)redeemTransferToken:(Token *)token
-                           amount:(NSNumber *)amount
-                         currency:(NSString *)currency {
+- (Transfer *)createTransfer:(Token *)token
+                      amount:(NSNumber *)amount
+                    currency:(NSString *)currency {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async redeemTransferToken:token
-                                 amount:amount
-                               currency:currency
-                              onSuccess:call.onSuccess
-                                onError:call.onError];
+        [self.async createTransfer:token
+                            amount:amount
+                          currency:currency
+                         onSuccess:call.onSuccess
+                           onError:call.onError];
     }];
 }
 

@@ -34,11 +34,11 @@
 
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100.99
-                                                   currency:@"USD"
-                                              redeemerAlias:payee.firstAlias
-                                                description:@"Book purchase"];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.99
+                                           currency:@"USD"
+                                      redeemerAlias:payee.firstAlias
+                                        description:@"Book purchase"];
         
         XCTAssertEqualObjects(@"100.99", token.payload.transfer.amount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
@@ -49,19 +49,19 @@
 
 - (void)testLookupToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100.99
-                                                   currency:@"USD"];
-        Token *lookedUp = [payer getTransferToken:token.id_p];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.99
+                                           currency:@"USD"];
+        Token *lookedUp = [payer getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
     }];
 }
 
 - (void)testLookupTokens {
     [self run: ^(TokenIO *tokenIO) {
-        [payer createTransferTokenForAccount:payerAccount.id amount:100.11 currency:@"USD"];
-        [payer createTransferTokenForAccount:payerAccount.id amount:100.22 currency:@"USD"];
-        [payer createTransferTokenForAccount:payerAccount.id amount:100.33 currency:@"USD"];
+        [payer createTokenForAccount:payerAccount.id amount:100.11 currency:@"USD"];
+        [payer createTokenForAccount:payerAccount.id amount:100.22 currency:@"USD"];
+        [payer createTokenForAccount:payerAccount.id amount:100.33 currency:@"USD"];
         
         NSArray<Token *> *lookedUp = [payer getTransferTokensOffset:0 limit:100];
         XCTAssertEqual(lookedUp.count, 3);
@@ -70,10 +70,10 @@
 
 - (void)testEndorseToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100.11
-                                                   currency:@"USD"];
-        Token *endorsed = [payer endorseTransferToken:token];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.11
+                                           currency:@"USD"];
+        Token *endorsed = [payer endorseToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         
@@ -86,10 +86,10 @@
 
 - (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100.11
-                                                   currency:@"USD"];
-        Token *cancelled = [payer cancelTransferToken:token];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100.11
+                                           currency:@"USD"];
+        Token *cancelled = [payer cancelToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         
