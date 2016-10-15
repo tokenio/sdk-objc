@@ -10,6 +10,7 @@
 #import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Payment.pbobjc.h"
+#import "gateway/Gateway.pbrpc.h"
 
 #import "TKAccount.h"
 #import "TKMember.h"
@@ -271,27 +272,27 @@
                       onError:onError];
 }
 
-- (void)createTransferTokenForAccount:(NSString *)accountId
-                               amount:(double)amount
-                             currency:(NSString *)currency
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError {
-    [self createTransferTokenForAccount:accountId
-                                 amount:amount
-                               currency:currency
-                          redeemerAlias:nil
-                            description:nil
-                              onSuccess:onSuccess
-                                onError:onError];
+- (void)createTokenForAccount:(NSString *)accountId
+                       amount:(double)amount
+                     currency:(NSString *)currency
+                    onSuccess:(OnSuccessWithToken)onSuccess
+                      onError:(OnError)onError {
+    [self createTokenForAccount:accountId
+                         amount:amount
+                       currency:currency
+                  redeemerAlias:nil
+                    description:nil
+                      onSuccess:onSuccess
+                        onError:onError];
 }
 
-- (void)createTransferTokenForAccount:(NSString *)accountId
-                               amount:(double)amount
-                             currency:(NSString *)currency
-                        redeemerAlias:(NSString *)redeemerAlias
-                          description:(NSString *)description
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError {
+- (void)createTokenForAccount:(NSString *)accountId
+                       amount:(double)amount
+                     currency:(NSString *)currency
+                redeemerAlias:(NSString *)redeemerAlias
+                  description:(NSString *)description
+                    onSuccess:(OnSuccessWithToken)onSuccess
+                      onError:(OnError)onError {
     
     TokenMember *payer = [TokenMember message];
     payer.id_p = self.id;
@@ -312,61 +313,62 @@
         payload.description_p = description;
     }
     
-    [client createTransferToken:payload
-                      onSuccess:^(Token *token) { onSuccess(token); }
-                        onError:onError];
+    [client createToken:payload
+              onSuccess:^(Token *token) { onSuccess(token); }
+                onError:onError];
 }
 
-- (void)getTransferToken:(NSString *)tokenId
-               onSuccess:(OnSuccessWithToken)onSuccess
-                 onError:(OnError)onError {
-    [client getTransferToken:tokenId
-                   onSuccess:onSuccess
-                     onError:onError];
+- (void)getToken:(NSString *)tokenId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError {
+    [client getToken:tokenId
+           onSuccess:onSuccess
+             onError:onError];
 }
 
 - (void)getTransferTokensOffset:(int)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError {
-    [client getTransferTokens:offset
-                        limit:limit
-                    onSuccess:onSuccess
-                      onError:onError];
+    [client getTokensOfType:GetTokensRequest_Type_Transfer
+                     offset:offset
+                      limit:limit
+                  onSuccess:onSuccess
+                    onError:onError];
 }
 
-- (void)endorseTransferToken:(Token *)token
-                   onSuccess:(OnSuccessWithToken)onSuccess
-                     onError:(OnError)onError {
-    [client endorseTransferToken:token
-                       onSuccess:onSuccess
-                         onError:onError];
+- (void)endorseToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)onSuccess
+             onError:(OnError)onError {
+    [client endorseToken:token
+               onSuccess:onSuccess
+                 onError:onError];
     
 }
 
-- (void)cancelTransferToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError {
-    [client cancelTransferToken:token
-                      onSuccess:onSuccess
-                        onError:onError];
+- (void)cancelToken:(Token *)token
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+    [client cancelToken:token
+              onSuccess:onSuccess
+                onError:onError];
 }
 
-- (void)redeemTransferToken:(Token *)token
-                  onSuccess:(OnSuccessWithTransfer)onSuccess
-                    onError:(OnError)onError {
-    [self redeemTransferToken:token
-                       amount:nil
-                     currency:nil
-                    onSuccess:onSuccess
-                      onError:onError];
+- (void)createTransfer:(Token *)token
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError {
+    [self createTransfer:token
+                  amount:nil
+                currency:nil
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
-- (void)redeemTransferToken:(Token *)token
-                     amount:(NSNumber *)amount
-                   currency:(NSString *)currency
-                  onSuccess:(OnSuccessWithTransfer)onSuccess
-                    onError:(OnError)onError {
+- (void)createTransfer:(Token *)token
+                amount:(NSNumber *)amount
+              currency:(NSString *)currency
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError {
     Transfer_Payload *payload = [Transfer_Payload message];
     payload.tokenId = token.id_p;
     payload.nonce = [TKUtil nonce];
@@ -378,9 +380,9 @@
         payload.amount.currency = currency;
     }
     
-    [client redeemTransferToken:payload
-                      onSuccess:onSuccess
-                        onError:onError];
+    [client createTransfer:payload
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
 #pragma mark private

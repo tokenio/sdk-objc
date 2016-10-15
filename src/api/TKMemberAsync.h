@@ -265,11 +265,11 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTransferTokenForAccount:(NSString *)accountId
-                               amount:(double)amount
-                             currency:(NSString *)currency
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError;
+- (void)createTokenForAccount:(NSString *)accountId
+                       amount:(double)amount
+                     currency:(NSString *)currency
+                    onSuccess:(OnSuccessWithToken)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Creates a new transfer token.
@@ -282,13 +282,13 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTransferTokenForAccount:(NSString *)accountId
-                               amount:(double)amount
-                             currency:(NSString *)currency
-                        redeemerAlias:(NSString *)redeemerAlias
-                          description:(NSString *)description
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError;
+- (void)createTokenForAccount:(NSString *)accountId
+                       amount:(double)amount
+                     currency:(NSString *)currency
+                redeemerAlias:(NSString *)redeemerAlias
+                  description:(NSString *)description
+                    onSuccess:(OnSuccessWithToken)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Looks up a existing transfer token.
@@ -297,9 +297,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransferToken:(NSString *)tokenId
-               onSuccess:(OnSuccessWithToken)onSuccess
-                 onError:(OnError)onError;
+- (void)getToken:(NSString *)tokenId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError;
 
 /**
  * Looks up transfer tokens owned by the member.
@@ -322,9 +322,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)endorseTransferToken:(Token *)token
-                   onSuccess:(OnSuccessWithToken)onSuccess
-                     onError:(OnError)onError;
+- (void)endorseToken:(Token *)token
+           onSuccess:(OnSuccessWithToken)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Cancels the transfer token by signing it. The signature is persisted
@@ -334,9 +334,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)cancelTransferToken:(Token *)token
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
+- (void)cancelToken:(Token *)token
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Redeems a transfer token.
@@ -345,9 +345,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemTransferToken:(Token *)token
-                  onSuccess:(OnSuccessWithTransfer)onSuccess
-                    onError:(OnError)onError;
+- (void)createTransfer:(Token *)token
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Redeems a transfer token.
@@ -358,10 +358,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemTransferToken:(Token *)token
-                     amount:(NSNumber *)amount
-                   currency:(NSString *)currency
-                  onSuccess:(OnSuccessWithTransfer)onSuccess
-                    onError:(OnError)onError;
+- (void)createTransfer:(Token *)token
+                amount:(NSNumber *)amount
+              currency:(NSString *)currency
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError;
 
 @end

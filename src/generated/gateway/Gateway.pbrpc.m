@@ -310,151 +310,79 @@
              responseClass:[GetTransactionsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Transfer Tokens.
+ * Tokens.
  * 
  * 
  */
-- (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCreateTransferTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Transfer Tokens.
- * 
- * 
- */
-- (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CreateTransferToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CreateTransferTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark GetTransferToken(GetTransferTokenRequest) returns (GetTransferTokenResponse)
-
-- (void)getTransferTokenWithRequest:(GetTransferTokenRequest *)request handler:(void(^)(GetTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetTransferTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetTransferTokenWithRequest:(GetTransferTokenRequest *)request handler:(void(^)(GetTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetTransferToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetTransferTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark GetTransferTokens(GetTransferTokensRequest) returns (GetTransferTokensResponse)
-
-- (void)getTransferTokensWithRequest:(GetTransferTokensRequest *)request handler:(void(^)(GetTransferTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetTransferTokensWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetTransferTokensWithRequest:(GetTransferTokensRequest *)request handler:(void(^)(GetTransferTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetTransferTokens"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetTransferTokensResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark EndorseTransferToken(EndorseTransferTokenRequest) returns (EndorseTransferTokenResponse)
-
-- (void)endorseTransferTokenWithRequest:(EndorseTransferTokenRequest *)request handler:(void(^)(EndorseTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToEndorseTransferTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEndorseTransferTokenWithRequest:(EndorseTransferTokenRequest *)request handler:(void(^)(EndorseTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"EndorseTransferToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[EndorseTransferTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark CancelTransferToken(CancelTransferTokenRequest) returns (CancelTransferTokenResponse)
-
-- (void)cancelTransferTokenWithRequest:(CancelTransferTokenRequest *)request handler:(void(^)(CancelTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCancelTransferTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToCancelTransferTokenWithRequest:(CancelTransferTokenRequest *)request handler:(void(^)(CancelTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CancelTransferToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CancelTransferTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-#pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
-
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Access Tokens.
- * 
- * 
- */
-- (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCreateAccessTokenWithRequest:request handler:handler] start];
+- (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Access Tokens.
+ * Tokens.
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CreateAccessToken"
+- (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CreateAccessTokenResponse class]
+             responseClass:[CreateTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetAccessToken(GetAccessTokenRequest) returns (GetAccessTokenResponse)
+#pragma mark GetToken(GetTokenRequest) returns (GetTokenResponse)
 
-- (void)getAccessTokenWithRequest:(GetAccessTokenRequest *)request handler:(void(^)(GetAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetAccessTokenWithRequest:request handler:handler] start];
+- (void)getTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetAccessTokenWithRequest:(GetAccessTokenRequest *)request handler:(void(^)(GetAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetAccessToken"
+- (GRPCProtoCall *)RPCToGetTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetAccessTokenResponse class]
+             responseClass:[GetTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetAccessTokens(GetAccessTokensRequest) returns (GetAccessTokensResponse)
+#pragma mark GetTokens(GetTokensRequest) returns (GetTokensResponse)
 
-- (void)getAccessTokensWithRequest:(GetAccessTokensRequest *)request handler:(void(^)(GetAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetAccessTokensWithRequest:request handler:handler] start];
+- (void)getTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTokensWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetAccessTokensWithRequest:(GetAccessTokensRequest *)request handler:(void(^)(GetAccessTokensResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetAccessTokens"
+- (GRPCProtoCall *)RPCToGetTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTokens"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetAccessTokensResponse class]
+             responseClass:[GetTokensResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark EndorseAccessToken(EndorseAccessTokenRequest) returns (EndorseAccessTokenResponse)
+#pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
 
-- (void)endorseAccessTokenWithRequest:(EndorseAccessTokenRequest *)request handler:(void(^)(EndorseAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToEndorseAccessTokenWithRequest:request handler:handler] start];
+- (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToEndorseTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEndorseAccessTokenWithRequest:(EndorseAccessTokenRequest *)request handler:(void(^)(EndorseAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"EndorseAccessToken"
+- (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"EndorseToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[EndorseAccessTokenResponse class]
+             responseClass:[EndorseTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark CancelAccessToken(CancelAccessTokenRequest) returns (CancelAccessTokenResponse)
+#pragma mark CancelToken(CancelTokenRequest) returns (CancelTokenResponse)
 
-- (void)cancelAccessTokenWithRequest:(CancelAccessTokenRequest *)request handler:(void(^)(CancelAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCancelAccessTokenWithRequest:request handler:handler] start];
+- (void)cancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCancelTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToCancelAccessTokenWithRequest:(CancelAccessTokenRequest *)request handler:(void(^)(CancelAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CancelAccessToken"
+- (GRPCProtoCall *)RPCToCancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CancelToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CancelAccessTokenResponse class]
+             responseClass:[CancelTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark RedeemTransferToken(RedeemTransferTokenRequest) returns (RedeemTransferTokenResponse)
+#pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -462,8 +390,8 @@
  * 
  * 
  */
-- (void)redeemTransferTokenWithRequest:(RedeemTransferTokenRequest *)request handler:(void(^)(RedeemTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToRedeemTransferTokenWithRequest:request handler:handler] start];
+- (void)createTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateTransferWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -472,10 +400,10 @@
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToRedeemTransferTokenWithRequest:(RedeemTransferTokenRequest *)request handler:(void(^)(RedeemTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"RedeemTransferToken"
+- (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateTransfer"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[RedeemTransferTokenResponse class]
+             responseClass:[CreateTransferResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)

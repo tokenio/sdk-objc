@@ -42,6 +42,24 @@ GPB_ENUM_FWD_DECLARE(Platform);
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum GetTokensRequest_Type
+
+typedef GPB_ENUM(GetTokensRequest_Type) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  GetTokensRequest_Type_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GetTokensRequest_Type_Invalid = 0,
+  GetTokensRequest_Type_Access = 1,
+  GetTokensRequest_Type_Transfer = 2,
+};
+
+GPBEnumDescriptor *GetTokensRequest_Type_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL GetTokensRequest_Type_IsValidValue(int32_t value);
+
 #pragma mark - GatewayRoot
 
 /// Exposes the extension registry for this file.
@@ -583,13 +601,13 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 
 @end
 
-#pragma mark - CreateTransferTokenRequest
+#pragma mark - CreateTokenRequest
 
-typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
-  CreateTransferTokenRequest_FieldNumber_Payload = 1,
+typedef GPB_ENUM(CreateTokenRequest_FieldNumber) {
+  CreateTokenRequest_FieldNumber_Payload = 1,
 };
 
-@interface CreateTransferTokenRequest : GPBMessage
+@interface CreateTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /// Test to see if @c payload has been set.
@@ -597,13 +615,13 @@ typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - CreateTransferTokenResponse
+#pragma mark - CreateTokenResponse
 
-typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
-  CreateTransferTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CreateTokenResponse_FieldNumber) {
+  CreateTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface CreateTransferTokenResponse : GPBMessage
+@interface CreateTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
@@ -611,25 +629,25 @@ typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetTransferTokenRequest
+#pragma mark - GetTokenRequest
 
-typedef GPB_ENUM(GetTransferTokenRequest_FieldNumber) {
-  GetTransferTokenRequest_FieldNumber_TokenId = 2,
+typedef GPB_ENUM(GetTokenRequest_FieldNumber) {
+  GetTokenRequest_FieldNumber_TokenId = 1,
 };
 
-@interface GetTransferTokenRequest : GPBMessage
+@interface GetTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
 
-#pragma mark - GetTransferTokenResponse
+#pragma mark - GetTokenResponse
 
-typedef GPB_ENUM(GetTransferTokenResponse_FieldNumber) {
-  GetTransferTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(GetTokenResponse_FieldNumber) {
+  GetTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface GetTransferTokenResponse : GPBMessage
+@interface GetTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
@@ -637,13 +655,16 @@ typedef GPB_ENUM(GetTransferTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetTransferTokensRequest
+#pragma mark - GetTokensRequest
 
-typedef GPB_ENUM(GetTransferTokensRequest_FieldNumber) {
-  GetTransferTokensRequest_FieldNumber_Page = 1,
+typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
+  GetTokensRequest_FieldNumber_Type = 1,
+  GetTokensRequest_FieldNumber_Page = 2,
 };
 
-@interface GetTransferTokensRequest : GPBMessage
+@interface GetTokensRequest : GPBMessage
+
+@property(nonatomic, readwrite) GetTokensRequest_Type type;
 
 /// Optional paging settings.
 @property(nonatomic, readwrite, strong, null_resettable) Page *page;
@@ -652,14 +673,22 @@ typedef GPB_ENUM(GetTransferTokensRequest_FieldNumber) {
 
 @end
 
-#pragma mark - GetTransferTokensResponse
+/// Fetches the raw value of a @c GetTokensRequest's @c type property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t GetTokensRequest_Type_RawValue(GetTokensRequest *message);
+/// Sets the raw value of an @c GetTokensRequest's @c type property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetGetTokensRequest_Type_RawValue(GetTokensRequest *message, int32_t value);
 
-typedef GPB_ENUM(GetTransferTokensResponse_FieldNumber) {
-  GetTransferTokensResponse_FieldNumber_TokensArray = 1,
-  GetTransferTokensResponse_FieldNumber_Offset = 2,
+#pragma mark - GetTokensResponse
+
+typedef GPB_ENUM(GetTokensResponse_FieldNumber) {
+  GetTokensResponse_FieldNumber_TokensArray = 1,
+  GetTokensResponse_FieldNumber_Offset = 2,
 };
 
-@interface GetTransferTokensResponse : GPBMessage
+@interface GetTokensResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
 /// The number of items in @c tokensArray without causing the array to be created.
@@ -670,14 +699,14 @@ typedef GPB_ENUM(GetTransferTokensResponse_FieldNumber) {
 
 @end
 
-#pragma mark - EndorseTransferTokenRequest
+#pragma mark - EndorseTokenRequest
 
-typedef GPB_ENUM(EndorseTransferTokenRequest_FieldNumber) {
-  EndorseTransferTokenRequest_FieldNumber_TokenId = 1,
-  EndorseTransferTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(EndorseTokenRequest_FieldNumber) {
+  EndorseTokenRequest_FieldNumber_TokenId = 1,
+  EndorseTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface EndorseTransferTokenRequest : GPBMessage
+@interface EndorseTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -687,13 +716,13 @@ typedef GPB_ENUM(EndorseTransferTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - EndorseTransferTokenResponse
+#pragma mark - EndorseTokenResponse
 
-typedef GPB_ENUM(EndorseTransferTokenResponse_FieldNumber) {
-  EndorseTransferTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(EndorseTokenResponse_FieldNumber) {
+  EndorseTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface EndorseTransferTokenResponse : GPBMessage
+@interface EndorseTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
@@ -701,14 +730,14 @@ typedef GPB_ENUM(EndorseTransferTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - CancelTransferTokenRequest
+#pragma mark - CancelTokenRequest
 
-typedef GPB_ENUM(CancelTransferTokenRequest_FieldNumber) {
-  CancelTransferTokenRequest_FieldNumber_TokenId = 1,
-  CancelTransferTokenRequest_FieldNumber_Signature = 2,
+typedef GPB_ENUM(CancelTokenRequest_FieldNumber) {
+  CancelTokenRequest_FieldNumber_TokenId = 1,
+  CancelTokenRequest_FieldNumber_Signature = 2,
 };
 
-@interface CancelTransferTokenRequest : GPBMessage
+@interface CancelTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
@@ -718,13 +747,13 @@ typedef GPB_ENUM(CancelTransferTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - CancelTransferTokenResponse
+#pragma mark - CancelTokenResponse
 
-typedef GPB_ENUM(CancelTransferTokenResponse_FieldNumber) {
-  CancelTransferTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CancelTokenResponse_FieldNumber) {
+  CancelTokenResponse_FieldNumber_Token = 1,
 };
 
-@interface CancelTransferTokenResponse : GPBMessage
+@interface CancelTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /// Test to see if @c token has been set.
@@ -732,163 +761,14 @@ typedef GPB_ENUM(CancelTransferTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - CreateAccessTokenRequest
+#pragma mark - CreateTransferRequest
 
-typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
-  CreateAccessTokenRequest_FieldNumber_Payload = 1,
+typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
+  CreateTransferRequest_FieldNumber_Payload = 1,
+  CreateTransferRequest_FieldNumber_PayloadSignature = 2,
 };
 
-@interface CreateAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
-/// Test to see if @c payload has been set.
-@property(nonatomic, readwrite) BOOL hasPayload;
-
-@end
-
-#pragma mark - CreateAccessTokenResponse
-
-typedef GPB_ENUM(CreateAccessTokenResponse_FieldNumber) {
-  CreateAccessTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface CreateAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - GetAccessTokenRequest
-
-typedef GPB_ENUM(GetAccessTokenRequest_FieldNumber) {
-  GetAccessTokenRequest_FieldNumber_TokenId = 2,
-};
-
-@interface GetAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@end
-
-#pragma mark - GetAccessTokenResponse
-
-typedef GPB_ENUM(GetAccessTokenResponse_FieldNumber) {
-  GetAccessTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface GetAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - GetAccessTokensRequest
-
-typedef GPB_ENUM(GetAccessTokensRequest_FieldNumber) {
-  GetAccessTokensRequest_FieldNumber_Page = 1,
-};
-
-@interface GetAccessTokensRequest : GPBMessage
-
-/// Optional paging settings.
-@property(nonatomic, readwrite, strong, null_resettable) Page *page;
-/// Test to see if @c page has been set.
-@property(nonatomic, readwrite) BOOL hasPage;
-
-@end
-
-#pragma mark - GetAccessTokensResponse
-
-typedef GPB_ENUM(GetAccessTokensResponse_FieldNumber) {
-  GetAccessTokensResponse_FieldNumber_TokensArray = 1,
-  GetAccessTokensResponse_FieldNumber_Offset = 2,
-};
-
-@interface GetAccessTokensResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
-/// The number of items in @c tokensArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger tokensArray_Count;
-
-/// Optional offset state for the client to roundtrip.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
-
-@end
-
-#pragma mark - EndorseAccessTokenRequest
-
-typedef GPB_ENUM(EndorseAccessTokenRequest_FieldNumber) {
-  EndorseAccessTokenRequest_FieldNumber_TokenId = 1,
-  EndorseAccessTokenRequest_FieldNumber_Signature = 2,
-};
-
-@interface EndorseAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
-
-@end
-
-#pragma mark - EndorseAccessTokenResponse
-
-typedef GPB_ENUM(EndorseAccessTokenResponse_FieldNumber) {
-  EndorseAccessTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface EndorseAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - CancelAccessTokenRequest
-
-typedef GPB_ENUM(CancelAccessTokenRequest_FieldNumber) {
-  CancelAccessTokenRequest_FieldNumber_TokenId = 1,
-  CancelAccessTokenRequest_FieldNumber_Signature = 2,
-};
-
-@interface CancelAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
-@property(nonatomic, readwrite) BOOL hasSignature;
-
-@end
-
-#pragma mark - CancelAccessTokenResponse
-
-typedef GPB_ENUM(CancelAccessTokenResponse_FieldNumber) {
-  CancelAccessTokenResponse_FieldNumber_Token = 1,
-};
-
-@interface CancelAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
-
-@end
-
-#pragma mark - RedeemTransferTokenRequest
-
-typedef GPB_ENUM(RedeemTransferTokenRequest_FieldNumber) {
-  RedeemTransferTokenRequest_FieldNumber_Payload = 1,
-  RedeemTransferTokenRequest_FieldNumber_PayloadSignature = 2,
-};
-
-@interface RedeemTransferTokenRequest : GPBMessage
+@interface CreateTransferRequest : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Transfer_Payload *payload;
 /// Test to see if @c payload has been set.
@@ -900,13 +780,13 @@ typedef GPB_ENUM(RedeemTransferTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - RedeemTransferTokenResponse
+#pragma mark - CreateTransferResponse
 
-typedef GPB_ENUM(RedeemTransferTokenResponse_FieldNumber) {
-  RedeemTransferTokenResponse_FieldNumber_Transfer = 1,
+typedef GPB_ENUM(CreateTransferResponse_FieldNumber) {
+  CreateTransferResponse_FieldNumber_Transfer = 1,
 };
 
-@interface RedeemTransferTokenResponse : GPBMessage
+@interface CreateTransferResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /// Test to see if @c transfer has been set.

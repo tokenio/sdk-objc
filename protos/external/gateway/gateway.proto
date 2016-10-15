@@ -194,111 +194,68 @@ message GetTransactionsResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Bank Transfer Tokens.
+// Transfer Tokens
 //
 
-message CreateTransferTokenRequest {
+message CreateTokenRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
 }
 
-message CreateTransferTokenResponse {
+message CreateTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message GetTransferTokenRequest {
-   string token_id = 2;
+message GetTokenRequest {
+  string token_id = 1;
 }
 
-message GetTransferTokenResponse {
+message GetTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message GetTransferTokensRequest {
-  io.token.proto.common.paging.Page page = 1; // Optional paging settings.
+message GetTokensRequest {
+  enum Type {
+    INVALID = 0;
+    ACCESS = 1;
+    TRANSFER = 2;
+  }
+  Type type = 1;
+  io.token.proto.common.paging.Page page = 2; // Optional paging settings.
 }
 
-message GetTransferTokensResponse {
+message GetTokensResponse {
   repeated io.token.proto.common.token.Token tokens = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
-message EndorseTransferTokenRequest {
+message EndorseTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message EndorseTransferTokenResponse {
+message EndorseTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
-message CancelTransferTokenRequest {
+message CancelTokenRequest {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
 }
 
-message CancelTransferTokenResponse {
+message CancelTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// AccessTokens.
-//
-
-message CreateAccessTokenRequest {
-  io.token.proto.common.token.TokenPayload payload = 1;
-}
-
-message CreateAccessTokenResponse {
-  io.token.proto.common.token.Token token = 1;
-}
-
-message GetAccessTokenRequest {
-  string token_id = 2;
-}
-
-message GetAccessTokenResponse {
-  io.token.proto.common.token.Token token = 1;
-}
-
-message GetAccessTokensRequest {
-  io.token.proto.common.paging.Page page = 1; // Optional paging settings.
-}
-
-message GetAccessTokensResponse {
-  repeated io.token.proto.common.token.Token tokens = 1;
-  string offset = 2; // Optional offset state for the client to roundtrip.
-}
-
-message EndorseAccessTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
-}
-
-message EndorseAccessTokenResponse {
-  io.token.proto.common.token.Token token = 1;
-}
-
-message CancelAccessTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
-}
-
-message CancelAccessTokenResponse {
-  io.token.proto.common.token.Token token = 1;
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfers.
 //
 
-message RedeemTransferTokenRequest {
+message CreateTransferRequest {
   io.token.proto.common.transfer.Transfer.Payload payload = 1;
   io.token.proto.common.security.Signature payload_signature = 2;
 }
 
-message RedeemTransferTokenResponse {
+message CreateTransferResponse {
   io.token.proto.common.transfer.Transfer transfer = 1;
 }
 
@@ -468,80 +425,44 @@ service GatewayService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Transfer Tokens.
+  // Tokens.
   //
 
-  rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
+  rpc CreateToken (CreateTokenRequest) returns (CreateTokenResponse) {
     option (google.api.http) = {
-        post: "/transfer-tokens"
+        post: "/tokens"
     };
   }
 
-  rpc GetTransferToken (GetTransferTokenRequest) returns (GetTransferTokenResponse) {
+  rpc GetToken (GetTokenRequest) returns (GetTokenResponse) {
     option (google.api.http) = {
-        get: "/transfer-tokens/{token_id}"
+        get: "/tokens/{token_id}"
     };
   }
 
-  rpc GetTransferTokens (GetTransferTokensRequest) returns (GetTransferTokensResponse) {
+  rpc GetTokens (GetTokensRequest) returns (GetTokensResponse) {
     option (google.api.http) = {
-        get: "/transfer-tokens?offset={page.offset}&limit={page.limit}"
+        get: "/tokens?type={type}&offset={page.offset}&limit={page.limit}"
     };
   }
 
-  rpc EndorseTransferToken (EndorseTransferTokenRequest) returns (EndorseTransferTokenResponse) {
+  rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
-        put: "/transfer-tokens/{token_id}/endorse"
+        put: "/tokens/{token_id}/endorse"
     };
   }
 
-  rpc CancelTransferToken (CancelTransferTokenRequest) returns (CancelTransferTokenResponse) {
+  rpc CancelToken (CancelTokenRequest) returns (CancelTokenResponse) {
     option (google.api.http) = {
-        put: "/transfer-tokens/{token_id}/cancel"
+        put: "/tokens/{token_id}/cancel"
     };
   }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Access Tokens.
-  //
-
-  rpc CreateAccessToken (CreateAccessTokenRequest) returns (CreateAccessTokenResponse) {
-    option (google.api.http) = {
-        post: "/access-tokens"
-    };
-  }
-
-  rpc GetAccessToken (GetAccessTokenRequest) returns (GetAccessTokenResponse) {
-    option (google.api.http) = {
-        get: "/access-tokens/{token_id}"
-    };
-  }
-
-  rpc GetAccessTokens (GetAccessTokensRequest) returns (GetAccessTokensResponse) {
-    option (google.api.http) = {
-        get: "/access-tokens?offset={page.offset}&limit={page.limit}"
-    };
-  }
-
-  rpc EndorseAccessToken (EndorseAccessTokenRequest) returns (EndorseAccessTokenResponse) {
-    option (google.api.http) = {
-        put: "/access-tokens/{token_id}/endorse"
-    };
-  }
-
-  rpc CancelAccessToken (CancelAccessTokenRequest) returns (CancelAccessTokenResponse) {
-    option (google.api.http) = {
-        put: "/access-tokens/{token_id}/cancel"
-    };
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Token Transfers.
   //
 
-  rpc RedeemTransferToken (RedeemTransferTokenRequest) returns (RedeemTransferTokenResponse) {
+  rpc CreateTransfer (CreateTransferRequest) returns (CreateTransferResponse) {
     option (google.api.http) = {
         post: "/transfers"
     };

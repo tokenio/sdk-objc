@@ -41,12 +41,12 @@
         [payer subscribeToNotifications:@"Token"
                                  target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"
                                platform:Platform_Ios];
-        Token *token = [payer createTransferTokenForAccount:payerAccount.id
-                                                     amount:100
-                                                   currency:@"USD"
-                                              redeemerAlias:payee.firstAlias
-                                                description:@"transfer test"];
-        token = [payer endorseTransferToken:token];
+        Token *token = [payer createTokenForAccount:payerAccount.id
+                                             amount:100
+                                           currency:@"USD"
+                                      redeemerAlias:payee.firstAlias
+                                        description:@"transfer test"];
+        token = [payer endorseToken:token];
     }];
 }
 
