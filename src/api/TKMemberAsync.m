@@ -9,7 +9,6 @@
 #import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
-#import "Payment.pbobjc.h"
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKAccount.h"
@@ -217,7 +216,7 @@
                 onError:onError];
 }
 
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError {
@@ -228,7 +227,7 @@
                      onError:onError];
 }
 
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                    tokenId:(NSString *)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
@@ -326,7 +325,7 @@
              onError:onError];
 }
 
-- (void)getTransferTokensOffset:(int)offset
+- (void)getTransferTokensOffset:(NSString *)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError {

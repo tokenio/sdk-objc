@@ -54,7 +54,7 @@
  * @param limit max number of records to return
  * @return a list of looked up transactions
  */
-- (NSArray<Transaction *> *)getTransactionsOffset:(int)offset
+- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                             limit:(int)limit;
 
 @end

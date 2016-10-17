@@ -10,8 +10,6 @@
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
-#import "Payment.pbobjc.h"
-
 
 @interface TKStepUpTest : TKTestBase
 @end

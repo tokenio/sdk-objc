@@ -8,12 +8,18 @@ import "member.proto";
 import "money.proto";
 import "notification.proto";
 import "security.proto";
-import "paging.proto";
 import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
 import "subscriber.proto";
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Paging details.
+//
+message Page {
+  string offset = 1;      // Opaque base-64 encoded offset for the client to roundtrip.
+  int32 limit = 2;        // Max number of records to return.
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member registration, key and alias mamangement.
@@ -185,7 +191,7 @@ message GetTransactionResponse {
 
 message GetTransactionsRequest {
   string account_id = 1;
-  io.token.proto.common.paging.Page page = 2; // Optional paging settings.
+  Page page = 2; // Optional paging settings.
 }
 
 message GetTransactionsResponse {
@@ -220,7 +226,7 @@ message GetTokensRequest {
     TRANSFER = 2;
   }
   Type type = 1;
-  io.token.proto.common.paging.Page page = 2; // Optional paging settings.
+  Page page = 2; // Optional paging settings.
 }
 
 message GetTokensResponse {
@@ -268,8 +274,8 @@ message GetTransferResponse {
 }
 
 message GetTransfersRequest {
-  string token_id = 1;                    // Optional token_id to filter transfers by.
-  io.token.proto.common.paging.Page page = 2; // Optional paging settings.
+  string token_id = 1;  // Optional token_id to filter transfers by.
+  Page page = 2;        // Optional paging settings.
 }
 
 message GetTransfersResponse {

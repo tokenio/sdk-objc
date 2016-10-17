@@ -174,14 +174,14 @@
     }];
 }
 
-- (NSArray<Transfer *> *)getTransfersOffset:(int)offset
+- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
                                       limit:(int)limit {
     return [self getTransfersOffset:offset
                               limit:limit
                             tokenId:nil];
 }
 
-- (NSArray<Transfer *> *)getTransfersOffset:(int)offset
+- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
                                       limit:(int)limit
                                     tokenId:(NSString *)tokenId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
@@ -267,7 +267,7 @@
     }];
 }
 
-- (NSArray<Token *> *)getTransferTokensOffset:(int)offset
+- (NSArray<Token *> *)getTransferTokensOffset:(NSString *)offset
                                         limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{

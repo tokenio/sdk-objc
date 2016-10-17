@@ -32,8 +32,6 @@
 		37637B651D989A930043345F /* Money.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B3F1D989A930043345F /* Money.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B661D989A930043345F /* Notification.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B401D989A930043345F /* Notification.pbobjc.h */; };
 		37637B671D989A930043345F /* Notification.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B411D989A930043345F /* Notification.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37637B681D989A930043345F /* Payment.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B421D989A930043345F /* Payment.pbobjc.h */; };
-		37637B691D989A930043345F /* Payment.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B431D989A930043345F /* Payment.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B441D989A930043345F /* Security.pbobjc.h */; };
 		37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B451D989A930043345F /* Security.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B461D989A930043345F /* Token.pbobjc.h */; };
@@ -46,8 +44,6 @@
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
 		8A1FA0D31DAEE92400DFB258 /* Fank.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */; };
 		8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */; };
-		8A1FA0D71DAEE9A400DFB258 /* Paging.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D51DAEE9A400DFB258 /* Paging.pbobjc.h */; };
-		8A1FA0D81DAEE9A400DFB258 /* Paging.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D61DAEE9A400DFB258 /* Paging.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */; };
 		8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */; };
 		8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -164,8 +160,6 @@
 		37637B3F1D989A930043345F /* Money.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Money.pbobjc.m; sourceTree = "<group>"; };
 		37637B401D989A930043345F /* Notification.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.pbobjc.h; sourceTree = "<group>"; };
 		37637B411D989A930043345F /* Notification.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.pbobjc.m; sourceTree = "<group>"; };
-		37637B421D989A930043345F /* Payment.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.pbobjc.h; sourceTree = "<group>"; };
-		37637B431D989A930043345F /* Payment.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.pbobjc.m; sourceTree = "<group>"; };
 		37637B441D989A930043345F /* Security.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Security.pbobjc.h; sourceTree = "<group>"; };
 		37637B451D989A930043345F /* Security.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Security.pbobjc.m; sourceTree = "<group>"; };
 		37637B461D989A930043345F /* Token.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.pbobjc.h; sourceTree = "<group>"; };
@@ -179,8 +173,6 @@
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
 		8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbrpc.h; sourceTree = "<group>"; };
 		8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbrpc.m; sourceTree = "<group>"; };
-		8A1FA0D51DAEE9A400DFB258 /* Paging.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paging.pbobjc.h; sourceTree = "<group>"; };
-		8A1FA0D61DAEE9A400DFB258 /* Paging.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Paging.pbobjc.m; sourceTree = "<group>"; };
 		8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKStepUpTests.m; sourceTree = "<group>"; };
 		8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAddressTests.m; sourceTree = "<group>"; };
 		8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
@@ -286,8 +278,6 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
-				8A1FA0D51DAEE9A400DFB258 /* Paging.pbobjc.h */,
-				8A1FA0D61DAEE9A400DFB258 /* Paging.pbobjc.m */,
 				37637B211D989A930043345F /* Account.pbobjc.h */,
 				37637B221D989A930043345F /* Account.pbobjc.m */,
 				37637B231D989A930043345F /* bankapi */,
@@ -299,8 +289,6 @@
 				37637B3F1D989A930043345F /* Money.pbobjc.m */,
 				37637B401D989A930043345F /* Notification.pbobjc.h */,
 				37637B411D989A930043345F /* Notification.pbobjc.m */,
-				37637B421D989A930043345F /* Payment.pbobjc.h */,
-				37637B431D989A930043345F /* Payment.pbobjc.m */,
 				37637B441D989A930043345F /* Security.pbobjc.h */,
 				37637B451D989A930043345F /* Security.pbobjc.m */,
 				37637B461D989A930043345F /* Token.pbobjc.h */,
@@ -565,7 +553,6 @@
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
 				ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */,
 				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
-				8A1FA0D71DAEE9A400DFB258 /* Paging.pbobjc.h in Headers */,
 				37637B521D989A930043345F /* Fank.pbobjc.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
@@ -581,7 +568,6 @@
 				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
 				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
-				37637B681D989A930043345F /* Payment.pbobjc.h in Headers */,
 				ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */,
 				ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */,
 				ABA7B396AEB29286AB91C613 /* sc.h in Headers */,
@@ -722,7 +708,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */ = {
@@ -752,7 +738,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */ = {
@@ -819,11 +805,9 @@
 				ABA7B0303C146231D78BE96C /* seed.c in Sources */,
 				37637B571D989A930043345F /* Auth.pbobjc.m in Sources */,
 				ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */,
-				37637B691D989A930043345F /* Payment.pbobjc.m in Sources */,
 				ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */,
 				37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */,
 				37637B6F1D989A930043345F /* Transaction.pbobjc.m in Sources */,
-				8A1FA0D81DAEE9A400DFB258 /* Paging.pbobjc.m in Sources */,
 				37637B611D989A930043345F /* Descriptor.pbobjc.m in Sources */,
 				ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */,
 				ABA7B164177B8BB039D61458 /* keypair.c in Sources */,

@@ -73,6 +73,25 @@ BOOL GetTokensRequest_Type_IsValidValue(int32_t value);
 @interface GatewayRoot : GPBRootObject
 @end
 
+#pragma mark - Page
+
+typedef GPB_ENUM(Page_FieldNumber) {
+  Page_FieldNumber_Offset = 1,
+  Page_FieldNumber_Limit = 2,
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Paging details.
+@interface Page : GPBMessage
+
+/// Opaque base-64 encoded offset for the client to roundtrip.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+/// Max number of records to return.
+@property(nonatomic, readwrite) int32_t limit;
+
+@end
+
 #pragma mark - CreateMemberRequest
 
 typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {

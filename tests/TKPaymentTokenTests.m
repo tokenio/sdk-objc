@@ -63,7 +63,7 @@
         [payer createTokenForAccount:payerAccount.id amount:100.22 currency:@"USD"];
         [payer createTokenForAccount:payerAccount.id amount:100.33 currency:@"USD"];
         
-        NSArray<Token *> *lookedUp = [payer getTransferTokensOffset:0 limit:100];
+        NSArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
         XCTAssertEqual(lookedUp.count, 3);
     }];
 }
