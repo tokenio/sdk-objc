@@ -96,9 +96,9 @@ message DeleteAddressResponse {}
 //
 
 message SubscribeToNotificationsRequest {
-    string provider = 1;
-    string target = 2;   // e.g push token
-    io.token.proto.common.subscriber.Platform platform = 3;
+  string provider = 1;
+  string target = 2;   // e.g push token
+  io.token.proto.common.subscriber.Platform platform = 3;
 }
 
 message SubscribeToNotificationsResponse {
@@ -108,19 +108,19 @@ message SubscribeToNotificationsResponse {
 message GetSubscribersRequest {}
 
 message GetSubscribersResponse {
-    repeated io.token.proto.common.subscriber.Subscriber subscribers = 1;
+  repeated io.token.proto.common.subscriber.Subscriber subscribers = 1;
 }
 
 message GetSubscriberRequest {
-    string subscriber_id = 1;
+  string subscriber_id = 1;
 }
 
 message GetSubscriberResponse {
-    io.token.proto.common.subscriber.Subscriber subscriber = 1;
+  io.token.proto.common.subscriber.Subscriber subscriber = 1;
 }
 
 message UnsubscribeFromNotificationsRequest {
-    string subscriber_id = 1;
+  string subscriber_id = 1;
 }
 
 message UnsubscribeFromNotificationsResponse {}
@@ -351,8 +351,7 @@ service GatewayService {
   // Devices for notification service
   //
 
-  rpc SubscribeToNotifications (SubscribeToNotificationsRequest)
-  returns (SubscribeToNotificationsResponse) {
+  rpc SubscribeToNotifications (SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse) {
     option (google.api.http) = {
         post: "/subscribers"
     };
@@ -364,15 +363,13 @@ service GatewayService {
     };
   }
 
-
   rpc GetSubscriber (GetSubscriberRequest) returns (GetSubscriberResponse) {
     option (google.api.http) = {
         get: "/subscribers/{subscriber_id}"
     };
   }
 
-  rpc UnsubscribeFromNotifications (UnsubscribeFromNotificationsRequest)
-  returns (UnsubscribeFromNotificationsResponse) {
+  rpc UnsubscribeFromNotifications (UnsubscribeFromNotificationsRequest) returns (UnsubscribeFromNotificationsResponse) {
     option (google.api.http) = {
         delete: "/subscribers/{subscriber_id}"
     };

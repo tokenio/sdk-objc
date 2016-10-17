@@ -31,6 +31,9 @@ def fetch_protos()
         file
     end
 
+    system("rm protos/common/*.proto")
+    system("rm -rf protos/external")
+
     file = download(TOKEN_PROTOS_VER, :external)
     system("unzip -d protos/external -o #{file} 'bankapi/banklink.proto'")
     system("unzip -d protos/external -o #{file} 'bankapi/fank.proto'")
@@ -80,6 +83,7 @@ post_install do |installer|
 
     # Build the command that generates the protos.
     dir = "src/generated"
+    system("rm -rf #{dir}");
 
     gencommand = generate_protos_cmd("common", dir) +
         generate_protos_cmd("common/google/api", dir) + 

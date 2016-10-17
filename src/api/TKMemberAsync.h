@@ -15,7 +15,6 @@
 @class TKClient;
 
 
-
 /**
  * Represents a Member in the Token system. Each member has an active secret
  * and public key pair that is used to perform authentication.
@@ -41,6 +40,20 @@
 + (TKMemberAsync *)member:(Member *)member
                 secretKey:(TKSecretKey *)key
                 useClient:(TKClient *)client;
+
+/**
+ * Sets the On-Behalf-Of authentication value to be used
+ * with this client. The value must correspond to an existing
+ * Access Token ID issued for the client member.
+ *
+ * @param accessTokenId the access token id
+ */
+- (void)useAccessToken:(NSString *)accessTokenId;
+
+/**
+ * Clears the access token value used with this client.
+ */
+- (void)clearAccessToken;
 
 /**
  * Approves a public key owned by this member. The key is added to the list
@@ -259,36 +272,86 @@
 /**
  * Creates a new transfer token.
  *
+ * @param redeemerUsername redeemer token username
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTokenForAccount:(NSString *)accountId
-                       amount:(double)amount
-                     currency:(NSString *)currency
-                    onSuccess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
+- (void)createTransferToken:(NSString *)redeemerUsername
+                 forAccount:(NSString *)accountId
+                     amount:(double)amount
+                   currency:(NSString *)currency
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError;
 
 /**
  * Creates a new transfer token.
  *
+ * @param redeemerUsername redeemer username
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
  * @param description transfer description, optional
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTokenForAccount:(NSString *)accountId
-                       amount:(double)amount
-                     currency:(NSString *)currency
-                redeemerUsername:(NSString *)redeemerUsername
-                  description:(NSString *)description
+- (void)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description
                     onSuccess:(OnSuccessWithToken)onSuccess
                       onError:(OnError)onError;
+
+/**
+ * Creates a new access token for a list of resources.
+ *
+ * @param toUsername the redeemer username
+ * @param resources a list of resources to grant access to
+ * @return the created access token
+ */
+- (void)createAccessToken:(NSString *)toUsername
+             forResources:(NSArray<AccessBody_Resource *> *)resources
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Creates a new access for an address.
+ *
+ * @param toUsername the redeemer username
+ * @param addressId address id
+ * @return the created access token
+ */
+- (void)createAccessToken:(NSString *)toUsername
+               forAddress:(NSString *)addressId
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Creates a new access for an account.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (void)createAccessToken:(NSString *)toUsername
+               forAccount:(NSString *)accountId
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Creates a new access for a transaction.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (void)createAccessToken:(NSString *)toUsername
+   forAccountTransactions:(NSString *)accountId
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Looks up a existing transfer token.
@@ -313,6 +376,19 @@
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError;
+
+/**
+ * Looks up access tokens owned by the member.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)getAccessTokensOffset:(NSString *)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTokens)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
@@ -363,5 +439,34 @@
               currency:(NSString *)currency
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
+
+/**
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
+ *
+ * @param transactionId ID of the transaction
+ * @param accountId account id
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getTransaction:(NSString *)transactionId
+            forAccount:(NSString *)accountId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError;
+
+/**
+ * Looks up existing transactions. This is a full list of transactions with token transfers
+ * being a subset.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @param accountId account id
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getTransactionsOffset:(NSString *)offset
+                        limit:(int)limit
+                   forAccount:(NSString *)accountId
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError;
 
 @end

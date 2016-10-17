@@ -35,6 +35,20 @@
             secretKey:(TKSecretKey *)key;
 
 /**
+ * Sets the On-Behalf-Of authentication value to be used
+ * with this client. The value must correspond to an existing
+ * Access Token ID issued for the client member.
+ *
+ * @param accessTokenId the access token id
+ */
+- (void)useAccessToken:(NSString *)accessTokenId;
+
+/**
+ * Clears the access token value used with this client.
+ */
+- (void)clearAccessToken;
+
+/**
  * Looks up member information for the current user. The user is defined by
  * the key used for authentication.
  *
@@ -264,14 +278,14 @@
  * Looks up existing transactions. This is a full list of transactions with token transfers
  * being a subset.
  *
- * @param accountId ID of the account
  * @param offset offset to start at
  * @param limit max number of records to return
+ * @param accountId ID of the account
  * @return transaction record
  */
-- (void)getTransactionsOffset:(NSString *)accountId
-                       offset:(NSString *)offset
+- (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
+                   forAccount:accountId
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
 

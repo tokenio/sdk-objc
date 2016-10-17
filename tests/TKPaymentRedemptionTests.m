@@ -36,11 +36,11 @@
 
 - (void)testRedeemToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenForAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                      redeemerUsername:payee.firstUsername
-                                        description:@"transfer test"];
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"];
         token = [payer endorseToken:token];
         Transfer *transfer = [payee createTransfer:token];
         
@@ -52,11 +52,11 @@
 
 - (void)testRedeemToken_withParams {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenForAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                      redeemerUsername:payee.firstUsername
-                                        description:@"transfer test"];
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"];
         token = [payer endorseToken:token];
         
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
@@ -69,11 +69,11 @@
 
 - (void)testLookupTransfer {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenForAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                      redeemerUsername:payee.firstUsername
-                                        description:@"transfer test"];
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"];
         token = [payer endorseToken:token];
         
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
@@ -85,11 +85,11 @@
 
 - (void)testLookupTransfers {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTokenForAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                      redeemerUsername:payee.firstUsername
-                                        description:@"transfer test"];
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"];
         token = [payer endorseToken:token];
         
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
