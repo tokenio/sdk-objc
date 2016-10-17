@@ -20,7 +20,6 @@
  #import "Money.pbobjc.h"
  #import "Notification.pbobjc.h"
  #import "Security.pbobjc.h"
- #import "Paging.pbobjc.h"
  #import "Token.pbobjc.h"
  #import "Transaction.pbobjc.h"
  #import "Transfer.pbobjc.h"
@@ -47,7 +46,6 @@
     [registry addExtensions:[MoneyRoot extensionRegistry]];
     [registry addExtensions:[NotificationRoot extensionRegistry]];
     [registry addExtensions:[SecurityRoot extensionRegistry]];
-    [registry addExtensions:[PagingRoot extensionRegistry]];
     [registry addExtensions:[TokenRoot extensionRegistry]];
     [registry addExtensions:[TransactionRoot extensionRegistry]];
     [registry addExtensions:[TransferRoot extensionRegistry]];
@@ -71,6 +69,60 @@ static GPBFileDescriptor *GatewayRoot_FileDescriptor(void) {
   }
   return descriptor;
 }
+
+#pragma mark - Page
+
+@implementation Page
+
+@dynamic offset;
+@dynamic limit;
+
+typedef struct Page__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t limit;
+  NSString *offset;
+} Page__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = Page_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Page__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "limit",
+        .dataTypeSpecific.className = NULL,
+        .number = Page_FieldNumber_Limit,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Page__storage_, limit),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Page class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Page__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 #pragma mark - CreateMemberRequest
 

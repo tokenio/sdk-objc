@@ -192,7 +192,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError;
@@ -206,7 +206,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                    tokenId:(NSString *)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
@@ -309,7 +309,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransferTokensOffset:(int)offset
+- (void)getTransferTokensOffset:(NSString *)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError;

@@ -306,13 +306,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)getTokensOfType:(GetTokensRequest_Type)type
-                 offset:(int)offset
+                 offset:(NSString *)offset
                   limit:(int)limit
               onSuccess:(OnSuccessWithTokens)onSuccess
                 onError:(OnError)onError {
     GetTokensRequest *request = [GetTokensRequest message];
     request.type = type;
-    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.offset = offset;
     request.page.limit = limit;
     RpcLogStart(request);
     
@@ -431,13 +431,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                    tokenId:(NSString *)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError {
     GetTransfersRequest *request = [GetTransfersRequest message];
-    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.offset = offset;
     request.page.limit = limit;
     request.tokenId = tokenId;
     RpcLogStart(request);
@@ -507,13 +507,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)getTransactionsOffset:(NSString *)accountId
-                       offset:(int)offset
+                       offset:(NSString *)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
     request.accountId = accountId;
-    request.page.offset = @"0"; // TODO(maxim): fix me
+    request.page.offset = offset;
     request.page.limit = limit;
     RpcLogStart(request);
     

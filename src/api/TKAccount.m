@@ -51,7 +51,7 @@
     }];
 }
 
-- (NSArray<Transaction *> *)getTransactionsOffset:(int)offset
+- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                             limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{

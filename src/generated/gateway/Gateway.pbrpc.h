@@ -10,7 +10,6 @@
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "Security.pbobjc.h"
-#import "Paging.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"

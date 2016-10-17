@@ -96,7 +96,7 @@
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
         
-        NSArray<Transfer *> *lookedUp = [payer getTransfersOffset:0
+        NSArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
                                                             limit:100
                                                           tokenId:token.id_p];
         

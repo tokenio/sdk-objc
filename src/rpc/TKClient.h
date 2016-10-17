@@ -184,7 +184,7 @@
  * @param limit max number of records to return
  */
 - (void)getTokensOfType:(GetTokensRequest_Type)type
-                 offset:(int)offset
+                 offset:(NSString *)offset
                   limit:(int)limit
               onSuccess:(OnSuccessWithTokens)onSuccess
                 onError:(OnError)onError;
@@ -232,7 +232,7 @@
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (void)getTransfersOffset:(int)offset
+- (void)getTransfersOffset:(NSString *)offset
                      limit:(int)limit
                    tokenId:(NSString *)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
@@ -270,7 +270,7 @@
  * @return transaction record
  */
 - (void)getTransactionsOffset:(NSString *)accountId
-                       offset:(int)offset
+                       offset:(NSString *)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;

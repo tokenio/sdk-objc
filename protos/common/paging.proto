@@ -1,9 +1,0 @@
-syntax = "proto3";
-package io.token.proto.common.paging;
-
-option java_outer_classname = "PagingProtos";
-
-message Page {
-  string offset = 1;      // Opaque base-64 encoded offset for the client to roundtrip.
-  int32 limit = 2;        // Max number of records to return.
-}

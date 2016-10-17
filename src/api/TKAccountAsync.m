@@ -5,7 +5,6 @@
 
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "Payment.pbobjc.h"
 
 #import "TKMember.h"
 #import "TKClient.h"
@@ -63,7 +62,7 @@
                    onError:onError];
 }
 
-- (void)getTransactionsOffset:(int)offset
+- (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {

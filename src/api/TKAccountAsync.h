@@ -63,7 +63,7 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getTransactionsOffset:(int)offset
+- (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
