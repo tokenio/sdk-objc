@@ -15,6 +15,7 @@
 @class TKClient;
 @class TKMemberAsync;
 @class Address;
+@class AccessBody_Resource;
 
 
 /**
@@ -40,6 +41,20 @@
  * asynchonous implementation `TKMemberAsync`.
  */
 + (TKMember *)member:(TKMemberAsync *)delegate;
+
+/**
+ * Sets the On-Behalf-Of authentication value to be used
+ * with this client.  The value must correspond to an existing
+ * Access Token ID issued for the client member.
+ *
+ * @param accessTokenId the access token id
+ */
+- (void)useAccessToken:(NSString *)accessTokenId;
+
+/**
+ * Clears the access token value used with this client.
+ */
+- (void)clearAccessToken;
 
 /**
  * Approves a public key owned by this member. The key is added to the list
@@ -193,18 +208,21 @@
 /**
  * Creates a new transfer token.
  *
+ * @param redeemerUsername redeemer token username
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
  * @return transfer token returned by the server
  */
-- (Token *)createTokenForAccount:(NSString *)accountId
-                                  amount:(double)amount
-                                currency:(NSString *)currency;
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency;
 
 /**
  * Creates a new transfer token.
  *
+ * @param redeemerUsername redeemer token username
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
@@ -212,14 +230,54 @@
  * @param description transfer description, optional
  * @return transfer token returned by the server
  */
-- (Token *)createTokenForAccount:(NSString *)accountId
-                                  amount:(double)amount
-                                currency:(NSString *)currency
-                           redeemerUsername:(NSString *)redeemerUsername
-                             description:(NSString *)description;
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description;
 
 /**
- * Looks up a existing transfer token.
+ * Creates a new access token for a list of resources.
+ *
+ * @param toUsername the redeemer username
+ * @param resources a list of resources to grant access to
+ * @return the created access token
+ */
+- (Token *)createAccessToken:(NSString *)toUsername
+                forResources:(NSArray<AccessBody_Resource *> *)resources;
+
+/**
+ * Creates a new access for an address.
+ *
+ * @param toUsername the redeemer username
+ * @param addressId address id
+ * @return the created access token
+ */
+- (Token *)createAccessToken:(NSString *)toUsername
+                  forAddress:(NSString *)addressId;
+
+/**
+ * Creates a new access for an account.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (Token *)createAccessToken:(NSString *)toUsername
+                  forAccount:(NSString *)accountId;
+
+/**
+ * Creates a new access for a transaction.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (Token *)createAccessToken:(NSString *)toUsername
+      forAccountTransactions:(NSString *)accountId;
+
+/**
+ * Looks up a existing token.
  *
  * @param tokenId token id
  * @return transfer token returned by the server
@@ -234,6 +292,15 @@
  * @return transfer tokens owned by the member
  */
 - (NSArray<Token *> *)getTransferTokensOffset:(NSString *)offset limit:(int)limit;
+
+/**
+ * Looks up access tokens owned by the member.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @return access tokens owned by the member
+ */
+- (NSArray<Token *> *)getAccessTokensOffset:(NSString *)offset limit:(int)limit;
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
@@ -272,5 +339,27 @@
 - (Transfer *)createTransfer:(Token *)token
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency;
+
+/**
+ * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
+ *
+ * @param transactionId ID of the transaction
+ * @return a looked up transaction
+ */
+- (Transaction *)getTransaction:(NSString *)transactionId
+                     forAccount:(NSString *)accountId;
+
+/**
+ * Looks up existing transactions. This is a full list of transactions with token transfers
+ * being a subset.
+ *
+ * @param offset offset to start at
+ * @param limit max number of records to return
+ * @param accountId account id
+ * @return a list of looked up transactions
+ */
+- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
+                                            limit:(int)limit
+                                       forAccount:(NSString *)accountId;
 
 @end

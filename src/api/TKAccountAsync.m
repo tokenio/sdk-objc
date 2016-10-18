@@ -66,9 +66,9 @@
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
-    return [client getTransactionsOffset:account.id_p
-                                  offset:offset
+    return [client getTransactionsOffset:offset
                                    limit:limit
+                              forAccount:account.id_p
                                onSuccess:onSuccess
                                  onError:onError];
 }

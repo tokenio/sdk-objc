@@ -7,14 +7,14 @@
     "898A30139186D79A50BCCE5290195A2483838282" : 9223372036854775807,
     "13811C548DDF1B6866B16DDDA04263527F58A06E" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D871BD6F-4FF1-4029-AAA4-214B3B97E807",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7181CFD8-6915-491B-BCCC-857C5D90EF8E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "898A30139186D79A50BCCE5290195A2483838282" : "sdk-objc\/",
-    "13811C548DDF1B6866B16DDDA04263527F58A06E" : "sdk-objc.withpostinstall\/src\/ed25519\/"
+    "13811C548DDF1B6866B16DDDA04263527F58A06E" : "sdk-objc\/src\/ed25519\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "TKObjc",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TokenSdk",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Samples\/TKObjc\/TKObjc.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TokenSdk.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:orlp\/ed25519.git",
@@ -22,7 +22,7 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "13811C548DDF1B6866B16DDDA04263527F58A06E"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/CocoaPods\/Specs.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/bitbucket.org\/tokenio\/sdk-objc",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "898A30139186D79A50BCCE5290195A2483838282"
     }

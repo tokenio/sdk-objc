@@ -20,6 +20,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 @implementation TKClient {
     GatewayService *gateway;
     NSString *memberId;
+    NSString *onBehalfOfMemberId;
     TKSecretKey *key;
 }
 
@@ -35,6 +36,14 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     }
     
     return self;
+}
+
+- (void)useAccessToken:(NSString *)accessTokenId {
+    onBehalfOfMemberId = accessTokenId;
+}
+
+- (void)clearAccessToken {
+    onBehalfOfMemberId = nil;
 }
 
 - (void)getMember:(OnSuccessWithMember)onSuccess
@@ -276,8 +285,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                                    RpcLogError(error);
                                    onError(error);
                                }
-                           }
-                           ];
+                           }];
     
     [self _startCall:call withRequest:request];
 }
@@ -506,9 +514,9 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)getTransactionsOffset:(NSString *)accountId
-                       offset:(NSString *)offset
+- (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
+                   forAccount:(NSString *)accountId
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
@@ -662,6 +670,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = key.id;
     call.requestHeaders[@"token-signature"] = signature;
+    
+    if (onBehalfOfMemberId) {
+        NSLog(@"Performing request on-behalf-of %@", onBehalfOfMemberId);
+        call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
+    }
     
     [call start];
 }
