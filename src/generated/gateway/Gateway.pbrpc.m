@@ -26,7 +26,7 @@
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and alias mamangement.
+ * Member registration, key and username mamangement.
  * 
  * 
  */
@@ -36,7 +36,7 @@
 // Returns a not-yet-started RPC object.
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and alias mamangement.
+ * Member registration, key and username mamangement.
  * 
  * 
  */
@@ -70,16 +70,16 @@
              responseClass:[GetMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark AliasExists(AliasExistsRequest) returns (AliasExistsResponse)
+#pragma mark UsernameExists(UsernameExistsRequest) returns (UsernameExistsResponse)
 
-- (void)aliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToAliasExistsWithRequest:request handler:handler] start];
+- (void)usernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUsernameExistsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToAliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"AliasExists"
+- (GRPCProtoCall *)RPCToUsernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UsernameExists"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[AliasExistsResponse class]
+             responseClass:[UsernameExistsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

@@ -36,7 +36,7 @@
         account.accountNumber = @"iban:checking";
 
         AccountsLinkPayload *payload = [AccountsLinkPayload message];
-        payload.alias = member.firstAlias;
+        payload.username = member.firstUsername;
 
         [payload.accountsArray addObject:account];
 

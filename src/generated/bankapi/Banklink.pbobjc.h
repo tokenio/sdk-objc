@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
   AuthorizeLinkAccountsRequest_FieldNumber_ClientId = 1,
-  AuthorizeLinkAccountsRequest_FieldNumber_Alias = 2,
+  AuthorizeLinkAccountsRequest_FieldNumber_Username = 2,
   AuthorizeLinkAccountsRequest_FieldNumber_Secret = 3,
   AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 4,
 };
@@ -52,7 +52,7 @@ typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *secret;
 

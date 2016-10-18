@@ -53,8 +53,8 @@
     return member.id_p;
 }
 
-- (NSString *)firstAlias {
-    return member.aliasesArray[0];
+- (NSString *)firstUsername {
+    return member.usernamesArray[0];
 }
 
 - (NSArray<NSString *> *)publicKeys {
@@ -65,8 +65,8 @@
     return result;
 }
 
-- (NSArray<NSString *> *)aliases {
-    return [member.aliasesArray copy];
+- (NSArray<NSString *> *)usernames {
+    return [member.usernamesArray copy];
 }
 
 - (void)approveKey:(TKSecretKey *)key
@@ -111,12 +111,12 @@
               onError:onError];
 }
 
-- (void)addAlias:(NSString *)alias
+- (void)addUsername:(NSString *)username
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
     
-    [client addAlias:alias
+    [client addUsername:username
                   to:member
            onSuccess:
      ^(Member *m) {
@@ -127,10 +127,10 @@
              onError:onError];
 }
 
-- (void)removeAlias:(NSString *)alias
+- (void)removeUsername:(NSString *)username
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError {
-    [client removeAlias:alias
+    [client removeUsername:username
                    from:member
               onSuccess:
      ^(Member *m) {
@@ -279,7 +279,7 @@
     [self createTokenForAccount:accountId
                          amount:amount
                        currency:currency
-                  redeemerAlias:nil
+                  redeemerUsername:nil
                     description:nil
                       onSuccess:onSuccess
                         onError:onError];
@@ -288,7 +288,7 @@
 - (void)createTokenForAccount:(NSString *)accountId
                        amount:(double)amount
                      currency:(NSString *)currency
-                redeemerAlias:(NSString *)redeemerAlias
+                redeemerUsername:(NSString *)redeemerUsername
                   description:(NSString *)description
                     onSuccess:(OnSuccessWithToken)onSuccess
                       onError:(OnError)onError {
@@ -304,8 +304,8 @@
     payload.transfer.currency = currency;
     payload.transfer.instructions.source.accountId = accountId;
     
-    if (redeemerAlias) {
-        payload.transfer.redeemer.alias = redeemerAlias;
+    if (redeemerUsername) {
+        payload.transfer.redeemer.username = redeemerUsername;
     }
     
     if (description) {

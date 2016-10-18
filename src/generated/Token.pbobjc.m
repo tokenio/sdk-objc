@@ -227,13 +227,13 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value__) {
 @implementation TokenMember
 
 @dynamic id_p;
-@dynamic alias;
+@dynamic username;
 @dynamic name;
 
 typedef struct TokenMember__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
-  NSString *alias;
+  NSString *username;
   NSString *name;
 } TokenMember__storage_;
 
@@ -253,11 +253,11 @@ typedef struct TokenMember__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "alias",
+        .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = TokenMember_FieldNumber_Alias,
+        .number = TokenMember_FieldNumber_Username,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TokenMember__storage_, alias),
+        .offset = (uint32_t)offsetof(TokenMember__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

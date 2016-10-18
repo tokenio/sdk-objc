@@ -22,7 +22,7 @@ message Page {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Member registration, key and alias mamangement.
+// Member registration, key and username management.
 //
 
 message CreateMemberRequest {
@@ -49,11 +49,11 @@ message GetMemberResponse {
   io.token.proto.common.member.Member member = 1;
 }
 
-message AliasExistsRequest {
-  string alias = 1;
+message UsernameExistsRequest {
+  string username = 1;
 }
 
-message AliasExistsResponse {
+message UsernameExistsResponse {
   bool exists = 1;
 }
 
@@ -126,7 +126,7 @@ message UnsubscribeFromNotificationsRequest {
 message UnsubscribeFromNotificationsResponse {}
 
 message NotifyRequest {
-  string alias = 1;
+  string username = 1;
   io.token.proto.common.notification.Notification notification = 2;
 }
 
@@ -291,7 +291,7 @@ message GetTransfersResponse {
 service GatewayService {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Member registration, key and alias mamangement.
+  // Member registration, key and username mamangement.
   //
 
   rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
@@ -312,9 +312,9 @@ service GatewayService {
     };
   }
 
-  rpc AliasExists (AliasExistsRequest) returns (AliasExistsResponse) {
+  rpc UsernameExists (UsernameExistsRequest) returns (UsernameExistsResponse) {
     option (google.api.http) = {
-      get: "/alias-exists?alias={alias}"
+      get: "/username-exists?username={username}"
     };
   }
 

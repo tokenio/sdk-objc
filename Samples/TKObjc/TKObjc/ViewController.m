@@ -95,8 +95,8 @@ typedef void (^AsyncTestBlock)(TokenIO *);
 
 
 - (TKMember *)createMember:(TokenIO *)token {
-    NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
-    return [token createMember:alias];
+    NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
+    return [token createMember:username];
 }
 
 - (void)createMember

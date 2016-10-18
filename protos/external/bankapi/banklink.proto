@@ -5,7 +5,7 @@ import "google/api/annotations.proto";
 
 message AuthorizeLinkAccountsRequest {
   string client_id = 1;
-  string alias = 2;
+  string username = 2;
   string secret = 3;
   repeated string accounts = 4;
 }

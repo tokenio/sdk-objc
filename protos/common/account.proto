@@ -10,7 +10,7 @@ message AccountsLinkPayload {
     string name = 1;
     string account_number = 2;
   }
-  string alias = 1;
+  string username = 1;
   string secret = 2;
   repeated NamedAccount accounts = 3;
 }

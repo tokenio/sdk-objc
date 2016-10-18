@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     let gatewayport:Int32 = 90
     //
     @IBOutlet weak var memberLabel:UILabel!
-    @IBOutlet weak var aliasTextfield: UITextField!
+    @IBOutlet weak var usernameTextfield: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
                     self.memberId = member?.id
                     self.memberLabel.text = "Id: \(self.memberId)"
                     print("member is this \(self.tkmember)")
-                    print("member.firstAlias should be nil is this \(self.tkmember?.firstAlias)")
+                    print("member.firstUsername should be nil is this \(self.tkmember?.firstUsername)")
             },
             onError: { (error) -> Void in
                 self.info(title:"Error",message:"\(error)")
@@ -69,25 +69,25 @@ class ViewController: UIViewController {
     
     }
     
-    @IBAction func addAlias(_ sender : AnyObject) {
-        tkmember?.addAlias(aliasTextfield.text,
+    @IBAction func addUsername(_ sender : AnyObject) {
+        tkmember?.addUsername(usernameTextfield.text,
                           onSucess: { (member) -> Void in
                             self.info(title:"Info",message:"Done")
            },
                           onError: { (error) -> Void in
                             self.info(title:"Error",message:"\(error)")
-                            print("addAlias Error:\(error)")
+                            print("addUsername Error:\(error)")
         })
     }
     
-    @IBAction func removeAlias(_ sender : AnyObject) {
-        tkmember?.removeAlias(aliasTextfield.text,
+    @IBAction func removeUsername(_ sender : AnyObject) {
+        tkmember?.removeUsername(usernameTextfield.text,
                            onSucess: { () -> Void in
                             self.info(title:"Info",message:"Done")
             },
                            onError: { (error) -> Void in
                             self.info(title:"Error",message:"\(error)")
-                            print("removeAlias Error:\(error)")
+                            print("removeUsername Error:\(error)")
         })
     }
     

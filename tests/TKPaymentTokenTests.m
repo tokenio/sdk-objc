@@ -37,12 +37,12 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"Book purchase"];
         
         XCTAssertEqualObjects(@"100.99", token.payload.transfer.amount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
-        XCTAssertEqualObjects(payee.firstAlias, token.payload.transfer.redeemer.alias);
+        XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
 }

@@ -9,7 +9,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D871BD6F-4FF1-4029-AAA4-214B3B97E807",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "898A30139186D79A50BCCE5290195A2483838282" : "sdk-objc.withpostinstall\/",
+    "898A30139186D79A50BCCE5290195A2483838282" : "sdk-objc\/",
     "13811C548DDF1B6866B16DDDA04263527F58A06E" : "sdk-objc.withpostinstall\/src\/ed25519\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "TKObjc",

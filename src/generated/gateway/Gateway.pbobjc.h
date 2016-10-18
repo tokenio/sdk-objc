@@ -169,25 +169,25 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @end
 
-#pragma mark - AliasExistsRequest
+#pragma mark - UsernameExistsRequest
 
-typedef GPB_ENUM(AliasExistsRequest_FieldNumber) {
-  AliasExistsRequest_FieldNumber_Alias = 1,
+typedef GPB_ENUM(UsernameExistsRequest_FieldNumber) {
+  UsernameExistsRequest_FieldNumber_Username = 1,
 };
 
-@interface AliasExistsRequest : GPBMessage
+@interface UsernameExistsRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @end
 
-#pragma mark - AliasExistsResponse
+#pragma mark - UsernameExistsResponse
 
-typedef GPB_ENUM(AliasExistsResponse_FieldNumber) {
-  AliasExistsResponse_FieldNumber_Exists = 1,
+typedef GPB_ENUM(UsernameExistsResponse_FieldNumber) {
+  UsernameExistsResponse_FieldNumber_Exists = 1,
 };
 
-@interface AliasExistsResponse : GPBMessage
+@interface UsernameExistsResponse : GPBMessage
 
 @property(nonatomic, readwrite) BOOL exists;
 
@@ -399,13 +399,13 @@ typedef GPB_ENUM(UnsubscribeFromNotificationsRequest_FieldNumber) {
 #pragma mark - NotifyRequest
 
 typedef GPB_ENUM(NotifyRequest_FieldNumber) {
-  NotifyRequest_FieldNumber_Alias = 1,
+  NotifyRequest_FieldNumber_Username = 1,
   NotifyRequest_FieldNumber_Notification = 2,
 };
 
 @interface NotifyRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
 /// Test to see if @c notification has been set.

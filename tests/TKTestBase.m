@@ -85,14 +85,14 @@
 }
 
 - (TKMember *)createMember:(TokenIO *)token {
-    NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
-    return [token createMember:alias];
+    NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
+    return [token createMember:username];
 }
 
 - (TKAccount *)createAccount:(TokenIO *)token {
     TKMember *member = [self createMember:token];
 
-    NSString *alias = member.firstAlias;
+    NSString *username = member.firstUsername;
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";
     NSString *bankId = @"bank-id";
@@ -105,7 +105,7 @@
            withAccountNumber:bankAccountNumber
                       amount:@"1000000.00"
                     currency:@"USD"];
-    NSString *linkPayload = [bank authorizeAccountLinkingFor:alias
+    NSString *linkPayload = [bank authorizeAccountLinkingFor:username
                                               accountNumbers:@[bankAccountNumber]];
                              
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId

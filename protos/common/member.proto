@@ -17,9 +17,9 @@ message MemberRemoveKeyOperation {
   string key_id = 1;
 }
 
-// Adds/removes member alias to/from the directory.
-message MemberAliasOperation {
-  string alias = 1;
+// Adds/removes member username to/from the directory.
+message MemberUsernameOperation {
+  string username = 1;
 }
 
 // Updates member information in the directory. The directory is append only
@@ -30,8 +30,8 @@ message MemberUpdate {
   oneof operation {
     MemberAddKeyOperation add_key = 3;
     MemberRemoveKeyOperation remove_key = 4;
-    MemberAliasOperation add_alias = 5;
-    MemberAliasOperation remove_alias = 6;
+    MemberUsernameOperation add_username = 5;
+    MemberUsernameOperation remove_username = 6;
   }
 }
 
@@ -39,7 +39,7 @@ message MemberUpdate {
 message Member {
   string id = 1;
   string last_hash = 2;
-  repeated string aliases = 3;
+  repeated string usernames = 3;
   repeated io.token.proto.common.security.Key keys = 4;
 }
 

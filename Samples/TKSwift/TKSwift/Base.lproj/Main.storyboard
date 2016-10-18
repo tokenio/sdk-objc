@@ -35,12 +35,12 @@
                                             <constraint firstAttribute="height" constant="30" id="MNG-bY-iP9"/>
                                             <constraint firstAttribute="width" constant="143" id="jhT-jb-iZj"/>
                                         </constraints>
-                                        <state key="normal" title="Add Alias">
+                                        <state key="normal" title="Add Username">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.1019607843" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="addAlias:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xGB-73-cu3"/>
+                                            <action selector="addUsername:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xGB-73-cu3"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="alias" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eWP-wo-a5k">
@@ -58,12 +58,12 @@
                                             <constraint firstAttribute="height" constant="30" id="Pep-W2-jPe"/>
                                             <constraint firstAttribute="width" constant="143" id="ytH-zr-qJf"/>
                                         </constraints>
-                                        <state key="normal" title="Remove Alias">
+                                        <state key="normal" title="Remove Username">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" red="0.1019607843" green="0.14901960780000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="removeAlias:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eV2-63-nSg"/>
+                                            <action selector="removeUsername:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eV2-63-nSg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hlz-6y-UCj">

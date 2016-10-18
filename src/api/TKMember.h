@@ -30,8 +30,8 @@
 
 @property (readonly, retain) TKMemberAsync *async;
 @property (readonly, retain) NSString *id;
-@property (readonly, retain) NSString *firstAlias;
-@property (readonly, retain) NSArray<NSString*> *aliases;
+@property (readonly, retain) NSString *firstUsername;
+@property (readonly, retain) NSArray<NSString*> *usernames;
 @property (readonly, retain) NSArray<NSString*> *publicKeys;
 @property (readonly, retain) TKSecretKey *key;
 
@@ -58,18 +58,18 @@
 - (void)removeKey:(NSString *)keyId;
 
 /**
- * Adds a new alias for the member.
+ * Adds a new username for the member.
  *
- * @param alias alias, e.g. 'john', must be unique
+ * @param username username, e.g. 'john', must be unique
  */
-- (void)addAlias:(NSString *)alias;
+- (void)addUsername:(NSString *)username;
 
 /**
- * Removes an alias for the member.
+ * Removes an username for the member.
  *
- * @param alias alias, e.g. 'john'
+ * @param username username, e.g. 'john'
  */
-- (void)removeAlias:(NSString *)alias;
+- (void)removeUsername:(NSString *)username;
 
 /**
  * Subscribes a device to receive push notifications
@@ -208,14 +208,14 @@
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer alias
+ * @param redeemer redeemer username
  * @param description transfer description, optional
  * @return transfer token returned by the server
  */
 - (Token *)createTokenForAccount:(NSString *)accountId
                                   amount:(double)amount
                                 currency:(NSString *)currency
-                           redeemerAlias:(NSString *)redeemerAlias
+                           redeemerUsername:(NSString *)redeemerUsername
                              description:(NSString *)description;
 
 /**

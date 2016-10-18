@@ -40,21 +40,21 @@
 - (id)initWithDelegate:(TokenIOAsync *)delegate;
 
 /**
- * Checks if a given alias already exists.
+ * Checks if a given username already exists.
  *
- * @param alias alias to check
- * @return true if alias already exists, false otherwise
+ * @param username username to check
+ * @return true if username already exists, false otherwise
  */
-- (BOOL)aliasExists:(NSString *)alias;
+- (BOOL)usernameExists:(NSString *)username;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the
- * given alias.
+ * given username.
  *
- * @param alias member alias to use, must be unique
+ * @param username member username to use, must be unique
  * @return newly created member
  */
-- (TKMember *)createMember:(NSString *)alias;
+- (TKMember *)createMember:(NSString *)username;
 
 /**
  * Logs in an existing member to the system.
@@ -68,35 +68,35 @@
 /**
  * Sends a notification to request linking of accounts
  *
- * @param alias alias to notify
+ * @param username username to notify
  * @param bankId bank id to link
  * @param accountsLinkPayload payload retrieved from bank
  */
-- (void)notifyLinkAccounts:(NSString * )alias
+- (void)notifyLinkAccounts:(NSString * )username
                     bankId:(NSString *)bankId
        accountsLinkPayload:(NSString *) accountsLinkPayload;
 
 /**
  * Sends a notification to request adding of a key
  *
- * @param alias alias to notify
+ * @param username username to notify
  * @param publicKey key in string form
  * @param name optional name of key
  */
-- (void)notifyAddKey:(NSString * )alias
+- (void)notifyAddKey:(NSString * )username
            publicKey:(NSString *)publicKey
                 name:(NSString *)name;
 
 /**
  * Sends a notification to request linking of accounts and adding of a key
  *
- * @param alias alias to notify
+ * @param username username to notify
  * @param bankId bank id to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param publicKey key in string form
  * @param name optional name of key
  */
-- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+- (void)notifyLinkAccountsAndAddKey:(NSString * )username
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey

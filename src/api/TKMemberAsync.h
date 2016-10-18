@@ -29,8 +29,8 @@
 
 @property (readonly, retain) TKMember *sync;
 @property (readonly, retain) NSString *id;
-@property (readonly, retain) NSString *firstAlias;
-@property (readonly, retain) NSArray<NSString*> *aliases;
+@property (readonly, retain) NSString *firstUsername;
+@property (readonly, retain) NSArray<NSString*> *usernames;
 @property (readonly, retain) NSArray<NSString*> *publicKeys;
 @property (readonly, retain) TKSecretKey *key;
 
@@ -80,24 +80,24 @@
           onError:(OnError)onError;
 
 /**
- * Adds a new alias for the member.
+ * Adds a new username for the member.
  *
- * @param alias alias, e.g. 'john', must be unique
+ * @param username username, e.g. 'john', must be unique
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addAlias:(NSString *)alias
+- (void)addUsername:(NSString *)username
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
 
 /**
- * Removes an alias for the member.
+ * Removes an username for the member.
  *
- * @param alias alias, e.g. 'john'
+ * @param username username, e.g. 'john'
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeAlias:(NSString *)alias
+- (void)removeUsername:(NSString *)username
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
@@ -277,7 +277,7 @@
  * @param accountId the funding account id
  * @param amount transfer amount
  * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer alias
+ * @param redeemer redeemer username
  * @param description transfer description, optional
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
@@ -285,7 +285,7 @@
 - (void)createTokenForAccount:(NSString *)accountId
                        amount:(double)amount
                      currency:(NSString *)currency
-                redeemerAlias:(NSString *)redeemerAlias
+                redeemerUsername:(NSString *)redeemerUsername
                   description:(NSString *)description
                     onSuccess:(OnSuccessWithToken)onSuccess
                       onError:(OnError)onError;

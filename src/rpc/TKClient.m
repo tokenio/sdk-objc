@@ -58,26 +58,26 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)addAlias:(NSString *)alias
+- (void)addUsername:(NSString *)username
               to:(Member *)member
        onSuccess:(OnSuccessWithMember)onSuccess
          onError:(OnError)onError {
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addAlias.alias = alias;
+    update.addUsername.username = username;
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
-- (void)removeAlias:(NSString *)alias
+- (void)removeUsername:(NSString *)username
                from:(Member *)member
           onSuccess:(OnSuccessWithMember)onSuccess
             onError:(OnError)onError {
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.removeAlias.alias = alias;
+    update.removeUsername.username = username;
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }

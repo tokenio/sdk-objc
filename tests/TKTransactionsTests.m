@@ -47,7 +47,7 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"transfer test"];
         token = [payer endorseToken:token];
         Transfer *transfer = [payee createTransfer:token];
@@ -66,7 +66,7 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"transfer test"];
         token = [payer endorseToken:token];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];

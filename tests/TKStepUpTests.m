@@ -42,7 +42,7 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"transfer test"];
         token = [payer endorseToken:token];
     }];

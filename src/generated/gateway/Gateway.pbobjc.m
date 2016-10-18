@@ -380,16 +380,16 @@ typedef struct GetMemberResponse__storage_ {
 
 @end
 
-#pragma mark - AliasExistsRequest
+#pragma mark - UsernameExistsRequest
 
-@implementation AliasExistsRequest
+@implementation UsernameExistsRequest
 
-@dynamic alias;
+@dynamic username;
 
-typedef struct AliasExistsRequest__storage_ {
+typedef struct UsernameExistsRequest__storage_ {
   uint32_t _has_storage_[1];
-  NSString *alias;
-} AliasExistsRequest__storage_;
+  NSString *username;
+} UsernameExistsRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -398,22 +398,22 @@ typedef struct AliasExistsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "alias",
+        .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = AliasExistsRequest_FieldNumber_Alias,
+        .number = UsernameExistsRequest_FieldNumber_Username,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AliasExistsRequest__storage_, alias),
+        .offset = (uint32_t)offsetof(UsernameExistsRequest__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AliasExistsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[UsernameExistsRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AliasExistsRequest__storage_)
+                                   storageSize:sizeof(UsernameExistsRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -423,15 +423,15 @@ typedef struct AliasExistsRequest__storage_ {
 
 @end
 
-#pragma mark - AliasExistsResponse
+#pragma mark - UsernameExistsResponse
 
-@implementation AliasExistsResponse
+@implementation UsernameExistsResponse
 
 @dynamic exists;
 
-typedef struct AliasExistsResponse__storage_ {
+typedef struct UsernameExistsResponse__storage_ {
   uint32_t _has_storage_[1];
-} AliasExistsResponse__storage_;
+} UsernameExistsResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -442,7 +442,7 @@ typedef struct AliasExistsResponse__storage_ {
       {
         .name = "exists",
         .dataTypeSpecific.className = NULL,
-        .number = AliasExistsResponse_FieldNumber_Exists,
+        .number = UsernameExistsResponse_FieldNumber_Exists,
         .hasIndex = 0,
         .offset = 1,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
@@ -450,12 +450,12 @@ typedef struct AliasExistsResponse__storage_ {
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AliasExistsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[UsernameExistsResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AliasExistsResponse__storage_)
+                                   storageSize:sizeof(UsernameExistsResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1161,12 +1161,12 @@ typedef struct UnsubscribeFromNotificationsResponse__storage_ {
 
 @implementation NotifyRequest
 
-@dynamic alias;
+@dynamic username;
 @dynamic hasNotification, notification;
 
 typedef struct NotifyRequest__storage_ {
   uint32_t _has_storage_[1];
-  NSString *alias;
+  NSString *username;
   Notification *notification;
 } NotifyRequest__storage_;
 
@@ -1177,11 +1177,11 @@ typedef struct NotifyRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "alias",
+        .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = NotifyRequest_FieldNumber_Alias,
+        .number = NotifyRequest_FieldNumber_Username,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(NotifyRequest__storage_, alias),
+        .offset = (uint32_t)offsetof(NotifyRequest__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

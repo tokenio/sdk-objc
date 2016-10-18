@@ -48,7 +48,7 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"transfer test"];
         token = [payer endorseToken:token];
         Transfer *transfer = [payee createTransfer:token];
@@ -61,7 +61,7 @@
         Token *token2 = [payer createTokenForAccount:payerAccount.id
                                               amount:100.99
                                             currency:@"USD"
-                                       redeemerAlias:payee.firstAlias
+                                       redeemerUsername:payee.firstUsername
                                          description:@"transfer test"];
         token = [payer endorseToken:token2];
         [payee createTransfer:token];
@@ -75,7 +75,7 @@
                                  target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
         
-        [tokenIO notifyLinkAccounts:payer.firstAlias
+        [tokenIO notifyLinkAccounts:payer.firstUsername
                              bankId:@"bank-id"
                 accountsLinkPayload:@"12345"];
     }];
@@ -90,7 +90,7 @@
                                platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
-        [tokenIO notifyAddKey:payer.firstAlias
+        [tokenIO notifyAddKey:payer.firstUsername
                     publicKey:key.publicKeyStr
                          name:@"Chrome 53.0"];
     }];
@@ -104,7 +104,7 @@
                                platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
-        [tokenIO notifyLinkAccountsAndAddKey:payer.firstAlias
+        [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
                                       bankId:@"bank-id"
                          accountsLinkPayload:@"12345"
                                    publicKey:key.publicKeyStr
@@ -140,7 +140,7 @@
         Token *token = [payer createTokenForAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
-                                      redeemerAlias:payee.firstAlias
+                                      redeemerUsername:payee.firstUsername
                                         description:@"transfer test"];
         token = [payer endorseToken:token];
         Transfer *transfer = [payee createTransfer:token];

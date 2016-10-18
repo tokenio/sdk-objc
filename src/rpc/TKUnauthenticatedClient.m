@@ -69,15 +69,15 @@
     }];
 }
 
-- (void)aliasExists:(NSString *)alias
+- (void)usernameExists:(NSString *)username
           onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
-    AliasExistsRequest *request = [AliasExistsRequest message];
-    request.alias = alias;
+    UsernameExistsRequest *request = [UsernameExistsRequest message];
+    request.username = username;
     RpcLogStart(request);
     
-    [gateway aliasExistsWithRequest:request
-                            handler:^(AliasExistsResponse *response, NSError *error) {
+    [gateway usernameExistsWithRequest:request
+                            handler:^(UsernameExistsResponse *response, NSError *error) {
         if (response) {
             RpcLogCompleted(response);
             onSuccess(response.exists);
@@ -88,13 +88,13 @@
     }];
 }
 
-- (void)notifyLinkAccounts:(NSString *)alias
+- (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
        accountsLinkPayload:(NSString *)accountsLinkPayload
                  onSuccess:(void (^)())onSuccess
                    onError:(void (^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.alias = alias;
+    request.username = username;
     request.notification.linkAccounts.bankId = bankId;
     request.notification.linkAccounts.accountsLinkPayload = accountsLinkPayload;
     RpcLogStart(request);
@@ -111,13 +111,13 @@
                                    }];
 }
 
-- (void)notifyAddKey:(NSString * )alias
+- (void)notifyAddKey:(NSString * )username
            publicKey:(NSString *) publicKey
                 name:(NSString*)name
            onSuccess:(void(^)())onSuccess
              onError:(void(^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.alias = alias;
+    request.username = username;
     request.notification.addKey.publicKey = publicKey;
     request.notification.addKey.name = name;
     RpcLogStart(request);
@@ -134,7 +134,7 @@
                              }];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+- (void)notifyLinkAccountsAndAddKey:(NSString * )username
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *) publicKey
@@ -142,7 +142,7 @@
                           onSuccess:(void(^)())onSuccess
                             onError:(void(^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.alias = alias;
+    request.username = username;
     request.notification.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
     request.notification.linkAccountsAndAddKey.linkAccounts.accountsLinkPayload = accountsLinkPayload;
     request.notification.linkAccountsAndAddKey.addKey.publicKey = publicKey;

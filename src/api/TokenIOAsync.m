@@ -45,7 +45,7 @@
     return [[TokenIO alloc] initWithDelegate:self];
 }
 
-- (void)createMember:(NSString *)alias
+- (void)createMember:(NSString *)username
             onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
@@ -53,9 +53,9 @@
     
     [client createMemberId:
      ^(NSString *memberId) {
-         [self _addKeyAndAlias:client
+         [self _addKeyAndUsername:client
                       memberId:memberId
-                         alias:alias
+                         username:username
                            key:key
                      onSuccess:onSuccess
                        onError:onError];
@@ -63,11 +63,11 @@
                    onError:onError];
 }
 
-- (void)aliasExists:(NSString *)alias
+- (void)usernameExists:(NSString *)username
           onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
-    [client aliasExists:alias
+    [client usernameExists:username
               onSuccess:onSuccess
                 onError:onError];
 }
@@ -89,13 +89,13 @@
               onError:onError];
 }
 
-- (void)notifyLinkAccounts:(NSString * )alias
+- (void)notifyLinkAccounts:(NSString * )username
                     bankId:(NSString *)bankId
        accountsLinkPayload:(NSString *) accountsLinkPayload
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
-    [client notifyLinkAccounts:alias
+    [client notifyLinkAccounts:username
                         bankId:bankId
            accountsLinkPayload:accountsLinkPayload
                      onSuccess:onSuccess
@@ -103,13 +103,13 @@
 }
 
 
-- (void)notifyAddKey:(NSString * )alias
+- (void)notifyAddKey:(NSString * )username
            publicKey:(NSString *)publicKey
                 name:(NSString *) name
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
-    [client notifyAddKey:alias
+    [client notifyAddKey:username
                publicKey:publicKey
                     name:name
                      onSuccess:onSuccess
@@ -117,7 +117,7 @@
 }
 
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+- (void)notifyLinkAccountsAndAddKey:(NSString * )username
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey
@@ -125,7 +125,7 @@
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
-    [client notifyLinkAccountsAndAddKey:alias
+    [client notifyLinkAccountsAndAddKey:username
                                  bankId:bankId
                     accountsLinkPayload:accountsLinkPayload
                               publicKey:publicKey
@@ -137,10 +137,10 @@
 
 #pragma mark private
 
-// alias can be nil. In this case only add the key.
-- (void)_addKeyAndAlias:(TKUnauthenticatedClient *)client
+// username can be nil. In this case only add the key.
+- (void)_addKeyAndUsername:(TKUnauthenticatedClient *)client
                memberId:(NSString *)memberId
-                  alias:(NSString *)alias
+                  username:(NSString *)username
                     key:(TKSecretKey *)key
               onSuccess:(void(^)(TKMemberAsync *))onSuccess
                 onError:(OnError)onError {
@@ -153,8 +153,8 @@
                                     initWithGateway:gateway
                                     memberId:memberId
                                     secretKey:key];
-         if (alias != nil) {
-             [authenticated addAlias:alias
+         if (username != nil) {
+             [authenticated addUsername:username
                                   to:member
                            onSuccess:
               ^(Member *m) {

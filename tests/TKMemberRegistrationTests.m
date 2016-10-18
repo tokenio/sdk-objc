@@ -20,10 +20,10 @@
 
 - (void)testCreateMember {
     [self run: ^(TokenIO *tokenIO) {
-        NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
-        TKMember *member = [tokenIO createMember:alias];
+        NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        TKMember *member = [tokenIO createMember:username];
         XCTAssert(member.id.length > 0);
-        XCTAssertEqualObjects(member.firstAlias, alias);
+        XCTAssertEqualObjects(member.firstUsername, username);
         XCTAssertEqual(member.publicKeys.count, 1);
     }];
 }
@@ -63,40 +63,40 @@
     }];
 }
 
-- (void)testAliasExists {
+- (void)testUsernameExists {
     [self run: ^(TokenIO *tokenIO) {
-        NSString *alias = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
         TKMember *member = [self createMember:tokenIO];
         
-        XCTAssertEqual([tokenIO aliasExists:alias], NO);
-        [member addAlias:alias];
-        XCTAssertEqual([tokenIO aliasExists:alias], YES);
+        XCTAssertEqual([tokenIO usernameExists:username], NO);
+        [member addUsername:username];
+        XCTAssertEqual([tokenIO usernameExists:username], YES);
     }];
 }
 
-- (void)testAddAlias {
+- (void)testAddUsername {
     [self run: ^(TokenIO *tokenIO) {
-        NSString *alias2 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
-        NSString *alias3 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username3 = [@"username-" stringByAppendingString:[TKUtil nonce]];
 
         TKMember *member = [self createMember:tokenIO];
-        [member addAlias:alias2];
-        [member addAlias:alias3];
+        [member addUsername:username2];
+        [member addUsername:username3];
 
-        XCTAssertEqual(member.aliases.count, 3);
+        XCTAssertEqual(member.usernames.count, 3);
     }];
 }
 
-- (void)testRemoveAlias {
+- (void)testRemoveUsername {
     [self run: ^(TokenIO *tokenIO) {
-        NSString *alias2 = [@"alias-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
 
         TKMember *member = [self createMember:tokenIO];
-        [member addAlias:alias2];
-        XCTAssertEqual(member.aliases.count, 2);
+        [member addUsername:username2];
+        XCTAssertEqual(member.usernames.count, 2);
 
-        [member removeAlias:alias2];
-        XCTAssertEqual(member.aliases.count, 1);
+        [member removeUsername:username2];
+        XCTAssertEqual(member.usernames.count, 1);
     }];
 }
 

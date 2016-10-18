@@ -31,7 +31,7 @@ typedef void (^AsyncTestBlock)(TokenIO *);
 - (void)run:(AsyncTestBlock)block;
 
 /**
- * Creates a new member with an auto generated alias and key.
+ * Creates a new member with an auto generated username and key.
  *
  * @param tokenIO
  * @return

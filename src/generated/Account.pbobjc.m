@@ -43,13 +43,13 @@ static GPBFileDescriptor *AccountRoot_FileDescriptor(void) {
 
 @implementation AccountsLinkPayload
 
-@dynamic alias;
+@dynamic username;
 @dynamic secret;
 @dynamic accountsArray, accountsArray_Count;
 
 typedef struct AccountsLinkPayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *alias;
+  NSString *username;
   NSString *secret;
   NSMutableArray *accountsArray;
 } AccountsLinkPayload__storage_;
@@ -61,11 +61,11 @@ typedef struct AccountsLinkPayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "alias",
+        .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = AccountsLinkPayload_FieldNumber_Alias,
+        .number = AccountsLinkPayload_FieldNumber_Username,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload__storage_, alias),
+        .offset = (uint32_t)offsetof(AccountsLinkPayload__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

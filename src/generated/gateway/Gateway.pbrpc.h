@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and alias mamangement.
+ * Member registration, key and username mamangement.
  * 
  * 
  */
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and alias mamangement.
+ * Member registration, key and username mamangement.
  * 
  * 
  */
@@ -53,11 +53,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark AliasExists(AliasExistsRequest) returns (AliasExistsResponse)
+#pragma mark UsernameExists(UsernameExistsRequest) returns (UsernameExistsResponse)
 
-- (void)aliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)usernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToAliasExistsWithRequest:(AliasExistsRequest *)request handler:(void(^)(AliasExistsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUsernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

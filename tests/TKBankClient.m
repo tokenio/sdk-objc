@@ -80,12 +80,12 @@
     }];
 }
 
-- (NSString *)authorizeAccountLinkingFor:(NSString *)alias
+- (NSString *)authorizeAccountLinkingFor:(NSString *)username
                           accountNumbers:(NSArray<NSString *> *)accountNumbers {
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     return [call run:^{
         AuthorizeLinkAccountsRequest *request = [AuthorizeLinkAccountsRequest message];
-        request.alias = alias;
+        request.username = username;
         request.secret = @"";
         [request.accountsArray addObjectsFromArray:accountNumbers];
 

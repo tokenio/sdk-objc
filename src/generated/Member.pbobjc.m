@@ -162,16 +162,16 @@ typedef struct MemberRemoveKeyOperation__storage_ {
 
 @end
 
-#pragma mark - MemberAliasOperation
+#pragma mark - MemberUsernameOperation
 
-@implementation MemberAliasOperation
+@implementation MemberUsernameOperation
 
-@dynamic alias;
+@dynamic username;
 
-typedef struct MemberAliasOperation__storage_ {
+typedef struct MemberUsernameOperation__storage_ {
   uint32_t _has_storage_[1];
-  NSString *alias;
-} MemberAliasOperation__storage_;
+  NSString *username;
+} MemberUsernameOperation__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -180,22 +180,22 @@ typedef struct MemberAliasOperation__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "alias",
+        .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = MemberAliasOperation_FieldNumber_Alias,
+        .number = MemberUsernameOperation_FieldNumber_Username,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, alias),
+        .offset = (uint32_t)offsetof(MemberUsernameOperation__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MemberAliasOperation class]
+        [GPBDescriptor allocDescriptorForClass:[MemberUsernameOperation class]
                                      rootClass:[MemberRoot class]
                                           file:MemberRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MemberAliasOperation__storage_)
+                                   storageSize:sizeof(MemberUsernameOperation__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -214,8 +214,8 @@ typedef struct MemberAliasOperation__storage_ {
 @dynamic memberId;
 @dynamic addKey;
 @dynamic removeKey;
-@dynamic addAlias;
-@dynamic removeAlias;
+@dynamic addUsername;
+@dynamic removeUsername;
 
 typedef struct MemberUpdate__storage_ {
   uint32_t _has_storage_[2];
@@ -223,8 +223,8 @@ typedef struct MemberUpdate__storage_ {
   NSString *memberId;
   MemberAddKeyOperation *addKey;
   MemberRemoveKeyOperation *removeKey;
-  MemberAliasOperation *addAlias;
-  MemberAliasOperation *removeAlias;
+  MemberUsernameOperation *addUsername;
+  MemberUsernameOperation *removeUsername;
 } MemberUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -270,20 +270,20 @@ typedef struct MemberUpdate__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "addAlias",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAliasOperation),
-        .number = MemberUpdate_FieldNumber_AddAlias,
+        .name = "addUsername",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
+        .number = MemberUpdate_FieldNumber_AddUsername,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, addAlias),
+        .offset = (uint32_t)offsetof(MemberUpdate__storage_, addUsername),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "removeAlias",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAliasOperation),
-        .number = MemberUpdate_FieldNumber_RemoveAlias,
+        .name = "removeUsername",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
+        .number = MemberUpdate_FieldNumber_RemoveUsername,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, removeAlias),
+        .offset = (uint32_t)offsetof(MemberUpdate__storage_, removeUsername),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -321,14 +321,14 @@ void MemberUpdate_ClearOperationOneOfCase(MemberUpdate *message) {
 
 @dynamic id_p;
 @dynamic lastHash;
-@dynamic aliasesArray, aliasesArray_Count;
+@dynamic usernamesArray, usernamesArray_Count;
 @dynamic keysArray, keysArray_Count;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *lastHash;
-  NSMutableArray *aliasesArray;
+  NSMutableArray *usernamesArray;
   NSMutableArray *keysArray;
 } Member__storage_;
 
@@ -357,11 +357,11 @@ typedef struct Member__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "aliasesArray",
+        .name = "usernamesArray",
         .dataTypeSpecific.className = NULL,
-        .number = Member_FieldNumber_AliasesArray,
+        .number = Member_FieldNumber_UsernamesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Member__storage_, aliasesArray),
+        .offset = (uint32_t)offsetof(Member__storage_, usernamesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },

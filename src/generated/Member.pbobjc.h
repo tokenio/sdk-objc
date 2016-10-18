@@ -26,8 +26,8 @@ CF_EXTERN_C_BEGIN
 
 @class Key;
 @class MemberAddKeyOperation;
-@class MemberAliasOperation;
 @class MemberRemoveKeyOperation;
+@class MemberUsernameOperation;
 @class Signature;
 GPB_ENUM_FWD_DECLARE(Key_Level);
 
@@ -84,16 +84,16 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
 
 @end
 
-#pragma mark - MemberAliasOperation
+#pragma mark - MemberUsernameOperation
 
-typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
-  MemberAliasOperation_FieldNumber_Alias = 1,
+typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
+  MemberUsernameOperation_FieldNumber_Username = 1,
 };
 
-/// Adds/removes member alias to/from the directory.
-@interface MemberAliasOperation : GPBMessage
+/// Adds/removes member username to/from the directory.
+@interface MemberUsernameOperation : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *alias;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @end
 
@@ -104,16 +104,16 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
   MemberUpdate_FieldNumber_MemberId = 2,
   MemberUpdate_FieldNumber_AddKey = 3,
   MemberUpdate_FieldNumber_RemoveKey = 4,
-  MemberUpdate_FieldNumber_AddAlias = 5,
-  MemberUpdate_FieldNumber_RemoveAlias = 6,
+  MemberUpdate_FieldNumber_AddUsername = 5,
+  MemberUpdate_FieldNumber_RemoveUsername = 6,
 };
 
 typedef GPB_ENUM(MemberUpdate_Operation_OneOfCase) {
   MemberUpdate_Operation_OneOfCase_GPBUnsetOneOfCase = 0,
   MemberUpdate_Operation_OneOfCase_AddKey = 3,
   MemberUpdate_Operation_OneOfCase_RemoveKey = 4,
-  MemberUpdate_Operation_OneOfCase_AddAlias = 5,
-  MemberUpdate_Operation_OneOfCase_RemoveAlias = 6,
+  MemberUpdate_Operation_OneOfCase_AddUsername = 5,
+  MemberUpdate_Operation_OneOfCase_RemoveUsername = 6,
 };
 
 /// Updates member information in the directory. The directory is append only
@@ -130,9 +130,9 @@ typedef GPB_ENUM(MemberUpdate_Operation_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberRemoveKeyOperation *removeKey;
 
-@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *addAlias;
+@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *addUsername;
 
-@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *removeAlias;
+@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *removeUsername;
 
 @end
 
@@ -144,7 +144,7 @@ void MemberUpdate_ClearOperationOneOfCase(MemberUpdate *message);
 typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_Id_p = 1,
   Member_FieldNumber_LastHash = 2,
-  Member_FieldNumber_AliasesArray = 3,
+  Member_FieldNumber_UsernamesArray = 3,
   Member_FieldNumber_KeysArray = 4,
 };
 
@@ -155,9 +155,9 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lastHash;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *aliasesArray;
-/// The number of items in @c aliasesArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger aliasesArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usernamesArray;
+/// The number of items in @c usernamesArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger usernamesArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
 /// The number of items in @c keysArray without causing the array to be created.

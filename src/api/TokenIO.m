@@ -28,19 +28,19 @@
     return self;
 }
 
-- (TKMember *)createMember:(NSString *)alias {
+- (TKMember *)createMember:(NSString *)username {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createMember:alias
+        [self.async createMember:username
                         onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                          onError: call.onError];
     }];
 }
 
-- (BOOL)aliasExists:(NSString *)alias {
+- (BOOL)usernameExists:(NSString *)username {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{
-        [self.async aliasExists:alias
+        [self.async usernameExists:username
                       onSuccess:^(BOOL exists) { call.onSuccess([NSNumber numberWithBool:exists]); }
                         onError:call.onError];
     }];
@@ -59,12 +59,12 @@
     }];
 }
 
-- (void)notifyLinkAccounts:(NSString * )alias
+- (void)notifyLinkAccounts:(NSString * )username
                     bankId:(NSString *)bankId
        accountsLinkPayload:(NSString *) accountsLinkPayload {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyLinkAccounts:alias
+        [self.async notifyLinkAccounts:username
                                 bankId:bankId
                    accountsLinkPayload:accountsLinkPayload
                              onSuccess:^(void) {call.onSuccess(nil);}
@@ -73,12 +73,12 @@
     }];
 }
 
-- (void)notifyAddKey:(NSString * )alias
+- (void)notifyAddKey:(NSString * )username
            publicKey:(NSString *)publicKey
                 name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyAddKey:alias
+        [self.async notifyAddKey:username
                        publicKey:publicKey
                             name:name
                              onSuccess:^(void) {call.onSuccess(nil);}
@@ -87,14 +87,14 @@
     }];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )alias
+- (void)notifyLinkAccountsAndAddKey:(NSString * )username
                              bankId:(NSString *)bankId
                 accountsLinkPayload:(NSString *) accountsLinkPayload
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyLinkAccountsAndAddKey:alias
+        [self.async notifyLinkAccountsAndAddKey:username
                           bankId:bankId
              accountsLinkPayload:accountsLinkPayload
                        publicKey:publicKey

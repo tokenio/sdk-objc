@@ -44,26 +44,26 @@
           onError:(OnError)onError;
 
 /**
- * Adds an alias for a given user.
+ * Adds an      for a given user.
  *
- * @param member member to add the alias to
- * @param alias new unique alias to add
+ * @param member member to add the username to
+ * @param username new unique username to add
  * @return member information
  */
-- (void)addAlias:(NSString *)alias
+- (void)addUsername:(NSString *)username
               to:(Member *)member
        onSuccess:(OnSuccessWithMember)onSuccess
          onError:(OnError)onError;
 
 
 /**
- * Removes an alias for a given user.
+ * Removes an username for a given user.
  *
- * @param member member to remove the alias to
- * @param alias alias to remove
+ * @param member member to remove the username to
+ * @param username username to remove
  * @return member information
  */
-- (void)removeAlias:(NSString *)alias
+- (void)removeUsername:(NSString *)username
                from:(Member *)member
           onSuccess:(OnSuccessWithMember)onSuccess
             onError:(OnError)onError;

@@ -29,16 +29,16 @@
     return self.async.id;
 }
 
-- (NSString *)firstAlias {
-    return self.async.firstAlias;
+- (NSString *)firstUsername {
+    return self.async.firstUsername;
 }
 
 - (NSArray<NSString *> *)publicKeys {
     return self.async.publicKeys;
 }
 
-- (NSArray<NSString *> *)aliases {
-    return self.async.aliases;
+- (NSArray<NSString *> *)usernames {
+    return self.async.usernames;
 }
 
 - (TKSecretKey *)key {
@@ -65,19 +65,19 @@
     }];
 }
 
-- (void)addAlias:(NSString *)alias {
+- (void)addUsername:(NSString *)username {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async addAlias:alias
+        [self.async addUsername:username
                    onSuccess:^{ call.onSuccess(nil); }
                      onError:call.onError];
     }];
 }
 
-- (void)removeAlias:(NSString *)alias {
+- (void)removeUsername:(NSString *)username {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async removeAlias:alias
+        [self.async removeUsername:username
                       onSuccess:^{ call.onSuccess(nil); }
                         onError:call.onError];
     }];
@@ -237,21 +237,21 @@
     return [self createTokenForAccount:accountId
                                 amount:amount
                               currency:currency
-                         redeemerAlias:nil
+                         redeemerUsername:nil
                            description:nil];
 }
 
 - (Token *)createTokenForAccount:(NSString *)accountId
                           amount:(double)amount
                         currency:(NSString *)currency
-                   redeemerAlias:(NSString *)redeemerAlias
+                   redeemerUsername:(NSString *)redeemerUsername
                      description:(NSString *)description {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTokenForAccount:accountId
                                    amount:amount
                                  currency:currency
-                            redeemerAlias:redeemerAlias
+                            redeemerUsername:redeemerUsername
                               description:description
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
