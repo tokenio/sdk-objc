@@ -73,10 +73,11 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Id_p = 1,
   Transfer_FieldNumber_ReferenceId = 2,
   Transfer_FieldNumber_Payload = 3,
-  Transfer_FieldNumber_PayloadSignaturesArray = 4,
+  Transfer_FieldNumber_CreatedAtMs = 4,
+  Transfer_FieldNumber_PayloadSignaturesArray = 5,
 };
 
-/// A transferInstructions record as persisted on the ledger.
+/// A transfer record as persisted on the ledger.
 @interface Transfer : GPBMessage
 
 /// Computed as the hash of the transfer payload.
@@ -88,6 +89,8 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Transfer_Payload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *payloadSignaturesArray;
 /// The number of items in @c payloadSignaturesArray without causing the array to be created.
@@ -135,7 +138,7 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_DestinationArray = 2,
 };
 
-/// Money transferInstructions instructions.
+/// Money transfer instructions.
 @interface TransferInstructions : GPBMessage
 
 /// Transfer source.
@@ -163,7 +166,7 @@ typedef GPB_ENUM(Source_Source_OneOfCase) {
   Source_Source_OneOfCase_AccountNumber = 2,
 };
 
-/// Money transferInstructions source. This could be an transferDest id assigned by Token or
+/// Money transfer source. This could be an transferDest id assigned by Token or
 /// real bank transferDest number.
 @interface Source : GPBMessage
 
@@ -193,8 +196,8 @@ typedef GPB_ENUM(Destination_Destination_OneOfCase) {
   Destination_Destination_OneOfCase_Ach = 3,
 };
 
-/// Money transferInstructions destination. The desitination is described differently
-/// depending on the transferInstructions method being used.
+/// Money transfer destination. The desitination is described differently
+/// depending on the transfer method being used.
 @interface Destination : GPBMessage
 
 @property(nonatomic, readonly) Destination_Destination_OneOfCase destinationOneOfCase;
@@ -217,7 +220,7 @@ typedef GPB_ENUM(DestinationBic_FieldNumber) {
   DestinationBic_FieldNumber_Account = 2,
 };
 
-/// SWIFT transferInstructions destination.
+/// SWIFT transfer destination.
 @interface DestinationBic : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
@@ -234,7 +237,7 @@ typedef GPB_ENUM(DestinationIban_FieldNumber) {
   DestinationIban_FieldNumber_Name = 3,
 };
 
-/// IBAN transferInstructions destination, can be used with different transferInstructions methods.
+/// IBAN transfer destination, can be used with different transfer methods.
 @interface DestinationIban : GPBMessage
 
 @property(nonatomic, readwrite) DestinationIban_Method method;
@@ -260,7 +263,7 @@ typedef GPB_ENUM(DestinationAch_FieldNumber) {
   DestinationAch_FieldNumber_Account = 2,
 };
 
-/// ACH transferInstructions destination.
+/// ACH transfer destination.
 @interface DestinationAch : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *routing;

@@ -7,12 +7,13 @@ import "money.proto";
 import "security.proto";
 
 
-// A transferInstructions record as persisted on the ledger.
+// A transfer record as persisted on the ledger.
 message Transfer {
   string id = 1;                               // Computed as the hash of the transfer payload.
   string reference_id = 2;                     // Bank transaction reference id.
   Payload payload = 3;
-  repeated io.token.proto.common.security.Signature payload_signatures = 4;
+  int64 created_at_ms = 4;
+  repeated io.token.proto.common.security.Signature payload_signatures = 5;
 
   message Payload {
     string nonce = 1;                                                     // Client assigned unique request id.
@@ -23,13 +24,13 @@ message Transfer {
   }
 }
 
-// Money transferInstructions instructions.
+// Money transfer instructions.
 message TransferInstructions {
   Source source = 1;                           // Transfer source.
   repeated Destination destination = 2;        // Transfer desitination.
 }
 
-// Money transferInstructions source. This could be an transferDest id assigned by Token or
+// Money transfer source. This could be an transferDest id assigned by Token or
 // real bank transferDest number.
 message Source {
   oneof source {
@@ -38,8 +39,8 @@ message Source {
   }
 }
 
-// Money transferInstructions destination. The desitination is described differently
-// depending on the transferInstructions method being used.
+// Money transfer destination. The desitination is described differently
+// depending on the transfer method being used.
 message Destination {
   oneof destination {
     DestinationBic swift = 1;
@@ -48,13 +49,13 @@ message Destination {
   }
 }
 
-// SWIFT transferInstructions destination.
+// SWIFT transfer destination.
 message DestinationBic {
   string bic = 1;
   string account = 2;
 }
 
-// IBAN transferInstructions destination, can be used with different transferInstructions methods.
+// IBAN transfer destination, can be used with different transfer methods.
 message DestinationIban {
   enum Method { INVALID = 0; SWIFT = 1; SEPA = 2; }
 
@@ -63,7 +64,7 @@ message DestinationIban {
   string name = 3;
 }
 
-// ACH transferInstructions destination.
+// ACH transfer destination.
 message DestinationAch {
   string routing = 1;
   string account = 2;
