@@ -242,10 +242,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addAddressWithName:(NSString *)name
-                  withData:(NSString *)data
-                 onSuccess:(OnSuccessWithAddress)onSuccess
-                   onError:(OnError)onError;
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
+         onSuccess:(OnSuccessWithAddress)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up an address by id.

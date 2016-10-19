@@ -16,6 +16,7 @@
  #import "gateway/Gateway.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
  #import "Account.pbobjc.h"
+ #import "Address.pbobjc.h"
  #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Notification.pbobjc.h"
@@ -42,6 +43,7 @@
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
     [registry addExtensions:[AccountRoot extensionRegistry]];
+    [registry addExtensions:[AddressRoot extensionRegistry]];
     [registry addExtensions:[MemberRoot extensionRegistry]];
     [registry addExtensions:[MoneyRoot extensionRegistry]];
     [registry addExtensions:[NotificationRoot extensionRegistry]];
@@ -470,14 +472,14 @@ typedef struct UsernameExistsResponse__storage_ {
 @implementation AddAddressRequest
 
 @dynamic name;
-@dynamic data_p;
-@dynamic hasDataSignature, dataSignature;
+@dynamic hasAddress, address;
+@dynamic hasAddressSignature, addressSignature;
 
 typedef struct AddAddressRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *name;
-  NSString *data_p;
-  Signature *dataSignature;
+  Address *address;
+  Signature *addressSignature;
 } AddAddressRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -496,20 +498,20 @@ typedef struct AddAddressRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "data_p",
-        .dataTypeSpecific.className = NULL,
-        .number = AddAddressRequest_FieldNumber_Data_p,
+        .name = "address",
+        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .number = AddAddressRequest_FieldNumber_Address,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, data_p),
+        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, address),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "dataSignature",
+        .name = "addressSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = AddAddressRequest_FieldNumber_DataSignature,
+        .number = AddAddressRequest_FieldNumber_AddressSignature,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, dataSignature),
+        .offset = (uint32_t)offsetof(AddAddressRequest__storage_, addressSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -538,7 +540,7 @@ typedef struct AddAddressRequest__storage_ {
 
 typedef struct AddAddressResponse__storage_ {
   uint32_t _has_storage_[1];
-  Address *address;
+  AddressRecord *address;
 } AddAddressResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -549,7 +551,7 @@ typedef struct AddAddressResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.className = GPBStringifySymbol(AddressRecord),
         .number = AddAddressResponse_FieldNumber_Address,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AddAddressResponse__storage_, address),
@@ -624,7 +626,7 @@ typedef struct GetAddressRequest__storage_ {
 
 typedef struct GetAddressResponse__storage_ {
   uint32_t _has_storage_[1];
-  Address *address;
+  AddressRecord *address;
 } GetAddressResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -635,7 +637,7 @@ typedef struct GetAddressResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.className = GPBStringifySymbol(AddressRecord),
         .number = GetAddressResponse_FieldNumber_Address,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetAddressResponse__storage_, address),
@@ -708,7 +710,7 @@ typedef struct GetAddressesResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "addressesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.className = GPBStringifySymbol(AddressRecord),
         .number = GetAddressesResponse_FieldNumber_AddressesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetAddressesResponse__storage_, addressesArray),

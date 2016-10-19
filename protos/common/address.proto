@@ -1,0 +1,70 @@
+syntax = "proto3";
+package io.token.proto.common.address;
+option java_outer_classname = "AddressProtos";
+
+// A physical shipping/billing address. Modeled after OpenStreetMap format:
+// http://wiki.openstreetmap.org/wiki/Key:addr
+message Address {
+  // The house number (may contain letters, dashes or other characters). Addresses
+  // describes ways to tag a single building with multiple addresses.
+  string house_number = 1;
+
+  // The name of a house. This is sometimes used in some countries like England
+  // instead of (or in addition to) a house number.
+  string house_name = 2;
+
+  // The house numbers (range or list) of flats behind a door.
+  string flats = 3;
+
+  // This special kind of housenumber relates to a settlement instead of a street.
+  // Conscription numbers were introduced in the Austrio-Hungarian Empire and are
+  // still in use in some parts of Europe, sometimes together with street-related
+  // housenumbers which are also called orientation numbers.
+  string conscription_number = 4;
+
+  // The name of the respective street.
+  string street = 5;
+
+  // This is part of an address which refers to the name of some territorial zone
+  // (usually like island, square) instead of a street. Should not be used together
+  // with street.
+  string place = 6;
+
+  // The postal code of the building/area.
+  string post_code = 7;
+
+  // The name of the city as given in postal addresses of the building/area.
+  string city = 8;
+
+  // The ISO 3166-1 alpha-2 two letter country code in upper case.
+  string country = 9;
+
+  // Use this for a full-text, often multi-line, address if you find the structured
+  // address fields unsuitable for denoting the address of this particular location.
+  // Examples: "Fifth house on the left after the village oak, Smalltown, Smallcountry"
+  // or "1200 West Sunset Boulevard Suite 110A". Beware that these strings can hardly
+  // be parsed by software.
+  string full = 10;
+
+  // The hamlet.
+  string hamlet = 11;
+
+  // If an address exists several times in a city. You have to add the name of the
+  // settlement. See Australian definition of suburb.
+  string suburb = 12;
+
+  // The subdistrict.
+  string subdistrict = 13;
+
+  // The district.
+  string district = 14;
+
+  // The province. For Canada, uppercase two-letter postal abbreviations
+  // (BC, AB, ON, QC, etc.) are used. In Russia a synonym region is widely
+  // used
+  string province = 15;
+
+  // The state. For the US, uppercase two-letter postal abbreviations (AK, CA, HI, NY,
+  // TX, WY, etc.) are used.
+  string state = 16;
+}

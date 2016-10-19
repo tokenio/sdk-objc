@@ -6,6 +6,7 @@
 
 #import "google/api/Annotations.pbobjc.h"
 #import "Account.pbobjc.h"
+#import "Address.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"

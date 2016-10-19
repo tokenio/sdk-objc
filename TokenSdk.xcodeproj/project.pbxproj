@@ -44,6 +44,8 @@
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
 		8A1FA0D31DAEE92400DFB258 /* Fank.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */; };
 		8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */; };
+		8A2937511DB825660034C110 /* Address.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A29374F1DB825660034C110 /* Address.pbobjc.h */; };
+		8A2937521DB825660034C110 /* Address.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2937501DB825660034C110 /* Address.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */; };
 		8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */; };
 		8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -175,6 +177,8 @@
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
 		8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbrpc.h; sourceTree = "<group>"; };
 		8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbrpc.m; sourceTree = "<group>"; };
+		8A29374F1DB825660034C110 /* Address.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.pbobjc.h; sourceTree = "<group>"; };
+		8A2937501DB825660034C110 /* Address.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.pbobjc.m; sourceTree = "<group>"; };
 		8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKStepUpTests.m; sourceTree = "<group>"; };
 		8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAddressTests.m; sourceTree = "<group>"; };
 		8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				8A29374F1DB825660034C110 /* Address.pbobjc.h */,
+				8A2937501DB825660034C110 /* Address.pbobjc.m */,
 				37637B211D989A930043345F /* Account.pbobjc.h */,
 				37637B221D989A930043345F /* Account.pbobjc.m */,
 				37637B231D989A930043345F /* bankapi */,
@@ -598,6 +604,7 @@
 				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
 				ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */,
 				37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */,
+				8A2937511DB825660034C110 /* Address.pbobjc.h in Headers */,
 				ABA7B155594D4232CAF702FF /* TKMemberAsync.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -823,6 +830,7 @@
 				37637B631D989A930043345F /* Member.pbobjc.m in Sources */,
 				ABA7BBB178DD0DBB9BF4DBA8 /* TKAccount.m in Sources */,
 				37637B651D989A930043345F /* Money.pbobjc.m in Sources */,
+				8A2937521DB825660034C110 /* Address.pbobjc.m in Sources */,
 				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,
 				37637B5F1D989A930043345F /* HTTP.pbobjc.m in Sources */,
 				ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */,

@@ -3,6 +3,7 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "Address.pbobjc.h"
 #import "Member.pbobjc.h"
 
 
@@ -24,22 +25,22 @@
 - (void)testCreateAddress {
     [self run: ^(TokenIO *tokenIO) {
         NSString *name = @"address_name";
-        NSString *data = @"address_data";
+        Address *payload = [Address message];
 
-        Address *address = [member addAddressWithName:name withData:data];
+        AddressRecord *address = [member addAddress:payload withName:name];
 
         XCTAssertEqualObjects(name, address.name);
-        XCTAssertEqualObjects(data, address.payload);
+        XCTAssertEqualObjects(payload, address.address);
     }];
 }
 
 - (void)testCreateAdnGetAddress {
     [self run: ^(TokenIO *tokenIO) {
         NSString *name = @"address_name";
-        NSString *data = @"address_data";
+        Address *payload = [Address message];
 
-        Address *address = [member addAddressWithName:name withData:data];
-        Address *result = [member getAddressWithId:address.id_p];
+        AddressRecord *address = [member addAddress:payload withName:name];
+        AddressRecord *result = [member getAddressWithId:address.id_p];
 
         XCTAssertEqualObjects(address, result);
     }];
@@ -48,14 +49,14 @@
 - (void)testCreateAdnGetAddresses {
     [self run: ^(TokenIO *tokenIO) {
         NSString *name_1 = @"address_name_1";
-        NSString *data_1 = @"address_data_1";
+        Address *data_1 = [Address message];
         NSString *name_2 = @"address_name_2";
-        NSString *data_2 = @"address_data_2";
+        Address *data_2 = [Address message];
 
-        Address *address_1 = [member addAddressWithName:name_1 withData:data_1];
-        Address *address_2 = [member addAddressWithName:name_2 withData:data_2];
+        AddressRecord *address_1 = [member addAddress:data_1 withName:name_1];
+        AddressRecord *address_2 = [member addAddress:data_2 withName:name_2];
 
-        NSArray<Address *> *result = [member getAddresses];
+        NSArray<AddressRecord *> *result = [member getAddresses];
 
         XCTAssertEqualObjects(address_1, result[0]);
         XCTAssertEqualObjects(address_2, result[1]);
@@ -64,7 +65,7 @@
 
 - (void)testGetAddresses_NotFound {
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<Address *> *result = [member getAddresses];
+        NSArray<AddressRecord *> *result = [member getAddresses];
 
         XCTAssertEqual(result.count, 0);
     }];
@@ -80,10 +81,10 @@
 - (void)testDeleteAddress {
     [self run: ^(TokenIO *tokenIO) {
         NSString *name = @"address_name";
-        NSString *data = @"address_data";
+        Address *payload = [Address message];
 
-        Address *address = [member addAddressWithName:name withData:data];
-        Address *result = [member getAddressWithId:address.id_p];
+        AddressRecord *address = [member addAddress:payload withName:name];
+        AddressRecord *result = [member getAddressWithId:address.id_p];
 
         XCTAssertEqualObjects(address, result);
 

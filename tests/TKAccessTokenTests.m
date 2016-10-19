@@ -10,6 +10,7 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Token.pbobjc.h"
@@ -35,7 +36,8 @@
 
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
@@ -44,7 +46,8 @@
 
 - (void)testLookupToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
         
@@ -55,7 +58,8 @@
 
 - (void)testLookupTokens {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
         [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
         [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
@@ -67,7 +71,8 @@
 
 - (void)testEndorseToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
         Token *endorsed = [grantor endorseToken:token];
@@ -80,7 +85,8 @@
 
 - (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
         Token *cancelled = [grantor cancelToken:token];

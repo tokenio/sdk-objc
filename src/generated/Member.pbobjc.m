@@ -14,6 +14,7 @@
 #endif
 
  #import "Member.pbobjc.h"
+ #import "Address.pbobjc.h"
  #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -32,6 +33,7 @@
   if (!registry) {
     GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[AddressRoot extensionRegistry]];
     [registry addExtensions:[SecurityRoot extensionRegistry]];
   }
   return registry;
@@ -391,22 +393,22 @@ typedef struct Member__storage_ {
 
 @end
 
-#pragma mark - Address
+#pragma mark - AddressRecord
 
-@implementation Address
+@implementation AddressRecord
 
 @dynamic id_p;
 @dynamic name;
-@dynamic payload;
-@dynamic hasPayloadSignature, payloadSignature;
+@dynamic hasAddress, address;
+@dynamic hasAddressSignature, addressSignature;
 
-typedef struct Address__storage_ {
+typedef struct AddressRecord__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *name;
-  NSString *payload;
-  Signature *payloadSignature;
-} Address__storage_;
+  Address *address;
+  Signature *addressSignature;
+} AddressRecord__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -417,47 +419,47 @@ typedef struct Address__storage_ {
       {
         .name = "id_p",
         .dataTypeSpecific.className = NULL,
-        .number = Address_FieldNumber_Id_p,
+        .number = AddressRecord_FieldNumber_Id_p,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Address__storage_, id_p),
+        .offset = (uint32_t)offsetof(AddressRecord__storage_, id_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
         .dataTypeSpecific.className = NULL,
-        .number = Address_FieldNumber_Name,
+        .number = AddressRecord_FieldNumber_Name,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Address__storage_, name),
+        .offset = (uint32_t)offsetof(AddressRecord__storage_, name),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "payload",
-        .dataTypeSpecific.className = NULL,
-        .number = Address_FieldNumber_Payload,
+        .name = "address",
+        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .number = AddressRecord_FieldNumber_Address,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Address__storage_, payload),
+        .offset = (uint32_t)offsetof(AddressRecord__storage_, address),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "payloadSignature",
+        .name = "addressSignature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = Address_FieldNumber_PayloadSignature,
+        .number = AddressRecord_FieldNumber_AddressSignature,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Address__storage_, payloadSignature),
+        .offset = (uint32_t)offsetof(AddressRecord__storage_, addressSignature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Address class]
+        [GPBDescriptor allocDescriptorForClass:[AddressRecord class]
                                      rootClass:[MemberRoot class]
                                           file:MemberRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Address__storage_)
+                                   storageSize:sizeof(AddressRecord__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

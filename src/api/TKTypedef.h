@@ -8,7 +8,7 @@
 @class Transfer;
 @class TKMemberAsync;
 @class TKAccountAsync;
-@class Address;
+@class AddressRecord;
 @class Subscriber;
 
 typedef void (^OnSuccess)();
@@ -36,8 +36,8 @@ typedef void (^OnSuccessWithMoney)(Money *);
 typedef void (^OnSuccessWithTransaction)(Transaction *);
 typedef void (^OnSuccessWithTransactions)(NSArray<Transaction *> *);
 
-typedef void (^OnSuccessWithAddress)(Address *);
-typedef void (^OnSuccessWithAddresses)(NSArray<Address *> *);
+typedef void (^OnSuccessWithAddress)(AddressRecord *);
+typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> *);
 
 typedef void (^OnSuccessWithSubscriber)(Subscriber *);
 typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> *);
