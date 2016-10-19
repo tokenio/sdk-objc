@@ -62,6 +62,7 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 @dynamic id_p;
 @dynamic referenceId;
 @dynamic hasPayload, payload;
+@dynamic createdAtMs;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 
 typedef struct Transfer__storage_ {
@@ -70,6 +71,7 @@ typedef struct Transfer__storage_ {
   NSString *referenceId;
   Transfer_Payload *payload;
   NSMutableArray *payloadSignaturesArray;
+  int64_t createdAtMs;
 } Transfer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -104,6 +106,15 @@ typedef struct Transfer__storage_ {
         .offset = (uint32_t)offsetof(Transfer__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_CreatedAtMs,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Transfer__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
       {
         .name = "payloadSignaturesArray",
