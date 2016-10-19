@@ -360,7 +360,7 @@
 }
 
 - (void)createAddressAccessToken:(NSString *)toUsername
-                      forAddress:(NSString *)addressId
+                    restrictedTo:(NSString *)addressId
                        onSuccess:(OnSuccessWithToken)onSuccess
                          onError:(OnError)onError {
     AccessBody_Resource_Address *address = [AccessBody_Resource_Address message];
@@ -390,9 +390,9 @@
 }
 
 - (void)createAccountAccessToken:(NSString *)toUsername
-               forAccount:(NSString *)accountId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError {
+                    restrictedTo:(NSString *)accountId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
     AccessBody_Resource_Account *account = [AccessBody_Resource_Account message];
     account.accountId = accountId;
     
@@ -420,7 +420,7 @@
 }
 
 - (void)createTransactionsAccessToken:(NSString *)toUsername
-                            forAccount:(NSString *)accountId
+                         restrictedTo:(NSString *)accountId
                             onSuccess:(OnSuccessWithToken)onSuccess
                               onError:(OnError)onError {
     AccessBody_Resource_AccountTransactions *transactions = [AccessBody_Resource_AccountTransactions message];
@@ -450,7 +450,7 @@
 }
 
 - (void)createBalanceAccessToken:(NSString *)toUsername
-                      forAccount:(NSString *)accountId
+                    restrictedTo:(NSString *)accountId
                        onSuccess:(OnSuccessWithToken)onSuccess
                          onError:(OnError)onError {
     AccessBody_Resource_AccountBalance *balance = [AccessBody_Resource_AccountBalance message];

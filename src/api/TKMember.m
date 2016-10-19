@@ -284,11 +284,11 @@
 }
 
 - (Token *)createAddressAccessToken:(NSString *)toUsername
-                         forAddress:(NSString *)addressId {
+                       restrictedTo:(NSString *)addressId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createAddressAccessToken:toUsername
-                                  forAddress:addressId
+                                restrictedTo:addressId
                                    onSuccess:call.onSuccess
                                      onError:call.onError];
     }];
@@ -304,11 +304,11 @@
 }
 
 - (Token *)createAccountAccessToken:(NSString *)toUsername
-                         forAccount:(NSString *)accountId {
+                       restrictedTo:(NSString *)accountId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createAccountAccessToken:toUsername
-                                  forAccount:accountId
+                                restrictedTo:accountId
                                    onSuccess:call.onSuccess
                                      onError:call.onError];
     }];
@@ -324,11 +324,11 @@
 }
 
 - (Token *)createTransactionsAccessToken:(NSString *)toUsername
-                              forAccount:(NSString *)accountId {
+                            restrictedTo:(NSString *)accountId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTransactionsAccessToken:toUsername
-                                       forAccount:accountId
+                                     restrictedTo:accountId
                                         onSuccess:call.onSuccess
                                           onError:call.onError];
     }];
@@ -344,11 +344,11 @@
 }
 
 - (Token *)createBalanceAccessToken:(NSString *)toUsername
-                         forAccount:(NSString *)accountId {
+                       restrictedTo:(NSString *)accountId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createBalanceAccessToken:toUsername
-                                  forAccount:accountId
+                                restrictedTo:accountId
                                    onSuccess:call.onSuccess
                                      onError:call.onError];
     }];

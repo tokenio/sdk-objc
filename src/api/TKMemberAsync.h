@@ -344,7 +344,7 @@
  * @return the created access token
  */
 - (void)createAddressAccessToken:(NSString *)toUsername
-                      forAddress:(NSString *)addressId
+                    restrictedTo:(NSString *)addressId
                        onSuccess:(OnSuccessWithToken)onSuccess
                          onError:(OnError)onError;
 
@@ -366,7 +366,7 @@
  * @return the created access token
  */
 - (void)createAccountAccessToken:(NSString *)toUsername
-                      forAccount:(NSString *)accountId
+                    restrictedTo:(NSString *)accountId
                        onSuccess:(OnSuccessWithToken)onSuccess
                          onError:(OnError)onError;
 
@@ -390,7 +390,7 @@
  * @return the created access token
  */
 - (void)createTransactionsAccessToken:(NSString *)toUsername
-                           forAccount:(NSString *)accountId
+                         restrictedTo:(NSString *)accountId
                             onSuccess:(OnSuccessWithToken)onSuccess
                               onError:(OnError)onError;
 
@@ -412,7 +412,7 @@
  * @return the created access token
  */
 - (void)createBalanceAccessToken:(NSString *)toUsername
-                      forAccount:(NSString *)accountId
+                    restrictedTo:(NSString *)accountId
                        onSuccess:(OnSuccessWithToken)onSuccess
                          onError:(OnError)onError;
 

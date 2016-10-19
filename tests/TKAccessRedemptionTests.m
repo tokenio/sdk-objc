@@ -52,7 +52,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
-                                              forAddress:address.id_p];
+                                            restrictedTo:address.id_p];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
@@ -76,7 +76,7 @@
 - (void)testBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createBalanceAccessToken:grantee.firstUsername
-                                              forAccount:grantorAccount.id];
+                                            restrictedTo:grantorAccount.id];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
@@ -99,7 +99,7 @@
 - (void)testAccountToken {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createAccountAccessToken:grantee.firstUsername
-                                              forAccount:grantorAccount.id];
+                                            restrictedTo:grantorAccount.id];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
@@ -148,7 +148,7 @@
         [redeemer createTransfer:transferToken];
         
         Token *accessToken = [grantor createTransactionsAccessToken:grantee.firstUsername
-                                                         forAccount:grantorAccount.id];
+                                                       restrictedTo:grantorAccount.id];
         accessToken = [grantor endorseToken:accessToken];
         
         [grantee useAccessToken:accessToken.id_p];
