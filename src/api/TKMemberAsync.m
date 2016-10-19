@@ -345,10 +345,24 @@
                 onError:onError];
 }
 
-- (void)createAccessToken:(NSString *)toUsername
-               forAddress:(NSString *)addressId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError {
+- (void)createAddressAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
+    AccessBody_Resource_AllAddresses *addresses = [AccessBody_Resource_AllAddresses message];
+    
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.allAddresses = addresses;
+    
+    [self createAccessToken:toUsername
+               forResources:[NSArray arrayWithObject:resource]
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)createAddressAccessToken:(NSString *)toUsername
+                      forAddress:(NSString *)addressId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
     AccessBody_Resource_Address *address = [AccessBody_Resource_Address message];
     address.addressId = addressId;
     
@@ -361,7 +375,21 @@
                     onError:onError];
 }
 
-- (void)createAccessToken:(NSString *)toUsername
+- (void)createAccountAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
+    AccessBody_Resource_AllAccounts *accounts = [AccessBody_Resource_AllAccounts message];
+    
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.allAccounts = accounts;
+    
+    [self createAccessToken:toUsername
+               forResources:[NSArray arrayWithObject:resource]
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)createAccountAccessToken:(NSString *)toUsername
                forAccount:(NSString *)accountId
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
@@ -375,18 +403,61 @@
                forResources:[NSArray arrayWithObject:resource]
                   onSuccess:onSuccess
                     onError:onError];
-    
 }
 
-- (void)createAccessToken:(NSString *)toUsername
-   forAccountTransactions:(NSString *)accountId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError {
-    AccessBody_Resource_AccountTransactions *transaction = [AccessBody_Resource_AccountTransactions message];
-    transaction.accountId = accountId;
+- (void)createTransactionsAccessToken:(NSString *)toUsername
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError {
+    AccessBody_Resource_AllAccountTransactions *transactions = [AccessBody_Resource_AllAccountTransactions message];
     
     AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.transactions = transaction;
+    resource.allTransactions = transactions;
+    
+    [self createAccessToken:toUsername
+               forResources:[NSArray arrayWithObject:resource]
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)createTransactionsAccessToken:(NSString *)toUsername
+                            forAccount:(NSString *)accountId
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError {
+    AccessBody_Resource_AccountTransactions *transactions = [AccessBody_Resource_AccountTransactions message];
+    transactions.accountId = accountId;
+    
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.transactions = transactions;
+    
+    [self createAccessToken:toUsername
+               forResources:[NSArray arrayWithObject:resource]
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)createBalanceAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
+    AccessBody_Resource_AllAccountBalances *balances = [AccessBody_Resource_AllAccountBalances message];
+
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.allBalances = balances;
+    
+    [self createAccessToken:toUsername
+               forResources:[NSArray arrayWithObject:resource]
+                  onSuccess:onSuccess
+                    onError:onError];
+}
+
+- (void)createBalanceAccessToken:(NSString *)toUsername
+                      forAccount:(NSString *)accountId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError {
+    AccessBody_Resource_AccountBalance *balance = [AccessBody_Resource_AccountBalance message];
+    balance.accountId = accountId;
+    
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.balance = balance;
     
     [self createAccessToken:toUsername
                forResources:[NSArray arrayWithObject:resource]
@@ -493,6 +564,14 @@
                       forAccount:accountId
                        onSuccess:onSuccess
                          onError:onError];
+}
+
+- (void)getBalance:(NSString *)accountId
+             onSuccess:(OnSuccessWithMoney)onSuccess
+               onError:(OnError)onError {
+    [client getBalance:accountId
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
 

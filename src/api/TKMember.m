@@ -274,36 +274,83 @@
     }];
 }
 
-- (Token *)createAccessToken:(NSString *)toUsername
-                  forAddress:(NSString *)addressId {
+- (Token *)createAddressAccessToken:(NSString *)toUsernamed {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAccessToken:toUsername
-                           forAddress:addressId
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async createAddressAccessToken:toUsernamed
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
     }];
 }
 
-- (Token *)createAccessToken:(NSString *)toUsername
-                  forAccount:(NSString *)accountId {
+- (Token *)createAddressAccessToken:(NSString *)toUsername
+                         forAddress:(NSString *)addressId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAccessToken:toUsername
-                           forAccount:accountId
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async createAddressAccessToken:toUsername
+                                  forAddress:addressId
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
     }];
 }
 
-- (Token *)createAccessToken:(NSString *)toUsername
-      forAccountTransactions:(NSString *)accountId {
+- (Token *)createAccountAccessToken:(NSString *)toUsername {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAccessToken:toUsername
-               forAccountTransactions:accountId
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
+        [self.async createAccountAccessToken:toUsername
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
+    }];
+}
+
+- (Token *)createAccountAccessToken:(NSString *)toUsername
+                         forAccount:(NSString *)accountId {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createAccountAccessToken:toUsername
+                                  forAccount:accountId
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
+    }];
+}
+
+- (Token *)createTransactionsAccessToken:(NSString *)toUsername {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createTransactionsAccessToken:toUsername
+                                        onSuccess:call.onSuccess
+                                          onError:call.onError];
+    }];
+}
+
+- (Token *)createTransactionsAccessToken:(NSString *)toUsername
+                              forAccount:(NSString *)accountId {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createTransactionsAccessToken:toUsername
+                                       forAccount:accountId
+                                        onSuccess:call.onSuccess
+                                          onError:call.onError];
+    }];
+}
+
+- (Token *)createBalanceAccessToken:(NSString *)toUsername{
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createBalanceAccessToken:toUsername
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
+    }];
+}
+
+- (Token *)createBalanceAccessToken:(NSString *)toUsername
+                         forAccount:(NSString *)accountId {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createBalanceAccessToken:toUsername
+                                  forAccount:accountId
+                                   onSuccess:call.onSuccess
+                                     onError:call.onError];
     }];
 }
 
@@ -396,6 +443,15 @@
                                forAccount:accountId
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
+    }];
+}
+
+- (Money *)getBalance:(NSString *)accountId {
+    TKRpcSyncCall<Money *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBalance:accountId
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
     }];
 }
 

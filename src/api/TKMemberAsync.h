@@ -187,6 +187,15 @@
            onError:(OnError)onError;
 
 /**
+ * Looks up account balance.
+ *
+ * @param accountId account id
+ */
+- (void)getBalance:(NSString *)accountId
+         onSuccess:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError;
+
+/**
  * Looks up an existing token transfer.
  *
  * @param transferId ID of the transfer record
@@ -318,16 +327,36 @@
                   onError:(OnError)onError;
 
 /**
+ * Creates a new access for any addresses.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (void)createAddressAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError;
+
+/**
  * Creates a new access for an address.
  *
  * @param toUsername the redeemer username
  * @param addressId address id
  * @return the created access token
  */
-- (void)createAccessToken:(NSString *)toUsername
-               forAddress:(NSString *)addressId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError;
+- (void)createAddressAccessToken:(NSString *)toUsername
+                      forAddress:(NSString *)addressId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError;
+
+/**
+ * Creates a new access for any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (void)createAccountAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                        onError:(OnError)onError;
 
 /**
  * Creates a new access for an account.
@@ -336,10 +365,22 @@
  * @param accountId account id
  * @return the created access token
  */
-- (void)createAccessToken:(NSString *)toUsername
-               forAccount:(NSString *)accountId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError;
+- (void)createAccountAccessToken:(NSString *)toUsername
+                      forAccount:(NSString *)accountId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError;
+
+
+/**
+ * Creates a new access for transactions in any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (void)createTransactionsAccessToken:(NSString *)toUsername
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError;
+
 
 /**
  * Creates a new access for a transaction.
@@ -348,10 +389,32 @@
  * @param accountId account id
  * @return the created access token
  */
-- (void)createAccessToken:(NSString *)toUsername
-   forAccountTransactions:(NSString *)accountId
-                onSuccess:(OnSuccessWithToken)onSuccess
-                  onError:(OnError)onError;
+- (void)createTransactionsAccessToken:(NSString *)toUsername
+                           forAccount:(NSString *)accountId
+                            onSuccess:(OnSuccessWithToken)onSuccess
+                              onError:(OnError)onError;
+
+/**
+ * Creates a new access for balance of any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (void)createBalanceAccessToken:(NSString *)toUsername
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError;
+
+/**
+ * Creates a new access for account balance.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (void)createBalanceAccessToken:(NSString *)toUsername
+                      forAccount:(NSString *)accountId
+                       onSuccess:(OnSuccessWithToken)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Looks up a existing transfer token.
