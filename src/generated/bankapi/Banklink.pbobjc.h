@@ -65,10 +65,16 @@ typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
 #pragma mark - AuthorizeLinkAccountsResponse
 
 typedef GPB_ENUM(AuthorizeLinkAccountsResponse_FieldNumber) {
-  AuthorizeLinkAccountsResponse_FieldNumber_AccountsLinkPayload = 1,
+  AuthorizeLinkAccountsResponse_FieldNumber_BankId = 1,
+  AuthorizeLinkAccountsResponse_FieldNumber_BankName = 2,
+  AuthorizeLinkAccountsResponse_FieldNumber_AccountsLinkPayload = 3,
 };
 
 @interface AuthorizeLinkAccountsResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
 

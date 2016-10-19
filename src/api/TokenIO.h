@@ -70,11 +70,13 @@
  *
  * @param username username to notify
  * @param bankId bank id to link
+ * @param bankName bank name to link
  * @param accountsLinkPayload payload retrieved from bank
  */
-- (void)notifyLinkAccounts:(NSString * )username
+- (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
-       accountsLinkPayload:(NSString *) accountsLinkPayload;
+                  bankName:(NSString *)bankName
+       accountsLinkPayload:(NSString *)accountsLinkPayload;
 
 /**
  * Sends a notification to request adding of a key
@@ -92,13 +94,15 @@
  *
  * @param username username to notify
  * @param bankId bank id to link
+ * @param bankName bank name to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param publicKey key in string form
  * @param name optional name of key
  */
-- (void)notifyLinkAccountsAndAddKey:(NSString * )username
+- (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
-                accountsLinkPayload:(NSString *) accountsLinkPayload
+                           bankName:(NSString *)bankName
+                accountsLinkPayload:(NSString *)accountsLinkPayload
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name;
 

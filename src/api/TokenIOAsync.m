@@ -89,14 +89,16 @@
               onError:onError];
 }
 
-- (void)notifyLinkAccounts:(NSString * )username
+- (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
-       accountsLinkPayload:(NSString *) accountsLinkPayload
+                  bankName:(NSString *)bankName
+       accountsLinkPayload:(NSString *)accountsLinkPayload
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     [client notifyLinkAccounts:username
                         bankId:bankId
+                      bankName:bankName
            accountsLinkPayload:accountsLinkPayload
                      onSuccess:onSuccess
                        onError:onError];
@@ -117,9 +119,10 @@
 }
 
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )username
+- (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
-                accountsLinkPayload:(NSString *) accountsLinkPayload
+                           bankName:(NSString *)bankName
+                accountsLinkPayload:(NSString *)accountsLinkPayload
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess
@@ -127,6 +130,7 @@
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
     [client notifyLinkAccountsAndAddKey:username
                                  bankId:bankId
+                               bankName:bankName
                     accountsLinkPayload:accountsLinkPayload
                               publicKey:publicKey
                                    name:name

@@ -24,7 +24,8 @@ def fetch_protos()
         file = "tokenio-proto-#{type}-#{version}.jar"
         puts("Downloading #{file} ...")
 
-        url = "https://token.artifactoryonline.com/token/public-libs-release-local/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
+        #url = "https://token.artifactoryonline.com/token/public-libs-release-local/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
+        url = "/Users/maxim/.m2/repository/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
         open(file, 'wb') do |file|
             file << open(url).read
         end

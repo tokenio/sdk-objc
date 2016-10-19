@@ -11,7 +11,8 @@ message TransferProcessed {
 // A notification that a bank wants to be linked.
 message LinkAccounts {
     string bank_id = 1;
-    string accounts_link_payload = 2;
+    string bank_name = 2;
+    string accounts_link_payload = 3;
 }
 
 // A notification to step up / endorse a token.

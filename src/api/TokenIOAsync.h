@@ -79,13 +79,15 @@
  *
  * @param username username to notify
  * @param bankId bank id to link
+ * @param bankName bank name to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyLinkAccounts:(NSString * )username
+- (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
-       accountsLinkPayload:(NSString *) accountsLinkPayload
+                  bankName:(NSString *)bankName
+       accountsLinkPayload:(NSString *)accountsLinkPayload
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError;
 
@@ -98,7 +100,7 @@
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyAddKey:(NSString * )username
+- (void)notifyAddKey:(NSString *)username
            publicKey:(NSString *)publicKey
                 name:(NSString *)name
            onSuccess:(OnSuccess)onSuccess
@@ -109,19 +111,21 @@
  *
  * @param username username to notify
  * @param bankId bank id to link
+ * @param bankName bank name to link
  * @param accountsLinkPayload payload retrieved from bank
  * @param publicKey key in string form
  * @param name name of key
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyLinkAccountsAndAddKey:(NSString * )username
-              bankId:(NSString *)bankId
- accountsLinkPayload:(NSString *) accountsLinkPayload
-           publicKey:(NSString *)publicKey
-                name:(NSString *)name
-           onSuccess:(OnSuccess)onSuccess
-             onError:(OnError)onError;
+- (void)notifyLinkAccountsAndAddKey:(NSString *)username
+                             bankId:(NSString *)bankId
+                           bankName:(NSString *)bankName
+                accountsLinkPayload:(NSString *)accountsLinkPayload
+                          publicKey:(NSString *)publicKey
+                               name:(NSString *)name
+                          onSuccess:(OnSuccess)onSuccess
+                            onError:(OnError)onError;
 
 
 @end

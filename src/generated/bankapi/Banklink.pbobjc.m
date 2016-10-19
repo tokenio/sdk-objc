@@ -132,10 +132,14 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
 
 @implementation AuthorizeLinkAccountsResponse
 
+@dynamic bankId;
+@dynamic bankName;
 @dynamic accountsLinkPayload;
 
 typedef struct AuthorizeLinkAccountsResponse__storage_ {
   uint32_t _has_storage_[1];
+  NSString *bankId;
+  NSString *bankName;
   NSString *accountsLinkPayload;
 } AuthorizeLinkAccountsResponse__storage_;
 
@@ -146,10 +150,28 @@ typedef struct AuthorizeLinkAccountsResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = AuthorizeLinkAccountsResponse_FieldNumber_BankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankName",
+        .dataTypeSpecific.className = NULL,
+        .number = AuthorizeLinkAccountsResponse_FieldNumber_BankName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, bankName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "accountsLinkPayload",
         .dataTypeSpecific.className = NULL,
         .number = AuthorizeLinkAccountsResponse_FieldNumber_AccountsLinkPayload,
-        .hasIndex = 0,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, accountsLinkPayload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
