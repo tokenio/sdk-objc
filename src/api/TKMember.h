@@ -146,6 +146,14 @@
 - (TKAccount *)getAccount:(NSString *)accountId;
 
 /**
+ * Looks up account balance.
+ *
+ * @param accountId account id
+ * @return account balance
+ */
+- (Money *)getBalance:(NSString *)accountId;
+
+/**
  * Looks up an existing token transfer.
  *
  * @param transferId ID of the transfer record
@@ -247,34 +255,77 @@
                 forResources:(NSArray<AccessBody_Resource *> *)resources;
 
 /**
- * Creates a new access for an address.
+ * Creates a new access token for any addresses.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (Token *)createAddressAccessToken:(NSString *)toUsername;
+
+/**
+ * Creates a new access token for a given address.
  *
  * @param toUsername the redeemer username
  * @param addressId address id
  * @return the created access token
  */
-- (Token *)createAccessToken:(NSString *)toUsername
-                  forAddress:(NSString *)addressId;
+- (Token *)createAddressAccessToken:(NSString *)toUsername
+                       restrictedTo:(NSString *)addressId;
 
 /**
- * Creates a new access for an account.
+ * Creates a new access token for any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (Token *)createAccountAccessToken:(NSString *)toUsername;
+
+/**
+ * Creates a new access token for a given account.
  *
  * @param toUsername the redeemer username
  * @param accountId account id
  * @return the created access token
  */
-- (Token *)createAccessToken:(NSString *)toUsername
-                  forAccount:(NSString *)accountId;
+- (Token *)createAccountAccessToken:(NSString *)toUsername
+                       restrictedTo:(NSString *)accountId;
 
 /**
- * Creates a new access for a transaction.
+ * Creates a new access tokrn for transactions in any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (Token *)createTransactionsAccessToken:(NSString *)toUsername;
+
+
+/**
+ * Creates a new access token for transactions in a given account.
  *
  * @param toUsername the redeemer username
  * @param accountId account id
  * @return the created access token
  */
-- (Token *)createAccessToken:(NSString *)toUsername
-      forAccountTransactions:(NSString *)accountId;
+- (Token *)createTransactionsAccessToken:(NSString *)toUsername
+                            restrictedTo:(NSString *)accountId;
+
+/**
+ * Creates a new access token for balance of any account.
+ *
+ * @param toUsername the redeemer username
+ * @return the created access token
+ */
+- (Token *)createBalanceAccessToken:(NSString *)toUsername;
+
+/**
+ * Creates a new access token for account balance.
+ *
+ * @param toUsername the redeemer username
+ * @param accountId account id
+ * @return the created access token
+ */
+- (Token *)createBalanceAccessToken:(NSString *)toUsername
+                       restrictedTo:(NSString *)accountId;
 
 /**
  * Looks up a existing token.

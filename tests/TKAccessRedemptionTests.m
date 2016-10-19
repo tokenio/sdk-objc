@@ -35,11 +35,10 @@
     }];
 }
 
-- (void)testAddressToken {
+- (void)testAnyAddressToken {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAddress:address.id_p];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
@@ -49,16 +48,88 @@
     }];
 }
 
-- (void)testAccountToken {
+- (void)testAddressToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAccount:grantorAccount.id];
+        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername
+                                            restrictedTo:address.id_p];
+        token = [grantor endorseToken:token];
+        
+        [grantee useAccessToken:token.id_p];
+        Address *lookedUp = [grantee getAddressWithId:address.id_p];
+        
+        XCTAssertEqualObjects(address, lookedUp);
+    }];
+}
+
+- (void)testAnyBalanceToken {
+    [self run: ^(TokenIO *tokenIO) {
+        Token *token = [grantor createBalanceAccessToken:grantee.firstUsername];
+        token = [grantor endorseToken:token];
+        
+        [grantee useAccessToken:token.id_p];
+        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
+        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance);
+    }];
+}
+
+- (void)testBalanceToken {
+    [self run: ^(TokenIO *tokenIO) {
+        Token *token = [grantor createBalanceAccessToken:grantee.firstUsername
+                                            restrictedTo:grantorAccount.id];
+        token = [grantor endorseToken:token];
+        
+        [grantee useAccessToken:token.id_p];
+        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
+        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance);
+    }];
+}
+
+- (void)testAnyAccountToken {
+    [self run: ^(TokenIO *tokenIO) {
+        Token *token = [grantor createAccountAccessToken:grantee.firstUsername];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
-        
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
+    }];
+}
+
+- (void)testAccountToken {
+    [self run: ^(TokenIO *tokenIO) {
+        Token *token = [grantor createAccountAccessToken:grantee.firstUsername
+                                            restrictedTo:grantorAccount.id];
+        token = [grantor endorseToken:token];
+        
+        [grantee useAccessToken:token.id_p];
+        TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+        XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
+    }];
+}
+
+- (void)testAnyAccountTransactionsToken {
+    [self run: ^(TokenIO *tokenIO) {
+        TKAccount *redeemerAccount = [self createAccount:tokenIO];
+        TKMember *redeemer = redeemerAccount.member;
+        
+        // Create and redeem transfer token to create a transaction.
+        Token *transferToken = [grantor createTransferToken:redeemer.firstUsername
+                                                 forAccount:grantorAccount.id
+                                                     amount:100.99
+                                                   currency:@"USD"
+                                                description:@"transfer test"];
+        transferToken = [grantor endorseToken:transferToken];
+        [redeemer createTransfer:transferToken];
+        
+        Token *accessToken = [grantor createTransactionsAccessToken:grantee.firstUsername];
+        accessToken = [grantor endorseToken:accessToken];
+        
+        [grantee useAccessToken:accessToken.id_p];
+        NSArray<Transaction*> *lookedUpTransactions = [grantee getTransactionsOffset:nil
+                                                                               limit:100
+                                                                          forAccount:grantorAccount.id];
+        XCTAssertEqual(1, [lookedUpTransactions count]);
     }];
 }
 
@@ -76,8 +147,8 @@
         transferToken = [grantor endorseToken:transferToken];
         [redeemer createTransfer:transferToken];
         
-        Token *accessToken = [grantor createAccessToken:grantee.firstUsername
-                                 forAccountTransactions:grantorAccount.id];
+        Token *accessToken = [grantor createTransactionsAccessToken:grantee.firstUsername
+                                                       restrictedTo:grantorAccount.id];
         accessToken = [grantor endorseToken:accessToken];
         
         [grantee useAccessToken:accessToken.id_p];

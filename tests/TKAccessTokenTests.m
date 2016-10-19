@@ -36,8 +36,8 @@
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAddress:address.id_p];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername
+                                            restrictedTo:address.id_p];
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
 }
@@ -45,8 +45,8 @@
 - (void)testLookupToken {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAddress:address.id_p];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername
+                                            restrictedTo:address.id_p];
         
         Token *lookedUp = [grantee getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
@@ -56,9 +56,9 @@
 - (void)testLookupTokens {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        [grantor createAccessToken:grantee.firstUsername forAddress:address.id_p];
-        [grantor createAccessToken:grantee.firstUsername forAddress:address.id_p];
-        [grantor createAccessToken:grantee.firstUsername forAddress:address.id_p];
+        [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
+        [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
+        [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
         
         NSArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
         XCTAssertEqual(lookedUp.count, 3);
@@ -68,8 +68,8 @@
 - (void)testEndorseToken {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAddress:address.id_p];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername
+                                            restrictedTo:address.id_p];
         Token *endorsed = [grantor endorseToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
@@ -81,8 +81,8 @@
 - (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
         Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
-        Token *token = [grantor createAccessToken:grantee.firstUsername
-                                       forAddress:address.id_p];
+        Token *token = [grantor createAddressAccessToken:grantee.firstUsername
+                                            restrictedTo:address.id_p];
         Token *cancelled = [grantor cancelToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
