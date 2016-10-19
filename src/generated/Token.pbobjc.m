@@ -804,15 +804,25 @@ typedef struct AccessBody__storage_ {
 @implementation AccessBody_Resource
 
 @dynamic resourceOneOfCase;
+@dynamic allAddresses;
+@dynamic allAccounts;
+@dynamic allTransactions;
+@dynamic allBalances;
 @dynamic address;
 @dynamic account;
-@dynamic transaction;
+@dynamic transactions;
+@dynamic balance;
 
 typedef struct AccessBody_Resource__storage_ {
   uint32_t _has_storage_[2];
+  AccessBody_Resource_AllAddresses *allAddresses;
+  AccessBody_Resource_AllAccounts *allAccounts;
+  AccessBody_Resource_AllAccountTransactions *allTransactions;
+  AccessBody_Resource_AllAccountBalances *allBalances;
   AccessBody_Resource_Address *address;
   AccessBody_Resource_Account *account;
-  AccessBody_Resource_Transaction *transaction;
+  AccessBody_Resource_AccountTransactions *transactions;
+  AccessBody_Resource_AccountBalance *balance;
 } AccessBody_Resource__storage_;
 
 // This method is threadsafe because it is initially called
@@ -821,6 +831,42 @@ typedef struct AccessBody_Resource__storage_ {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "allAddresses",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllAddresses),
+        .number = AccessBody_Resource_FieldNumber_AllAddresses,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAddresses),
+        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allAccounts",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllAccounts),
+        .number = AccessBody_Resource_FieldNumber_AllAccounts,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAccounts),
+        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allTransactions",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllAccountTransactions),
+        .number = AccessBody_Resource_FieldNumber_AllTransactions,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allTransactions),
+        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allBalances",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllAccountBalances),
+        .number = AccessBody_Resource_FieldNumber_AllBalances,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allBalances),
+        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .dataType = GPBDataTypeMessage,
+      },
       {
         .name = "address",
         .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_Address),
@@ -840,11 +886,20 @@ typedef struct AccessBody_Resource__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "transaction",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_Transaction),
-        .number = AccessBody_Resource_FieldNumber_Transaction,
+        .name = "transactions",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AccountTransactions),
+        .number = AccessBody_Resource_FieldNumber_Transactions,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, transaction),
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, transactions),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "balance",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AccountBalance),
+        .number = AccessBody_Resource_FieldNumber_Balance,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, balance),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -863,6 +918,11 @@ typedef struct AccessBody_Resource__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\004\001\014\000\002\013\000\003\017\000\004\013\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -876,6 +936,36 @@ void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message) {
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
+#pragma mark - AccessBody_Resource_AllAddresses
+
+@implementation AccessBody_Resource_AllAddresses
+
+
+typedef struct AccessBody_Resource_AllAddresses__storage_ {
+  uint32_t _has_storage_[1];
+} AccessBody_Resource_AllAddresses__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllAddresses class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(AccessBody_Resource_AllAddresses__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AccessBody_Resource_Address
 
 @implementation AccessBody_Resource_Address
@@ -910,6 +1000,36 @@ typedef struct AccessBody_Resource_Address__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_Address__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AllAccounts
+
+@implementation AccessBody_Resource_AllAccounts
+
+
+typedef struct AccessBody_Resource_AllAccounts__storage_ {
+  uint32_t _has_storage_[1];
+} AccessBody_Resource_AllAccounts__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllAccounts class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(AccessBody_Resource_AllAccounts__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -962,16 +1082,46 @@ typedef struct AccessBody_Resource_Account__storage_ {
 
 @end
 
-#pragma mark - AccessBody_Resource_Transaction
+#pragma mark - AccessBody_Resource_AllAccountTransactions
 
-@implementation AccessBody_Resource_Transaction
+@implementation AccessBody_Resource_AllAccountTransactions
+
+
+typedef struct AccessBody_Resource_AllAccountTransactions__storage_ {
+  uint32_t _has_storage_[1];
+} AccessBody_Resource_AllAccountTransactions__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllAccountTransactions class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(AccessBody_Resource_AllAccountTransactions__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AccountTransactions
+
+@implementation AccessBody_Resource_AccountTransactions
 
 @dynamic accountId;
 
-typedef struct AccessBody_Resource_Transaction__storage_ {
+typedef struct AccessBody_Resource_AccountTransactions__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-} AccessBody_Resource_Transaction__storage_;
+} AccessBody_Resource_AccountTransactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -982,20 +1132,93 @@ typedef struct AccessBody_Resource_Transaction__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = AccessBody_Resource_Transaction_FieldNumber_AccountId,
+        .number = AccessBody_Resource_AccountTransactions_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessBody_Resource_Transaction__storage_, accountId),
+        .offset = (uint32_t)offsetof(AccessBody_Resource_AccountTransactions__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_Transaction class]
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AccountTransactions class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessBody_Resource_Transaction__storage_)
+                                   storageSize:sizeof(AccessBody_Resource_AccountTransactions__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AllAccountBalances
+
+@implementation AccessBody_Resource_AllAccountBalances
+
+
+typedef struct AccessBody_Resource_AllAccountBalances__storage_ {
+  uint32_t _has_storage_[1];
+} AccessBody_Resource_AllAccountBalances__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllAccountBalances class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(AccessBody_Resource_AllAccountBalances__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AccountBalance
+
+@implementation AccessBody_Resource_AccountBalance
+
+@dynamic accountId;
+
+typedef struct AccessBody_Resource_AccountBalance__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+} AccessBody_Resource_AccountBalance__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = AccessBody_Resource_AccountBalance_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AccessBody_Resource_AccountBalance__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AccountBalance class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AccessBody_Resource_AccountBalance__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

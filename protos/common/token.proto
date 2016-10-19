@@ -100,24 +100,46 @@ message AccessBody {
 
   message Resource {
     oneof resource {
-      Address address = 1;
-      Account account = 2;
-      Transaction transaction = 3;
+      AllAddresses allAddresses = 1;
+      AllAccounts allAccounts = 2;
+      AllAccountTransactions allTransactions = 3;
+      AllAccountBalances allBalances = 4;
+      Address address = 5;
+      Account account = 6;
+      AccountTransactions transactions = 7;
+      AccountBalance balance = 8;
     }
 
-    // Provides Access to member address information
+    // Provides access to all member addresses
+    message AllAddresses {}
+
+    // Provides access to a specific member address
     message Address {
-      string address_id = 1;                              // Optional
+      string address_id = 1;
     }
 
-    // Provides access to member account balance
+    // Provides access to all member accounts
+    message AllAccounts {}
+
+    // Provides access to a specific member account balance
     message Account {
-      string account_id = 1;                              // Optional
+      string account_id = 1;
     }
 
-    // Provides access to account transactions
-    message Transaction {
-      string account_id = 1;                              // Optional
+    // Provides access to member transactions in all accounts
+    message AllAccountTransactions {}
+
+    // Provides access to a specific account transactions
+    message AccountTransactions {
+      string account_id = 1;
+    }
+
+    // Provides access to member balance on all accounts
+    message AllAccountBalances {}
+
+    // Provides access to a specific account balance
+    message AccountBalance {
+      string account_id = 1;
     }
   }
 }
