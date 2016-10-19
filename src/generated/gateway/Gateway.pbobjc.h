@@ -495,35 +495,6 @@ typedef GPB_ENUM(GetAccountsResponse_FieldNumber) {
 
 @end
 
-#pragma mark - SetAccountNameRequest
-
-typedef GPB_ENUM(SetAccountNameRequest_FieldNumber) {
-  SetAccountNameRequest_FieldNumber_AccountId = 1,
-  SetAccountNameRequest_FieldNumber_Name = 2,
-};
-
-@interface SetAccountNameRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
-@end
-
-#pragma mark - SetAccountNameResponse
-
-typedef GPB_ENUM(SetAccountNameResponse_FieldNumber) {
-  SetAccountNameResponse_FieldNumber_Account = 1,
-};
-
-@interface SetAccountNameResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Account *account;
-/// Test to see if @c account has been set.
-@property(nonatomic, readwrite) BOOL hasAccount;
-
-@end
-
 #pragma mark - GetBalanceRequest
 
 typedef GPB_ENUM(GetBalanceRequest_FieldNumber) {

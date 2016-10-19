@@ -262,18 +262,6 @@
              responseClass:[GetAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark SetAccountName(SetAccountNameRequest) returns (SetAccountNameResponse)
-
-- (void)setAccountNameWithRequest:(SetAccountNameRequest *)request handler:(void(^)(SetAccountNameResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSetAccountNameWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetAccountNameWithRequest:(SetAccountNameRequest *)request handler:(void(^)(SetAccountNameResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SetAccountName"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SetAccountNameResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
 #pragma mark GetBalance(GetBalanceRequest) returns (GetBalanceResponse)
 
 - (void)getBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
