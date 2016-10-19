@@ -26,6 +26,7 @@ CF_EXTERN_C_BEGIN
 
 @class Account;
 @class Address;
+@class AddressRecord;
 @class Member;
 @class MemberUpdate;
 @class Money;
@@ -197,19 +198,21 @@ typedef GPB_ENUM(UsernameExistsResponse_FieldNumber) {
 
 typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
   AddAddressRequest_FieldNumber_Name = 1,
-  AddAddressRequest_FieldNumber_Data_p = 2,
-  AddAddressRequest_FieldNumber_DataSignature = 3,
+  AddAddressRequest_FieldNumber_Address = 2,
+  AddAddressRequest_FieldNumber_AddressSignature = 3,
 };
 
 @interface AddAddressRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *data_p;
+@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+/// Test to see if @c address has been set.
+@property(nonatomic, readwrite) BOOL hasAddress;
 
-@property(nonatomic, readwrite, strong, null_resettable) Signature *dataSignature;
-/// Test to see if @c dataSignature has been set.
-@property(nonatomic, readwrite) BOOL hasDataSignature;
+@property(nonatomic, readwrite, strong, null_resettable) Signature *addressSignature;
+/// Test to see if @c addressSignature has been set.
+@property(nonatomic, readwrite) BOOL hasAddressSignature;
 
 @end
 
@@ -221,7 +224,7 @@ typedef GPB_ENUM(AddAddressResponse_FieldNumber) {
 
 @interface AddAddressResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+@property(nonatomic, readwrite, strong, null_resettable) AddressRecord *address;
 /// Test to see if @c address has been set.
 @property(nonatomic, readwrite) BOOL hasAddress;
 
@@ -247,7 +250,7 @@ typedef GPB_ENUM(GetAddressResponse_FieldNumber) {
 
 @interface GetAddressResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+@property(nonatomic, readwrite, strong, null_resettable) AddressRecord *address;
 /// Test to see if @c address has been set.
 @property(nonatomic, readwrite) BOOL hasAddress;
 
@@ -267,7 +270,7 @@ typedef GPB_ENUM(GetAddressesResponse_FieldNumber) {
 
 @interface GetAddressesResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Address*> *addressesArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AddressRecord*> *addressesArray;
 /// The number of items in @c addressesArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger addressesArray_Count;
 

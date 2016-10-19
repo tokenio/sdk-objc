@@ -247,14 +247,14 @@
                        onError:onError];
 }
 
-- (void)addAddressWithName:(NSString *)name
-                  withData:(NSString *)data
-                 onSuccess:(OnSuccessWithAddress)onSuccess
-                   onError:(OnError)onError {
-    [client addAddressWithName:name
-                      withData:data
-                     onSuccess:onSuccess
-                       onError:onError];
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
+         onSuccess:(OnSuccessWithAddress)onSuccess
+           onError:(OnError)onError {
+    [client addAddress:address
+              withName:name
+             onSuccess:onSuccess
+               onError:onError];
 }
 
 - (void)getAddressWithId:(NSString *)addressId

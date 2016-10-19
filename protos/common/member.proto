@@ -3,6 +3,7 @@ package io.token.proto.common.member;
 
 option java_outer_classname = "MemberProtos";
 
+import "address.proto";
 import "security.proto";
 
 
@@ -44,9 +45,9 @@ message Member {
 }
 
 // A member address record
-message Address {
+message AddressRecord {
   string id = 1; // Address id
   string name = 2; // The display name of the address
-  string payload = 3; // Country specific JSON address
-  io.token.proto.common.security.Signature payload_signature = 4; // member signature of the data
+  io.token.proto.common.address.Address address = 3; // Country specific JSON address
+  io.token.proto.common.security.Signature address_signature = 4; // member signature of the address
 }

@@ -541,15 +541,15 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)addAddressWithName:(NSString * )name
-                  withData:(NSString *)data
-                 onSuccess:(OnSuccessWithAddress)onSuccess
-                   onError:(OnError)onError {
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
+         onSuccess:(OnSuccessWithAddress)onSuccess
+           onError:(OnError)onError {
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
-    request.data_p = data;
-    request.dataSignature.keyId = key.id;
-    request.dataSignature.signature = [TKCrypto signPayload:data usingKey:key];
+    request.address = address;
+    request.addressSignature.keyId = key.id;
+    request.addressSignature.signature = [TKCrypto sign:address usingKey:key];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

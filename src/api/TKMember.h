@@ -15,6 +15,7 @@
 @class TKClient;
 @class TKMemberAsync;
 @class Address;
+@class AddressRecord;
 @class AccessBody_Resource;
 
 
@@ -184,12 +185,12 @@
 /**
  * Creates a new member address.
  *
+ * @param address the address
  * @param name the name of the address
- * @param address the address json
  * @return the address record created
  */
-- (Address *)addAddressWithName:(NSString *)name
-                       withData:(NSString *)data;
+- (AddressRecord *)addAddress:(Address *)address
+                     withName:(NSString *)name;
 
 /**
  * Looks up an address by id.
@@ -197,14 +198,14 @@
  * @param addressId the address id
  * @return an address record
  */
-- (Address *)getAddressWithId:(NSString *)addressId;
+- (AddressRecord *)getAddressWithId:(NSString *)addressId;
 
 /**
  * Looks up member addresses.
  *
  * @return a list of addresses
  */
-- (NSArray<Address *> *)getAddresses;
+- (NSArray<AddressRecord *> *)getAddresses;
 
 /**
  * Deletes a member address by its id.

@@ -4,6 +4,7 @@ package io.token.proto.gateway;
 import "google/api/annotations.proto";
 
 import "account.proto";
+import "address.proto";
 import "member.proto";
 import "money.proto";
 import "notification.proto";
@@ -63,12 +64,12 @@ message UsernameExistsResponse {
 
 message AddAddressRequest {
   string name = 1;
-  string data = 2;
-  io.token.proto.common.security.Signature data_signature = 3;
+  io.token.proto.common.address.Address address = 2;
+  io.token.proto.common.security.Signature address_signature = 3;
 }
 
 message AddAddressResponse {
-  io.token.proto.common.member.Address address = 1;
+  io.token.proto.common.member.AddressRecord address = 1;
 }
 
 message GetAddressRequest {
@@ -76,13 +77,13 @@ message GetAddressRequest {
 }
 
 message GetAddressResponse {
-  io.token.proto.common.member.Address address = 1;
+  io.token.proto.common.member.AddressRecord address = 1;
 }
 
 message GetAddressesRequest {}
 
 message GetAddressesResponse {
-  repeated io.token.proto.common.member.Address addresses = 1;
+  repeated io.token.proto.common.member.AddressRecord addresses = 1;
 }
 
 message DeleteAddressRequest {
@@ -293,7 +294,7 @@ service GatewayService {
 
   rpc UpdateMember (UpdateMemberRequest) returns (UpdateMemberResponse) {
     option (google.api.http) = {
-        post: "/members/{update.member_id}"
+        post: "/members/{update.member_id}/updates"
     };
   }
 

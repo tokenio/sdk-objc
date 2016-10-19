@@ -10,6 +10,7 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Token.pbobjc.h"
@@ -37,12 +38,13 @@
 
 - (void)testAnyAddressToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
-        Address *lookedUp = [grantee getAddressWithId:address.id_p];
+        AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
         
         XCTAssertEqualObjects(address, lookedUp);
     }];
@@ -50,13 +52,14 @@
 
 - (void)testAddressToken {
     [self run: ^(TokenIO *tokenIO) {
-        Address *address = [grantor addAddressWithName:@"Home" withData:@"Data"];
+        Address *payload = [Address message];
+        AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
         token = [grantor endorseToken:token];
         
         [grantee useAccessToken:token.id_p];
-        Address *lookedUp = [grantee getAddressWithId:address.id_p];
+        AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
         
         XCTAssertEqualObjects(address, lookedUp);
     }];

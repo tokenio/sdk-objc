@@ -24,6 +24,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Address;
 @class Key;
 @class MemberAddKeyOperation;
 @class MemberRemoveKeyOperation;
@@ -165,17 +166,17 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 @end
 
-#pragma mark - Address
+#pragma mark - AddressRecord
 
-typedef GPB_ENUM(Address_FieldNumber) {
-  Address_FieldNumber_Id_p = 1,
-  Address_FieldNumber_Name = 2,
-  Address_FieldNumber_Payload = 3,
-  Address_FieldNumber_PayloadSignature = 4,
+typedef GPB_ENUM(AddressRecord_FieldNumber) {
+  AddressRecord_FieldNumber_Id_p = 1,
+  AddressRecord_FieldNumber_Name = 2,
+  AddressRecord_FieldNumber_Address = 3,
+  AddressRecord_FieldNumber_AddressSignature = 4,
 };
 
 /// A member address record
-@interface Address : GPBMessage
+@interface AddressRecord : GPBMessage
 
 /// Address id
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
@@ -184,12 +185,14 @@ typedef GPB_ENUM(Address_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 /// Country specific JSON address
-@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+/// Test to see if @c address has been set.
+@property(nonatomic, readwrite) BOOL hasAddress;
 
-/// member signature of the data
-@property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
-/// Test to see if @c payloadSignature has been set.
-@property(nonatomic, readwrite) BOOL hasPayloadSignature;
+/// member signature of the address
+@property(nonatomic, readwrite, strong, null_resettable) Signature *addressSignature;
+/// Test to see if @c addressSignature has been set.
+@property(nonatomic, readwrite) BOOL hasAddressSignature;
 
 @end
 

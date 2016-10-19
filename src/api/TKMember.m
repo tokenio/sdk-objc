@@ -198,19 +198,19 @@
     }];
 }
 
-- (Address *)addAddressWithName:(NSString *)name
-                       withData:(NSString *)data {
-    TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
+- (AddressRecord *)addAddress:(Address *)address
+                     withName:(NSString *)name {
+    TKRpcSyncCall<AddressRecord *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async addAddressWithName:name
-                              withData:data
-                             onSuccess:call.onSuccess
-                               onError:call.onError];
+        [self.async addAddress:address
+                      withName:name
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
     }];
 }
 
-- (Address *)getAddressWithId:(NSString *)addressId {
-    TKRpcSyncCall<Address *> *call = [TKRpcSyncCall create];
+- (AddressRecord *)getAddressWithId:(NSString *)addressId {
+    TKRpcSyncCall<AddressRecord *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getAddressWithId:addressId
                            onSuccess:call.onSuccess
@@ -218,8 +218,8 @@
     }];
 }
 
-- (NSArray<Address *> *)getAddresses {
-    TKRpcSyncCall<NSArray<Address *> *> *call = [TKRpcSyncCall create];
+- (NSArray<AddressRecord *> *)getAddresses {
+    TKRpcSyncCall<NSArray<AddressRecord *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getAddresses:call.onSuccess
                          onError:call.onError];
