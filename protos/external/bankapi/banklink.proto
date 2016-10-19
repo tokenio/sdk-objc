@@ -11,7 +11,9 @@ message AuthorizeLinkAccountsRequest {
 }
 
 message AuthorizeLinkAccountsResponse {
-  string accounts_link_payload = 1;
+  string bank_id = 1;
+  string bank_name = 2;
+  string accounts_link_payload = 3;
 }
 
 

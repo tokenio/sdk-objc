@@ -59,13 +59,15 @@
     }];
 }
 
-- (void)notifyLinkAccounts:(NSString * )username
+- (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
-       accountsLinkPayload:(NSString *) accountsLinkPayload {
+                  bankName:(NSString *)bankName
+       accountsLinkPayload:(NSString *)accountsLinkPayload {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccounts:username
                                 bankId:bankId
+                              bankName:bankName
                    accountsLinkPayload:accountsLinkPayload
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
@@ -87,20 +89,22 @@
     }];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )username
+- (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
-                accountsLinkPayload:(NSString *) accountsLinkPayload
+                           bankName:(NSString *)bankName
+                accountsLinkPayload:(NSString *)accountsLinkPayload
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccountsAndAddKey:username
-                          bankId:bankId
-             accountsLinkPayload:accountsLinkPayload
-                       publicKey:publicKey
-                            name:name
-                       onSuccess:^(void) {call.onSuccess(nil);}
-                         onError:call.onError
+                                         bankId:bankId
+                                       bankName:bankName
+                            accountsLinkPayload:accountsLinkPayload
+                                      publicKey:publicKey
+                                           name:name
+                                      onSuccess:^(void) {call.onSuccess(nil);}
+                                        onError:call.onError
          ];
     }];
 }

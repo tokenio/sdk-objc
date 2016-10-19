@@ -90,12 +90,14 @@
 
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
+                  bankName:(NSString *)bankName
        accountsLinkPayload:(NSString *)accountsLinkPayload
                  onSuccess:(void (^)())onSuccess
                    onError:(void (^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
     request.notification.linkAccounts.bankId = bankId;
+    request.notification.linkAccounts.bankName = bankName;
     request.notification.linkAccounts.accountsLinkPayload = accountsLinkPayload;
     RpcLogStart(request);
     
@@ -111,8 +113,8 @@
                                    }];
 }
 
-- (void)notifyAddKey:(NSString * )username
-           publicKey:(NSString *) publicKey
+- (void)notifyAddKey:(NSString *)username
+           publicKey:(NSString *)publicKey
                 name:(NSString*)name
            onSuccess:(void(^)())onSuccess
              onError:(void(^)(NSError *))onError {
@@ -134,16 +136,18 @@
                              }];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString * )username
+- (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
-                accountsLinkPayload:(NSString *) accountsLinkPayload
-                          publicKey:(NSString *) publicKey
+                           bankName:(NSString *)bankName
+                accountsLinkPayload:(NSString *)accountsLinkPayload
+                          publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(void(^)())onSuccess
                             onError:(void(^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
     request.notification.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
+    request.notification.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
     request.notification.linkAccountsAndAddKey.linkAccounts.accountsLinkPayload = accountsLinkPayload;
     request.notification.linkAccountsAndAddKey.addKey.publicKey = publicKey;
     request.notification.linkAccountsAndAddKey.addKey.name = name;

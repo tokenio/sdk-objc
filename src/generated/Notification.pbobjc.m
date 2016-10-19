@@ -88,11 +88,13 @@ typedef struct TransferProcessed__storage_ {
 @implementation LinkAccounts
 
 @dynamic bankId;
+@dynamic bankName;
 @dynamic accountsLinkPayload;
 
 typedef struct LinkAccounts__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
+  NSString *bankName;
   NSString *accountsLinkPayload;
 } LinkAccounts__storage_;
 
@@ -112,10 +114,19 @@ typedef struct LinkAccounts__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
+        .name = "bankName",
+        .dataTypeSpecific.className = NULL,
+        .number = LinkAccounts_FieldNumber_BankName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(LinkAccounts__storage_, bankName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "accountsLinkPayload",
         .dataTypeSpecific.className = NULL,
         .number = LinkAccounts_FieldNumber_AccountsLinkPayload,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountsLinkPayload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,

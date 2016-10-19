@@ -77,6 +77,7 @@
         
         [tokenIO notifyLinkAccounts:payer.firstUsername
                              bankId:@"bank-id"
+                           bankName:@"bank-name"
                 accountsLinkPayload:@"12345"];
     }];
 }
@@ -106,6 +107,7 @@
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
                                       bankId:@"bank-id"
+                                    bankName:@"bank-name"
                          accountsLinkPayload:@"12345"
                                    publicKey:key.publicKeyStr
                                         name:@"Chrome 53.0"];

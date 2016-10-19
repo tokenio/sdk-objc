@@ -27,8 +27,13 @@ CF_EXTERN_C_BEGIN
 @class AccessBody;
 @class AccessBody_Resource;
 @class AccessBody_Resource_Account;
+@class AccessBody_Resource_AccountBalance;
+@class AccessBody_Resource_AccountTransactions;
 @class AccessBody_Resource_Address;
-@class AccessBody_Resource_Transaction;
+@class AccessBody_Resource_AllAccountBalances;
+@class AccessBody_Resource_AllAccountTransactions;
+@class AccessBody_Resource_AllAccounts;
+@class AccessBody_Resource_AllAddresses;
 @class DoubleRange;
 @class Signature;
 @class TimePeriod;
@@ -348,32 +353,59 @@ typedef GPB_ENUM(AccessBody_FieldNumber) {
 #pragma mark - AccessBody_Resource
 
 typedef GPB_ENUM(AccessBody_Resource_FieldNumber) {
-  AccessBody_Resource_FieldNumber_Address = 1,
-  AccessBody_Resource_FieldNumber_Account = 2,
-  AccessBody_Resource_FieldNumber_Transaction = 3,
+  AccessBody_Resource_FieldNumber_AllAddresses = 1,
+  AccessBody_Resource_FieldNumber_AllAccounts = 2,
+  AccessBody_Resource_FieldNumber_AllTransactions = 3,
+  AccessBody_Resource_FieldNumber_AllBalances = 4,
+  AccessBody_Resource_FieldNumber_Address = 5,
+  AccessBody_Resource_FieldNumber_Account = 6,
+  AccessBody_Resource_FieldNumber_Transactions = 7,
+  AccessBody_Resource_FieldNumber_Balance = 8,
 };
 
 typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
   AccessBody_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
-  AccessBody_Resource_Resource_OneOfCase_Address = 1,
-  AccessBody_Resource_Resource_OneOfCase_Account = 2,
-  AccessBody_Resource_Resource_OneOfCase_Transaction = 3,
+  AccessBody_Resource_Resource_OneOfCase_AllAddresses = 1,
+  AccessBody_Resource_Resource_OneOfCase_AllAccounts = 2,
+  AccessBody_Resource_Resource_OneOfCase_AllTransactions = 3,
+  AccessBody_Resource_Resource_OneOfCase_AllBalances = 4,
+  AccessBody_Resource_Resource_OneOfCase_Address = 5,
+  AccessBody_Resource_Resource_OneOfCase_Account = 6,
+  AccessBody_Resource_Resource_OneOfCase_Transactions = 7,
+  AccessBody_Resource_Resource_OneOfCase_Balance = 8,
 };
 
 @interface AccessBody_Resource : GPBMessage
 
 @property(nonatomic, readonly) AccessBody_Resource_Resource_OneOfCase resourceOneOfCase;
 
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances;
+
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Account *account;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Transaction *transaction;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountTransactions *transactions;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountBalance *balance;
 
 @end
 
 /// Clears whatever value was set for the oneof 'resource'.
 void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message);
+
+#pragma mark - AccessBody_Resource_AllAddresses
+
+/// Provides access to all member addresses
+@interface AccessBody_Resource_AllAddresses : GPBMessage
+
+@end
 
 #pragma mark - AccessBody_Resource_Address
 
@@ -381,11 +413,17 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
   AccessBody_Resource_Address_FieldNumber_AddressId = 1,
 };
 
-/// Provides Access to member address information
+/// Provides access to a specific member address
 @interface AccessBody_Resource_Address : GPBMessage
 
-/// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
+
+@end
+
+#pragma mark - AccessBody_Resource_AllAccounts
+
+/// Provides access to all member accounts
+@interface AccessBody_Resource_AllAccounts : GPBMessage
 
 @end
 
@@ -395,24 +433,49 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
   AccessBody_Resource_Account_FieldNumber_AccountId = 1,
 };
 
-/// Provides access to member account balance
+/// Provides access to a specific member account balance
 @interface AccessBody_Resource_Account : GPBMessage
 
-/// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-#pragma mark - AccessBody_Resource_Transaction
+#pragma mark - AccessBody_Resource_AllAccountTransactions
 
-typedef GPB_ENUM(AccessBody_Resource_Transaction_FieldNumber) {
-  AccessBody_Resource_Transaction_FieldNumber_AccountId = 1,
+/// Provides access to member transactions in all accounts
+@interface AccessBody_Resource_AllAccountTransactions : GPBMessage
+
+@end
+
+#pragma mark - AccessBody_Resource_AccountTransactions
+
+typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
+  AccessBody_Resource_AccountTransactions_FieldNumber_AccountId = 1,
 };
 
-/// Provides access to account transactions
-@interface AccessBody_Resource_Transaction : GPBMessage
+/// Provides access to a specific account transactions
+@interface AccessBody_Resource_AccountTransactions : GPBMessage
 
-/// Optional
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - AccessBody_Resource_AllAccountBalances
+
+/// Provides access to member balance on all accounts
+@interface AccessBody_Resource_AllAccountBalances : GPBMessage
+
+@end
+
+#pragma mark - AccessBody_Resource_AccountBalance
+
+typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
+  AccessBody_Resource_AccountBalance_FieldNumber_AccountId = 1,
+};
+
+/// Provides access to a specific account balance
+@interface AccessBody_Resource_AccountBalance : GPBMessage
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
