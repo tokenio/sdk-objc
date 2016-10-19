@@ -162,15 +162,6 @@ message GetAccountsResponse {
   repeated io.token.proto.common.account.Account accounts = 1;
 }
 
-message SetAccountNameRequest {
-  string account_id = 1;
-  string name = 2;
-}
-
-message SetAccountNameResponse {
-  io.token.proto.common.account.Account account = 1;
-}
-
 message GetBalanceRequest {
   string account_id = 1;
 }
@@ -400,12 +391,6 @@ service GatewayService {
   rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {
     option (google.api.http) = {
         get: "/accounts"
-    };
-  }
-
-  rpc SetAccountName (SetAccountNameRequest) returns (SetAccountNameResponse) {
-    option (google.api.http) = {
-        patch: "/accounts/{account_id}?name={name}"
     };
   }
 
