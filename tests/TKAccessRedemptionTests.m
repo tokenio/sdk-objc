@@ -57,10 +57,8 @@
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
-        Money *lookedUpBalance = [lookedUpAccount getBalance];
         
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
-        XCTAssertNotNil(lookedUpBalance);
     }];
 }
 
