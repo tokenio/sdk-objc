@@ -382,11 +382,11 @@
    forAccountTransactions:(NSString *)accountId
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
-    AccessBody_Resource_Transaction *transaction = [AccessBody_Resource_Transaction message];
+    AccessBody_Resource_AccountTransactions *transaction = [AccessBody_Resource_AccountTransactions message];
     transaction.accountId = accountId;
     
     AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.transaction = transaction;
+    resource.transactions = transaction;
     
     [self createAccessToken:toUsername
                forResources:[NSArray arrayWithObject:resource]
