@@ -65,7 +65,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id
-                                             amount:100.99
+                                             amount:49.99
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [payer endorseToken:token];

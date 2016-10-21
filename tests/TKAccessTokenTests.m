@@ -78,7 +78,7 @@
         Token *endorsed = [grantor endorseToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-        XCTAssertEqual(1, endorsed.payloadSignaturesArray_Count);
+        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
     }];
 }
@@ -92,7 +92,7 @@
         Token *cancelled = [grantor cancelToken:token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-        XCTAssertEqual(1, cancelled.payloadSignaturesArray_Count);
+        XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
     }];
 }
