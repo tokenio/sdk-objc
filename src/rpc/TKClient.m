@@ -117,13 +117,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
-- (void)subscribeToNotifications:(NSString *)provider
-                          target:(NSString *)target
+- (void)subscribeToNotifications:(NSString *)target
                         platform:(Platform)platform
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
     SubscribeToNotificationsRequest *request = [SubscribeToNotificationsRequest message];
-    request.provider = provider;
     request.target = target;
     request.platform = platform;
     GRPCProtoCall *call = [gateway

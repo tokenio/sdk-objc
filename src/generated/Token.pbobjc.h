@@ -140,7 +140,6 @@ void SetTokenSignature_Action_RawValue(TokenSignature *message, int32_t value);
 typedef GPB_ENUM(TokenMember_FieldNumber) {
   TokenMember_FieldNumber_Id_p = 1,
   TokenMember_FieldNumber_Username = 2,
-  TokenMember_FieldNumber_Name = 3,
 };
 
 @interface TokenMember : GPBMessage
@@ -148,8 +147,6 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @end
 

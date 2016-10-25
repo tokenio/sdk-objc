@@ -41,8 +41,7 @@
 - (void)testSubscribeAndUnsubscribe {
     [self run: ^(TokenIO *tokenIO) {
         
-        Subscriber *s = [payer subscribeToNotifications:@"Token"
-                                                 target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+        Subscriber *s = [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                                platform:Platform_Ios];
         
         Token *token = [payer createTransferToken:payee.firstUsername
@@ -71,8 +70,7 @@
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:@"Token"
-                                 target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+        [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
         
         [tokenIO notifyLinkAccounts:payer.firstUsername
@@ -86,8 +84,7 @@
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
         
-        [payer subscribeToNotifications:@"Token"
-                                 target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+        [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
@@ -100,8 +97,7 @@
 
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:@"Token"
-                                 target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+        [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
         
         TKSecretKey *key = [TKCrypto generateKey];
@@ -117,8 +113,7 @@
 - (void)testGetSubscribers {
     [self run: ^(TokenIO *tokenIO) {
         
-        Subscriber * subscriber = [payer subscribeToNotifications:@"Token"
-                                                           target:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+        Subscriber * subscriber = [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                                          platform:Platform_Test];
         
         [payer getSubscribers];
@@ -135,8 +130,7 @@
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
         
-        [payer subscribeToNotifications:@"Token"
-                                 target:@"notificationUri"
+        [payer subscribeToNotifications:@"notificationUri"
                                platform:Platform_Ios];
         
         Token *token = [payer createTransferToken:payee.firstUsername

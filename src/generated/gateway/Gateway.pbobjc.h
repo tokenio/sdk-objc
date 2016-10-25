@@ -297,14 +297,11 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 #pragma mark - SubscribeToNotificationsRequest
 
 typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
-  SubscribeToNotificationsRequest_FieldNumber_Provider = 1,
-  SubscribeToNotificationsRequest_FieldNumber_Target = 2,
-  SubscribeToNotificationsRequest_FieldNumber_Platform = 3,
+  SubscribeToNotificationsRequest_FieldNumber_Target = 1,
+  SubscribeToNotificationsRequest_FieldNumber_Platform = 2,
 };
 
 @interface SubscribeToNotificationsRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
 
 /// e.g push token
 @property(nonatomic, readwrite, copy, null_resettable) NSString *target;

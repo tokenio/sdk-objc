@@ -97,9 +97,8 @@ message DeleteAddressResponse {}
 //
 
 message SubscribeToNotificationsRequest {
-  string provider = 1;
-  string target = 2;   // e.g push token
-  io.token.proto.common.subscriber.Platform platform = 3;
+  string target = 1;   // e.g push token
+  io.token.proto.common.subscriber.Platform platform = 2;
 }
 
 message SubscribeToNotificationsResponse {

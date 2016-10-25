@@ -149,13 +149,11 @@
                 onError:onError];
 }
 
-- (void)subscribeToNotifications:(NSString *)provider
-                          target:(NSString *)target
+- (void)subscribeToNotifications:(NSString *)target
                         platform:(Platform)platform
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
-    [client subscribeToNotifications:provider
-                              target:target
+    [client subscribeToNotifications:target
                             platform:platform
                            onSuccess:onSuccess
                              onError:onError];

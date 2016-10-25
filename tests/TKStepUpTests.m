@@ -36,8 +36,7 @@
     [self run: ^(TokenIO *tokenIO) {
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
-        [payer subscribeToNotifications:@"Token"
-                                 target:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"
+        [payer subscribeToNotifications:@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"
                                platform:Platform_Ios];
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id

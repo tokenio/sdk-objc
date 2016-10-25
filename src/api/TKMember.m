@@ -91,13 +91,11 @@
     }];
 }
 
-- (Subscriber *)subscribeToNotifications:(NSString *)provider
-                                  target:(NSString *)target
+- (Subscriber *)subscribeToNotifications:(NSString *)target
                                 platform:(Platform)platform {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async subscribeToNotifications:provider
-                                      target:target
+        [self.async subscribeToNotifications:target
                                     platform:platform
                                    onSuccess:call.onSuccess
                                      onError:call.onError];

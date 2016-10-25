@@ -811,14 +811,12 @@ typedef struct DeleteAddressResponse__storage_ {
 
 @implementation SubscribeToNotificationsRequest
 
-@dynamic provider;
 @dynamic target;
 @dynamic platform;
 
 typedef struct SubscribeToNotificationsRequest__storage_ {
   uint32_t _has_storage_[1];
   Platform platform;
-  NSString *provider;
   NSString *target;
 } SubscribeToNotificationsRequest__storage_;
 
@@ -829,19 +827,10 @@ typedef struct SubscribeToNotificationsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "provider",
-        .dataTypeSpecific.className = NULL,
-        .number = SubscribeToNotificationsRequest_FieldNumber_Provider,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, provider),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "target",
         .dataTypeSpecific.className = NULL,
         .number = SubscribeToNotificationsRequest_FieldNumber_Target,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, target),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -850,7 +839,7 @@ typedef struct SubscribeToNotificationsRequest__storage_ {
         .name = "platform",
         .dataTypeSpecific.enumDescFunc = Platform_EnumDescriptor,
         .number = SubscribeToNotificationsRequest_FieldNumber_Platform,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, platform),
         .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,

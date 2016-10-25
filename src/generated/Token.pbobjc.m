@@ -228,13 +228,11 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value__) {
 
 @dynamic id_p;
 @dynamic username;
-@dynamic name;
 
 typedef struct TokenMember__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *username;
-  NSString *name;
 } TokenMember__storage_;
 
 // This method is threadsafe because it is initially called
@@ -258,15 +256,6 @@ typedef struct TokenMember__storage_ {
         .number = TokenMember_FieldNumber_Username,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TokenMember__storage_, username),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "name",
-        .dataTypeSpecific.className = NULL,
-        .number = TokenMember_FieldNumber_Name,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(TokenMember__storage_, name),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

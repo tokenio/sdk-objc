@@ -109,12 +109,10 @@
 /**
  * Subscribes a device to receive push notifications
  *
- * @param provider push notification provider (default @"Token")
  * @param target target to send push to (push token)
  * @param platform target platform for notification (e.g. Platform_Ios)
  */
-- (void)subscribeToNotifications:(NSString *)provider
-                          target:(NSString *)target
+- (void)subscribeToNotifications:(NSString *)target
                         platform:(Platform)platform
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError;
