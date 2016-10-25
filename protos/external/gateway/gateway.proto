@@ -140,7 +140,7 @@ message NotifyResponse {}
 message LinkAccountsRequest {
   string bank_id = 1;
   // encrypted AccountsLinkPayload
-  string accounts_link_payload = 2;
+  repeated string account_link_payloads = 2;
 }
 
 message LinkAccountsResponse {

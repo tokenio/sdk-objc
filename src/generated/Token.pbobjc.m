@@ -15,7 +15,7 @@
 
  #import "Token.pbobjc.h"
  #import "Security.pbobjc.h"
- #import "Transfer.pbobjc.h"
+ #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -34,7 +34,7 @@
     GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[SecurityRoot extensionRegistry]];
-    [registry addExtensions:[TransferRoot extensionRegistry]];
+    [registry addExtensions:[TransferinstructionsRoot extensionRegistry]];
   }
   return registry;
 }

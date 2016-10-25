@@ -9,6 +9,7 @@
 #import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKAccount.h"

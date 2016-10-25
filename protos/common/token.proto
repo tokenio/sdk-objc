@@ -4,7 +4,7 @@ package io.token.proto.common.token;
 option java_outer_classname = "TokenProtos";
 
 import "security.proto";
-import "transfer.proto";
+import "transferinstructions.proto";
 
 
 //
@@ -58,13 +58,13 @@ message TokenPayload {
 //
 
 message TransferBody {
-  TokenMember redeemer = 1;                                             // Redeemer member.
-  io.token.proto.common.transfer.TransferInstructions instructions = 2; // Transfer instructions.
-  TokenMember fees_paid_by = 3;                                         // Payer or redeemer member id.
-  string currency = 4;                                                  // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
-  string lifetime_amount = 5;                                           // Optional: Token total lifetime amount. Double.
-  string amount = 6;                                                    // Optional: Single token charge request acceptable range. Double.
-  map<string, Var> vars = 7;                                            // Optional: token variables.
+  TokenMember redeemer = 1;                                                          // Redeemer member.
+  io.token.proto.common.transferinstructions.TransferInstructions instructions = 2;  // Transfer instructions.
+  TokenMember fees_paid_by = 3;                                                      // Payer or redeemer member id.
+  string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+  string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
+  string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
+  map<string, Var> vars = 7;                                                         // Optional: token variables.
 }
 
 // Describes a single variable value. Only one of the fields is set.
