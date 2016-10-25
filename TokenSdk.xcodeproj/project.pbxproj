@@ -42,6 +42,8 @@
 		37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B4B1D989A930043345F /* Transfer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3777163E1D99BF6800287239 /* TokenSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 3777163D1D99BF6800287239 /* TokenSdk.h */; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
+		8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */; };
+		8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A1FA0D31DAEE92400DFB258 /* Fank.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */; };
 		8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */; };
 		8A2937511DB825660034C110 /* Address.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A29374F1DB825660034C110 /* Address.pbobjc.h */; };
@@ -175,6 +177,8 @@
 		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
 		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
+		8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transferinstructions.pbobjc.h; sourceTree = "<group>"; };
+		8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transferinstructions.pbobjc.m; sourceTree = "<group>"; };
 		8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbrpc.h; sourceTree = "<group>"; };
 		8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fank.pbrpc.m; sourceTree = "<group>"; };
 		8A29374F1DB825660034C110 /* Address.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.pbobjc.h; sourceTree = "<group>"; };
@@ -286,6 +290,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */,
+				8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */,
 				8A29374F1DB825660034C110 /* Address.pbobjc.h */,
 				8A2937501DB825660034C110 /* Address.pbobjc.m */,
 				37637B211D989A930043345F /* Account.pbobjc.h */,
@@ -592,6 +598,7 @@
 				3777163E1D99BF6800287239 /* TokenSdk.h in Headers */,
 				37637B601D989A930043345F /* Descriptor.pbobjc.h in Headers */,
 				37637B621D989A930043345F /* Member.pbobjc.h in Headers */,
+				8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */,
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
 				8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */,
@@ -807,6 +814,7 @@
 				ABA7BA9B13612439D753F584 /* TKJson.m in Sources */,
 				ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */,
 				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,
+				8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */,
 				37637B531D989A930043345F /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
 				ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */,

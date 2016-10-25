@@ -5,15 +5,13 @@ import "google/api/annotations.proto";
 
 message AuthorizeLinkAccountsRequest {
   string client_id = 1;
-  string username = 2;
-  string secret = 3;
-  repeated string accounts = 4;
+  repeated string accounts = 5;
 }
 
 message AuthorizeLinkAccountsResponse {
   string bank_id = 1;
   string bank_name = 2;
-  string accounts_link_payload = 3;
+  repeated string account_link_payloads = 3;
 }
 
 
@@ -28,4 +26,3 @@ service AccountLinkingService {
     };
   }
 }
-
