@@ -63,7 +63,7 @@ typedef GPB_ENUM(TransferProcessed_FieldNumber) {
 typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_BankId = 1,
   LinkAccounts_FieldNumber_BankName = 2,
-  LinkAccounts_FieldNumber_AccountsLinkPayload = 3,
+  LinkAccounts_FieldNumber_AccountLinkPayloadsArray = 3,
 };
 
 /// A notification that a bank wants to be linked.
@@ -73,7 +73,9 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+/// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 
 @end
 

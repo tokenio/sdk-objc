@@ -62,13 +62,13 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountsLinkPayload:(NSString *)accountsLinkPayload {
+       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccounts:username
                                 bankId:bankId
                               bankName:bankName
-                   accountsLinkPayload:accountsLinkPayload
+                   accountLinkPayloads:accountLinkPayloads
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
          ];
@@ -92,7 +92,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountsLinkPayload:(NSString *)accountsLinkPayload
+                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
@@ -100,7 +100,7 @@
         [self.async notifyLinkAccountsAndAddKey:username
                                          bankId:bankId
                                        bankName:bankName
-                            accountsLinkPayload:accountsLinkPayload
+                            accountLinkPayloads:accountLinkPayloads
                                       publicKey:publicKey
                                            name:name
                                       onSuccess:^(void) {call.onSuccess(nil);}

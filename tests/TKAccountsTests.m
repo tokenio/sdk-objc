@@ -31,18 +31,15 @@
     [self run: ^(TokenIO *tokenIO) {
         NSString *bankId = @"bank-id";
 
-        AccountsLinkPayload_NamedAccount *account = [AccountsLinkPayload_NamedAccount message];
-        account.name = @"Checking";
-        account.accountNumber = @"iban:checking";
-
-        AccountsLinkPayload *payload = [AccountsLinkPayload message];
-        payload.username = member.firstUsername;
-
-        [payload.accountsArray addObject:account];
+        AccountLinkPayload *payload = [AccountLinkPayload message];
+        payload.accountName = @"Checking";
+        payload.accountNumber = @"iban:checking";
+        payload.expirationMs = [[NSDate date] timeIntervalSince1970] * 1000 + 10000;
 
         NSString *payloadBase64 = [TKJson serializeBase64:payload];
+        NSArray *payloads = [NSArray arrayWithObject:payloadBase64];
         NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                                  withPayload:payloadBase64];
+                                                 withPayloads:payloads];
 
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);

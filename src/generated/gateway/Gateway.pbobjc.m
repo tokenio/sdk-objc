@@ -1237,12 +1237,12 @@ typedef struct NotifyResponse__storage_ {
 @implementation LinkAccountsRequest
 
 @dynamic bankId;
-@dynamic accountsLinkPayload;
+@dynamic accountLinkPayloadsArray, accountLinkPayloadsArray_Count;
 
 typedef struct LinkAccountsRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
-  NSString *accountsLinkPayload;
+  NSMutableArray *accountLinkPayloadsArray;
 } LinkAccountsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1261,12 +1261,12 @@ typedef struct LinkAccountsRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accountsLinkPayload",
+        .name = "accountLinkPayloadsArray",
         .dataTypeSpecific.className = NULL,
-        .number = LinkAccountsRequest_FieldNumber_AccountsLinkPayload,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(LinkAccountsRequest__storage_, accountsLinkPayload),
-        .flags = GPBFieldOptional,
+        .number = LinkAccountsRequest_FieldNumber_AccountLinkPayloadsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(LinkAccountsRequest__storage_, accountLinkPayloadsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },
     };

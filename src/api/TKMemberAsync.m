@@ -183,11 +183,11 @@
 
 
 - (void)linkAccounts:(NSString *)bankId
-         withPayload:(NSString *)payload
+         withPayloads:(NSArray<NSString *> *)payloads
            onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError {
     [client linkAccounts:bankId
-                 payload:payload
+            withPayloads:payloads
                onSuccess:
      ^(NSArray<Account *> *accounts) {
          onSuccess([self _mapAccounts:accounts]);

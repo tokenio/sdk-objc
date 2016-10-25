@@ -129,11 +129,11 @@
 }
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayload:(NSString *)payload {
+                          withPayloads:(NSArray<NSString*> *)payloads {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async linkAccounts:bankId
-                     withPayload:payload
+                     withPayloads:payloads
                        onSuccess:
          ^(NSArray<TKAccountAsync *> *accounts) {
              call.onSuccess([self _asyncToSync:accounts]);
