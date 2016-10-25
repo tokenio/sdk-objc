@@ -43,18 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
   AuthorizeLinkAccountsRequest_FieldNumber_ClientId = 1,
-  AuthorizeLinkAccountsRequest_FieldNumber_Username = 2,
-  AuthorizeLinkAccountsRequest_FieldNumber_Secret = 3,
-  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 4,
+  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 5,
 };
 
 @interface AuthorizeLinkAccountsRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *secret;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountsArray;
 /// The number of items in @c accountsArray without causing the array to be created.
@@ -67,7 +61,7 @@ typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
 typedef GPB_ENUM(AuthorizeLinkAccountsResponse_FieldNumber) {
   AuthorizeLinkAccountsResponse_FieldNumber_BankId = 1,
   AuthorizeLinkAccountsResponse_FieldNumber_BankName = 2,
-  AuthorizeLinkAccountsResponse_FieldNumber_AccountsLinkPayload = 3,
+  AuthorizeLinkAccountsResponse_FieldNumber_AccountLinkPayloadsArray = 3,
 };
 
 @interface AuthorizeLinkAccountsResponse : GPBMessage
@@ -76,7 +70,9 @@ typedef GPB_ENUM(AuthorizeLinkAccountsResponse_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+/// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 
 @end
 

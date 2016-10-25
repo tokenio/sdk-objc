@@ -91,14 +91,14 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountsLinkPayload:(NSString *)accountsLinkPayload
+       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
                  onSuccess:(void (^)())onSuccess
                    onError:(void (^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
     request.notification.linkAccounts.bankId = bankId;
     request.notification.linkAccounts.bankName = bankName;
-    request.notification.linkAccounts.accountsLinkPayload = accountsLinkPayload;
+    request.notification.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
     RpcLogStart(request);
     
     [gateway notifyWithRequest:request
@@ -139,7 +139,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountsLinkPayload:(NSString *)accountsLinkPayload
+                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(void(^)())onSuccess
@@ -148,7 +148,7 @@
     request.username = username;
     request.notification.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
     request.notification.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
-    request.notification.linkAccountsAndAddKey.linkAccounts.accountsLinkPayload = accountsLinkPayload;
+    request.notification.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
     request.notification.linkAccountsAndAddKey.addKey.publicKey = publicKey;
     request.notification.linkAccountsAndAddKey.addKey.name = name;
     RpcLogStart(request);

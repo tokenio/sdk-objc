@@ -149,11 +149,11 @@
  * Links a funding bank account to Token.
  *
  * @param bankId bank id
- * @param accountLinkPayload account link authorization payload generated
+ * @param accountLinkPayloads account link authorization payload generated
  *                           by the bank
  */
 - (void)linkAccounts:(NSString *)bankId
-             payload:(NSString *)accountLinkPayload
+        withPayloads:(NSArray<NSString *> *)accountLinkPayloads
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError;
 

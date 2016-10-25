@@ -80,20 +80,19 @@
     }];
 }
 
-- (NSString *)authorizeAccountLinkingFor:(NSString *)username
-                          accountNumbers:(NSArray<NSString *> *)accountNumbers {
-    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+- (NSArray<NSString*> *)authorizeAccountLinkingFor:(NSString *)clientId
+                                    accountNumbers:(NSArray<NSString *> *)accountNumbers {
+    TKRpcSyncCall<NSArray<NSString*> *> *call = [TKRpcSyncCall create];
     return [call run:^{
         AuthorizeLinkAccountsRequest *request = [AuthorizeLinkAccountsRequest message];
-        request.username = username;
-        request.secret = @"";
+        request.clientId = clientId;
         [request.accountsArray addObjectsFromArray:accountNumbers];
 
         [accounts authorizeLinkAccountsWithRequest:request
                                    handler:
                                            ^(AuthorizeLinkAccountsResponse *response, NSError *error) {
                                                if (response) {
-                                                   call.onSuccess(response.accountsLinkPayload);
+                                                   call.onSuccess(response.accountLinkPayloadsArray);
                                                } else {
                                                    call.onError(error);
                                                }

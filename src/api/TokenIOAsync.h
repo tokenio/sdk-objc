@@ -80,14 +80,14 @@
  * @param username username to notify
  * @param bankId bank id to link
  * @param bankName bank name to link
- * @param accountsLinkPayload payload retrieved from bank
+ * @param accountLinkPayloads payloads retrieved from bank
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountsLinkPayload:(NSString *)accountsLinkPayload
+       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError;
 
@@ -112,7 +112,7 @@
  * @param username username to notify
  * @param bankId bank id to link
  * @param bankName bank name to link
- * @param accountsLinkPayload payload retrieved from bank
+ * @param accountLinkPayloads payloads retrieved from bank
  * @param publicKey key in string form
  * @param name name of key
  * @param onSuccess invoked if successful
@@ -121,7 +121,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountsLinkPayload:(NSString *)accountsLinkPayload
+                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess

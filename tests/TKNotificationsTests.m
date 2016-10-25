@@ -72,11 +72,12 @@
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
+        NSArray<NSString*> *payloads = @[@"12345"];
         
         [tokenIO notifyLinkAccounts:payer.firstUsername
                              bankId:@"bank-id"
                            bankName:@"bank-name"
-                accountsLinkPayload:@"12345"];
+                accountLinkPayloads:payloads];
     }];
 }
 
@@ -99,12 +100,13 @@
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
+        NSArray<NSString*> *payloads = @[@"12345"];
         
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
                                       bankId:@"bank-id"
                                     bankName:@"bank-name"
-                         accountsLinkPayload:@"12345"
+                         accountLinkPayloads:payloads
                                    publicKey:key.publicKeyStr
                                         name:@"Chrome 53.0"];
     }];

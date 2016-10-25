@@ -423,7 +423,7 @@ typedef GPB_ENUM(NotifyRequest_FieldNumber) {
 
 typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
   LinkAccountsRequest_FieldNumber_BankId = 1,
-  LinkAccountsRequest_FieldNumber_AccountsLinkPayload = 2,
+  LinkAccountsRequest_FieldNumber_AccountLinkPayloadsArray = 2,
 };
 
 @interface LinkAccountsRequest : GPBMessage
@@ -431,7 +431,9 @@ typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 /// encrypted AccountsLinkPayload
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountsLinkPayload;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+/// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 
 @end
 

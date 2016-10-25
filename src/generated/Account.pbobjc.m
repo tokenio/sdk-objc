@@ -39,83 +39,20 @@ static GPBFileDescriptor *AccountRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - AccountsLinkPayload
+#pragma mark - AccountLinkPayload
 
-@implementation AccountsLinkPayload
+@implementation AccountLinkPayload
 
-@dynamic username;
-@dynamic secret;
-@dynamic accountsArray, accountsArray_Count;
-
-typedef struct AccountsLinkPayload__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *username;
-  NSString *secret;
-  NSMutableArray *accountsArray;
-} AccountsLinkPayload__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "username",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountsLinkPayload_FieldNumber_Username,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload__storage_, username),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "secret",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountsLinkPayload_FieldNumber_Secret,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload__storage_, secret),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "accountsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountsLinkPayload_NamedAccount),
-        .number = AccountsLinkPayload_FieldNumber_AccountsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload__storage_, accountsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccountsLinkPayload class]
-                                     rootClass:[AccountRoot class]
-                                          file:AccountRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccountsLinkPayload__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - AccountsLinkPayload_NamedAccount
-
-@implementation AccountsLinkPayload_NamedAccount
-
-@dynamic name;
+@dynamic accountName;
 @dynamic accountNumber;
+@dynamic expirationMs;
 
-typedef struct AccountsLinkPayload_NamedAccount__storage_ {
+typedef struct AccountLinkPayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *name;
+  NSString *accountName;
   NSString *accountNumber;
-} AccountsLinkPayload_NamedAccount__storage_;
+  int64_t expirationMs;
+} AccountLinkPayload__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -124,31 +61,40 @@ typedef struct AccountsLinkPayload_NamedAccount__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "name",
+        .name = "accountName",
         .dataTypeSpecific.className = NULL,
-        .number = AccountsLinkPayload_NamedAccount_FieldNumber_Name,
+        .number = AccountLinkPayload_FieldNumber_AccountName,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload_NamedAccount__storage_, name),
+        .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, accountName),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
         .dataTypeSpecific.className = NULL,
-        .number = AccountsLinkPayload_NamedAccount_FieldNumber_AccountNumber,
+        .number = AccountLinkPayload_FieldNumber_AccountNumber,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccountsLinkPayload_NamedAccount__storage_, accountNumber),
+        .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, accountNumber),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "expirationMs",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountLinkPayload_FieldNumber_ExpirationMs,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, expirationMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccountsLinkPayload_NamedAccount class]
+        [GPBDescriptor allocDescriptorForClass:[AccountLinkPayload class]
                                      rootClass:[AccountRoot class]
                                           file:AccountRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccountsLinkPayload_NamedAccount__storage_)
+                                   storageSize:sizeof(AccountLinkPayload__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

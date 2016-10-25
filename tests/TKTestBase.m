@@ -92,7 +92,6 @@
 - (TKAccount *)createAccount:(TokenIO *)token {
     TKMember *member = [self createMember:token];
 
-    NSString *username = member.firstUsername;
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";
     NSString *bankId = @"bank-id";
@@ -105,11 +104,13 @@
            withAccountNumber:bankAccountNumber
                       amount:@"1000000.00"
                     currency:@"USD"];
-    NSString *linkPayload = [bank authorizeAccountLinkingFor:username
-                                              accountNumbers:@[bankAccountNumber]];
+    
+    NSString *clientId = fankClient.id_p;
+    NSArray<NSString*> *payloads = [bank authorizeAccountLinkingFor:clientId
+                                                     accountNumbers:@[bankAccountNumber]];
                              
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                              withPayload:linkPayload];
+                                              withPayloads:payloads];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }

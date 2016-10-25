@@ -27,7 +27,7 @@
                              amount:(NSString *)amount
                            currency:(NSString *)currency;
 
-- (NSString *)authorizeAccountLinkingFor:(NSString *)username
+- (NSArray<NSString*> *)authorizeAccountLinkingFor:(NSString *)clientId
                           accountNumbers:(NSArray<NSString *> *)accountNumbers;
 
 @end

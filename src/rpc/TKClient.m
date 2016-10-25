@@ -201,12 +201,12 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 
 - (void)linkAccounts:(NSString *)bankId
-             payload:(NSString *)accountLinkPayload
+        withPayloads:(NSArray<NSString*> *)accountLinkPayloads
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError {
     LinkAccountsRequest *request = [LinkAccountsRequest message];
     request.bankId = bankId;
-    request.accountsLinkPayload = accountLinkPayload;
+    request.accountLinkPayloadsArray = [NSMutableArray arrayWithArray: accountLinkPayloads];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

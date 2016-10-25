@@ -57,15 +57,11 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
 @implementation AuthorizeLinkAccountsRequest
 
 @dynamic clientId;
-@dynamic username;
-@dynamic secret;
 @dynamic accountsArray, accountsArray_Count;
 
 typedef struct AuthorizeLinkAccountsRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *clientId;
-  NSString *username;
-  NSString *secret;
   NSMutableArray *accountsArray;
 } AuthorizeLinkAccountsRequest__storage_;
 
@@ -81,24 +77,6 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
         .number = AuthorizeLinkAccountsRequest_FieldNumber_ClientId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "username",
-        .dataTypeSpecific.className = NULL,
-        .number = AuthorizeLinkAccountsRequest_FieldNumber_Username,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, username),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "secret",
-        .dataTypeSpecific.className = NULL,
-        .number = AuthorizeLinkAccountsRequest_FieldNumber_Secret,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, secret),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -134,13 +112,13 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
 
 @dynamic bankId;
 @dynamic bankName;
-@dynamic accountsLinkPayload;
+@dynamic accountLinkPayloadsArray, accountLinkPayloadsArray_Count;
 
 typedef struct AuthorizeLinkAccountsResponse__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
   NSString *bankName;
-  NSString *accountsLinkPayload;
+  NSMutableArray *accountLinkPayloadsArray;
 } AuthorizeLinkAccountsResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -168,12 +146,12 @@ typedef struct AuthorizeLinkAccountsResponse__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accountsLinkPayload",
+        .name = "accountLinkPayloadsArray",
         .dataTypeSpecific.className = NULL,
-        .number = AuthorizeLinkAccountsResponse_FieldNumber_AccountsLinkPayload,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, accountsLinkPayload),
-        .flags = GPBFieldOptional,
+        .number = AuthorizeLinkAccountsResponse_FieldNumber_AccountLinkPayloadsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, accountLinkPayloadsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },
     };

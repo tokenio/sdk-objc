@@ -123,11 +123,11 @@
  * Links a funding bank account to Token and returns it to the caller.
  *
  * @param bankId bank id
- * @param payload account link authorization payload generated
+ * @param payloads account link authorization payload generated
  *                by the bank
  */
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayload:(NSString *)payload;
+                         withPayloads:(NSArray<NSString*> *)payloads;
 
 /**
  * Looks up funding bank accounts linked to Token.

@@ -156,13 +156,13 @@
  * Links a funding bank account to Token and returns it to the caller.
  *
  * @param bankId bank id
- * @param payload account link authorization payload generated
+ * @param payloads account link authorization payload generated
  *                by the bank
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
 - (void)linkAccounts:(NSString *)bankId
-         withPayload:(NSString *)payload
+         withPayloads:(NSArray<NSString*> *)payloads
            onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError;
 
