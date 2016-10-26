@@ -43,12 +43,14 @@ static GPBFileDescriptor *AccountRoot_FileDescriptor(void) {
 
 @implementation AccountLinkPayload
 
+@dynamic username;
 @dynamic accountName;
 @dynamic accountNumber;
 @dynamic expirationMs;
 
 typedef struct AccountLinkPayload__storage_ {
   uint32_t _has_storage_[1];
+  NSString *username;
   NSString *accountName;
   NSString *accountNumber;
   int64_t expirationMs;
@@ -61,10 +63,19 @@ typedef struct AccountLinkPayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountLinkPayload_FieldNumber_Username,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "accountName",
         .dataTypeSpecific.className = NULL,
         .number = AccountLinkPayload_FieldNumber_AccountName,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, accountName),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -73,7 +84,7 @@ typedef struct AccountLinkPayload__storage_ {
         .name = "accountNumber",
         .dataTypeSpecific.className = NULL,
         .number = AccountLinkPayload_FieldNumber_AccountNumber,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, accountNumber),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -82,7 +93,7 @@ typedef struct AccountLinkPayload__storage_ {
         .name = "expirationMs",
         .dataTypeSpecific.className = NULL,
         .number = AccountLinkPayload_FieldNumber_ExpirationMs,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(AccountLinkPayload__storage_, expirationMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,

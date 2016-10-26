@@ -32,6 +32,7 @@
         NSString *bankId = @"bank-id";
 
         AccountLinkPayload *payload = [AccountLinkPayload message];
+        payload.username = member.firstUsername;
         payload.accountName = @"Checking";
         payload.accountNumber = @"iban:checking";
         payload.expirationMs = [[NSDate date] timeIntervalSince1970] * 1000 + 10000;

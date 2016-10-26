@@ -42,11 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - AuthorizeLinkAccountsRequest
 
 typedef GPB_ENUM(AuthorizeLinkAccountsRequest_FieldNumber) {
-  AuthorizeLinkAccountsRequest_FieldNumber_ClientId = 1,
-  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 5,
+  AuthorizeLinkAccountsRequest_FieldNumber_Username = 1,
+  AuthorizeLinkAccountsRequest_FieldNumber_ClientId = 2,
+  AuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 3,
 };
 
 @interface AuthorizeLinkAccountsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 
