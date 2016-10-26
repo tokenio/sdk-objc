@@ -42,14 +42,17 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - AccountLinkPayload
 
 typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
-  AccountLinkPayload_FieldNumber_AccountName = 1,
-  AccountLinkPayload_FieldNumber_AccountNumber = 2,
-  AccountLinkPayload_FieldNumber_ExpirationMs = 3,
+  AccountLinkPayload_FieldNumber_Username = 1,
+  AccountLinkPayload_FieldNumber_AccountName = 2,
+  AccountLinkPayload_FieldNumber_AccountNumber = 3,
+  AccountLinkPayload_FieldNumber_ExpirationMs = 4,
 };
 
 /// The payload of the account linking request. Used for serialization only.
 /// The value of the payload is encrypted as a serialized JSON object.
 @interface AccountLinkPayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountName;
 

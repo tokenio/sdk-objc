@@ -106,7 +106,8 @@
                     currency:@"USD"];
     
     NSString *clientId = fankClient.id_p;
-    NSArray<NSString*> *payloads = [bank authorizeAccountLinkingFor:clientId
+    NSArray<NSString*> *payloads = [bank authorizeAccountLinkingFor:member.firstUsername
+                                                           clientId:clientId
                                                      accountNumbers:@[bankAccountNumber]];
                              
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId

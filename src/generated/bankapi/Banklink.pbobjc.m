@@ -56,11 +56,13 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
 
 @implementation AuthorizeLinkAccountsRequest
 
+@dynamic username;
 @dynamic clientId;
 @dynamic accountsArray, accountsArray_Count;
 
 typedef struct AuthorizeLinkAccountsRequest__storage_ {
   uint32_t _has_storage_[1];
+  NSString *username;
   NSString *clientId;
   NSMutableArray *accountsArray;
 } AuthorizeLinkAccountsRequest__storage_;
@@ -72,10 +74,19 @@ typedef struct AuthorizeLinkAccountsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = AuthorizeLinkAccountsRequest_FieldNumber_Username,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "clientId",
         .dataTypeSpecific.className = NULL,
         .number = AuthorizeLinkAccountsRequest_FieldNumber_ClientId,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsRequest__storage_, clientId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
