@@ -49,7 +49,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [payer endorseToken:token];
+        token = [[payer endorseToken:token] token];
         Transfer *transfer = [payee createTransfer:token];
         
         Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
@@ -68,7 +68,7 @@
                                              amount:49.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [payer endorseToken:token];
+        token = [[payer endorseToken:token] token];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];

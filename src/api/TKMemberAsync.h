@@ -460,7 +460,7 @@
  * @param onError callback invoked on error
  */
 - (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)onSuccess
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -472,7 +472,7 @@
  * @param onError callback invoked on error
  */
 - (void)cancelToken:(Token *)token
-          onSuccess:(OnSuccessWithToken)onSuccess
+          onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
             onError:(OnError)onError;
 
 /**

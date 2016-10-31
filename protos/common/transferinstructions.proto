@@ -13,10 +13,8 @@ message TransferInstructions {
 // Money transfer source. This could be an transferDest id assigned by Token or
 // real bank transferDest number.
 message Source {
-  oneof source {
-    string account_id = 1;
-    string account_number = 2;
-  }
+  string account_id = 1;      // Required when coming from the client.
+  string account_number = 2;  // Optional when coming from the client, required at the bank.
 }
 
 // Money transfer destination. The desitination is described differently
@@ -53,8 +51,6 @@ message DestinationAch {
 
 // Local transfer within the same bank.
 message DestinationLocal {
-  oneof destination {
-    string account_id = 1;
-    string account_number = 2;
-  }
+    string account_id = 1;      // Required when coming from the client.
+    string account_number = 2;  // Optional when coming from the client, required at the bank.
 }

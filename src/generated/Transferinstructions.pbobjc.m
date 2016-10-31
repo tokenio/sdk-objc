@@ -98,12 +98,11 @@ typedef struct TransferInstructions__storage_ {
 
 @implementation Source
 
-@dynamic sourceOneOfCase;
 @dynamic accountId;
 @dynamic accountNumber;
 
 typedef struct Source__storage_ {
-  uint32_t _has_storage_[2];
+  uint32_t _has_storage_[1];
   NSString *accountId;
   NSString *accountNumber;
 } Source__storage_;
@@ -118,7 +117,7 @@ typedef struct Source__storage_ {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
         .number = Source_FieldNumber_AccountId,
-        .hasIndex = -1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(Source__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -127,7 +126,7 @@ typedef struct Source__storage_ {
         .name = "accountNumber",
         .dataTypeSpecific.className = NULL,
         .number = Source_FieldNumber_AccountNumber,
-        .hasIndex = -1,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(Source__storage_, accountNumber),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -141,12 +140,6 @@ typedef struct Source__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Source__storage_)
                                          flags:0];
-    static const char *oneofs[] = {
-      "source",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -155,11 +148,6 @@ typedef struct Source__storage_ {
 
 @end
 
-void Source_ClearSourceOneOfCase(Source *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
 #pragma mark - Destination
 
 @implementation Destination
@@ -473,12 +461,11 @@ typedef struct DestinationAch__storage_ {
 
 @implementation DestinationLocal
 
-@dynamic destinationOneOfCase;
 @dynamic accountId;
 @dynamic accountNumber;
 
 typedef struct DestinationLocal__storage_ {
-  uint32_t _has_storage_[2];
+  uint32_t _has_storage_[1];
   NSString *accountId;
   NSString *accountNumber;
 } DestinationLocal__storage_;
@@ -493,7 +480,7 @@ typedef struct DestinationLocal__storage_ {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
         .number = DestinationLocal_FieldNumber_AccountId,
-        .hasIndex = -1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(DestinationLocal__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -502,7 +489,7 @@ typedef struct DestinationLocal__storage_ {
         .name = "accountNumber",
         .dataTypeSpecific.className = NULL,
         .number = DestinationLocal_FieldNumber_AccountNumber,
-        .hasIndex = -1,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(DestinationLocal__storage_, accountNumber),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -516,12 +503,6 @@ typedef struct DestinationLocal__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DestinationLocal__storage_)
                                          flags:0];
-    static const char *oneofs[] = {
-      "destination",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -530,11 +511,6 @@ typedef struct DestinationLocal__storage_ {
 
 @end
 
-void DestinationLocal_ClearDestinationOneOfCase(DestinationLocal *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
 
 #pragma clang diagnostic pop
 

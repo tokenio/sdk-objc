@@ -37,6 +37,7 @@ CF_EXTERN_C_BEGIN
 @class DoubleRange;
 @class Signature;
 @class TimePeriod;
+@class Token;
 @class TokenMember;
 @class TokenPayload;
 @class TokenSignature;
@@ -69,6 +70,24 @@ GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void);
 /// Checks to see if the given value is defined by the enum or was not known at
 /// the time this source was generated.
 BOOL TokenSignature_Action_IsValidValue(int32_t value);
+
+#pragma mark - Enum TokenOperationResult_Status
+
+typedef GPB_ENUM(TokenOperationResult_Status) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  TokenOperationResult_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  TokenOperationResult_Status_Invalid = 0,
+  TokenOperationResult_Status_Success = 1,
+  TokenOperationResult_Status_MoreSignaturesNeeded = 2,
+};
+
+GPBEnumDescriptor *TokenOperationResult_Status_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL TokenOperationResult_Status_IsValidValue(int32_t value);
 
 #pragma mark - TokenRoot
 
@@ -476,6 +495,33 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
+
+#pragma mark - TokenOperationResult
+
+typedef GPB_ENUM(TokenOperationResult_FieldNumber) {
+  TokenOperationResult_FieldNumber_Token = 1,
+  TokenOperationResult_FieldNumber_Status = 2,
+};
+
+///
+/// Token operation status
+@interface TokenOperationResult : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+/// Test to see if @c token has been set.
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@property(nonatomic, readwrite) TokenOperationResult_Status status;
+
+@end
+
+/// Fetches the raw value of a @c TokenOperationResult's @c status property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t TokenOperationResult_Status_RawValue(TokenOperationResult *message);
+/// Sets the raw value of an @c TokenOperationResult's @c status property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

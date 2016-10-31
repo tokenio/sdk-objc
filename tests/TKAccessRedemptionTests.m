@@ -41,7 +41,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
@@ -56,7 +56,7 @@
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
@@ -68,7 +68,7 @@
 - (void)testAnyBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createBalanceAccessToken:grantee.firstUsername];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
@@ -80,7 +80,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createBalanceAccessToken:grantee.firstUsername
                                             restrictedTo:grantorAccount.id];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
@@ -91,7 +91,7 @@
 - (void)testAnyAccountToken {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createAccountAccessToken:grantee.firstUsername];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
@@ -103,7 +103,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [grantor createAccountAccessToken:grantee.firstUsername
                                             restrictedTo:grantorAccount.id];
-        token = [grantor endorseToken:token];
+        token = [[grantor endorseToken:token] token];
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
@@ -122,11 +122,11 @@
                                                      amount:100.99
                                                    currency:@"USD"
                                                 description:@"transfer test"];
-        transferToken = [grantor endorseToken:transferToken];
+        transferToken = [[grantor endorseToken:transferToken] token];
         [redeemer createTransfer:transferToken];
         
         Token *accessToken = [grantor createTransactionsAccessToken:grantee.firstUsername];
-        accessToken = [grantor endorseToken:accessToken];
+        accessToken = [[grantor endorseToken:accessToken] token];
         
         [grantee useAccessToken:accessToken.id_p];
         NSArray<Transaction*> *lookedUpTransactions = [grantee getTransactionsOffset:nil
@@ -147,12 +147,12 @@
                                                      amount:100.99
                                                    currency:@"USD"
                                                 description:@"transfer test"];
-        transferToken = [grantor endorseToken:transferToken];
+        transferToken = [[grantor endorseToken:transferToken] token];
         [redeemer createTransfer:transferToken];
         
         Token *accessToken = [grantor createTransactionsAccessToken:grantee.firstUsername
                                                        restrictedTo:grantorAccount.id];
-        accessToken = [grantor endorseToken:accessToken];
+        accessToken = [[grantor endorseToken:accessToken] token];
         
         [grantee useAccessToken:accessToken.id_p];
         NSArray<Transaction*> *lookedUpTransactions = [grantee

@@ -43,7 +43,7 @@
                                            amount:100
                                          currency:@"USD"
                                       description:@"transfer test"];
-        token = [payer endorseToken:token];
+        [payer endorseToken:token];
     }];
 }
 

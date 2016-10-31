@@ -1217,6 +1217,108 @@ typedef struct AccessBody_Resource_AccountBalance__storage_ {
 
 @end
 
+#pragma mark - TokenOperationResult
+
+@implementation TokenOperationResult
+
+@dynamic hasToken, token;
+@dynamic status;
+
+typedef struct TokenOperationResult__storage_ {
+  uint32_t _has_storage_[1];
+  TokenOperationResult_Status status;
+  Token *token;
+} TokenOperationResult__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "token",
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
+        .number = TokenOperationResult_FieldNumber_Token,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TokenOperationResult__storage_, token),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = TokenOperationResult_Status_EnumDescriptor,
+        .number = TokenOperationResult_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TokenOperationResult__storage_, status),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TokenOperationResult class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TokenOperationResult__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t TokenOperationResult_Status_RawValue(TokenOperationResult *message) {
+  GPBDescriptor *descriptor = [TokenOperationResult descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TokenOperationResult_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int32_t value) {
+  GPBDescriptor *descriptor = [TokenOperationResult descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TokenOperationResult_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum TokenOperationResult_Status
+
+GPBEnumDescriptor *TokenOperationResult_Status_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Success\000MoreSignaturesNeeded\000";
+    static const int32_t values[] = {
+        TokenOperationResult_Status_Invalid,
+        TokenOperationResult_Status_Success,
+        TokenOperationResult_Status_MoreSignaturesNeeded,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TokenOperationResult_Status)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:TokenOperationResult_Status_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL TokenOperationResult_Status_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case TokenOperationResult_Status_Invalid:
+    case TokenOperationResult_Status_Success:
+    case TokenOperationResult_Status_MoreSignaturesNeeded:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 
 #pragma clang diagnostic pop
 

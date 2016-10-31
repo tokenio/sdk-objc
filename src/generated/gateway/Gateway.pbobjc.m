@@ -2176,11 +2176,11 @@ typedef struct EndorseTokenRequest__storage_ {
 
 @implementation EndorseTokenResponse
 
-@dynamic hasToken, token;
+@dynamic hasResult, result;
 
 typedef struct EndorseTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  Token *token;
+  TokenOperationResult *result;
 } EndorseTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2190,11 +2190,11 @@ typedef struct EndorseTokenResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = EndorseTokenResponse_FieldNumber_Token,
+        .name = "result",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenOperationResult),
+        .number = EndorseTokenResponse_FieldNumber_Result,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(EndorseTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(EndorseTokenResponse__storage_, result),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2273,11 +2273,11 @@ typedef struct CancelTokenRequest__storage_ {
 
 @implementation CancelTokenResponse
 
-@dynamic hasToken, token;
+@dynamic hasResult, result;
 
 typedef struct CancelTokenResponse__storage_ {
   uint32_t _has_storage_[1];
-  Token *token;
+  TokenOperationResult *result;
 } CancelTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2287,11 +2287,11 @@ typedef struct CancelTokenResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(Token),
-        .number = CancelTokenResponse_FieldNumber_Token,
+        .name = "result",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenOperationResult),
+        .number = CancelTokenResponse_FieldNumber_Result,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(CancelTokenResponse__storage_, token),
+        .offset = (uint32_t)offsetof(CancelTokenResponse__storage_, result),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

@@ -41,7 +41,11 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        token = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+
         Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
@@ -57,7 +61,11 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        token = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
         
@@ -74,7 +82,10 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        token = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
         Transfer *lookedUp = [payer getTransfer:transfer.id_p];
@@ -90,7 +101,10 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        token = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         [payee createTransfer:token amount:@11.11 currency:@"USD"];
         [payee createTransfer:token amount:@11.11 currency:@"USD"];

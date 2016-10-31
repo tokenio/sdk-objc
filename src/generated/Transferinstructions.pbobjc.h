@@ -93,26 +93,17 @@ typedef GPB_ENUM(Source_FieldNumber) {
   Source_FieldNumber_AccountNumber = 2,
 };
 
-typedef GPB_ENUM(Source_Source_OneOfCase) {
-  Source_Source_OneOfCase_GPBUnsetOneOfCase = 0,
-  Source_Source_OneOfCase_AccountId = 1,
-  Source_Source_OneOfCase_AccountNumber = 2,
-};
-
 /// Money transfer source. This could be an transferDest id assigned by Token or
 /// real bank transferDest number.
 @interface Source : GPBMessage
 
-@property(nonatomic, readonly) Source_Source_OneOfCase sourceOneOfCase;
-
+/// Required when coming from the client.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/// Optional when coming from the client, required at the bank.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @end
-
-/// Clears whatever value was set for the oneof 'source'.
-void Source_ClearSourceOneOfCase(Source *message);
 
 #pragma mark - Destination
 
@@ -216,25 +207,16 @@ typedef GPB_ENUM(DestinationLocal_FieldNumber) {
   DestinationLocal_FieldNumber_AccountNumber = 2,
 };
 
-typedef GPB_ENUM(DestinationLocal_Destination_OneOfCase) {
-  DestinationLocal_Destination_OneOfCase_GPBUnsetOneOfCase = 0,
-  DestinationLocal_Destination_OneOfCase_AccountId = 1,
-  DestinationLocal_Destination_OneOfCase_AccountNumber = 2,
-};
-
 /// Local transfer within the same bank.
 @interface DestinationLocal : GPBMessage
 
-@property(nonatomic, readonly) DestinationLocal_Destination_OneOfCase destinationOneOfCase;
-
+/// Required when coming from the client.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/// Optional when coming from the client, required at the bank.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @end
-
-/// Clears whatever value was set for the oneof 'destination'.
-void DestinationLocal_ClearDestinationOneOfCase(DestinationLocal *message);
 
 NS_ASSUME_NONNULL_END
 

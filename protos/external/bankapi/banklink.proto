@@ -4,8 +4,9 @@ package io.token.proto.bankapi;
 import "google/api/annotations.proto";
 
 message AuthorizeLinkAccountsRequest {
-  string client_id = 1;
-  repeated string accounts = 5;
+  string username = 1;
+  string client_id = 2;
+  repeated string accounts = 3;
 }
 
 message AuthorizeLinkAccountsResponse {

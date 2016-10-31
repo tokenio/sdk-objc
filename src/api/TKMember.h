@@ -8,6 +8,8 @@
 #import "TKTypedef.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Token.pbobjc.h"
+
 
 
 @class TKSecretKey;
@@ -357,18 +359,18 @@
  * along with the token.
  *
  * @param token token to endorse
- * @return endorsed token
+ * @return result of the endorse operation
  */
-- (Token *)endorseToken:(Token *)token;
+- (TokenOperationResult *)endorseToken:(Token *)token;
 
 /**
  * Cancels the transfer token by signing it. The signature is persisted 
  * along with the token.
  *
  * @param token token to cancel
- * @return cancelled token
+ * @return result of the cancelled operation
  */
-- (Token *)cancelToken:(Token *)token;
+- (TokenOperationResult *)cancelToken:(Token *)token;
 
 /**
  * Redeems a transfer token.

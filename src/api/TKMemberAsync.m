@@ -496,7 +496,7 @@
 }
 
 - (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)onSuccess
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     [client endorseToken:token
                onSuccess:onSuccess
@@ -505,7 +505,7 @@
 }
 
 - (void)cancelToken:(Token *)token
-          onSuccess:(OnSuccessWithToken)onSuccess
+          onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
             onError:(OnError)onError {
     [client cancelToken:token
               onSuccess:onSuccess

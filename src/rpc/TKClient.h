@@ -207,7 +207,7 @@
  * @param token token to endorse
  */
 - (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)success
+           onSuccess:(OnSuccessWithTokenOperationResult)success
              onError:(OnError)error;
 
 /**
@@ -216,7 +216,7 @@
  * @param token token to endorse
  */
 - (void)cancelToken:(Token *)token
-          onSuccess:(OnSuccessWithToken)success
+          onSuccess:(OnSuccessWithTokenOperationResult)success
             onError:(OnError)error;
 
 /**

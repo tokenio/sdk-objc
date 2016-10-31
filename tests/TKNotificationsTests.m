@@ -49,7 +49,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [payer endorseToken:token];
+        token = [[payer endorseToken:token] token];
         Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
@@ -62,7 +62,7 @@
                                             amount:100.99
                                           currency:@"USD"
                                        description:@"transfer test"];
-        token = [payer endorseToken:token2];
+        token = [[payer endorseToken:token2] token];
         [payee createTransfer:token];
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
     }];
@@ -140,7 +140,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [payer endorseToken:token];
+        token = [[payer endorseToken:token] token];
         Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);

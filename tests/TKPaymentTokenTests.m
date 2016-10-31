@@ -84,8 +84,10 @@
                                        forAccount:payerAccount.id
                                            amount:100.11
                                          currency:@"USD"];
-        Token *endorsed = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        Token* endorsed = [endorsedResult token];
         
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         
         XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.amount);
@@ -95,13 +97,17 @@
     }];
 }
 
+
 - (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id
                                            amount:100.11
                                          currency:@"USD"];
-        Token *cancelled = [payer cancelToken:token];
+        TokenOperationResult *cancelledResult = [payer cancelToken:token];
+        Token *cancelled = [cancelledResult token];
+        XCTAssertEqual([cancelledResult status], TokenOperationResult_Status_Success);
+
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         

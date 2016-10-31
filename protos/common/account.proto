@@ -5,9 +5,10 @@ option java_outer_classname = "AccountProtos";
 // The payload of the account linking request. Used for serialization only.
 // The value of the payload is encrypted as a serialized JSON object.
 message AccountLinkPayload {
-  string account_name = 1;
-  string account_number = 2;
-  int64 expiration_ms = 3;
+  string username = 1;
+  string account_name = 2;
+  string account_number = 3;
+  int64 expiration_ms = 4;
 }
 
 // Bank Service Account representation.

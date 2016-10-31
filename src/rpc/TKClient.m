@@ -338,7 +338,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)endorseToken:(Token *)token
-           onSuccess:(OnSuccessWithToken)onSuccess
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
@@ -353,7 +353,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            handler:^(EndorseTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.token);
+                                   onSuccess(response.result);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -364,7 +364,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)cancelToken:(Token *)token
-          onSuccess:(OnSuccessWithToken)onSuccess
+          onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
             onError:(OnError)onError {
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
@@ -379,7 +379,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            handler:^(CancelTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.token);
+                                   onSuccess(response.result);
                                } else {
                                    RpcLogError(error);
                                    onError(error);

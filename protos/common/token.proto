@@ -52,7 +52,6 @@ message TokenPayload {
   }
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfer Token
 //
@@ -141,4 +140,17 @@ message AccessBody {
       string account_id = 1;
     }
   }
+}
+
+//
+// Token operation status
+//
+message TokenOperationResult {
+  Token token = 1;
+  enum Status {
+    INVALID = 0;
+    SUCCESS = 1;
+    MORE_SIGNATURES_NEEDED = 2;
+  }
+  Status status = 2;
 }

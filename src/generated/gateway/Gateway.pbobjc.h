@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class Signature;
 @class Subscriber;
 @class Token;
+@class TokenOperationResult;
 @class TokenPayload;
 @class Transaction;
 @class Transfer;
@@ -711,14 +712,14 @@ typedef GPB_ENUM(EndorseTokenRequest_FieldNumber) {
 #pragma mark - EndorseTokenResponse
 
 typedef GPB_ENUM(EndorseTokenResponse_FieldNumber) {
-  EndorseTokenResponse_FieldNumber_Token = 1,
+  EndorseTokenResponse_FieldNumber_Result = 1,
 };
 
 @interface EndorseTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
+@property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
+/// Test to see if @c result has been set.
+@property(nonatomic, readwrite) BOOL hasResult;
 
 @end
 
@@ -742,14 +743,14 @@ typedef GPB_ENUM(CancelTokenRequest_FieldNumber) {
 #pragma mark - CancelTokenResponse
 
 typedef GPB_ENUM(CancelTokenResponse_FieldNumber) {
-  CancelTokenResponse_FieldNumber_Token = 1,
+  CancelTokenResponse_FieldNumber_Result = 1,
 };
 
 @interface CancelTokenResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
-@property(nonatomic, readwrite) BOOL hasToken;
+@property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
+/// Test to see if @c result has been set.
+@property(nonatomic, readwrite) BOOL hasResult;
 
 @end
 

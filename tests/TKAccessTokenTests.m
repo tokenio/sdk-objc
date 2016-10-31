@@ -75,7 +75,7 @@
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
-        Token *endorsed = [grantor endorseToken:token];
+        Token *endorsed = [[grantor endorseToken:token] token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
@@ -89,7 +89,7 @@
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         Token *token = [grantor createAddressAccessToken:grantee.firstUsername
                                             restrictedTo:address.id_p];
-        Token *cancelled = [grantor cancelToken:token];
+        Token *cancelled = [[grantor cancelToken:token] token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);

@@ -4,6 +4,7 @@
 @class Money;
 @class TKAccount;
 @class Token;
+@class TokenOperationResult;
 @class Transaction;
 @class Transfer;
 @class TKMemberAsync;
@@ -41,3 +42,5 @@ typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> *);
 
 typedef void (^OnSuccessWithSubscriber)(Subscriber *);
 typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> *);
+
+typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);

@@ -231,7 +231,7 @@ message EndorseTokenRequest {
 }
 
 message EndorseTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+  io.token.proto.common.token.TokenOperationResult result = 1;
 }
 
 message CancelTokenRequest {
@@ -240,7 +240,7 @@ message CancelTokenRequest {
 }
 
 message CancelTokenResponse {
-  io.token.proto.common.token.Token token = 1;
+  io.token.proto.common.token.TokenOperationResult result = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

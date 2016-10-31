@@ -383,8 +383,8 @@
     }];
 }
 
-- (Token *)endorseToken:(Token *)token {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+- (TokenOperationResult *)endorseToken:(Token *)token {
+    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async endorseToken:token
                        onSuccess:call.onSuccess
@@ -392,8 +392,8 @@
     }];
 }
 
-- (Token *)cancelToken:(Token *)token {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+- (TokenOperationResult *)cancelToken:(Token *)token {
+    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async cancelToken:token
                       onSuccess:call.onSuccess
