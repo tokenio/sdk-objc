@@ -45,12 +45,12 @@ static GPBFileDescriptor *TransferinstructionsRoot_FileDescriptor(void) {
 @implementation TransferInstructions
 
 @dynamic hasSource, source;
-@dynamic destinationArray, destinationArray_Count;
+@dynamic destinationsArray, destinationsArray_Count;
 
 typedef struct TransferInstructions__storage_ {
   uint32_t _has_storage_[1];
   Source *source;
-  NSMutableArray *destinationArray;
+  NSMutableArray *destinationsArray;
 } TransferInstructions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -69,11 +69,11 @@ typedef struct TransferInstructions__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "destinationArray",
+        .name = "destinationsArray",
         .dataTypeSpecific.className = GPBStringifySymbol(Destination),
-        .number = TransferInstructions_FieldNumber_DestinationArray,
+        .number = TransferInstructions_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationArray),
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

@@ -68,7 +68,7 @@ BOOL DestinationIban_Method_IsValidValue(int32_t value);
 
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_Source = 1,
-  TransferInstructions_FieldNumber_DestinationArray = 2,
+  TransferInstructions_FieldNumber_DestinationsArray = 2,
 };
 
 /// Money transfer instructions.
@@ -80,9 +80,9 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasSource;
 
 /// Transfer desitination.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationArray;
-/// The number of items in @c destinationArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger destinationArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
+/// The number of items in @c destinationsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
 @end
 

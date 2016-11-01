@@ -24,9 +24,9 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Destination;
 @class Money;
 @class Signature;
-@class TransferInstructions;
 @class Transfer_Payload;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -81,7 +81,7 @@ typedef GPB_ENUM(Transfer_Payload_FieldNumber) {
   Transfer_Payload_FieldNumber_Nonce = 1,
   Transfer_Payload_FieldNumber_TokenId = 2,
   Transfer_Payload_FieldNumber_Amount = 3,
-  Transfer_Payload_FieldNumber_Instructions = 5,
+  Transfer_Payload_FieldNumber_DestinationsArray = 5,
   Transfer_Payload_FieldNumber_Description_p = 6,
 };
 
@@ -98,10 +98,10 @@ typedef GPB_ENUM(Transfer_Payload_FieldNumber) {
 /// Test to see if @c amount has been set.
 @property(nonatomic, readwrite) BOOL hasAmount;
 
-/// Transfer instructions.
-@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
-/// Test to see if @c instructions has been set.
-@property(nonatomic, readwrite) BOOL hasInstructions;
+/// Transfer desitinations, sorted in priority order.
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
+/// The number of items in @c destinationsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
 /// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;

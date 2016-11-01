@@ -150,7 +150,7 @@ typedef struct Transfer__storage_ {
 @dynamic nonce;
 @dynamic tokenId;
 @dynamic hasAmount, amount;
-@dynamic hasInstructions, instructions;
+@dynamic destinationsArray, destinationsArray_Count;
 @dynamic description_p;
 
 typedef struct Transfer_Payload__storage_ {
@@ -158,7 +158,7 @@ typedef struct Transfer_Payload__storage_ {
   NSString *nonce;
   NSString *tokenId;
   Money *amount;
-  TransferInstructions *instructions;
+  NSMutableArray *destinationsArray;
   NSString *description_p;
 } Transfer_Payload__storage_;
 
@@ -196,19 +196,19 @@ typedef struct Transfer_Payload__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "instructions",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions),
-        .number = Transfer_Payload_FieldNumber_Instructions,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, instructions),
-        .flags = GPBFieldOptional,
+        .name = "destinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
+        .number = Transfer_Payload_FieldNumber_DestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Transfer_Payload__storage_, destinationsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = Transfer_Payload_FieldNumber_Description_p,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(Transfer_Payload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
