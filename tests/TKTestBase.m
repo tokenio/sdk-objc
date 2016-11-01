@@ -94,7 +94,7 @@
 
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";
-    NSString *bankId = @"bank-id";
+    NSString *bankId = @"iron";
     NSString *accountName = @"Checking";
     NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
     

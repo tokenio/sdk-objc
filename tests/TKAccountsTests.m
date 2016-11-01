@@ -29,7 +29,7 @@
 
 - (void)testLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
-        NSString *bankId = @"bank-id";
+        NSString *bankId = @"iron";
 
         AccountLinkPayload *payload = [AccountLinkPayload message];
         payload.username = member.firstUsername;
