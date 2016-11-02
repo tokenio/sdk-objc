@@ -75,7 +75,7 @@
         NSArray<NSString*> *payloads = @[@"12345"];
         
         [tokenIO notifyLinkAccounts:payer.firstUsername
-                             bankId:@"bank-id"
+                             bankId:@"iron"
                            bankName:@"bank-name"
                 accountLinkPayloads:payloads];
     }];
@@ -104,7 +104,7 @@
         
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
-                                      bankId:@"bank-id"
+                                      bankId:@"iron"
                                     bankName:@"bank-name"
                          accountLinkPayloads:payloads
                                    publicKey:key.publicKeyStr
