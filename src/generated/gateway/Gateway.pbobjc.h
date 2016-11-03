@@ -39,7 +39,7 @@ CF_EXTERN_C_BEGIN
 @class TokenPayload;
 @class Transaction;
 @class Transfer;
-@class Transfer_Payload;
+@class TransferPayload;
 GPB_ENUM_FWD_DECLARE(Platform);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -763,7 +763,7 @@ typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
 
 @interface CreateTransferRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Transfer_Payload *payload;
+@property(nonatomic, readwrite, strong, null_resettable) TransferPayload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 

@@ -389,7 +389,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
-- (void)createTransfer:(Transfer_Payload *)payload
+- (void)createTransfer:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
     CreateTransferRequest *request = [CreateTransferRequest message];

@@ -527,7 +527,7 @@
               currency:(NSString *)currency
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
-    Transfer_Payload *payload = [Transfer_Payload message];
+    TransferPayload *payload = [TransferPayload message];
     payload.tokenId = token.id_p;
     payload.nonce = [TKUtil nonce];
     

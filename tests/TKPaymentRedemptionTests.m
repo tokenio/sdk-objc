@@ -48,8 +48,8 @@
 
         Transfer *transfer = [payee createTransfer:token];
         
-        XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+        XCTAssertEqualObjects(@"", transfer.payload.amount.value);
+        XCTAssertEqualObjects(@"", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }

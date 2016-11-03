@@ -248,7 +248,7 @@ message CancelTokenResponse {
 //
 
 message CreateTransferRequest {
-  io.token.proto.common.transfer.Transfer.Payload payload = 1;
+  io.token.proto.common.transfer.TransferPayload payload = 1;
   io.token.proto.common.security.Signature payload_signature = 2;
 }
 
