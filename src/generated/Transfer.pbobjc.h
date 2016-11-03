@@ -27,7 +27,7 @@ CF_EXTERN_C_BEGIN
 @class Destination;
 @class Money;
 @class Signature;
-@class Transfer_Payload;
+@class TransferPayload;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,8 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Id_p = 1,
   Transfer_FieldNumber_ReferenceId = 2,
-  Transfer_FieldNumber_Payload = 3,
-  Transfer_FieldNumber_CreatedAtMs = 4,
+  Transfer_FieldNumber_CreatedAtMs = 3,
+  Transfer_FieldNumber_Payload = 4,
   Transfer_FieldNumber_PayloadSignaturesArray = 5,
 };
 
@@ -63,11 +63,11 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 /// Bank transaction reference id.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *referenceId;
 
-@property(nonatomic, readwrite, strong, null_resettable) Transfer_Payload *payload;
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferPayload *payload;
 /// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
-
-@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *payloadSignaturesArray;
 /// The number of items in @c payloadSignaturesArray without causing the array to be created.
@@ -75,17 +75,18 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 
 @end
 
-#pragma mark - Transfer_Payload
+#pragma mark - TransferPayload
 
-typedef GPB_ENUM(Transfer_Payload_FieldNumber) {
-  Transfer_Payload_FieldNumber_Nonce = 1,
-  Transfer_Payload_FieldNumber_TokenId = 2,
-  Transfer_Payload_FieldNumber_Amount = 3,
-  Transfer_Payload_FieldNumber_DestinationsArray = 5,
-  Transfer_Payload_FieldNumber_Description_p = 6,
+typedef GPB_ENUM(TransferPayload_FieldNumber) {
+  TransferPayload_FieldNumber_Nonce = 1,
+  TransferPayload_FieldNumber_TokenId = 2,
+  TransferPayload_FieldNumber_Amount = 3,
+  TransferPayload_FieldNumber_DestinationsArray = 5,
+  TransferPayload_FieldNumber_Description_p = 6,
 };
 
-@interface Transfer_Payload : GPBMessage
+/// A transfer payload that is being signed by the redeemer and the bank.
+@interface TransferPayload : GPBMessage
 
 /// Client assigned unique request id.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;

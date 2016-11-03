@@ -15,7 +15,7 @@
 @class Token;
 @class TokenPayload;
 @class Transfer;
-@class Transfer_Payload;
+@class TransferPayload;
 
 
 /**
@@ -224,7 +224,7 @@
  *
  * @param transfer transfer parameters, such as amount, currency, etc
  */
-- (void)createTransfer:(Transfer_Payload *)payload
+- (void)createTransfer:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

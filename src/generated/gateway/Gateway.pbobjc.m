@@ -2321,7 +2321,7 @@ typedef struct CancelTokenResponse__storage_ {
 
 typedef struct CreateTransferRequest__storage_ {
   uint32_t _has_storage_[1];
-  Transfer_Payload *payload;
+  TransferPayload *payload;
   Signature *payloadSignature;
 } CreateTransferRequest__storage_;
 
@@ -2333,7 +2333,7 @@ typedef struct CreateTransferRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(Transfer_Payload),
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferPayload),
         .number = CreateTransferRequest_FieldNumber_Payload,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreateTransferRequest__storage_, payload),
