@@ -156,15 +156,15 @@ BOOL Key_Level_IsValidValue(int32_t value__) {
 
 @implementation Signature
 
+@dynamic memberId;
 @dynamic keyId;
 @dynamic signature;
-@dynamic timestampMs;
 
 typedef struct Signature__storage_ {
   uint32_t _has_storage_[1];
+  NSString *memberId;
   NSString *keyId;
   NSString *signature;
-  int64_t timestampMs;
 } Signature__storage_;
 
 // This method is threadsafe because it is initially called
@@ -174,10 +174,19 @@ typedef struct Signature__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = Signature_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Signature__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "keyId",
         .dataTypeSpecific.className = NULL,
         .number = Signature_FieldNumber_KeyId,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(Signature__storage_, keyId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -186,19 +195,10 @@ typedef struct Signature__storage_ {
         .name = "signature",
         .dataTypeSpecific.className = NULL,
         .number = Signature_FieldNumber_Signature,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(Signature__storage_, signature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "timestampMs",
-        .dataTypeSpecific.className = NULL,
-        .number = Signature_FieldNumber_TimestampMs,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Signature__storage_, timestampMs),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

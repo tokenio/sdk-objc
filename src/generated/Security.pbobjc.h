@@ -87,18 +87,18 @@ void SetKey_Level_RawValue(Key *message, int32_t value);
 #pragma mark - Signature
 
 typedef GPB_ENUM(Signature_FieldNumber) {
-  Signature_FieldNumber_KeyId = 1,
-  Signature_FieldNumber_Signature = 2,
-  Signature_FieldNumber_TimestampMs = 7,
+  Signature_FieldNumber_MemberId = 1,
+  Signature_FieldNumber_KeyId = 2,
+  Signature_FieldNumber_Signature = 3,
 };
 
 @interface Signature : GPBMessage
 
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
-
-@property(nonatomic, readwrite) int64_t timestampMs;
 
 @end
 
