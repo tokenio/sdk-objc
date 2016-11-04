@@ -50,10 +50,7 @@
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token] token];
-        Transfer *transfer = [payee createTransfer:token];
-        
-        XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+        [payee createTransfer:token];
         
         [payer unsubscribeFromNotifications:s.id_p];
         
@@ -64,7 +61,6 @@
                                        description:@"transfer test"];
         token = [[payer endorseToken:token2] token];
         [payee createTransfer:token];
-        XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
     }];
 }
 
@@ -143,8 +139,6 @@
         token = [[payer endorseToken:token] token];
         Transfer *transfer = [payee createTransfer:token];
         
-        XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }

@@ -18,7 +18,7 @@ message Key {
 }
 
 message Signature {
-  string key_id = 1;
-  string signature = 2;
-  int64 timestamp_ms = 7;
+  string member_id = 1;
+  string key_id = 2;
+  string signature = 3;
 }

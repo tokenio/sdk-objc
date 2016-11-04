@@ -53,6 +53,7 @@
     request.update.memberId = memberId;
     request.update.addKey.level = 0;
     request.update.addKey.publicKey = key.publicKeyStr;
+    request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = key.id;
     request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);

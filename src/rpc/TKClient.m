@@ -342,6 +342,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
              onError:(OnError)onError {
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
+    request.signature.memberId = memberId;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:token
                                           action:TokenSignature_Action_Endorsed
@@ -368,6 +369,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
             onError:(OnError)onError {
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
+    request.signature.memberId = memberId;
     request.signature.keyId = key.id;
     request.signature.signature = [TKCrypto sign:token
                                           action:TokenSignature_Action_Cancelled
@@ -394,6 +396,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                onError:(OnError)onError {
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
+    request.payloadSignature.memberId = memberId;
     request.payloadSignature.keyId = key.id;
     request.payloadSignature.signature = [TKCrypto sign:payload usingKey:key];
     RpcLogStart(request);
@@ -546,6 +549,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.address = address;
+    request.addressSignature.memberId = memberId;
     request.addressSignature.keyId = key.id;
     request.addressSignature.signature = [TKCrypto sign:address usingKey:key];
     RpcLogStart(request);
@@ -640,6 +644,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
               onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
+    request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = key.id;
     request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);
