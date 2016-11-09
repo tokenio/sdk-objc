@@ -104,7 +104,6 @@
                        onError:onError];
 }
 
-
 - (void)notifyAddKey:(NSString * )username
            publicKey:(NSString *)publicKey
                 name:(NSString *) name

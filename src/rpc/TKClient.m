@@ -674,8 +674,14 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-key-id"] = key.id;
     call.requestHeaders[@"token-signature"] = signature;
     
+    // TODO(alexey): Here for debugging, remove when not needed anymore.
+    NSLog(@"Auth member-id: %@", memberId);
+    NSLog(@"Auth key-id: %@", key.id);
+    NSLog(@"Auth key-public: %@", key.publicKeyStr);
+    NSLog(@"Auth signature: %@", signature);
+    
     if (onBehalfOfMemberId) {
-        NSLog(@"Performing request on-behalf-of %@", onBehalfOfMemberId);
+        NSLog(@"Auth on-behalf-of %@", onBehalfOfMemberId);
         call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
     }
     
