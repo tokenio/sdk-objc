@@ -75,7 +75,15 @@
     unsigned const char *pk = key.publicKey.bytes;
 
     ed25519_sign(signature, data.bytes, data.length, pk, sk);
-    return [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
+    NSString *result = [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
+    
+    // TODO(alexey): Remove this, here to help track down prod issue.
+    NSLog(@"payload=[%@]", data);
+    NSLog(@"key.id=[%@]", key.id);
+    NSLog(@"key.public=[%@]", key.publicKeyStr);
+    NSLog(@"signature=[%@]", result);
+    
+    return result;
 }
 
 + (bool)verifySignature:(NSString *)signature
@@ -90,6 +98,10 @@
     NSString *actionName = [TokenSignature_Action_EnumDescriptor() textFormatNameForValue:action];
     NSString *jsonToken = [TKJson serialize:token.payload];
     NSString *payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
+    
+    // TODO(alexey): Remove this, here to help track down prod issue.
+    NSLog(@"payload=[%@]", payload);
+    
     return [payload dataUsingEncoding:NSASCIIStringEncoding];
 }
 
