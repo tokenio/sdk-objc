@@ -61,11 +61,9 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
-        [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
-        [grantor createAddressAccessToken:grantee.firstUsername restrictedTo:address.id_p];
         
         NSArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
-        XCTAssertEqual(lookedUp.count, 3);
+        XCTAssertEqual(lookedUp.count, 1);
     }];
 }
 
