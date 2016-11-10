@@ -32,6 +32,8 @@ CF_EXTERN_C_BEGIN
 @class Money;
 @class Notification;
 @class Page;
+@class ReplaceTokenRequest_CancelToken;
+@class ReplaceTokenRequest_CreateToken;
 @class Signature;
 @class Subscriber;
 @class Token;
@@ -40,6 +42,7 @@ CF_EXTERN_C_BEGIN
 @class Transaction;
 @class Transfer;
 @class TransferPayload;
+GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(Platform);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -416,9 +419,23 @@ typedef GPB_ENUM(NotifyRequest_FieldNumber) {
 
 #pragma mark - NotifyResponse
 
+typedef GPB_ENUM(NotifyResponse_FieldNumber) {
+  NotifyResponse_FieldNumber_Status = 1,
+};
+
 @interface NotifyResponse : GPBMessage
 
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
 @end
+
+/// Fetches the raw value of a @c NotifyResponse's @c status property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t NotifyResponse_Status_RawValue(NotifyResponse *message);
+/// Sets the raw value of an @c NotifyResponse's @c status property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetNotifyResponse_Status_RawValue(NotifyResponse *message, int32_t value);
 
 #pragma mark - LinkAccountsRequest
 
@@ -747,6 +764,76 @@ typedef GPB_ENUM(CancelTokenResponse_FieldNumber) {
 };
 
 @interface CancelTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
+/// Test to see if @c result has been set.
+@property(nonatomic, readwrite) BOOL hasResult;
+
+@end
+
+#pragma mark - ReplaceTokenRequest
+
+typedef GPB_ENUM(ReplaceTokenRequest_FieldNumber) {
+  ReplaceTokenRequest_FieldNumber_CancelToken = 1,
+  ReplaceTokenRequest_FieldNumber_CreateToken = 2,
+};
+
+@interface ReplaceTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) ReplaceTokenRequest_CancelToken *cancelToken;
+/// Test to see if @c cancelToken has been set.
+@property(nonatomic, readwrite) BOOL hasCancelToken;
+
+@property(nonatomic, readwrite, strong, null_resettable) ReplaceTokenRequest_CreateToken *createToken;
+/// Test to see if @c createToken has been set.
+@property(nonatomic, readwrite) BOOL hasCreateToken;
+
+@end
+
+#pragma mark - ReplaceTokenRequest_CancelToken
+
+typedef GPB_ENUM(ReplaceTokenRequest_CancelToken_FieldNumber) {
+  ReplaceTokenRequest_CancelToken_FieldNumber_TokenId = 1,
+  ReplaceTokenRequest_CancelToken_FieldNumber_Signature = 2,
+};
+
+@interface ReplaceTokenRequest_CancelToken : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/// Test to see if @c signature has been set.
+@property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
+#pragma mark - ReplaceTokenRequest_CreateToken
+
+typedef GPB_ENUM(ReplaceTokenRequest_CreateToken_FieldNumber) {
+  ReplaceTokenRequest_CreateToken_FieldNumber_Payload = 1,
+  ReplaceTokenRequest_CreateToken_FieldNumber_PayloadSignature = 2,
+};
+
+@interface ReplaceTokenRequest_CreateToken : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/// Test to see if @c payload has been set.
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+/// Optional if endorsement requested.
+@property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
+/// Test to see if @c payloadSignature has been set.
+@property(nonatomic, readwrite) BOOL hasPayloadSignature;
+
+@end
+
+#pragma mark - ReplaceTokenResponse
+
+typedef GPB_ENUM(ReplaceTokenResponse_FieldNumber) {
+  ReplaceTokenResponse_FieldNumber_Result = 1,
+};
+
+@interface ReplaceTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
 /// Test to see if @c result has been set.

@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AccessTokenConfig.h"
 #import "TKTypedef.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
@@ -315,105 +316,38 @@
 /**
  * Creates a new access token for a list of resources.
  *
- * @param toUsername the redeemer username
- * @param resources a list of resources to grant access to
+ * @param accessTokenConfig the access token configuration object
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  * @return the created access token
  */
-- (void)createAccessToken:(NSString *)toUsername
-             forResources:(NSArray<AccessBody_Resource *> *)resources
+- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError;
 
 /**
- * Creates a new access for any addresses.
+ * Cancels the existing access token and creates a replacement for it.
  *
- * @param toUsername the redeemer username
- * @return the created access token
+ * @param tokenToCancel old token to cancel
+ * @param accessTokenConfig access token configuration to create a new token from
+ * @return result of the replacement operation
  */
-- (void)createAddressAccessToken:(NSString *)toUsername
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                         onError:(OnError)onError;
+- (void)replaceAccessToken:(Token *)tokenToCancel
+         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                 onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                   onError:(OnError)onError;
 
 /**
- * Creates a new access for an address.
+ * Cancels the existing access token, creates a replacement and endorses it.
  *
- * @param toUsername the redeemer username
- * @param addressId address id
- * @return the created access token
+ * @param tokenToCancel old token to cancel
+ * @param accessTokenConfig access token configuration to create a new token from
+ * @return result of the replacement operation
  */
-- (void)createAddressAccessToken:(NSString *)toUsername
-                    restrictedTo:(NSString *)addressId
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                         onError:(OnError)onError;
-
-/**
- * Creates a new access for any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (void)createAccountAccessToken:(NSString *)toUsername
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                        onError:(OnError)onError;
-
-/**
- * Creates a new access for an account.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (void)createAccountAccessToken:(NSString *)toUsername
-                    restrictedTo:(NSString *)accountId
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                         onError:(OnError)onError;
-
-
-/**
- * Creates a new access for transactions in any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (void)createTransactionsAccessToken:(NSString *)toUsername
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError;
-
-
-/**
- * Creates a new access for a transaction.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (void)createTransactionsAccessToken:(NSString *)toUsername
-                         restrictedTo:(NSString *)accountId
-                            onSuccess:(OnSuccessWithToken)onSuccess
-                              onError:(OnError)onError;
-
-/**
- * Creates a new access for balance of any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (void)createBalanceAccessToken:(NSString *)toUsername
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                         onError:(OnError)onError;
-
-/**
- * Creates a new access for account balance.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (void)createBalanceAccessToken:(NSString *)toUsername
-                    restrictedTo:(NSString *)accountId
-                       onSuccess:(OnSuccessWithToken)onSuccess
-                         onError:(OnError)onError;
-
+- (void)replaceAndEndorseAccessToken:(Token *)tokenToCancel
+                   accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                             onError:(OnError)onError;
 /**
  * Looks up a existing transfer token.
  *

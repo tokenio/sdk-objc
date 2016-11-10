@@ -32,6 +32,24 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum NotifyStatus
+
+typedef GPB_ENUM(NotifyStatus) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  NotifyStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  NotifyStatus_Failed = 0,
+  NotifyStatus_Sent = 1,
+  NotifyStatus_NoSubscribers = 2,
+};
+
+GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL NotifyStatus_IsValidValue(int32_t value);
+
 #pragma mark - NotificationRoot
 
 /// Exposes the extension registry for this file.

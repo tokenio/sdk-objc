@@ -261,94 +261,34 @@
     }];
 }
 
-- (Token *)createAccessToken:(NSString *)toUsername
-                forResources:(NSArray<AccessBody_Resource *> *)resources {
+- (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAccessToken:toUsername
-                         forResources:resources
+        [self.async createAccessToken:accessTokenConfig
                             onSuccess:call.onSuccess
                               onError:call.onError];
     }];
 }
 
-- (Token *)createAddressAccessToken:(NSString *)toUsernamed {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+- (TokenOperationResult *)replaceAccessToken:(Token *)tokenToCancel
+                           accessTokenConfig:(AccessTokenConfig *)accessTokenConfig {
+    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAddressAccessToken:toUsernamed
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
+        [self.async replaceAccessToken:tokenToCancel
+                     accessTokenConfig:accessTokenConfig
+                             onSuccess:call.onSuccess
+                               onError:call.onError];
     }];
 }
 
-- (Token *)createAddressAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)addressId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
+                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig {
+    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createAddressAccessToken:toUsername
-                                restrictedTo:addressId
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
-    }];
-}
-
-- (Token *)createAccountAccessToken:(NSString *)toUsername {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createAccountAccessToken:toUsername
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
-    }];
-}
-
-- (Token *)createAccountAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)accountId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createAccountAccessToken:toUsername
-                                restrictedTo:accountId
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
-    }];
-}
-
-- (Token *)createTransactionsAccessToken:(NSString *)toUsername {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createTransactionsAccessToken:toUsername
-                                        onSuccess:call.onSuccess
-                                          onError:call.onError];
-    }];
-}
-
-- (Token *)createTransactionsAccessToken:(NSString *)toUsername
-                            restrictedTo:(NSString *)accountId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createTransactionsAccessToken:toUsername
-                                     restrictedTo:accountId
-                                        onSuccess:call.onSuccess
-                                          onError:call.onError];
-    }];
-}
-
-- (Token *)createBalanceAccessToken:(NSString *)toUsername{
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createBalanceAccessToken:toUsername
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
-    }];
-}
-
-- (Token *)createBalanceAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)accountId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createBalanceAccessToken:toUsername
-                                restrictedTo:accountId
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
+        [self.async replaceAndEndorseAccessToken:tokenToCancel
+                               accessTokenConfig:accessTokenConfig
+                                       onSuccess:call.onSuccess
+                                         onError:call.onError];
     }];
 }
 

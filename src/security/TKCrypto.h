@@ -39,6 +39,18 @@
           usingKey:(TKSecretKey *)key;
 
 /**
+ * Signs a token payload with the supplied secret key.
+ *
+ * @param tokenPayload token payload to sign
+ * @param action action being signed on
+ * @param key key to sign with
+ * @return signed message, Base64 encoded
+ */
++ (NSString *)signPayload:(TokenPayload *)tokenPayload
+                   action:(TokenSignature_Action)action
+                 usingKey:(TKSecretKey *)key;
+
+/**
  * Signs the specified payload using given key
  *
  * @param key the key to be used for signing

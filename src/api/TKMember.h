@@ -5,11 +5,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AccessTokenConfig.h"
 #import "TKTypedef.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
-
 
 
 @class TKSecretKey;
@@ -248,85 +248,30 @@
 /**
  * Creates a new access token for a list of resources.
  *
- * @param toUsername the redeemer username
- * @param resources a list of resources to grant access to
+ * @param accessTokenConfig the access token configuration object
  * @return the created access token
  */
-- (Token *)createAccessToken:(NSString *)toUsername
-                forResources:(NSArray<AccessBody_Resource *> *)resources;
+- (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig;
 
 /**
- * Creates a new access token for any addresses.
+ * Cancels the existing access token and creates a replacement for it.
  *
- * @param toUsername the redeemer username
- * @return the created access token
+ * @param tokenToCancel old token to cancel
+ * @param accessTokenConfig access token configuration to create a new token from
+ * @return result of the replacement operation
  */
-- (Token *)createAddressAccessToken:(NSString *)toUsername;
+- (TokenOperationResult *)replaceAccessToken:(Token *)tokenToCancel
+                           accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
 
 /**
- * Creates a new access token for a given address.
+ * Cancels the existing access token, creates a replacement and endorses it.
  *
- * @param toUsername the redeemer username
- * @param addressId address id
- * @return the created access token
+ * @param tokenToCancel old token to cancel
+ * @param accessTokenConfig access token configuration to create a new token from
+ * @return result of the replacement operation
  */
-- (Token *)createAddressAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)addressId;
-
-/**
- * Creates a new access token for any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (Token *)createAccountAccessToken:(NSString *)toUsername;
-
-/**
- * Creates a new access token for a given account.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (Token *)createAccountAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)accountId;
-
-/**
- * Creates a new access tokrn for transactions in any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (Token *)createTransactionsAccessToken:(NSString *)toUsername;
-
-
-/**
- * Creates a new access token for transactions in a given account.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (Token *)createTransactionsAccessToken:(NSString *)toUsername
-                            restrictedTo:(NSString *)accountId;
-
-/**
- * Creates a new access token for balance of any account.
- *
- * @param toUsername the redeemer username
- * @return the created access token
- */
-- (Token *)createBalanceAccessToken:(NSString *)toUsername;
-
-/**
- * Creates a new access token for account balance.
- *
- * @param toUsername the redeemer username
- * @param accountId account id
- * @return the created access token
- */
-- (Token *)createBalanceAccessToken:(NSString *)toUsername
-                       restrictedTo:(NSString *)accountId;
+- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
+                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
 
 /**
  * Looks up a existing token.
