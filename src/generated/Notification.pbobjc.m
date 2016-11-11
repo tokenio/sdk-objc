@@ -40,6 +40,42 @@ static GPBFileDescriptor *NotificationRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum NotifyStatus
+
+GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Failed\000Sent\000NoSubscribers\000";
+    static const int32_t values[] = {
+        NotifyStatus_Failed,
+        NotifyStatus_Sent,
+        NotifyStatus_NoSubscribers,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(NotifyStatus)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:NotifyStatus_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL NotifyStatus_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case NotifyStatus_Failed:
+    case NotifyStatus_Sent:
+    case NotifyStatus_NoSubscribers:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - TransferProcessed
 
 @implementation TransferProcessed

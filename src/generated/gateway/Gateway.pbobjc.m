@@ -1206,9 +1206,11 @@ typedef struct NotifyRequest__storage_ {
 
 @implementation NotifyResponse
 
+@dynamic status;
 
 typedef struct NotifyResponse__storage_ {
   uint32_t _has_storage_[1];
+  NotifyStatus status;
 } NotifyResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1216,12 +1218,23 @@ typedef struct NotifyResponse__storage_ {
 + (GPBDescriptor *)descriptor {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = NotifyStatus_EnumDescriptor,
+        .number = NotifyResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NotifyResponse__storage_, status),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
+    };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[NotifyResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NotifyResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -1231,6 +1244,18 @@ typedef struct NotifyResponse__storage_ {
 }
 
 @end
+
+int32_t NotifyResponse_Status_RawValue(NotifyResponse *message) {
+  GPBDescriptor *descriptor = [NotifyResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NotifyResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetNotifyResponse_Status_RawValue(NotifyResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [NotifyResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NotifyResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - LinkAccountsRequest
 
@@ -2303,6 +2328,211 @@ typedef struct CancelTokenResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CancelTokenResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ReplaceTokenRequest
+
+@implementation ReplaceTokenRequest
+
+@dynamic hasCancelToken, cancelToken;
+@dynamic hasCreateToken, createToken;
+
+typedef struct ReplaceTokenRequest__storage_ {
+  uint32_t _has_storage_[1];
+  ReplaceTokenRequest_CancelToken *cancelToken;
+  ReplaceTokenRequest_CreateToken *createToken;
+} ReplaceTokenRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "cancelToken",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReplaceTokenRequest_CancelToken),
+        .number = ReplaceTokenRequest_FieldNumber_CancelToken,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest__storage_, cancelToken),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "createToken",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReplaceTokenRequest_CreateToken),
+        .number = ReplaceTokenRequest_FieldNumber_CreateToken,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest__storage_, createToken),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReplaceTokenRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReplaceTokenRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ReplaceTokenRequest_CancelToken
+
+@implementation ReplaceTokenRequest_CancelToken
+
+@dynamic tokenId;
+@dynamic hasSignature, signature;
+
+typedef struct ReplaceTokenRequest_CancelToken__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
+  Signature *signature;
+} ReplaceTokenRequest_CancelToken__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = ReplaceTokenRequest_CancelToken_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest_CancelToken__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = ReplaceTokenRequest_CancelToken_FieldNumber_Signature,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest_CancelToken__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReplaceTokenRequest_CancelToken class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReplaceTokenRequest_CancelToken__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ReplaceTokenRequest_CreateToken
+
+@implementation ReplaceTokenRequest_CreateToken
+
+@dynamic hasPayload, payload;
+@dynamic hasPayloadSignature, payloadSignature;
+
+typedef struct ReplaceTokenRequest_CreateToken__storage_ {
+  uint32_t _has_storage_[1];
+  TokenPayload *payload;
+  Signature *payloadSignature;
+} ReplaceTokenRequest_CreateToken__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = ReplaceTokenRequest_CreateToken_FieldNumber_Payload,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest_CreateToken__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "payloadSignature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = ReplaceTokenRequest_CreateToken_FieldNumber_PayloadSignature,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ReplaceTokenRequest_CreateToken__storage_, payloadSignature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReplaceTokenRequest_CreateToken class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReplaceTokenRequest_CreateToken__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ReplaceTokenResponse
+
+@implementation ReplaceTokenResponse
+
+@dynamic hasResult, result;
+
+typedef struct ReplaceTokenResponse__storage_ {
+  uint32_t _has_storage_[1];
+  TokenOperationResult *result;
+} ReplaceTokenResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "result",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenOperationResult),
+        .number = ReplaceTokenResponse_FieldNumber_Result,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReplaceTokenResponse__storage_, result),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReplaceTokenResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReplaceTokenResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

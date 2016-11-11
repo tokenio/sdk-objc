@@ -58,6 +58,7 @@
 		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
 		8AC7AB821DB56E9B00FD4176 /* TKAccessTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */; };
 		8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */; };
+		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
 		ABA7B01411EF72BFC5345CEF /* TKAccountAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccountAsync.m */; };
 		ABA7B0303C146231D78BE96C /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC2013ED8025D15A3E18 /* seed.c */; };
 		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -196,6 +197,8 @@
 		8A99091F1D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessTokenTests.m; sourceTree = "<group>"; };
 		8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessRedemptionTests.m; sourceTree = "<group>"; };
+		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
+		94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenConfig.m; sourceTree = "<group>"; };
 		A0BD2260CD0EE1FB0E488C44 /* libPods-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TKBankClient.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		ABA7B0D240C12726391240B2 /* TKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKCrypto.m; sourceTree = "<group>"; };
@@ -466,6 +469,8 @@
 				ABA7BD61CA7BB1D1369DC3B4 /* TKMemberAsync.h */,
 				ABA7B5B2892CFF8B1E4F0EE0 /* TKMemberAsync.m */,
 				3777163D1D99BF6800287239 /* TokenSdk.h */,
+				94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */,
+				94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -822,6 +827,7 @@
 				ABA7B847267CDA906A218BBB /* ge.c in Sources */,
 				8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */,
 				ABA7BA98793B0592D11A83BB /* sc.c in Sources */,
+				94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */,
 				37637B671D989A930043345F /* Notification.pbobjc.m in Sources */,
 				ABA7B0303C146231D78BE96C /* seed.c in Sources */,
 				37637B571D989A930043345F /* Auth.pbobjc.m in Sources */,

@@ -130,7 +130,9 @@ message NotifyRequest {
   io.token.proto.common.notification.Notification notification = 2;
 }
 
-message NotifyResponse {}
+message NotifyResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +193,7 @@ message GetTransactionsResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Transfer Tokens
+// Tokens
 //
 
 message CreateTokenRequest {
@@ -240,6 +242,25 @@ message CancelTokenRequest {
 }
 
 message CancelTokenResponse {
+  io.token.proto.common.token.TokenOperationResult result = 1;
+}
+
+message ReplaceTokenRequest {
+  message CancelToken {
+    string token_id = 1;
+    io.token.proto.common.security.Signature signature = 2;
+  }
+
+  message CreateToken {
+    io.token.proto.common.token.TokenPayload payload = 1;
+    io.token.proto.common.security.Signature payload_signature = 2; // Optional if endorsement requested.
+  }
+
+  CancelToken cancel_token = 1;
+  CreateToken create_token = 2;
+}
+
+message ReplaceTokenResponse {
   io.token.proto.common.token.TokenOperationResult result = 1;
 }
 
@@ -443,6 +464,12 @@ service GatewayService {
   rpc CancelToken (CancelTokenRequest) returns (CancelTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/cancel"
+    };
+  }
+
+  rpc ReplaceToken (ReplaceTokenRequest) returns (ReplaceTokenResponse) {
+    option (google.api.http) = {
+        post: "/tokens/{cancel_token.token_id}"
     };
   }
 

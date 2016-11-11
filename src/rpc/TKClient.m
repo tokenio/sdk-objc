@@ -288,6 +288,58 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     [self _startCall:call withRequest:request];
 }
 
+- (void)replaceToken:(Token *)tokenToCancel
+       tokenToCreate:(TokenPayload *)tokenToCreate
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+             onError:(OnError)onError {
+    ReplaceTokenRequest *request = [self createReplaceTokenRequest:tokenToCancel tokenToCreate:tokenToCreate];
+    
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToReplaceTokenWithRequest: request
+                           handler:^(ReplaceTokenResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.result);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+
+    
+}
+
+- (void)replaceAndEndorseToken:(Token *)tokenToCancel
+                 tokenToCreate:(TokenPayload *)tokenToCreate
+                     onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                       onError:(OnError)onError {
+    ReplaceTokenRequest *request = [self createReplaceTokenRequest:tokenToCancel tokenToCreate:tokenToCreate];
+    request.createToken.payloadSignature.memberId = memberId;
+    request.createToken.payloadSignature.keyId = key.id;
+    request.createToken.payloadSignature.signature = [TKCrypto signPayload:tokenToCreate
+                                                                    action:TokenSignature_Action_Endorsed
+                                                                  usingKey:key];
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToReplaceTokenWithRequest: request
+                           handler:^(ReplaceTokenResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.result);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
 - (void)getToken:(NSString *)tokenId
        onSuccess:(OnSuccessWithToken)onSuccess
          onError:(OnError)onError {
@@ -638,6 +690,18 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 #pragma mark private
+- (ReplaceTokenRequest *)createReplaceTokenRequest:(Token *)tokenToCancel
+                                     tokenToCreate:(TokenPayload *)tokenToCreate {
+    ReplaceTokenRequest *request = [ReplaceTokenRequest message];
+    request.cancelToken.tokenId = tokenToCancel.id_p;
+    request.cancelToken.signature.memberId = memberId;
+    request.cancelToken.signature.keyId = key.id;
+    request.cancelToken.signature.signature = [TKCrypto sign:tokenToCancel
+                                                      action:TokenSignature_Action_Cancelled
+                                                    usingKey:key];
+    request.createToken.payload = tokenToCreate;
+    return request;
+}
 
 - (void)_updateMember:(MemberUpdate *)update
             onSuccess:(OnSuccessWithMember)onSuccess

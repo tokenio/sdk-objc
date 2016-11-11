@@ -25,7 +25,14 @@
 + (NSString *)sign:(Token *)token
             action:(TokenSignature_Action)action
           usingKey:(TKSecretKey *)key {
-    NSData *payload = [self payloadFor:token action:action];
+    NSData *payload = [self encodedPayloadFor:token with:action];
+    return [self signData:payload usingKey:key];
+}
+
++ (NSString *)signPayload:(TokenPayload *)tokenPayload
+                   action:(TokenSignature_Action)action
+                 usingKey:(TKSecretKey *)key {
+    NSData *payload = [self encodedPayload:tokenPayload with:action];
     return [self signData:payload usingKey:key];
 }
 
@@ -47,7 +54,7 @@
               forToken:(Token *)token
                 action:(TokenSignature_Action) action
         usingPublicKey:(NSData *)key {
-    NSData *payload = [self payloadFor:token action:action];
+    NSData *payload = [self encodedPayloadFor:token with:action];
     return [self verifySignature:signature forData:payload usingPublicKey:key];
 }
 
@@ -93,10 +100,15 @@
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, key.bytes) != 0;
 }
 
-+ (NSData *)payloadFor:(Token *)token
-                  action:(TokenSignature_Action)action {
++ (NSData *)encodedPayloadFor:(Token *)token
+                         with:(TokenSignature_Action)action {
+    return [self encodedPayload:token.payload with:action];
+}
+
++ (NSData *)encodedPayload:(TokenPayload *)tokenPayload
+                      with:(TokenSignature_Action)action {
     NSString *actionName = [TokenSignature_Action_EnumDescriptor() textFormatNameForValue:action];
-    NSString *jsonToken = [TKJson serialize:token.payload];
+    NSString *jsonToken = [TKJson serialize:tokenPayload];
     NSString *payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
     
     // TODO(alexey): Remove this, here to help track down prod issue.

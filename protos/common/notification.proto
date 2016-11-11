@@ -41,3 +41,9 @@ message Notification {
         io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
     }
 }
+
+enum NotifyStatus {
+    FAILED = 0;
+    SENT = 1;
+    NO_SUBSCRIBERS = 2;
+}

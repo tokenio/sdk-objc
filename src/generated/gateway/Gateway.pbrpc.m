@@ -370,6 +370,18 @@
              responseClass:[CancelTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark ReplaceToken(ReplaceTokenRequest) returns (ReplaceTokenResponse)
+
+- (void)replaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToReplaceTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ReplaceToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ReplaceTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
 
 /**
