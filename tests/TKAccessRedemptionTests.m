@@ -41,7 +41,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAllAddresses];
         Token *token = [grantor createAccessToken:access];
 
@@ -59,7 +59,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAddress:address.id_p];
         Token *token = [grantor createAccessToken:access];
 
@@ -74,7 +74,7 @@
 
 - (void)testAnyBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAllBalances];
         Token *token = [grantor createAccessToken:access];
 
@@ -88,7 +88,7 @@
 
 - (void)testBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAccountBalances:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
 
@@ -102,7 +102,7 @@
 
 - (void)testAnyAccountToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAllAccounts];
         Token *token = [grantor createAccessToken:access];
 

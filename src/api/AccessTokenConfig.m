@@ -9,6 +9,14 @@
 
 @implementation AccessTokenConfig
 
++ (id)create:(NSString *)redeemerUsername {
+    return [[AccessTokenConfig alloc] initWithRedeemer:redeemerUsername];
+}
+
++ (id)fromPayload:(TokenPayload *)payloadToInitFrom {
+    return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
+}
+
 - (id)initWithRedeemer:(NSString *)redeemerUsername {
     self = [super init];
     if (self) {

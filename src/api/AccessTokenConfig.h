@@ -17,18 +17,32 @@
 }
 
 /**
+ * Creates a new instance with a provided redeemer username (the 'payload.to' field).
+ *
+ * @param redeemerUsername username of the token redeemer
+ */
++ (id)create:(NSString *)redeemerUsername;
+
+/**
  * Creates a new instance from an existing token payload.
  *
  * @param payloadToInitFrom token payload to initialize the config from
  */
-- (id)initWithPayload:(TokenPayload *)payloadToInitFrom;
++ (id)fromPayload:(TokenPayload *)payloadToInitFrom;
 
-/**
+ /**
  * Creates a new instance with a provided redeemer username (the 'payload.to' field).
  *
  * @param redeemerUsername username of the token redeemer
  */
 - (id)initWithRedeemer:(NSString *)redeemerUsername;
+
+/**
+ * Creates a new instance from an existing token payload.
+ *
+ * @param payloadToInitFrom token payload to initialize the config from
+ */
+- (id)initWithPayload:(TokenPayload *)payloadToInitFrom;
 
 /**
  * Sets 'from' field on the payload.

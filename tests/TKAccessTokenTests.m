@@ -36,7 +36,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
         [access forAddress:address.id_p];
         token = [grantor createAccessToken:access];
     }];
@@ -84,7 +84,7 @@
 
 - (void)testReplaceToken {
     [self run: ^(TokenIO *tokenIO){
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithPayload:token.payload];
+        AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
         [access forAll];
         TokenOperationResult *replaced = [grantor replaceAccessToken:token accessTokenConfig:access];
         XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [replaced status]);
@@ -94,7 +94,7 @@
 
 - (void)testReplaceAndEndorseToken {
     [self run: ^(TokenIO *tokenIO){
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithPayload:token.payload];
+        AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
         [access forAll];
         TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:access];
         XCTAssertEqual(TokenOperationResult_Status_Success, [replaced status]);
