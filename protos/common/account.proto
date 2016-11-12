@@ -15,4 +15,5 @@ message AccountLinkPayload {
 message Account {
   string id = 1;
   string name = 2;
+  string bank_id = 3;
 }

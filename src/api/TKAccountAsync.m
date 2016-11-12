@@ -46,6 +46,10 @@
     return account.name;
 }
 
+- (NSString *)bankId {
+    return account.bankId;
+}
+
 - (void)getBalance:(OnSuccessWithMoney)onSuccess
            onError:(OnError)onError {
     [client getBalance:account.id_p

@@ -64,9 +64,11 @@
         NSArray<TKAccount *> *accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
+        XCTAssertEqualObjects(@"iron", accounts[0].bankId);
         
         TKAccount *account = [member getAccount:accounts[0].id];
         XCTAssertEqualObjects(@"Checking", account.name);
+        XCTAssertEqualObjects(@"iron", account.bankId);
     }];
 }
 

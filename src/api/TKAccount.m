@@ -31,6 +31,10 @@
     return self.async.name;
 }
 
+- (NSString *)bankId {
+    return self.async.bankId;
+}
+
 - (TKMember *)member {
     return self.async.member;
 }
