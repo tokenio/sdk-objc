@@ -13,7 +13,7 @@
  */
 @interface AccessTokenConfig : NSObject {
     TokenPayload * payload;
-    NSMutableArray<AccessBody_Resource *> * resources;
+    NSMutableSet<AccessBody_Resource *> * resources;
 }
 
 /**
@@ -21,14 +21,14 @@
  *
  * @param redeemerUsername username of the token redeemer
  */
-+ (id)create:(NSString *)redeemerUsername;
++ (AccessTokenConfig *)create:(NSString *)redeemerUsername;
 
 /**
  * Creates a new instance from an existing token payload.
  *
  * @param payloadToInitFrom token payload to initialize the config from
  */
-+ (id)fromPayload:(TokenPayload *)payloadToInitFrom;
++ (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom;
 
  /**
  * Creates a new instance with a provided redeemer username (the 'payload.to' field).
