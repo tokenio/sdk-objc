@@ -406,6 +406,7 @@
     [self createTransfer:token
                   amount:nil
                 currency:nil
+             description:nil
                onSuccess:onSuccess
                  onError:onError];
 }
@@ -413,6 +414,7 @@
 - (void)createTransfer:(Token *)token
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
+           description:(NSString *)description
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
@@ -424,6 +426,9 @@
     }
     if (currency) {
         payload.amount.currency = currency;
+    }
+    if (description) {
+        payload.description_p = description;
     }
     
     [client createTransfer:payload

@@ -469,7 +469,7 @@ service GatewayService {
 
   rpc ReplaceToken (ReplaceTokenRequest) returns (ReplaceTokenResponse) {
     option (google.api.http) = {
-        post: "/tokens/{cancel_token.token_id}"
+        post: "/tokens/{cancel_token.token_id}/replace"
     };
   }
 

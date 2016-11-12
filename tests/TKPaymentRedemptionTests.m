@@ -67,7 +67,7 @@
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
-        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
+        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:@"test"];
         
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
@@ -87,7 +87,7 @@
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
-        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD"];
+        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:nil];
         Transfer *lookedUp = [payer getTransfer:transfer.id_p];
         
         XCTAssertEqualObjects(transfer, lookedUp);
@@ -106,9 +106,9 @@
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil];
         
         NSArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
                                                             limit:100

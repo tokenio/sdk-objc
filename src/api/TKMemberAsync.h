@@ -426,12 +426,14 @@
  * @param token transfer token to redeem
  * @param amount transfer amount
  * @param currency transfer currency code, e.g. "EUR"
+ * @param description transfer description
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
 - (void)createTransfer:(Token *)token
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
+           description:(NSString *)description
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

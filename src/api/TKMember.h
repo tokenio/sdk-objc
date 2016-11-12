@@ -331,11 +331,13 @@
  * @param token transfer token to redeem
  * @param amount transfer amount
  * @param currency transfer currency code, e.g. "EUR"
+ * @param description transfer description
  * @return transfer record
  */
 - (Transfer *)createTransfer:(Token *)token
                       amount:(NSNumber *)amount
-                    currency:(NSString *)currency;
+                    currency:(NSString *)currency
+                 description:(NSString *)description;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
