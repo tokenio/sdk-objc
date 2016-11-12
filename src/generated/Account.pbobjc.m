@@ -121,11 +121,13 @@ typedef struct AccountLinkPayload__storage_ {
 
 @dynamic id_p;
 @dynamic name;
+@dynamic bankId;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *name;
+  NSString *bankId;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -149,6 +151,15 @@ typedef struct Account__storage_ {
         .number = Account_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Account__storage_, name),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = Account_FieldNumber_BankId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Account__storage_, bankId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

@@ -27,6 +27,7 @@
 @property (atomic, readonly) TKMember *member;
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSString *name;
+@property (atomic, readonly) NSString *bankId;
 
 + (TKAccount *)account:(TKAccountAsync *)delegate;
 

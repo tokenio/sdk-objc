@@ -67,6 +67,7 @@ typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
 typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Id_p = 1,
   Account_FieldNumber_Name = 2,
+  Account_FieldNumber_BankId = 3,
 };
 
 /// Bank Service Account representation.
@@ -75,6 +76,8 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
 
