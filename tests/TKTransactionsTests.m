@@ -50,7 +50,10 @@
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token] token];
-        Transfer *transfer = [payee createTransfer:token];
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@100.99
+                                          currency:@"USD"
+                                       description:@"full amount"];
         
         Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
         
@@ -58,6 +61,7 @@
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);
         XCTAssertEqualObjects(token.id_p, transaction.tokenId);
         XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
+        XCTAssertTrue([transaction.description containsString:@"full amount"]);
     }];
 }
 
@@ -69,9 +73,9 @@
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token] token];
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD"];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one"];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two"];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three"];
         
         NSArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
         XCTAssertEqual(3, lookedUp.count);

@@ -344,17 +344,20 @@
 - (Transfer *)createTransfer:(Token *)token {
     return [self createTransfer:token
                          amount:nil
-                       currency:nil];
+                       currency:nil
+                    description:nil];
 }
 
 - (Transfer *)createTransfer:(Token *)token
                       amount:(NSNumber *)amount
-                    currency:(NSString *)currency {
+                    currency:(NSString *)currency
+                 description:(NSString *)description {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTransfer:token
                             amount:amount
                           currency:currency
+                       description:description
                          onSuccess:call.onSuccess
                            onError:call.onError];
     }];
