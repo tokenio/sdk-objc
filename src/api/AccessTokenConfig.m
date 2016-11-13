@@ -9,11 +9,11 @@
 
 @implementation AccessTokenConfig
 
-+ (id)create:(NSString *)redeemerUsername {
++ (AccessTokenConfig *)create:(NSString *)redeemerUsername {
     return [[AccessTokenConfig alloc] initWithRedeemer:redeemerUsername];
 }
 
-+ (id)fromPayload:(TokenPayload *)payloadToInitFrom {
++ (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom {
     return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
 }
 
@@ -24,7 +24,7 @@
         payload.version = @"1.0";
         payload.nonce = [TKUtil nonce];
         payload.to.username = redeemerUsername;
-        resources = [[NSMutableArray alloc] init];
+        resources = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -34,7 +34,7 @@
     if (self) {
         payload = [payloadToInitFrom copy];
         [payload.access clear];
-        resources = [[NSMutableArray alloc] init];
+        resources = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -113,7 +113,7 @@
 }
 
 - (TokenPayload *)toTokenPayload {
-    [payload.access.resourcesArray addObjectsFromArray:resources];
+    [payload.access.resourcesArray addObjectsFromArray:[resources allObjects]];
     return payload;
 }
 @end

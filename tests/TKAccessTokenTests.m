@@ -102,4 +102,19 @@
     }];
 }
 
+- (void)testAddingPermissionsIdempotent {
+    [self run: ^(TokenIO *tokenIO){
+        AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
+        [access forAccount:grantee.id];
+        [access forAccount:grantee.id];
+        [access forAccount:grantee.id];
+        [access forAllAddresses];
+        [access forAllAddresses];
+        
+        TokenPayload *payload = [access toTokenPayload];
+        NSUInteger count = [payload.access resourcesArray_Count];
+        XCTAssertEqual(2, count);
+    }];
+}
+
 @end
