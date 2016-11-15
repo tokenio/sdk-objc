@@ -337,6 +337,7 @@
          accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
                  onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                    onError:(OnError)onError {
+    [accessTokenConfig from:self.id];
     [client replaceToken:tokenToCancel
            tokenToCreate:[accessTokenConfig toTokenPayload]
                onSuccess:onSuccess
@@ -347,6 +348,7 @@
                    accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
                            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                              onError:(OnError)onError {
+    [accessTokenConfig from:self.id];
     [client replaceAndEndorseToken:tokenToCancel
                      tokenToCreate:[accessTokenConfig toTokenPayload]
                          onSuccess:onSuccess

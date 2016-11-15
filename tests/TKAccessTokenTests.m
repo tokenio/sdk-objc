@@ -111,6 +111,7 @@
         [access forAllAddresses];
         [access forAllAddresses];
         
+        [access from:grantee.id];
         TokenPayload *payload = [access toTokenPayload];
         NSUInteger count = [payload.access resourcesArray_Count];
         XCTAssertEqual(2, count);
