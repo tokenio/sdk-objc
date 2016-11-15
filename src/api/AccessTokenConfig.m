@@ -43,6 +43,7 @@
     TokenMember *payer = [TokenMember message];
     payer.id_p = memberId;
     payload.from = payer;
+    payload.nonce = [TKUtil nonce];
 }
 
 - (void)forAllAddresses {
