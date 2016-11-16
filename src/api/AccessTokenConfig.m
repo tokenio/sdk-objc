@@ -34,6 +34,7 @@
     if (self) {
         payload = [payloadToInitFrom copy];
         [payload.access clear];
+        payload.nonce = [TKUtil nonce];
         resources = [[NSMutableSet alloc] init];
     }
     return self;
@@ -43,7 +44,6 @@
     TokenMember *payer = [TokenMember message];
     payer.id_p = memberId;
     payload.from = payer;
-    payload.nonce = [TKUtil nonce];
 }
 
 - (void)forAllAddresses {
