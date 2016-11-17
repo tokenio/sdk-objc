@@ -34,16 +34,13 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccountTransactions;
 @class AccessBody_Resource_AllAccounts;
 @class AccessBody_Resource_AllAddresses;
-@class DoubleRange;
 @class Signature;
-@class TimePeriod;
 @class Token;
 @class TokenMember;
 @class TokenPayload;
 @class TokenSignature;
 @class TransferBody;
 @class TransferInstructions;
-@class Var;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -242,7 +239,6 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
   TransferBody_FieldNumber_Currency = 4,
   TransferBody_FieldNumber_LifetimeAmount = 5,
   TransferBody_FieldNumber_Amount = 6,
-  TransferBody_FieldNumber_Vars = 7,
 };
 
 @interface TransferBody : GPBMessage
@@ -270,84 +266,6 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 
 /// Optional: Single token charge request acceptable range. Double.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
-
-/// Optional: token variables.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, Var*> *vars;
-/// The number of items in @c vars without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger vars_Count;
-
-@end
-
-#pragma mark - Var
-
-typedef GPB_ENUM(Var_FieldNumber) {
-  Var_FieldNumber_Range = 1,
-  Var_FieldNumber_OneOfArray = 2,
-  Var_FieldNumber_Regex = 3,
-  Var_FieldNumber_Value = 4,
-  Var_FieldNumber_Period = 5,
-};
-
-/// Describes a single variable value. Only one of the fields is set.
-@interface Var : GPBMessage
-
-/// Used to represent amount range.
-@property(nonatomic, readwrite, strong, null_resettable) DoubleRange *range;
-/// Test to see if @c range has been set.
-@property(nonatomic, readwrite) BOOL hasRange;
-
-/// An array of strings a value must belong to.
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *oneOfArray;
-/// The number of items in @c oneOfArray without causing the array to be created.
-@property(nonatomic, readonly) NSUInteger oneOfArray_Count;
-
-/// Regex match.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *regex;
-
-/// Plain string value.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *value;
-
-/// Amount per time period.
-@property(nonatomic, readwrite, strong, null_resettable) TimePeriod *period;
-/// Test to see if @c period has been set.
-@property(nonatomic, readwrite) BOOL hasPeriod;
-
-@end
-
-#pragma mark - DoubleRange
-
-typedef GPB_ENUM(DoubleRange_FieldNumber) {
-  DoubleRange_FieldNumber_Min = 1,
-  DoubleRange_FieldNumber_Max = 2,
-  DoubleRange_FieldNumber_Default_p = 3,
-};
-
-/// A range of a double value, used for amounts. The doubles are sent as strings over the wire.
-@interface DoubleRange : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *min;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *max;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *default_p;
-
-@end
-
-#pragma mark - TimePeriod
-
-typedef GPB_ENUM(TimePeriod_FieldNumber) {
-  TimePeriod_FieldNumber_Duration = 1,
-  TimePeriod_FieldNumber_Max = 2,
-};
-
-/// Time period description for multi use transfer tokens.
-@interface TimePeriod : GPBMessage
-
-/// ISO8601 duration. E.g.: P1M for 1 month.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *duration;
-
-/// Max amount for the given duration.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *max;
 
 @end
 

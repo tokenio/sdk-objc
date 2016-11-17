@@ -83,26 +83,6 @@
 }
 
 /**
- * Map fields, each field is proto message.
- */
-- (void)testMap_Message {
-    TokenPayload *token = [TokenPayload message];
-    token.effectiveAtMs = 12345;
-    token.transfer.amount = @"123.45";
-
-    Var *var1 = [Var message];
-    var1.value = @"one";
-
-    Var *var2 = [Var message];
-    var2.regex = @"two";
-
-    token.transfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
-
-    NSString *json = [TKJson serialize:token];
-    XCTAssertEqualObjects(json, @"{\"effectiveAtMs\":12345,\"transfer\":{\"amount\":\"123.45\",\"vars\":{\"one\":{\"value\":\"one\"},\"two\":{\"regex\":\"two\"}}}}");
-}
-
-/**
  * Enum fields.
  */
 - (void)testEnum {
@@ -189,29 +169,6 @@
     
     NSString *json1 = [TKJson serialize:token1];
     Token *token2  = [TKJson deserializeMessageOfClass:[Token class] fromJSON:json1];
-    NSString* json2 = [TKJson serialize:token2];
-    
-    XCTAssertEqualObjects(json1, json2);
-}
-
-/**
- * Deserialize Map fields, each field is proto message.
- */
-- (void)testDeserializeMap_Message {
-    TokenPayload *token1 = [TokenPayload message];
-    token1.transfer.amount = @"123.45";
-    token1.effectiveAtMs = 12345;
-    
-    Var *var1 = [Var message];
-    var1.value = @"one";
-    
-    Var *var2 = [Var message];
-    var2.regex = @"two";
-    
-    token1.transfer.vars = [@{@"one": var1, @"two": var2 } mutableCopy];
-    
-    NSString *json1 = [TKJson serialize:token1];
-    TokenPayload *token2  = [TKJson deserializeMessageOfClass:[TokenPayload class] fromJSON:json1];
     NSString* json2 = [TKJson serialize:token2];
     
     XCTAssertEqualObjects(json1, json2);

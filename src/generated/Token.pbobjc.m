@@ -440,7 +440,6 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 @dynamic currency;
 @dynamic lifetimeAmount;
 @dynamic amount;
-@dynamic vars, vars_Count;
 
 typedef struct TransferBody__storage_ {
   uint32_t _has_storage_[1];
@@ -450,7 +449,6 @@ typedef struct TransferBody__storage_ {
   NSString *currency;
   NSString *lifetimeAmount;
   NSString *amount;
-  NSMutableDictionary *vars;
 } TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -513,15 +511,6 @@ typedef struct TransferBody__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
-      {
-        .name = "vars",
-        .dataTypeSpecific.className = GPBStringifySymbol(Var),
-        .number = TransferBody_FieldNumber_Vars,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(TransferBody__storage_, vars),
-        .flags = GPBFieldMapKeyString,
-        .dataType = GPBDataTypeMessage,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TransferBody class]
@@ -530,212 +519,6 @@ typedef struct TransferBody__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferBody__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - Var
-
-@implementation Var
-
-@dynamic hasRange, range;
-@dynamic oneOfArray, oneOfArray_Count;
-@dynamic regex;
-@dynamic value;
-@dynamic hasPeriod, period;
-
-typedef struct Var__storage_ {
-  uint32_t _has_storage_[1];
-  DoubleRange *range;
-  NSMutableArray *oneOfArray;
-  NSString *regex;
-  NSString *value;
-  TimePeriod *period;
-} Var__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "range",
-        .dataTypeSpecific.className = GPBStringifySymbol(DoubleRange),
-        .number = Var_FieldNumber_Range,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Var__storage_, range),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "oneOfArray",
-        .dataTypeSpecific.className = NULL,
-        .number = Var_FieldNumber_OneOfArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Var__storage_, oneOfArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "regex",
-        .dataTypeSpecific.className = NULL,
-        .number = Var_FieldNumber_Regex,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Var__storage_, regex),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "value",
-        .dataTypeSpecific.className = NULL,
-        .number = Var_FieldNumber_Value,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Var__storage_, value),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "period",
-        .dataTypeSpecific.className = GPBStringifySymbol(TimePeriod),
-        .number = Var_FieldNumber_Period,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Var__storage_, period),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Var class]
-                                     rootClass:[TokenRoot class]
-                                          file:TokenRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Var__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - DoubleRange
-
-@implementation DoubleRange
-
-@dynamic min;
-@dynamic max;
-@dynamic default_p;
-
-typedef struct DoubleRange__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *min;
-  NSString *max;
-  NSString *default_p;
-} DoubleRange__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "min",
-        .dataTypeSpecific.className = NULL,
-        .number = DoubleRange_FieldNumber_Min,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(DoubleRange__storage_, min),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "max",
-        .dataTypeSpecific.className = NULL,
-        .number = DoubleRange_FieldNumber_Max,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(DoubleRange__storage_, max),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "default_p",
-        .dataTypeSpecific.className = NULL,
-        .number = DoubleRange_FieldNumber_Default_p,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(DoubleRange__storage_, default_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[DoubleRange class]
-                                     rootClass:[TokenRoot class]
-                                          file:TokenRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(DoubleRange__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - TimePeriod
-
-@implementation TimePeriod
-
-@dynamic duration;
-@dynamic max;
-
-typedef struct TimePeriod__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *duration;
-  NSString *max;
-} TimePeriod__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "duration",
-        .dataTypeSpecific.className = NULL,
-        .number = TimePeriod_FieldNumber_Duration,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TimePeriod__storage_, duration),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "max",
-        .dataTypeSpecific.className = NULL,
-        .number = TimePeriod_FieldNumber_Max,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TimePeriod__storage_, max),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[TimePeriod class]
-                                     rootClass:[TokenRoot class]
-                                          file:TokenRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(TimePeriod__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

@@ -63,31 +63,7 @@ message TransferBody {
   string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
-  map<string, Var> vars = 7;                                                         // Optional: token variables.
 }
-
-// Describes a single variable value. Only one of the fields is set.
-message Var {
-  DoubleRange range = 1;                                  // Used to represent amount range.
-  repeated string one_of = 2;                             // An array of strings a value must belong to.
-  string regex = 3;                                       // Regex match.
-  string value = 4;                                       // Plain string value.
-  TimePeriod period = 5;                                  // Amount per time period.
-}
-
-// A range of a double value, used for amounts. The doubles are sent as strings over the wire.
-message DoubleRange {
-  string min = 1;
-  string max = 2;
-  string default = 3;
-}
-
-// Time period description for multi use transfer tokens.
-message TimePeriod {
-  string duration = 1;                                    // ISO8601 duration. E.g.: P1M for 1 month.
-  string max = 2;                                         // Max amount for the given duration.
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Access Token
