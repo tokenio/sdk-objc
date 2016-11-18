@@ -9,6 +9,7 @@
 
 #import "TKJson.h"
 
+#import "gateway/Auth.pbobjc.h"
 #import "gateway/Gateway.pbobjc.h"
 #import "Security.pbobjc.h"
 
@@ -96,6 +97,18 @@
 }
 
 /**
+ * Long long (64 bit) field.
+ */
+- (void)testLongLong {
+    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    payload.request = [@"Hello" dataUsingEncoding:NSASCIIStringEncoding];
+    payload.createdAtMs = 1479441243495;
+    
+    NSString *json = [TKJson serialize:payload];
+    XCTAssertEqualObjects(json, @"{\"createdAtMs\":\"1479441243495\",\"request\":\"SGVsbG8=\"}");
+}
+
+/**
  * Deserialize Simple message.
  */
 - (void)testDeserializeSimple {
@@ -103,7 +116,8 @@
     request1.nonce = @"12345";
 
     NSString* json1 = [TKJson serialize:request1];
-    CreateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[CreateMemberRequest class] fromJSON:json1];
+    CreateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[CreateMemberRequest class]
+                                                              fromJSON:json1];
     NSString* json2 = [TKJson serialize:request2];
     
     XCTAssertEqualObjects(json1, json2);
@@ -116,7 +130,8 @@
     GetMemberRequest *request1 = [GetMemberRequest message];
     
     NSString* json1 = [TKJson serialize:request1];
-    GetMemberRequest *request2  = [TKJson deserializeMessageOfClass:[GetMemberRequest class] fromJSON:json1];
+    GetMemberRequest *request2  = [TKJson deserializeMessageOfClass:[GetMemberRequest class]
+                                                           fromJSON:json1];
     NSString* json2 = [TKJson serialize:request2];
     
     XCTAssertEqualObjects(json1, json2);
@@ -130,7 +145,8 @@
     request1.nonce = @"123/45";
     
     NSString* json1 = [TKJson serialize:request1];
-    CreateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[CreateMemberRequest class] fromJSON:json1];
+    CreateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[CreateMemberRequest class]
+                                                              fromJSON:json1];
     NSString* json2 = [TKJson serialize:request2];
     
     XCTAssertEqualObjects(json1, json2);
@@ -148,7 +164,8 @@
     request1.updateSignature.signature = @"signature";
     
     NSString* json1 = [TKJson serialize:request1];
-    UpdateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[UpdateMemberRequest class] fromJSON:json1];
+    UpdateMemberRequest *request2  = [TKJson deserializeMessageOfClass:[UpdateMemberRequest class]
+                                                              fromJSON:json1];
     NSString* json2 = [TKJson serialize:request2];
 
     XCTAssertEqualObjects(json1, json2);
@@ -184,8 +201,25 @@
     signature1.signature.signature = @"signature";
     
     NSString *json1 = [TKJson serialize:signature1];
-    TokenSignature *signature2  = [TKJson deserializeMessageOfClass:[TokenSignature class] fromJSON:json1];
+    TokenSignature *signature2  = [TKJson deserializeMessageOfClass:[TokenSignature class]
+                                                           fromJSON:json1];
     NSString* json2 = [TKJson serialize:signature2];
+    
+    XCTAssertEqualObjects(json1, json2);
+}
+
+/**
+ * Long long (64 bit) field.
+ */
+- (void)testDeserializeLongLong {
+    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    payload.request = [@"Hello" dataUsingEncoding:NSASCIIStringEncoding];
+    payload.createdAtMs = 1479441243495;
+    
+    NSString *json1 = [TKJson serialize:payload];
+    GRpcAuthPayload *payload2 = [TKJson deserializeMessageOfClass:[GRpcAuthPayload class]
+                                                         fromJSON:json1];
+    NSString *json2 = [TKJson serialize:payload2];
     
     XCTAssertEqualObjects(json1, json2);
 }

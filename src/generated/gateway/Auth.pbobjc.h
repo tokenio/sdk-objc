@@ -47,6 +47,7 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
   HttpAuthPayload_FieldNumber_UriPath = 3,
   HttpAuthPayload_FieldNumber_QueryString = 4,
   HttpAuthPayload_FieldNumber_RequestBody = 5,
+  HttpAuthPayload_FieldNumber_CreatedAtMs = 6,
 };
 
 /// The payload is signed by the client for every HTTP request. It consists
@@ -63,6 +64,23 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *requestBody;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+@end
+
+#pragma mark - GRpcAuthPayload
+
+typedef GPB_ENUM(GRpcAuthPayload_FieldNumber) {
+  GRpcAuthPayload_FieldNumber_Request = 1,
+  GRpcAuthPayload_FieldNumber_CreatedAtMs = 6,
+};
+
+@interface GRpcAuthPayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSData *request;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
 
