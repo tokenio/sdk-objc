@@ -40,7 +40,7 @@
                                          currency:@"USD"
                                       description:@"transfer test"];
         
-        XCTAssertEqualObjects(@"100.99", token.payload.transfer.amount);
+        XCTAssertEqualObjects(@"100.99", token.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
         XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
@@ -90,7 +90,7 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         
-        XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.amount);
+        XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", endorsed.payload.transfer.currency);
         XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
@@ -111,7 +111,7 @@
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         
-        XCTAssertEqualObjects(@"100.11", cancelled.payload.transfer.amount);
+        XCTAssertEqualObjects(@"100.11", cancelled.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", cancelled.payload.transfer.currency);
         XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
         XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
