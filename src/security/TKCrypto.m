@@ -19,6 +19,7 @@
          usingKey:(TKSecretKey *)key {
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
+    NSLog(@"SIGNING PAYLOAD: %@", json);
     return [self signData:jsonData usingKey:key];
 }
 

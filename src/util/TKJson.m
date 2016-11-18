@@ -166,7 +166,7 @@
         case GPBDataTypeSFixed64:
         case GPBDataTypeInt64:
         case GPBDataTypeSInt64:
-            return @(GPBGetMessageInt64Field(message, field));
+            return [NSString stringWithFormat:@"%lld", GPBGetMessageInt64Field(message, field)];
         case GPBDataTypeUInt64:
             return @(GPBGetMessageUInt64Field(message, field));
         case GPBDataTypeFixed32:
@@ -322,7 +322,8 @@
 }
 
 /**
- * Helper function to create an object from JSON value that can be set to a message field using GPBSetMessageXXX method.
+ * Helper function to create an object from JSON value that can be set to a message field using 
+ * GPBSetMessageXXX method.
  *
  * @param field field descriptor
  * @param value value from JSON
@@ -332,13 +333,14 @@
     switch (field.dataType) {
         case GPBDataTypeBool:
             return [NSNumber numberWithBool:[value isEqualToString:@"true"]];
-        case GPBDataTypeFloat:
-        case GPBDataTypeDouble:
         case GPBDataTypeFixed64:
         case GPBDataTypeSFixed64:
         case GPBDataTypeInt64:
         case GPBDataTypeSInt64:
         case GPBDataTypeUInt64:
+            return [NSNumber numberWithLongLong:[value longLongValue]];
+        case GPBDataTypeFloat:
+        case GPBDataTypeDouble:
         case GPBDataTypeFixed32:
         case GPBDataTypeSFixed32:
         case GPBDataTypeInt32:

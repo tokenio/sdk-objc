@@ -10,4 +10,10 @@ message HttpAuthPayload {
   string uri_path = 3;
   string query_string = 4;
   string request_body = 5;
+  int64 created_at_ms = 6;
+}
+
+message GRpcAuthPayload {
+  bytes request = 1;
+  int64 created_at_ms = 6;
 }

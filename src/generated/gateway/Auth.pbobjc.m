@@ -48,6 +48,7 @@ static GPBFileDescriptor *AuthRoot_FileDescriptor(void) {
 @dynamic uriPath;
 @dynamic queryString;
 @dynamic requestBody;
+@dynamic createdAtMs;
 
 typedef struct HttpAuthPayload__storage_ {
   uint32_t _has_storage_[1];
@@ -56,6 +57,7 @@ typedef struct HttpAuthPayload__storage_ {
   NSString *uriPath;
   NSString *queryString;
   NSString *requestBody;
+  int64_t createdAtMs;
 } HttpAuthPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -109,6 +111,15 @@ typedef struct HttpAuthPayload__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = HttpAuthPayload_FieldNumber_CreatedAtMs,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[HttpAuthPayload class]
@@ -117,6 +128,60 @@ typedef struct HttpAuthPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(HttpAuthPayload__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GRpcAuthPayload
+
+@implementation GRpcAuthPayload
+
+@dynamic request;
+@dynamic createdAtMs;
+
+typedef struct GRpcAuthPayload__storage_ {
+  uint32_t _has_storage_[1];
+  NSData *request;
+  int64_t createdAtMs;
+} GRpcAuthPayload__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "request",
+        .dataTypeSpecific.className = NULL,
+        .number = GRpcAuthPayload_FieldNumber_Request,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GRpcAuthPayload__storage_, request),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBytes,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GRpcAuthPayload_FieldNumber_CreatedAtMs,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GRpcAuthPayload__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GRpcAuthPayload class]
+                                     rootClass:[AuthRoot class]
+                                          file:AuthRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GRpcAuthPayload__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

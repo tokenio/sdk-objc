@@ -5,6 +5,7 @@
 
 #import "ProtoRPC/ProtoRPC.h"
 #import "Member.pbobjc.h"
+#import "gateway/Auth.pbobjc.h"
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKClient.h"
@@ -730,19 +731,26 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)_startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
-    NSString *signature = [TKCrypto sign:request usingKey:key];
+    unsigned long now = (unsigned long)([[NSDate date] timeIntervalSince1970] * 1000);
     
+    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    payload.request = [request data];
+    payload.createdAtMs = now;
+    NSString *signature = [TKCrypto sign:payload usingKey:key];
+
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = key.id;
     call.requestHeaders[@"token-signature"] = signature;
+    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
     
     // TODO(alexey): Here for debugging, remove when not needed anymore.
     NSLog(@"Auth member-id: %@", memberId);
     NSLog(@"Auth key-id: %@", key.id);
     NSLog(@"Auth key-public: %@", key.publicKeyStr);
     NSLog(@"Auth signature: %@", signature);
+    NSLog(@"Auth created-at-ms: %lu", now);
     
     if (onBehalfOfMemberId) {
         NSLog(@"Auth on-behalf-of %@", onBehalfOfMemberId);
