@@ -27,6 +27,7 @@ CF_EXTERN_C_BEGIN
 @class AddKey;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
+@class NotificationContent;
 @class StepUp;
 @class TransferProcessed;
 
@@ -34,13 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum NotifyStatus
 
+/// The status returned when sending a notification. ACCEPTED means the notification was initiated, but
+/// not necessarily successfully delivered
 typedef GPB_ENUM(NotifyStatus) {
   /// Value used if any message's field encounters a value that is not defined
   /// by this enum. The message will also have C functions to get/set the rawValue
   /// of the field.
   NotifyStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  NotifyStatus_Failed = 0,
-  NotifyStatus_Sent = 1,
+  NotifyStatus_Invalid = 0,
+  NotifyStatus_Accepted = 1,
   NotifyStatus_NoSubscribers = 2,
 };
 
@@ -49,6 +52,24 @@ GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void);
 /// Checks to see if the given value is defined by the enum or was not known at
 /// the time this source was generated.
 BOOL NotifyStatus_IsValidValue(int32_t value);
+
+#pragma mark - Enum Notification_Status
+
+typedef GPB_ENUM(Notification_Status) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  Notification_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Notification_Status_Invalid = 0,
+  Notification_Status_Pending = 1,
+  Notification_Status_Delivered = 2,
+};
+
+GPBEnumDescriptor *Notification_Status_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL Notification_Status_IsValidValue(int32_t value);
 
 #pragma mark - NotificationRoot
 
@@ -146,28 +167,29 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
 
 @end
 
-#pragma mark - Notification
+#pragma mark - NotifyBody
 
-typedef GPB_ENUM(Notification_FieldNumber) {
-  Notification_FieldNumber_TransferProcessed = 1,
-  Notification_FieldNumber_LinkAccounts = 2,
-  Notification_FieldNumber_StepUp = 3,
-  Notification_FieldNumber_AddKey = 4,
-  Notification_FieldNumber_LinkAccountsAndAddKey = 5,
+typedef GPB_ENUM(NotifyBody_FieldNumber) {
+  NotifyBody_FieldNumber_TransferProcessed = 1,
+  NotifyBody_FieldNumber_LinkAccounts = 2,
+  NotifyBody_FieldNumber_StepUp = 3,
+  NotifyBody_FieldNumber_AddKey = 4,
+  NotifyBody_FieldNumber_LinkAccountsAndAddKey = 5,
 };
 
-typedef GPB_ENUM(Notification_Notification_OneOfCase) {
-  Notification_Notification_OneOfCase_GPBUnsetOneOfCase = 0,
-  Notification_Notification_OneOfCase_TransferProcessed = 1,
-  Notification_Notification_OneOfCase_LinkAccounts = 2,
-  Notification_Notification_OneOfCase_StepUp = 3,
-  Notification_Notification_OneOfCase_AddKey = 4,
-  Notification_Notification_OneOfCase_LinkAccountsAndAddKey = 5,
+typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
+  NotifyBody_Body_OneOfCase_GPBUnsetOneOfCase = 0,
+  NotifyBody_Body_OneOfCase_TransferProcessed = 1,
+  NotifyBody_Body_OneOfCase_LinkAccounts = 2,
+  NotifyBody_Body_OneOfCase_StepUp = 3,
+  NotifyBody_Body_OneOfCase_AddKey = 4,
+  NotifyBody_Body_OneOfCase_LinkAccountsAndAddKey = 5,
 };
 
-@interface Notification : GPBMessage
+/// A data that goes in a NotifyRequest
+@interface NotifyBody : GPBMessage
 
-@property(nonatomic, readonly) Notification_Notification_OneOfCase notificationOneOfCase;
+@property(nonatomic, readonly) NotifyBody_Body_OneOfCase bodyOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferProcessed *transferProcessed;
 
@@ -181,8 +203,68 @@ typedef GPB_ENUM(Notification_Notification_OneOfCase) {
 
 @end
 
-/// Clears whatever value was set for the oneof 'notification'.
-void Notification_ClearNotificationOneOfCase(Notification *message);
+/// Clears whatever value was set for the oneof 'body'.
+void NotifyBody_ClearBodyOneOfCase(NotifyBody *message);
+
+#pragma mark - Notification
+
+typedef GPB_ENUM(Notification_FieldNumber) {
+  Notification_FieldNumber_Id_p = 1,
+  Notification_FieldNumber_SubscriberId = 2,
+  Notification_FieldNumber_Content = 3,
+  Notification_FieldNumber_Status = 4,
+};
+
+/// The record of a notification. Retrieved from notification service
+@interface Notification : GPBMessage
+
+/// A unique ID given to this notification
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/// The subscriber that was or will be notified
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+/// Contents of the notification
+@property(nonatomic, readwrite, strong, null_resettable) NotificationContent *content;
+/// Test to see if @c content has been set.
+@property(nonatomic, readwrite) BOOL hasContent;
+
+@property(nonatomic, readwrite) Notification_Status status;
+
+@end
+
+/// Fetches the raw value of a @c Notification's @c status property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t Notification_Status_RawValue(Notification *message);
+/// Sets the raw value of an @c Notification's @c status property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetNotification_Status_RawValue(Notification *message, int32_t value);
+
+#pragma mark - NotificationContent
+
+typedef GPB_ENUM(NotificationContent_FieldNumber) {
+  NotificationContent_FieldNumber_Type = 1,
+  NotificationContent_FieldNumber_Title = 2,
+  NotificationContent_FieldNumber_Body = 3,
+  NotificationContent_FieldNumber_Payload = 4,
+  NotificationContent_FieldNumber_CreatedAtMs = 5,
+};
+
+/// The contents of a notification that was sent or will be sent
+@interface NotificationContent : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *type;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *title;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *body;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

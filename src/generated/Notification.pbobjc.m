@@ -46,10 +46,10 @@ GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Failed\000Sent\000NoSubscribers\000";
+        "Invalid\000Accepted\000NoSubscribers\000";
     static const int32_t values[] = {
-        NotifyStatus_Failed,
-        NotifyStatus_Sent,
+        NotifyStatus_Invalid,
+        NotifyStatus_Accepted,
         NotifyStatus_NoSubscribers,
     };
     GPBEnumDescriptor *worker =
@@ -67,8 +67,8 @@ GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void) {
 
 BOOL NotifyStatus_IsValidValue(int32_t value__) {
   switch (value__) {
-    case NotifyStatus_Failed:
-    case NotifyStatus_Sent:
+    case NotifyStatus_Invalid:
+    case NotifyStatus_Accepted:
     case NotifyStatus_NoSubscribers:
       return YES;
     default:
@@ -335,25 +335,25 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 
 @end
 
-#pragma mark - Notification
+#pragma mark - NotifyBody
 
-@implementation Notification
+@implementation NotifyBody
 
-@dynamic notificationOneOfCase;
+@dynamic bodyOneOfCase;
 @dynamic transferProcessed;
 @dynamic linkAccounts;
 @dynamic stepUp;
 @dynamic addKey;
 @dynamic linkAccountsAndAddKey;
 
-typedef struct Notification__storage_ {
+typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
   TransferProcessed *transferProcessed;
   LinkAccounts *linkAccounts;
   StepUp *stepUp;
   AddKey *addKey;
   LinkAccountsAndAddKey *linkAccountsAndAddKey;
-} Notification__storage_;
+} NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -364,59 +364,59 @@ typedef struct Notification__storage_ {
       {
         .name = "transferProcessed",
         .dataTypeSpecific.className = GPBStringifySymbol(TransferProcessed),
-        .number = Notification_FieldNumber_TransferProcessed,
+        .number = NotifyBody_FieldNumber_TransferProcessed,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, transferProcessed),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, transferProcessed),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "linkAccounts",
         .dataTypeSpecific.className = GPBStringifySymbol(LinkAccounts),
-        .number = Notification_FieldNumber_LinkAccounts,
+        .number = NotifyBody_FieldNumber_LinkAccounts,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, linkAccounts),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, linkAccounts),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "stepUp",
         .dataTypeSpecific.className = GPBStringifySymbol(StepUp),
-        .number = Notification_FieldNumber_StepUp,
+        .number = NotifyBody_FieldNumber_StepUp,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, stepUp),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, stepUp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "addKey",
         .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
-        .number = Notification_FieldNumber_AddKey,
+        .number = NotifyBody_FieldNumber_AddKey,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, addKey),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, addKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "linkAccountsAndAddKey",
         .dataTypeSpecific.className = GPBStringifySymbol(LinkAccountsAndAddKey),
-        .number = Notification_FieldNumber_LinkAccountsAndAddKey,
+        .number = NotifyBody_FieldNumber_LinkAccountsAndAddKey,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Notification__storage_, linkAccountsAndAddKey),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, linkAccountsAndAddKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Notification class]
+        [GPBDescriptor allocDescriptorForClass:[NotifyBody class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Notification__storage_)
+                                   storageSize:sizeof(NotifyBody__storage_)
                                          flags:0];
     static const char *oneofs[] = {
-      "notification",
+      "body",
     };
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
@@ -429,11 +429,222 @@ typedef struct Notification__storage_ {
 
 @end
 
-void Notification_ClearNotificationOneOfCase(Notification *message) {
+void NotifyBody_ClearBodyOneOfCase(NotifyBody *message) {
   GPBDescriptor *descriptor = [message descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
+#pragma mark - Notification
+
+@implementation Notification
+
+@dynamic id_p;
+@dynamic subscriberId;
+@dynamic hasContent, content;
+@dynamic status;
+
+typedef struct Notification__storage_ {
+  uint32_t _has_storage_[1];
+  Notification_Status status;
+  NSString *id_p;
+  NSString *subscriberId;
+  NotificationContent *content;
+} Notification__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Notification_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Notification__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "subscriberId",
+        .dataTypeSpecific.className = NULL,
+        .number = Notification_FieldNumber_SubscriberId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Notification__storage_, subscriberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "content",
+        .dataTypeSpecific.className = GPBStringifySymbol(NotificationContent),
+        .number = Notification_FieldNumber_Content,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Notification__storage_, content),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = Notification_Status_EnumDescriptor,
+        .number = Notification_FieldNumber_Status,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Notification__storage_, status),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Notification class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Notification__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t Notification_Status_RawValue(Notification *message) {
+  GPBDescriptor *descriptor = [Notification descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Notification_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetNotification_Status_RawValue(Notification *message, int32_t value) {
+  GPBDescriptor *descriptor = [Notification descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Notification_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Notification_Status
+
+GPBEnumDescriptor *Notification_Status_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Pending\000Delivered\000";
+    static const int32_t values[] = {
+        Notification_Status_Invalid,
+        Notification_Status_Pending,
+        Notification_Status_Delivered,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Notification_Status)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Notification_Status_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Notification_Status_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Notification_Status_Invalid:
+    case Notification_Status_Pending:
+    case Notification_Status_Delivered:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - NotificationContent
+
+@implementation NotificationContent
+
+@dynamic type;
+@dynamic title;
+@dynamic body;
+@dynamic payload;
+@dynamic createdAtMs;
+
+typedef struct NotificationContent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *type;
+  NSString *title;
+  NSString *body;
+  NSString *payload;
+  int64_t createdAtMs;
+} NotificationContent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "type",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_Type,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, type),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "title",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_Title,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, title),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "body",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_Body,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, body),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_Payload,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_CreatedAtMs,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NotificationContent class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NotificationContent__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

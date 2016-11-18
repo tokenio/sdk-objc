@@ -97,9 +97,9 @@
                    onError:(void (^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.notification.linkAccounts.bankId = bankId;
-    request.notification.linkAccounts.bankName = bankName;
-    request.notification.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
+    request.body.linkAccounts.bankId = bankId;
+    request.body.linkAccounts.bankName = bankName;
+    request.body.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
     RpcLogStart(request);
     
     [gateway notifyWithRequest:request
@@ -121,8 +121,8 @@
              onError:(void(^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.notification.addKey.publicKey = publicKey;
-    request.notification.addKey.name = name;
+    request.body.addKey.publicKey = publicKey;
+    request.body.addKey.name = name;
     RpcLogStart(request);
     
     [gateway notifyWithRequest:request
@@ -147,11 +147,11 @@
                             onError:(void(^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.notification.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
-    request.notification.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
-    request.notification.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
-    request.notification.linkAccountsAndAddKey.addKey.publicKey = publicKey;
-    request.notification.linkAccountsAndAddKey.addKey.name = name;
+    request.body.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
+    request.body.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
+    request.body.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
+    request.body.linkAccountsAndAddKey.addKey.publicKey = publicKey;
+    request.body.linkAccountsAndAddKey.addKey.name = name;
     RpcLogStart(request);
     
     [gateway notifyWithRequest:request

@@ -127,13 +127,19 @@ message UnsubscribeFromNotificationsResponse {}
 
 message NotifyRequest {
   string username = 1;
-  io.token.proto.common.notification.Notification notification = 2;
+  io.token.proto.common.notification.NotifyBody body = 2;
 }
 
 message NotifyResponse {
   io.token.proto.common.notification.NotifyStatus status = 1;
 }
 
+message GetNotificationsRequest {
+}
+
+message GetNotificationsResponse {
+  repeated io.token.proto.common.notification.Notification notifications = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
@@ -390,6 +396,12 @@ service GatewayService {
   rpc Notify (NotifyRequest) returns (NotifyResponse) {
     option (google.api.http) = {
         post: "/notify"
+    };
+  }
+
+  rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
+    option (google.api.http) = {
+        get: "/notifications"
     };
   }
 

@@ -33,9 +33,10 @@ typedef GPB_ENUM(Platform) {
   /// by this enum. The message will also have C functions to get/set the rawValue
   /// of the field.
   Platform_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Platform_Ios = 0,
-  Platform_Android = 1,
-  Platform_Test = 2,
+  Platform_Invalid = 0,
+  Platform_Ios = 1,
+  Platform_Android = 2,
+  Platform_Test = 3,
 };
 
 GPBEnumDescriptor *Platform_EnumDescriptor(void);

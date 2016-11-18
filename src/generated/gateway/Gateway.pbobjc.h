@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class MemberUpdate;
 @class Money;
 @class Notification;
+@class NotifyBody;
 @class Page;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
@@ -404,16 +405,16 @@ typedef GPB_ENUM(UnsubscribeFromNotificationsRequest_FieldNumber) {
 
 typedef GPB_ENUM(NotifyRequest_FieldNumber) {
   NotifyRequest_FieldNumber_Username = 1,
-  NotifyRequest_FieldNumber_Notification = 2,
+  NotifyRequest_FieldNumber_Body = 2,
 };
 
 @interface NotifyRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
-@property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
-/// Test to see if @c notification has been set.
-@property(nonatomic, readwrite) BOOL hasNotification;
+@property(nonatomic, readwrite, strong, null_resettable) NotifyBody *body;
+/// Test to see if @c body has been set.
+@property(nonatomic, readwrite) BOOL hasBody;
 
 @end
 
@@ -436,6 +437,26 @@ int32_t NotifyResponse_Status_RawValue(NotifyResponse *message);
 /// it to be set to a value that was not defined by the enum at the time the code
 /// was generated.
 void SetNotifyResponse_Status_RawValue(NotifyResponse *message, int32_t value);
+
+#pragma mark - GetNotificationsRequest
+
+@interface GetNotificationsRequest : GPBMessage
+
+@end
+
+#pragma mark - GetNotificationsResponse
+
+typedef GPB_ENUM(GetNotificationsResponse_FieldNumber) {
+  GetNotificationsResponse_FieldNumber_NotificationsArray = 1,
+};
+
+@interface GetNotificationsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
+/// The number of items in @c notificationsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger notificationsArray_Count;
+
+@end
 
 #pragma mark - LinkAccountsRequest
 

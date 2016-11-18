@@ -1153,12 +1153,12 @@ typedef struct UnsubscribeFromNotificationsResponse__storage_ {
 @implementation NotifyRequest
 
 @dynamic username;
-@dynamic hasNotification, notification;
+@dynamic hasBody, body;
 
 typedef struct NotifyRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *username;
-  Notification *notification;
+  NotifyBody *body;
 } NotifyRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1177,11 +1177,11 @@ typedef struct NotifyRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "notification",
-        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
-        .number = NotifyRequest_FieldNumber_Notification,
+        .name = "body",
+        .dataTypeSpecific.className = GPBStringifySymbol(NotifyBody),
+        .number = NotifyRequest_FieldNumber_Body,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(NotifyRequest__storage_, notification),
+        .offset = (uint32_t)offsetof(NotifyRequest__storage_, body),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1256,6 +1256,79 @@ void SetNotifyResponse_Status_RawValue(NotifyResponse *message, int32_t value) {
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:NotifyResponse_FieldNumber_Status];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
+
+#pragma mark - GetNotificationsRequest
+
+@implementation GetNotificationsRequest
+
+
+typedef struct GetNotificationsRequest__storage_ {
+  uint32_t _has_storage_[1];
+} GetNotificationsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetNotificationsRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(GetNotificationsRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetNotificationsResponse
+
+@implementation GetNotificationsResponse
+
+@dynamic notificationsArray, notificationsArray_Count;
+
+typedef struct GetNotificationsResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *notificationsArray;
+} GetNotificationsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notificationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .number = GetNotificationsResponse_FieldNumber_NotificationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetNotificationsResponse__storage_, notificationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetNotificationsResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetNotificationsResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 #pragma mark - LinkAccountsRequest
 

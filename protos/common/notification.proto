@@ -32,8 +32,9 @@ message LinkAccountsAndAddKey {
     AddKey add_key = 2;
 }
 
-message Notification {
-    oneof notification {
+// A data that goes in a NotifyRequest
+message NotifyBody {
+    oneof body {
         io.token.proto.common.notification.TransferProcessed transfer_processed = 1;
         io.token.proto.common.notification.LinkAccounts link_accounts = 2;
         io.token.proto.common.notification.StepUp step_up = 3;
@@ -42,8 +43,39 @@ message Notification {
     }
 }
 
+// The status returned when sending a notification. ACCEPTED means the notification was initiated, but
+// not necessarily successfully delivered
 enum NotifyStatus {
-    FAILED = 0;
-    SENT = 1;
+    INVALID = 0;
+    ACCEPTED = 1;
     NO_SUBSCRIBERS = 2;
+}
+
+
+// The record of a notification. Retrieved from notification service
+message Notification {
+  // A unique ID given to this notification
+  string id = 1;
+
+  // The subscriber that was or will be notified
+  string subscriber_id = 2;
+
+  // Contents of the notification
+  NotificationContent content = 3;
+
+  enum Status {
+    INVALID = 0;
+    PENDING = 1;
+    DELIVERED = 2;
+  }
+  Status status = 4;
+}
+
+// The contents of a notification that was sent or will be sent
+message NotificationContent {
+  string type = 1;
+  string title = 2;
+  string body = 3;
+  string payload = 4;
+  int64 created_at_ms = 5;
 }

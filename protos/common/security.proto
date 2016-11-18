@@ -8,7 +8,7 @@ message Key {
   string id = 1;
   string public_key = 2;     // Base64url encoded public key.
 
-  enum Level {
+  enum Level {               // TODO: Make 0 invalid
     PRIVILEGED = 0;
     STANDARD = 1;
     LOW = 2;

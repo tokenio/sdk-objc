@@ -45,8 +45,9 @@ GPBEnumDescriptor *Platform_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Ios\000Android\000Test\000";
+        "Invalid\000Ios\000Android\000Test\000";
     static const int32_t values[] = {
+        Platform_Invalid,
         Platform_Ios,
         Platform_Android,
         Platform_Test,
@@ -66,6 +67,7 @@ GPBEnumDescriptor *Platform_EnumDescriptor(void) {
 
 BOOL Platform_IsValidValue(int32_t value__) {
   switch (value__) {
+    case Platform_Invalid:
     case Platform_Ios:
     case Platform_Android:
     case Platform_Test:
