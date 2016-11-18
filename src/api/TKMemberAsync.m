@@ -307,7 +307,7 @@
     payload.version = @"1.0";
     payload.nonce = [TKUtil nonce];
     payload.from = payer;
-    payload.transfer.amount = [NSString stringWithFormat:@"%g", amount];
+    payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
     payload.transfer.currency = currency;
     payload.transfer.instructions.source.accountId = accountId;
     
