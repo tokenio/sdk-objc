@@ -14,6 +14,7 @@
 #endif
 
  #import "Notification.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,6 +24,18 @@
 #pragma mark - NotificationRoot
 
 @implementation NotificationRoot
+
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPBDebugCheckRuntimeVersion();
+    registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -160,12 +173,12 @@ typedef struct LinkAccounts__storage_ {
       },
       {
         .name = "accountLinkPayloadsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
         .number = LinkAccounts_FieldNumber_AccountLinkPayloadsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountLinkPayloadsArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

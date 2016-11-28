@@ -153,7 +153,7 @@
  *                           by the bank
  */
 - (void)linkAccounts:(NSString *)bankId
-        withPayloads:(NSArray<NSString *> *)accountLinkPayloads
+        withPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError;
 

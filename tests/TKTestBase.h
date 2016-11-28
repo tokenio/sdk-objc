@@ -8,6 +8,7 @@
 @class TokenIO;
 @class TKMember;
 @class TKAccount;
+@class TKBankClient;
 
 typedef void (^AsyncTestBlock)(TokenIO *);
 
@@ -19,6 +20,8 @@ typedef void (^AsyncTestBlock)(TokenIO *);
  * running a main application event loop to make the tests work.
  */
 @interface TKTestBase : XCTestCase
+
+@property(readonly) TKBankClient *bank;
 
 - (void)setUp;
 

@@ -92,7 +92,7 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                  onSuccess:(void (^)())onSuccess
                    onError:(void (^)(NSError *))onError {
     NotifyRequest *request = [NotifyRequest message];
@@ -140,7 +140,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(void(^)())onSuccess

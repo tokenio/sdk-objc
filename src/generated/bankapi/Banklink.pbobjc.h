@@ -24,6 +24,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class SealedMessage;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - BanklinkRoot
@@ -73,7 +75,7 @@ typedef GPB_ENUM(AuthorizeLinkAccountsResponse_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
 /// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 

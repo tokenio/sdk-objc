@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class Page;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
+@class SealedMessage;
 @class Signature;
 @class Subscriber;
 @class Token;
@@ -470,7 +471,7 @@ typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 /// encrypted AccountsLinkPayload
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
 /// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 

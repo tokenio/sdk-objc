@@ -1360,12 +1360,12 @@ typedef struct LinkAccountsRequest__storage_ {
       },
       {
         .name = "accountLinkPayloadsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
         .number = LinkAccountsRequest_FieldNumber_AccountLinkPayloadsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(LinkAccountsRequest__storage_, accountLinkPayloadsArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

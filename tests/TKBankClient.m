@@ -63,6 +63,7 @@
                       currency:(NSString *)currency {
     FankAddAccountRequest *request = [FankAddAccountRequest message];
     request.clientId = client.id_p;
+    request.name = name;
     request.accountNumber = accountNumber;
     request.balance.value = amount;
     request.balance.currency = currency;
@@ -80,10 +81,10 @@
     }];
 }
 
-- (NSArray<NSString*> *)authorizeAccountLinkingFor:(NSString *)username
+- (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers {
-    TKRpcSyncCall<NSArray<NSString*> *> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<NSArray<SealedMessage*> *> *call = [TKRpcSyncCall create];
     return [call run:^{
         AuthorizeLinkAccountsRequest *request = [AuthorizeLinkAccountsRequest message];
         request.username = username;

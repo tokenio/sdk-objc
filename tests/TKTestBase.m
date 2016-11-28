@@ -25,7 +25,6 @@
 
 @implementation TKTestBase {
     TokenIO *tokenIO;
-    TKBankClient *bank;
     dispatch_queue_t queue;
 }
 
@@ -38,8 +37,8 @@
     builder.host = gateway.host;
     builder.port = gateway.port;
     tokenIO = [builder build];
-    bank = [TKBankClient bankClientWithHost:fank.host
-                                       port:fank.port];
+    _bank = [TKBankClient bankClientWithHost:fank.host
+                                        port:fank.port];
 
     queue = dispatch_queue_create("io.token.Test", nil);
 }
@@ -98,17 +97,17 @@
     NSString *accountName = @"Checking";
     NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
     
-    FankClient *fankClient = [bank addClientWithFirstName:firstName lastName:lastName];
-    [bank addAccountWithName:accountName
-                   forClient:fankClient
-           withAccountNumber:bankAccountNumber
-                      amount:@"1000000.00"
-                    currency:@"USD"];
+    FankClient *fankClient = [_bank addClientWithFirstName:firstName lastName:lastName];
+    [_bank addAccountWithName:accountName
+                    forClient:fankClient
+            withAccountNumber:bankAccountNumber
+                       amount:@"1000000.00"
+                     currency:@"USD"];
     
     NSString *clientId = fankClient.id_p;
-    NSArray<NSString*> *payloads = [bank authorizeAccountLinkingFor:member.firstUsername
-                                                           clientId:clientId
-                                                     accountNumbers:@[bankAccountNumber]];
+    NSArray<SealedMessage*> *payloads = [_bank authorizeAccountLinkingFor:member.firstUsername
+                                                                 clientId:clientId
+                                                           accountNumbers:@[bankAccountNumber]];
                              
     NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
                                               withPayloads:payloads];

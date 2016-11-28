@@ -15,6 +15,7 @@
 
  #import "bankapi/Banklink.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -32,6 +33,7 @@
     GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
   }
   return registry;
 }
@@ -158,12 +160,12 @@ typedef struct AuthorizeLinkAccountsResponse__storage_ {
       },
       {
         .name = "accountLinkPayloadsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
         .number = AuthorizeLinkAccountsResponse_FieldNumber_AccountLinkPayloadsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(AuthorizeLinkAccountsResponse__storage_, accountLinkPayloadsArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

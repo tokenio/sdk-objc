@@ -10,6 +10,9 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "TKBankClient.h"
+#import "TKUtil.h"
+#import "bankapi/Fank.pbobjc.h"
 
 
 @interface TKAccountsTests : TKTestBase
@@ -17,6 +20,7 @@
 
 @implementation TKAccountsTests {
     TKMember *member;
+    FankClient *fankClient;
 }
 
 - (void)setUp {
@@ -24,26 +28,33 @@
 
     [self run: ^(TokenIO *tokenIO) {
         member = [self createMember:tokenIO];
+        NSString *firstName = [@"FirstName-" stringByAppendingString:[TKUtil nonce]];
+        NSString *lastName = [@"LastName-" stringByAppendingString:[TKUtil nonce]];
+        fankClient = [self.bank addClientWithFirstName:firstName lastName:lastName];
     }];
 }
 
 - (void)testLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
         NSString *bankId = @"iron";
-
-        AccountLinkPayload *payload = [AccountLinkPayload message];
-        payload.username = member.firstUsername;
-        payload.accountName = @"Checking";
-        payload.accountNumber = @"iban:checking";
-        payload.expirationMs = [[NSDate date] timeIntervalSince1970] * 1000 + 10000;
-
-        NSString *payloadBase64 = [TKJson serializeBase64:payload];
-        NSArray *payloads = [NSArray arrayWithObject:payloadBase64];
+        
+        FankAccount *checking = [self.bank addAccountWithName: @"Checking"
+                                                    forClient: fankClient
+                                            withAccountNumber: [@"iban:checking-" stringByAppendingString:[TKUtil nonce]]
+                                                       amount: @"1000000.00"
+                                                     currency: @"USD"];
+        
+        NSArray<SealedMessage*> *payloads = [self.bank authorizeAccountLinkingFor: member.firstUsername
+                                                                         clientId: fankClient.id_p
+                                                                   accountNumbers: [NSArray arrayWithObjects: checking.accountNumber, nil]];
+        
         NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
                                                  withPayloads:payloads];
 
         XCTAssert(accounts.count == 1);
+        XCTAssertNotNil(accounts[0].id);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
+        XCTAssertEqualObjects(bankId, accounts[0].bankId);
     }];
 }
 

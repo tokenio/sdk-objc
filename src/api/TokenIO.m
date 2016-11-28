@@ -62,7 +62,7 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads {
+       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccounts:username
@@ -92,7 +92,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];

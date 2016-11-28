@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Security.pbobjc.h"
 
 @class FankAccount;
 @class FankClient;
@@ -27,7 +28,7 @@
                              amount:(NSString *)amount
                            currency:(NSString *)currency;
 
-- (NSArray<NSString*> *)authorizeAccountLinkingFor:(NSString *)username
+- (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers;
 

@@ -202,7 +202,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 
 - (void)linkAccounts:(NSString *)bankId
-        withPayloads:(NSArray<NSString*> *)accountLinkPayloads
+        withPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError {
     LinkAccountsRequest *request = [LinkAccountsRequest message];
