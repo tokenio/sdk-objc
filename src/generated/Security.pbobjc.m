@@ -18,6 +18,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 
 #pragma mark - SecurityRoot
 
@@ -208,6 +209,385 @@ typedef struct Signature__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Signature__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SealedMessage
+
+@implementation SealedMessage
+
+@dynamic methodOneOfCase;
+@dynamic ciphertext;
+@dynamic noop;
+@dynamic aes;
+@dynamic rsa;
+@dynamic rsaAes;
+
+typedef struct SealedMessage__storage_ {
+  uint32_t _has_storage_[2];
+  NSString *ciphertext;
+  SealedMessage_NoopMethod *noop;
+  SealedMessage_AesMethod *aes;
+  SealedMessage_RsaMethod *rsa;
+  SealedMessage_RsaAesMethod *rsaAes;
+} SealedMessage__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "ciphertext",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_FieldNumber_Ciphertext,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SealedMessage__storage_, ciphertext),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "noop",
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_NoopMethod),
+        .number = SealedMessage_FieldNumber_Noop,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SealedMessage__storage_, noop),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "aes",
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_AesMethod),
+        .number = SealedMessage_FieldNumber_Aes,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SealedMessage__storage_, aes),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "rsa",
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_RsaMethod),
+        .number = SealedMessage_FieldNumber_Rsa,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SealedMessage__storage_, rsa),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "rsaAes",
+        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_RsaAesMethod),
+        .number = SealedMessage_FieldNumber_RsaAes,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SealedMessage__storage_, rsaAes),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SealedMessage class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SealedMessage__storage_)
+                                         flags:0];
+    static const char *oneofs[] = {
+      "method",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void SealedMessage_ClearMethodOneOfCase(SealedMessage *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - SealedMessage_NoopMethod
+
+@implementation SealedMessage_NoopMethod
+
+
+typedef struct SealedMessage_NoopMethod__storage_ {
+  uint32_t _has_storage_[1];
+} SealedMessage_NoopMethod__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SealedMessage_NoopMethod class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(SealedMessage_NoopMethod__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SealedMessage_AesMethod
+
+@implementation SealedMessage_AesMethod
+
+@dynamic keyId;
+@dynamic algorithm;
+@dynamic iv;
+
+typedef struct SealedMessage_AesMethod__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *keyId;
+  NSString *iv;
+  NSString *algorithm;
+} SealedMessage_AesMethod__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "keyId",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_AesMethod_FieldNumber_KeyId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SealedMessage_AesMethod__storage_, keyId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "iv",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_AesMethod_FieldNumber_Iv,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(SealedMessage_AesMethod__storage_, iv),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "algorithm",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_AesMethod_FieldNumber_Algorithm,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SealedMessage_AesMethod__storage_, algorithm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SealedMessage_AesMethod class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SealedMessage_AesMethod__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SealedMessage_RsaMethod
+
+@implementation SealedMessage_RsaMethod
+
+@dynamic keyId;
+@dynamic algorithm;
+@dynamic signature;
+@dynamic signatureKeyId;
+
+typedef struct SealedMessage_RsaMethod__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *keyId;
+  NSString *algorithm;
+  NSString *signature;
+  NSString *signatureKeyId;
+} SealedMessage_RsaMethod__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "keyId",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaMethod_FieldNumber_KeyId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, keyId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "algorithm",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaMethod_FieldNumber_Algorithm,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, algorithm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaMethod_FieldNumber_Signature,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "signatureKeyId",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaMethod_FieldNumber_SignatureKeyId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, signatureKeyId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SealedMessage_RsaMethod class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SealedMessage_RsaMethod__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SealedMessage_RsaAesMethod
+
+@implementation SealedMessage_RsaAesMethod
+
+@dynamic rsaKeyId;
+@dynamic rsaAlgorithm;
+@dynamic aesAlgorithm;
+@dynamic iv;
+@dynamic encryptedAesKey;
+@dynamic signature;
+@dynamic signatureKeyId;
+
+typedef struct SealedMessage_RsaAesMethod__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *rsaKeyId;
+  NSString *rsaAlgorithm;
+  NSString *aesAlgorithm;
+  NSString *iv;
+  NSString *encryptedAesKey;
+  NSString *signature;
+  NSString *signatureKeyId;
+} SealedMessage_RsaAesMethod__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "rsaKeyId",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_RsaKeyId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, rsaKeyId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "rsaAlgorithm",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_RsaAlgorithm,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, rsaAlgorithm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "aesAlgorithm",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_AesAlgorithm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, aesAlgorithm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "iv",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_Iv,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, iv),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "encryptedAesKey",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_EncryptedAesKey,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, encryptedAesKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_Signature,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "signatureKeyId",
+        .dataTypeSpecific.className = NULL,
+        .number = SealedMessage_RsaAesMethod_FieldNumber_SignatureKeyId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, signatureKeyId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SealedMessage_RsaAesMethod class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SealedMessage_RsaAesMethod__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

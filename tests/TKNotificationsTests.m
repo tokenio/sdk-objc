@@ -68,7 +68,8 @@
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
-        NSArray<NSString*> *payloads = @[@"12345"];
+        
+        NSArray<SealedMessage*> *payloads = [NSArray arrayWithObjects: [SealedMessage new], nil];
         
         [tokenIO notifyLinkAccounts:payer.firstUsername
                              bankId:@"iron"
@@ -96,7 +97,8 @@
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
-        NSArray<NSString*> *payloads = @[@"12345"];
+        
+        NSArray<SealedMessage*> *payloads = [NSArray arrayWithObjects: [SealedMessage new], nil];
         
         TKSecretKey *key = [TKCrypto generateKey];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername

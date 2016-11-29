@@ -24,6 +24,11 @@
 
 CF_EXTERN_C_BEGIN
 
+@class SealedMessage_AesMethod;
+@class SealedMessage_NoopMethod;
+@class SealedMessage_RsaAesMethod;
+@class SealedMessage_RsaMethod;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum Key_Level
@@ -100,6 +105,146 @@ typedef GPB_ENUM(Signature_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
+
+@end
+
+#pragma mark - SealedMessage
+
+typedef GPB_ENUM(SealedMessage_FieldNumber) {
+  SealedMessage_FieldNumber_Ciphertext = 1,
+  SealedMessage_FieldNumber_Noop = 4,
+  SealedMessage_FieldNumber_Aes = 5,
+  SealedMessage_FieldNumber_Rsa = 6,
+  SealedMessage_FieldNumber_RsaAes = 7,
+};
+
+typedef GPB_ENUM(SealedMessage_Method_OneOfCase) {
+  SealedMessage_Method_OneOfCase_GPBUnsetOneOfCase = 0,
+  SealedMessage_Method_OneOfCase_Noop = 4,
+  SealedMessage_Method_OneOfCase_Aes = 5,
+  SealedMessage_Method_OneOfCase_Rsa = 6,
+  SealedMessage_Method_OneOfCase_RsaAes = 7,
+};
+
+/// Represents an encrypted message payload
+@interface SealedMessage : GPBMessage
+
+/// Base64url encoded ciphertext.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ciphertext;
+
+@property(nonatomic, readonly) SealedMessage_Method_OneOfCase methodOneOfCase;
+
+/// Noop encryption
+@property(nonatomic, readwrite, strong, null_resettable) SealedMessage_NoopMethod *noop;
+
+/// AES blocks method
+@property(nonatomic, readwrite, strong, null_resettable) SealedMessage_AesMethod *aes;
+
+/// RSA blocks method
+@property(nonatomic, readwrite, strong, null_resettable) SealedMessage_RsaMethod *rsa;
+
+/// RSA/AES Method specific metadata
+@property(nonatomic, readwrite, strong, null_resettable) SealedMessage_RsaAesMethod *rsaAes;
+
+@end
+
+/// Clears whatever value was set for the oneof 'method'.
+void SealedMessage_ClearMethodOneOfCase(SealedMessage *message);
+
+#pragma mark - SealedMessage_NoopMethod
+
+/// Clear text is used instad of encryption
+@interface SealedMessage_NoopMethod : GPBMessage
+
+@end
+
+#pragma mark - SealedMessage_AesMethod
+
+typedef GPB_ENUM(SealedMessage_AesMethod_FieldNumber) {
+  SealedMessage_AesMethod_FieldNumber_KeyId = 1,
+  SealedMessage_AesMethod_FieldNumber_Iv = 2,
+  SealedMessage_AesMethod_FieldNumber_Algorithm = 3,
+};
+
+/// The message is encrypted using a symmetric key.
+/// The key must be known to both sender and receipient.
+@interface SealedMessage_AesMethod : GPBMessage
+
+/// The id of the key used for encryption
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
+
+/// AES/CBC/PKCS5Padding
+@property(nonatomic, readwrite, copy, null_resettable) NSString *algorithm;
+
+/// Base64url encoded initialization vector
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iv;
+
+@end
+
+#pragma mark - SealedMessage_RsaMethod
+
+typedef GPB_ENUM(SealedMessage_RsaMethod_FieldNumber) {
+  SealedMessage_RsaMethod_FieldNumber_KeyId = 1,
+  SealedMessage_RsaMethod_FieldNumber_Algorithm = 2,
+  SealedMessage_RsaMethod_FieldNumber_Signature = 3,
+  SealedMessage_RsaMethod_FieldNumber_SignatureKeyId = 4,
+};
+
+/// The message is encrypted using the public key of the receipient.
+/// The message can be decrypted only with the corresponding private key.
+@interface SealedMessage_RsaMethod : GPBMessage
+
+/// The id of the key used for encryption
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
+
+/// RSA/ECB/OAEPWithSHA-256AndMGF1Padding
+@property(nonatomic, readwrite, copy, null_resettable) NSString *algorithm;
+
+/// Base64url encoded ciphertext signature.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
+
+/// the key-id of the signature
+@property(nonatomic, readwrite, copy, null_resettable) NSString *signatureKeyId;
+
+@end
+
+#pragma mark - SealedMessage_RsaAesMethod
+
+typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
+  SealedMessage_RsaAesMethod_FieldNumber_RsaKeyId = 1,
+  SealedMessage_RsaAesMethod_FieldNumber_RsaAlgorithm = 2,
+  SealedMessage_RsaAesMethod_FieldNumber_AesAlgorithm = 3,
+  SealedMessage_RsaAesMethod_FieldNumber_Iv = 4,
+  SealedMessage_RsaAesMethod_FieldNumber_EncryptedAesKey = 5,
+  SealedMessage_RsaAesMethod_FieldNumber_Signature = 6,
+  SealedMessage_RsaAesMethod_FieldNumber_SignatureKeyId = 7,
+};
+
+/// The message is encrypted with a self-generated symmetric key.
+/// That key is encrypted using the public key of the receipient and
+/// can only be decrypted with the corresponding private key.
+@interface SealedMessage_RsaAesMethod : GPBMessage
+
+/// The id of the key used for encryption
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rsaKeyId;
+
+/// RSA/ECB/OAEPWithSHA-256AndMGF1Padding
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rsaAlgorithm;
+
+/// AES/CBC/PKCS5Padding
+@property(nonatomic, readwrite, copy, null_resettable) NSString *aesAlgorithm;
+
+/// Base64url encoded initialization vector
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iv;
+
+/// Base64url encoded rsa-encrypted aes key
+@property(nonatomic, readwrite, copy, null_resettable) NSString *encryptedAesKey;
+
+/// Base64url encoded ciphertext signature.
+@property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
+
+/// the key-id of the signature
+@property(nonatomic, readwrite, copy, null_resettable) NSString *signatureKeyId;
 
 @end
 

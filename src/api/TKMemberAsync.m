@@ -184,7 +184,7 @@
 
 
 - (void)linkAccounts:(NSString *)bankId
-         withPayloads:(NSArray<NSString *> *)payloads
+         withPayloads:(NSArray<SealedMessage *> *)payloads
            onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError {
     [client linkAccounts:bankId

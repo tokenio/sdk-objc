@@ -4,7 +4,7 @@
 //
 
 #import "TKTypedef.h"
-
+#import "Security.pbobjc.h"
 
 @class GatewayService;
 @class TokenIOBuilder;
@@ -76,7 +76,7 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads;
+       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads;
 
 /**
  * Sends a notification to request adding of a key
@@ -102,7 +102,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name;
 

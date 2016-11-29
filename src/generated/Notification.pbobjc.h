@@ -28,6 +28,7 @@ CF_EXTERN_C_BEGIN
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
+@class SealedMessage;
 @class StepUp;
 @class TransferProcessed;
 
@@ -112,7 +113,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountLinkPayloadsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
 /// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 

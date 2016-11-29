@@ -129,7 +129,7 @@
  *                by the bank
  */
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                         withPayloads:(NSArray<NSString*> *)payloads;
+                         withPayloads:(NSArray<SealedMessage*> *)payloads;
 
 /**
  * Looks up funding bank accounts linked to Token.

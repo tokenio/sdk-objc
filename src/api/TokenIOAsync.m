@@ -92,7 +92,7 @@
 - (void)notifyLinkAccounts:(NSString *)username
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
@@ -121,7 +121,7 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<NSString*> *)accountLinkPayloads
+                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                           publicKey:(NSString *)publicKey
                                name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess

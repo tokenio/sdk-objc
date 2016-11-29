@@ -129,7 +129,7 @@
 }
 
 - (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayloads:(NSArray<NSString*> *)payloads {
+                          withPayloads:(NSArray<SealedMessage*> *)payloads {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async linkAccounts:bankId

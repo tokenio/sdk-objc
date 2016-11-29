@@ -163,7 +163,7 @@
  * @param onError callback invoked on error
  */
 - (void)linkAccounts:(NSString *)bankId
-         withPayloads:(NSArray<NSString*> *)payloads
+         withPayloads:(NSArray<SealedMessage*> *)payloads
            onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError;
 
