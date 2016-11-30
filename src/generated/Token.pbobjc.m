@@ -281,7 +281,6 @@ typedef struct TokenMember__storage_ {
 @implementation TokenPayload
 
 @dynamic bodyOneOfCase;
-@dynamic parentTokenId;
 @dynamic version;
 @dynamic nonce;
 @dynamic hasIssuer, issuer;
@@ -303,7 +302,6 @@ typedef struct TokenPayload__storage_ {
   NSString *description_p;
   TransferBody *transfer;
   AccessBody *access;
-  NSString *parentTokenId;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
 } TokenPayload__storage_;
@@ -318,7 +316,7 @@ typedef struct TokenPayload__storage_ {
         .name = "version",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_Version,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, version),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -327,7 +325,7 @@ typedef struct TokenPayload__storage_ {
         .name = "nonce",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_Nonce,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, nonce),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -336,7 +334,7 @@ typedef struct TokenPayload__storage_ {
         .name = "issuer",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
         .number = TokenPayload_FieldNumber_Issuer,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, issuer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -345,7 +343,7 @@ typedef struct TokenPayload__storage_ {
         .name = "from",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
         .number = TokenPayload_FieldNumber_From,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, from),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -354,7 +352,7 @@ typedef struct TokenPayload__storage_ {
         .name = "to",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
         .number = TokenPayload_FieldNumber_To,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, to),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -363,7 +361,7 @@ typedef struct TokenPayload__storage_ {
         .name = "effectiveAtMs",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_EffectiveAtMs,
-        .hasIndex = 6,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, effectiveAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -372,7 +370,7 @@ typedef struct TokenPayload__storage_ {
         .name = "expiresAtMs",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_ExpiresAtMs,
-        .hasIndex = 7,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, expiresAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -381,7 +379,7 @@ typedef struct TokenPayload__storage_ {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_Description_p,
-        .hasIndex = 8,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -403,15 +401,6 @@ typedef struct TokenPayload__storage_ {
         .offset = (uint32_t)offsetof(TokenPayload__storage_, access),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "parentTokenId",
-        .dataTypeSpecific.className = NULL,
-        .number = TokenPayload_FieldNumber_ParentTokenId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TokenPayload__storage_, parentTokenId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

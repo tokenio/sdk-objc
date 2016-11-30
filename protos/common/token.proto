@@ -35,7 +35,6 @@ message TokenMember {
 }
 
 message TokenPayload {
-  string parent_token_id = 11;                          // Parent token id.
   string version = 1;                                   // 1.0
   string nonce = 2;                                     // nonce, random string used to de-dupe tokens, set by client.
 
