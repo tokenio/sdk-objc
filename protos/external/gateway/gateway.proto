@@ -148,7 +148,7 @@ message GetNotificationsResponse {
 message LinkAccountsRequest {
   string bank_id = 1;
   // encrypted AccountsLinkPayload
-  repeated string account_link_payloads = 2;
+  repeated io.token.proto.common.security.SealedMessage account_link_payloads = 2;
 }
 
 message LinkAccountsResponse {

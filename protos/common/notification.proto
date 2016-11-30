@@ -1,6 +1,8 @@
 syntax = "proto3";
 package io.token.proto.common.notification;
 
+import "security.proto";
+
 option java_outer_classname = "NotificationProtos";
 
 // A notification that a transfer was successfully processed.
@@ -12,7 +14,7 @@ message TransferProcessed {
 message LinkAccounts {
     string bank_id = 1;
     string bank_name = 2;
-    repeated string account_link_payloads = 3;
+    repeated io.token.proto.common.security.SealedMessage account_link_payloads = 3;
 }
 
 // A notification to step up / endorse a token.

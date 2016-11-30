@@ -33,15 +33,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum Key_Level
 
-/// TODO: Make 0 invalid
 typedef GPB_ENUM(Key_Level) {
   /// Value used if any message's field encounters a value that is not defined
   /// by this enum. The message will also have C functions to get/set the rawValue
   /// of the field.
   Key_Level_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Key_Level_Privileged = 0,
-  Key_Level_Standard = 1,
-  Key_Level_Low = 2,
+  Key_Level_Invalid = 0,
+  Key_Level_Privileged = 1,
+  Key_Level_Standard = 2,
+  Key_Level_Low = 3,
 };
 
 GPBEnumDescriptor *Key_Level_EnumDescriptor(void);

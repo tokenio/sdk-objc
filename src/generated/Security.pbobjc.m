@@ -123,8 +123,9 @@ GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Privileged\000Standard\000Low\000";
+        "Invalid\000Privileged\000Standard\000Low\000";
     static const int32_t values[] = {
+        Key_Level_Invalid,
         Key_Level_Privileged,
         Key_Level_Standard,
         Key_Level_Low,
@@ -144,6 +145,7 @@ GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
 
 BOOL Key_Level_IsValidValue(int32_t value__) {
   switch (value__) {
+    case Key_Level_Invalid:
     case Key_Level_Privileged:
     case Key_Level_Standard:
     case Key_Level_Low:

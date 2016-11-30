@@ -57,7 +57,6 @@
 - (void)testRepeated {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = @"m123";
-    request.update.addKey.level = 0;
     request.update.addKey.publicKey = @"public-key";
     request.updateSignature.keyId = @"key-id";
     request.updateSignature.signature = @"signature";
@@ -158,7 +157,7 @@
 - (void)testDeserialzeRepeated {
     UpdateMemberRequest *request1 = [UpdateMemberRequest message];
     request1.update.memberId = @"m123";
-    request1.update.addKey.level = 0;
+    request1.update.addKey.level = Key_Level_Privileged;
     request1.update.addKey.publicKey = @"public-key";
     request1.updateSignature.keyId = @"key-id";
     request1.updateSignature.signature = @"signature";

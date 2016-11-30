@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.bankapi;
 
 import "google/api/annotations.proto";
+import "security.proto";
 
 message AuthorizeLinkAccountsRequest {
   string username = 1;
@@ -12,7 +13,7 @@ message AuthorizeLinkAccountsRequest {
 message AuthorizeLinkAccountsResponse {
   string bank_id = 1;
   string bank_name = 2;
-  repeated string account_link_payloads = 3;
+  repeated io.token.proto.common.security.SealedMessage account_link_payloads = 3;
 }
 
 

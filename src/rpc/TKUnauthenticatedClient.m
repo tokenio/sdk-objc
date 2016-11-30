@@ -51,7 +51,7 @@
             onError:(void(^)(NSError *))onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
-    request.update.addKey.level = 0;
+    request.update.addKey.level = Key_Level_Privileged;
     request.update.addKey.publicKey = key.publicKeyStr;
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = key.id;
