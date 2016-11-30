@@ -179,7 +179,6 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Description_p = 8,
   TokenPayload_FieldNumber_Transfer = 9,
   TokenPayload_FieldNumber_Access = 10,
-  TokenPayload_FieldNumber_ParentTokenId = 11,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -189,9 +188,6 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 };
 
 @interface TokenPayload : GPBMessage
-
-/// Parent token id.
-@property(nonatomic, readwrite, copy, null_resettable) NSString *parentTokenId;
 
 /// 1.0
 @property(nonatomic, readwrite, copy, null_resettable) NSString *version;
