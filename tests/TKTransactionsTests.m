@@ -77,8 +77,9 @@
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two"];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three"];
         
-        NSArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
-        XCTAssertEqual(3, lookedUp.count);
+        PagedArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
+        XCTAssertEqual(3, lookedUp.items.count);
+        XCTAssertNotNil(lookedUp.offset);
     }];
 }
 

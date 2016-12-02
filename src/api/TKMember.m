@@ -9,6 +9,7 @@
 #import "TKSecretKey.h"
 #import "TKRpcSyncCall.h"
 #import "TKAccountAsync.h"
+#import "PagedArray.h"
 
 
 @implementation TKMember
@@ -176,16 +177,16 @@
     }];
 }
 
-- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                      limit:(int)limit {
+- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
+                                         limit:(int)limit {
     return [self getTransfersOffset:offset
                               limit:limit
                             tokenId:nil];
 }
 
-- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                      limit:(int)limit
-                                    tokenId:(NSString *)tokenId {
+- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
+                                         limit:(int)limit
+                                       tokenId:(NSString *)tokenId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransfersOffset:offset
@@ -301,8 +302,8 @@
     }];
 }
 
-- (NSArray<Token *> *)getTransferTokensOffset:(NSString *)offset
-                                        limit:(int)limit {
+- (PagedArray<Token *> *)getTransferTokensOffset:(NSString *)offset
+                                           limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransferTokensOffset:offset
@@ -312,8 +313,8 @@
     }];
 }
 
-- (NSArray<Token *> *)getAccessTokensOffset:(NSString *)offset
-                                      limit:(int)limit {
+- (PagedArray<Token *> *)getAccessTokensOffset:(NSString *)offset
+                                         limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getAccessTokensOffset:offset
@@ -374,10 +375,10 @@
     }];
 }
 
-- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                            limit:(int)limit
-                                       forAccount:(NSString *)accountId {
-    TKRpcSyncCall<NSArray<Transaction *> *> *call = [TKRpcSyncCall create];
+- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
+                                               limit:(int)limit
+                                          forAccount:(NSString *)accountId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransactionsOffset:offset
                                     limit:limit

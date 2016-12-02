@@ -10,6 +10,7 @@
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
+#import "PagedArray.h"
 
 
 @class TKSecretKey;
@@ -168,8 +169,8 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                      limit:(int)limit;
+- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
+                                         limit:(int)limit;
 
 /**
  * Looks up existing token transfers.
@@ -178,9 +179,9 @@
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
  */
-- (NSArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                      limit:(int)limit
-                                    tokenId:(NSString *)tokenId;
+- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
+                                         limit:(int)limit
+                                       tokenId:(NSString *)tokenId;
 
 /**
  * Creates a new member address.
@@ -288,7 +289,7 @@
  * @param limit max number of records to return
  * @return transfer tokens owned by the member
  */
-- (NSArray<Token *> *)getTransferTokensOffset:(NSString *)offset limit:(int)limit;
+- (PagedArray<Token *> *)getTransferTokensOffset:(NSString *)offset limit:(int)limit;
 
 /**
  * Looks up access tokens owned by the member.
@@ -297,7 +298,7 @@
  * @param limit max number of records to return
  * @return access tokens owned by the member
  */
-- (NSArray<Token *> *)getAccessTokensOffset:(NSString *)offset limit:(int)limit;
+- (PagedArray<Token *> *)getAccessTokensOffset:(NSString *)offset limit:(int)limit;
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
@@ -357,8 +358,8 @@
  * @param accountId account id
  * @return a list of looked up transactions
  */
-- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                            limit:(int)limit
-                                       forAccount:(NSString *)accountId;
+- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
+                                               limit:(int)limit
+                                          forAccount:(NSString *)accountId;
 
 @end

@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
+#import "PagedArray.h"
 
 
 @class TKMember;
@@ -55,7 +56,7 @@
  * @param limit max number of records to return
  * @return a list of looked up transactions
  */
-- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                            limit:(int)limit;
+- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
+                                               limit:(int)limit;
 
 @end

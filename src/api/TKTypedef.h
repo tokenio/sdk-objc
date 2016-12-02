@@ -11,6 +11,9 @@
 @class TKAccountAsync;
 @class AddressRecord;
 @class Subscriber;
+@class PagedArray<Token>;
+@class PagedArray<Transaction>;
+@class PagedArray<Transfer>;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
@@ -27,15 +30,15 @@ typedef void (^OnSuccessWithAccount)(Account *);
 typedef void (^OnSuccessWithTKAccountAsync)(TKAccountAsync *);
 
 typedef void (^OnSuccessWithToken)(Token *);
-typedef void (^OnSuccessWithTokens)(NSArray<Token *> *);
+typedef void (^OnSuccessWithTokens)(PagedArray<Token *> *);
 
 typedef void (^OnSuccessWithTransfer)(Transfer *);
-typedef void (^OnSuccessWithTransfers)(NSArray<Transfer *> *);
+typedef void (^OnSuccessWithTransfers)(PagedArray<Transfer *> *);
 
 typedef void (^OnSuccessWithMoney)(Money *);
 
 typedef void (^OnSuccessWithTransaction)(Transaction *);
-typedef void (^OnSuccessWithTransactions)(NSArray<Transaction *> *);
+typedef void (^OnSuccessWithTransactions)(PagedArray<Transaction *> *);
 
 typedef void (^OnSuccessWithAddress)(AddressRecord *);
 typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> *);

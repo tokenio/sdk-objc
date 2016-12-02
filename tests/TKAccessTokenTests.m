@@ -15,6 +15,7 @@
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Token.pbobjc.h"
+#import "PagedArray.h"
 
 
 @interface TKAccessTokenTests : TKTestBase
@@ -57,8 +58,9 @@
 
 - (void)testLookupTokens {
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
-        XCTAssertEqual(lookedUp.count, 1);
+        PagedArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
+        XCTAssertEqual(lookedUp.items.count, 1);
+        XCTAssertNotNil(lookedUp.offset);
     }];
 }
 

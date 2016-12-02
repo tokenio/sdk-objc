@@ -14,6 +14,7 @@
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Token.pbobjc.h"
+#import "PagedArray.h"
 
 
 @interface TKAccessRedemptionTests : TKTestBase
@@ -149,10 +150,11 @@
         accessToken = [[grantor endorseToken:accessToken] token];
         
         [grantee useAccessToken:accessToken.id_p];
-        NSArray<Transaction*> *lookedUpTransactions = [grantee getTransactionsOffset:nil
+        PagedArray<Transaction *> *lookedUpTransactions = [grantee getTransactionsOffset:nil
                                                                                limit:100
                                                                           forAccount:grantorAccount.id];
-        XCTAssertEqual(1, [lookedUpTransactions count]);
+        XCTAssertEqual(1, lookedUpTransactions.items.count);
+        XCTAssertNotNil(lookedUpTransactions.offset);
     }];
 }
 
@@ -178,11 +180,12 @@
         accessToken = [[grantor endorseToken:accessToken] token];
         
         [grantee useAccessToken:accessToken.id_p];
-        NSArray<Transaction*> *lookedUpTransactions = [grantee
+        PagedArray<Transaction *> *lookedUpTransactions = [grantee
                                                        getTransactionsOffset:nil
                                                        limit:100
                                                        forAccount:grantorAccount.id];
-        XCTAssertEqual(1, [lookedUpTransactions count]);
+        XCTAssertEqual(1, lookedUpTransactions.items.count);
+        XCTAssertNotNil(lookedUpTransactions.offset);
     }];
 }
 

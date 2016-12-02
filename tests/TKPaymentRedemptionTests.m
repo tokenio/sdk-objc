@@ -110,11 +110,12 @@
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil];
         
-        NSArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
+        PagedArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
                                                             limit:100
                                                           tokenId:token.id_p];
         
-        XCTAssertEqual(3, lookedUp.count);
+        XCTAssertEqual(3, lookedUp.items.count);
+        XCTAssertNotNil(lookedUp.offset);
     }];
 }
 
