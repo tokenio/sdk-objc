@@ -73,8 +73,9 @@
                             amount:100.33
                           currency:@"USD"];
         
-        NSArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
-        XCTAssertEqual(lookedUp.count, 3);
+        PagedArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
+        XCTAssertEqual(lookedUp.items.count, 3);
+        XCTAssertNotNil(lookedUp.offset);
     }];
 }
 

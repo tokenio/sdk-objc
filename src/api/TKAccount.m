@@ -55,8 +55,8 @@
     }];
 }
 
-- (NSArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                            limit:(int)limit {
+- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
+                                               limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransactionsOffset:offset

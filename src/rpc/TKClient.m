@@ -12,6 +12,7 @@
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
+#import "PagedArray.h"
 
 
 NSString *const kTokenRealm = @"Token";
@@ -380,7 +381,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            handler:^(GetTokensResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.tokensArray);
+                                   PagedArray<Token *> *paged = [[PagedArray<Token *> alloc]
+                                                                 initWith: response.tokensArray
+                                                                   offset: response.offset];
+                                   onSuccess(paged);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -510,7 +514,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            ^(GetTransfersResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.transfersArray);
+                                   PagedArray<Transfer *> *paged = [[PagedArray<Transfer *> alloc]
+                                                                 initWith: response.transfersArray
+                                                                   offset: response.offset];
+                                   onSuccess(paged);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
@@ -585,7 +592,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                            ^(GetTransactionsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.transactionsArray);
+                                   PagedArray<Transaction *> *paged = [[PagedArray<Transaction *> alloc]
+                                                                 initWith: response.transactionsArray
+                                                                   offset: response.offset];
+                                   onSuccess(paged);
                                } else {
                                    RpcLogError(error);
                                    onError(error);
