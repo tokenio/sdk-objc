@@ -95,11 +95,13 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "InvalidStatus\000Success\000FailureInsufficien"
-        "tFunds\000FailureGeneric\000";
+        "tFunds\000FailureInvalidCurrency\000FailureGen"
+        "eric\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Success,
         TransactionStatus_FailureInsufficientFunds,
+        TransactionStatus_FailureInvalidCurrency,
         TransactionStatus_FailureGeneric,
     };
     GPBEnumDescriptor *worker =
@@ -120,6 +122,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
     case TransactionStatus_InvalidStatus:
     case TransactionStatus_Success:
     case TransactionStatus_FailureInsufficientFunds:
+    case TransactionStatus_FailureInvalidCurrency:
     case TransactionStatus_FailureGeneric:
       return YES;
     default:
