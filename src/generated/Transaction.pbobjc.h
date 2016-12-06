@@ -56,6 +56,7 @@ typedef GPB_ENUM(TransactionStatus) {
   TransactionStatus_InvalidStatus = 0,
   TransactionStatus_Success = 1,
   TransactionStatus_FailureInsufficientFunds = 2,
+  TransactionStatus_FailureInvalidCurrency = 4,
   TransactionStatus_FailureGeneric = 3,
 };
 
