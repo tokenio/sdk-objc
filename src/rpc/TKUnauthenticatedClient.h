@@ -20,9 +20,10 @@
 
 /**
  * @param gateway gRPC client
+ * @param timeoutMs gRPC timeout in ms
  * @return new unauthenticated client
  */
-- (id)initWithGateway:(GatewayService *)gateway;
+- (id)initWithGateway:(GatewayService *)gateway timeoutMs:(int)timeoutMs;
 
 /**
  * Creates new member ID. After the method returns the ID is reserved on
