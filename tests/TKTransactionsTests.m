@@ -57,7 +57,7 @@
         
         Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
         
-        XCTAssertEqualObjects(@"100.99", transaction.amount.value);
+        XCTAssertEqualWithAccuracy(100.99, [transaction.amount.value doubleValue], 0.0);
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);
         XCTAssertEqualObjects(token.id_p, transaction.tokenId);
         XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
