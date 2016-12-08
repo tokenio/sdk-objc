@@ -5,7 +5,6 @@
 
 #import "ProtoRPC/ProtoRPC.h"
 #import "Member.pbobjc.h"
-#import "gateway/Auth.pbobjc.h"
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKClient.h"
@@ -13,20 +12,19 @@
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
 #import "PagedArray.h"
-
-
-NSString *const kTokenRealm = @"Token";
-NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
+#import "TKRpc.h"
 
 
 @implementation TKClient {
     GatewayService *gateway;
+    TKRpc *rpc;
     NSString *memberId;
     NSString *onBehalfOfMemberId;
     TKSecretKey *key;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
+            timeoutMs:(int)timeoutMs_
              memberId:(NSString *)memberId_
             secretKey:(TKSecretKey *)key_ {
     self = [super init];
@@ -35,6 +33,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
         gateway = gateway_;
         memberId = memberId_;
         key = key_;
+        rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
     }
     
     return self;
@@ -741,25 +740,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)_startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
-    unsigned long now = (unsigned long)([[NSDate date] timeIntervalSince1970] * 1000);
-    
-    GRpcAuthPayload *payload = [GRpcAuthPayload message];
-    payload.request = [request data];
-    payload.createdAtMs = now;
-    NSString *signature = [TKCrypto sign:payload usingKey:key];
-
-    call.requestHeaders[@"token-realm"] = kTokenRealm;
-    call.requestHeaders[@"token-scheme"] = kTokenScheme;
-    call.requestHeaders[@"token-member-id"] = memberId;
-    call.requestHeaders[@"token-key-id"] = key.id;
-    call.requestHeaders[@"token-signature"] = signature;
-    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
-    
-    if (onBehalfOfMemberId) {
-        call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
-    }
-    
-    [call start];
+    [rpc execute:call
+         request:request
+        memberId:memberId
+       secretKey:key
+      onBehalfOf:onBehalfOfMemberId];
 }
 
 @end

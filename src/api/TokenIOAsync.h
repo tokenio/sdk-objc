@@ -40,7 +40,7 @@
 /**
  * Creates a new instance that connects to the specified Token host and port.
  */
-- (id)initWithHost:(NSString *)host port:(int)port;
+- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the

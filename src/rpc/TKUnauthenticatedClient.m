@@ -10,18 +10,20 @@
 #import "TKSecretKey.h"
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
-#import "TKTypedef.h"
+#import "TKRpc.h"
 
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;
+    TKRpc *rpc;
 }
 
-- (id)initWithGateway:(GatewayService *)gateway_ {
+- (id)initWithGateway:(GatewayService *)gateway_ timeoutMs:(int)timeoutMs_ {
     self = [super init];
 
     if (self) {
         gateway = gateway_;
+        rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
     }
 
     return self;
@@ -33,17 +35,19 @@
     request.nonce = [TKUtil nonce];
     RpcLogStart(request);
 
-    [gateway createMemberWithRequest:request handler:^(CreateMemberResponse *response, NSError *error) {
-        if (response) {
-            RpcLogCompleted(response);
-            onSuccess(response.memberId);
-        } else {
-            RpcLogError(error);
-            onError(error);
-        }
-    }];
+    GRPCProtoCall *call = [gateway
+            RPCToCreateMemberWithRequest:request
+                                 handler:^(CreateMemberResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.memberId);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }];
+    [rpc execute:call request:request];
 }
-
 
 - (void)addFirstKey:(TKSecretKey *)key
           forMember:(NSString *)memberId
@@ -58,16 +62,18 @@
     request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
     RpcLogStart(request);
 
-    [gateway updateMemberWithRequest:request
-                             handler:^(UpdateMemberResponse *response, NSError *error) {
-        if (response) {
-            RpcLogCompleted(response);
-            onSuccess(response.member);
-        } else {
-            RpcLogError(error);
-            onError(error);
-        }
-    }];
+    GRPCProtoCall *call = [gateway
+            RPCToUpdateMemberWithRequest:request
+                                 handler:^(UpdateMemberResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.member);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }];
+    [rpc execute:call request:request];
 }
 
 - (void)usernameExists:(NSString *)username
@@ -76,17 +82,19 @@
     UsernameExistsRequest *request = [UsernameExistsRequest message];
     request.username = username;
     RpcLogStart(request);
-    
-    [gateway usernameExistsWithRequest:request
-                            handler:^(UsernameExistsResponse *response, NSError *error) {
-        if (response) {
-            RpcLogCompleted(response);
-            onSuccess(response.exists);
-        } else {
-            RpcLogError(error);
-            onError(error);
-        }
-    }];
+
+    GRPCProtoCall *call = [gateway
+            RPCToUsernameExistsWithRequest:request
+                                   handler:^(UsernameExistsResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompleted(response);
+                                           onSuccess(response.exists);
+                                       } else {
+                                           RpcLogError(error);
+                                           onError(error);
+                                       }
+                                   }];
+    [rpc execute:call request:request];
 }
 
 - (void)notifyLinkAccounts:(NSString *)username
@@ -101,17 +109,19 @@
     request.body.linkAccounts.bankName = bankName;
     request.body.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
     RpcLogStart(request);
-    
-    [gateway notifyWithRequest:request
-                                   handler:^(NotifyResponse *response, NSError *error) {
-                                       if (response) {
-                                           RpcLogCompleted(response);
-                                           onSuccess();
-                                       } else {
-                                           RpcLogError(error);
-                                           onError(error);
-                                       }
-                                   }];
+
+    GRPCProtoCall *call = [gateway
+            RPCToNotifyWithRequest:request
+                           handler:^(NotifyResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    [rpc execute:call request:request];
 }
 
 - (void)notifyAddKey:(NSString *)username
@@ -124,17 +134,19 @@
     request.body.addKey.publicKey = publicKey;
     request.body.addKey.name = name;
     RpcLogStart(request);
-    
-    [gateway notifyWithRequest:request
-                             handler:^(NotifyResponse *response, NSError *error) {
-                                 if (response) {
-                                     RpcLogCompleted(response);
-                                     onSuccess();
-                                 } else {
-                                     RpcLogError(error);
-                                     onError(error);
-                                 }
-                             }];
+
+    GRPCProtoCall *call = [gateway
+            RPCToNotifyWithRequest:request
+                           handler:^(NotifyResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    [rpc execute:call request:request];
 }
 
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
@@ -153,17 +165,19 @@
     request.body.linkAccountsAndAddKey.addKey.publicKey = publicKey;
     request.body.linkAccountsAndAddKey.addKey.name = name;
     RpcLogStart(request);
-    
-    [gateway notifyWithRequest:request
-                                            handler:^(NotifyResponse *response, NSError *error) {
-                                                if (response) {
-                                                    RpcLogCompleted(response);
-                                                    onSuccess();
-                                                } else {
-                                                    RpcLogError(error);
-                                                    onError(error);
-                                                }
-                                            }];
+
+    GRPCProtoCall *call = [gateway
+            RPCToNotifyWithRequest:request
+                           handler:^(NotifyResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    [rpc execute:call request:request];
 }
 
 @end

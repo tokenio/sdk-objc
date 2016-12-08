@@ -27,10 +27,12 @@
 
 /**
  * @param gateway gateway gRPC client
+ * @param timeoutMs gRPC timeout in ms
  * @param key secret key to use for authentication
  * @return newly created client
  */
 - (id)initWithGateway:(GatewayService *)gateway
+            timeoutMs:(int)timeoutMs
              memberId:(NSString *)memberId
             secretKey:(TKSecretKey *)key;
 

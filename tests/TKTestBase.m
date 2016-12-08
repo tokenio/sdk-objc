@@ -36,6 +36,7 @@
     TokenIOBuilder *builder = [TokenIO builder];
     builder.host = gateway.host;
     builder.port = gateway.port;
+    builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
     tokenIO = [builder build];
     _bank = [TKBankClient bankClientWithHost:fank.host
                                         port:fank.port];

@@ -21,6 +21,7 @@
     if (self) {
         self.host = @"api.token.io";
         self.port = 9000;
+        self.timeoutMs = 10 * 1000; // 10 seconds.
     }
 
     return self;
@@ -30,9 +31,8 @@
     return [self buildAsync].sync;
 }
 
-
 - (TokenIOAsync *)buildAsync {
-    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port];
+    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port timeoutMs:self.timeoutMs];
 }
 
 @end

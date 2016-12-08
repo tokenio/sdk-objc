@@ -20,13 +20,14 @@
 
 @implementation TokenIOAsync {
     GatewayService *gateway;
+    int timeoutMs;
 }
 
 + (TokenIOBuilder *)builder {
     return [[TokenIOBuilder alloc] init];
 }
 
-- (id)initWithHost:(NSString *)host port:(int)port {
+- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout {
     self = [super init];
     
     if (self) {
@@ -34,8 +35,10 @@
         
         [GRPCCall useInsecureConnectionsForHost:address];
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
-        
+        [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
+
         gateway = [GatewayService serviceWithHost:address];
+        timeoutMs = timeout;
     }
     
     return self;
@@ -48,7 +51,7 @@
 - (void)createMember:(NSString *)username
             onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
     TKSecretKey *key = [TKCrypto generateKey];
     
     [client createMemberId:
@@ -66,7 +69,7 @@
 - (void)usernameExists:(NSString *)username
           onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
     [client usernameExists:username
               onSuccess:onSuccess
                 onError:onError];
@@ -77,6 +80,7 @@
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
+                                               timeoutMs:timeoutMs
                                                 memberId:memberId
                                                secretKey:key];
     [client getMember:
@@ -95,7 +99,7 @@
        accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
     [client notifyLinkAccounts:username
                         bankId:bankId
                       bankName:bankName
@@ -109,7 +113,7 @@
                 name:(NSString *) name
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
     [client notifyAddKey:username
                publicKey:publicKey
                     name:name
@@ -126,7 +130,7 @@
                                name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
     [client notifyLinkAccountsAndAddKey:username
                                  bankId:bankId
                                bankName:bankName
@@ -142,44 +146,46 @@
 
 // username can be nil. In this case only add the key.
 - (void)_addKeyAndUsername:(TKUnauthenticatedClient *)client
-               memberId:(NSString *)memberId
+                  memberId:(NSString *)memberId
                   username:(NSString *)username
-                    key:(TKSecretKey *)key
-              onSuccess:(void(^)(TKMemberAsync *))onSuccess
-                onError:(OnError)onError {
+                       key:(TKSecretKey *)key
+                 onSuccess:(void(^)(TKMemberAsync *))onSuccess
+                   onError:(OnError)onError {
     [client
-     addFirstKey:key
-     forMember:memberId
-     onSuccess:
-     ^(Member *member) {
-         TKClient *authenticated = [[TKClient alloc]
-                                    initWithGateway:gateway
-                                    memberId:memberId
-                                    secretKey:key];
-         if (username != nil) {
-             [authenticated addUsername:username
-                                  to:member
-                           onSuccess:
-              ^(Member *m) {
-                  TKClient *newClient = [[TKClient alloc]
-                                         initWithGateway:gateway
+            addFirstKey:key
+              forMember:memberId
+              onSuccess:
+                      ^(Member *member) {
+                          TKClient *authenticated = [[TKClient alloc]
+                                  initWithGateway:gateway
+                                        timeoutMs:timeoutMs
                                          memberId:memberId
-                                         secretKey:key];
-                  onSuccess([TKMemberAsync
-                             member:m
-                             secretKey:key
-                             useClient:newClient]);
-              }
-                             onError: onError];
-         }
-         else {
-             onSuccess([TKMemberAsync
-                        member:member
-                        secretKey:key
-                        useClient:authenticated]);
-         }
-     }
-     onError:onError];
+                                        secretKey:key];
+                          if (username != nil) {
+                              [authenticated addUsername:username
+                                                      to:member
+                                               onSuccess:
+                                                       ^(Member *m) {
+                                                           TKClient *newClient = [[TKClient alloc]
+                                                                   initWithGateway:gateway
+                                                                         timeoutMs:timeoutMs
+                                                                          memberId:memberId
+                                                                         secretKey:key];
+                                                           onSuccess([TKMemberAsync
+                                                                   member:m
+                                                                secretKey:key
+                                                                useClient:newClient]);
+                                                       }
+                                                 onError: onError];
+                          }
+                          else {
+                              onSuccess([TKMemberAsync
+                                      member:member
+                                   secretKey:key
+                                   useClient:authenticated]);
+                          }
+                      }
+                onError:onError];
 }
 
 @end
