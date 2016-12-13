@@ -42,7 +42,7 @@
  * Returns shared instance of the log Manager.
  *
  * @param delegate external logger delegate
- * @param muteNSLog if TRUE SDK will supress all NSLogs
+ * @param muteNSLog if TRUE SDK will suppress all NSLogs
  * @return instance of TKLogManager
  */
 + (instancetype)logManagerWithDelegate:(id<TKExternalLoggerDelegate>)delegate muteNSLog:(bool)muteNSLog;
