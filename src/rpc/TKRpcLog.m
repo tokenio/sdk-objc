@@ -6,16 +6,16 @@
 #import <Protobuf/GPBMessage.h>
 
 #import "TKRpcLog.h"
-
+#import "TKLogManager.h"
 
 void RpcLogStart(GPBMessage *request) {
-   NSLog(@"RPC << %@", request);
+    TKLogInfo(@"RPC << %@", request)
 }
 
 void RpcLogError(NSError *error) {
-   NSLog(@"RPC >> ERROR: %@", error);
+    TKLogError(@"RPC >> ERROR: %@", error)
 }
 
 void RpcLogCompleted(GPBMessage *response) {
-   NSLog(@"RPC >> %@", response);
+    TKLogInfo(@"RPC >> %@", response)
 }
