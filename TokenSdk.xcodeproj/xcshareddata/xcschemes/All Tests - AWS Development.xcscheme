@@ -65,12 +65,12 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "TOKEN_GATEWAY"
-            value = "aws.dev.api.token.io"
+            value = "grpc.dev.api.token.io"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "TOKEN_BANK"
-            value = "aws.fank.dev.api.token.io"
+            value = "grpc.fank.dev.api.token.io"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
