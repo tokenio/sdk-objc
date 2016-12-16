@@ -1,8 +1,0 @@
-#!/bin/bash
-
-xcodebuild \
-    -workspace TokenSdk.xcworkspace \
-    -scheme "All Tests - AWS Staging" \
-    -sdk iphonesimulator \
-    -destination "platform=iOS Simulator,name=iPhone 6,OS=10.1" \
-    test
