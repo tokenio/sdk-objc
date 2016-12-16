@@ -127,6 +127,9 @@
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
+		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
+		DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A51E00786800358830 /* TKLogManager.m */; };
+		DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A81E007E9000358830 /* TKLogTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +277,9 @@
 		ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccountAsync.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
+		DD6AD2A51E00786800358830 /* TKLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogManager.m; sourceTree = "<group>"; };
+		DD6AD2A81E007E9000358830 /* TKLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogTests.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -441,6 +447,7 @@
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
 				ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */,
+				DD6AD2A81E007E9000358830 /* TKLogTests.m */,
 				ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */,
 				ABA7B30F0E5668621466B95A /* TKTestBase.h */,
 				ABA7B6A0C915116837349E69 /* TKUtilTests.m */,
@@ -512,6 +519,8 @@
 		ABA7B92556DD88305DE6EDC5 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				DD6AD2A41E00786800358830 /* TKLogManager.h */,
+				DD6AD2A51E00786800358830 /* TKLogManager.m */,
 				ABA7B899E7F7DE3107CB62E1 /* TKJson.m */,
 				ABA7B16EB35673E0ED34C018 /* TKUtil.m */,
 				ABA7BEE87D6C30096F9CADA3 /* TKJson.h */,
@@ -627,6 +636,7 @@
 				ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */,
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
 				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
+				DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */,
 				ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */,
 				37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */,
 				8A2937511DB825660034C110 /* Address.pbobjc.h in Headers */,
@@ -844,6 +854,7 @@
 				ABA7BA98793B0592D11A83BB /* sc.c in Sources */,
 				94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */,
 				37637B671D989A930043345F /* Notification.pbobjc.m in Sources */,
+				DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */,
 				ABA7B0303C146231D78BE96C /* seed.c in Sources */,
 				37637B571D989A930043345F /* Auth.pbobjc.m in Sources */,
 				ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */,
@@ -882,6 +893,7 @@
 				1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */,
 				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
 				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,
+				DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
