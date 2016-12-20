@@ -61,10 +61,12 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
 
 @dynamic publicKey;
 @dynamic level;
+@dynamic algorithm;
 
 typedef struct MemberAddKeyOperation__storage_ {
   uint32_t _has_storage_[1];
   Key_Level level;
+  Key_Algorithm algorithm;
   NSString *publicKey;
 } MemberAddKeyOperation__storage_;
 
@@ -89,6 +91,15 @@ typedef struct MemberAddKeyOperation__storage_ {
         .number = MemberAddKeyOperation_FieldNumber_Level,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, level),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "algorithm",
+        .dataTypeSpecific.enumDescFunc = Key_Algorithm_EnumDescriptor,
+        .number = MemberAddKeyOperation_FieldNumber_Algorithm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, algorithm),
         .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
@@ -118,6 +129,18 @@ int32_t MemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message) {
 void SetMemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message, int32_t value) {
   GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Level];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t MemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message) {
+  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Algorithm];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetMemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message, int32_t value) {
+  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Algorithm];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 

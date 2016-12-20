@@ -28,6 +28,7 @@
 #import "Security.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 #import "Token.pbobjc.h"
+#import "Notification.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
 

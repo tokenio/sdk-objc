@@ -174,6 +174,20 @@
                   onError:onError];
 }
 
+- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+               onError:(OnError)onError {
+    [client getNotifications:onSuccess
+                   onError:onError];
+}
+
+- (void)getNotification:(NSString *)notificationId
+            onSuccess:(OnSuccessWithNotification)onSuccess
+              onError:(OnError)onError {
+    [client getNotification:notificationId
+                onSuccess:onSuccess
+                  onError:onError];
+}
+
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError {

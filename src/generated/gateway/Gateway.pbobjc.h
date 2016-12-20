@@ -459,6 +459,32 @@ typedef GPB_ENUM(GetNotificationsResponse_FieldNumber) {
 
 @end
 
+#pragma mark - GetNotificationRequest
+
+typedef GPB_ENUM(GetNotificationRequest_FieldNumber) {
+  GetNotificationRequest_FieldNumber_NotificationId = 1,
+};
+
+@interface GetNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+#pragma mark - GetNotificationResponse
+
+typedef GPB_ENUM(GetNotificationResponse_FieldNumber) {
+  GetNotificationResponse_FieldNumber_Notification = 1,
+};
+
+@interface GetNotificationResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
+/// Test to see if @c notification has been set.
+@property(nonatomic, readwrite) BOOL hasNotification;
+
+@end
+
 #pragma mark - LinkAccountsRequest
 
 typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {

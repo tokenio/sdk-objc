@@ -136,6 +136,23 @@
             onSuccess:(OnSuccessWithSubscriber)onSuccess
               onError:(OnError)onError;
 
+/**
+ * Get all notifications
+ *
+ */
+- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+               onError:(OnError)onError;
+
+
+/**
+ * Get a notification by Id
+ *
+ * @param notificationId id of notification to get
+ */
+- (void)getNotification:(NSString *)notificationId
+            onSuccess:(OnSuccessWithNotification)onSuccess
+              onError:(OnError)onError;
+
 
 /**
  * Unsubscribes a device from push notifications

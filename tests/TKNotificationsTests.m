@@ -13,6 +13,7 @@
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
+#import "Notification.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 
 
@@ -142,6 +143,31 @@
         Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
+    }];
+}
+
+- (void)testGetNotifications {
+    [self run: ^(TokenIO *tokenIO) {
+        NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
+        [tags addObject:@"iphone"];
+            
+        [payer subscribeToNotifications:@"notificationUri"
+                                platform:Platform_Ios];
+        
+        NSArray<Notification*> *notifications = [payer getNotifications];
+        XCTAssert(notifications.count == 0);
+        TKSecretKey *key = [TKCrypto generateKey];
+        [tokenIO notifyAddKey:payer.firstUsername
+                    publicKey:key.publicKeyStr
+                         name:@"Chrome 53.0"];
+        
+        notifications = [payer getNotifications];
+        XCTAssert(notifications.count == 1);
+
+        Notification* notification = [payer getNotification:notifications[0].id_p];
+        XCTAssert([notifications[0].id_p isEqualToString:notification.id_p]);
+        XCTAssert([notifications[0].subscriberId isEqualToString:notification.subscriberId]);
+        XCTAssert([notifications[0].content.title isEqualToString:notification.content.title]);
     }];
 }
 

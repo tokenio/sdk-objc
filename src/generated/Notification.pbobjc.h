@@ -250,6 +250,8 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
   NotificationContent_FieldNumber_Body = 3,
   NotificationContent_FieldNumber_Payload = 4,
   NotificationContent_FieldNumber_CreatedAtMs = 5,
+  NotificationContent_FieldNumber_LocKey = 6,
+  NotificationContent_FieldNumber_LocArgsArray = 7,
 };
 
 /// The contents of a notification that was sent or will be sent
@@ -260,6 +262,12 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *body;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *locKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *locArgsArray;
+/// The number of items in @c locArgsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger locArgsArray_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
 

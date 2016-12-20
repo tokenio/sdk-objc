@@ -120,6 +120,24 @@
     }];
 }
 
+- (NSArray<Notification *> *)getNotifications {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getNotifications:call.onSuccess
+                           onError:call.onError];
+    }];
+}
+
+- (Notification *)getNotification:(NSString *)NotificationId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getNotification:NotificationId
+                        onSuccess:call.onSuccess
+                          onError:call.onError];
+    }];
+}
+
+
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
