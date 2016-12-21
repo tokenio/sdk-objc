@@ -10,6 +10,7 @@
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
+#import "Notification.pbobjc.h"
 #import "PagedArray.h"
 
 
@@ -111,6 +112,20 @@
  * @param subscriberId id of subscriber to get
  */
 - (Subscriber *)getSubscriber:(NSString *)subscriberId;
+
+
+/**
+ * Get all notifications
+ *
+ */
+- (NSArray<Notification *> *)getNotifications;
+
+/**
+ * Get a notification by Id
+ *
+ * @param notificationId id of notification to get
+ */
+- (Notification *)getNotification:(NSString *)notificationId;
 
 
 /**

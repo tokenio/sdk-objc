@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class MemberRemoveKeyOperation;
 @class MemberUsernameOperation;
 @class Signature;
+GPB_ENUM_FWD_DECLARE(Key_Algorithm);
 GPB_ENUM_FWD_DECLARE(Key_Level);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -52,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
   MemberAddKeyOperation_FieldNumber_PublicKey = 1,
   MemberAddKeyOperation_FieldNumber_Level = 2,
+  MemberAddKeyOperation_FieldNumber_Algorithm = 3,
 };
 
 /// Adds member key to the directory.
@@ -62,6 +64,8 @@ typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
 
 @property(nonatomic, readwrite) enum Key_Level level;
 
+@property(nonatomic, readwrite) enum Key_Algorithm algorithm;
+
 @end
 
 /// Fetches the raw value of a @c MemberAddKeyOperation's @c level property, even
@@ -71,6 +75,14 @@ int32_t MemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message);
 /// it to be set to a value that was not defined by the enum at the time the code
 /// was generated.
 void SetMemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message, int32_t value);
+
+/// Fetches the raw value of a @c MemberAddKeyOperation's @c algorithm property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t MemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message);
+/// Sets the raw value of an @c MemberAddKeyOperation's @c algorithm property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetMemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message, int32_t value);
 
 #pragma mark - MemberRemoveKeyOperation
 

@@ -7,6 +7,13 @@ option java_outer_classname = "SecurityProtos";
 message Key {
   string id = 1;
   string public_key = 2;     // Base64url encoded public key.
+  Level level = 3;
+  Algorithm algorithm = 4;
+
+  enum Algorithm {
+    UNKNOWN = 0;
+    ED25519 = 1;
+  }
 
   enum Level {
     INVALID = 0;
@@ -14,8 +21,6 @@ message Key {
     STANDARD = 2;
     LOW = 3;
   }
-
-  Level level = 3;
 }
 
 message Signature {
@@ -30,21 +35,12 @@ message SealedMessage {
 
   oneof method {
     NoopMethod noop = 4;              // Noop encryption
-    AesMethod aes = 5;                // AES blocks method
     RsaMethod rsa = 6;                // RSA blocks method
     RsaAesMethod rsa_aes = 7;         // RSA/AES Method specific metadata
   }
 
   // Clear text is used instad of encryption
   message NoopMethod {
-  }
-
-  // The message is encrypted using a symmetric key.
-  // The key must be known to both sender and receipient.
-  message AesMethod {
-    string key_id = 1;                // The id of the key used for encryption
-    string algorithm = 3;             // AES/CBC/PKCS5Padding
-    string iv = 2;                    // Base64url encoded initialization vector
   }
 
   // The message is encrypted using the public key of the receipient.
@@ -63,7 +59,6 @@ message SealedMessage {
     string rsa_key_id = 1;            // The id of the key used for encryption
     string rsa_algorithm = 2;         // RSA/ECB/OAEPWithSHA-256AndMGF1Padding
     string aes_algorithm = 3;         // AES/CBC/PKCS5Padding
-    string iv = 4;                    // Base64url encoded initialization vector
     string encrypted_aes_key = 5;     // Base64url encoded rsa-encrypted aes key
     string signature = 6;             // Base64url encoded ciphertext signature.
     string signature_key_id = 7;      // the key-id of the signature

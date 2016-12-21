@@ -578,6 +578,8 @@ BOOL Notification_Status_IsValidValue(int32_t value__) {
 @dynamic type;
 @dynamic title;
 @dynamic body;
+@dynamic locKey;
+@dynamic locArgsArray, locArgsArray_Count;
 @dynamic payload;
 @dynamic createdAtMs;
 
@@ -587,6 +589,8 @@ typedef struct NotificationContent__storage_ {
   NSString *title;
   NSString *body;
   NSString *payload;
+  NSString *locKey;
+  NSMutableArray *locArgsArray;
   int64_t createdAtMs;
 } NotificationContent__storage_;
 
@@ -627,7 +631,7 @@ typedef struct NotificationContent__storage_ {
         .name = "payload",
         .dataTypeSpecific.className = NULL,
         .number = NotificationContent_FieldNumber_Payload,
-        .hasIndex = 3,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(NotificationContent__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -636,10 +640,28 @@ typedef struct NotificationContent__storage_ {
         .name = "createdAtMs",
         .dataTypeSpecific.className = NULL,
         .number = NotificationContent_FieldNumber_CreatedAtMs,
-        .hasIndex = 4,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(NotificationContent__storage_, createdAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "locKey",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_LocKey,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, locKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "locArgsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_LocArgsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, locArgsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

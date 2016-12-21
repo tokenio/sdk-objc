@@ -179,6 +179,45 @@
     [self _startCall:call withRequest:request];
 }
 
+- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+                   onError:(OnError)onError {
+    GetNotificationsRequest *request = [GetNotificationsRequest message];
+    GRPCProtoCall *call = [gateway
+                           RPCToGetNotificationsWithRequest:request
+                           handler:^(GetNotificationsResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.notificationsArray);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+
+- (void)getNotification:(NSString *)notificationId
+            onSuccess:(OnSuccessWithNotification)onSuccess
+              onError:(OnError)onError {
+    GetNotificationRequest *request = [GetNotificationRequest message];
+    request.notificationId = notificationId;
+    GRPCProtoCall *call = [gateway
+                           RPCToGetNotificationWithRequest:request
+                           handler:^(GetNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.notification);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess

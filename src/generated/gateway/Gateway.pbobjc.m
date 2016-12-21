@@ -1330,6 +1330,92 @@ typedef struct GetNotificationsResponse__storage_ {
 
 @end
 
+#pragma mark - GetNotificationRequest
+
+@implementation GetNotificationRequest
+
+@dynamic notificationId;
+
+typedef struct GetNotificationRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *notificationId;
+} GetNotificationRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetNotificationRequest_FieldNumber_NotificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetNotificationRequest__storage_, notificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetNotificationRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetNotificationRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetNotificationResponse
+
+@implementation GetNotificationResponse
+
+@dynamic hasNotification, notification;
+
+typedef struct GetNotificationResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Notification *notification;
+} GetNotificationResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notification",
+        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .number = GetNotificationResponse_FieldNumber_Notification,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetNotificationResponse__storage_, notification),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetNotificationResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetNotificationResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - LinkAccountsRequest
 
 @implementation LinkAccountsRequest

@@ -226,6 +226,18 @@
              responseClass:[GetNotificationsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
+
+- (void)getNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**

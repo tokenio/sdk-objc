@@ -24,12 +24,28 @@
 
 CF_EXTERN_C_BEGIN
 
-@class SealedMessage_AesMethod;
 @class SealedMessage_NoopMethod;
 @class SealedMessage_RsaAesMethod;
 @class SealedMessage_RsaMethod;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum Key_Algorithm
+
+typedef GPB_ENUM(Key_Algorithm) {
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
+  Key_Algorithm_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Key_Algorithm_Unknown = 0,
+  Key_Algorithm_Ed25519 = 1,
+};
+
+GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void);
+
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
+BOOL Key_Algorithm_IsValidValue(int32_t value);
 
 #pragma mark - Enum Key_Level
 
@@ -69,6 +85,7 @@ typedef GPB_ENUM(Key_FieldNumber) {
   Key_FieldNumber_Id_p = 1,
   Key_FieldNumber_PublicKey = 2,
   Key_FieldNumber_Level = 3,
+  Key_FieldNumber_Algorithm = 4,
 };
 
 @interface Key : GPBMessage
@@ -80,6 +97,8 @@ typedef GPB_ENUM(Key_FieldNumber) {
 
 @property(nonatomic, readwrite) Key_Level level;
 
+@property(nonatomic, readwrite) Key_Algorithm algorithm;
+
 @end
 
 /// Fetches the raw value of a @c Key's @c level property, even
@@ -89,6 +108,14 @@ int32_t Key_Level_RawValue(Key *message);
 /// it to be set to a value that was not defined by the enum at the time the code
 /// was generated.
 void SetKey_Level_RawValue(Key *message, int32_t value);
+
+/// Fetches the raw value of a @c Key's @c algorithm property, even
+/// if the value was not defined by the enum at the time the code was generated.
+int32_t Key_Algorithm_RawValue(Key *message);
+/// Sets the raw value of an @c Key's @c algorithm property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
+void SetKey_Algorithm_RawValue(Key *message, int32_t value);
 
 #pragma mark - Signature
 
@@ -113,7 +140,6 @@ typedef GPB_ENUM(Signature_FieldNumber) {
 typedef GPB_ENUM(SealedMessage_FieldNumber) {
   SealedMessage_FieldNumber_Ciphertext = 1,
   SealedMessage_FieldNumber_Noop = 4,
-  SealedMessage_FieldNumber_Aes = 5,
   SealedMessage_FieldNumber_Rsa = 6,
   SealedMessage_FieldNumber_RsaAes = 7,
 };
@@ -121,7 +147,6 @@ typedef GPB_ENUM(SealedMessage_FieldNumber) {
 typedef GPB_ENUM(SealedMessage_Method_OneOfCase) {
   SealedMessage_Method_OneOfCase_GPBUnsetOneOfCase = 0,
   SealedMessage_Method_OneOfCase_Noop = 4,
-  SealedMessage_Method_OneOfCase_Aes = 5,
   SealedMessage_Method_OneOfCase_Rsa = 6,
   SealedMessage_Method_OneOfCase_RsaAes = 7,
 };
@@ -136,9 +161,6 @@ typedef GPB_ENUM(SealedMessage_Method_OneOfCase) {
 
 /// Noop encryption
 @property(nonatomic, readwrite, strong, null_resettable) SealedMessage_NoopMethod *noop;
-
-/// AES blocks method
-@property(nonatomic, readwrite, strong, null_resettable) SealedMessage_AesMethod *aes;
 
 /// RSA blocks method
 @property(nonatomic, readwrite, strong, null_resettable) SealedMessage_RsaMethod *rsa;
@@ -155,29 +177,6 @@ void SealedMessage_ClearMethodOneOfCase(SealedMessage *message);
 
 /// Clear text is used instad of encryption
 @interface SealedMessage_NoopMethod : GPBMessage
-
-@end
-
-#pragma mark - SealedMessage_AesMethod
-
-typedef GPB_ENUM(SealedMessage_AesMethod_FieldNumber) {
-  SealedMessage_AesMethod_FieldNumber_KeyId = 1,
-  SealedMessage_AesMethod_FieldNumber_Iv = 2,
-  SealedMessage_AesMethod_FieldNumber_Algorithm = 3,
-};
-
-/// The message is encrypted using a symmetric key.
-/// The key must be known to both sender and receipient.
-@interface SealedMessage_AesMethod : GPBMessage
-
-/// The id of the key used for encryption
-@property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
-
-/// AES/CBC/PKCS5Padding
-@property(nonatomic, readwrite, copy, null_resettable) NSString *algorithm;
-
-/// Base64url encoded initialization vector
-@property(nonatomic, readwrite, copy, null_resettable) NSString *iv;
 
 @end
 
@@ -214,7 +213,6 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
   SealedMessage_RsaAesMethod_FieldNumber_RsaKeyId = 1,
   SealedMessage_RsaAesMethod_FieldNumber_RsaAlgorithm = 2,
   SealedMessage_RsaAesMethod_FieldNumber_AesAlgorithm = 3,
-  SealedMessage_RsaAesMethod_FieldNumber_Iv = 4,
   SealedMessage_RsaAesMethod_FieldNumber_EncryptedAesKey = 5,
   SealedMessage_RsaAesMethod_FieldNumber_Signature = 6,
   SealedMessage_RsaAesMethod_FieldNumber_SignatureKeyId = 7,
@@ -233,9 +231,6 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
 
 /// AES/CBC/PKCS5Padding
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aesAlgorithm;
-
-/// Base64url encoded initialization vector
-@property(nonatomic, readwrite, copy, null_resettable) NSString *iv;
 
 /// Base64url encoded rsa-encrypted aes key
 @property(nonatomic, readwrite, copy, null_resettable) NSString *encryptedAesKey;

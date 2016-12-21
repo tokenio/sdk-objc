@@ -11,6 +11,7 @@
 @class TKAccountAsync;
 @class AddressRecord;
 @class Subscriber;
+@class Notification;
 @class PagedArray<Token>;
 @class PagedArray<Transaction>;
 @class PagedArray<Transfer>;
@@ -45,5 +46,8 @@ typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> *);
 
 typedef void (^OnSuccessWithSubscriber)(Subscriber *);
 typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> *);
+
+typedef void (^OnSuccessWithNotification)(Notification *);
+typedef void (^OnSuccessWithNotifications)(NSArray<Notification *> *);
 
 typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);

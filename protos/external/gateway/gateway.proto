@@ -141,6 +141,14 @@ message GetNotificationsResponse {
   repeated io.token.proto.common.notification.Notification notifications = 1;
 }
 
+message GetNotificationRequest {
+  string notification_id = 1;
+}
+
+message GetNotificationResponse {
+  io.token.proto.common.notification.Notification notification = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
 //
@@ -402,6 +410,12 @@ service GatewayService {
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
         get: "/notifications"
+    };
+  }
+
+  rpc GetNotification (GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {
+        get: "/notifications/{notification_id}"
     };
   }
 
