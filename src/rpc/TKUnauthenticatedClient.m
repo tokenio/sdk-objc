@@ -57,6 +57,7 @@
     request.update.memberId = memberId;
     request.update.addKey.level = Key_Level_Privileged;
     request.update.addKey.publicKey = key.publicKeyStr;
+    request.update.addKey.algorithm = Key_Algorithm_Ed25519;
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = key.id;
     request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];

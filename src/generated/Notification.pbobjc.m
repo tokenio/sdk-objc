@@ -246,9 +246,11 @@ typedef struct StepUp__storage_ {
 
 @dynamic publicKey;
 @dynamic name;
+@dynamic algorithm;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
+  Key_Algorithm algorithm;
   NSString *publicKey;
   NSString *name;
 } AddKey__storage_;
@@ -277,6 +279,15 @@ typedef struct AddKey__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "algorithm",
+        .dataTypeSpecific.enumDescFunc = Key_Algorithm_EnumDescriptor,
+        .number = AddKey_FieldNumber_Algorithm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(AddKey__storage_, algorithm),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[AddKey class]
@@ -293,6 +304,18 @@ typedef struct AddKey__storage_ {
 }
 
 @end
+
+int32_t AddKey_Algorithm_RawValue(AddKey *message) {
+  GPBDescriptor *descriptor = [AddKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AddKey_FieldNumber_Algorithm];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetAddKey_Algorithm_RawValue(AddKey *message, int32_t value) {
+  GPBDescriptor *descriptor = [AddKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AddKey_FieldNumber_Algorithm];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - LinkAccountsAndAddKey
 
