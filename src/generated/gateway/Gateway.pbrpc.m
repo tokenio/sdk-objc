@@ -454,4 +454,40 @@
              responseClass:[GetTransfersResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ */
+- (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBanksWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBanks"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetBanksResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
+
+- (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBankInfoWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBankInfo"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetBankInfoResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 @end

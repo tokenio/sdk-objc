@@ -377,4 +377,19 @@
                                                limit:(int)limit
                                           forAccount:(NSString *)accountId;
 
+/**
+ * Returns a list of all token enabled banks.
+ *
+ * @return a list of banks
+ */
+- (NSArray<Bank *> *)getBanks;
+
+/**
+ * Returns linking information for the specified bank id.
+ *
+ * @param bankId the bank id
+ * @return bank linking information
+ */
+- (BankInfo *)getBankInfo:(NSString *)bankId;
+
 @end

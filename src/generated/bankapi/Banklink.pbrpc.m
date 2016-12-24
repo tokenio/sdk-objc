@@ -34,4 +34,16 @@
              responseClass:[AuthorizeLinkAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark AuthorizeLinkAccountsGet(AuthorizeLinkAccountsRequest) returns (AuthorizeLinkAccountsResponse)
+
+- (void)authorizeLinkAccountsGetWithRequest:(AuthorizeLinkAccountsRequest *)request handler:(void(^)(AuthorizeLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAuthorizeLinkAccountsGetWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToAuthorizeLinkAccountsGetWithRequest:(AuthorizeLinkAccountsRequest *)request handler:(void(^)(AuthorizeLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AuthorizeLinkAccountsGet"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[AuthorizeLinkAccountsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 @end

@@ -19,6 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToAuthorizeLinkAccountsWithRequest:(AuthorizeLinkAccountsRequest *)request handler:(void(^)(AuthorizeLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark AuthorizeLinkAccountsGet(AuthorizeLinkAccountsRequest) returns (AuthorizeLinkAccountsResponse)
+
+- (void)authorizeLinkAccountsGetWithRequest:(AuthorizeLinkAccountsRequest *)request handler:(void(^)(AuthorizeLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToAuthorizeLinkAccountsGetWithRequest:(AuthorizeLinkAccountsRequest *)request handler:(void(^)(AuthorizeLinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 @end
 
 /**

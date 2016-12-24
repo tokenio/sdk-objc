@@ -15,6 +15,8 @@
 @class PagedArray<Token>;
 @class PagedArray<Transaction>;
 @class PagedArray<Transfer>;
+@class Bank;
+@class BankInfo;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
@@ -51,3 +53,6 @@ typedef void (^OnSuccessWithNotification)(Notification *);
 typedef void (^OnSuccessWithNotifications)(NSArray<Notification *> *);
 
 typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);
+
+typedef void (^OnSuccessWithBanks)(NSArray<Bank *> *);
+typedef void (^OnSuccessWithBankInfo)(BankInfo *);

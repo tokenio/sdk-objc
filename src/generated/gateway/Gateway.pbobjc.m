@@ -25,6 +25,7 @@
  #import "Transaction.pbobjc.h"
  #import "Transfer.pbobjc.h"
  #import "Subscriber.pbobjc.h"
+ #import "Bankinfo.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -52,6 +53,7 @@
     [registry addExtensions:[TransactionRoot extensionRegistry]];
     [registry addExtensions:[TransferRoot extensionRegistry]];
     [registry addExtensions:[SubscriberRoot extensionRegistry]];
+    [registry addExtensions:[BankinfoRoot extensionRegistry]];
   }
   return registry;
 }
@@ -2983,6 +2985,165 @@ typedef struct GetTransfersResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetTransfersResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBanksRequest
+
+@implementation GetBanksRequest
+
+
+typedef struct GetBanksRequest__storage_ {
+  uint32_t _has_storage_[1];
+} GetBanksRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBanksRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(GetBanksRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBanksResponse
+
+@implementation GetBanksResponse
+
+@dynamic banksArray, banksArray_Count;
+
+typedef struct GetBanksResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *banksArray;
+} GetBanksResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "banksArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Bank),
+        .number = GetBanksResponse_FieldNumber_BanksArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetBanksResponse__storage_, banksArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBanksResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBanksResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBankInfoRequest
+
+@implementation GetBankInfoRequest
+
+@dynamic bankId;
+
+typedef struct GetBankInfoRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bankId;
+} GetBankInfoRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBankInfoRequest_FieldNumber_BankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetBankInfoRequest__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBankInfoRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBankInfoRequest__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBankInfoResponse
+
+@implementation GetBankInfoResponse
+
+@dynamic hasInfo, info;
+
+typedef struct GetBankInfoResponse__storage_ {
+  uint32_t _has_storage_[1];
+  BankInfo *info;
+} GetBankInfoResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "info",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankInfo),
+        .number = GetBankInfoResponse_FieldNumber_Info,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetBankInfoResponse__storage_, info),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBankInfoResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBankInfoResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

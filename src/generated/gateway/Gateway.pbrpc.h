@@ -15,6 +15,7 @@
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Subscriber.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -301,6 +302,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ */
+- (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
+
+- (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

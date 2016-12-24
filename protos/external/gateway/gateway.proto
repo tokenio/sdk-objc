@@ -13,6 +13,7 @@ import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
 import "subscriber.proto";
+import "bankinfo.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Paging details.
@@ -309,6 +310,25 @@ message GetTransfersResponse {
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Bank Information Endpoints.
+//
+
+message GetBanksRequest {
+}
+
+message GetBanksResponse {
+  repeated io.token.proto.common.bank.Bank banks = 1;
+}
+
+message GetBankInfoRequest {
+  string bank_id = 1;
+}
+
+message GetBankInfoResponse {
+  io.token.proto.common.bank.BankInfo info = 1;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gateway Service.
@@ -518,6 +538,22 @@ service GatewayService {
   rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
         get: "/transfers?token_id={token_id}&offset={page.offset}&limit={page.limit}"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Bank Information Endpoints.
+  //
+
+  rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
+    option (google.api.http) = {
+        get: "/banks"
+    };
+  }
+
+  rpc GetBankInfo (GetBankInfoRequest) returns (GetBankInfoResponse) {
+    option (google.api.http) = {
+        get: "/banks/{bank_id}/info"
     };
   }
 }
