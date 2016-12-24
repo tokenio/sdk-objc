@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 #import <GRPCClient/GRPCCall+Tests.h>
+#import <GRPCClient/GRPCCall.h>
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKMember.h"
@@ -27,13 +28,15 @@
     return [[TokenIOBuilder alloc] init];
 }
 
-- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout {
+- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout useSsl:(BOOL)useSsl {
     self = [super init];
     
     if (self) {
         NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
         
-        [GRPCCall useInsecureConnectionsForHost:address];
+        if (!useSsl) {
+            [GRPCCall useInsecureConnectionsForHost:address];
+        }
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 

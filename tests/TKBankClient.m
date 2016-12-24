@@ -18,19 +18,21 @@
     AccountLinkingService *accounts;
 }
 
-+ (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port {
-    return [[TKBankClient alloc] initWithHost:host port:port];
++ (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl {
+    return [[TKBankClient alloc] initWithHost:host port:port useSsl:useSsl];
 }
 
-- (TKBankClient *)initWithHost:(NSString *)host port:(int)port {
+- (TKBankClient *)initWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl {
     self = [super init];
 
     if (self) {
         NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
-
-        [GRPCCall useInsecureConnectionsForHost:address];
+    
+        if (!useSsl) {
+            [GRPCCall useInsecureConnectionsForHost:address];
+        }
+        
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
-
         fank = [FankFankService serviceWithHost:address];
         accounts = [AccountLinkingService serviceWithHost:address];
     }

@@ -64,12 +64,17 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "TOKEN_GATEWAY"
-            value = "api-grpc.stg.token.io"
+            value = "api-grpc.stg.token.io:443"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "TOKEN_BANK"
-            value = "fank-grpc.stg.token.io"
+            value = "fank-grpc.stg.token.io:443"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "TOKEN_USE_SSL"
+            value = "YES"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

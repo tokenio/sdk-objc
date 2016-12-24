@@ -32,14 +32,19 @@
     [super setUp];
     HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
     HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:9100];
+    
+    NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
+    BOOL useSsl = sslOverride ? [sslOverride boolValue] : NO;
 
     TokenIOBuilder *builder = [TokenIO builder];
     builder.host = gateway.host;
     builder.port = gateway.port;
+    builder.useSsl = useSsl;
     builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
     tokenIO = [builder build];
     _bank = [TKBankClient bankClientWithHost:fank.host
-                                        port:fank.port];
+                                        port:fank.port
+                                      useSsl:useSsl];
 
     queue = dispatch_queue_create("io.token.Test", nil);
 }

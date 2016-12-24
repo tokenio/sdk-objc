@@ -17,7 +17,7 @@
  */
 @interface TKBankClient : NSObject
 
-+ (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port;
++ (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl;
 
 
 - (FankClient *)addClientWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
