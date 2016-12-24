@@ -22,6 +22,7 @@
         self.host = @"api.token.io";
         self.port = 9000;
         self.timeoutMs = 10 * 1000; // 10 seconds.
+        self.useSsl = YES;
     }
 
     return self;
@@ -32,7 +33,7 @@
 }
 
 - (TokenIOAsync *)buildAsync {
-    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port timeoutMs:self.timeoutMs];
+    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port timeoutMs:self.timeoutMs useSsl:self.useSsl];
 }
 
 @end

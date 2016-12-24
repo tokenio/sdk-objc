@@ -19,6 +19,7 @@
 @property (readwrite, copy) NSString *host;
 @property (readwrite) int port;
 @property (readwrite) int timeoutMs;
+@property (readwrite) BOOL useSsl;
 
 - (id)init;
 
