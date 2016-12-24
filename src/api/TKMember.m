@@ -415,6 +415,25 @@
     }];
 }
 
+- (NSArray<Bank *> *)getBanks {
+    TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBanks:call.onSuccess
+                     onError:call.onError];
+    }];
+
+}
+
+- (BankInfo *)getBankInfo:(NSString *)bankId {
+    TKRpcSyncCall<BankInfo *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBankInfo:bankId
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
+    }];
+
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {

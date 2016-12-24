@@ -27,6 +27,8 @@ CF_EXTERN_C_BEGIN
 @class Account;
 @class Address;
 @class AddressRecord;
+@class Bank;
+@class BankInfo;
 @class Member;
 @class MemberUpdate;
 @class Money;
@@ -983,6 +985,52 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 
 /// Optional offset state for the client to roundtrip.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@end
+
+#pragma mark - GetBanksRequest
+
+@interface GetBanksRequest : GPBMessage
+
+@end
+
+#pragma mark - GetBanksResponse
+
+typedef GPB_ENUM(GetBanksResponse_FieldNumber) {
+  GetBanksResponse_FieldNumber_BanksArray = 1,
+};
+
+@interface GetBanksResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Bank*> *banksArray;
+/// The number of items in @c banksArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger banksArray_Count;
+
+@end
+
+#pragma mark - GetBankInfoRequest
+
+typedef GPB_ENUM(GetBankInfoRequest_FieldNumber) {
+  GetBankInfoRequest_FieldNumber_BankId = 1,
+};
+
+@interface GetBankInfoRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - GetBankInfoResponse
+
+typedef GPB_ENUM(GetBankInfoResponse_FieldNumber) {
+  GetBankInfoResponse_FieldNumber_Info = 1,
+};
+
+@interface GetBankInfoResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankInfo *info;
+/// Test to see if @c info has been set.
+@property(nonatomic, readwrite) BOOL hasInfo;
 
 @end
 

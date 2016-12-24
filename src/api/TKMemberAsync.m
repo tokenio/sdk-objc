@@ -482,6 +482,19 @@
                    onError:onError];
 }
 
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
+    [client getBanks:onSuccess
+             onError:onError];
+}
+
+- (void)getBankInfo:(NSString *)bankId
+          onSuccess:(OnSuccessWithBankInfo)onSuccess
+            onError:(OnError)onError {
+    [client getBankInfo:bankId
+              onSuccess:onSuccess
+                onError:onError];
+}
 
 #pragma mark private
 

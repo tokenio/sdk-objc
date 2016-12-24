@@ -130,6 +130,9 @@
 		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
 		DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A51E00786800358830 /* TKLogManager.m */; };
 		DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A81E007E9000358830 /* TKLogTests.m */; };
+		FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */; };
+		FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +153,7 @@
 		1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKNotificationsTests.m; sourceTree = "<group>"; };
 		27932CCA173CAF159694397E /* libPods-TokenSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C88C1E343E1E5719F3A91FD /* Pods-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBankInfoTests.m; sourceTree = "<group>"; };
 		33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.debug.xcconfig"; sourceTree = "<group>"; };
 		35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		37637B211D989A930043345F /* Account.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.pbobjc.h; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
 		DD6AD2A51E00786800358830 /* TKLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogManager.m; sourceTree = "<group>"; };
 		DD6AD2A81E007E9000358830 /* TKLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogTests.m; sourceTree = "<group>"; };
+		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
+		FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankinfo.pbobjc.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -307,6 +313,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */,
+				FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */,
 				8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */,
 				8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */,
 				8A29374F1DB825660034C110 /* Address.pbobjc.h */,
@@ -461,6 +469,7 @@
 				1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */,
 				8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */,
 				8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */,
+				2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -618,6 +627,7 @@
 				ABA7B396AEB29286AB91C613 /* sc.h in Headers */,
 				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
 				8A8404A71DA60C5F0015A6F4 /* Banklink.pbobjc.h in Headers */,
+				FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */,
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
@@ -918,6 +928,7 @@
 				37637B5B1D989A930043345F /* Gateway.pbrpc.m in Sources */,
 				ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */,
 				37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */,
+				FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */,
 				ABA7B1759A41D7570F394BDA /* TKSecretKey.m in Sources */,
 				8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */,
 				8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */,
@@ -966,6 +977,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */,
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,

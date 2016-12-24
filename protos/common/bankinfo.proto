@@ -1,0 +1,15 @@
+syntax = "proto3";
+package io.token.proto.common.bank;
+
+option java_outer_classname = "BankProtos";
+
+message Bank {
+  string id = 1;
+  string name = 2;
+  string logo_uri = 3;
+}
+
+message BankInfo {
+  string linking_uri = 1;
+  string redirect_uri_regex = 2;
+}

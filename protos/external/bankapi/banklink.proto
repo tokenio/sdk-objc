@@ -27,4 +27,10 @@ service AccountLinkingService {
         put: "/clients/{client_id}/link-accounts"
     };
   }
+
+  rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest) returns (AuthorizeLinkAccountsResponse) {
+    option (google.api.http) = {
+        get: "/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
+    };
+  }
 }

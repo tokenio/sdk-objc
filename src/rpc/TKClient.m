@@ -738,6 +738,51 @@
     [self _startCall:call withRequest:request];
 }
 
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
+    GetBanksRequest *request = [GetBanksRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBanksWithRequest:request
+                           handler:
+                           ^(GetBanksResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.banksArray);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getBankInfo:(NSString *) bankId
+          onSuccess:(OnSuccessWithBankInfo)onSuccess
+            onError:(OnError)onError {
+    GetBankInfoRequest *request = [GetBankInfoRequest message];
+    request.bankId = bankId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBankInfoWithRequest:request
+                           handler:
+                           ^(GetBankInfoResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.info);
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+
+    [self _startCall:call withRequest:request];
+
+}
+
 #pragma mark private
 - (ReplaceTokenRequest *)createReplaceTokenRequest:(Token *)tokenToCancel
                                      tokenToCreate:(TokenPayload *)tokenToCreate {

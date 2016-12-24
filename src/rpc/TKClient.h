@@ -369,4 +369,22 @@
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
 
+/**
+ * Returns a list of all token enabled banks.
+ *
+ * @return a list of banks
+ */
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Returns linking information for the specified bank id.
+ *
+ * @param bankId the bank id
+ * @return bank linking information
+ */
+- (void)getBankInfo:(NSString *) bankId
+          onSuccess:(OnSuccessWithBankInfo)onSuccess
+            onError:(OnError)onError;
+
 @end
