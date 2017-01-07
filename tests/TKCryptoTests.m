@@ -6,26 +6,35 @@
 #import <XCTest/XCTest.h>
 
 #import "TKCrypto.h"
-#import "TKSecretKey.h"
-#import "Token.pbobjc.h"
+#import "TKKeyInfo.h"
+#import "TKTestTokenCryptoEngineFactory.h"
+#import "TKSignature.h"
 
 @interface TKCryptoTests : XCTestCase
 @end
 
-@implementation TKCryptoTests
+@implementation TKCryptoTests {
+    TKCrypto *crypto;
+}
+
+- (void)setUp {
+    [super setUp];
+    id<TKCryptoEngine> engine = [[[TKTestTokenCryptoEngineFactory alloc] init] createEngine:@"member_id_123"];
+    crypto = [[TKCrypto alloc] initWithEngine:engine];
+}
 
 - (void)testSignAndVerify_message {
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKSecretKey *key = [TKCrypto generateKey];
-    NSString *signature = [TKCrypto sign:token
-                                usingKey:key];
-    XCTAssert(signature.length > 0);
+    TKKeyInfo *key = [[crypto generateKeys] objectAtIndex:0];
+    TKSignature *signature = [crypto sign:token usingKey:kKeySigningHighPrivelege];
+    XCTAssertEqualObjects(signature.key.id, key.id);
+    XCTAssert(signature.value.length > 0);
 
-    bool success = [TKCrypto verifySignature:signature
-                                  forMessage:token
-                              usingPublicKey:key.publicKey];
+    bool success = [crypto verifySignature:signature.value
+                                forMessage:token
+                                usingKeyId:key.id];
     XCTAssert(success);
 }
 
@@ -33,22 +42,23 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKSecretKey *key = [TKCrypto generateKey];
-    NSString *signature = [TKCrypto sign:token
-                                  action:TokenSignature_Action_Endorsed
-                                usingKey:key];
-    XCTAssert(signature.length > 0);
+    TKKeyInfo *key = [[crypto generateKeys] objectAtIndex:0];
+    TKSignature *signature = [crypto sign:token
+                                   action:TokenSignature_Action_Endorsed
+                                 usingKey:kKeySigningHighPrivelege];
+    XCTAssertEqualObjects(signature.key.id, key.id);
+    XCTAssert(signature.value.length > 0);
 
-    bool success = [TKCrypto verifySignature:signature
-                                    forToken:token
-                                      action:TokenSignature_Action_Endorsed
-                              usingPublicKey:key.publicKey];
+    bool success = [crypto verifySignature:signature.value
+                                  forToken:token
+                                    action:TokenSignature_Action_Endorsed
+                                usingKeyId:key.id];
     XCTAssert(success);
 
-    success = [TKCrypto verifySignature:signature
-                                    forToken:token
-                                      action:TokenSignature_Action_Cancelled
-                              usingPublicKey:key.publicKey];
+    success = [crypto verifySignature:signature.value
+                             forToken:token
+                               action:TokenSignature_Action_Cancelled
+                           usingKeyId:key.id];
     XCTAssert(!success);
 }
 

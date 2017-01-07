@@ -12,8 +12,6 @@
 @class TKMember;
 @class TKClient;
 @class Token;
-@class Payment;
-
 
 /**
  * Represents a funding account in the Token system.

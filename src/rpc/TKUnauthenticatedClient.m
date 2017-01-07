@@ -7,10 +7,10 @@
 
 #import "TKUnauthenticatedClient.h"
 #import "TKUtil.h"
-#import "TKSecretKey.h"
-#import "TKCrypto.h"
 #import "TKRpcLog.h"
 #import "TKRpc.h"
+#import "TKKeyInfo.h"
+#import "TKSignature.h"
 
 
 @implementation TKUnauthenticatedClient {
@@ -49,32 +49,37 @@
     [rpc execute:call request:request];
 }
 
-- (void)addFirstKey:(TKSecretKey *)key
-          forMember:(NSString *)memberId
-          onSuccess:(void(^)(Member*))onSuccess
-            onError:(void(^)(NSError *))onError {
-    UpdateMemberRequest *request = [UpdateMemberRequest message];
-    request.update.memberId = memberId;
-    request.update.addKey.level = Key_Level_Privileged;
-    request.update.addKey.publicKey = key.publicKeyStr;
-    request.update.addKey.algorithm = Key_Algorithm_Ed25519;
-    request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = key.id;
-    request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
-    RpcLogStart(request);
+- (void)createKeys:(NSString *)memberId
+            crypto:(TKCrypto *)crypto
+         onSuccess:(void (^)(Member *))onSuccess
+           onError:(void(^)(NSError *))onError {
+    NSArray<TKKeyInfo*> *keys = [crypto generateKeys];
+    for (TKKeyInfo *key in keys) {
+        UpdateMemberRequest *request = [UpdateMemberRequest message];
+        request.update.memberId = memberId;
+        request.update.addKey.level = Key_Level_Privileged;
+        request.update.addKey.publicKey = key.publicKeyStr;
+        request.update.addKey.algorithm = Key_Algorithm_Ed25519;
 
-    GRPCProtoCall *call = [gateway
-            RPCToUpdateMemberWithRequest:request
-                                 handler:^(UpdateMemberResponse *response, NSError *error) {
-                                     if (response) {
-                                         RpcLogCompleted(response);
-                                         onSuccess(response.member);
-                                     } else {
-                                         RpcLogError(error);
-                                         onError(error);
-                                     }
-                                 }];
-    [rpc execute:call request:request];
+        TKSignature *signature = [crypto sign:request.update usingKey:key.type];
+        request.updateSignature.memberId = memberId;
+        request.updateSignature.keyId = signature.key.id;
+        request.updateSignature.signature = signature.value;
+        RpcLogStart(request);
+
+        GRPCProtoCall *call = [gateway
+                RPCToUpdateMemberWithRequest:request
+                                     handler:^(UpdateMemberResponse *response, NSError *error) {
+                                         if (response) {
+                                             RpcLogCompleted(response);
+                                             onSuccess(response.member);
+                                         } else {
+                                             RpcLogError(error);
+                                             onError(error);
+                                         }
+                                     }];
+        [rpc execute:call request:request];
+    }
 }
 
 - (void)usernameExists:(NSString *)username

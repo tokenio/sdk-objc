@@ -14,7 +14,6 @@
 #import "TKAccountAsync.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
-#import "TKSecretKey.h"
 #import "TKTypedef.h"
 #import "TokenIO.h"
 #import "TokenIOAsync.h"

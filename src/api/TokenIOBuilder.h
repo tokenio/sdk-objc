@@ -8,7 +8,7 @@
 
 @class TokenIO;
 @class TokenIOAsync;
-
+@protocol TKCryptoEngineFactory;
 
 /**
  * A builder that is used to customize and create `TokenIO` and 
@@ -20,6 +20,7 @@
 @property (readwrite) int port;
 @property (readwrite) int timeoutMs;
 @property (readwrite) BOOL useSsl;
+@property (readwrite) id<TKCryptoEngineFactory> cryptoEngine;
 
 - (id)init;
 

@@ -33,7 +33,17 @@
 }
 
 - (TokenIOAsync *)buildAsync {
-    return [[TokenIOAsync alloc] initWithHost:self.host port:self.port timeoutMs:self.timeoutMs useSsl:self.useSsl];
+    if (!self.cryptoEngine) {
+        [NSException
+                raise:NSInvalidArgumentException
+               format:@"Crypto engine must be set"];
+    }
+    return [[TokenIOAsync alloc]
+            initWithHost:self.host
+                    port:self.port
+               timeoutMs:self.timeoutMs
+                  crypto:self.cryptoEngine
+                  useSsl:self.useSsl];
 }
 
 @end

@@ -6,10 +6,11 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
+#import "TKCryptoEngineFactory.h"
 
 @class GatewayService;
 @class Member;
-@class TKSecretKey;
+@class TKCrypto;
 
 /**
  * Similar to TKClient but is only used for a handful of requests that
@@ -23,7 +24,8 @@
  * @param timeoutMs gRPC timeout in ms
  * @return new unauthenticated client
  */
-- (id)initWithGateway:(GatewayService *)gateway timeoutMs:(int)timeoutMs;
+- (id)initWithGateway:(GatewayService *)gateway
+            timeoutMs:(int)timeoutMs;
 
 /**
  * Creates new member ID. After the method returns the ID is reserved on
@@ -39,13 +41,15 @@
 /**
  * Adds first key to be linked with the specified member id.
  *
+ * @param memberId member id
+ * @param crypto crypto module used to generate keys
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)addFirstKey:(TKSecretKey *)key
-          forMember:(NSString *)memberId
-          onSuccess:(void(^)(Member*))onSuccess
-            onError:(void(^)(NSError *))onError;
+- (void)createKeys:(NSString *)memberId
+            crypto:(TKCrypto *)crypto
+         onSuccess:(void (^)(Member *))onSuccess
+           onError:(void(^)(NSError *))onError;
 
 /**
  * Checks if a given username already exists.

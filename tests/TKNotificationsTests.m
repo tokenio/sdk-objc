@@ -7,15 +7,7 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
-#import "TKCrypto.h"
-#import "TKSecretKey.h"
-#import "Account.pbobjc.h"
-#import "Money.pbobjc.h"
-#import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
-#import "Notification.pbobjc.h"
-#import "Subscriber.pbobjc.h"
-
 
 
 @interface TKNotificationsTests : TKTestBase
@@ -24,6 +16,8 @@
 @implementation TKNotificationsTests {
     TKAccount *payerAccount;
     TKMember *payer;
+    TKMember *payerAnotherDevice;
+
     TKAccount *payeeAccount;
     TKMember *payee;
 }
@@ -34,6 +28,8 @@
     [self run: ^(TokenIO *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
+        payerAnotherDevice = [self createMember:tokenIO];
+
         payeeAccount = [self createAccount:tokenIO];
         payee = payeeAccount.member;
     }];
@@ -79,20 +75,17 @@
     }];
 }
 
-
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
-        
-        TKSecretKey *key = [TKCrypto generateKey];
+
+        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername
-                    publicKey:key.publicKeyStr
+                    publicKey:key
                          name:@"Chrome 53.0"];
     }];
 }
-
 
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
@@ -100,20 +93,18 @@
                                platform:Platform_Ios];
         
         NSArray<SealedMessage*> *payloads = [NSArray arrayWithObjects: [SealedMessage new], nil];
-        
-        TKSecretKey *key = [TKCrypto generateKey];
+        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
                                       bankId:@"iron"
                                     bankName:@"bank-name"
                          accountLinkPayloads:payloads
-                                   publicKey:key.publicKeyStr
+                                   publicKey:key
                                         name:@"Chrome 53.0"];
     }];
 }
 
 - (void)testGetSubscribers {
     [self run: ^(TokenIO *tokenIO) {
-        
         Subscriber * subscriber = [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                                          platform:Platform_Test];
         
@@ -153,12 +144,12 @@
             
         [payer subscribeToNotifications:@"notificationUri"
                                 platform:Platform_Ios];
-        
+
         NSArray<Notification*> *notifications = [payer getNotifications];
         XCTAssert(notifications.count == 0);
-        TKSecretKey *key = [TKCrypto generateKey];
+        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername
-                    publicKey:key.publicKeyStr
+                    publicKey:key
                          name:@"Chrome 53.0"];
         
         notifications = [payer getNotifications];

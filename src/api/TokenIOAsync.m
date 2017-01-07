@@ -6,21 +6,20 @@
 #import <Foundation/Foundation.h>
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 #import <GRPCClient/GRPCCall+Tests.h>
-#import <GRPCClient/GRPCCall.h>
-#import "gateway/Gateway.pbrpc.h"
 
+#import "gateway/Gateway.pbrpc.h"
 #import "TKMember.h"
 #import "TokenIOAsync.h"
 #import "TokenIOBuilder.h"
 #import "TKUnauthenticatedClient.h"
 #import "TokenIO.h"
 #import "TKClient.h"
-#import "TKSecretKey.h"
-#import "TKCrypto.h"
 #import "TKMemberAsync.h"
+
 
 @implementation TokenIOAsync {
     GatewayService *gateway;
+    id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
 }
 
@@ -28,7 +27,11 @@
     return [[TokenIOBuilder alloc] init];
 }
 
-- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout useSsl:(BOOL)useSsl {
+- (id)initWithHost:(NSString *)host
+              port:(int)port
+         timeoutMs:(int)timeout
+            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
+            useSsl:(BOOL)useSsl {
     self = [super init];
     
     if (self) {
@@ -41,6 +44,7 @@
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
+        cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
     }
     
@@ -54,45 +58,44 @@
 - (void)createMember:(NSString *)username
             onSucess:(OnSuccessWithTKMemberAsync)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
-    TKSecretKey *key = [TKCrypto generateKey];
-    
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
     [client createMemberId:
-     ^(NSString *memberId) {
-         [self _addKeyAndUsername:client
-                      memberId:memberId
-                         username:username
-                           key:key
-                     onSuccess:onSuccess
-                       onError:onError];
-     }
+                    ^(NSString *memberId) {
+                        [self _addKeyAndUsername:client
+                                        memberId:memberId
+                                        username:username
+                                       onSuccess:onSuccess
+                                         onError:onError];
+                    }
                    onError:onError];
 }
 
 - (void)usernameExists:(NSString *)username
           onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
     [client usernameExists:username
               onSuccess:onSuccess
                 onError:onError];
 }
 
 - (void)loginMember:(NSString *)memberId
-          secretKey:(TKSecretKey *)key
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
+    TKCrypto *crypto = [self createCrypto:memberId];
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
+                                                  crypto:crypto
                                                timeoutMs:timeoutMs
-                                                memberId:memberId
-                                               secretKey:key];
-    [client getMember:
-     ^(Member *member) {
-         onSuccess([TKMemberAsync
-                    member:member
-                    secretKey:key
-                    useClient:client]);
-     }
+                                                memberId:memberId];
+    [client getMember: ^(Member *member) {
+                onSuccess([TKMemberAsync
+                        member:member
+                     useClient:client]);
+            }
               onError:onError];
 }
 
@@ -102,7 +105,9 @@
        accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
     [client notifyLinkAccounts:username
                         bankId:bankId
                       bankName:bankName
@@ -116,7 +121,9 @@
                 name:(NSString *) name
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
     [client notifyAddKey:username
                publicKey:publicKey
                     name:name
@@ -133,7 +140,9 @@
                                name:(NSString *)name
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc] initWithGateway:gateway timeoutMs:timeoutMs];
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
     [client notifyLinkAccountsAndAddKey:username
                                  bankId:bankId
                                bankName:bankName
@@ -147,48 +156,49 @@
 
 #pragma mark private
 
+- (TKCrypto *)createCrypto:(NSString *)memberId {
+    return [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
+}
+
 // username can be nil. In this case only add the key.
 - (void)_addKeyAndUsername:(TKUnauthenticatedClient *)client
                   memberId:(NSString *)memberId
                   username:(NSString *)username
-                       key:(TKSecretKey *)key
                  onSuccess:(void(^)(TKMemberAsync *))onSuccess
                    onError:(OnError)onError {
+    TKCrypto *crypto = [self createCrypto:memberId];
     [client
-            addFirstKey:key
-              forMember:memberId
-              onSuccess:
-                      ^(Member *member) {
-                          TKClient *authenticated = [[TKClient alloc]
-                                  initWithGateway:gateway
-                                        timeoutMs:timeoutMs
-                                         memberId:memberId
-                                        secretKey:key];
-                          if (username != nil) {
-                              [authenticated addUsername:username
-                                                      to:member
-                                               onSuccess:
-                                                       ^(Member *m) {
-                                                           TKClient *newClient = [[TKClient alloc]
-                                                                   initWithGateway:gateway
-                                                                         timeoutMs:timeoutMs
-                                                                          memberId:memberId
-                                                                         secretKey:key];
-                                                           onSuccess([TKMemberAsync
-                                                                   member:m
-                                                                secretKey:key
-                                                                useClient:newClient]);
-                                                       }
-                                                 onError: onError];
-                          }
-                          else {
-                              onSuccess([TKMemberAsync
-                                      member:member
-                                   secretKey:key
-                                   useClient:authenticated]);
-                          }
-                      }
-                onError:onError];
+            createKeys:memberId
+                crypto:crypto
+             onSuccess:
+                     ^(Member *member) {
+                         TKClient *authenticated = [[TKClient alloc]
+                                 initWithGateway:gateway
+                                          crypto:crypto
+                                       timeoutMs:timeoutMs
+                                        memberId:memberId];
+                         if (username != nil) {
+                             [authenticated addUsername:username
+                                                     to:member
+                                              onSuccess:
+                                                      ^(Member *m) {
+                                                          TKClient *newClient = [[TKClient alloc]
+                                                                  initWithGateway:gateway
+                                                                           crypto:crypto
+                                                                        timeoutMs:timeoutMs
+                                                                         memberId:memberId];
+                                                          onSuccess([TKMemberAsync
+                                                                  member:m
+                                                               useClient:newClient]);
+                                                      }
+                                                onError:onError];
+                         } else {
+                             onSuccess([TKMemberAsync
+                                     member:member
+                                  useClient:authenticated]);
+                         }
+                     }
+               onError:onError];
 }
 
 @end

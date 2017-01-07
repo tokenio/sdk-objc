@@ -11,10 +11,9 @@
 #import "Security.pbobjc.h"
 
 
-@class TKSecretKey;
 @class Member;
 @class TKClient;
-
+@class TKCrypto;
 
 /**
  * Represents a Member in the Token system. Each member has an active secret
@@ -32,14 +31,12 @@
 @property (readonly, retain) NSString *firstUsername;
 @property (readonly, retain) NSArray<NSString*> *usernames;
 @property (readonly, retain) NSArray<NSString*> *publicKeys;
-@property (readonly, retain) TKSecretKey *key;
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
  * Use `TokenIO` or `TokenIOAsync` to obtain an instance of this class.
  */
 + (TKMemberAsync *)member:(Member *)member
-                secretKey:(TKSecretKey *)key
                 useClient:(TKClient *)client;
 
 /**
@@ -64,23 +61,10 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)approveKey:(TKSecretKey *)key
+- (void)approvePublicKey:(NSString *)publicKey
              level:(Key_Level)level
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
-
-/**
- * Approves a public key owned by this member. The key is added to the list
- * of valid keys for the member.
- *
- * @param key to add to the approved list
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)approvePublicKey:(NSString *)publicKey
-                   level:(Key_Level)level
-               onSuccess:(OnSuccess)onSuccess
-                 onError:(OnError)onError;
 
 /**
  * Removes a key owned by this member.

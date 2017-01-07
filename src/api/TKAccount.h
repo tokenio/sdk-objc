@@ -13,7 +13,6 @@
 @class TKAccountAsync;
 @class Transaction;
 
-
 /**
  * Represents a funding account in the Token system.
  * 

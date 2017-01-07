@@ -9,7 +9,6 @@
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
 #import "TokenIOAsync.h"
-#import "TKSecretKey.h"
 #import "TKRpcSyncCall.h"
 #import "TKMemberAsync.h"
 
@@ -33,7 +32,7 @@
     return [call run:^{
         [self.async createMember:username
                         onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
-                         onError: call.onError];
+                         onError:call.onError];
     }];
 }
 
@@ -41,18 +40,17 @@
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{
         [self.async usernameExists:username
-                      onSuccess:^(BOOL exists) { call.onSuccess([NSNumber numberWithBool:exists]); }
+                      onSuccess:^(BOOL exists) { call.onSuccess(@(exists)); }
                         onError:call.onError];
     }];
     return [result boolValue];
 }
 
-- (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey {
+- (TKMember *)loginMember:(NSString *)memberId {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
                 loginMember:memberId
-                  secretKey:secretKey
                    onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                     onError:call.onError
         ];
@@ -75,7 +73,7 @@
     }];
 }
 
-- (void)notifyAddKey:(NSString * )username
+- (void)notifyAddKey:(NSString *)username
            publicKey:(NSString *)publicKey
                 name:(NSString *)name {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];

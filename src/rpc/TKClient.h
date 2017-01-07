@@ -11,11 +11,11 @@
 
 @class Member;
 @class GatewayService;
-@class TKSecretKey;
 @class Token;
 @class TokenPayload;
 @class Transfer;
 @class TransferPayload;
+@class TKCrypto;
 
 
 /**
@@ -27,14 +27,14 @@
 
 /**
  * @param gateway gateway gRPC client
+ * @param crypto crypto module to use
  * @param timeoutMs gRPC timeout in ms
- * @param key secret key to use for authentication
  * @return newly created client
  */
 - (id)initWithGateway:(GatewayService *)gateway
+               crypto:(TKCrypto *)crypto
             timeoutMs:(int)timeoutMs
-             memberId:(NSString *)memberId
-            secretKey:(TKSecretKey *)key;
+             memberId:(NSString *)memberId;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used
@@ -216,6 +216,7 @@
  *
  * @param tokenToCancel old token to replace
  * @param tokenToCreate new token to create
+ * @param keyId key id used to sign the token
  */
 - (void)replaceAndEndorseToken:(Token *)tokenToCancel
                  tokenToCreate:(TokenPayload *)tokenToCreate
