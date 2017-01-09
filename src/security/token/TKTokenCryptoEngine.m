@@ -32,7 +32,7 @@
     [storage addKey:key ofType:kKeyKeyManagement];
     [storage addKey:key ofType:kKeySigning];
     [storage addKey:key ofType:kKeySigningHighPrivelege];
-    return @[[TKKeyInfo keyInfoWithType:kKeySigningHighPrivelege publicKey:key.publicKey]];
+    return @[[TKKeyInfo keyInfoWithId:key.id type:kKeySigningHighPrivelege publicKey:key.publicKey]];
 }
 
 - (NSString *)signData:(NSData *)data
@@ -56,7 +56,7 @@
 
 - (TKKeyInfo *)lookupKeyByType:(TKKeyType)type {
     TKTokenSecretKey *key = [storage lookupKeyByType:type];
-    return [TKKeyInfo keyInfoWithType:type publicKey:key.publicKey];
+    return [TKKeyInfo keyInfoWithId:key.id type:type publicKey:key.publicKey];
 }
 
 #pragma mark private

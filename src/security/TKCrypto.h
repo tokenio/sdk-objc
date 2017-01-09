@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
 - (NSArray<TKKeyInfo*> *)generateKeys;
 
 /**
- * Signs a message with the secret key specified by the supplied id.
+ * Signs a message with the secret key specified by the supplied type.
  *
  * @param message message to sign
  * @param keyType key to use
@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
              usingKey:(TKKeyType)keyType;
 
 /**
- * Signs a token with the secret key specified by the supplied id.
+ * Signs a token with the secret key specified by the supplied type.
  *
  * @param token token to sign
  * @param action action being signed on
@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
              usingKey:(TKKeyType)keyType;
 
 /**
- * Signs a token payload with the secret key specified by the supplied id.
+ * Signs a token payload with the secret key specified by the supplied type.
  *
  * @param tokenPayload token payload to sign
  * @param action action being signed on
@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
                     usingKey:(TKKeyType)keyType;
 
 /**
- * Signs a payload with the secret key specified by the supplied id.
+ * Signs a payload with the secret key specified by the supplied type.
  *
  * @param key the key to be used for signing
  * @param payload the payload to be signed

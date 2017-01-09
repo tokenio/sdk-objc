@@ -9,23 +9,20 @@
 
 @implementation TKKeyInfo
 
-+ (TKKeyInfo *)keyInfoWithType:(TKKeyType)type publicKey:(NSData *)pk {
-    return [[TKKeyInfo alloc] initWithType:type publicKey:pk];
++ (TKKeyInfo *)keyInfoWithId:(NSString *)id type:(TKKeyType)type publicKey:(NSData *)pk {
+    return [[TKKeyInfo alloc] initWithId:id type:type publicKey:pk];
 }
 
-- (id)initWithType:(TKKeyType)type publicKey:(NSData *)pk {
+- (id)initWithId:(NSString *)id type:(TKKeyType)type publicKey:(NSData *)pk {
     self = [super init];
 
     if (self) {
         _type = type;
         _publicKey = pk;
+        _id = id;
     }
 
     return self;
-}
-
-- (NSString *)id {
-    return [TKUtil idForData:self.publicKey];
 }
 
 - (NSString *)publicKeyStr {

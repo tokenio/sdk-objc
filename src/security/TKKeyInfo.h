@@ -9,7 +9,7 @@
 
 @interface TKKeyInfo : NSObject
 
-+ (TKKeyInfo *)keyInfoWithType:(TKKeyType)type publicKey:(NSData *)pk;
++ (TKKeyInfo *)keyInfoWithId:(NSString *)id type:(TKKeyType)type publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) TKKeyType type;
