@@ -143,6 +143,14 @@
 		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
 		DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A51E00786800358830 /* TKLogManager.m */; };
 		DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A81E007E9000358830 /* TKLogTests.m */; };
+		DDAA0D341E257C6000E9BB09 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D331E257C6000E9BB09 /* main.m */; };
+		DDAA0D371E257C6000E9BB09 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D361E257C6000E9BB09 /* AppDelegate.m */; };
+		DDAA0D3A1E257C6000E9BB09 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D391E257C6000E9BB09 /* ViewController.m */; };
+		DDAA0D3D1E257C6000E9BB09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDAA0D3B1E257C6000E9BB09 /* Main.storyboard */; };
+		DDAA0D3F1E257C6000E9BB09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA0D3E1E257C6000E9BB09 /* Assets.xcassets */; };
+		DDAA0D421E257C6000E9BB09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDAA0D401E257C6000E9BB09 /* LaunchScreen.storyboard */; };
+		DDAA0D6C1E257D7E00E9BB09 /* TokenSdk.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
+		DDAA0D6D1E257DB800E9BB09 /* TokenSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
 		FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */; };
 		FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */; };
@@ -155,6 +163,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8A99090D1D890E820096A7FA;
 			remoteInfo = sdk;
+		};
+		DDAA0D6A1E257C9600E9BB09 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A9909051D890E820096A7FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDAA0D2F1E257C6000E9BB09;
+			remoteInfo = TestHost;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -310,6 +325,17 @@
 		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
 		DD6AD2A51E00786800358830 /* TKLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogManager.m; sourceTree = "<group>"; };
 		DD6AD2A81E007E9000358830 /* TKLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogTests.m; sourceTree = "<group>"; };
+		DDAA0D301E257C6000E9BB09 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAA0D331E257C6000E9BB09 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DDAA0D351E257C6000E9BB09 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DDAA0D361E257C6000E9BB09 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DDAA0D381E257C6000E9BB09 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DDAA0D391E257C6000E9BB09 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DDAA0D3C1E257C6000E9BB09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DDAA0D3E1E257C6000E9BB09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DDAA0D411E257C6000E9BB09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DDAA0D431E257C6000E9BB09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDAA0D691E257C7B00E9BB09 /* TokenSdkTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TokenSdkTests copy-Info.plist"; path = "/Users/vadim 1/Code/Tokenio/sdk-objc/TokenSdkTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
 		FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankinfo.pbobjc.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +356,14 @@
 			files = (
 				8A9909191D890E820096A7FA /* TokenSdk.framework in Frameworks */,
 				AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA0D2D1E257C6000E9BB09 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA0D6D1E257DB800E9BB09 /* TokenSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,9 +478,11 @@
 			children = (
 				8A9909101D890E820096A7FA /* src */,
 				8A99091C1D890E820096A7FA /* tests */,
+				DDAA0D311E257C6000E9BB09 /* TestHost */,
 				8A99090F1D890E820096A7FA /* Products */,
 				CC754FFC3CA010778232A1E9 /* Pods */,
 				45A6D2E987A941A285DA25C4 /* Frameworks */,
+				DDAA0D691E257C7B00E9BB09 /* TokenSdkTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -455,6 +491,7 @@
 			children = (
 				8A99090E1D890E820096A7FA /* TokenSdk.framework */,
 				8A9909181D890E820096A7FA /* TokenSdk.xctest */,
+				DDAA0D301E257C6000E9BB09 /* TestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +678,30 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DDAA0D311E257C6000E9BB09 /* TestHost */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA0D351E257C6000E9BB09 /* AppDelegate.h */,
+				DDAA0D361E257C6000E9BB09 /* AppDelegate.m */,
+				DDAA0D381E257C6000E9BB09 /* ViewController.h */,
+				DDAA0D391E257C6000E9BB09 /* ViewController.m */,
+				DDAA0D3B1E257C6000E9BB09 /* Main.storyboard */,
+				DDAA0D3E1E257C6000E9BB09 /* Assets.xcassets */,
+				DDAA0D401E257C6000E9BB09 /* LaunchScreen.storyboard */,
+				DDAA0D431E257C6000E9BB09 /* Info.plist */,
+				DDAA0D321E257C6000E9BB09 /* Supporting Files */,
+			);
+			path = TestHost;
+			sourceTree = "<group>";
+		};
+		DDAA0D321E257C6000E9BB09 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA0D331E257C6000E9BB09 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -753,11 +814,29 @@
 			);
 			dependencies = (
 				8A99091B1D890E820096A7FA /* PBXTargetDependency */,
+				DDAA0D6B1E257C9600E9BB09 /* PBXTargetDependency */,
 			);
 			name = TokenSdkTests;
 			productName = sdkTests;
 			productReference = 8A9909181D890E820096A7FA /* TokenSdk.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DDAA0D2F1E257C6000E9BB09 /* TestHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDAA0D461E257C6000E9BB09 /* Build configuration list for PBXNativeTarget "TestHost" */;
+			buildPhases = (
+				DDAA0D2C1E257C6000E9BB09 /* Sources */,
+				DDAA0D2D1E257C6000E9BB09 /* Frameworks */,
+				DDAA0D2E1E257C6000E9BB09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestHost;
+			productName = TestHost;
+			productReference = DDAA0D301E257C6000E9BB09 /* TestHost.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -770,9 +849,18 @@
 				TargetAttributes = {
 					8A99090D1D890E820096A7FA = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 734Q44J6QX;
+						ProvisioningStyle = Automatic;
 					};
 					8A9909171D890E820096A7FA = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 734Q44J6QX;
+						TestTargetID = DDAA0D2F1E257C6000E9BB09;
+					};
+					DDAA0D2F1E257C6000E9BB09 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 734Q44J6QX;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -782,6 +870,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 8A9909041D890E820096A7FA;
 			productRefGroup = 8A99090F1D890E820096A7FA /* Products */;
@@ -790,6 +879,7 @@
 			targets = (
 				8A99090D1D890E820096A7FA /* TokenSdk */,
 				8A9909171D890E820096A7FA /* TokenSdkTests */,
+				DDAA0D2F1E257C6000E9BB09 /* TestHost */,
 			);
 		};
 /* End PBXProject section */
@@ -809,6 +899,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA0D2E1E257C6000E9BB09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA0D6C1E257D7E00E9BB09 /* TokenSdk.framework in Resources */,
+				DDAA0D421E257C6000E9BB09 /* LaunchScreen.storyboard in Resources */,
+				DDAA0D3F1E257C6000E9BB09 /* Assets.xcassets in Resources */,
+				DDAA0D3D1E257C6000E9BB09 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1056,6 +1157,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDAA0D2C1E257C6000E9BB09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA0D3A1E257C6000E9BB09 /* ViewController.m in Sources */,
+				DDAA0D371E257C6000E9BB09 /* AppDelegate.m in Sources */,
+				DDAA0D341E257C6000E9BB09 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1064,7 +1175,31 @@
 			target = 8A99090D1D890E820096A7FA /* TokenSdk */;
 			targetProxy = 8A99091A1D890E820096A7FA /* PBXContainerItemProxy */;
 		};
+		DDAA0D6B1E257C9600E9BB09 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDAA0D2F1E257C6000E9BB09 /* TestHost */;
+			targetProxy = DDAA0D6A1E257C9600E9BB09 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DDAA0D3B1E257C6000E9BB09 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDAA0D3C1E257C6000E9BB09 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DDAA0D401E257C6000E9BB09 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDAA0D411E257C6000E9BB09 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8A9909201D890E820096A7FA /* Debug */ = {
@@ -1166,7 +1301,8 @@
 			baseConfigurationReference = 33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1200,7 +1336,8 @@
 			baseConfigurationReference = 78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1233,6 +1370,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 734Q44J6QX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1258,6 +1396,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdkTests;
 				PRODUCT_NAME = TokenSdk;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -1265,6 +1404,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 734Q44J6QX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1290,6 +1430,35 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = token.io.sdkTests;
 				PRODUCT_NAME = TokenSdk;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
+			};
+			name = Release;
+		};
+		DDAA0D441E257C6000E9BB09 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = 734Q44J6QX;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tokenio.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DDAA0D451E257C6000E9BB09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = 734Q44J6QX;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tokenio.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1322,6 +1491,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DDAA0D461E257C6000E9BB09 /* Build configuration list for PBXNativeTarget "TestHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDAA0D441E257C6000E9BB09 /* Debug */,
+				DDAA0D451E257C6000E9BB09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
