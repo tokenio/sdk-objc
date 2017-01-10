@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Token.pbobjc.h"
+#import "TokenSdk.h"
 
 
 @class TKKeyInfo;
@@ -32,11 +33,12 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
 - (id)initWithEngine:(id<TKCryptoEngine>)engine;
 
 /**
- * Generates a set of keys needed by the app and returns them to the caller.
+ * Generates a key of the given level.
  *
+ * @param level key level
  * @return the newly created key pair information
  */
-- (NSArray<TKKeyInfo*> *)generateKeys;
+- (TKKeyInfo *)generateKey:(Key_Level)level;
 
 /**
  * Signs a message with the secret key specified by the supplied type.

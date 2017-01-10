@@ -5,7 +5,6 @@
 
 #import "ed25519.h"
 #import "TKTokenSecretKey.h"
-#import "TKUtil.h"
 #import "TKTokenCryptoEngine.h"
 #import "TKKeyInfo.h"
 #import "TKTokenCryptoStorage.h"

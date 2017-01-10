@@ -53,7 +53,10 @@
             crypto:(TKCrypto *)crypto
          onSuccess:(void (^)(Member *))onSuccess
            onError:(void(^)(NSError *))onError {
-    NSArray<TKKeyInfo*> *keys = [crypto generateKeys];
+    NSArray<NSNumber *> *keys = @[
+            @(Key_Level_Privileged),
+            @(Key_Level_Standard),
+            @(Key_Level_Low)];
     [self createKeysForMember_:memberId
                           keys:keys
                       keyIndex:0
@@ -170,13 +173,13 @@
 #pragma mark private
 
 - (void)createKeysForMember_:(NSString *)memberId
-                        keys:(NSArray<TKKeyInfo *> *)keys
+                        keys:(NSArray<NSNumber *> *)keys
                     keyIndex:(NSUInteger)keyIndex
                     lastHash:(NSString *)lastHash
                       crypto:(TKCrypto *)crypto
                    onSuccess:(void (^)(Member *))onSuccess
                      onError:(void(^)(NSError *))onError {
-    TKKeyInfo *key = [keys objectAtIndex:keyIndex];
+    TKKeyInfo *key = [crypto generateKey:(Key_Level) [[keys objectAtIndex:keyIndex] intValue]];
 
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
