@@ -15,14 +15,14 @@
 @protocol TKCryptoEngine
 
 /**
- * Generates a set of keys needed by the app and returns them to the caller.
- * The keys are sorted from the most privileged to the least privileged. If
- * the keys already exist for a given member they are discarded and new set
- * of keys is generated.
+ * Generates a keys of the specified level. If the key with the specified level
+ * already exists, it is replaced. Old key is still kept around because it
+ * could be used for signature verification later.
  *
+ * @param level key level
  * @return the newly created key pair information
  */
-- (NSArray<TKKeyInfo*> *)generateKeys;
+- (TKKeyInfo *)generateKey:(Key_Level)level;
 
 /**
  * Signs the data with the identified by the supplied key id.

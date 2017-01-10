@@ -26,7 +26,10 @@
 }
 
 - (NSArray<TKKeyInfo*> *)generateKeys {
-    return [engine generateKeys];
+    TKKeyInfo *privileged = [engine generateKey:Key_Level_Privileged];
+    TKKeyInfo *standard = [engine generateKey:Key_Level_Standard];
+    TKKeyInfo *low = [engine generateKey:Key_Level_Low];
+    return @[privileged, standard, low];
 }
 
 - (TKSignature *)sign:(GPBMessage *)message

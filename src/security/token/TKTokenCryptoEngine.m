@@ -26,20 +26,10 @@
     return self;
 }
 
-- (NSArray<TKKeyInfo*> *)generateKeys {
-    TKTokenSecretKey *privileged = [self generateKey:Key_Level_Privileged];
-    TKTokenSecretKey *standard = [self generateKey:Key_Level_Standard];
-    TKTokenSecretKey *low = [self generateKey:Key_Level_Low];
-
-    [storage addKey:privileged];
-    [storage addKey:standard];
-    [storage addKey:low];
-
-    return @[
-            privileged.keyInfo,
-            standard.keyInfo,
-            low.keyInfo
-    ];
+- (TKKeyInfo *)generateKey:(Key_Level)level {
+    TKTokenSecretKey *key = [self createNewKey_:level];
+    [storage addKey:key];
+    return key.keyInfo;
 }
 
 - (TKSignature *)signData:(NSData *)data
@@ -65,7 +55,7 @@
 
 #pragma mark private
 
-- (TKTokenSecretKey *)generateKey:(Key_Level)keyLevel {
+- (TKTokenSecretKey *)createNewKey_:(Key_Level)keyLevel {
     unsigned char seed[32];
     if (ed25519_create_seed(seed)) {
         [NSException
