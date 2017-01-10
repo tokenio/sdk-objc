@@ -3,14 +3,14 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TKSecretKey.h"
+#import "TKTokenSecretKey.h"
 #import "TKUtil.h"
 
 
-@implementation TKSecretKey
+@implementation TKTokenSecretKey
 
-+ (TKSecretKey *)withPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
-    return [[TKSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
++ (TKTokenSecretKey *)keyWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
+    return [[TKTokenSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
 }
 
 - (id)initWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk {

@@ -5,17 +5,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class TKSecretKey;
 @class GPBMessage;
+@class TKCrypto;
 
 
 @interface TKRpc : NSObject
 
-
 /**
  * @param timeoutMs gRPC timeout in ms
- * @param memberId member id
- * @param key secret key to use for authentication
  * @return newly created client
  */
 - (id)initWithTimeoutMs:(int)timeoutMs;
@@ -26,12 +23,7 @@
 - (void)execute:(GRPCProtoCall *)call
         request:(GPBMessage *)request
        memberId:(NSString *)memberId
-      secretKey:(TKSecretKey *)key;
-
-- (void)execute:(GRPCProtoCall *)call
-        request:(GPBMessage *)request
-       memberId:(NSString *)memberId
-      secretKey:(TKSecretKey *)key
+        crypto:(TKCrypto *)crypto
      onBehalfOf:(NSString *)onBehalfOfMemberId;
 
 @end

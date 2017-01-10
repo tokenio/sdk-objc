@@ -5,8 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class GPBMessage;
 
+@class GPBMessage;
 
 void RpcLogStart(GPBMessage *request);
 void RpcLogError(NSError *error);

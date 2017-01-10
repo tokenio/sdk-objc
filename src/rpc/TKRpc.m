@@ -8,8 +8,8 @@
 #import "GPBMessage.h"
 #import "Auth.pbobjc.h"
 #import "TKCrypto.h"
-#import "TKRpcLog.h"
-#import "TKSecretKey.h"
+#import "TKKeyInfo.h"
+#import "TKSignature.h"
 
 NSString *const kTokenRealm = @"Token";
 NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
@@ -37,31 +37,20 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 - (void)execute:(GRPCProtoCall *)call
         request:(GPBMessage *)request
        memberId:(NSString *)memberId
-      secretKey:(TKSecretKey *)key {
-    [self execute:call
-          request:request
-         memberId:memberId
-        secretKey:key
-       onBehalfOf:nil];
-}
-
-- (void)execute:(GRPCProtoCall *)call
-        request:(GPBMessage *)request
-       memberId:(NSString *)memberId
-      secretKey:(TKSecretKey *)key
+         crypto:(TKCrypto *)crypto
      onBehalfOf:(NSString *)onBehalfOfMemberId {
     unsigned long now = (unsigned long)([[NSDate date] timeIntervalSince1970] * 1000);
 
     GRpcAuthPayload *payload = [GRpcAuthPayload message];
     payload.request = [request data];
     payload.createdAtMs = now;
-    NSString *signature = [TKCrypto sign:payload usingKey:key];
+    TKSignature *signature = [crypto sign:payload usingKey:kKeyAuth];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
     call.requestHeaders[@"token-member-id"] = memberId;
-    call.requestHeaders[@"token-key-id"] = key.id;
-    call.requestHeaders[@"token-signature"] = signature;
+    call.requestHeaders[@"token-key-id"] = signature.key.id;
+    call.requestHeaders[@"token-signature"] = signature.value;
     call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
 
     if (onBehalfOfMemberId) {

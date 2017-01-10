@@ -8,31 +8,32 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKClient.h"
-#import "TKSecretKey.h"
 #import "TKCrypto.h"
 #import "TKRpcLog.h"
 #import "PagedArray.h"
 #import "TKRpc.h"
+#import "TKKeyInfo.h"
+#import "TKSignature.h"
 
 
 @implementation TKClient {
     GatewayService *gateway;
+    TKCrypto *crypto;
     TKRpc *rpc;
     NSString *memberId;
     NSString *onBehalfOfMemberId;
-    TKSecretKey *key;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
+               crypto:(TKCrypto *)crypto_
             timeoutMs:(int)timeoutMs_
-             memberId:(NSString *)memberId_
-            secretKey:(TKSecretKey *)key_ {
+             memberId:(NSString *)memberId_ {
     self = [super init];
     
     if (self) {
         gateway = gateway_;
+        crypto = crypto_;
         memberId = memberId_;
-        key = key_;
         rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
     }
     
@@ -332,8 +333,8 @@
        tokenToCreate:(TokenPayload *)tokenToCreate
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
-    ReplaceTokenRequest *request = [self createReplaceTokenRequest:tokenToCancel tokenToCreate:tokenToCreate];
-    
+    ReplaceTokenRequest *request = [self _createReplaceTokenRequest:tokenToCancel
+                                                      tokenToCreate:tokenToCreate];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -349,20 +350,20 @@
                            }];
     
     [self _startCall:call withRequest:request];
-
-    
 }
 
 - (void)replaceAndEndorseToken:(Token *)tokenToCancel
                  tokenToCreate:(TokenPayload *)tokenToCreate
                      onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                        onError:(OnError)onError {
-    ReplaceTokenRequest *request = [self createReplaceTokenRequest:tokenToCancel tokenToCreate:tokenToCreate];
+    ReplaceTokenRequest *request = [self _createReplaceTokenRequest:tokenToCancel
+                                                      tokenToCreate:tokenToCreate];
+    TKSignature *signature = [crypto signPayload:tokenToCreate
+                                          action:TokenSignature_Action_Endorsed
+                                        usingKey:kKeySigning];
     request.createToken.payloadSignature.memberId = memberId;
-    request.createToken.payloadSignature.keyId = key.id;
-    request.createToken.payloadSignature.signature = [TKCrypto signPayload:tokenToCreate
-                                                                    action:TokenSignature_Action_Endorsed
-                                                                  usingKey:key];
+    request.createToken.payloadSignature.keyId = signature.key.id;
+    request.createToken.payloadSignature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -435,13 +436,14 @@
 - (void)endorseToken:(Token *)token
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:token
+                                   action:TokenSignature_Action_Endorsed
+                                 usingKey:kKeySigning];
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:token
-                                          action:TokenSignature_Action_Endorsed
-                                        usingKey:key];
+    request.signature.keyId = signature.key.id;
+    request.signature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -462,13 +464,14 @@
 - (void)cancelToken:(Token *)token
           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
             onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:token
+                                   action:TokenSignature_Action_Cancelled
+                                 usingKey:kKeySigning];
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
-    request.signature.keyId = key.id;
-    request.signature.signature = [TKCrypto sign:token
-                                          action:TokenSignature_Action_Cancelled
-                                        usingKey:key];
+    request.signature.keyId = signature.key.id;
+    request.signature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -489,11 +492,12 @@
 - (void)createTransfer:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:payload usingKey:kKeySigning];
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
     request.payloadSignature.memberId = memberId;
-    request.payloadSignature.keyId = key.id;
-    request.payloadSignature.signature = [TKCrypto sign:payload usingKey:key];
+    request.payloadSignature.keyId = signature.key.id;
+    request.payloadSignature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -647,12 +651,13 @@
           withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess
            onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:address usingKey:kKeySigning];
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.address = address;
     request.addressSignature.memberId = memberId;
-    request.addressSignature.keyId = key.id;
-    request.addressSignature.signature = [TKCrypto sign:address usingKey:key];
+    request.addressSignature.keyId = signature.key.id;
+    request.addressSignature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -784,15 +789,17 @@
 }
 
 #pragma mark private
-- (ReplaceTokenRequest *)createReplaceTokenRequest:(Token *)tokenToCancel
-                                     tokenToCreate:(TokenPayload *)tokenToCreate {
+
+- (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel
+                                      tokenToCreate:(TokenPayload *)tokenToCreate {
+    TKSignature *signature = [crypto sign:tokenToCancel
+                                   action:TokenSignature_Action_Cancelled
+                                 usingKey:kKeySigning];
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];
     request.cancelToken.tokenId = tokenToCancel.id_p;
     request.cancelToken.signature.memberId = memberId;
-    request.cancelToken.signature.keyId = key.id;
-    request.cancelToken.signature.signature = [TKCrypto sign:tokenToCancel
-                                                      action:TokenSignature_Action_Cancelled
-                                                    usingKey:key];
+    request.cancelToken.signature.keyId = signature.key.id;
+    request.cancelToken.signature.signature = signature.value;
     request.createToken.payload = tokenToCreate;
     return request;
 }
@@ -800,11 +807,12 @@
 - (void)_updateMember:(MemberUpdate *)update
             onSuccess:(OnSuccessWithMember)onSuccess
               onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:update usingKey:kKeySigning];
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
     request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = key.id;
-    request.updateSignature.signature = [TKCrypto sign:request.update usingKey:key];
+    request.updateSignature.keyId = signature.key.id;
+    request.updateSignature.signature = signature.value;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -827,7 +835,7 @@
     [rpc execute:call
          request:request
         memberId:memberId
-       secretKey:key
+          crypto:crypto
       onBehalfOf:onBehalfOfMemberId];
 }
 

@@ -9,7 +9,6 @@
 @class GatewayService;
 @class TokenIOBuilder;
 @class TKMember;
-@class TKSecretKey;
 @class TokenIOAsync;
 
 
@@ -60,10 +59,9 @@
  * Logs in an existing member to the system.
  *
  * @param memberId member id
- * @param key secret/public key pair to use
  * @return logged in member
  */
-- (TKMember *)loginMember:(NSString *)memberId secretKey:(TKSecretKey *)secretKey;
+- (TKMember *)loginMember:(NSString *)memberId;
 
 /**
  * Sends a notification to request linking of accounts

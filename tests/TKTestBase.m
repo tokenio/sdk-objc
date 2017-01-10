@@ -11,7 +11,7 @@
 #import "TKBankClient.h"
 #import "TKMember.h"
 #import "TKAccount.h"
-#import "TKUtil.h"
+#import "TKTestTokenCryptoEngineFactory.h"
 #import "bankapi/Fank.pbobjc.h"
 
 @interface HostAndPort : NSObject
@@ -41,6 +41,7 @@
     builder.port = gateway.port;
     builder.useSsl = useSsl;
     builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+    builder.cryptoEngine = [TKTestTokenCryptoEngineFactory factory];
     tokenIO = [builder build];
     _bank = [TKBankClient bankClientWithHost:fank.host
                                         port:fank.port

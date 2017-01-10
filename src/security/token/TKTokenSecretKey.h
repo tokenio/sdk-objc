@@ -4,15 +4,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TKCrypto.h"
 
 
 /**
  * Secret key that identifies a given client device. The key is private/public
  * key pair.
  */
-@interface TKSecretKey : NSObject
+@interface TKTokenSecretKey : NSObject
 
-+ (TKSecretKey *)withPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
++ (TKTokenSecretKey *)keyWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSData *publicKey;

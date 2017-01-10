@@ -6,71 +6,94 @@
 #import <Foundation/Foundation.h>
 #import "Token.pbobjc.h"
 
-@class TKSecretKey;
-@class GPBMessage;
-@class Token;
 
+@class TKKeyInfo;
+@class TKSignature;
+@protocol TKCryptoEngine;
 
 /**
- * Set of methods that deal with crypto, key generation, method signing, etc.
+ * Defines possible secure key types based on usage.
+ */
+typedef NS_ENUM(NSInteger, TKKeyType) {
+    kKeyAuth,
+    kKeyKeyManagement,
+    kKeySigning,
+    kKeySigningHighPrivelege,
+};
+
+/**
+ * An abstract class that defines a set of methods that deal with crypto,
+ * key generation, method signing, etc. There are two abstract methods
+ * that need to be implemented in the derived classes signData and
+ * verifySignature:forData.
  */
 @interface TKCrypto : NSObject
 
-/**
- * Signs a message with the supplied secret key.
- *
- * @param message message to sign
- * @param key key to sign with
- * @return signed message, Base64 encoded
- */
-+(NSString *)sign:(GPBMessage *)message
-         usingKey:(TKSecretKey *)key;
+- (id)initWithEngine:(id<TKCryptoEngine>)engine;
 
 /**
- * Signs a token with the supplied secret key.
+ * Generates a set of keys needed by the app and returns them to the caller.
+ *
+ * @return the newly created key pair information
+ */
+- (NSArray<TKKeyInfo*> *)generateKeys;
+
+/**
+ * Signs a message with the secret key specified by the supplied type.
+ *
+ * @param message message to sign
+ * @param keyType key to use
+ * @return signed message, Base64 encoded
+ */
+- (TKSignature *)sign:(GPBMessage *)message
+             usingKey:(TKKeyType)keyType;
+
+/**
+ * Signs a token with the secret key specified by the supplied type.
  *
  * @param token token to sign
  * @param action action being signed on
- * @param key key to sign with
+ * @param keyType key to use
  * @return signed message, Base64 encoded
  */
-+ (NSString *)sign:(Token *)token
-            action:(TokenSignature_Action)action
-          usingKey:(TKSecretKey *)key;
+- (TKSignature *)sign:(Token *)token
+               action:(TokenSignature_Action)action
+             usingKey:(TKKeyType)keyType;
 
 /**
- * Signs a token payload with the supplied secret key.
+ * Signs a token payload with the secret key specified by the supplied type.
  *
  * @param tokenPayload token payload to sign
  * @param action action being signed on
- * @param key key to sign with
+ * @param keyType key to use
  * @return signed message, Base64 encoded
  */
-+ (NSString *)signPayload:(TokenPayload *)tokenPayload
-                   action:(TokenSignature_Action)action
-                 usingKey:(TKSecretKey *)key;
+- (TKSignature *)signPayload:(TokenPayload *)tokenPayload
+                      action:(TokenSignature_Action)action
+                    usingKey:(TKKeyType)keyType;
 
 /**
- * Signs the specified payload using given key
+ * Signs a payload with the secret key specified by the supplied type.
  *
  * @param key the key to be used for signing
  * @param payload the payload to be signed
+ * @param keyType key to use
  * @return a payload signature
  */
-+(NSString *)signPayload:(NSString *)payload
-                usingKey:(TKSecretKey *)key;
+- (TKSignature *)signPayload:(NSString *)payload
+                    usingKey:(TKKeyType)keyType;
 
 /**
  * Verifies a message signature.
  *
  * @param signature signature to verify
  * @param message message to verify the signature for
- * @param key public key used to verify the signature
+ * @param keyType key to use
  * @return true if signature verifies
  */
-+(bool)verifySignature:(NSString *)signature
-            forMessage:(GPBMessage *)message
-        usingPublicKey:(NSData *)key;
+- (bool)verifySignature:(NSString *)signature
+             forMessage:(GPBMessage *)message
+               usingKeyId:(NSString *)keyId;
 
 /**
  * Verifies a token signature.
@@ -78,19 +101,12 @@
  * @param signature signature to verify
  * @param token token to verify the signature for
  * @param action action to verify the signature for
- * @param key public key used to verify the signature
+ * @param keyType key to use
  * @return true if signature verifies
  */
-+(bool)verifySignature:(NSString *)signature
-              forToken:(Token *)token
-                action:(TokenSignature_Action) action
-        usingPublicKey:(NSData *)key;
-
-/**
- * Generates a new key pair.
- *
- * @return newly created key pair
- */
-+(TKSecretKey *)generateKey;
+- (bool)verifySignature:(NSString *)signature
+               forToken:(Token *)token
+                 action:(TokenSignature_Action) action
+             usingKeyId:(NSString *)keyId;
 
 @end

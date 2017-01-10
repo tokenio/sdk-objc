@@ -4,22 +4,15 @@
 //
 
 #import <Protobuf/GPBMessage.h>
-#import "Money.pbobjc.h"
-#import "Member.pbobjc.h"
-#import "Security.pbobjc.h"
-#import "Token.pbobjc.h"
-#import "Transfer.pbobjc.h"
-#import "Transferinstructions.pbobjc.h"
+
 #import "gateway/Gateway.pbrpc.h"
 
+#import "Transferinstructions.pbobjc.h"
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
-#import "TKSecretKey.h"
 #import "TKClient.h"
 #import "TKAccountAsync.h"
-#import "TKUtil.h"
-
 
 @implementation TKMemberAsync {
     TKClient *client;
@@ -27,18 +20,15 @@
 }
 
 + (TKMemberAsync *)member:(Member *)member
-                secretKey:(TKSecretKey *)key
                 useClient:(TKClient *)client {
-    return [[TKMemberAsync alloc] initWithMember:member secretKey:key useClient:client];
+    return [[TKMemberAsync alloc] initWithMember:member useClient:client];
 }
 
 - (id)initWithMember:(Member *)member_
-           secretKey:(TKSecretKey *)key
            useClient:(TKClient *)client_ {
     self = [super init];
     
     if (self) {
-        _key = key;
         member = member_;
         client = client_;
     }
@@ -76,16 +66,6 @@
 
 - (void)clearAccessToken {
     [client clearAccessToken];
-}
-
-- (void)approveKey:(TKSecretKey *)key
-             level:(Key_Level)level
-         onSuccess:(OnSuccess)onSuccess
-           onError:(OnError)onError {
-    [self approvePublicKey:key.publicKeyStr
-                     level:level
-                 onSuccess:onSuccess
-                   onError:onError];
 }
 
 - (void)approvePublicKey:(NSString *)publicKey

@@ -9,14 +9,13 @@
 #import <objc/NSObject.h>
 
 #import "TKTypedef.h"
+#import "TKCryptoEngineFactory.h"
 
 
 @class GatewayService;
 @class TokenIOBuilder;
 @class TKMember;
-@class TKSecretKey;
 @class TokenIO;
-
 
 /**
  * Use this class to create to create a new member using `createMember`
@@ -39,8 +38,18 @@
 
 /**
  * Creates a new instance that connects to the specified Token host and port.
+ *
+ * @param host host to connect to
+ * @param port gRPC port to connect to
+ * @param timeout timeout value in ms
+ * @param crypto crypto module to use
+ * @param useSsl use SSL if true
  */
-- (id)initWithHost:(NSString *)host port:(int)port timeoutMs:(int)timeout useSsl:(BOOL)useSsl;
+- (id)initWithHost:(NSString *)host
+              port:(int)port
+         timeoutMs:(int)timeout
+            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
+            useSsl:(BOOL)useSsl;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the
@@ -70,7 +79,6 @@
  * @return logged in member
  */
 - (void)loginMember:(NSString *)memberId
-          secretKey:(TKSecretKey *)key
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError;
 

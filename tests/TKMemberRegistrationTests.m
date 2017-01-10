@@ -5,12 +5,8 @@
 
 #import "TKCrypto.h"
 #import "TKMember.h"
-#import "TKSecretKey.h"
 #import "TKTestBase.h"
-#import "TKUtil.h"
 #import "TokenIO.h"
-#import "Security.pbobjc.h"
-
 
 
 @interface TKMemberRegistrationTests : TKTestBase
@@ -31,35 +27,10 @@
 - (void)testLoginMember {
     [self run: ^(TokenIO *tokenIO) {
         TKMember *created = [self createMember:tokenIO];
-        TKMember *loggedIn = [tokenIO loginMember:created.id secretKey:created.key];
+        TKMember *loggedIn = [tokenIO loginMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
         XCTAssertEqual(loggedIn.publicKeys.count, 1);
-    }];
-}
-
-- (void)testAddKey {
-    [self run: ^(TokenIO *tokenIO) {
-        TKSecretKey *key2 = [TKCrypto generateKey];
-        TKSecretKey *key3 = [TKCrypto generateKey];
-
-        TKMember *member = [self createMember:tokenIO];
-        [member approveKey:key2 level:Key_Level_Standard];
-        [member approveKey:key3 level:Key_Level_Low];
-
-        XCTAssertEqual(member.publicKeys.count, 3);
-    }];
-}
-
-- (void)testRemoveKey {
-    [self run: ^(TokenIO *tokenIO) {
-        TKSecretKey *key2 = [TKCrypto generateKey];
-
-        TKMember *member = [self createMember:tokenIO];
-        [member approveKey:key2 level:Key_Level_Privileged];
-        XCTAssertEqual(member.publicKeys.count, 2);
-
-        [member removeKey:key2.id];
-        XCTAssertEqual(member.publicKeys.count, 1);
+        XCTAssertEqualObjects(created.firstUsername, loggedIn.firstUsername);
     }];
 }
 

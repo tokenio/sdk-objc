@@ -14,7 +14,6 @@
 #import "PagedArray.h"
 
 
-@class TKSecretKey;
 @class Member;
 @class TKClient;
 @class TKMemberAsync;
@@ -39,7 +38,6 @@
 @property (readonly, retain) NSString *firstUsername;
 @property (readonly, retain) NSArray<NSString*> *usernames;
 @property (readonly, retain) NSArray<NSString*> *publicKeys;
-@property (readonly, retain) TKSecretKey *key;
 
 /**
  * Creates new member that is implemented by delegating all the calls to the
@@ -67,8 +65,8 @@
  *
  * @param key to add to the approved list
  */
-- (void)approveKey:(TKSecretKey *)key
-             level:(Key_Level)level;
+- (void)approvePublicKey:(NSString *)key
+                   level:(Key_Level)level;
 
 /**
  * Removes a key owned by this member.

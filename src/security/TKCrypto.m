@@ -5,103 +5,103 @@
 
 #import "Protobuf/GPBMessage.h"
 #import "Token.pbobjc.h"
-
-#import "ed25519.h"
-#import "TKCrypto.h"
-#import "TKSecretKey.h"
+#import "TKCryptoEngine.h"
 #import "TKJson.h"
-#import "TKUtil.h"
+#import "TKKeyInfo.h"
+#import "TKSignature.h"
 
 
-@implementation TKCrypto
-
-+(NSString *)sign:(GPBMessage *)message
-         usingKey:(TKSecretKey *)key {
-    NSString *json = [TKJson serialize:message];
-    NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return [self signData:jsonData usingKey:key];
+@implementation TKCrypto {
+    id<TKCryptoEngine> engine;
 }
 
-+ (NSString *)sign:(Token *)token
-            action:(TokenSignature_Action)action
-          usingKey:(TKSecretKey *)key {
-    NSData *payload = [self encodedPayloadFor:token with:action];
-    return [self signData:payload usingKey:key];
-}
+- (id)initWithEngine:(id<TKCryptoEngine>)engine_ {
+    self = [super init];
 
-+ (NSString *)signPayload:(TokenPayload *)tokenPayload
-                   action:(TokenSignature_Action)action
-                 usingKey:(TKSecretKey *)key {
-    NSData *payload = [self encodedPayload:tokenPayload with:action];
-    return [self signData:payload usingKey:key];
-}
-
-+(NSString *)signPayload:(NSString *)payload
-                usingKey:(TKSecretKey *)key {
-    return [self signData:[payload dataUsingEncoding:NSASCIIStringEncoding]
-                 usingKey:key];
-}
-
-+(bool)verifySignature:(NSString *)signature
-            forMessage:(GPBMessage *)message
-        usingPublicKey:(NSData *)key {
-    NSString *json = [TKJson serialize:message];
-    NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return [self verifySignature:signature forData:jsonData usingPublicKey:key];
-}
-
-+(bool)verifySignature:(NSString *)signature
-              forToken:(Token *)token
-                action:(TokenSignature_Action) action
-        usingPublicKey:(NSData *)key {
-    NSData *payload = [self encodedPayloadFor:token with:action];
-    return [self verifySignature:signature forData:payload usingPublicKey:key];
-}
-
-+(TKSecretKey *)generateKey {
-    unsigned char seed[32];
-    if (ed25519_create_seed(seed)) {
-        [NSException
-                raise:NSInternalInconsistencyException
-               format:@"Can't initialize random number generator"];
+    if (self) {
+        engine = engine_;
     }
 
-    unsigned char public_key[32], private_key[64];
-    ed25519_create_keypair(public_key, private_key, seed);
-
-    NSData *publicKey = [NSData dataWithBytes:public_key length:sizeof(public_key)];
-    NSData *privateKey = [NSData dataWithBytes:private_key length:sizeof(private_key)];
-
-    return [TKSecretKey withPrivateKey:privateKey publicKey:publicKey];
+    return self;
 }
 
-+ (NSString *)signData:(NSData *)data
-              usingKey:(TKSecretKey *)key {
-    unsigned char signature[64];
-    unsigned const char *sk = key.privateKey.bytes;
-    unsigned const char *pk = key.publicKey.bytes;
-
-    ed25519_sign(signature, data.bytes, data.length, pk, sk);
-    return [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
+- (NSArray<TKKeyInfo*> *)generateKeys {
+    return [engine generateKeys];
 }
 
-+ (bool)verifySignature:(NSString *)signature
-               forData:(NSData *)data
-        usingPublicKey:(NSData *)key {
-    NSData *decodedSignature = [TKUtil base64DecodeString:signature];
-    return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, key.bytes) != 0;
+- (TKSignature *)sign:(GPBMessage *)message
+             usingKey:(TKKeyType)keyType {
+    NSString *json = [TKJson serialize:message];
+    NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
+    TKKeyInfo *key = [engine lookupKeyByType:keyType];
+    NSString *signature = [engine signData:jsonData usingKeyId:key.id];
+    return [TKSignature signature:signature signedWith:key];
 }
 
-+ (NSData *)encodedPayloadFor:(Token *)token
+- (TKSignature *)sign:(Token *)token
+               action:(TokenSignature_Action)action
+             usingKey:(TKKeyType)keyType {
+    NSData *payload = [self encodedPayloadFor:token with:action];
+    TKKeyInfo *key = [engine lookupKeyByType:keyType];
+    NSString *signature = [engine signData:payload usingKeyId:key.id];
+    return [TKSignature signature:signature signedWith:key];
+}
+
+- (TKSignature *)signPayload:(TokenPayload *)tokenPayload
+                      action:(TokenSignature_Action)action
+                    usingKey:(TKKeyType)keyType {
+    NSData *payload = [self encodedPayload:tokenPayload with:action];
+    TKKeyInfo *key = [engine lookupKeyByType:keyType];
+    NSString *signature = [engine signData:payload usingKeyId:key.id];
+    return [TKSignature signature:signature signedWith:key];
+}
+
+- (TKSignature *)signPayload:(NSString *)payload
+                    usingKey:(TKKeyType)keyType {
+    TKKeyInfo *key = [engine lookupKeyByType:keyType];
+    NSString *signature = [engine
+            signData:[payload dataUsingEncoding:NSASCIIStringEncoding]
+          usingKeyId:key.id];
+    return [TKSignature signature:signature signedWith:key];
+}
+
+- (bool)verifySignature:(NSString *)signature
+             forMessage:(GPBMessage *)message
+             usingKeyId:(NSString *)keyId {
+    NSString *json = [TKJson serialize:message];
+    NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
+    return [engine verifySignature:signature
+                           forData:jsonData
+                        usingKeyId:keyId];
+}
+
+- (bool)verifySignature:(NSString *)signature
+               forToken:(Token *)token
+                 action:(TokenSignature_Action) action
+             usingKeyId:(NSString *)keyId {
+    NSData *payload = [self encodedPayloadFor:token with:action];
+    return [engine verifySignature:signature
+                           forData:payload
+                        usingKeyId:keyId];
+}
+
+#pragma mark private
+
+- (TKKeyInfo *)lookupKey:(TKKeyType)type {
+    return [engine lookupKeyByType:type];
+}
+
+- (NSData *)encodedPayloadFor:(Token *)token
                          with:(TokenSignature_Action)action {
     return [self encodedPayload:token.payload with:action];
 }
 
-+ (NSData *)encodedPayload:(TokenPayload *)tokenPayload
+- (NSData *)encodedPayload:(TokenPayload *)tokenPayload
                       with:(TokenSignature_Action)action {
-    NSString *actionName = [TokenSignature_Action_EnumDescriptor() textFormatNameForValue:action];
-    NSString *jsonToken = [TKJson serialize:tokenPayload];
-    NSString *payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
+    NSString * actionName = [TokenSignature_Action_EnumDescriptor() textFormatNameForValue:action];
+    NSString * jsonToken = [TKJson serialize:tokenPayload];
+    NSString * payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
+
     return [payload dataUsingEncoding:NSASCIIStringEncoding];
 }
 

@@ -6,10 +6,8 @@
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
-#import "TKSecretKey.h"
 #import "TKRpcSyncCall.h"
 #import "TKAccountAsync.h"
-#import "PagedArray.h"
 
 
 @implementation TKMember
@@ -42,10 +40,6 @@
     return self.async.usernames;
 }
 
-- (TKSecretKey *)key {
-    return self.async.key;
-}
-
 - (void)useAccessToken:(NSString *)accessTokenId {
     [self.async useAccessToken:accessTokenId];
 }
@@ -54,11 +48,11 @@
     [self.async clearAccessToken];
 }
 
-- (void)approveKey:(TKSecretKey *)key
-             level:(Key_Level)level{
+- (void)approvePublicKey:(NSString *)key
+                   level:(Key_Level)level {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async approveKey:key
+        [self.async approvePublicKey:key
                          level:level
                      onSuccess:^{ call.onSuccess(nil); }
                        onError:call.onError];
