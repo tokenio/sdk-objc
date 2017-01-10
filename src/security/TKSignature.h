@@ -14,7 +14,7 @@
 @interface TKSignature : NSObject
 
 + (TKSignature *)signature:(NSString *)signature
-                  signedWith:(TKKeyInfo*)key;
+                signedWith:(TKKeyInfo*)key;
 
 @property (atomic, readonly) NSString *value;
 @property (atomic, readonly) TKKeyInfo *key;

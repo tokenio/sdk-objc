@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TKCrypto.h"
+#import "Security.pbobjc.h"
 
 
 /**
@@ -13,11 +14,12 @@
  */
 @interface TKTokenSecretKey : NSObject
 
-+ (TKTokenSecretKey *)keyWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk;
++ (TKTokenSecretKey *)keyWithLevel:(Key_Level)level  privateKey:(NSData *)sk publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
+@property (atomic, readonly) Key_Level level;
 @property (atomic, readonly) NSData *publicKey;
-@property (atomic, readonly) NSString *publicKeyStr;
 @property (atomic, readonly) NSData *privateKey;
+@property (atomic, readonly) TKKeyInfo *keyInfo;
 
 @end

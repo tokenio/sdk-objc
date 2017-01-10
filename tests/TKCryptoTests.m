@@ -27,8 +27,8 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *key = [[crypto generateKeys] objectAtIndex:0];
-    TKSignature *signature = [crypto sign:token usingKey:kKeySigningHighPrivelege];
+    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
+    TKSignature *signature = [crypto sign:token usingKey:kKeySigningHighPrivilege];
     XCTAssertEqualObjects(signature.key.id, key.id);
     XCTAssert(signature.value.length > 0);
 
@@ -42,10 +42,10 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *key = [[crypto generateKeys] objectAtIndex:0];
+    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:kKeySigningHighPrivelege];
+                                 usingKey:kKeySigningHighPrivilege];
     XCTAssertEqualObjects(signature.key.id, key.id);
     XCTAssert(signature.value.length > 0);
 

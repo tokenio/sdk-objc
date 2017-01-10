@@ -21,9 +21,9 @@
     return self;
 }
 
-- (void)addKey:(TKTokenSecretKey *)key ofType:(TKKeyType)type {
+- (void)addKey:(TKTokenSecretKey *)key {
     [allKeys setObject:key forKey:key.id];
-    [currentKeys setObject:key.id forKey:@(type)];
+    [currentKeys setObject:key.id forKey:@(key.level)];
 }
 
 - (TKTokenSecretKey *)lookupKeyById:(NSString *)id {
@@ -36,12 +36,12 @@
     return key;
 }
 
-- (TKTokenSecretKey *)lookupKeyByType:(TKKeyType)type {
-    NSString *id = [currentKeys objectForKey:@(type)];
+- (TKTokenSecretKey *)lookupKeyByLevel:(Key_Level)keyLevel {
+    NSString *id = [currentKeys objectForKey:@(keyLevel)];
     if (!id) {
         [NSException
                 raise:NSInvalidArgumentException
-               format:@"Can not find key of type: %d", type];
+               format:@"Can not find key of level: %d", keyLevel];
     }
     return [self lookupKeyById:id];
 }

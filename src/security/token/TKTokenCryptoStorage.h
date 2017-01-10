@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Security.pbobjc.h"
 #import "TKCrypto.h"
 
 @class TKTokenSecretKey;
@@ -15,13 +16,11 @@
 @protocol TKTokenCryptoStorage
 
 /**
- * Adds a secret key to the storage. If a key with a given type already exists
- * it is replaced with the given key. The old key is kept around and could be
- * looked up by its id.
+ * Adds a secret key to the storage.
  *
  * @param key
  */
-- (void)addKey:(TKTokenSecretKey *)key ofType:(TKKeyType)type;
+- (void)addKey:(TKTokenSecretKey *)key;
 
 /**
  * Looks up secret key by its id. Exception is thrown if key is
@@ -32,13 +31,14 @@
  */
 - (TKTokenSecretKey *)lookupKeyById:(NSString *)id;
 
+
 /**
- * Looks up current secret key for a given type that should be used for
- * signing. Exception is thrown if key is not found.
+ * Looks up secret key by its id. Exception is thrown if key is
+ * not found.
  *
- * @param type key type
+ * @param level level of the key to lookup
  * @return looked up key
  */
-- (TKTokenSecretKey *)lookupKeyByType:(TKKeyType)type;
+- (TKTokenSecretKey *)lookupKeyByLevel:(Key_Level)level;
 
 @end
