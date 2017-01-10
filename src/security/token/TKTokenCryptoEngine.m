@@ -26,13 +26,22 @@
 }
 
 - (NSArray<TKKeyInfo*> *)generateKeys {
-    // TODO: We need to extend this to provision multiple keys, see TKKeyType.
-    TKTokenSecretKey *key = [self generateKey];
-    [storage addKey:key ofType:kKeyAuth];
-    [storage addKey:key ofType:kKeyKeyManagement];
-    [storage addKey:key ofType:kKeySigning];
-    [storage addKey:key ofType:kKeySigningHighPrivelege];
-    return @[[TKKeyInfo keyInfoWithId:key.id type:kKeySigningHighPrivelege publicKey:key.publicKey]];
+    TKTokenSecretKey *privileged = [self generateKey:Key_Level_Privileged];
+    // TODO: This needs to be Key_Level_Standard. Need to change server first
+    // PR-383.
+    TKTokenSecretKey *standard = [self generateKey:Key_Level_Privileged];
+    TKTokenSecretKey *low = [self generateKey:Key_Level_Low];
+
+    [storage addKey:privileged ofType:kKeyKeyManagement];
+    [storage addKey:privileged ofType:kKeySigningHighPrivelege];
+    [storage addKey:standard ofType:kKeySigning];
+    [storage addKey:low ofType:kKeyAuth];
+
+    return @[
+            privileged.keyInfo,
+            standard.keyInfo,
+            low.keyInfo
+    ];
 }
 
 - (NSString *)signData:(NSData *)data
@@ -56,12 +65,12 @@
 
 - (TKKeyInfo *)lookupKeyByType:(TKKeyType)type {
     TKTokenSecretKey *key = [storage lookupKeyByType:type];
-    return [TKKeyInfo keyInfoWithId:key.id type:type publicKey:key.publicKey];
+    return [TKKeyInfo keyInfoWithId:key.id level:key.level publicKey:key.publicKey];
 }
 
 #pragma mark private
 
-- (TKTokenSecretKey *)generateKey {
+- (TKTokenSecretKey *)generateKey:(Key_Level)keyLevel {
     unsigned char seed[32];
     if (ed25519_create_seed(seed)) {
         [NSException
@@ -75,7 +84,7 @@
     NSData *publicKey = [NSData dataWithBytes:public_key length:sizeof(public_key)];
     NSData *privateKey = [NSData dataWithBytes:private_key length:sizeof(private_key)];
 
-    return [TKTokenSecretKey keyWithPrivateKey:privateKey publicKey:publicKey];
+    return [TKTokenSecretKey keyWithLevel:keyLevel privateKey:privateKey publicKey:publicKey];
 }
 
 @end

@@ -15,6 +15,7 @@
 
 /**
  * Generates a set of keys needed by the app and returns them to the caller.
+ * The keys are sorted from the most privileged to the least privileged.
  *
  * @return the newly created key pair information
  */

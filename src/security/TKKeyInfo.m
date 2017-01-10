@@ -9,15 +9,17 @@
 
 @implementation TKKeyInfo
 
-+ (TKKeyInfo *)keyInfoWithId:(NSString *)id type:(TKKeyType)type publicKey:(NSData *)pk {
-    return [[TKKeyInfo alloc] initWithId:id type:type publicKey:pk];
++ (TKKeyInfo *)keyInfoWithId:(NSString *)id level:(Key_Level)level publicKey:(NSData *)pk {
+    return [[TKKeyInfo alloc] initWithId:id level:level publicKey:pk];
 }
 
-- (id)initWithId:(NSString *)id type:(TKKeyType)type publicKey:(NSData *)pk {
+- (id)initWithId:(NSString *)id level:(Key_Level)level publicKey:(NSData *)pk {
     self = [super init];
 
     if (self) {
-        _type = type;
+        _level = level;
+        // TODO: Support multiple algorithms.
+        _algorithm = Key_Algorithm_Ed25519;
         _publicKey = pk;
         _id = id;
     }

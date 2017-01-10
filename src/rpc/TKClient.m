@@ -101,7 +101,7 @@
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addKey.level = (int) level;
+    update.addKey.level = (Key_Level) level;
     update.addKey.publicKey = newPublicKey;
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
@@ -807,7 +807,7 @@
 - (void)_updateMember:(MemberUpdate *)update
             onSuccess:(OnSuccessWithMember)onSuccess
               onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:update usingKey:kKeySigning];
+    TKSignature *signature = [crypto sign:update usingKey:kKeyKeyManagement];
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
     request.updateSignature.memberId = memberId;
