@@ -9,13 +9,13 @@
 #import <objc/NSObject.h>
 
 #import "TKTypedef.h"
-#import "TKCryptoEngineFactory.h"
 
 
 @class GatewayService;
 @class TokenIOBuilder;
 @class TKMember;
 @class TokenIO;
+@protocol TKCryptoEngineFactory;
 
 /**
  * Use this class to create to create a new member using `createMember`

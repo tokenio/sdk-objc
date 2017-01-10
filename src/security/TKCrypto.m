@@ -33,36 +33,21 @@
              usingKey:(TKKeyType)keyType {
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    TKKeyInfo *key = [engine lookupKeyByType:keyType];
-    NSString *signature = [engine signData:jsonData usingKeyId:key.id];
-    return [TKSignature signature:signature signedWith:key];
+    return [engine signData:jsonData usingKeyLevel:[self keyLevelForType:keyType]];
 }
 
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
              usingKey:(TKKeyType)keyType {
     NSData *payload = [self encodedPayloadFor:token with:action];
-    TKKeyInfo *key = [engine lookupKeyByType:keyType];
-    NSString *signature = [engine signData:payload usingKeyId:key.id];
-    return [TKSignature signature:signature signedWith:key];
+    return [engine signData:payload usingKeyLevel:[self keyLevelForType:keyType]];
 }
 
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
                     usingKey:(TKKeyType)keyType {
     NSData *payload = [self encodedPayload:tokenPayload with:action];
-    TKKeyInfo *key = [engine lookupKeyByType:keyType];
-    NSString *signature = [engine signData:payload usingKeyId:key.id];
-    return [TKSignature signature:signature signedWith:key];
-}
-
-- (TKSignature *)signPayload:(NSString *)payload
-                    usingKey:(TKKeyType)keyType {
-    TKKeyInfo *key = [engine lookupKeyByType:keyType];
-    NSString *signature = [engine
-            signData:[payload dataUsingEncoding:NSASCIIStringEncoding]
-          usingKeyId:key.id];
-    return [TKSignature signature:signature signedWith:key];
+    return [engine signData:payload usingKeyLevel:[self keyLevelForType:keyType]];
 }
 
 - (bool)verifySignature:(NSString *)signature
@@ -87,10 +72,6 @@
 
 #pragma mark private
 
-- (TKKeyInfo *)lookupKey:(TKKeyType)type {
-    return [engine lookupKeyByType:type];
-}
-
 - (NSData *)encodedPayloadFor:(Token *)token
                          with:(TokenSignature_Action)action {
     return [self encodedPayload:token.payload with:action];
@@ -103,6 +84,27 @@
     NSString * payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
 
     return [payload dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (Key_Level)keyLevelForType:(TKKeyType)type {
+    switch (type) {
+        case kKeyKeyManagement:
+            return Key_Level_Privileged;
+        case kKeySigningHighPrivilege:
+            // TODO: This needs to be Key_Level_Standard. Need to change server first
+            // PR-383.
+            return Key_Level_Privileged;
+        case kKeySigning:
+            // TODO: This needs to be Key_Level_Low. Need to change server first
+            // PR-383.
+            return Key_Level_Privileged;
+        case kKeyAuth:
+            return Key_Level_Low;
+        default:
+            [NSException
+                    raise:NSInvalidArgumentException
+                   format:@"Invalid key type: %d", type];
+    }
 }
 
 @end

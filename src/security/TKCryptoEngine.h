@@ -4,6 +4,7 @@
 //
 
 #import "TKCrypto.h"
+#import "TokenSdk.h"
 
 @class TKKeyInfo;
 
@@ -15,7 +16,9 @@
 
 /**
  * Generates a set of keys needed by the app and returns them to the caller.
- * The keys are sorted from the most privileged to the least privileged.
+ * The keys are sorted from the most privileged to the least privileged. If
+ * the keys already exist for a given member they are discarded and new set
+ * of keys is generated.
  *
  * @return the newly created key pair information
  */
@@ -25,11 +28,11 @@
  * Signs the data with the identified by the supplied key id.
  *
  * @param data payload to sign
- * @param keyId identifies the key used for signing
+ * @param keyLevel level of the key to use
  * @return payload signature
  */
-- (NSString *)signData:(NSData *)data
-            usingKeyId:(NSString *)keyId;
+- (TKSignature *)signData:(NSData *)data
+            usingKeyLevel:(Key_Level)keyLevel;
 
 /**
  * Verifies the payload signature.
@@ -42,13 +45,5 @@
 - (bool)verifySignature:(NSString *)signature
                 forData:(NSData *)data
              usingKeyId:(NSString *)keyId;
-
-/**
- * Looks up current key for the given key type.
- *
- * @param type key type
- * @return  key info
- */
-- (TKKeyInfo *)lookupKeyByType:(TKKeyType)type;
 
 @end

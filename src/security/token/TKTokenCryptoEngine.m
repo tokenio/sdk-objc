@@ -9,6 +9,7 @@
 #import "TKTokenCryptoEngine.h"
 #import "TKKeyInfo.h"
 #import "TKTokenCryptoStorage.h"
+#import "TKSignature.h"
 
 
 @implementation TKTokenCryptoEngine {
@@ -27,15 +28,12 @@
 
 - (NSArray<TKKeyInfo*> *)generateKeys {
     TKTokenSecretKey *privileged = [self generateKey:Key_Level_Privileged];
-    // TODO: This needs to be Key_Level_Standard. Need to change server first
-    // PR-383.
-    TKTokenSecretKey *standard = [self generateKey:Key_Level_Privileged];
+    TKTokenSecretKey *standard = [self generateKey:Key_Level_Standard];
     TKTokenSecretKey *low = [self generateKey:Key_Level_Low];
 
-    [storage addKey:privileged ofType:kKeyKeyManagement];
-    [storage addKey:privileged ofType:kKeySigningHighPrivelege];
-    [storage addKey:standard ofType:kKeySigning];
-    [storage addKey:low ofType:kKeyAuth];
+    [storage addKey:privileged];
+    [storage addKey:standard];
+    [storage addKey:low];
 
     return @[
             privileged.keyInfo,
@@ -44,15 +42,17 @@
     ];
 }
 
-- (NSString *)signData:(NSData *)data
-            usingKeyId:(NSString *)keyId {
-    TKTokenSecretKey *key = [storage lookupKeyById:keyId];
+- (TKSignature *)signData:(NSData *)data
+            usingKeyLevel:(Key_Level)keyLevel {
+    TKTokenSecretKey *key = [storage lookupKeyByLevel:keyLevel];
     unsigned char signature[64];
     unsigned const char *sk = key.privateKey.bytes;
     unsigned const char *pk = key.publicKey.bytes;
 
     ed25519_sign(signature, data.bytes, data.length, pk, sk);
-    return [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
+    return [TKSignature
+            signature:[TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)]
+           signedWith:key.keyInfo];
 }
 
 - (bool)verifySignature:(NSString *)signature
@@ -61,11 +61,6 @@
     NSData *publicKey = [storage lookupKeyById:keyId].publicKey;
     NSData *decodedSignature = [TKUtil base64DecodeString:signature];
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, publicKey.bytes) != 0;
-}
-
-- (TKKeyInfo *)lookupKeyByType:(TKKeyType)type {
-    TKTokenSecretKey *key = [storage lookupKeyByType:type];
-    return [TKKeyInfo keyInfoWithId:key.id level:key.level publicKey:key.publicKey];
 }
 
 #pragma mark private
