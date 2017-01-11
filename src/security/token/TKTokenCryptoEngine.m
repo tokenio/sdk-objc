@@ -5,10 +5,10 @@
 
 #import "ed25519.h"
 #import "TKTokenSecretKey.h"
-#import "TKUtil.h"
 #import "TKTokenCryptoEngine.h"
 #import "TKKeyInfo.h"
 #import "TKTokenCryptoStorage.h"
+#import "TKSignature.h"
 
 
 @implementation TKTokenCryptoEngine {
@@ -25,25 +25,23 @@
     return self;
 }
 
-- (NSArray<TKKeyInfo*> *)generateKeys {
-    // TODO: We need to extend this to provision multiple keys, see TKKeyType.
-    TKTokenSecretKey *key = [self generateKey];
-    [storage addKey:key ofType:kKeyAuth];
-    [storage addKey:key ofType:kKeyKeyManagement];
-    [storage addKey:key ofType:kKeySigning];
-    [storage addKey:key ofType:kKeySigningHighPrivelege];
-    return @[[TKKeyInfo keyInfoWithId:key.id type:kKeySigningHighPrivelege publicKey:key.publicKey]];
+- (TKKeyInfo *)generateKey:(Key_Level)level {
+    TKTokenSecretKey *key = [self createNewKey_:level];
+    [storage addKey:key];
+    return key.keyInfo;
 }
 
-- (NSString *)signData:(NSData *)data
-            usingKeyId:(NSString *)keyId {
-    TKTokenSecretKey *key = [storage lookupKeyById:keyId];
+- (TKSignature *)signData:(NSData *)data
+            usingKeyLevel:(Key_Level)keyLevel {
+    TKTokenSecretKey *key = [storage lookupKeyByLevel:keyLevel];
     unsigned char signature[64];
     unsigned const char *sk = key.privateKey.bytes;
     unsigned const char *pk = key.publicKey.bytes;
 
     ed25519_sign(signature, data.bytes, data.length, pk, sk);
-    return [TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)];
+    return [TKSignature
+            signature:[TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)]
+           signedWith:key.keyInfo];
 }
 
 - (bool)verifySignature:(NSString *)signature
@@ -54,14 +52,9 @@
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, publicKey.bytes) != 0;
 }
 
-- (TKKeyInfo *)lookupKeyByType:(TKKeyType)type {
-    TKTokenSecretKey *key = [storage lookupKeyByType:type];
-    return [TKKeyInfo keyInfoWithId:key.id type:type publicKey:key.publicKey];
-}
-
 #pragma mark private
 
-- (TKTokenSecretKey *)generateKey {
+- (TKTokenSecretKey *)createNewKey_:(Key_Level)keyLevel {
     unsigned char seed[32];
     if (ed25519_create_seed(seed)) {
         [NSException
@@ -75,7 +68,7 @@
     NSData *publicKey = [NSData dataWithBytes:public_key length:sizeof(public_key)];
     NSData *privateKey = [NSData dataWithBytes:private_key length:sizeof(private_key)];
 
-    return [TKTokenSecretKey keyWithPrivateKey:privateKey publicKey:publicKey];
+    return [TKTokenSecretKey keyWithLevel:keyLevel privateKey:privateKey publicKey:publicKey];
 }
 
 @end

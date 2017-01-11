@@ -5,18 +5,20 @@
 
 #import "TKTokenSecretKey.h"
 #import "TKUtil.h"
+#import "TKKeyInfo.h"
 
 
 @implementation TKTokenSecretKey
 
-+ (TKTokenSecretKey *)keyWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
-    return [[TKTokenSecretKey alloc] initWithPrivateKey:sk publicKey:pk];
++ (TKTokenSecretKey *)keyWithLevel:(Key_Level)level privateKey:(NSData *)sk publicKey:(NSData *)pk {
+    return [[TKTokenSecretKey alloc] initWithLevel:level privateKey:sk publicKey:pk];
 }
 
-- (id)initWithPrivateKey:(NSData *)sk publicKey:(NSData *)pk {
+- (id)initWithLevel:(Key_Level)level privateKey:(NSData *)sk publicKey:(NSData *)pk {
     self = [super init];
 
     if (self) {
+        _level = level;
         _privateKey = sk;
         _publicKey = pk;
     }
@@ -28,8 +30,12 @@
     return [TKUtil idForData:self.publicKey];
 }
 
-- (NSString *)publicKeyStr {
-    return [TKUtil base64EncodeData:self.publicKey];
+- (TKKeyInfo *)keyInfo {
+    return [TKKeyInfo
+            keyInfoWithId:self.id
+                    level:self.level
+                algorithm:Key_Algorithm_Ed25519
+                publicKey:self.publicKey];
 }
 
 @end

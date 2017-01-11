@@ -63,11 +63,11 @@
                   timeoutMs:timeoutMs];
     [client createMemberId:
                     ^(NSString *memberId) {
-                        [self _addKeyAndUsername:client
-                                        memberId:memberId
-                                        username:username
-                                       onSuccess:onSuccess
-                                         onError:onError];
+                        [self _addKeysAndUsername:client
+                                         memberId:memberId
+                                         username:username
+                                        onSuccess:onSuccess
+                                          onError:onError];
                     }
                    onError:onError];
 }
@@ -161,11 +161,11 @@
 }
 
 // username can be nil. In this case only add the key.
-- (void)_addKeyAndUsername:(TKUnauthenticatedClient *)client
-                  memberId:(NSString *)memberId
-                  username:(NSString *)username
-                 onSuccess:(void(^)(TKMemberAsync *))onSuccess
-                   onError:(OnError)onError {
+- (void)_addKeysAndUsername:(TKUnauthenticatedClient *)client
+                   memberId:(NSString *)memberId
+                   username:(NSString *)username
+                  onSuccess:(void (^)(TKMemberAsync *))onSuccess
+                    onError:(OnError)onError {
     TKCrypto *crypto = [self createCrypto:memberId];
     [client
             createKeys:memberId

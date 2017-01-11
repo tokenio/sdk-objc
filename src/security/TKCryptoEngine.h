@@ -4,6 +4,7 @@
 //
 
 #import "TKCrypto.h"
+#import "TokenSdk.h"
 
 @class TKKeyInfo;
 
@@ -14,21 +15,24 @@
 @protocol TKCryptoEngine
 
 /**
- * Generates a set of keys needed by the app and returns them to the caller.
+ * Generates a keys of the specified level. If the key with the specified level
+ * already exists, it is replaced. Old key is still kept around because it
+ * could be used for signature verification later.
  *
+ * @param level key level
  * @return the newly created key pair information
  */
-- (NSArray<TKKeyInfo*> *)generateKeys;
+- (TKKeyInfo *)generateKey:(Key_Level)level;
 
 /**
  * Signs the data with the identified by the supplied key id.
  *
  * @param data payload to sign
- * @param keyId identifies the key used for signing
+ * @param keyLevel level of the key to use
  * @return payload signature
  */
-- (NSString *)signData:(NSData *)data
-            usingKeyId:(NSString *)keyId;
+- (TKSignature *)signData:(NSData *)data
+            usingKeyLevel:(Key_Level)keyLevel;
 
 /**
  * Verifies the payload signature.
@@ -41,13 +45,5 @@
 - (bool)verifySignature:(NSString *)signature
                 forData:(NSData *)data
              usingKeyId:(NSString *)keyId;
-
-/**
- * Looks up current key for the given key type.
- *
- * @param type key type
- * @return  key info
- */
-- (TKKeyInfo *)lookupKeyByType:(TKKeyType)type;
 
 @end
