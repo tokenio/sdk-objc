@@ -189,12 +189,6 @@
     return (SecKeyRef)keyRef;
 }
 
-- (NSData *)createSHA512:(NSData *)source {
-    uint8_t digest[CC_SHA512_DIGEST_LENGTH] = {0};
-    CC_SHA512(source.bytes, (CC_LONG)source.length, digest);
-    return [NSData dataWithBytes:digest length:CC_SHA512_DIGEST_LENGTH];
-}
-
 - (SecKeyRef)publicKeyForKeyId:(NSString*)keyId {
     NSData* appLabel = [TKUtil base64DecodeString:keyId];
     CFMutableDictionaryRef getKeyRef = newCFDict;
