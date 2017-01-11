@@ -32,7 +32,7 @@
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
     CFErrorRef error = NULL;
 
-    CFDataRef signRef = SecKeyCreateSignature(privateKeyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA1, (__bridge CFDataRef)data, &error);
+    CFDataRef signRef = SecKeyCreateSignature(privateKeyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, &error);
     if (error != errSecSuccess) {
         [NSException
          raise:NSInvalidArgumentException
@@ -54,7 +54,7 @@
     }
     CFErrorRef error = NULL;
     NSData* signatureData = [TKUtil base64DecodeString:signature];
-    Boolean success = SecKeyVerifySignature(keyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA1, (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
+    Boolean success = SecKeyVerifySignature(keyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
     CFRelease(keyRef);
     
     return success == 1;
@@ -98,7 +98,9 @@
     
     // create dict which actually saves key into keychain
     CFMutableDictionaryRef generateKeyRef = newCFDict;
+#if !(TARGET_IPHONE_SIMULATOR)
     CFDictionaryAddValue(generateKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
+#endif
     CFDictionaryAddValue(generateKeyRef, kSecAttrKeyType, kSecAttrKeyTypeECSECPrimeRandom);
     CFDictionaryAddValue(generateKeyRef, kSecAttrKeySizeInBits, (__bridge const void *)([NSNumber numberWithInt:256]));
     CFDictionaryAddValue(generateKeyRef, kSecPrivateKeyAttrs, accessControlDict);
@@ -120,7 +122,9 @@
 
 - (void)deleteOldKeysForLevel:(Key_Level)level {
     CFMutableDictionaryRef queryKeyRef = newCFDict;
+#if !(TARGET_IPHONE_SIMULATOR)
     CFDictionaryAddValue(queryKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
+#endif
     CFDictionaryAddValue(queryKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeylevel:level]));
     CFDictionarySetValue(queryKeyRef, kSecClass, kSecClassKey);
     SecItemDelete(queryKeyRef);
@@ -159,7 +163,7 @@
     
     CFRelease(publicKeyRef);
    
-    return  [TKKeyInfo keyInfoWithId:keyHashString level:level algorithm:Key_Algorithm_Unknown publicKey:puclicKeyData];
+    return  [TKKeyInfo keyInfoWithId:keyHashString level:level algorithm:Key_Algorithm_Sha256WithEcdsa publicKey:puclicKeyData];
 }
 
 - (SecKeyRef)privateKeyForLevel:(Key_Level)level {
@@ -167,7 +171,9 @@
     CFMutableDictionaryRef getKeyRef = newCFDict;
     CFDictionarySetValue(getKeyRef, kSecClass, kSecClassKey);
     CFDictionarySetValue(getKeyRef, kSecAttrKeyClass, kSecAttrKeyClassPrivate);
+#if !(TARGET_IPHONE_SIMULATOR)
     CFDictionaryAddValue(getKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
+#endif
     CFDictionarySetValue(getKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeylevel:level]));
     CFDictionarySetValue(getKeyRef, kSecReturnRef, kCFBooleanTrue);
     CFDictionarySetValue(getKeyRef, kSecUseOperationPrompt, @"Authenticate to sign data");
