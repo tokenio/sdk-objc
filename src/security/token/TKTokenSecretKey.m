@@ -31,7 +31,11 @@
 }
 
 - (TKKeyInfo *)keyInfo {
-    return [TKKeyInfo keyInfoWithId:self.id level:self.level publicKey:self.publicKey];
+    return [TKKeyInfo
+            keyInfoWithId:self.id
+                    level:self.level
+                algorithm:Key_Algorithm_Ed25519
+                publicKey:self.publicKey];
 }
 
 @end

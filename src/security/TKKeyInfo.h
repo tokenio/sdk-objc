@@ -11,7 +11,10 @@
 
 @interface TKKeyInfo : NSObject
 
-+ (TKKeyInfo *)keyInfoWithId:(NSString *)id level:(Key_Level)level publicKey:(NSData *)pk;
++ (TKKeyInfo *)keyInfoWithId:(NSString *)id
+                       level:(Key_Level)level
+                   algorithm:(Key_Algorithm)algorithm
+                   publicKey:(NSData *)pk;
 
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) Key_Level level;
