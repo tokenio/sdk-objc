@@ -151,10 +151,9 @@
 		DDAA0D421E257C6000E9BB09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDAA0D401E257C6000E9BB09 /* LaunchScreen.storyboard */; };
 		DDAA0D6C1E257D7E00E9BB09 /* TokenSdk.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
 		DDAA0D6D1E257DB800E9BB09 /* TokenSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
-		DDAA0D711E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DDAA0D6F1E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.h */; };
-		DDAA0D721E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D701E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m */; };
-		DDAA0D751E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = DDAA0D731E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h */; };
-		DDAA0D761E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */; };
+		DDAA0D7D1E25CBEA00E9BB09 /* TKSecureEnclaveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D7A1E25CB8A00E9BB09 /* TKSecureEnclaveTests.m */; };
+		DDAA0D7E1E25CC0500E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D701E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m */; };
+		DDAA0D7F1E25CC0900E9BB09 /* TKSecureEnclaveCryptoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */; };
 		FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */; };
 		FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */; };
@@ -344,6 +343,7 @@
 		DDAA0D701E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveCryptoEngineFactory.m; sourceTree = "<group>"; };
 		DDAA0D731E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecureEnclaveCryptoEngine.h; sourceTree = "<group>"; };
 		DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveCryptoEngine.m; sourceTree = "<group>"; };
+		DDAA0D7A1E25CB8A00E9BB09 /* TKSecureEnclaveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveTests.m; sourceTree = "<group>"; };
 		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
 		FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankinfo.pbobjc.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -531,6 +531,7 @@
 				ABA7B30F0E5668621466B95A /* TKTestBase.h */,
 				ABA7B6A0C915116837349E69 /* TKUtilTests.m */,
 				ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */,
+				DDAA0D7A1E25CB8A00E9BB09 /* TKSecureEnclaveTests.m */,
 				ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */,
 				ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */,
 				ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */,
@@ -745,7 +746,6 @@
 				37637B5E1D989A930043345F /* HTTP.pbobjc.h in Headers */,
 				ABA7B46027069D67CCC10553 /* TKRpcSyncCall.h in Headers */,
 				37637B661D989A930043345F /* Notification.pbobjc.h in Headers */,
-				DDAA0D751E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h in Headers */,
 				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
 				94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */,
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
@@ -772,7 +772,6 @@
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
 				ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */,
-				DDAA0D711E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.h in Headers */,
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
 				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
 				DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */,
@@ -1098,7 +1097,6 @@
 				1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */,
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,
 				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,
-				DDAA0D761E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,
 				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
 				37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */,
@@ -1115,7 +1113,6 @@
 				8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */,
 				37637B531D989A930043345F /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
-				DDAA0D721E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m in Sources */,
 				ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */,
 				ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */,
 				ABA7B847267CDA906A218BBB /* ge.c in Sources */,
@@ -1162,11 +1159,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDAA0D7D1E25CBEA00E9BB09 /* TKSecureEnclaveTests.m in Sources */,
 				FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */,
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
 				8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */,
+				DDAA0D7E1E25CC0500E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m in Sources */,
 				1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */,
 				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
 				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,
@@ -1178,6 +1177,7 @@
 				8AC7AB821DB56E9B00FD4176 /* TKAccessTokenTests.m in Sources */,
 				8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */,
 				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
+				DDAA0D7F1E25CC0900E9BB09 /* TKSecureEnclaveCryptoEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,6 +1523,7 @@
 				DDAA0D451E257C6000E9BB09 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
