@@ -7,7 +7,7 @@
 #import <GRPCCLient/GRPCCall+Tests.h>
 
 #import "bankapi/Fank.pbrpc.h"
-#import "bankapi/Banklink.pbrpc.h"
+#import "bankapi/Fank.pbobjc.h"
 
 #import "TKBankClient.h"
 #import "TKRpcSyncCall.h"
@@ -15,7 +15,6 @@
 
 @implementation TKBankClient {
     FankFankService *fank;
-    AccountLinkingService *accounts;
 }
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl {
@@ -34,7 +33,6 @@
         
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
         fank = [FankFankService serviceWithHost:address];
-        accounts = [AccountLinkingService serviceWithHost:address];
     }
 
     return self;
@@ -88,16 +86,16 @@
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers {
     TKRpcSyncCall<NSArray<SealedMessage*> *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        AuthorizeLinkAccountsRequest *request = [AuthorizeLinkAccountsRequest message];
+        FankAuthorizeLinkAccountsRequest *request = [FankAuthorizeLinkAccountsRequest message];
         request.username = username;
         request.clientId = clientId;
         [request.accountsArray addObjectsFromArray:accountNumbers];
 
-        [accounts authorizeLinkAccountsWithRequest:request
-                                   handler:
-                                           ^(AuthorizeLinkAccountsResponse *response, NSError *error) {
+        [fank authorizeLinkAccountsWithRequest:request
+                                       handler:
+                                           ^(AccountLinkingPayloads *response, NSError *error) {
                                                if (response) {
-                                                   call.onSuccess(response.accountLinkPayloadsArray);
+                                                   call.onSuccess(response.payloadsArray);
                                                } else {
                                                    call.onError(error);
                                                }

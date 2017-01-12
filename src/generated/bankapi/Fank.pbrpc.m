@@ -82,4 +82,28 @@
              responseClass:[FankGetAccountResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark AuthorizeLinkAccounts(AuthorizeLinkAccountsRequest) returns (AccountLinkingPayloads)
+
+- (void)authorizeLinkAccountsWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAuthorizeLinkAccountsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToAuthorizeLinkAccountsWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AuthorizeLinkAccounts"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[AccountLinkingPayloads class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark AuthorizeLinkAccountsGet(AuthorizeLinkAccountsRequest) returns (AccountLinkingPayloads)
+
+- (void)authorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAuthorizeLinkAccountsGetWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToAuthorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AuthorizeLinkAccountsGet"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[AccountLinkingPayloads class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 @end

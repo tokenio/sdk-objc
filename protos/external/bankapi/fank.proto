@@ -3,8 +3,9 @@ package io.token.proto.bankapi;
 option objc_class_prefix = "Fank";
 
 import "google/api/annotations.proto";
-
 import "money.proto";
+import "banklink.proto";
+import "security.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Common data structures.
@@ -74,10 +75,15 @@ message GetAccountResponse {
   Account account = 1;
 }
 
+message AuthorizeLinkAccountsRequest {
+  string username = 1;
+  string client_id = 2;
+  repeated string accounts = 3;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fank testing API, used to create accounts on the fly. Used for testing.
 //
-
 service FankService {
   rpc AddClient (AddClientRequest) returns (AddClientResponse) {
     option (google.api.http) = {
@@ -106,6 +112,20 @@ service FankService {
   rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
     option (google.api.http) = {
         get: "/clients/{client_id}/accounts/{account_number}"
+    };
+  }
+
+  rpc AuthorizeLinkAccounts (AuthorizeLinkAccountsRequest)
+      returns (io.token.proto.banklink.AccountLinkingPayloads) {
+    option (google.api.http) = {
+        put: "/clients/{client_id}/link-accounts"
+    };
+  }
+
+  rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
+      returns (io.token.proto.banklink.AccountLinkingPayloads) {
+    option (google.api.http) = {
+        get: "/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
     };
   }
 }

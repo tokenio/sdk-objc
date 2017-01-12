@@ -103,7 +103,7 @@
         default:
             [NSException
                     raise:NSInvalidArgumentException
-                   format:@"Invalid key type: %d", type];
+                   format:@"Invalid key type: %@", @(type)];
     }
 }
 

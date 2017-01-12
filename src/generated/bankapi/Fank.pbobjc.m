@@ -16,6 +16,8 @@
  #import "bankapi/Fank.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
  #import "Money.pbobjc.h"
+ #import "Banklink.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -34,6 +36,8 @@
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
     [registry addExtensions:[MoneyRoot extensionRegistry]];
+    [registry addExtensions:[BanklinkRoot extensionRegistry]];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
   }
   return registry;
 }
@@ -660,6 +664,71 @@ typedef struct FankGetAccountResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountResponse__storage_)
+                                         flags:0];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankAuthorizeLinkAccountsRequest
+
+@implementation FankAuthorizeLinkAccountsRequest
+
+@dynamic username;
+@dynamic clientId;
+@dynamic accountsArray, accountsArray_Count;
+
+typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *username;
+  NSString *clientId;
+  NSMutableArray *accountsArray;
+} FankAuthorizeLinkAccountsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = FankAuthorizeLinkAccountsRequest_FieldNumber_Username,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "clientId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankAuthorizeLinkAccountsRequest_FieldNumber_ClientId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, clientId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accountsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = FankAuthorizeLinkAccountsRequest_FieldNumber_AccountsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, accountsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankAuthorizeLinkAccountsRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankAuthorizeLinkAccountsRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
