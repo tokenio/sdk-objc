@@ -13,7 +13,7 @@ message Key {
   enum Algorithm {
     UNKNOWN = 0;
     ED25519 = 1;
-    SHA256_WITH_ECDSA = 2;
+    ECDSA_SHA256 = 2;
   }
 
   enum Level {

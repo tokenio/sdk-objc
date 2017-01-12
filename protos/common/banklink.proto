@@ -1,0 +1,13 @@
+syntax = "proto3";
+package io.token.proto.banklink;
+
+import "security.proto";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// This message represents
+//
+message AccountLinkingPayloads {
+  string bank_id = 1;
+  string bank_name = 2;
+  repeated io.token.proto.common.security.SealedMessage payloads = 3;
+}

@@ -329,12 +329,23 @@ message GetBankInfoResponse {
   io.token.proto.common.bank.BankInfo info = 1;
 }
 
+message GetInfoRequest {
+  string clientVersion = 1;
+}
+
+message GetInfoResponse {
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gateway Service.
 //
 
 service GatewayService {
+  rpc GetInfo (GetInfoRequest) returns (GetInfoResponse) {
+    option (google.api.http) = {
+       get: "/info"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Member registration, key and username mamangement.

@@ -39,7 +39,7 @@ typedef GPB_ENUM(Key_Algorithm) {
   Key_Algorithm_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Key_Algorithm_Unknown = 0,
   Key_Algorithm_Ed25519 = 1,
-  Key_Algorithm_Sha256WithEcdsa = 2,
+  Key_Algorithm_EcdsaSha256 = 2,
 };
 
 GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void);
