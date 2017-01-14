@@ -30,24 +30,24 @@
 }
 
 - (TKSignature *)sign:(GPBMessage *)message
-             usingKey:(TKKeyType)keyType {
+             usingKey:(Key_Level)keyLevel {
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return [engine signData:jsonData usingKeyLevel:[self keyLevelForType:keyType]];
+    return [engine signData:jsonData usingKeyLevel:keyLevel];
 }
 
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
-             usingKey:(TKKeyType)keyType {
+             usingKey:(Key_Level)keyLevel {
     NSData *payload = [self encodedPayloadFor:token with:action];
-    return [engine signData:payload usingKeyLevel:[self keyLevelForType:keyType]];
+    return [engine signData:payload usingKeyLevel:keyLevel];
 }
 
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
-                    usingKey:(TKKeyType)keyType {
+                    usingKey:(Key_Level)keyLevel {
     NSData *payload = [self encodedPayload:tokenPayload with:action];
-    return [engine signData:payload usingKeyLevel:[self keyLevelForType:keyType]];
+    return [engine signData:payload usingKeyLevel:keyLevel];
 }
 
 - (bool)verifySignature:(NSString *)signature
@@ -84,27 +84,6 @@
     NSString * payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
 
     return [payload dataUsingEncoding:NSASCIIStringEncoding];
-}
-
-- (Key_Level)keyLevelForType:(TKKeyType)type {
-    switch (type) {
-        case kKeyKeyManagement:
-            return Key_Level_Privileged;
-        case kKeySigningHighPrivilege:
-            // TODO: This needs to be Key_Level_Standard. Need to change server first
-            // PR-383.
-            return Key_Level_Privileged;
-        case kKeySigning:
-            // TODO: This needs to be Key_Level_Low. Need to change server first
-            // PR-383.
-            return Key_Level_Privileged;
-        case kKeyAuth:
-            return Key_Level_Low;
-        default:
-            [NSException
-                    raise:NSInvalidArgumentException
-                   format:@"Invalid key type: %@", @(type)];
-    }
 }
 
 @end

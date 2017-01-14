@@ -5,8 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TKTypedef.h"
 #import "gateway/Gateway.pbrpc.h"
+
+#import "TKTypedef.h"
+#import "TKCrypto.h"
 
 
 @class Member;
@@ -249,8 +251,10 @@
  * Endorses a transfer token.
  *
  * @param token token to endorse
+ * @param keyLevel specifies the key to use
  */
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)success
              onError:(OnError)error;
 
