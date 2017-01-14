@@ -27,14 +27,15 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
-    TKSignature *signature = [crypto sign:token usingKey:kKeySigningHighPrivilege];
-    XCTAssertEqualObjects(signature.key.id, key.id);
+    TKKeyInfo *low = [crypto generateKey:Key_Level_Low];
+
+    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low];
+    XCTAssertEqualObjects(signature.key.id, low.id);
     XCTAssert(signature.value.length > 0);
 
     bool success = [crypto verifySignature:signature.value
                                 forMessage:token
-                                usingKeyId:key.id];
+                                usingKeyId:low.id];
     XCTAssert(success);
 }
 
@@ -42,23 +43,23 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
+    TKKeyInfo *standard = [crypto generateKey:Key_Level_Standard];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:kKeySigningHighPrivilege];
-    XCTAssertEqualObjects(signature.key.id, key.id);
+                                 usingKey:Key_Level_Standard];
+    XCTAssertEqualObjects(signature.key.id, standard.id);
     XCTAssert(signature.value.length > 0);
 
     bool success = [crypto verifySignature:signature.value
                                   forToken:token
                                     action:TokenSignature_Action_Endorsed
-                                usingKeyId:key.id];
+                                usingKeyId:standard.id];
     XCTAssert(success);
 
     success = [crypto verifySignature:signature.value
                              forToken:token
                                action:TokenSignature_Action_Cancelled
-                           usingKeyId:key.id];
+                           usingKeyId:standard.id];
     XCTAssert(!success);
 }
 

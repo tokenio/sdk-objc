@@ -41,7 +41,7 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
@@ -61,7 +61,7 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         
         token = [endorsedResult token];
         
@@ -82,7 +82,7 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
@@ -101,7 +101,7 @@
                                            amount:100.99
                                          currency:@"USD"
                                       description:@"transfer test"];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);

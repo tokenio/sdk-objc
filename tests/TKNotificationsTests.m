@@ -46,7 +46,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [[payer endorseToken:token] token];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         [payee createTransfer:token];
         
         [payer unsubscribeFromNotifications:s.id_p];
@@ -56,7 +56,7 @@
                                             amount:100.99
                                           currency:@"USD"
                                        description:@"transfer test"];
-        token = [[payer endorseToken:token2] token];
+        token = [[payer endorseToken:token2 withKey:Key_Level_Standard] token];
         [payee createTransfer:token];
     }];
 }
@@ -105,8 +105,9 @@
 
 - (void)testGetSubscribers {
     [self run: ^(TokenIO *tokenIO) {
-        Subscriber * subscriber = [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
-                                                         platform:Platform_Test];
+        Subscriber * subscriber = [payer
+                subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+                                platform:Platform_Test];
         
         [payer getSubscribers];
         XCTAssert([payer getSubscribers].count == 1);
@@ -130,7 +131,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [[payer endorseToken:token] token];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         Transfer *transfer = [payee createTransfer:token];
         
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);

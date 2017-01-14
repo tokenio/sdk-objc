@@ -44,7 +44,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     GRpcAuthPayload *payload = [GRpcAuthPayload message];
     payload.request = [request data];
     payload.createdAtMs = now;
-    TKSignature *signature = [crypto sign:payload usingKey:kKeyAuth];
+    TKSignature *signature = [crypto sign:payload usingKey:Key_Level_Low];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;

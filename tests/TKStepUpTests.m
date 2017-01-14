@@ -32,7 +32,7 @@
     }];
 }
 
-- (void)testRedeemToken {
+- (void)testRedeemToken_stepUp {
     [self run: ^(TokenIO *tokenIO) {
         NSMutableArray* tags = [NSMutableArray arrayWithCapacity:1];
         [tags addObject:@"iphone"];
@@ -43,7 +43,11 @@
                                            amount:100
                                          currency:@"USD"
                                       description:@"transfer test"];
-        [payer endorseToken:token];
+        TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
+        XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
+
+        result = [payer endorseToken:token withKey:Key_Level_Standard];
+        XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
     }];
 }
 

@@ -318,9 +318,10 @@
  * along with the token.
  *
  * @param token token to endorse
+ * @param keyLevel key to use
  * @return result of the endorse operation
  */
-- (TokenOperationResult *)endorseToken:(Token *)token;
+- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel;
 
 /**
  * Cancels the transfer token by signing it. The signature is persisted 

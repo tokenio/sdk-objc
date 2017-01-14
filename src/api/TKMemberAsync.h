@@ -391,10 +391,12 @@
  * along with the token.
  *
  * @param token token to endorse
+ * @param keyLevel key to use
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError;
 
