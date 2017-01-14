@@ -49,7 +49,7 @@
                                              amount:100.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [[payer endorseToken:token] token];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         Transfer *transfer = [payee createTransfer:token
                                             amount:@100.99
                                           currency:@"USD"
@@ -72,7 +72,7 @@
                                              amount:49.99
                                            currency:@"USD"
                                         description:@"transfer test"];
-        token = [[payer endorseToken:token] token];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one"];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two"];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three"];

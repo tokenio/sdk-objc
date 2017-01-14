@@ -336,10 +336,11 @@
     }];
 }
 
-- (TokenOperationResult *)endorseToken:(Token *)token {
+- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async endorseToken:token
+                         withKey:keyLevel
                        onSuccess:call.onSuccess
                          onError:call.onError];
     }];

@@ -8,7 +8,6 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKClient.h"
-#import "TKCrypto.h"
 #import "TKRpcLog.h"
 #import "PagedArray.h"
 #import "TKRpc.h"
@@ -360,7 +359,7 @@
                                                       tokenToCreate:tokenToCreate];
     TKSignature *signature = [crypto signPayload:tokenToCreate
                                           action:TokenSignature_Action_Endorsed
-                                        usingKey:kKeySigning];
+                                        usingKey:Key_Level_Standard];
     request.createToken.payloadSignature.memberId = memberId;
     request.createToken.payloadSignature.keyId = signature.key.id;
     request.createToken.payloadSignature.signature = signature.value;
@@ -434,11 +433,12 @@
 }
 
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:kKeySigning];
+                                 usingKey:keyLevel];
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -466,7 +466,7 @@
             onError:(OnError)onError {
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Cancelled
-                                 usingKey:kKeySigning];
+                                 usingKey:Key_Level_Low];
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -492,7 +492,7 @@
 - (void)createTransfer:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:payload usingKey:kKeySigning];
+    TKSignature *signature = [crypto sign:payload usingKey:Key_Level_Low];
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
     request.payloadSignature.memberId = memberId;
@@ -651,7 +651,7 @@
           withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess
            onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:address usingKey:kKeySigning];
+    TKSignature *signature = [crypto sign:address usingKey:Key_Level_Low];
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.address = address;
@@ -794,7 +794,7 @@
                                       tokenToCreate:(TokenPayload *)tokenToCreate {
     TKSignature *signature = [crypto sign:tokenToCancel
                                    action:TokenSignature_Action_Cancelled
-                                 usingKey:kKeySigning];
+                                 usingKey:Key_Level_Low];
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];
     request.cancelToken.tokenId = tokenToCancel.id_p;
     request.cancelToken.signature.memberId = memberId;
@@ -807,7 +807,7 @@
 - (void)_updateMember:(MemberUpdate *)update
             onSuccess:(OnSuccessWithMember)onSuccess
               onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:update usingKey:kKeyKeyManagement];
+    TKSignature *signature = [crypto sign:update usingKey:Key_Level_Privileged];
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
     request.updateSignature.memberId = memberId;
