@@ -85,7 +85,7 @@
                                        forAccount:payerAccount.id
                                            amount:100.11
                                          currency:@"USD"];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         Token* endorsed = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);

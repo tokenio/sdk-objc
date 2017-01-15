@@ -66,7 +66,7 @@
 
 - (void)testEndorseToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *endorsed = [[grantor endorseToken:token] token];
+        Token *endorsed = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
         XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);

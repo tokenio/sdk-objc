@@ -380,12 +380,13 @@
 }
 
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     [client endorseToken:token
+                 withKey:keyLevel
                onSuccess:onSuccess
                  onError:onError];
-    
 }
 
 - (void)cancelToken:(Token *)token

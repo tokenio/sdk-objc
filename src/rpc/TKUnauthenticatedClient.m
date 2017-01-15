@@ -191,7 +191,7 @@
         request.update.prevHash = lastHash;
     }
 
-    TKSignature *signature = [crypto sign:request.update usingKey:kKeyKeyManagement];
+    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id;
     request.updateSignature.signature = signature.value;

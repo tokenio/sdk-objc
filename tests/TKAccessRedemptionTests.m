@@ -46,7 +46,7 @@
         [access forAllAddresses];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
@@ -64,7 +64,7 @@
         [access forAddress:address.id_p];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         AddressRecord *lookedUp = [grantee getAddressWithId:address.id_p];
@@ -79,7 +79,7 @@
         [access forAllBalances];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
@@ -93,7 +93,7 @@
         [access forAccountBalances:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
@@ -107,7 +107,7 @@
         [access forAllAccounts];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
@@ -121,7 +121,7 @@
         [access forAccount:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
 
-        token = [[grantor endorseToken:token] token];
+        token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
         TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
@@ -140,14 +140,14 @@
                                                      amount:100.99
                                                    currency:@"USD"
                                                 description:@"transfer test"];
-        transferToken = [[grantor endorseToken:transferToken] token];
+        transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         [redeemer createTransfer:transferToken];
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
         [access forAllTransactions];
         Token *accessToken = [grantor createAccessToken:access];
         
-        accessToken = [[grantor endorseToken:accessToken] token];
+        accessToken = [[grantor endorseToken:accessToken withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:accessToken.id_p];
         PagedArray<Transaction *> *lookedUpTransactions = [grantee getTransactionsOffset:nil
@@ -169,7 +169,7 @@
                                                      amount:100.99
                                                    currency:@"USD"
                                                 description:@"transfer test"];
-        transferToken = [[grantor endorseToken:transferToken] token];
+        transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         [redeemer createTransfer:transferToken];
         
         
@@ -177,7 +177,7 @@
         [access forAccountTransactions:grantorAccount.id];
         Token *accessToken = [grantor createAccessToken:access];
 
-        accessToken = [[grantor endorseToken:accessToken] token];
+        accessToken = [[grantor endorseToken:accessToken withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:accessToken.id_p];
         PagedArray<Transaction *> *lookedUpTransactions = [grantee
