@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
         ss.source_files = "src/api/**/*.{h,c,m}","src/ed25519/**/*.{h,c,m}","src/rpc/**/*.{h,c,m}","src/security/**/*.{h,c,m}", 
                         "src/util/**/*.{h,c,m}","#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
         ss.requires_arc = true
-        ss.public_header_files = gendir, "src/api", "src/security", "src/util"
+        ss.public_header_files = gendir, "src/api", "src/security", "src/security/token", "src/util"
         ss.header_mappings_dir = gendir
         ss.exclude_files = "**/*_test.*",
                            "**/test_*.*",
