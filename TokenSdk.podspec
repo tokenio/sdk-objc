@@ -3,11 +3,8 @@
 # gRPC.
 #
 
-def Pod::tokenSdkVer; "0.0.3"; end
-
 Pod::Spec.new do |s|
     s.name     = "TokenSdk"
-    s.version  = tokenSdkVer
     s.license  = "New BSD"
     s.authors  = { 'Token' => 'eng@token.io' }
     s.homepage = "http://www.token.io/"
