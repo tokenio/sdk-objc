@@ -41,6 +41,23 @@
     XCTAssert(success);
 }
 
+- (void)testHelloWorld {
+    
+    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
+    NSData *data = [@"Hello World" dataUsingEncoding:NSUTF8StringEncoding];
+
+    TKSignature *signature = [crypto signData:data usingKey:kKeySigningHighPrivilege];
+    NSLog(@"Signature for Hello World: %@", signature.value);
+    NSLog(@"Public key: %@", signature.key.publicKeyStr);
+    XCTAssertEqualObjects(signature.key.id, key.id);
+    XCTAssert(signature.value.length > 0);
+    
+    bool success = [crypto verifySignature:signature.value
+                                   forData:data
+                                usingKeyId:key.id];
+    XCTAssert(success);
+}
+
 - (void)testSignAndVerify_token {
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";

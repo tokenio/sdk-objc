@@ -51,6 +51,16 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
              usingKey:(TKKeyType)keyType;
 
 /**
+ * Signs a block of data with the secret key specified by the supplied type.
+ *
+ * @param data data to sign
+ * @param keyType key to use
+ * @return signed data, Base64 encoded
+ */
+- (TKSignature *)signData:(NSData *)data
+             usingKey:(TKKeyType)keyType;
+
+/**
  * Signs a token with the secret key specified by the supplied type.
  *
  * @param token token to sign
@@ -99,5 +109,17 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
                forToken:(Token *)token
                  action:(TokenSignature_Action) action
              usingKeyId:(NSString *)keyId;
+/**
+ * Verifies a data signature.
+ *
+ * @param signature signature to verify
+ * @param data data to verify the signature for
+ * @param keyType key to use
+ * @return true if signature verifies
+ */
+- (bool)verifySignature:(NSString *)signature
+             forData:(NSData *)data
+             usingKeyId:(NSString *)keyId;
+
 
 @end

@@ -36,6 +36,10 @@
     return [engine signData:jsonData usingKeyLevel:[self keyLevelForType:keyType]];
 }
 
+- (TKSignature*)signData:(NSData *)data usingKey:(TKKeyType)keyType {
+    return [engine signData:data usingKeyLevel:[self keyLevelForType:keyType]];
+}
+
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
              usingKey:(TKKeyType)keyType {
@@ -67,6 +71,12 @@
     NSData *payload = [self encodedPayloadFor:token with:action];
     return [engine verifySignature:signature
                            forData:payload
+                        usingKeyId:keyId];
+}
+
+- (bool)verifySignature:(NSString *)signature forData:(NSData *)data usingKeyId:(NSString *)keyId {
+    return [engine verifySignature:signature
+                           forData:data
                         usingKeyId:keyId];
 }
 
