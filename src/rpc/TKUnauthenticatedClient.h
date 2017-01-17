@@ -75,22 +75,23 @@
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
        accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                 onSuccess:(void(^)())onSuccess
-                   onError:(void(^)(NSError *))onError;
+                 onSuccess:(OnSuccess)onSuccess
+                   onError:(OnError)onError;
+
 /**
  * Sends a notification to request adding of a key
  *
  * @param username username to notify
+ * @param keyName optional key name
  * @param publicKey key in string form
- * @param name optional key name
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyAddKey:(NSString * )username
-                publicKey:(NSString *) publicKey
-                name:(NSString*)name
-                 onSuccess:(void(^)())onSuccess
-                   onError:(void(^)(NSError *))onError;
+- (void)notifyAddKey:(NSString *)username
+             keyName:(NSString *)keyName
+                 key:(Key *)key
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts and adding of a key
@@ -99,19 +100,18 @@
  * @param bankId bank id to link
  * @param bankName bank name to link
  * @param accountLinkPayloads payloads retrieved from bank
- * @param publicKey key in string form
- * @param name optional key name
+ * @param key key in string form
+ * @param keyName optional key name
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                          publicKey:(NSString *)publicKey
-                               name:(NSString *)name
-                          onSuccess:(void(^)())onSuccess
-                            onError:(void(^)(NSError *))onError;
-
+                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                            keyName:(NSString *)keyName
+                                key:(Key *)key
+                          onSuccess:(OnSuccess)onSuccess
+                            onError:(OnError)onError;
 
 @end

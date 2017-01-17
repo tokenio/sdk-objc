@@ -25,13 +25,13 @@
 CF_EXTERN_C_BEGIN
 
 @class AddKey;
+@class Key;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
 @class SealedMessage;
 @class StepUp;
 @class TransferProcessed;
-GPB_ENUM_FWD_DECLARE(Key_Algorithm);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -136,29 +136,20 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
 #pragma mark - AddKey
 
 typedef GPB_ENUM(AddKey_FieldNumber) {
-  AddKey_FieldNumber_PublicKey = 1,
-  AddKey_FieldNumber_Name = 2,
-  AddKey_FieldNumber_Algorithm = 3,
+  AddKey_FieldNumber_Name = 1,
+  AddKey_FieldNumber_Key = 2,
 };
 
 /// A notification that a key wants to be added to a member.
 @interface AddKey : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
-
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-@property(nonatomic, readwrite) enum Key_Algorithm algorithm;
+@property(nonatomic, readwrite, strong, null_resettable) Key *key;
+/// Test to see if @c key has been set.
+@property(nonatomic, readwrite) BOOL hasKey;
 
 @end
-
-/// Fetches the raw value of a @c AddKey's @c algorithm property, even
-/// if the value was not defined by the enum at the time the code was generated.
-int32_t AddKey_Algorithm_RawValue(AddKey *message);
-/// Sets the raw value of an @c AddKey's @c algorithm property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
-void SetAddKey_Algorithm_RawValue(AddKey *message, int32_t value);
 
 #pragma mark - LinkAccountsAndAddKey
 

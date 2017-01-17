@@ -1034,24 +1034,6 @@ typedef GPB_ENUM(GetBankInfoResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetInfoRequest
-
-typedef GPB_ENUM(GetInfoRequest_FieldNumber) {
-  GetInfoRequest_FieldNumber_ClientVersion = 1,
-};
-
-@interface GetInfoRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *clientVersion;
-
-@end
-
-#pragma mark - GetInfoResponse
-
-@interface GetInfoResponse : GPBMessage
-
-@end
-
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

@@ -32,8 +32,8 @@
     return self.async.firstUsername;
 }
 
-- (NSArray<NSString *> *)publicKeys {
-    return self.async.publicKeys;
+- (NSArray<Key *> *)keys {
+    return self.async.keys;
 }
 
 - (NSArray<NSString *> *)usernames {
