@@ -61,7 +61,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)approvePublicKey:(NSString *)publicKey
+- (void)approveKey:(Key *)key
              level:(Key_Level)level
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
