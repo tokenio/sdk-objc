@@ -37,7 +37,7 @@
 @property (readonly, retain) NSString *id;
 @property (readonly, retain) NSString *firstUsername;
 @property (readonly, retain) NSArray<NSString*> *usernames;
-@property (readonly, retain) NSArray<NSString*> *publicKeys;
+@property (readonly, retain) NSArray<Key*> *keys;
 
 /**
  * Creates new member that is implemented by delegating all the calls to the

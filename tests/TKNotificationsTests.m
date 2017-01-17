@@ -80,10 +80,10 @@
         [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
                                platform:Platform_Ios];
 
-        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
+        Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername
-                    publicKey:key
-                         name:@"Chrome 53.0"];
+                      keyName:@"Chrome 53.0"
+                          key:key];
     }];
 }
 
@@ -93,13 +93,13 @@
                                platform:Platform_Ios];
         
         NSArray<SealedMessage*> *payloads = [NSArray arrayWithObjects: [SealedMessage new], nil];
-        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
+        Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
                                       bankId:@"iron"
                                     bankName:@"bank-name"
                          accountLinkPayloads:payloads
-                                   publicKey:key
-                                        name:@"Chrome 53.0"];
+                                     keyName:@"Chrome 53.0"
+                                         key:key];
     }];
 }
 
@@ -148,10 +148,8 @@
 
         NSArray<Notification*> *notifications = [payer getNotifications];
         XCTAssert(notifications.count == 0);
-        NSString *key = [[payerAnotherDevice publicKeys] firstObject];
-        [tokenIO notifyAddKey:payer.firstUsername
-                    publicKey:key
-                         name:@"Chrome 53.0"];
+        Key *key = [[payerAnotherDevice keys] firstObject];
+        [tokenIO notifyAddKey:payer.firstUsername keyName:@"Chrome 53.0" key:key];
         
         notifications = [payer getNotifications];
         XCTAssert(notifications.count == 1);

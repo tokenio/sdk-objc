@@ -48,10 +48,10 @@
     return member.usernamesArray[0];
 }
 
-- (NSArray<NSString *> *)publicKeys {
+- (NSArray<NSString *> *)keys {
     NSMutableArray<NSString *> *result = [NSMutableArray array];
     for (Key *key in member.keysArray) {
-        [result addObject:key.publicKey];
+        [result addObject:key];
     }
     return result;
 }
