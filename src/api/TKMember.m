@@ -48,13 +48,15 @@
     [self.async clearAccessToken];
 }
 
-- (void)approvePublicKey:(NSString *)key
-                   level:(Key_Level)level {
+- (void)approveKey:(Key *)key
+             level:(Key_Level)level {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async approvePublicKey:key
+        [self.async approveKey:key
                          level:level
-                     onSuccess:^{ call.onSuccess(nil); }
+                     onSuccess:^{
+                         call.onSuccess(nil);
+                     }
                        onError:call.onError];
     }];
 }

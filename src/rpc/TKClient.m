@@ -92,17 +92,18 @@
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 
-- (void)addKey:(NSString *)newPublicKey
-            to:(Member *)member
+- (void)addKey:(Key *)key
          level:(NSUInteger)level
+            to:(Member *)member
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError {
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
     update.addKey.level = (Key_Level) level;
-    update.addKey.publicKey = newPublicKey;
-    
+    update.addKey.publicKey = key.publicKey;
+    update.addKey.algorithm = key.algorithm;
+
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
 

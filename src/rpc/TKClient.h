@@ -87,15 +87,15 @@
             onError:(OnError)onError;
 
 /**
- * Adds a public key to the list of approved keys for the specified member.
+ * Adds a key to the list of approved keys for the specified member.
  *
  * @param key key to add
  * @param member member to add the key to
  * @param level key level
  */
-- (void)addKey:(NSString *)newPublicKey
-            to:(Member *)member
+- (void)addKey:(Key *)key
          level:(NSUInteger)level
+            to:(Member *)member
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError;
 

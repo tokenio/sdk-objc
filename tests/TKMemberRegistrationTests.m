@@ -34,6 +34,16 @@
     }];
 }
 
+- (void)testLoginMember_anotherDevice {
+    [self run: ^(TokenIO *tokenIO) {
+        TKMember *created = [self createMember:tokenIO];
+        TKMember *loggedIn = [tokenIO loginMember:created.id];
+        XCTAssert(loggedIn.id.length > 0);
+        XCTAssertEqual(loggedIn.keys.count, 3);
+        XCTAssertEqualObjects(created.firstUsername, loggedIn.firstUsername);
+    }];
+}
+
 - (void)testUsernameExists {
     [self run: ^(TokenIO *tokenIO) {
         NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];

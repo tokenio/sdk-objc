@@ -68,15 +68,15 @@
     [client clearAccessToken];
 }
 
-- (void)approvePublicKey:(NSString *)publicKey
-                   level:(Key_Level)level
-               onSuccess:(OnSuccess)onSuccess
-                 onError:(OnError)onError {
+- (void)approveKey:(Key *)key
+             level:(Key_Level)level
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
-    
-    [client addKey:publicKey
-                to:member
+
+    [client addKey:key
              level:level
+                to:member
          onSuccess:
      ^(Member *m) {
          [retainedMember clear];
