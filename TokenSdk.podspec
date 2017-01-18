@@ -38,8 +38,7 @@ Pod::Spec.new do |s|
                 "src/util/*.{h,c,m}","src/ed25519/src/*.{h,c,m}","src/security/**/*.{h,c,m}",
                 "#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
         ss.requires_arc = true
-        ss.public_header_files = "src/api", "src/security", "src/security/token", "src/util",
-                "src/ed25519/src"
+        ss.public_header_files = "src/api", "src/security", "src/security/token", "src/util"
         ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*"
         ss.dependency "gRPC-ProtoRPC"
         ss.dependency "#{s.name}/Messages"
