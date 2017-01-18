@@ -3,7 +3,7 @@
 # gRPC.
 #
 
-def Pod::tokenSdkVer; "0.0.3"; end
+def Pod::tokenSdkVer; "1.0.0"; end
 
 Pod::Spec.new do |s|
     s.name     = "TokenSdk"
@@ -34,14 +34,12 @@ Pod::Spec.new do |s|
 
     # SDK & gRPC plugin on top of Messages. Needs arc
     s.subspec "Implementation" do |ss|
-        ss.source_files = "src/api/**/*.{h,c,m}","src/ed25519/**/*.{h,c,m}","src/rpc/**/*.{h,c,m}","src/security/**/*.{h,c,m}", 
-                        "src/util/**/*.{h,c,m}","#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
+        ss.source_files = "src/api/*.{h,c,m}","src/rpc/*.{h,c,m}","src/security/*.{h,c,m}",
+                "src/util/*.{h,c,m}","src/ed25519/src/*.{h,c,m}","src/security/**/*.{h,c,m}",
+                "#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
         ss.requires_arc = true
-        ss.public_header_files = gendir, "src/api", "src/security", "src/security/token", "src/util"
-        ss.header_mappings_dir = gendir
-        ss.exclude_files = "**/*_test.*",
-                           "**/test_*.*",
-                           "**/test/*.*"
+        ss.public_header_files = "src/api", "src/security", "src/security/token", "src/util"
+        ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*"
         ss.dependency "gRPC-ProtoRPC"
         ss.dependency "#{s.name}/Messages"
         ss.dependency "OrderedDictionary"
