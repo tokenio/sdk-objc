@@ -56,6 +56,7 @@
 		8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */; };
 		8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */; };
 		8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */; };
 		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
 		94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAE5321DF218880023AAA8 /* PagedArray.h */; };
 		94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE5341DF21A590023AAA8 /* PagedArray.m */; };
@@ -217,7 +218,7 @@
 		8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessRedemptionTests.m; sourceTree = "<group>"; };
 		8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbobjc.h; sourceTree = "<group>"; };
 		8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
-		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
+		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
 		94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenConfig.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
 		94FAE5341DF21A590023AAA8 /* PagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedArray.m; sourceTree = "<group>"; };
@@ -642,6 +643,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */,
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
