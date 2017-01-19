@@ -30,8 +30,8 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
     
-    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
-    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Privileged];
+    TKKeyInfo *key = [crypto generateKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low];
     XCTAssertEqualObjects(signature.key.id, key.id);
     XCTAssert(signature.value.length > 0);
     
@@ -41,24 +41,31 @@
     XCTAssert(success);
 }
 
-- (void)testHelloWorld {
+- (void)testSignAndVerify_token {
+    Token *token = [Token message];
+    token.payload.transfer.amount = @"100.23";
     
-    TKKeyInfo *key = [crypto generateKey:Key_Level_Privileged];
-    NSData *data = [@"Hello World" dataUsingEncoding:NSUTF8StringEncoding];
-
-    TKSignature *signature = [crypto signData:data usingKey:Key_Level_Privileged];
-    NSLog(@"Signature for Hello World: %@", signature.value);
-    NSLog(@"Public key: %@", signature.key.publicKeyStr);
+    TKKeyInfo *key = [crypto generateKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:token
+                                   action:TokenSignature_Action_Endorsed
+                                 usingKey:Key_Level_Low];
     XCTAssertEqualObjects(signature.key.id, key.id);
     XCTAssert(signature.value.length > 0);
     
     bool success = [crypto verifySignature:signature.value
-                                   forData:data
+                                  forToken:token
+                                    action:TokenSignature_Action_Endorsed
                                 usingKeyId:key.id];
     XCTAssert(success);
+    
+    success = [crypto verifySignature:signature.value
+                             forToken:token
+                               action:TokenSignature_Action_Cancelled
+                           usingKeyId:key.id];
+    XCTAssert(!success);
 }
 
-- (void)testSignAndVerify_token {
+- (void)testSignAndVerify_token_touchID {
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
     

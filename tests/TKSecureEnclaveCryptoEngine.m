@@ -37,6 +37,7 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
 
     CFDataRef signRef = SecKeyCreateSignature(privateKeyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, &error);
     if (error != errSecSuccess) {
+        CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
          format:@"Error signing data: %@\n", error];
@@ -112,6 +113,7 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     
     SecKeyRef privateKeyRef = SecKeyCreateRandomKey(generateKeyRef, &error);
     if (error != errSecSuccess) {
+        CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
          format:@"Error generating private key: %@\n", error];
@@ -159,8 +161,6 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     
     CFDictionaryRef dictRef = SecKeyCopyAttributes(keyRef);
     CFDataRef keyHash = CFDictionaryGetValue(dictRef, kSecAttrApplicationLabel);
-    NSLog(@"kSecAttrApplicationLabel %@", keyHash);
-    NSLog(@"puclicKeyData %@", puclicKeyData);
     NSData* keyHashData = (__bridge NSData *)(keyHash);
     NSString* keyHashString = [TKUtil base64EncodeData:keyHashData];
     
