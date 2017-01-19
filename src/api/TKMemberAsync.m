@@ -48,10 +48,10 @@
     return member.usernamesArray[0];
 }
 
-- (NSArray<NSString *> *)publicKeys {
+- (NSArray<NSString *> *)keys {
     NSMutableArray<NSString *> *result = [NSMutableArray array];
     for (Key *key in member.keysArray) {
-        [result addObject:key.publicKey];
+        [result addObject:key];
     }
     return result;
 }
@@ -68,15 +68,15 @@
     [client clearAccessToken];
 }
 
-- (void)approvePublicKey:(NSString *)publicKey
-                   level:(Key_Level)level
-               onSuccess:(OnSuccess)onSuccess
-                 onError:(OnError)onError {
+- (void)approveKey:(Key *)key
+             level:(Key_Level)level
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
-    
-    [client addKey:publicKey
-                to:member
+
+    [client addKey:key
              level:level
+                to:member
          onSuccess:
      ^(Member *m) {
          [retainedMember clear];
@@ -380,12 +380,13 @@
 }
 
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     [client endorseToken:token
+                 withKey:keyLevel
                onSuccess:onSuccess
                  onError:onError];
-    
 }
 
 - (void)cancelToken:(Token *)token

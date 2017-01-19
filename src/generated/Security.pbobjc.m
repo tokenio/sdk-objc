@@ -146,11 +146,11 @@ GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Unknown\000Ed25519\000Sha256WithEcdsa\000";
+        "InvalidAlgorithm\000Ed25519\000EcdsaSha256\000";
     static const int32_t values[] = {
-        Key_Algorithm_Unknown,
+        Key_Algorithm_InvalidAlgorithm,
         Key_Algorithm_Ed25519,
-        Key_Algorithm_Sha256WithEcdsa,
+        Key_Algorithm_EcdsaSha256,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Key_Algorithm)
@@ -167,9 +167,9 @@ GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void) {
 
 BOOL Key_Algorithm_IsValidValue(int32_t value__) {
   switch (value__) {
-    case Key_Algorithm_Unknown:
+    case Key_Algorithm_InvalidAlgorithm:
     case Key_Algorithm_Ed25519:
-    case Key_Algorithm_Sha256WithEcdsa:
+    case Key_Algorithm_EcdsaSha256:
       return YES;
     default:
       return NO;
@@ -182,9 +182,9 @@ GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Invalid\000Privileged\000Standard\000Low\000";
+        "InvalidLevel\000Privileged\000Standard\000Low\000";
     static const int32_t values[] = {
-        Key_Level_Invalid,
+        Key_Level_InvalidLevel,
         Key_Level_Privileged,
         Key_Level_Standard,
         Key_Level_Low,
@@ -204,7 +204,7 @@ GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
 
 BOOL Key_Level_IsValidValue(int32_t value__) {
   switch (value__) {
-    case Key_Level_Invalid:
+    case Key_Level_InvalidLevel:
     case Key_Level_Privileged:
     case Key_Level_Standard:
     case Key_Level_Low:

@@ -1,4 +1,4 @@
-TOKEN_PROTOS_VER = "1.0.203"
+TOKEN_PROTOS_VER = "1.0.211"
 platform :ios, '8.0'
 
 
@@ -24,9 +24,14 @@ def fetch_protos()
         file = "tokenio-proto-#{type}-#{version}.jar"
         puts("Downloading #{file} ...")
 
-        url = "https://token.artifactoryonline.com/token/public-libs-release-local/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
-        open(file, 'wb') do |file|
-            file << open(url).read
+        m2path = ENV["HOME"] + "/.m2/repository/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
+        if File.file?(m2path) then
+            FileUtils.cp(m2path, file)
+        else
+            url = "https://token.artifactoryonline.com/token/public-libs-release-local/io/token/proto/tokenio-proto-#{type}/#{version}/#{file}"
+            open(file, 'wb') do |file|
+                file << open(url).read
+            end
         end
         file
     end

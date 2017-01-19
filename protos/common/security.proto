@@ -11,13 +11,13 @@ message Key {
   Algorithm algorithm = 4;
 
   enum Algorithm {
-    UNKNOWN = 0;
+    INVALID_ALGORITHM = 0;
     ED25519 = 1;
-    SHA256_WITH_ECDSA = 2;
+    ECDSA_SHA256 = 2;
   }
 
   enum Level {
-    INVALID = 0;
+    INVALID_LEVEL = 0;
     PRIVILEGED = 1;
     STANDARD = 2;
     LOW = 3;

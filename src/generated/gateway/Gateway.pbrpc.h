@@ -24,20 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and username mamangement.
- * 
- * 
- */
 - (void)createMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and username mamangement.
- * 
- * 
- */
 - (GRPCProtoCall *)RPCToCreateMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 

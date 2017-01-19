@@ -5,8 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TKTypedef.h"
 #import "gateway/Gateway.pbrpc.h"
+
+#import "TKTypedef.h"
+#import "TKCrypto.h"
 
 
 @class Member;
@@ -85,15 +87,15 @@
             onError:(OnError)onError;
 
 /**
- * Adds a public key to the list of approved keys for the specified member.
+ * Adds a key to the list of approved keys for the specified member.
  *
  * @param key key to add
  * @param member member to add the key to
  * @param level key level
  */
-- (void)addKey:(NSString *)newPublicKey
-            to:(Member *)member
+- (void)addKey:(Key *)key
          level:(NSUInteger)level
+            to:(Member *)member
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError;
 
@@ -249,8 +251,10 @@
  * Endorses a transfer token.
  *
  * @param token token to endorse
+ * @param keyLevel specifies the key to use
  */
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)success
              onError:(OnError)error;
 

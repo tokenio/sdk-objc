@@ -244,15 +244,13 @@ typedef struct StepUp__storage_ {
 
 @implementation AddKey
 
-@dynamic publicKey;
 @dynamic name;
-@dynamic algorithm;
+@dynamic hasKey, key;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
-  Key_Algorithm algorithm;
-  NSString *publicKey;
   NSString *name;
+  Key *key;
 } AddKey__storage_;
 
 // This method is threadsafe because it is initially called
@@ -262,31 +260,22 @@ typedef struct AddKey__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "publicKey",
-        .dataTypeSpecific.className = NULL,
-        .number = AddKey_FieldNumber_PublicKey,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AddKey__storage_, publicKey),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "name",
         .dataTypeSpecific.className = NULL,
         .number = AddKey_FieldNumber_Name,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(AddKey__storage_, name),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "algorithm",
-        .dataTypeSpecific.enumDescFunc = Key_Algorithm_EnumDescriptor,
-        .number = AddKey_FieldNumber_Algorithm,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(AddKey__storage_, algorithm),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
-        .dataType = GPBDataTypeEnum,
+        .name = "key",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = AddKey_FieldNumber_Key,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(AddKey__storage_, key),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -304,18 +293,6 @@ typedef struct AddKey__storage_ {
 }
 
 @end
-
-int32_t AddKey_Algorithm_RawValue(AddKey *message) {
-  GPBDescriptor *descriptor = [AddKey descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AddKey_FieldNumber_Algorithm];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetAddKey_Algorithm_RawValue(AddKey *message, int32_t value) {
-  GPBDescriptor *descriptor = [AddKey descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AddKey_FieldNumber_Algorithm];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
 
 #pragma mark - LinkAccountsAndAddKey
 

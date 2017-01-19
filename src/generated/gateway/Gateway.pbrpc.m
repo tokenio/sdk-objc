@@ -24,22 +24,10 @@
 
 #pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and username mamangement.
- * 
- * 
- */
 - (void)createMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateMemberWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Member registration, key and username mamangement.
- * 
- * 
- */
 - (GRPCProtoCall *)RPCToCreateMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateMember"
             requestsWriter:[GRXWriter writerWithValue:request]

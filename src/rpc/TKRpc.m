@@ -31,6 +31,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 - (void)execute:(GRPCProtoCall *)call
         request:(GPBMessage *)request {
+    [self _setSdkHeaders:call];
     [self dispatch:call request:request];
 }
 
@@ -44,7 +45,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     GRpcAuthPayload *payload = [GRpcAuthPayload message];
     payload.request = [request data];
     payload.createdAtMs = now;
-    TKSignature *signature = [crypto sign:payload usingKey:kKeyAuth];
+    TKSignature *signature = [crypto sign:payload usingKey:Key_Level_Low];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
@@ -52,6 +53,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-key-id"] = signature.key.id;
     call.requestHeaders[@"token-signature"] = signature.value;
     call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
+    
+    [self _setSdkHeaders:call];
 
     if (onBehalfOfMemberId) {
         call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
@@ -67,6 +70,13 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                 [call cancel];
             });
     [call start];
+}
+
+- (void)_setSdkHeaders:(GRPCProtoCall *)call {
+    NSString * version = [[NSBundle bundleForClass:self.class]
+                          objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    call.requestHeaders[@"token-sdk"] = @"objc";
+    call.requestHeaders[@"token-sdk-version"] = version;
 }
 
 @end

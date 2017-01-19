@@ -32,8 +32,8 @@
     return self.async.firstUsername;
 }
 
-- (NSArray<NSString *> *)publicKeys {
-    return self.async.publicKeys;
+- (NSArray<Key *> *)keys {
+    return self.async.keys;
 }
 
 - (NSArray<NSString *> *)usernames {
@@ -48,13 +48,15 @@
     [self.async clearAccessToken];
 }
 
-- (void)approvePublicKey:(NSString *)key
-                   level:(Key_Level)level {
+- (void)approveKey:(Key *)key
+             level:(Key_Level)level {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async approvePublicKey:key
+        [self.async approveKey:key
                          level:level
-                     onSuccess:^{ call.onSuccess(nil); }
+                     onSuccess:^{
+                         call.onSuccess(nil);
+                     }
                        onError:call.onError];
     }];
 }
@@ -336,10 +338,11 @@
     }];
 }
 
-- (TokenOperationResult *)endorseToken:(Token *)token {
+- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async endorseToken:token
+                         withKey:keyLevel
                        onSuccess:call.onSuccess
                          onError:call.onError];
     }];

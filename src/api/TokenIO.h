@@ -80,12 +80,12 @@
  * Sends a notification to request adding of a key
  *
  * @param username username to notify
- * @param publicKey key in string form
- * @param name optional name of key
+ * @param key key in string form
+ * @param keyName optional name of key
  */
-- (void)notifyAddKey:(NSString * )username
-           publicKey:(NSString *)publicKey
-                name:(NSString *)name;
+- (void)notifyAddKey:(NSString *)username
+             keyName:(NSString *)keyName
+                 key:(Key *)key;
 
 /**
  * Sends a notification to request linking of accounts and adding of a key
@@ -94,15 +94,14 @@
  * @param bankId bank id to link
  * @param bankName bank name to link
  * @param accountLinkPayloads payloads retrieved from bank
- * @param publicKey key in string form
- * @param name optional name of key
+ * @param key key in string form
+ * @param keyName optional name of key
  */
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                          publicKey:(NSString *)publicKey
-                               name:(NSString *)name;
-
+                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                            keyName:(NSString *)keyName
+                                key:(Key *)key;
 
 @end

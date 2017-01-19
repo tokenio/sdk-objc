@@ -30,7 +30,7 @@
 @property (readonly, retain) NSString *id;
 @property (readonly, retain) NSString *firstUsername;
 @property (readonly, retain) NSArray<NSString*> *usernames;
-@property (readonly, retain) NSArray<NSString*> *publicKeys;
+@property (readonly, retain) NSArray<Key*> *keys;
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
@@ -61,7 +61,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)approvePublicKey:(NSString *)publicKey
+- (void)approveKey:(Key *)key
              level:(Key_Level)level
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
@@ -391,10 +391,12 @@
  * along with the token.
  *
  * @param token token to endorse
+ * @param keyLevel key to use
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
 - (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError;
 

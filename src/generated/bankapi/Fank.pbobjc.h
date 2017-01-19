@@ -230,6 +230,26 @@ typedef GPB_ENUM(FankGetAccountResponse_FieldNumber) {
 
 @end
 
+#pragma mark - FankAuthorizeLinkAccountsRequest
+
+typedef GPB_ENUM(FankAuthorizeLinkAccountsRequest_FieldNumber) {
+  FankAuthorizeLinkAccountsRequest_FieldNumber_Username = 1,
+  FankAuthorizeLinkAccountsRequest_FieldNumber_ClientId = 2,
+  FankAuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 3,
+};
+
+@interface FankAuthorizeLinkAccountsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountsArray;
+/// The number of items in @c accountsArray without causing the array to be created.
+@property(nonatomic, readonly) NSUInteger accountsArray_Count;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

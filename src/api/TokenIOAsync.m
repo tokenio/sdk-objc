@@ -116,28 +116,27 @@
                        onError:onError];
 }
 
-- (void)notifyAddKey:(NSString * )username
-           publicKey:(NSString *)publicKey
-                name:(NSString *) name
+- (void)notifyAddKey:(NSString *)username
+             keyName:(NSString *)keyName
+                 key:(Key *)key
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs];
     [client notifyAddKey:username
-               publicKey:publicKey
-                    name:name
-                     onSuccess:onSuccess
-                       onError:onError];
+                 keyName:keyName
+                     key:key
+               onSuccess:onSuccess
+                 onError:onError];
 }
-
 
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                          publicKey:(NSString *)publicKey
-                               name:(NSString *)name
+                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                            keyName:(NSString *)keyName
+                                key:(Key *)key
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
@@ -147,12 +146,11 @@
                                  bankId:bankId
                                bankName:bankName
                     accountLinkPayloads:accountLinkPayloads
-                              publicKey:publicKey
-                                   name:name
+                                keyName:keyName
+                                    key:key
                               onSuccess:onSuccess
                                 onError:onError];
 }
-
 
 #pragma mark private
 

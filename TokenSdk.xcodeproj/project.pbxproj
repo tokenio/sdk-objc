@@ -50,14 +50,13 @@
 		8A2937521DB825660034C110 /* Address.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2937501DB825660034C110 /* Address.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */; };
 		8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */; };
-		8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */; };
-		8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */; };
-		8A8404A71DA60C5F0015A6F4 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A9909191D890E820096A7FA /* TokenSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A99090E1D890E820096A7FA /* TokenSdk.framework */; };
 		8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */; };
 		8AC7AB821DB56E9B00FD4176 /* TKAccessTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */; };
 		8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */; };
+		8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */; };
+		8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */; };
 		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
 		94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAE5321DF218880023AAA8 /* PagedArray.h */; };
 		94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE5341DF21A590023AAA8 /* PagedArray.m */; };
@@ -228,10 +227,6 @@
 		8A2937501DB825660034C110 /* Address.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.pbobjc.m; sourceTree = "<group>"; };
 		8A4A6D3C1DB06D30005DCB70 /* TKStepUpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKStepUpTests.m; sourceTree = "<group>"; };
 		8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAddressTests.m; sourceTree = "<group>"; };
-		8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
-		8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbrpc.h; sourceTree = "<group>"; };
-		8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbrpc.m; sourceTree = "<group>"; };
-		8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbobjc.h; sourceTree = "<group>"; };
 		8A99090E1D890E820096A7FA /* TokenSdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TokenSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A9909131D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A9909181D890E820096A7FA /* TokenSdk.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokenSdk.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,7 +234,9 @@
 		8A99091F1D890E820096A7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessTokenTests.m; sourceTree = "<group>"; };
 		8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessRedemptionTests.m; sourceTree = "<group>"; };
-		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
+		8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbobjc.h; sourceTree = "<group>"; };
+		8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
+		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
 		94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenConfig.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
 		94FAE5341DF21A590023AAA8 /* PagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedArray.m; sourceTree = "<group>"; };
@@ -381,6 +378,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */,
+				8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */,
 				FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */,
 				FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */,
 				8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */,
@@ -418,10 +417,6 @@
 			children = (
 				8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */,
 				8A1FA0D21DAEE92400DFB258 /* Fank.pbrpc.m */,
-				8A8404A01DA60C5F0015A6F4 /* Banklink.pbobjc.m */,
-				8A8404A11DA60C5F0015A6F4 /* Banklink.pbrpc.h */,
-				8A8404A21DA60C5F0015A6F4 /* Banklink.pbrpc.m */,
-				8A8404A31DA60C5F0015A6F4 /* Banklink.pbobjc.h */,
 				37637B281D989A930043345F /* Fank.pbobjc.h */,
 				37637B291D989A930043345F /* Fank.pbobjc.m */,
 			);
@@ -730,6 +725,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */,
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
@@ -751,10 +747,10 @@
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
 				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
 				ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */,
+				8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */,
 				ABA7BAC0AF3B2A9A22210B47 /* ge.h in Headers */,
 				ABA7B396AEB29286AB91C613 /* sc.h in Headers */,
 				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
-				8A8404A71DA60C5F0015A6F4 /* Banklink.pbobjc.h in Headers */,
 				FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */,
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
@@ -766,7 +762,6 @@
 				8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */,
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
-				8A8404A51DA60C5F0015A6F4 /* Banklink.pbrpc.h in Headers */,
 				37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */,
 				1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */,
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
@@ -1098,6 +1093,7 @@
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,
 				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,
+				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
 				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
 				37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */,
 				ABA7B5835408D6DD145BFCD0 /* TKClient.m in Sources */,
@@ -1105,8 +1101,6 @@
 				ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */,
 				37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */,
 				FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */,
-				8A8404A61DA60C5F0015A6F4 /* Banklink.pbrpc.m in Sources */,
-				8A8404A41DA60C5F0015A6F4 /* Banklink.pbobjc.m in Sources */,
 				ABA7BA9B13612439D753F584 /* TKJson.m in Sources */,
 				ABA7BF633D0F779DAEC4968F /* TKUtil.m in Sources */,
 				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,

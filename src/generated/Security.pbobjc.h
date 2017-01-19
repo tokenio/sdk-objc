@@ -37,9 +37,9 @@ typedef GPB_ENUM(Key_Algorithm) {
   /// by this enum. The message will also have C functions to get/set the rawValue
   /// of the field.
   Key_Algorithm_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Key_Algorithm_Unknown = 0,
+  Key_Algorithm_InvalidAlgorithm = 0,
   Key_Algorithm_Ed25519 = 1,
-  Key_Algorithm_Sha256WithEcdsa = 2,
+  Key_Algorithm_EcdsaSha256 = 2,
 };
 
 GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void);
@@ -55,7 +55,7 @@ typedef GPB_ENUM(Key_Level) {
   /// by this enum. The message will also have C functions to get/set the rawValue
   /// of the field.
   Key_Level_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Key_Level_Invalid = 0,
+  Key_Level_InvalidLevel = 0,
   Key_Level_Privileged = 1,
   Key_Level_Standard = 2,
   Key_Level_Low = 3,

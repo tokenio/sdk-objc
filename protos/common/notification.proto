@@ -24,9 +24,8 @@ message StepUp {
 
 // A notification that a key wants to be added to a member.
 message AddKey {
-    string public_key = 1;
-    string name = 2;
-    io.token.proto.common.security.Key.Algorithm algorithm = 3;
+    string name = 1;
+    io.token.proto.common.security.Key key = 2;
 }
 
 // A notification that a bank wants to be linked, and keys want to be added.

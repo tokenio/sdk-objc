@@ -37,7 +37,7 @@
 @property (readonly, retain) NSString *id;
 @property (readonly, retain) NSString *firstUsername;
 @property (readonly, retain) NSArray<NSString*> *usernames;
-@property (readonly, retain) NSArray<NSString*> *publicKeys;
+@property (readonly, retain) NSArray<Key*> *keys;
 
 /**
  * Creates new member that is implemented by delegating all the calls to the
@@ -60,13 +60,14 @@
 - (void)clearAccessToken;
 
 /**
- * Approves a public key owned by this member. The key is added to the list
+ * Approves a key owned by this member. The key is added to the list
  * of valid keys for the member.
  *
  * @param key to add to the approved list
+ * @param level key security level to use
  */
-- (void)approvePublicKey:(NSString *)key
-                   level:(Key_Level)level;
+- (void)approveKey:(Key *)key
+             level:(Key_Level)level;
 
 /**
  * Removes a key owned by this member.
@@ -318,9 +319,10 @@
  * along with the token.
  *
  * @param token token to endorse
+ * @param keyLevel key to use
  * @return result of the endorse operation
  */
-- (TokenOperationResult *)endorseToken:(Token *)token;
+- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel;
 
 /**
  * Cancels the transfer token by signing it. The signature is persisted 

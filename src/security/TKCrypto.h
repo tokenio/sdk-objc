@@ -13,16 +13,6 @@
 @protocol TKCryptoEngine;
 
 /**
- * Defines possible secure key types based on usage.
- */
-typedef NS_ENUM(NSInteger, TKKeyType) {
-    kKeyAuth,
-    kKeyKeyManagement,
-    kKeySigning,
-    kKeySigningHighPrivilege,
-};
-
-/**
  * An abstract class that defines a set of methods that deal with crypto,
  * key generation, method signing, etc. There are two abstract methods
  * that need to be implemented in the derived classes signData and
@@ -44,11 +34,11 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
  * Signs a message with the secret key specified by the supplied type.
  *
  * @param message message to sign
- * @param keyType key to use
+ * @param keyLevel key to use
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)sign:(GPBMessage *)message
-             usingKey:(TKKeyType)keyType;
+             usingKey:(Key_Level)keyLevel;
 
 /**
  * Signs a block of data with the secret key specified by the supplied type.
@@ -65,24 +55,24 @@ typedef NS_ENUM(NSInteger, TKKeyType) {
  *
  * @param token token to sign
  * @param action action being signed on
- * @param keyType key to use
+ * @param keyLevel key to use
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
-             usingKey:(TKKeyType)keyType;
+             usingKey:(Key_Level)keyLevel;
 
 /**
  * Signs a token payload with the secret key specified by the supplied type.
  *
  * @param tokenPayload token payload to sign
  * @param action action being signed on
- * @param keyType key to use
+ * @param keyLevel key to use
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
-                    usingKey:(TKKeyType)keyType;
+                    usingKey:(Key_Level)keyLevel;
 
 /**
  * Verifies a message signature.

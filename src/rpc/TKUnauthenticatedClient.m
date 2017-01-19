@@ -91,8 +91,8 @@
                     bankId:(NSString *)bankId
                   bankName:(NSString *)bankName
        accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                 onSuccess:(void (^)())onSuccess
-                   onError:(void (^)(NSError *))onError {
+                 onSuccess:(OnSuccess)onSuccess
+                   onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
     request.body.linkAccounts.bankId = bankId;
@@ -115,14 +115,14 @@
 }
 
 - (void)notifyAddKey:(NSString *)username
-           publicKey:(NSString *)publicKey
-                name:(NSString*)name
-           onSuccess:(void(^)())onSuccess
-             onError:(void(^)(NSError *))onError {
+             keyName:(NSString *)keyName
+                 key:(Key *)key
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.body.addKey.publicKey = publicKey;
-    request.body.addKey.name = name;
+    request.body.addKey.name = keyName;
+    request.body.addKey.key = key;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -142,18 +142,18 @@
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
                              bankId:(NSString *)bankId
                            bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
-                          publicKey:(NSString *)publicKey
-                               name:(NSString *)name
-                          onSuccess:(void(^)())onSuccess
-                            onError:(void(^)(NSError *))onError {
+                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                            keyName:(NSString *)keyName
+                                key:(Key *)key
+                          onSuccess:(OnSuccess)onSuccess
+                            onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
     request.body.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
     request.body.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
     request.body.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
-    request.body.linkAccountsAndAddKey.addKey.publicKey = publicKey;
-    request.body.linkAccountsAndAddKey.addKey.name = name;
+    request.body.linkAccountsAndAddKey.addKey.name = keyName;
+    request.body.linkAccountsAndAddKey.addKey.key = key;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -191,7 +191,7 @@
         request.update.prevHash = lastHash;
     }
 
-    TKSignature *signature = [crypto sign:request.update usingKey:kKeyKeyManagement];
+    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id;
     request.updateSignature.signature = signature.value;

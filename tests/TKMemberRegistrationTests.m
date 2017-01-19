@@ -20,7 +20,7 @@
         TKMember *member = [tokenIO createMember:username];
         XCTAssert(member.id.length > 0);
         XCTAssertEqualObjects(member.firstUsername, username);
-        XCTAssertEqual(member.publicKeys.count, 3);
+        XCTAssertEqual(member.keys.count, 3);
     }];
 }
 
@@ -29,7 +29,17 @@
         TKMember *created = [self createMember:tokenIO];
         TKMember *loggedIn = [tokenIO loginMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
-        XCTAssertEqual(loggedIn.publicKeys.count, 3);
+        XCTAssertEqual(loggedIn.keys.count, 3);
+        XCTAssertEqualObjects(created.firstUsername, loggedIn.firstUsername);
+    }];
+}
+
+- (void)testLoginMember_anotherDevice {
+    [self run: ^(TokenIO *tokenIO) {
+        TKMember *created = [self createMember:tokenIO];
+        TKMember *loggedIn = [tokenIO loginMember:created.id];
+        XCTAssert(loggedIn.id.length > 0);
+        XCTAssertEqual(loggedIn.keys.count, 3);
         XCTAssertEqualObjects(created.firstUsername, loggedIn.firstUsername);
     }];
 }
