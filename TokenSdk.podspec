@@ -3,7 +3,7 @@
 # gRPC.
 #
 
-def Pod::tokenSdkVer; "1.0.0"; end
+def Pod::tokenSdkVer; "1.0.1"; end
 
 Pod::Spec.new do |s|
     s.name     = "TokenSdk"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.license  = "New BSD"
     s.authors  = { 'Token' => 'eng@token.io' }
     s.homepage = "http://www.token.io/"
-    s.source = { :git => 'https://bitbucket.org/tokenio/sdk-objc', :submodules => true }
+    s.source = { :git => 'https://bitbucket.org/tokenio/sdk-objc', :tag => 'v1.0.1', :submodules => true }
     s.summary = "Token Objective-C SDK"
 
     s.ios.deployment_target = "7.1"
