@@ -47,13 +47,23 @@
 - (BOOL)usernameExists:(NSString *)username;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
+ * Creates a new Token member with a set of auto generated keys and the
  * given username.
  *
  * @param username member username to use, must be unique
  * @return newly created member
  */
 - (TKMember *)createMember:(NSString *)username;
+
+/**
+ * Generates a set of keys and returns it to the caller. This is typically
+ * used on a second device that needs to be provisioned for an existing
+ * member. The keys are then send to an existing device for approval.
+ *
+ * @param memberId member id to generate the keys for
+ * @return generated keys
+ */
+- (NSArray<Key *> *)generateKeys:(NSString *)memberId;
 
 /**
  * Logs in an existing member to the system.

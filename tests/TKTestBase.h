@@ -11,6 +11,7 @@
 @class TKBankClient;
 
 typedef void (^AsyncTestBlock)(TokenIO *);
+typedef id (^AsyncTestBlockWithResult)(TokenIO *);
 
 /**
  * Base class for the integration tests. The derived classes invoke run method
@@ -32,6 +33,14 @@ typedef void (^AsyncTestBlock)(TokenIO *);
  * @param block block of code to execute
  */
 - (void)run:(AsyncTestBlock)block;
+
+/**
+ * Executes the specified block on a thread and processes the main dispatch queue
+ * while waiting for the block to finish. Returns result back to the caller.
+ *
+ * @param block block of code to execute
+ */
+- (id)runWithResult:(AsyncTestBlockWithResult)block;
 
 /**
  * Creates a new member with an auto generated username and key.

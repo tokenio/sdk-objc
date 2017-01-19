@@ -63,6 +63,18 @@
              onError:(OnError)onError;
 
 /**
+ * Generates a set of keys and returns it to the caller. This is typically
+ * used on a second device that needs to be provisioned for an existing
+ * member. The keys are then send to an existing device for approval.
+ *
+ * @param memberId member id the keys are being generated for
+ * @return generated keys
+ */
+- (void)generateKeys:(NSString *)memberId
+           onSuccess:(OnSuccessWithKeys)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Checks if a given username already exists.
  *
  * @param username username to check

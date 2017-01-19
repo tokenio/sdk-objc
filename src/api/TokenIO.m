@@ -36,6 +36,15 @@
     }];
 }
 
+- (NSArray<Key *> *)generateKeys:(NSString *)memberId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async generateKeys:memberId
+                onSuccess:^(NSArray<Key *> *keys) { call.onSuccess(keys); }
+                onError:call.onError];
+    }];
+}
+
 - (BOOL)usernameExists:(NSString *)username {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{

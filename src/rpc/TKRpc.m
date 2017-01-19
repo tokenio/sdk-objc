@@ -8,7 +8,6 @@
 #import "GPBMessage.h"
 #import "Auth.pbobjc.h"
 #import "TKCrypto.h"
-#import "TKKeyInfo.h"
 #import "TKSignature.h"
 
 NSString *const kTokenRealm = @"Token";
@@ -49,7 +48,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
     call.requestHeaders[@"token-member-id"] = memberId;
-    call.requestHeaders[@"token-key-id"] = signature.key.id;
+    call.requestHeaders[@"token-key-id"] = signature.key.id_p;
     call.requestHeaders[@"token-signature"] = signature.value;
     call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
 

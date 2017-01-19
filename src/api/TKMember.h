@@ -64,10 +64,8 @@
  * of valid keys for the member.
  *
  * @param key to add to the approved list
- * @param level key security level to use
  */
-- (void)approveKey:(Key *)key
-             level:(Key_Level)level;
+- (void)approveKey:(Key *)key;
 
 /**
  * Removes a key owned by this member.

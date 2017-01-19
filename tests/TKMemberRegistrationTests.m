@@ -24,6 +24,28 @@
     }];
 }
 
+- (void)testProvisionNewDevice {
+    // Create a member.
+    TKMember *member = [self runWithResult:^TKMember *(TokenIO *tokenIO) {
+        NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        return [tokenIO createMember:username];
+    }];
+
+    // Generate keys on a new device, get the keys approved and login
+    // with the new keys.
+    [self run: ^(TokenIO *tokenIO) {
+        NSArray<Key *> *keysNewDevice = [tokenIO generateKeys:member.id];
+
+        for (Key *key in keysNewDevice) {
+            [member approveKey:key];
+        }
+
+        TKMember *memberNewDevice = [tokenIO loginMember:member.id];
+        XCTAssertEqualObjects(member.firstUsername, memberNewDevice.firstUsername);
+        XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
+    }];
+}
+
 - (void)testLoginMember {
     [self run: ^(TokenIO *tokenIO) {
         TKMember *created = [self createMember:tokenIO];

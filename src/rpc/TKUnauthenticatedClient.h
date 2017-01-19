@@ -35,21 +35,22 @@
  * @param onError invoked if failed
  */
 - (void)createMemberId:(void(^)(NSString *memberId))onSuccess
-               onError:(void(^)(NSError *))onError;
-
+               onError:(OnError)onError;
 
 /**
- * Adds first key to be linked with the specified member id.
+ * Adds a set of keys to be linked with the specified member id.
  *
  * @param memberId member id
+ * @param keys array of keys to be added
  * @param crypto crypto module used to generate keys
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)createKeys:(NSString *)memberId
-            crypto:(TKCrypto *)crypto
-         onSuccess:(void (^)(Member *))onSuccess
-           onError:(void(^)(NSError *))onError;
+- (void)addKeys:(NSArray<Key *> *)keys
+    forMemberId:(NSString *)memberId
+         crypto:(TKCrypto *)crypto
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Checks if a given username already exists.

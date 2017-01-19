@@ -9,13 +9,13 @@
 @implementation TKSignature
 
 + (TKSignature *)signature:(NSString *)signature
-                signedWith:(TKKeyInfo*)key {
+                signedWith:(Key *)key {
     return [[TKSignature alloc] initWithSignature:signature
                                        signedWith:key];
 }
 
 - (id)initWithSignature:(NSString *)signature
-             signedWith:(TKKeyInfo *)key {
+             signedWith:(Key  *)key {
     self = [super init];
 
     if (self) {

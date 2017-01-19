@@ -4,12 +4,11 @@
 //
 
 #import "gateway/Gateway.pbrpc.h"
+#import "Security.pbobjc.h"
 
 #import "TKUnauthenticatedClient.h"
-#import "TKUtil.h"
 #import "TKRpcLog.h"
 #import "TKRpc.h"
-#import "TKKeyInfo.h"
 #import "TKSignature.h"
 
 
@@ -49,21 +48,18 @@
     [rpc execute:call request:request];
 }
 
-- (void)createKeys:(NSString *)memberId
-            crypto:(TKCrypto *)crypto
-         onSuccess:(void (^)(Member *))onSuccess
-           onError:(void(^)(NSError *))onError {
-    NSArray<NSNumber *> *keys = @[
-            @(Key_Level_Privileged),
-            @(Key_Level_Standard),
-            @(Key_Level_Low)];
-    [self createKeysForMember_:memberId
-                          keys:keys
-                      keyIndex:0
-                      lastHash:nil
-                        crypto:crypto
-                     onSuccess:onSuccess
-                       onError:onError];
+- (void)addKeys:(NSArray<Key *> *)keys
+    forMemberId:(NSString *)memberId
+         crypto:(TKCrypto *)crypto
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError {
+    [self _addKeyForMember:memberId
+                      keys:keys
+                  keyIndex:0
+                  lastHash:nil
+                    crypto:crypto
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
 - (void)usernameExists:(NSString *)username
@@ -172,19 +168,19 @@
 
 #pragma mark private
 
-- (void)createKeysForMember_:(NSString *)memberId
-                        keys:(NSArray<NSNumber *> *)keys
-                    keyIndex:(NSUInteger)keyIndex
-                    lastHash:(NSString *)lastHash
-                      crypto:(TKCrypto *)crypto
-                   onSuccess:(void (^)(Member *))onSuccess
-                     onError:(void(^)(NSError *))onError {
-    TKKeyInfo *key = [crypto generateKey:(Key_Level) [[keys objectAtIndex:keyIndex] intValue]];
+- (void)_addKeyForMember:(NSString *)memberId
+                    keys:(NSArray<Key *> *)keys
+                keyIndex:(NSUInteger)keyIndex
+                lastHash:(NSString *)lastHash
+                  crypto:(TKCrypto *)crypto
+               onSuccess:(OnSuccessWithMember)onSuccess
+                 onError:(OnError)onError {
+    Key *key = [keys objectAtIndex:keyIndex];
 
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.addKey.level = key.level;
-    request.update.addKey.publicKey = key.publicKeyStr;
+    request.update.addKey.publicKey = key.publicKey;
     request.update.addKey.algorithm = key.algorithm;
 
     if (lastHash) {
@@ -193,7 +189,7 @@
 
     TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
     request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = signature.key.id;
+    request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
     RpcLogStart(request);
 
@@ -205,13 +201,13 @@
                                          if (keyIndex == keys.count - 1) {
                                              onSuccess(response.member);
                                          } else {
-                                             [self createKeysForMember_:memberId
-                                                                   keys:keys
-                                                               keyIndex:keyIndex + 1
-                                                               lastHash:response.member.lastHash
-                                                                 crypto:crypto
-                                                              onSuccess:onSuccess
-                                                                onError:onError];
+                                             [self _addKeyForMember:memberId
+                                                               keys:keys
+                                                           keyIndex:keyIndex + 1
+                                                           lastHash:response.member.lastHash
+                                                             crypto:crypto
+                                                          onSuccess:onSuccess
+                                                            onError:onError];
                                          }
                                      } else {
                                          RpcLogError(error);
