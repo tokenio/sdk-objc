@@ -3,7 +3,7 @@
 # gRPC.
 #
 
-def Pod::tokenSdkVer; "1.0.1"; end
+def Pod::tokenSdkVer; "1.0.2"; end
 
 Pod::Spec.new do |s|
     s.name     = "TokenSdk"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.license  = "New BSD"
     s.authors  = { 'Token' => 'eng@token.io' }
     s.homepage = "http://www.token.io/"
-    s.source = { :git => 'https://bitbucket.org/tokenio/sdk-objc', :tag => 'v1.0.1', :submodules => true }
+    s.source = { :git => 'https://bitbucket.org/tokenio/sdk-objc', :tag => 'v1.0.2', :submodules => true }
     s.summary = "Token Objective-C SDK"
 
     s.ios.deployment_target = "7.1"
@@ -53,6 +53,6 @@ Pod::Spec.new do |s|
        # This is needed by all pods that depend on gRPC-RxLibrary:
        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
        # Needed to find our generated headers that are quoted
-       'HEADER_SEARCH_PATHS' => "'#{currentdir}/#{gendir}'"
+       'HEADER_SEARCH_PATHS' => "'#{currentdir}/#{gendir}' \"${PODS_ROOT}/TokenSdk/src/generated\" \"${PODS_ROOT}/TokenSdk/src/generated/bankapi\""
     }
 end
