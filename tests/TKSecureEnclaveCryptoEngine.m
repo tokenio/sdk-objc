@@ -11,6 +11,9 @@
 #import "TKJson.h"
 #import "TKSignature.h"
 #include <CommonCrypto/CommonDigest.h>
+#import "QHex.h"
+
+static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034200";
 
 @implementation TKSecureEnclaveCryptoEngine {
     NSString* _memberId;
@@ -162,8 +165,11 @@
     NSString* keyHashString = [TKUtil base64EncodeData:keyHashData];
     
     CFRelease(publicKeyRef);
+    
+    NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:keyHeader] mutableCopy];
+    [keyWithHeaderData appendData:puclicKeyData];
    
-    return  [TKKeyInfo keyInfoWithId:keyHashString level:level algorithm:Key_Algorithm_Sha256WithEcdsa publicKey:puclicKeyData];
+    return  [TKKeyInfo keyInfoWithId:keyHashString level:level algorithm:Key_Algorithm_EcdsaSha256 publicKey:keyWithHeaderData];
 }
 
 - (SecKeyRef)privateKeyForLevel:(Key_Level)level {

@@ -36,8 +36,8 @@
     return [engine signData:jsonData usingKeyLevel:keyLevel];
 }
 
-- (TKSignature*)signData:(NSData *)data usingKey:(TKKeyType)keyType {
-    return [engine signData:data usingKeyLevel:[self keyLevelForType:keyType]];
+- (TKSignature*)signData:(NSData *)data usingKey:(Key_Level)keyLevel {
+    return [engine signData:data usingKeyLevel:keyLevel];
 }
 
 - (TKSignature *)sign:(Token *)token

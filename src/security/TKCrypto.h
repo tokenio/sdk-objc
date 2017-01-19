@@ -48,7 +48,7 @@
  * @return signed data, Base64 encoded
  */
 - (TKSignature *)signData:(NSData *)data
-             usingKey:(TKKeyType)keyType;
+                 usingKey:(Key_Level)keyLevel;
 
 /**
  * Signs a token with the secret key specified by the supplied type.
