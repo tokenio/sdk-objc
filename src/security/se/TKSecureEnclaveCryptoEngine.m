@@ -8,11 +8,12 @@
 
 #import "TKSecureEnclaveCryptoEngine.h"
 #import "TKKeyInfo.h"
-#import "TKJson.h"
 #import "TKSignature.h"
 #import "QHex.h"
 
-// Header bytes (expected by OpenSSL) to be prepended to the raw public key data
+// Header bytes (expected by OpenSSL) to be prepended to the raw public key data to
+// get the key in X509 format:
+// https://forums.developer.apple.com/thread/8030
 static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034200";
 
 @implementation TKSecureEnclaveCryptoEngine {
@@ -35,10 +36,12 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
     CFErrorRef error = NULL;
 
-    CFDataRef signRef = SecKeyCreateSignature(privateKeyRef,
-                                              kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
-                                              (__bridge CFDataRef)data, &error);
-    if (error != errSecSuccess) {
+    CFDataRef signRef = SecKeyCreateSignature(
+            privateKeyRef,
+            kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
+            (__bridge CFDataRef)data,
+            &error);
+    if (signRef != nil) {
         CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
@@ -47,8 +50,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     NSData* signatureData = (__bridge NSData *)(signRef);
 
     NSString* signatureString = [TKUtil base64EncodeData:signatureData];
-    TKSignature* tkSignature =  [TKSignature signature:signatureString
-                                            signedWith:[self keyInfoForPrivateKey:privateKeyRef level:keyLevel]];
+    TKSignature* tkSignature =  [TKSignature
+            signature:signatureString
+            signedWith:[self keyInfoForPrivateKey:privateKeyRef level:keyLevel]];
     CFRelease(privateKeyRef);
 
     return tkSignature;
@@ -58,9 +62,11 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef keyRef = [self publicKeyForKeyId:keyId];
     CFErrorRef error = NULL;
     NSData* signatureData = [TKUtil base64DecodeString:signature];
-    Boolean success = SecKeyVerifySignature(keyRef,
-                                            kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
-                                            (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
+    Boolean success = SecKeyVerifySignature(
+            keyRef,
+            kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
+            (__bridge CFDataRef)data,
+            (__bridge CFDataRef)(signatureData), &error);
     CFRelease(keyRef);
     
     return success == 1;
@@ -68,10 +74,14 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 
 #pragma mark- Private Methods
 
-#define newCFDict CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks)
+#define newCFDict CFDictionaryCreateMutable( \
+    kCFAllocatorDefault, \
+    0, \
+    &kCFTypeDictionaryKeyCallBacks, \
+    &kCFTypeDictionaryValueCallBacks)
 
 
-- (NSString*)keyLabelForKeylevel:(Key_Level)level {
+- (NSString*)keyLabelForKeyLevel:(Key_Level)level {
     return [NSString stringWithFormat:@"%@_%@", _memberId, @(level)];
 }
 
@@ -85,13 +95,11 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         accessFlags |= kSecAccessControlUserPresence; // Will require Touch ID/Passcode
     }
     SecAccessControlRef sacObject = SecAccessControlCreateWithFlags(
-                                                                    kCFAllocatorDefault,
-                                                                    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                                                                    accessFlags,
-                                                                    &error
-                                                                    );
-    
-    if (error != errSecSuccess) {
+            kCFAllocatorDefault,
+            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+            accessFlags,
+            &error);
+    if (sacObject != nil) {
         [NSException
          raise:NSInvalidArgumentException
          format:@"Error generating access controls: %@\n", error];
@@ -100,7 +108,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFMutableDictionaryRef accessControlDict = newCFDict;
     CFDictionaryAddValue(accessControlDict, kSecAttrAccessControl, sacObject);
     CFDictionaryAddValue(accessControlDict, kSecAttrIsPermanent, kCFBooleanTrue);
-    CFDictionaryAddValue(accessControlDict, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeylevel:level]));
+    CFDictionaryAddValue(accessControlDict, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeyLevel:level]));
     
     // create dict which actually saves key into keychain
     CFMutableDictionaryRef generateKeyRef = newCFDict;
@@ -108,13 +116,13 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFDictionaryAddValue(generateKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
 #endif
     CFDictionaryAddValue(generateKeyRef, kSecAttrKeyType, kSecAttrKeyTypeECSECPrimeRandom);
-    CFDictionaryAddValue(generateKeyRef, kSecAttrKeySizeInBits, (__bridge const void *)([NSNumber numberWithInt:256]));
+    CFDictionaryAddValue(generateKeyRef, kSecAttrKeySizeInBits, (__bridge const void *)(@256));
     CFDictionaryAddValue(generateKeyRef, kSecPrivateKeyAttrs, accessControlDict);
     
     CFRelease(sacObject);
     
     SecKeyRef privateKeyRef = SecKeyCreateRandomKey(generateKeyRef, &error);
-    if (error != errSecSuccess) {
+    if (privateKeyRef != nil) {
         CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
@@ -132,7 +140,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 #if !(TARGET_IPHONE_SIMULATOR)
     CFDictionaryAddValue(queryKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
 #endif
-    CFDictionaryAddValue(queryKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeylevel:level]));
+    CFDictionaryAddValue(queryKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeyLevel:level]));
     CFDictionarySetValue(queryKeyRef, kSecClass, kSecClassKey);
     SecItemDelete(queryKeyRef);
 }
@@ -144,9 +152,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFDictionarySetValue(queryRef, kSecAttrKeyClass, kSecAttrKeyClassPublic);
     CFDictionarySetValue(queryRef, kSecReturnData, kCFBooleanTrue);
     CFTypeRef result;
-    OSStatus status = SecItemAdd(queryRef, (CFTypeRef *)&result);
+    OSStatus status = SecItemAdd(queryRef, &result);
     if (status != errSecSuccess) {
-        status = SecItemCopyMatching(queryRef, (CFTypeRef *)&result);
+        status = SecItemCopyMatching(queryRef, &result);
         if (status != errSecSuccess) {
             [NSException
              raise:NSInvalidArgumentException
@@ -171,7 +179,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:kKeyHeader] mutableCopy];
     [keyWithHeaderData appendData:puclicKeyData];
    
-    return  [TKKeyInfo keyInfoWithId:keyHashString level:level
+    return  [TKKeyInfo keyInfoWithId:keyHashString
+                               level:level
                            algorithm:Key_Algorithm_EcdsaSha256
                            publicKey:keyWithHeaderData];
 }
@@ -184,7 +193,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 #if !(TARGET_IPHONE_SIMULATOR)
     CFDictionaryAddValue(getKeyRef, kSecAttrTokenID, kSecAttrTokenIDSecureEnclave);
 #endif
-    CFDictionarySetValue(getKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeylevel:level]));
+    CFDictionarySetValue(getKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeyLevel:level]));
     CFDictionarySetValue(getKeyRef, kSecReturnRef, kCFBooleanTrue);
     CFDictionarySetValue(getKeyRef, kSecUseOperationPrompt, @"Authenticate to sign data");
     
@@ -218,4 +227,5 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     
     return (SecKeyRef)keyRef;
 }
+
 @end
