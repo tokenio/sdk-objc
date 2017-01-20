@@ -58,16 +58,16 @@
              responseClass:[GetMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark UsernameExists(UsernameExistsRequest) returns (UsernameExistsResponse)
+#pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
 
-- (void)usernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToUsernameExistsWithRequest:request handler:handler] start];
+- (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetMemberIdWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUsernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"UsernameExists"
+- (GRPCProtoCall *)RPCToGetMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetMemberId"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[UsernameExistsResponse class]
+             responseClass:[GetMemberIdResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

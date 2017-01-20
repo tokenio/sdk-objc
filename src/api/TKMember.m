@@ -48,12 +48,10 @@
     [self.async clearAccessToken];
 }
 
-- (void)approveKey:(Key *)key
-             level:(Key_Level)level {
+- (void)approveKey:(Key *)key {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async approveKey:key
-                         level:level
                      onSuccess:^{
                          call.onSuccess(nil);
                      }

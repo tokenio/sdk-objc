@@ -178,27 +178,27 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @end
 
-#pragma mark - UsernameExistsRequest
+#pragma mark - GetMemberIdRequest
 
-typedef GPB_ENUM(UsernameExistsRequest_FieldNumber) {
-  UsernameExistsRequest_FieldNumber_Username = 1,
+typedef GPB_ENUM(GetMemberIdRequest_FieldNumber) {
+  GetMemberIdRequest_FieldNumber_Username = 1,
 };
 
-@interface UsernameExistsRequest : GPBMessage
+@interface GetMemberIdRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @end
 
-#pragma mark - UsernameExistsResponse
+#pragma mark - GetMemberIdResponse
 
-typedef GPB_ENUM(UsernameExistsResponse_FieldNumber) {
-  UsernameExistsResponse_FieldNumber_Exists = 1,
+typedef GPB_ENUM(GetMemberIdResponse_FieldNumber) {
+  GetMemberIdResponse_FieldNumber_MemberId = 1,
 };
 
-@interface UsernameExistsResponse : GPBMessage
+@interface GetMemberIdResponse : GPBMessage
 
-@property(nonatomic, readwrite) BOOL exists;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
 

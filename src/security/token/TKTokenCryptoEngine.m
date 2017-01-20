@@ -6,7 +6,6 @@
 #import "ed25519.h"
 #import "TKTokenSecretKey.h"
 #import "TKTokenCryptoEngine.h"
-#import "TKKeyInfo.h"
 #import "TKTokenCryptoStorage.h"
 #import "TKSignature.h"
 
@@ -25,7 +24,7 @@
     return self;
 }
 
-- (TKKeyInfo *)generateKey:(Key_Level)level {
+- (Key *)generateKey:(Key_Level)level {
     TKTokenSecretKey *key = [self createNewKey_:level];
     [storage addKey:key];
     return key.keyInfo;

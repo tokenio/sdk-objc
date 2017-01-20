@@ -6,7 +6,6 @@
 #import <XCTest/XCTest.h>
 
 #import "TKCrypto.h"
-#import "TKKeyInfo.h"
 #import "TKTestTokenCryptoEngineFactory.h"
 #import "TKSignature.h"
 
@@ -27,15 +26,15 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *low = [crypto generateKey:Key_Level_Low];
+    Key *low = [crypto generateKey:Key_Level_Low];
 
     TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low];
-    XCTAssertEqualObjects(signature.key.id, low.id);
+    XCTAssertEqualObjects(signature.key.id_p, low.id_p);
     XCTAssert(signature.value.length > 0);
 
     bool success = [crypto verifySignature:signature.value
                                 forMessage:token
-                                usingKeyId:low.id];
+                                usingKeyId:low.id_p];
     XCTAssert(success);
 }
 
@@ -43,23 +42,23 @@
     Token *token = [Token message];
     token.payload.transfer.amount = @"100.23";
 
-    TKKeyInfo *standard = [crypto generateKey:Key_Level_Standard];
+    Key *standard = [crypto generateKey:Key_Level_Standard];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:Key_Level_Standard];
-    XCTAssertEqualObjects(signature.key.id, standard.id);
+    XCTAssertEqualObjects(signature.key.id_p, standard.id_p);
     XCTAssert(signature.value.length > 0);
 
     bool success = [crypto verifySignature:signature.value
                                   forToken:token
                                     action:TokenSignature_Action_Endorsed
-                                usingKeyId:standard.id];
+                                usingKeyId:standard.id_p];
     XCTAssert(success);
 
     success = [crypto verifySignature:signature.value
                              forToken:token
                                action:TokenSignature_Action_Cancelled
-                           usingKeyId:standard.id];
+                           usingKeyId:standard.id_p];
     XCTAssert(!success);
 }
 

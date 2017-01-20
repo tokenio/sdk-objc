@@ -35,31 +35,32 @@
  * @param onError invoked if failed
  */
 - (void)createMemberId:(void(^)(NSString *memberId))onSuccess
-               onError:(void(^)(NSError *))onError;
-
-
-/**
- * Adds first key to be linked with the specified member id.
- *
- * @param memberId member id
- * @param crypto crypto module used to generate keys
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
- */
-- (void)createKeys:(NSString *)memberId
-            crypto:(TKCrypto *)crypto
-         onSuccess:(void (^)(Member *))onSuccess
-           onError:(void(^)(NSError *))onError;
+               onError:(OnError)onError;
 
 /**
  * Checks if a given username already exists.
  *
  * @param username username to check
- * @return true if username already exists, false otherwise
+ * @return member id if username already exists, nil otherwise
  */
-- (void)usernameExists:(NSString *)username
-          onSuccess:(OnSuccessWithBoolean)onSuccess
+- (void)getMemberId:(NSString *)username
+          onSuccess:(OnSuccessWithString)onSuccess
             onError:(OnError)onError;
+
+/**
+ * Adds a set of keys to be linked with the specified member id.
+ *
+ * @param memberId member id
+ * @param keys array of keys to be added
+ * @param crypto crypto module used to generate keys
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)addKeys:(NSArray<Key *> *)keys
+    forMemberId:(NSString *)memberId
+         crypto:(TKCrypto *)crypto
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts

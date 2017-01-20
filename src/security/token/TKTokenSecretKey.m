@@ -5,7 +5,6 @@
 
 #import "TKTokenSecretKey.h"
 #import "TKUtil.h"
-#import "TKKeyInfo.h"
 
 
 @implementation TKTokenSecretKey
@@ -30,12 +29,13 @@
     return [TKUtil idForData:self.publicKey];
 }
 
-- (TKKeyInfo *)keyInfo {
-    return [TKKeyInfo
-            keyInfoWithId:self.id
-                    level:self.level
-                algorithm:Key_Algorithm_Ed25519
-                publicKey:self.publicKey];
+- (Key *)keyInfo {
+    Key *key = [Key message];
+    key.id_p = self.id;
+    key.level = self.level;
+    key.algorithm = Key_Algorithm_Ed25519;
+    key.publicKey = [TKUtil base64EncodeData:self.publicKey];
+    return key;
 }
 
 @end

@@ -10,6 +10,7 @@
 @class TokenIOBuilder;
 @class TKMember;
 @class TokenIOAsync;
+@class DeviceInfo;
 
 
 /**
@@ -47,13 +48,23 @@
 - (BOOL)usernameExists:(NSString *)username;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
+ * Creates a new Token member with a set of auto generated keys and the
  * given username.
  *
  * @param username member username to use, must be unique
  * @return newly created member
  */
 - (TKMember *)createMember:(NSString *)username;
+
+/**
+ * Provisions a new device for an existing user. The call generates a set
+ * of keys that are returned back. The keys need to be approved by an
+ * existing device/keys.
+ *
+ * @param username member id to provision the device for
+ * @return device information
+ */
+- (DeviceInfo *)provisionDevice:(NSString *)username;
 
 /**
  * Logs in an existing member to the system.

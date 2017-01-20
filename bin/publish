@@ -1,0 +1,122 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+usage="publish [-m] [-r] [-p] --
+
+where:
+    -m
+        Increment major version (V.x.x)
+    -r
+        Increment minor version (x.V.x)
+    -p
+        Increment patch version (x.x.V). Default if no options provided."
+
+major=null
+minor=null
+patch=null
+
+while getopts ":m:r:p" opt; do
+  case $opt in
+    m)
+      major=true
+      ;;
+    r)
+      minor=true
+      ;;
+    p)
+      patch=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$(git symbolic-ref --short -q HEAD)" != "master" ]; then
+    echo "Script must be run from master!"
+    exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+    echo "Master branch is dirty!"
+    exit 1
+fi
+
+if [ "${major}" == "null" ] && [ "${minor}" == "null" ] && [ "${patch}" == "null" ]; then
+    echo "No options provided. Incrementing patch version."
+    patch=true
+fi
+
+pushd $(dirname $0) 1>/dev/null
+git pull --rebase --no-edit origin master
+
+function get_version {
+    echo `cat ${spec} | grep Pod::tokenSdkVer | cut -d';' -f2 | tr -d '"'`
+}
+
+function get_part {
+    echo `echo ${1} | cut -d '.' -f${2}`
+}
+
+function update_version {
+    local plist="../src/Info.plist"
+    sed -i.bak -e "s/^def Pod::tokenSdkVer;.*/def Pod::tokenSdkVer; \"${2}\"; end/" ${spec}
+    sed -i.bak -e "s/:tag =>.*/:tag => \"v${2}\",/" ${spec}
+
+    sed -i.bak -e "s/<string>${1}<\/string>/<string>${2}<\/string>/" ${plist}
+    rm -rf ${spec}.bak
+    rm -rf ${plist}.bak
+
+    git add ${spec}
+    git add ${plist}
+
+    git commit -m "Updating sdk version from ${1} to ${2}" ${spec} ${plist}
+    git push origin master
+}
+
+function tag_release {
+    git tag -a v${1} -m "Creating sdk release ${1}"
+    git push origin v${1}
+}
+
+function publish_podspec {
+    pod repo add token-cocoa-pods git@bitbucket.org:tokenio/token-cocoa-pods.git && true
+    pod repo update
+    # TODO: remove --allow-warnings when all warnings are fixed.
+    pod repo push token-cocoa-pods ${spec} --verbose --allow-warnings
+}
+
+spec="../TokenSdk.podspec"
+old_version=$(get_version)
+echo "Found old version: ${old_version}"
+
+major_value=$(get_part ${old_version} 1)
+minor_value=$(get_part ${old_version} 2)
+patch_value=$(get_part ${old_version} 3)
+
+if [ "${major}" != "null" ]; then
+    major_value=$((major_value + 1))
+fi
+
+if [ "${minor}" != "null" ]; then
+    minor_value=$((minor_value + 1))
+fi
+
+if [ "${patch}" != "null" ]; then
+    patch_value=$((patch_value + 1))
+fi
+
+new_version="${major_value}.${minor_value}.${patch_value}"
+
+update_version ${old_version} ${new_version}
+tag_release ${new_version}
+publish_podspec
+
+popd 1>/dev/null
