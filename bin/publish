@@ -55,7 +55,7 @@ pushd $(dirname $0) 1>/dev/null
 git pull --rebase --no-edit origin master
 
 function get_version {
-    echo `cat TokenSdk.podspec | grep Pod::tokenSdkVer | cut -d';' -f2 | tr -d '"'`
+    echo `cat ${spec} | grep Pod::tokenSdkVer | cut -d';' -f2 | tr -d '"'`
 }
 
 function get_part {
