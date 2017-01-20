@@ -51,16 +51,16 @@
 - (void)getMemberId:(NSString *)username
           onSuccess:(OnSuccessWithString)onSuccess
             onError:(OnError)onError {
-    UsernameExistsRequest *request = [UsernameExistsRequest message];
+    GetMemberIdRequest *request = [GetMemberIdRequest message];
     request.username = username;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-            RPCToUsernameExistsWithRequest:request
-                                   handler:^(UsernameExistsResponse *response, NSError *error) {
+            RPCToGetMemberIdWithRequest:request
+                                   handler:^(GetMemberIdResponse *response, NSError *error) {
                                        if (response) {
                                            RpcLogCompleted(response);
-                                           onSuccess(response.exists);
+                                           onSuccess(response.memberId);
                                        } else {
                                            RpcLogError(error);
                                            onError(error);
@@ -74,6 +74,7 @@
          crypto:(TKCrypto *)crypto
       onSuccess:(OnSuccessWithMember)onSuccess
         onError:(OnError)onError {
+    // TODO: Replace with a batch Directory call.
     [self _addKeyForMember:memberId
                       keys:keys
                   keyIndex:0

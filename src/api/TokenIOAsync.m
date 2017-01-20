@@ -93,7 +93,7 @@
             initWithGateway:gateway
                   timeoutMs:timeoutMs];
     [client getMemberId:username
-              onSuccess:^(NSString *memberId) { onSuccess(memberId != nil); }
+              onSuccess:^(NSString *memberId) { onSuccess([memberId length] != 0); }
                 onError:onError];
 }
 

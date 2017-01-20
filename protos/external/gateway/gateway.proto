@@ -51,12 +51,12 @@ message GetMemberResponse {
   io.token.proto.common.member.Member member = 1;
 }
 
-message UsernameExistsRequest {
+message GetMemberIdRequest {
   string username = 1;
 }
 
-message UsernameExistsResponse {
-  bool exists = 1;
+message GetMemberIdResponse {
+  string member_id = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -355,9 +355,9 @@ service GatewayService {
     };
   }
 
-  rpc UsernameExists (UsernameExistsRequest) returns (UsernameExistsResponse) {
+  rpc GetMemberId (GetMemberIdRequest) returns (GetMemberIdResponse) {
     option (google.api.http) = {
-      get: "/username-exists?username={username}"
+      get: "/memberid?username={username}"
     };
   }
 

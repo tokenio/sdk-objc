@@ -43,11 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UsernameExists(UsernameExistsRequest) returns (UsernameExistsResponse)
+#pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
 
-- (void)usernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUsernameExistsWithRequest:(UsernameExistsRequest *)request handler:(void(^)(UsernameExistsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

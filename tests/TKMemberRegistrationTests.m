@@ -4,9 +4,8 @@
 //
 
 #import "TKCrypto.h"
-#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "DeviceInfo.h"
 
 
 @interface TKMemberRegistrationTests : TKTestBase
@@ -34,13 +33,14 @@
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<Key *> *keysNewDevice = [tokenIO provisionDevice:member.id];
+        DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstUsername];
 
-        for (Key *key in keysNewDevice) {
+        // TODO: Replace with a batch Directory call.
+        for (Key *key in newDevice.keys) {
             [member approveKey:key];
         }
 
-        TKMember *memberNewDevice = [tokenIO loginMember:member.id];
+        TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstUsername, memberNewDevice.firstUsername);
         XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
     }];

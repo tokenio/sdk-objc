@@ -17,6 +17,7 @@
 @class PagedArray<Transfer>;
 @class Bank;
 @class BankInfo;
+@class DeviceInfo;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
