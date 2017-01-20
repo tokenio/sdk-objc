@@ -54,7 +54,7 @@
 - (void)clearAccessToken;
 
 /**
- * Approves a public key owned by this member. The key is added to the list
+ * Approves a key owned by this member. The key is added to the list
  * of valid keys for the member.
  *
  * @param key to add to the approved list
@@ -62,7 +62,6 @@
  * @param onError callback invoked on error
  */
 - (void)approveKey:(Key *)key
-             level:(Key_Level)level
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 

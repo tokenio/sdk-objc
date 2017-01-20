@@ -14,6 +14,7 @@
 #import "TKClient.h"
 #import "TKAccountAsync.h"
 
+
 @implementation TKMemberAsync {
     TKClient *client;
     Member *member;
@@ -69,20 +70,17 @@
 }
 
 - (void)approveKey:(Key *)key
-             level:(Key_Level)level
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
     [client addKey:key
-             level:level
                 to:member
-         onSuccess:
-     ^(Member *m) {
-         [retainedMember clear];
-         [retainedMember mergeFrom:m];
-         onSuccess();
-     }
+         onSuccess:^(Member *m) {
+             [retainedMember clear];
+             [retainedMember mergeFrom:m];
+             onSuccess();
+         }
            onError:onError];
 }
 

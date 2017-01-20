@@ -63,6 +63,17 @@
              onError:(OnError)onError;
 
 /**
+ * Provisions a new device for an existing user. The call generates a set
+ * of keys that are returned back. The keys need to be approved by an
+ * existing device/keys.
+ *
+ * @param username member id to provision the device for
+ */
+- (void)provisionDevice:(NSString *)username
+              onSuccess:(OnSuccessWithDeviceInfo)onSuccess
+                onError:(OnError)onError;
+
+/**
  * Checks if a given username already exists.
  *
  * @param username username to check

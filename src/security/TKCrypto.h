@@ -8,7 +8,6 @@
 #import "TokenSdk.h"
 
 
-@class TKKeyInfo;
 @class TKSignature;
 @protocol TKCryptoEngine;
 
@@ -23,12 +22,20 @@
 - (id)initWithEngine:(id<TKCryptoEngine>)engine;
 
 /**
+ * Generates a set of keys to be used by a given member.
+ *
+ * @param level key level
+ * @return the newly created key pair information
+ */
+- (NSArray<Key *> *)generateKeys;
+
+/**
  * Generates a key of the given level.
  *
  * @param level key level
  * @return the newly created key pair information
  */
-- (TKKeyInfo *)generateKey:(Key_Level)level;
+- (Key *)generateKey:(Key_Level)level;
 
 /**
  * Signs a message with the secret key specified by the supplied type.

@@ -94,10 +94,23 @@
  * @param level key level
  */
 - (void)addKey:(Key *)key
-         level:(NSUInteger)level
             to:(Member *)member
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError;
+
+/**
+ * Adds a set of keys to the list of approved keys for the specified member.
+ *
+ * @param keys array of keys to be added
+ * @param member member to add the key to
+ * @param crypto crypto module used to generate keys
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)addKeys:(NSArray<Key *> *)keys
+             to:(Member *)member
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Removes a public key from the list of approved keys for the specified member.

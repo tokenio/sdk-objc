@@ -17,11 +17,13 @@
 @class PagedArray<Transfer>;
 @class Bank;
 @class BankInfo;
+@class DeviceInfo;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)(NSError *);
 
 typedef void (^OnSuccessWithBoolean)(BOOL);
+typedef void (^OnSuccessWithString)(NSString *);
 
 typedef void (^OnSuccessWithMember)(Member *);
 typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync *);
@@ -56,3 +58,5 @@ typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);
 
 typedef void (^OnSuccessWithBanks)(NSArray<Bank *> *);
 typedef void (^OnSuccessWithBankInfo)(BankInfo *);
+
+typedef void (^OnSuccessWithDeviceInfo)(DeviceInfo *);

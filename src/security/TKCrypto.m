@@ -7,7 +7,6 @@
 #import "Token.pbobjc.h"
 #import "TKCryptoEngine.h"
 #import "TKJson.h"
-#import "TKKeyInfo.h"
 #import "TKSignature.h"
 
 
@@ -25,7 +24,15 @@
     return self;
 }
 
-- (TKKeyInfo *)generateKey:(Key_Level)level {
+- (NSArray<Key *> *)generateKeys {
+    return @[
+            [self generateKey:Key_Level_Privileged],
+            [self generateKey:Key_Level_Standard],
+            [self generateKey:Key_Level_Low]
+    ];
+}
+
+- (Key *)generateKey:(Key_Level)level {
     return [engine generateKey:level];
 }
 

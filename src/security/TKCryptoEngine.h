@@ -22,7 +22,7 @@
  * @param level key level
  * @return the newly created key pair information
  */
-- (TKKeyInfo *)generateKey:(Key_Level)level;
+- (Key *)generateKey:(Key_Level)level;
 
 /**
  * Signs the data with the identified by the supplied key id.

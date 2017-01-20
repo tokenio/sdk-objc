@@ -20,6 +20,6 @@
 @property (atomic, readonly) Key_Level level;
 @property (atomic, readonly) NSData *publicKey;
 @property (atomic, readonly) NSData *privateKey;
-@property (atomic, readonly) TKKeyInfo *keyInfo;
+@property (atomic, readonly) Key *keyInfo;
 
 @end

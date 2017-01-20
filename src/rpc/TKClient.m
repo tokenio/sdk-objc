@@ -11,7 +11,6 @@
 #import "TKRpcLog.h"
 #import "PagedArray.h"
 #import "TKRpc.h"
-#import "TKKeyInfo.h"
 #import "TKSignature.h"
 
 
@@ -93,18 +92,29 @@
 }
 
 - (void)addKey:(Key *)key
-         level:(NSUInteger)level
             to:(Member *)member
      onSuccess:(OnSuccessWithMember)onSuccess
        onError:(OnError)onError {
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addKey.level = (Key_Level) level;
+    update.addKey.level = key.level;
     update.addKey.publicKey = key.publicKey;
     update.addKey.algorithm = key.algorithm;
 
     [self _updateMember:update onSuccess:onSuccess onError:onError];
+}
+
+- (void)addKeys:(NSArray<Key *> *)keys
+             to:(Member *)member
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError {
+    // TODO: This needs to use Directory batch API instead.
+    [self _addKey:keys
+         keyIndex:0
+         lastHash:nil
+        onSuccess:onSuccess
+          onError:onError];
 }
 
 - (void)removeKey:(NSString *)keyId
@@ -362,7 +372,7 @@
                                           action:TokenSignature_Action_Endorsed
                                         usingKey:Key_Level_Standard];
     request.createToken.payloadSignature.memberId = memberId;
-    request.createToken.payloadSignature.keyId = signature.key.id;
+    request.createToken.payloadSignature.keyId = signature.key.id_p;
     request.createToken.payloadSignature.signature = signature.value;
     RpcLogStart(request);
     
@@ -443,7 +453,7 @@
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id;
+    request.signature.keyId = signature.key.id_p;
     request.signature.signature = signature.value;
     RpcLogStart(request);
     
@@ -471,7 +481,7 @@
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id;
+    request.signature.keyId = signature.key.id_p;
     request.signature.signature = signature.value;
     RpcLogStart(request);
     
@@ -497,7 +507,7 @@
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
     request.payloadSignature.memberId = memberId;
-    request.payloadSignature.keyId = signature.key.id;
+    request.payloadSignature.keyId = signature.key.id_p;
     request.payloadSignature.signature = signature.value;
     RpcLogStart(request);
     
@@ -657,7 +667,7 @@
     request.name = name;
     request.address = address;
     request.addressSignature.memberId = memberId;
-    request.addressSignature.keyId = signature.key.id;
+    request.addressSignature.keyId = signature.key.id_p;
     request.addressSignature.signature = signature.value;
     RpcLogStart(request);
     
@@ -799,7 +809,7 @@
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];
     request.cancelToken.tokenId = tokenToCancel.id_p;
     request.cancelToken.signature.memberId = memberId;
-    request.cancelToken.signature.keyId = signature.key.id;
+    request.cancelToken.signature.keyId = signature.key.id_p;
     request.cancelToken.signature.signature = signature.value;
     request.createToken.payload = tokenToCreate;
     return request;
@@ -812,7 +822,7 @@
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update = update;
     request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = signature.key.id;
+    request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
     RpcLogStart(request);
     
@@ -838,6 +848,51 @@
         memberId:memberId
           crypto:crypto
       onBehalfOf:onBehalfOfMemberId];
+}
+
+- (void)_addKey:(NSArray<Key *> *)keys
+       keyIndex:(NSUInteger)keyIndex
+       lastHash:(NSString *)lastHash
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError {
+    Key *key = [keys objectAtIndex:keyIndex];
+
+    UpdateMemberRequest *request = [UpdateMemberRequest message];
+    request.update.memberId = memberId;
+    request.update.addKey.level = key.level;
+    request.update.addKey.publicKey = key.publicKey;
+    request.update.addKey.algorithm = key.algorithm;
+
+    if (lastHash) {
+        request.update.prevHash = lastHash;
+    }
+
+    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
+    request.updateSignature.memberId = memberId;
+    request.updateSignature.keyId = signature.key.id_p;
+    request.updateSignature.signature = signature.value;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToUpdateMemberWithRequest:request
+                                 handler:^(UpdateMemberResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         if (keyIndex == keys.count - 1) {
+                                             onSuccess(response.member);
+                                         } else {
+                                             [self _addKey:keys
+                                                  keyIndex:keyIndex + 1
+                                                  lastHash:response.member.lastHash
+                                                 onSuccess:onSuccess
+                                                   onError:onError];
+                                         }
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }];
+    [rpc execute:call request:request];
 }
 
 @end

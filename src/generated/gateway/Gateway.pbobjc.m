@@ -384,16 +384,16 @@ typedef struct GetMemberResponse__storage_ {
 
 @end
 
-#pragma mark - UsernameExistsRequest
+#pragma mark - GetMemberIdRequest
 
-@implementation UsernameExistsRequest
+@implementation GetMemberIdRequest
 
 @dynamic username;
 
-typedef struct UsernameExistsRequest__storage_ {
+typedef struct GetMemberIdRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *username;
-} UsernameExistsRequest__storage_;
+} GetMemberIdRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -404,20 +404,20 @@ typedef struct UsernameExistsRequest__storage_ {
       {
         .name = "username",
         .dataTypeSpecific.className = NULL,
-        .number = UsernameExistsRequest_FieldNumber_Username,
+        .number = GetMemberIdRequest_FieldNumber_Username,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UsernameExistsRequest__storage_, username),
+        .offset = (uint32_t)offsetof(GetMemberIdRequest__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UsernameExistsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[GetMemberIdRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UsernameExistsRequest__storage_)
+                                   storageSize:sizeof(GetMemberIdRequest__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -427,15 +427,16 @@ typedef struct UsernameExistsRequest__storage_ {
 
 @end
 
-#pragma mark - UsernameExistsResponse
+#pragma mark - GetMemberIdResponse
 
-@implementation UsernameExistsResponse
+@implementation GetMemberIdResponse
 
-@dynamic exists;
+@dynamic memberId;
 
-typedef struct UsernameExistsResponse__storage_ {
+typedef struct GetMemberIdResponse__storage_ {
   uint32_t _has_storage_[1];
-} UsernameExistsResponse__storage_;
+  NSString *memberId;
+} GetMemberIdResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -444,22 +445,22 @@ typedef struct UsernameExistsResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "exists",
+        .name = "memberId",
         .dataTypeSpecific.className = NULL,
-        .number = UsernameExistsResponse_FieldNumber_Exists,
+        .number = GetMemberIdResponse_FieldNumber_MemberId,
         .hasIndex = 0,
-        .offset = 1,  // Stored in _has_storage_ to save space.
+        .offset = (uint32_t)offsetof(GetMemberIdResponse__storage_, memberId),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UsernameExistsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[GetMemberIdResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UsernameExistsResponse__storage_)
+                                   storageSize:sizeof(GetMemberIdResponse__storage_)
                                          flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

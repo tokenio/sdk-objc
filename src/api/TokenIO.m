@@ -11,6 +11,7 @@
 #import "TokenIOAsync.h"
 #import "TKRpcSyncCall.h"
 #import "TKMemberAsync.h"
+#import "DeviceInfo.h"
 
 
 @implementation TokenIO
@@ -33,6 +34,17 @@
         [self.async createMember:username
                         onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                          onError:call.onError];
+    }];
+}
+
+- (DeviceInfo *)provisionDevice:(NSString *)username {
+    TKRpcSyncCall<DeviceInfo *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async provisionDevice:username
+                          onSuccess:^(DeviceInfo *deviceInfo) {
+                              call.onSuccess(deviceInfo);
+                          }
+                            onError:call.onError];
     }];
 }
 

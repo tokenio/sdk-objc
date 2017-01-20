@@ -26,23 +26,15 @@
 @implementation TKTestBase {
     TokenIO *tokenIO;
     dispatch_queue_t queue;
+    BOOL useSsl;
 }
 
 - (void)setUp {
     [super setUp];
-    HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
-    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:9100];
-    
     NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
-    BOOL useSsl = sslOverride ? [sslOverride boolValue] : NO;
+    useSsl = sslOverride ? [sslOverride boolValue] : NO;
 
-    TokenIOBuilder *builder = [TokenIO builder];
-    builder.host = gateway.host;
-    builder.port = gateway.port;
-    builder.useSsl = useSsl;
-    builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
-    builder.cryptoEngine = [TKTestTokenCryptoEngineFactory factory];
-    tokenIO = [builder build];
+    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:9100];
     _bank = [TKBankClient bankClientWithHost:fank.host
                                         port:fank.port
                                       useSsl:useSsl];
@@ -51,12 +43,30 @@
 }
 
 - (void)run:(AsyncTestBlock)block {
+   [self runWithResult: ^id(TokenIO *tio) {
+       block(tio);
+       return nil;
+   }];
+}
+
+- (id)runWithResult:(AsyncTestBlockWithResult)block {
     __block NSException *error;
+    __block id result = nil;
 
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
     dispatch_async(queue, ^{
         @try {
-            block(tokenIO);
+            HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
+
+            TokenIOBuilder *builder = [TokenIO builder];
+            builder.host = gateway.host;
+            builder.port = gateway.port;
+            builder.useSsl = useSsl;
+            builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+            builder.cryptoEngine = [TKTestTokenCryptoEngineFactory factory];
+            tokenIO = [builder build];
+
+            result = block(tokenIO);
         } @catch(NSException *e) {
             error = e;
         } @finally {
@@ -88,6 +98,8 @@
     if (error) {
         @throw error;
     }
+
+    return result;
 }
 
 - (TKMember *)createMember:(TokenIO *)token {
