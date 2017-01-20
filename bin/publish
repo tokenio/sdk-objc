@@ -2,7 +2,6 @@
 
 set -o errexit
 set -o nounset
-set -x
 
 usage="publish [-m] [-r] [-p] --
 
@@ -63,7 +62,7 @@ function get_version {
 }
 
 function get_part {
-    echo `${1} | cut -d '.' -f${2}`
+    echo `echo ${1} | cut -d '.' -f${2}`
 }
 
 function update_version {
@@ -98,9 +97,9 @@ spec="../TokenSdk.podspec"
 old_version=$(get_version)
 echo "Found old version: ${old_version}"
 
-major_value=$(get_part ${version} 1)
-minor_value=$(get_part ${version} 2)
-patch_value=$(get_part ${version} 3)
+major_value=$(get_part ${old_version} 1)
+minor_value=$(get_part ${old_version} 2)
+patch_value=$(get_part ${old_version} 3)
 
 if [ "${major}" != "null" ]; then
     major_value=$((major_value + 1))
@@ -116,8 +115,8 @@ fi
 
 new_version="${major_value}.${minor_value}.${patch_value}"
 
-$(update_version ${old_version} ${new_version})
-$(tag_release ${new_version})
-$(publish_podspec)
+update_version ${old_version} ${new_version}
+tag_release ${new_version}
+publish_podspec
 
 popd 1>/dev/null
