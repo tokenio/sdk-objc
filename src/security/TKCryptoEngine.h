@@ -6,8 +6,6 @@
 #import "TKCrypto.h"
 #import "TokenSdk.h"
 
-@class TKKeyInfo;
-
 /**
  * Defines a set of methods that deal with crypto, key generation, method
  * signing, etc.
