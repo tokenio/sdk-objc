@@ -168,21 +168,16 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef publicKeyRef = SecKeyCopyPublicKey(keyRef);
     NSData* puclicKeyData = [self publicKeyDataFromKeyRef:publicKeyRef];
     
-    CFDictionaryRef dictRef = SecKeyCopyAttributes(keyRef);
-    CFDataRef keyHash = CFDictionaryGetValue(dictRef, kSecAttrApplicationLabel);
-    NSData* keyHashData = (__bridge NSData *)(keyHash);
-    NSString* keyHashString = [TKUtil base64EncodeData:keyHashData];
-    
     CFRelease(publicKeyRef);
     
     NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:kKeyHeader] mutableCopy];
     [keyWithHeaderData appendData:puclicKeyData];
    
     Key *key = [Key message];
-    key.id_p = keyHashString;
     key.level = level;
     key.algorithm = Key_Algorithm_EcdsaSha256;
     key.publicKey = [TKUtil base64EncodeData:keyWithHeaderData];
+    key.id_p = [TKUtil idForData:keyWithHeaderData];
     
     return key;
 }
