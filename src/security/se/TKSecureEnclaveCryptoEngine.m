@@ -7,7 +7,6 @@
 //
 
 #import "TKSecureEnclaveCryptoEngine.h"
-#import "TKKeyInfo.h"
 #import "TKSignature.h"
 #import "QHex.h"
 
@@ -28,7 +27,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return self;
 }
 
-- (TKKeyInfo*)generateKey:(Key_Level)level {
+- (Key *)generateKey:(Key_Level)level {
     return [self generateKeyPairWithLevel:level];
 }
 
@@ -41,7 +40,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
             kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
             (__bridge CFDataRef)data,
             &error);
-    if (signRef != nil) {
+    if (signRef == nil) {
         CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
@@ -85,7 +84,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return [NSString stringWithFormat:@"%@_%@", _memberId, @(level)];
 }
 
-- (TKKeyInfo*)generateKeyPairWithLevel:(Key_Level)level {
+- (Key*)generateKeyPairWithLevel:(Key_Level)level {
     
     [self deleteOldKeysForLevel:level];
     
@@ -99,7 +98,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
             kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
             accessFlags,
             &error);
-    if (sacObject != nil) {
+    if (sacObject == nil) {
         [NSException
          raise:NSInvalidArgumentException
          format:@"Error generating access controls: %@\n", error];
@@ -122,17 +121,17 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFRelease(sacObject);
     
     SecKeyRef privateKeyRef = SecKeyCreateRandomKey(generateKeyRef, &error);
-    if (privateKeyRef != nil) {
+    if (privateKeyRef == nil) {
         CFRelease(privateKeyRef);
         [NSException
          raise:NSInvalidArgumentException
          format:@"Error generating private key: %@\n", error];
     }
     
-    TKKeyInfo* keyInfo = [self keyInfoForPrivateKey:privateKeyRef level:level];
+    Key* key = [self keyInfoForPrivateKey:privateKeyRef level:level];
 
     CFRelease(privateKeyRef);
-    return keyInfo;
+    return key;
 }
 
 - (void)deleteOldKeysForLevel:(Key_Level)level {
@@ -165,7 +164,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return keyBitsData;
 }
 
-- (TKKeyInfo*)keyInfoForPrivateKey:(SecKeyRef)keyRef level:(Key_Level)level {
+- (Key*)keyInfoForPrivateKey:(SecKeyRef)keyRef level:(Key_Level)level {
     SecKeyRef publicKeyRef = SecKeyCopyPublicKey(keyRef);
     NSData* puclicKeyData = [self publicKeyDataFromKeyRef:publicKeyRef];
     
@@ -179,10 +178,13 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:kKeyHeader] mutableCopy];
     [keyWithHeaderData appendData:puclicKeyData];
    
-    return  [TKKeyInfo keyInfoWithId:keyHashString
-                               level:level
-                           algorithm:Key_Algorithm_EcdsaSha256
-                           publicKey:keyWithHeaderData];
+    Key *key = [Key message];
+    key.id_p = keyHashString;
+    key.level = level;
+    key.algorithm = Key_Algorithm_EcdsaSha256;
+    key.publicKey = [TKUtil base64EncodeData:keyWithHeaderData];
+    
+    return key;
 }
 
 - (SecKeyRef)privateKeyForLevel:(Key_Level)level {
