@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+set -x
+
 usage="publish [-m] [-r] [-p] --
 
 where:
@@ -59,7 +63,7 @@ function get_version {
 }
 
 function get_part {
-    echo `${1} | cut -d "." -f${2}`
+    echo `${1} | cut -d '.' -f${2}`
 }
 
 function update_version {
