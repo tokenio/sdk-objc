@@ -48,22 +48,8 @@
     [rpc execute:call request:request];
 }
 
-- (void)addKeys:(NSArray<Key *> *)keys
-    forMemberId:(NSString *)memberId
-         crypto:(TKCrypto *)crypto
-      onSuccess:(OnSuccessWithMember)onSuccess
-        onError:(OnError)onError {
-    [self _addKeyForMember:memberId
-                      keys:keys
-                  keyIndex:0
-                  lastHash:nil
-                    crypto:crypto
-                 onSuccess:onSuccess
-                   onError:onError];
-}
-
-- (void)usernameExists:(NSString *)username
-          onSuccess:(OnSuccessWithBoolean)onSuccess
+- (void)getMemberId:(NSString *)username
+          onSuccess:(OnSuccessWithString)onSuccess
             onError:(OnError)onError {
     UsernameExistsRequest *request = [UsernameExistsRequest message];
     request.username = username;
@@ -81,6 +67,20 @@
                                        }
                                    }];
     [rpc execute:call request:request];
+}
+
+- (void)addKeys:(NSArray<Key *> *)keys
+    forMemberId:(NSString *)memberId
+         crypto:(TKCrypto *)crypto
+      onSuccess:(OnSuccessWithMember)onSuccess
+        onError:(OnError)onError {
+    [self _addKeyForMember:memberId
+                      keys:keys
+                  keyIndex:0
+                  lastHash:nil
+                    crypto:crypto
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
 - (void)notifyLinkAccounts:(NSString *)username

@@ -34,7 +34,7 @@
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<Key *> *keysNewDevice = [tokenIO generateKeys:member.id];
+        NSArray<Key *> *keysNewDevice = [tokenIO provisionDevice:member.id];
 
         for (Key *key in keysNewDevice) {
             [member approveKey:key];

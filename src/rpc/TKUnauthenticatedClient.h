@@ -38,6 +38,16 @@
                onError:(OnError)onError;
 
 /**
+ * Checks if a given username already exists.
+ *
+ * @param username username to check
+ * @return member id if username already exists, nil otherwise
+ */
+- (void)getMemberId:(NSString *)username
+          onSuccess:(OnSuccessWithString)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Adds a set of keys to be linked with the specified member id.
  *
  * @param memberId member id
@@ -51,16 +61,6 @@
          crypto:(TKCrypto *)crypto
       onSuccess:(OnSuccessWithMember)onSuccess
         onError:(OnError)onError;
-
-/**
- * Checks if a given username already exists.
- *
- * @param username username to check
- * @return true if username already exists, false otherwise
- */
-- (void)usernameExists:(NSString *)username
-          onSuccess:(OnSuccessWithBoolean)onSuccess
-            onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts

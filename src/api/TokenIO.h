@@ -10,6 +10,7 @@
 @class TokenIOBuilder;
 @class TKMember;
 @class TokenIOAsync;
+@class DeviceInfo;
 
 
 /**
@@ -56,14 +57,14 @@
 - (TKMember *)createMember:(NSString *)username;
 
 /**
- * Generates a set of keys and returns it to the caller. This is typically
- * used on a second device that needs to be provisioned for an existing
- * member. The keys are then send to an existing device for approval.
+ * Provisions a new device for an existing user. The call generates a set
+ * of keys that are returned back. The keys need to be approved by an
+ * existing device/keys.
  *
- * @param memberId member id to generate the keys for
- * @return generated keys
+ * @param username member id to provision the device for
+ * @return device information
  */
-- (NSArray<Key *> *)generateKeys:(NSString *)memberId;
+- (DeviceInfo *)provisionDevice:(NSString *)username;
 
 /**
  * Logs in an existing member to the system.

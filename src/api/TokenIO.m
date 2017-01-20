@@ -11,6 +11,7 @@
 #import "TokenIOAsync.h"
 #import "TKRpcSyncCall.h"
 #import "TKMemberAsync.h"
+#import "DeviceInfo.h"
 
 
 @implementation TokenIO
@@ -36,12 +37,14 @@
     }];
 }
 
-- (NSArray<Key *> *)generateKeys:(NSString *)memberId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+- (DeviceInfo *)provisionDevice:(NSString *)username {
+    TKRpcSyncCall<DeviceInfo *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async generateKeys:memberId
-                onSuccess:^(NSArray<Key *> *keys) { call.onSuccess(keys); }
-                onError:call.onError];
+        [self.async provisionDevice:username
+                          onSuccess:^(DeviceInfo *deviceInfo) {
+                              call.onSuccess(deviceInfo);
+                          }
+                            onError:call.onError];
     }];
 }
 

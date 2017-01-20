@@ -13,6 +13,7 @@
 #import "TokenIOBuilder.h"
 #import "TKUnauthenticatedClient.h"
 #import "TKClient.h"
+#import "DeviceInfo.h"
 
 
 @implementation TokenIOAsync {
@@ -70,12 +71,19 @@
                    onError:onError];
 }
 
-- (void)generateKeys:(NSString *)memberId
-           onSuccess:(OnSuccessWithKeys)onSuccess
-             onError:(OnError)onError {
-    TKCrypto *crypto = [self _createCrypto:memberId];
-    NSArray<Key *> *keys = [crypto generateKeys];
-    onSuccess(keys);
+- (void)provisionDevice:(NSString *)username
+              onSuccess:(OnSuccessWithDeviceInfo)onSuccess
+                onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs];
+    [client getMemberId:username
+              onSuccess:^(NSString *memberId) {
+                  TKCrypto *crypto = [self _createCrypto:memberId];
+                  NSArray<Key *> *keys = [crypto generateKeys];
+                  onSuccess([DeviceInfo deviceInfo:memberId keys:keys]);
+              }
+                onError:onError];
 }
 
 - (void)usernameExists:(NSString *)username
@@ -84,8 +92,8 @@
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs];
-    [client usernameExists:username
-              onSuccess:onSuccess
+    [client getMemberId:username
+              onSuccess:^(NSString *memberId) { onSuccess(memberId != nil); }
                 onError:onError];
 }
 
