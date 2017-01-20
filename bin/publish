@@ -96,6 +96,8 @@ function publish_podspec {
 
 spec="../TokenSdk.podspec"
 old_version=$(get_version)
+echo "Found old version: ${old_version}"
+
 major_value=$(get_part ${version} 1)
 minor_value=$(get_part ${version} 2)
 patch_value=$(get_part ${version} 3)
