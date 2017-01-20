@@ -53,9 +53,6 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
 
 - (bool)verifySignature:(NSString *)signature forData:(NSData *)data usingKeyId:(NSString *)keyId {
     SecKeyRef keyRef = [self publicKeyForKeyId:keyId];
-    if (keyRef == NULL) {
-        return false;
-    }
     CFErrorRef error = NULL;
     NSData* signatureData = [TKUtil base64DecodeString:signature];
     Boolean success = SecKeyVerifySignature(keyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
