@@ -10,10 +10,10 @@
 #import "TKKeyInfo.h"
 #import "TKJson.h"
 #import "TKSignature.h"
-#include <CommonCrypto/CommonDigest.h>
 #import "QHex.h"
 
-static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034200";
+// Header bytes (expected by OpenSSL) to be prepended to the raw public key data
+static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034200";
 
 @implementation TKSecureEnclaveCryptoEngine {
     NSString* _memberId;
@@ -35,7 +35,9 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
     CFErrorRef error = NULL;
 
-    CFDataRef signRef = SecKeyCreateSignature(privateKeyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, &error);
+    CFDataRef signRef = SecKeyCreateSignature(privateKeyRef,
+                                              kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
+                                              (__bridge CFDataRef)data, &error);
     if (error != errSecSuccess) {
         CFRelease(privateKeyRef);
         [NSException
@@ -45,7 +47,8 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     NSData* signatureData = (__bridge NSData *)(signRef);
 
     NSString* signatureString = [TKUtil base64EncodeData:signatureData];
-    TKSignature* tkSignature =  [TKSignature signature:signatureString signedWith:[self keyInfoForPrivateKey:privateKeyRef level:keyLevel]];
+    TKSignature* tkSignature =  [TKSignature signature:signatureString
+                                            signedWith:[self keyInfoForPrivateKey:privateKeyRef level:keyLevel]];
     CFRelease(privateKeyRef);
 
     return tkSignature;
@@ -55,7 +58,9 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     SecKeyRef keyRef = [self publicKeyForKeyId:keyId];
     CFErrorRef error = NULL;
     NSData* signatureData = [TKUtil base64DecodeString:signature];
-    Boolean success = SecKeyVerifySignature(keyRef, kSecKeyAlgorithmECDSASignatureMessageX962SHA256, (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
+    Boolean success = SecKeyVerifySignature(keyRef,
+                                            kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
+                                            (__bridge CFDataRef)data, (__bridge CFDataRef)(signatureData), &error);
     CFRelease(keyRef);
     
     return success == 1;
@@ -163,10 +168,12 @@ static NSString* keyHeader = @"3059301306072a8648ce3d020106082a8648ce3d030107034
     
     CFRelease(publicKeyRef);
     
-    NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:keyHeader] mutableCopy];
+    NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:kKeyHeader] mutableCopy];
     [keyWithHeaderData appendData:puclicKeyData];
    
-    return  [TKKeyInfo keyInfoWithId:keyHashString level:level algorithm:Key_Algorithm_EcdsaSha256 publicKey:keyWithHeaderData];
+    return  [TKKeyInfo keyInfoWithId:keyHashString level:level
+                           algorithm:Key_Algorithm_EcdsaSha256
+                           publicKey:keyWithHeaderData];
 }
 
 - (SecKeyRef)privateKeyForLevel:(Key_Level)level {

@@ -719,7 +719,7 @@
 				DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */,
 			);
 			name = SecureEnclave;
-			path = secureEnclave;
+			path = se;
 			sourceTree = "<group>";
 		};
 		DDF54B001E31796A00BE739B /* Tools */ = {
