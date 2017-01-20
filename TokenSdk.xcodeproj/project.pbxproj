@@ -337,7 +337,6 @@
 		DDAA0D3E1E257C6000E9BB09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDAA0D411E257C6000E9BB09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDAA0D431E257C6000E9BB09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DDAA0D691E257C7B00E9BB09 /* TokenSdkTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TokenSdkTests copy-Info.plist"; path = "/Users/vadim 1/Code/Tokenio/sdk-objc/TokenSdkTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		DDAA0D6F1E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecureEnclaveCryptoEngineFactory.h; sourceTree = "<group>"; };
 		DDAA0D701E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveCryptoEngineFactory.m; sourceTree = "<group>"; };
 		DDAA0D731E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecureEnclaveCryptoEngine.h; sourceTree = "<group>"; };
@@ -489,7 +488,6 @@
 				8A99090F1D890E820096A7FA /* Products */,
 				CC754FFC3CA010778232A1E9 /* Pods */,
 				45A6D2E987A941A285DA25C4 /* Frameworks */,
-				DDAA0D691E257C7B00E9BB09 /* TokenSdkTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -721,7 +719,7 @@
 				DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */,
 			);
 			name = SecureEnclave;
-			path = ../../tests;
+			path = secureEnclave;
 			sourceTree = "<group>";
 		};
 		DDF54B001E31796A00BE739B /* Tools */ = {
