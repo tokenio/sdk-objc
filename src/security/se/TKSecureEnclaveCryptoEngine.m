@@ -179,6 +179,21 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     key.publicKey = [TKUtil base64EncodeData:keyWithHeaderData];
     key.id_p = [TKUtil idForData:keyWithHeaderData];
     
+    CFMutableDictionaryRef queryRef = newCFDict;
+    CFDictionarySetValue(queryRef, kSecClass, kSecClassKey);
+    CFDictionarySetValue(queryRef, kSecValueRef, publicKeyRef);
+    CFDictionarySetValue(queryRef, kSecAttrKeyClass, kSecAttrKeyClassPublic);
+    CFMutableDictionaryRef updateRef = newCFDict;
+    CFDictionarySetValue(updateRef, kSecAttrLabel, (__bridge const void *)key.id_p);
+    OSStatus status = SecItemUpdate(queryRef, updateRef);
+    if (status != errSecSuccess) {
+        if (status != errSecSuccess) {
+            [NSException
+             raise:NSInvalidArgumentException
+             format:@"Error attaching key id label to public key: %@\n", @(status)];
+        }
+    }
+    
     return key;
 }
 
@@ -206,12 +221,11 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 }
 
 - (SecKeyRef)publicKeyForKeyId:(NSString*)keyId {
-    NSData* appLabel = [TKUtil base64DecodeString:keyId];
     CFMutableDictionaryRef getKeyRef = newCFDict;
     
     CFDictionarySetValue(getKeyRef, kSecClass, kSecClassKey);
     CFDictionarySetValue(getKeyRef, kSecAttrKeyClass, kSecAttrKeyClassPublic);
-    CFDictionarySetValue(getKeyRef, kSecAttrApplicationLabel, (__bridge const void *)(appLabel));
+    CFDictionarySetValue(getKeyRef, kSecAttrLabel, (__bridge const void *)(keyId));
     CFDictionarySetValue(getKeyRef, kSecReturnRef, kCFBooleanTrue);
     
     SecKeyRef keyRef;
