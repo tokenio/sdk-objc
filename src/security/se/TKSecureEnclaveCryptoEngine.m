@@ -190,7 +190,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         if (status != errSecSuccess) {
             [NSException
              raise:NSInvalidArgumentException
-             format:@"Error attached key id label to public key: %@\n", @(status)];
+             format:@"Error attaching key id label to public key: %@\n", @(status)];
         }
     }
     
