@@ -11,6 +11,8 @@
 #import "TokenIOBuilder.h"
 #import "TokenIO.h"
 #import "TokenIOAsync.h"
+#import "TKSecureEnclaveCryptoEngineFactory.h"
+#import "TKTokenCryptoEngineFactory.h"
 
 
 @implementation TokenIOBuilder
@@ -33,16 +35,18 @@
 }
 
 - (TokenIOAsync *)buildAsync {
-    if (!self.cryptoEngine) {
-        [NSException
-                raise:NSInvalidArgumentException
-               format:@"Crypto engine must be set"];
+    id<TKCryptoEngineFactory> cryptoEngineFactory;
+    if (self.keyStore) {
+        cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:self.keyStore];
+    } else {
+        cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
     }
+
     return [[TokenIOAsync alloc]
             initWithHost:self.host
                     port:self.port
                timeoutMs:self.timeoutMs
-                  crypto:self.cryptoEngine
+                  crypto:cryptoEngineFactory
                   useSsl:self.useSsl];
 }
 

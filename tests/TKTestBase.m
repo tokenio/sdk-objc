@@ -4,6 +4,7 @@
 //
 
 #import "Money.pbobjc.h"
+#import "bankapi/Fank.pbobjc.h"
 
 #import "TKTestBase.h"
 #import "TokenIO.h"
@@ -11,8 +12,7 @@
 #import "TKBankClient.h"
 #import "TKMember.h"
 #import "TKAccount.h"
-#import "TKTestTokenCryptoEngineFactory.h"
-#import "bankapi/Fank.pbobjc.h"
+#import "TKTestKeyStore.h"
 
 @interface HostAndPort : NSObject
 @property NSString *host;
@@ -63,7 +63,7 @@
             builder.port = gateway.port;
             builder.useSsl = useSsl;
             builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
-            builder.cryptoEngine = [TKTestTokenCryptoEngineFactory factory];
+            builder.keyStore = [[TKTestKeyStore alloc] init];
             tokenIO = [builder build];
 
             result = block(tokenIO);

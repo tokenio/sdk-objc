@@ -37,9 +37,10 @@
 
 - (void)testSubscribeAndUnsubscribe {
     [self run: ^(TokenIO *tokenIO) {
-        
-        Subscriber *s = [payer subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
-                                               platform:Platform_Ios];
+
+        Subscriber *s = [payer
+                subscribeToNotifications:@"8E8E256A58DE0F62F4A427202DF8CB07C6BD644AFFE93210BC49B8E5F940255400"
+                                platform:Platform_Ios];
         
         Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
