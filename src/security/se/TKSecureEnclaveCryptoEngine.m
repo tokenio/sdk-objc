@@ -187,11 +187,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFDictionarySetValue(updateRef, kSecAttrLabel, (__bridge const void *)key.id_p);
     OSStatus status = SecItemUpdate(queryRef, updateRef);
     if (status != errSecSuccess) {
-        if (status != errSecSuccess) {
-            [NSException
-             raise:NSInvalidArgumentException
-             format:@"Error attaching key id label to public key: %@\n", @(status)];
-        }
+        [NSException
+         raise:NSInvalidArgumentException
+         format:@"Error attaching key id label to public key: %@\n", @(status)];
     }
     
     return key;
