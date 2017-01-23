@@ -4,8 +4,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TKTokenCryptoStorage.h"
+#import "TKKeyStore.h"
 
 
-@interface TKTestTokenCryptoStorage : NSObject<TKTokenCryptoStorage>
+@interface TKTestKeyStore : NSObject<TKKeyStore>
 @end

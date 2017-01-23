@@ -6,11 +6,11 @@
 #import <Foundation/Foundation.h>
 #import "TKCryptoEngineFactory.h"
 
-@protocol TKTokenCryptoStorage;
+@protocol TKKeyStore;
 
 
-@interface TKTestTokenCryptoEngineFactory : NSObject<TKCryptoEngineFactory>
+@interface TKTokenCryptoEngineFactory : NSObject<TKCryptoEngineFactory>
 
-+ (id<TKCryptoEngineFactory>)factory;
++ (id<TKCryptoEngineFactory>)factoryWithStore:(id<TKKeyStore>)storage;
 
 @end

@@ -6,19 +6,21 @@
 #import "ed25519.h"
 #import "TKTokenSecretKey.h"
 #import "TKTokenCryptoEngine.h"
-#import "TKTokenCryptoStorage.h"
+#import "TKKeyStore.h"
 #import "TKSignature.h"
 
 
 @implementation TKTokenCryptoEngine {
-    id<TKTokenCryptoStorage> storage;
+    id<TKKeyStore> keyStore;
+    NSString *memberId;
 }
 
-- (id)initWithStorage:(id<TKTokenCryptoStorage>)storage_ {
+- (id)initForMember:(NSString *)memberId_ useKeyStore:(id <TKKeyStore>)store_ {
     self = [super init];
 
     if (self) {
-        storage = storage_;
+        keyStore = store_;
+        memberId = memberId_;
     }
 
     return self;
@@ -26,13 +28,13 @@
 
 - (Key *)generateKey:(Key_Level)level {
     TKTokenSecretKey *key = [self createNewKey_:level];
-    [storage addKey:key];
+    [keyStore addKey:key forMember:memberId];
     return key.keyInfo;
 }
 
 - (TKSignature *)signData:(NSData *)data
             usingKeyLevel:(Key_Level)keyLevel {
-    TKTokenSecretKey *key = [storage lookupKeyByLevel:keyLevel];
+    TKTokenSecretKey *key = [keyStore lookupKeyByLevel:keyLevel forMember:memberId];
     unsigned char signature[64];
     unsigned const char *sk = key.privateKey.bytes;
     unsigned const char *pk = key.publicKey.bytes;
@@ -46,7 +48,7 @@
 - (bool)verifySignature:(NSString *)signature
                 forData:(NSData *)data
              usingKeyId:(NSString *)keyId {
-    NSData *publicKey = [storage lookupKeyById:keyId].publicKey;
+    NSData *publicKey = [keyStore lookupKeyById:keyId forMember:memberId].publicKey;
     NSData *decodedSignature = [TKUtil base64DecodeString:signature];
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, publicKey.bytes) != 0;
 }

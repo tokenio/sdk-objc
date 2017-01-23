@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 #import "TKCryptoEngine.h"
 
-@protocol TKTokenCryptoStorage;
+@protocol TKKeyStore;
 
 /**
  * Token implementation of the TKCrypto that performs all the crypto operations
@@ -14,6 +14,6 @@
  */
 @interface TKTokenCryptoEngine : NSObject<TKCryptoEngine>
 
-- (id)initWithStorage:(id<TKTokenCryptoStorage>)storage;
+- (id)initForMember:(NSString *)memberId useKeyStore:(id <TKKeyStore>)store_;
 
 @end
