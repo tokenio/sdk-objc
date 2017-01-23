@@ -38,7 +38,7 @@
                onError:(OnError)onError;
 
 /**
- * Checks if a given username already exists.
+ * Looks up member id for a given username.
  *
  * @param username username to check
  * @return member id if username already exists, nil otherwise

@@ -796,7 +796,6 @@
                            }];
 
     [self _startCall:call withRequest:request];
-
 }
 
 #pragma mark private
