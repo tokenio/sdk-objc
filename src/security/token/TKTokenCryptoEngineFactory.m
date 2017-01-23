@@ -5,8 +5,6 @@
 
 #import "TKTokenCryptoEngineFactory.h"
 #import "TKTokenCryptoEngine.h"
-#import "TKKeyStore.h"
-#import "TKTestKeyStore.h"
 
 
 @implementation TKTokenCryptoEngineFactory {
