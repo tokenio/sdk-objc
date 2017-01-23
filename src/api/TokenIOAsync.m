@@ -79,9 +79,15 @@
                   timeoutMs:timeoutMs];
     [client getMemberId:username
               onSuccess:^(NSString *memberId) {
-                  TKCrypto *crypto = [self _createCrypto:memberId];
-                  NSArray<Key *> *keys = [crypto generateKeys];
-                  onSuccess([DeviceInfo deviceInfo:memberId keys:keys]);
+                  if (memberId) {
+                      TKCrypto *crypto = [self _createCrypto:memberId];
+                      NSArray<Key *> *keys = [crypto generateKeys];
+                      onSuccess([DeviceInfo deviceInfo:memberId keys:keys]);
+                  } else {
+                      onError([NSError errorWithDomain:@"io.grpc"
+                                                  code:GRPCErrorCodeNotFound
+                                              userInfo:nil]);
+                  }
               }
                 onError:onError];
 }
