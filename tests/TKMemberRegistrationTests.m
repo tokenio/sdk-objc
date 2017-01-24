@@ -34,11 +34,7 @@
     // with the new keys.
     [self run: ^(TokenIO *tokenIO) {
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstUsername];
-
-        // TODO: Replace with a batch Directory call.
-        for (Key *key in newDevice.keys) {
-            [member approveKey:key];
-        }
+        [member approveKeys:newDevice.keys];
 
         TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstUsername, memberNewDevice.firstUsername);

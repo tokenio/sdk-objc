@@ -59,12 +59,32 @@
     }];
 }
 
+- (void)approveKeys:(NSArray<Key *> *)keys {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async approveKeys:keys
+                      onSuccess:^{
+                          call.onSuccess(nil);
+                      }
+                        onError:call.onError];
+    }];
+}
+
 - (void)removeKey:(NSString *)keyId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async removeKey:keyId
                     onSuccess:^{ call.onSuccess(nil); }
                       onError:call.onError];
+    }];
+}
+
+- (void)removeKeys:(NSArray<NSString *> *)keyIds {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async removeKeys:keyIds
+                     onSuccess:^{ call.onSuccess(nil); }
+                       onError:call.onError];
     }];
 }
 

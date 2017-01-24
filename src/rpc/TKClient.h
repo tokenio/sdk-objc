@@ -62,66 +62,17 @@
           onError:(OnError)onError;
 
 /**
- * Adds an      for a given user.
+ * Updates a Token member by adding/removing keys/usernames. The operations
+ * are batched together and sent to the server.
  *
- * @param member member to add the username to
- * @param username new unique username to add
+ * @param member member to update
+ * @param operations set of operations that will mutate the member account
  * @return member information
  */
-- (void)addUsername:(NSString *)username
-              to:(Member *)member
-       onSuccess:(OnSuccessWithMember)onSuccess
-         onError:(OnError)onError;
-
-
-/**
- * Removes an username for a given user.
- *
- * @param member member to remove the username to
- * @param username username to remove
- * @return member information
- */
-- (void)removeUsername:(NSString *)username
-               from:(Member *)member
-          onSuccess:(OnSuccessWithMember)onSuccess
-            onError:(OnError)onError;
-
-/**
- * Adds a key to the list of approved keys for the specified member.
- *
- * @param key key to add
- * @param member member to add the key to
- * @param level key level
- */
-- (void)addKey:(Key *)key
-            to:(Member *)member
-     onSuccess:(OnSuccessWithMember)onSuccess
-       onError:(OnError)onError;
-
-/**
- * Adds a set of keys to the list of approved keys for the specified member.
- *
- * @param keys array of keys to be added
- * @param member member to add the key to
- * @param crypto crypto module used to generate keys
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
- */
-- (void)addKeys:(NSArray<Key *> *)keys
-             to:(Member *)member
-      onSuccess:(OnSuccessWithMember)onSuccess
-        onError:(OnError)onError;
-
-/**
- * Removes a public key from the list of approved keys for the specified member.
- *
- * @param key key to remove
- * @param member member to remove the key for
- */
-- (void)removeKey:(NSString *)keyId
-             from:(Member *)member
-        onSuccess:(OnSuccessWithMember)onSuccess
-          onError:(OnError)onError;
+- (void)updateMember:(Member *)member
+          operations:(NSArray<MemberOperation *> *)operations
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Subscribes a device to receive push notifications
@@ -140,7 +91,6 @@
  */
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
                onError:(OnError)onError;
-
 
 /**
  * Get a subscriber by Id

@@ -66,6 +66,18 @@
            onError:(OnError)onError;
 
 /**
+ * Adds a set of keys owned by this member. The keys are added to the list
+ * of valid keys for the member.
+ *
+ * @param keys to add to the approved list
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)approveKeys:(NSArray<Key *> *)keys
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Removes a key owned by this member.
  *
  * @param keyId key ID of the key to remove
@@ -73,6 +85,17 @@
  * @param onError callback invoked on error
  */
 - (void)removeKey:(NSString *)keyId
+        onSuccess:(OnSuccess)onSuccess
+          onError:(OnError)onError;
+
+/**
+ * Removes a set of keys owned by this member.
+ *
+ * @param keyId key ID of the key to remove
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)removeKeys:(NSArray<NSString *> *)keyIds
         onSuccess:(OnSuccess)onSuccess
           onError:(OnError)onError;
 

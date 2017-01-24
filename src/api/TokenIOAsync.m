@@ -186,31 +186,32 @@
                     onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
-    [client addKeys:keys
-        forMemberId:memberId
-             crypto:crypto
-          onSuccess:^(Member *member) {
-              TKClient *authenticated = [[TKClient alloc]
-                      initWithGateway:gateway
-                               crypto:crypto
-                            timeoutMs:timeoutMs
-                             memberId:memberId];
-              [authenticated addUsername:username
-                                      to:member
-                               onSuccess:
-                                       ^(Member *m) {
-                                           TKClient *newClient = [[TKClient alloc]
-                                                   initWithGateway:gateway
-                                                            crypto:crypto
-                                                         timeoutMs:timeoutMs
-                                                          memberId:memberId];
-                                           onSuccess([TKMemberAsync
-                                                   member:m
-                                                useClient:newClient]);
-                                       }
-                                 onError:onError];
-          }
-            onError:onError];
+
+    NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
+    for (Key *key in keys) {
+        MemberOperation *addKey = [MemberOperation message];
+        addKey.addKey.key = key;
+        [operations addObject:addKey];
+    }
+
+    MemberOperation *addUsername = [MemberOperation message];
+    addUsername.addUsername.username = username;
+    [operations addObject:addUsername];
+
+    [client createMember:memberId
+                  crypto:crypto
+              operations:operations
+               onSuccess:^(Member *member) {
+                   TKClient *newClient = [[TKClient alloc]
+                           initWithGateway:gateway
+                                    crypto:crypto
+                                 timeoutMs:timeoutMs
+                                  memberId:memberId];
+                   onSuccess([TKMemberAsync
+                           member:member
+                        useClient:newClient]);
+               }
+                 onError:onError];
 }
 
 @end

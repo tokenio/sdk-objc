@@ -68,11 +68,26 @@
 - (void)approveKey:(Key *)key;
 
 /**
+ * Approves a set of keys owned by this member. The keys are added to the list
+ * of valid keys for the member.
+ *
+ * @param keys to add to the approved list
+ */
+- (void)approveKeys:(NSArray<Key *> *)keys;
+
+/**
  * Removes a key owned by this member.
  *
  * @param keyId key ID of the key to remove
  */
 - (void)removeKey:(NSString *)keyId;
+
+/**
+ * Removes a set of keys owned by this member.
+ *
+ * @param keyIds key IDs of the keys to remove
+ */
+- (void)removeKeys:(NSArray<NSString *> *)keyIds;
 
 /**
  * Adds a new username for the member.
