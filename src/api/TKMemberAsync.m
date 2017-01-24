@@ -82,7 +82,7 @@
             onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray *addKeys = [NSMutableArray array];
+    NSMutableArray<MemberOperation *> *addKeys = [NSMutableArray array];
     for (Key *key in keys) {
         MemberOperation *addKey = [MemberOperation message];
         addKey.addKey.key = key;
@@ -112,7 +112,7 @@
            onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray *removeKeys = [NSMutableArray array];
+    NSMutableArray<MemberOperation *> *removeKeys = [NSMutableArray array];
     for (NSString *keyId in keyIds) {
         MemberOperation *removeKey = [MemberOperation message];
         removeKey.removeKey.keyId = keyId;
@@ -132,12 +132,24 @@
 - (void)addUsername:(NSString *)username
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError {
+    [self addUsernames:@[username]
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)addUsernames:(NSArray<NSString *> *)usernames
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    MemberOperation *addUsername = [MemberOperation message];
-    addUsername.addUsername.username = username;
+    NSMutableArray<MemberOperation *> *addUsernames = [NSMutableArray array];
+    for (NSString *username in usernames) {
+        MemberOperation *addUsername = [MemberOperation message];
+        addUsername.addUsername.username = username;
+        [addUsernames addObject:addUsername];
+    }
     [client updateMember:retainedMember
-              operations:@[addUsername]
+              operations:[addUsernames copy]
                onSuccess:
                        ^(Member *m) {
                            [retainedMember clear];
@@ -150,12 +162,24 @@
 - (void)removeUsername:(NSString *)username
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError {
+    [self removeUsernames:@[username]
+                onSuccess:onSuccess
+                  onError:onError];
+}
+
+- (void)removeUsernames:(NSArray<NSString *> *)usernames
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    MemberOperation *removeUsername = [MemberOperation message];
-    removeUsername.removeUsername.username = username;
+    NSMutableArray *removeUsernames = [NSMutableArray array];
+    for (NSString *username in usernames) {
+        MemberOperation *removeUsername = [MemberOperation message];
+        removeUsername.removeUsername.username = username;
+        [removeUsernames addObject:removeUsername];
+    }
     [client updateMember:retainedMember
-              operations:@[removeUsername]
+              operations:[removeUsernames copy]
                onSuccess:
                        ^(Member *m) {
                            [retainedMember clear];

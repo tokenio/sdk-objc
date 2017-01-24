@@ -111,6 +111,17 @@
          onError:(OnError)onError;
 
 /**
+ * Adds a set of usernames for the member.
+ *
+ * @param usernames set of usernames
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)addUsernames:(NSArray<NSString *> *)usernames
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Removes an username for the member.
  *
  * @param username username, e.g. 'john'
@@ -121,6 +132,16 @@
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
+/**
+ * Removes a set of usernames for the member.
+ *
+ * @param usernames set of usernames
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)removeUsernames:(NSArray<NSString *> *)usernames
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError;
 
 /**
  * Subscribes a device to receive push notifications

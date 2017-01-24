@@ -76,6 +76,18 @@
     }];
 }
 
+- (void)testAddUsernames {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username3 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addUsernames:@[username2, username3]];
+
+        XCTAssertEqual(member.usernames.count, 3);
+    }];
+}
+
 - (void)testRemoveUsername {
     [self run: ^(TokenIO *tokenIO) {
         NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
@@ -85,6 +97,20 @@
         XCTAssertEqual(member.usernames.count, 2);
 
         [member removeUsername:username2];
+        XCTAssertEqual(member.usernames.count, 1);
+    }];
+}
+
+- (void)testRemoveUsernames {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username3 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addUsernames:@[username2, username3]];
+        XCTAssertEqual(member.usernames.count, 3);
+
+        [member removeUsernames:@[username2, username3]];
         XCTAssertEqual(member.usernames.count, 1);
     }];
 }

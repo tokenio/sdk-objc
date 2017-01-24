@@ -97,11 +97,25 @@
 - (void)addUsername:(NSString *)username;
 
 /**
+ * Adds a new set of usernames for the member.
+ *
+ * @param usernames set of usernames
+ */
+- (void)addUsernames:(NSArray<NSString *> *)usernames;
+
+/**
  * Removes an username for the member.
  *
  * @param username username, e.g. 'john'
  */
 - (void)removeUsername:(NSString *)username;
+
+/**
+ * Removes a of usernames for the member.
+ *
+ * @param usernames set of usernames
+ */
+- (void)removeUsernames:(NSArray<NSString *> *)usernames;
 
 /**
  * Subscribes a device to receive push notifications

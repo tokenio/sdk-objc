@@ -97,12 +97,30 @@
     }];
 }
 
+- (void)addUsernames:(NSArray<NSString *> *)usernames {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async addUsernames:usernames
+                       onSuccess:^{ call.onSuccess(nil); }
+                         onError:call.onError];
+    }];
+}
+
 - (void)removeUsername:(NSString *)username {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async removeUsername:username
                       onSuccess:^{ call.onSuccess(nil); }
                         onError:call.onError];
+    }];
+}
+
+- (void)removeUsernames:(NSArray<NSString *> *)usernames {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async removeUsernames:usernames
+                       onSuccess:^{ call.onSuccess(nil); }
+                         onError:call.onError];
     }];
 }
 
