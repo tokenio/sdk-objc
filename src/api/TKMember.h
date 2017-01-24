@@ -68,11 +68,26 @@
 - (void)approveKey:(Key *)key;
 
 /**
+ * Approves a set of keys owned by this member. The keys are added to the list
+ * of valid keys for the member.
+ *
+ * @param keys to add to the approved list
+ */
+- (void)approveKeys:(NSArray<Key *> *)keys;
+
+/**
  * Removes a key owned by this member.
  *
  * @param keyId key ID of the key to remove
  */
 - (void)removeKey:(NSString *)keyId;
+
+/**
+ * Removes a set of keys owned by this member.
+ *
+ * @param keyIds key IDs of the keys to remove
+ */
+- (void)removeKeys:(NSArray<NSString *> *)keyIds;
 
 /**
  * Adds a new username for the member.
@@ -82,11 +97,25 @@
 - (void)addUsername:(NSString *)username;
 
 /**
+ * Adds a new set of usernames for the member.
+ *
+ * @param usernames set of usernames
+ */
+- (void)addUsernames:(NSArray<NSString *> *)usernames;
+
+/**
  * Removes an username for the member.
  *
  * @param username username, e.g. 'john'
  */
 - (void)removeUsername:(NSString *)username;
+
+/**
+ * Removes a of usernames for the member.
+ *
+ * @param usernames set of usernames
+ */
+- (void)removeUsernames:(NSArray<NSString *> *)usernames;
 
 /**
  * Subscribes a device to receive push notifications

@@ -48,19 +48,18 @@
             onError:(OnError)onError;
 
 /**
- * Adds a set of keys to be linked with the specified member id.
+ * Creates a new Token member.
  *
  * @param memberId member id
- * @param keys array of keys to be added
- * @param crypto crypto module used to generate keys
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
+ * @param crypto crypto engine to use
+ * @param operations a set of operations that setup member keys and/or usernames
+ * @return member information
  */
-- (void)addKeys:(NSArray<Key *> *)keys
-    forMemberId:(NSString *)memberId
-         crypto:(TKCrypto *)crypto
-      onSuccess:(OnSuccessWithMember)onSuccess
-        onError:(OnError)onError;
+- (void)createMember:(NSString *)memberId
+                  crypto:(TKCrypto *)crypto
+          operations:(NSArray<MemberOperation *> *)operations
+               onSuccess:(OnSuccessWithMember)onSuccess
+                 onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts

@@ -4,7 +4,6 @@
 //
 
 #import "gateway/Gateway.pbrpc.h"
-#import "Security.pbobjc.h"
 
 #import "TKUnauthenticatedClient.h"
 #import "TKRpcLog.h"
@@ -69,19 +68,33 @@
     [rpc execute:call request:request];
 }
 
-- (void)addKeys:(NSArray<Key *> *)keys
-    forMemberId:(NSString *)memberId
-         crypto:(TKCrypto *)crypto
-      onSuccess:(OnSuccessWithMember)onSuccess
-        onError:(OnError)onError {
-    // TODO: Replace with a batch Directory call.
-    [self _addKeyForMember:memberId
-                      keys:keys
-                  keyIndex:0
-                  lastHash:nil
-                    crypto:crypto
-                 onSuccess:onSuccess
-                   onError:onError];
+- (void)createMember:(NSString *)memberId
+                  crypto:(TKCrypto *)crypto
+          operations:(NSArray<MemberOperation *> *)operations
+               onSuccess:(OnSuccessWithMember)onSuccess
+                 onError:(OnError)onError {
+    UpdateMemberRequest *request = [UpdateMemberRequest message];
+    request.update.memberId = memberId;
+    request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
+
+    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
+    request.updateSignature.memberId = memberId;
+    request.updateSignature.keyId = signature.key.id_p;
+    request.updateSignature.signature = signature.value;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToUpdateMemberWithRequest:request
+                                 handler:^(UpdateMemberResponse *response, NSError *error) {
+                                     if (response) {
+                                         RpcLogCompleted(response);
+                                         onSuccess(response.member);
+                                     } else {
+                                         RpcLogError(error);
+                                         onError(error);
+                                     }
+                                 }];
+    [rpc execute:call request:request];
 }
 
 - (void)notifyLinkAccounts:(NSString *)username
@@ -148,7 +161,8 @@
     request.username = username;
     request.body.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
     request.body.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
-    request.body.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
+    request.body.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray
+            = [NSMutableArray arrayWithArray:accountLinkPayloads];
     request.body.linkAccountsAndAddKey.addKey.name = keyName;
     request.body.linkAccountsAndAddKey.addKey.key = key;
     RpcLogStart(request);
@@ -164,58 +178,6 @@
                                    onError(error);
                                }
                            }];
-    [rpc execute:call request:request];
-}
-
-#pragma mark private
-
-- (void)_addKeyForMember:(NSString *)memberId
-                    keys:(NSArray<Key *> *)keys
-                keyIndex:(NSUInteger)keyIndex
-                lastHash:(NSString *)lastHash
-                  crypto:(TKCrypto *)crypto
-               onSuccess:(OnSuccessWithMember)onSuccess
-                 onError:(OnError)onError {
-    Key *key = [keys objectAtIndex:keyIndex];
-
-    UpdateMemberRequest *request = [UpdateMemberRequest message];
-    request.update.memberId = memberId;
-    
-    MemberOperation *operation = [MemberOperation message];
-    operation.addKey.key = key;
-    [request.update.operationsArray addObject:operation];
-
-    if (lastHash) {
-        request.update.prevHash = lastHash;
-    }
-
-    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
-    request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = signature.key.id_p;
-    request.updateSignature.signature = signature.value;
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToUpdateMemberWithRequest:request
-                                 handler:^(UpdateMemberResponse *response, NSError *error) {
-                                     if (response) {
-                                         RpcLogCompleted(response);
-                                         if (keyIndex == keys.count - 1) {
-                                             onSuccess(response.member);
-                                         } else {
-                                             [self _addKeyForMember:memberId
-                                                               keys:keys
-                                                           keyIndex:keyIndex + 1
-                                                           lastHash:response.member.lastHash
-                                                             crypto:crypto
-                                                          onSuccess:onSuccess
-                                                            onError:onError];
-                                         }
-                                     } else {
-                                         RpcLogError(error);
-                                         onError(error);
-                                     }
-                                 }];
     [rpc execute:call request:request];
 }
 

@@ -34,11 +34,7 @@
     // with the new keys.
     [self run: ^(TokenIO *tokenIO) {
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstUsername];
-
-        // TODO: Replace with a batch Directory call.
-        for (Key *key in newDevice.keys) {
-            [member approveKey:key];
-        }
+        [member approveKeys:newDevice.keys];
 
         TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstUsername, memberNewDevice.firstUsername);
@@ -80,6 +76,18 @@
     }];
 }
 
+- (void)testAddUsernames {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username3 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addUsernames:@[username2, username3]];
+
+        XCTAssertEqual(member.usernames.count, 3);
+    }];
+}
+
 - (void)testRemoveUsername {
     [self run: ^(TokenIO *tokenIO) {
         NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
@@ -89,6 +97,20 @@
         XCTAssertEqual(member.usernames.count, 2);
 
         [member removeUsername:username2];
+        XCTAssertEqual(member.usernames.count, 1);
+    }];
+}
+
+- (void)testRemoveUsernames {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        NSString *username3 = [@"username-" stringByAppendingString:[TKUtil nonce]];
+
+        TKMember *member = [self createMember:tokenIO];
+        [member addUsernames:@[username2, username3]];
+        XCTAssertEqual(member.usernames.count, 3);
+
+        [member removeUsernames:@[username2, username3]];
         XCTAssertEqual(member.usernames.count, 1);
     }];
 }
