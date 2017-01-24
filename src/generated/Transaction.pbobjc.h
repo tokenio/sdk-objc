@@ -31,9 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Enum TransactionType
 
 typedef GPB_ENUM(TransactionType) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   TransactionType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TransactionType_InvalidType = 0,
   TransactionType_Debit = 1,
@@ -42,16 +44,20 @@ typedef GPB_ENUM(TransactionType) {
 
 GPBEnumDescriptor *TransactionType_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL TransactionType_IsValidValue(int32_t value);
 
 #pragma mark - Enum TransactionStatus
 
 typedef GPB_ENUM(TransactionStatus) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   TransactionStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TransactionStatus_InvalidStatus = 0,
   TransactionStatus_Success = 1,
@@ -62,20 +68,24 @@ typedef GPB_ENUM(TransactionStatus) {
 
 GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL TransactionStatus_IsValidValue(int32_t value);
 
 #pragma mark - TransactionRoot
 
-/// Exposes the extension registry for this file.
-///
-/// The base class provides:
-/// @code
-///   + (GPBExtensionRegistry *)extensionRegistry;
-/// @endcode
-/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
-/// this file and all files that it depends on.
+/**
+ * Exposes the extension registry for this file.
+ *
+ * The base class provides:
+ * @code
+ *   + (GPBExtensionRegistry *)extensionRegistry;
+ * @endcode
+ * which is a @c GPBExtensionRegistry that includes all the extensions defined by
+ * this file and all files that it depends on.
+ **/
 @interface TransactionRoot : GPBRootObject
 @end
 
@@ -100,33 +110,41 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 @property(nonatomic, readwrite) TransactionStatus status;
 
 @property(nonatomic, readwrite, strong, null_resettable) Money *amount;
-/// Test to see if @c amount has been set.
+/** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
-/// Points to the token, only set for Token transactions.
+/** Points to the token, only set for Token transactions. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
-/// Points to the token transfer, only set for Token transactions.
+/** Points to the token transfer, only set for Token transactions. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenTransferId;
 
 @end
 
-/// Fetches the raw value of a @c Transaction's @c type property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c Transaction's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t Transaction_Type_RawValue(Transaction *message);
-/// Sets the raw value of an @c Transaction's @c type property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c Transaction's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetTransaction_Type_RawValue(Transaction *message, int32_t value);
 
-/// Fetches the raw value of a @c Transaction's @c status property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c Transaction's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t Transaction_Status_RawValue(Transaction *message);
-/// Sets the raw value of an @c Transaction's @c status property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c Transaction's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetTransaction_Status_RawValue(Transaction *message, int32_t value);
 
 NS_ASSUME_NONNULL_END

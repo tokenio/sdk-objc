@@ -59,15 +59,11 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
 
 @implementation MemberAddKeyOperation
 
-@dynamic publicKey;
-@dynamic level;
-@dynamic algorithm;
+@dynamic hasKey, key;
 
 typedef struct MemberAddKeyOperation__storage_ {
   uint32_t _has_storage_[1];
-  Key_Level level;
-  Key_Algorithm algorithm;
-  NSString *publicKey;
+  Key *key;
 } MemberAddKeyOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -77,31 +73,13 @@ typedef struct MemberAddKeyOperation__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "publicKey",
-        .dataTypeSpecific.className = NULL,
-        .number = MemberAddKeyOperation_FieldNumber_PublicKey,
+        .name = "key",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = MemberAddKeyOperation_FieldNumber_Key,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, publicKey),
+        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, key),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "level",
-        .dataTypeSpecific.enumDescFunc = Key_Level_EnumDescriptor,
-        .number = MemberAddKeyOperation_FieldNumber_Level,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, level),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
-        .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "algorithm",
-        .dataTypeSpecific.enumDescFunc = Key_Algorithm_EnumDescriptor,
-        .number = MemberAddKeyOperation_FieldNumber_Algorithm,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, algorithm),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
-        .dataType = GPBDataTypeEnum,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -119,30 +97,6 @@ typedef struct MemberAddKeyOperation__storage_ {
 }
 
 @end
-
-int32_t MemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message) {
-  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Level];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetMemberAddKeyOperation_Level_RawValue(MemberAddKeyOperation *message, int32_t value) {
-  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Level];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
-
-int32_t MemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message) {
-  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Algorithm];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetMemberAddKeyOperation_Algorithm_RawValue(MemberAddKeyOperation *message, int32_t value) {
-  GPBDescriptor *descriptor = [MemberAddKeyOperation descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MemberAddKeyOperation_FieldNumber_Algorithm];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
 
 #pragma mark - MemberRemoveKeyOperation
 
@@ -230,26 +184,107 @@ typedef struct MemberUsernameOperation__storage_ {
 
 @end
 
-#pragma mark - MemberUpdate
+#pragma mark - MemberOperation
 
-@implementation MemberUpdate
+@implementation MemberOperation
 
 @dynamic operationOneOfCase;
-@dynamic prevHash;
-@dynamic memberId;
 @dynamic addKey;
 @dynamic removeKey;
 @dynamic addUsername;
 @dynamic removeUsername;
 
-typedef struct MemberUpdate__storage_ {
+typedef struct MemberOperation__storage_ {
   uint32_t _has_storage_[2];
-  NSString *prevHash;
-  NSString *memberId;
   MemberAddKeyOperation *addKey;
   MemberRemoveKeyOperation *removeKey;
   MemberUsernameOperation *addUsername;
   MemberUsernameOperation *removeUsername;
+} MemberOperation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberAddKeyOperation),
+        .number = MemberOperation_FieldNumber_AddKey,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "removeKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberRemoveKeyOperation),
+        .number = MemberOperation_FieldNumber_RemoveKey,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, removeKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "addUsername",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
+        .number = MemberOperation_FieldNumber_AddUsername,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, addUsername),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "removeUsername",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
+        .number = MemberOperation_FieldNumber_RemoveUsername,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, removeUsername),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberOperation class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberOperation__storage_)
+                                         flags:0];
+    static const char *oneofs[] = {
+      "operation",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void MemberOperation_ClearOperationOneOfCase(MemberOperation *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - MemberUpdate
+
+@implementation MemberUpdate
+
+@dynamic prevHash;
+@dynamic memberId;
+@dynamic operationsArray, operationsArray_Count;
+
+typedef struct MemberUpdate__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *prevHash;
+  NSString *memberId;
+  NSMutableArray *operationsArray;
 } MemberUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -277,39 +312,12 @@ typedef struct MemberUpdate__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "addKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAddKeyOperation),
-        .number = MemberUpdate_FieldNumber_AddKey,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, addKey),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "removeKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRemoveKeyOperation),
-        .number = MemberUpdate_FieldNumber_RemoveKey,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, removeKey),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "addUsername",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
-        .number = MemberUpdate_FieldNumber_AddUsername,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, addUsername),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "removeUsername",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberUsernameOperation),
-        .number = MemberUpdate_FieldNumber_RemoveUsername,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(MemberUpdate__storage_, removeUsername),
-        .flags = GPBFieldOptional,
+        .name = "operationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperation),
+        .number = MemberUpdate_FieldNumber_OperationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MemberUpdate__storage_, operationsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -321,12 +329,6 @@ typedef struct MemberUpdate__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberUpdate__storage_)
                                          flags:0];
-    static const char *oneofs[] = {
-      "operation",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -335,11 +337,6 @@ typedef struct MemberUpdate__storage_ {
 
 @end
 
-void MemberUpdate_ClearOperationOneOfCase(MemberUpdate *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
 #pragma mark - Member
 
 @implementation Member

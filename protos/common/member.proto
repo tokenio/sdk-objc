@@ -6,12 +6,9 @@ option java_outer_classname = "MemberProtos";
 import "address.proto";
 import "security.proto";
 
-
 // Adds member key to the directory.
 message MemberAddKeyOperation {
-  string public_key = 1;                               // Base64url encoded public key.
-  io.token.proto.common.security.Key.Level level = 2;
-  io.token.proto.common.security.Key.Algorithm algorithm = 3;
+  io.token.proto.common.security.Key key = 1;
 }
 
 // Removes member key from the directory.
@@ -24,17 +21,21 @@ message MemberUsernameOperation {
   string username = 1;
 }
 
+message MemberOperation {
+  oneof operation {
+    MemberAddKeyOperation add_key = 1;
+    MemberRemoveKeyOperation remove_key = 2;
+    MemberUsernameOperation add_username = 3;
+    MemberUsernameOperation remove_username = 4;
+  }
+}
+
 // Updates member information in the directory. The directory is append only
 // log of operations.
 message MemberUpdate {
   string prev_hash = 1;
   string member_id = 2;
-  oneof operation {
-    MemberAddKeyOperation add_key = 3;
-    MemberRemoveKeyOperation remove_key = 4;
-    MemberUsernameOperation add_username = 5;
-    MemberUsernameOperation remove_username = 6;
-  }
+  repeated MemberOperation operations = 3;
 }
 
 // A member record that is computed by replaying all the member updates.
