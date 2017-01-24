@@ -33,9 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Enum Key_Algorithm
 
 typedef GPB_ENUM(Key_Algorithm) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   Key_Algorithm_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Key_Algorithm_InvalidAlgorithm = 0,
   Key_Algorithm_Ed25519 = 1,
@@ -44,16 +46,20 @@ typedef GPB_ENUM(Key_Algorithm) {
 
 GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL Key_Algorithm_IsValidValue(int32_t value);
 
 #pragma mark - Enum Key_Level
 
 typedef GPB_ENUM(Key_Level) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   Key_Level_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Key_Level_InvalidLevel = 0,
   Key_Level_Privileged = 1,
@@ -63,20 +69,24 @@ typedef GPB_ENUM(Key_Level) {
 
 GPBEnumDescriptor *Key_Level_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL Key_Level_IsValidValue(int32_t value);
 
 #pragma mark - SecurityRoot
 
-/// Exposes the extension registry for this file.
-///
-/// The base class provides:
-/// @code
-///   + (GPBExtensionRegistry *)extensionRegistry;
-/// @endcode
-/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
-/// this file and all files that it depends on.
+/**
+ * Exposes the extension registry for this file.
+ *
+ * The base class provides:
+ * @code
+ *   + (GPBExtensionRegistry *)extensionRegistry;
+ * @endcode
+ * which is a @c GPBExtensionRegistry that includes all the extensions defined by
+ * this file and all files that it depends on.
+ **/
 @interface SecurityRoot : GPBRootObject
 @end
 
@@ -93,7 +103,7 @@ typedef GPB_ENUM(Key_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/// Base64url encoded public key.
+/** Base64url encoded public key. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
 @property(nonatomic, readwrite) Key_Level level;
@@ -102,20 +112,28 @@ typedef GPB_ENUM(Key_FieldNumber) {
 
 @end
 
-/// Fetches the raw value of a @c Key's @c level property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c Key's @c level property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t Key_Level_RawValue(Key *message);
-/// Sets the raw value of an @c Key's @c level property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c Key's @c level property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetKey_Level_RawValue(Key *message, int32_t value);
 
-/// Fetches the raw value of a @c Key's @c algorithm property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c Key's @c algorithm property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t Key_Algorithm_RawValue(Key *message);
-/// Sets the raw value of an @c Key's @c algorithm property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c Key's @c algorithm property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetKey_Algorithm_RawValue(Key *message, int32_t value);
 
 #pragma mark - Signature
@@ -152,31 +170,37 @@ typedef GPB_ENUM(SealedMessage_Method_OneOfCase) {
   SealedMessage_Method_OneOfCase_RsaAes = 7,
 };
 
-/// Represents an encrypted message payload
+/**
+ * Represents an encrypted message payload
+ **/
 @interface SealedMessage : GPBMessage
 
-/// Base64url encoded ciphertext.
+/** Base64url encoded ciphertext. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *ciphertext;
 
 @property(nonatomic, readonly) SealedMessage_Method_OneOfCase methodOneOfCase;
 
-/// Noop encryption
+/** Noop encryption */
 @property(nonatomic, readwrite, strong, null_resettable) SealedMessage_NoopMethod *noop;
 
-/// RSA blocks method
+/** RSA blocks method */
 @property(nonatomic, readwrite, strong, null_resettable) SealedMessage_RsaMethod *rsa;
 
-/// RSA/AES Method specific metadata
+/** RSA/AES Method specific metadata */
 @property(nonatomic, readwrite, strong, null_resettable) SealedMessage_RsaAesMethod *rsaAes;
 
 @end
 
-/// Clears whatever value was set for the oneof 'method'.
+/**
+ * Clears whatever value was set for the oneof 'method'.
+ **/
 void SealedMessage_ClearMethodOneOfCase(SealedMessage *message);
 
 #pragma mark - SealedMessage_NoopMethod
 
-/// Clear text is used instad of encryption
+/**
+ * Clear text is used instad of encryption
+ **/
 @interface SealedMessage_NoopMethod : GPBMessage
 
 @end
@@ -190,20 +214,22 @@ typedef GPB_ENUM(SealedMessage_RsaMethod_FieldNumber) {
   SealedMessage_RsaMethod_FieldNumber_SignatureKeyId = 4,
 };
 
-/// The message is encrypted using the public key of the receipient.
-/// The message can be decrypted only with the corresponding private key.
+/**
+ * The message is encrypted using the public key of the receipient.
+ * The message can be decrypted only with the corresponding private key.
+ **/
 @interface SealedMessage_RsaMethod : GPBMessage
 
-/// The id of the key used for encryption
+/** The id of the key used for encryption */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
 
-/// RSA/ECB/OAEPWithSHA-256AndMGF1Padding
+/** RSA/ECB/OAEPWithSHA-256AndMGF1Padding */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *algorithm;
 
-/// Base64url encoded ciphertext signature.
+/** Base64url encoded ciphertext signature. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
 
-/// the key-id of the signature
+/** the key-id of the signature */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signatureKeyId;
 
 @end
@@ -219,27 +245,29 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
   SealedMessage_RsaAesMethod_FieldNumber_SignatureKeyId = 7,
 };
 
-/// The message is encrypted with a self-generated symmetric key.
-/// That key is encrypted using the public key of the receipient and
-/// can only be decrypted with the corresponding private key.
+/**
+ * The message is encrypted with a self-generated symmetric key.
+ * That key is encrypted using the public key of the receipient and
+ * can only be decrypted with the corresponding private key.
+ **/
 @interface SealedMessage_RsaAesMethod : GPBMessage
 
-/// The id of the key used for encryption
+/** The id of the key used for encryption */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rsaKeyId;
 
-/// RSA/ECB/OAEPWithSHA-256AndMGF1Padding
+/** RSA/ECB/OAEPWithSHA-256AndMGF1Padding */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rsaAlgorithm;
 
-/// AES/CBC/PKCS5Padding
+/** AES/CBC/PKCS5Padding */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aesAlgorithm;
 
-/// Base64url encoded rsa-encrypted aes key
+/** Base64url encoded rsa-encrypted aes key */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *encryptedAesKey;
 
-/// Base64url encoded ciphertext signature.
+/** Base64url encoded ciphertext signature. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
 
-/// the key-id of the signature
+/** the key-id of the signature */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signatureKeyId;
 
 @end

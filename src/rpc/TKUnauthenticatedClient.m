@@ -180,9 +180,10 @@
 
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
-    request.update.addKey.level = key.level;
-    request.update.addKey.publicKey = key.publicKey;
-    request.update.addKey.algorithm = key.algorithm;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addKey.key = key;
+    [request.update.operationsArray addObject:operation];
 
     if (lastHash) {
         request.update.prevHash = lastHash;

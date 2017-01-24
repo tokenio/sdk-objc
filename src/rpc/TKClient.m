@@ -74,7 +74,10 @@
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addUsername.username = username;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addUsername.username = username;
+    [update.operationsArray addObject:operation];
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
@@ -86,7 +89,10 @@
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.removeUsername.username = username;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.removeUsername.username = username;
+    [update.operationsArray addObject:operation];
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
@@ -98,9 +104,10 @@
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.addKey.level = key.level;
-    update.addKey.publicKey = key.publicKey;
-    update.addKey.algorithm = key.algorithm;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addKey.key = key;
+    [update.operationsArray addObject:operation];
 
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
@@ -124,7 +131,10 @@
     MemberUpdate *update = [MemberUpdate message];
     update.memberId = member.id_p;
     update.prevHash = member.lastHash;
-    update.removeKey.keyId = keyId;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.removeKey.keyId = keyId;
+    [update.operationsArray addObject:operation];
     
     [self _updateMember:update onSuccess:onSuccess onError:onError];
 }
@@ -858,9 +868,10 @@
 
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
-    request.update.addKey.level = key.level;
-    request.update.addKey.publicKey = key.publicKey;
-    request.update.addKey.algorithm = key.algorithm;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addKey.key = key;
+    [request.update.operationsArray addObject:operation];
 
     if (lastHash) {
         request.update.prevHash = lastHash;

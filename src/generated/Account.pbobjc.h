@@ -28,14 +28,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - AccountRoot
 
-/// Exposes the extension registry for this file.
-///
-/// The base class provides:
-/// @code
-///   + (GPBExtensionRegistry *)extensionRegistry;
-/// @endcode
-/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
-/// this file and all files that it depends on.
+/**
+ * Exposes the extension registry for this file.
+ *
+ * The base class provides:
+ * @code
+ *   + (GPBExtensionRegistry *)extensionRegistry;
+ * @endcode
+ * which is a @c GPBExtensionRegistry that includes all the extensions defined by
+ * this file and all files that it depends on.
+ **/
 @interface AccountRoot : GPBRootObject
 @end
 
@@ -48,8 +50,10 @@ typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
   AccountLinkPayload_FieldNumber_ExpirationMs = 4,
 };
 
-/// The payload of the account linking request. Used for serialization only.
-/// The value of the payload is encrypted as a serialized JSON object.
+/**
+ * The payload of the account linking request. Used for serialization only.
+ * The value of the payload is encrypted as a serialized JSON object.
+ **/
 @interface AccountLinkPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
@@ -70,7 +74,9 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_BankId = 3,
 };
 
-/// Bank Service Account representation.
+/**
+ * Bank Service Account representation.
+ **/
 @interface Account : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;

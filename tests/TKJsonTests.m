@@ -57,12 +57,19 @@
 - (void)testRepeated {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = @"m123";
-    request.update.addKey.publicKey = @"public-key";
+    
+    Key *key = [Key message];
+    key.publicKey = @"public-key";
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addKey.key = key;
+    [request.update.operationsArray addObject:operation];
+    
     request.updateSignature.keyId = @"key-id";
     request.updateSignature.signature = @"signature";
 
     NSString *json = [TKJson serialize:request];
-    XCTAssertEqualObjects(json, @"{\"update\":{\"addKey\":{\"publicKey\":\"public-key\"},\"memberId\":\"m123\"},\"updateSignature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
+    XCTAssertEqualObjects(json, @"{\"update\":{\"memberId\":\"m123\",\"operations\":[{\"addKey\":{\"key\":{\"publicKey\":\"public-key\"}}}]},\"updateSignature\":{\"keyId\":\"key-id\",\"signature\":\"signature\"}}");
 }
 
 /**
@@ -157,8 +164,15 @@
 - (void)testDeserialzeRepeated {
     UpdateMemberRequest *request1 = [UpdateMemberRequest message];
     request1.update.memberId = @"m123";
-    request1.update.addKey.level = Key_Level_Privileged;
-    request1.update.addKey.publicKey = @"public-key";
+    
+    Key *key = [Key message];
+    key.publicKey = @"public-key";
+    key.level = Key_Level_Privileged;
+    
+    MemberOperation *operation = [MemberOperation message];
+    operation.addKey.key = key;
+    [request1.update.operationsArray addObject:operation];
+    
     request1.updateSignature.keyId = @"key-id";
     request1.updateSignature.signature = @"signature";
     
