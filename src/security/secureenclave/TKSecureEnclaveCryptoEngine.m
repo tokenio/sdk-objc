@@ -8,6 +8,7 @@
 
 #import "TKSecureEnclaveCryptoEngine.h"
 #import "TKSignature.h"
+#import "TKLogManager.h"
 #import "QHex.h"
 
 // Header bytes (expected by OpenSSL) to be prepended to the raw public key data to
@@ -42,9 +43,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
             &error);
     if (signRef == nil) {
         CFRelease(privateKeyRef);
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error signing data: %@\n", error];
+        TKLogError(@"Error signing data");
+        return nil;
     }
     NSData* signatureData = (__bridge NSData *)(signRef);
 
