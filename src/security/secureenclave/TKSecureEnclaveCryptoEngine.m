@@ -43,7 +43,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
             &error);
     if (signRef == nil) {
         CFRelease(privateKeyRef);
-        TKLogError(@"Error signing data");
+        TKLogError(@"Error signing data: %@", error);
         return nil;
     }
     NSData* signatureData = (__bridge NSData *)(signRef);
