@@ -32,16 +32,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FankFankRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface FankFankRoot : GPBRootObject
 @end
 
@@ -53,10 +51,8 @@ typedef GPB_ENUM(FankClient_FieldNumber) {
   FankClient_FieldNumber_LastName = 3,
 };
 
-/**
- *
- * A bank client, such as John Doe. Client can have multiple accounts.
- **/
+///
+/// A bank client, such as John Doe. Client can have multiple accounts.
 @interface FankClient : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
@@ -82,7 +78,7 @@ typedef GPB_ENUM(FankAccount_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
-/** Test to see if @c balance has been set. */
+/// Test to see if @c balance has been set.
 @property(nonatomic, readwrite) BOOL hasBalance;
 
 @end
@@ -111,7 +107,7 @@ typedef GPB_ENUM(FankAddClientResponse_FieldNumber) {
 @interface FankAddClientResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) FankClient *client;
-/** Test to see if @c client has been set. */
+/// Test to see if @c client has been set.
 @property(nonatomic, readwrite) BOOL hasClient;
 
 @end
@@ -137,7 +133,7 @@ typedef GPB_ENUM(FankGetClientResponse_FieldNumber) {
 @interface FankGetClientResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) FankClient *client;
-/** Test to see if @c client has been set. */
+/// Test to see if @c client has been set.
 @property(nonatomic, readwrite) BOOL hasClient;
 
 @end
@@ -160,7 +156,7 @@ typedef GPB_ENUM(FankAddAccountRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
-/** Test to see if @c balance has been set. */
+/// Test to see if @c balance has been set.
 @property(nonatomic, readwrite) BOOL hasBalance;
 
 @end
@@ -174,7 +170,7 @@ typedef GPB_ENUM(FankAddAccountResponse_FieldNumber) {
 @interface FankAddAccountResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) FankAccount *account;
-/** Test to see if @c account has been set. */
+/// Test to see if @c account has been set.
 @property(nonatomic, readwrite) BOOL hasAccount;
 
 @end
@@ -200,7 +196,7 @@ typedef GPB_ENUM(FankGetAccountsResponse_FieldNumber) {
 @interface FankGetAccountsResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankAccount*> *accountArray;
-/** The number of items in @c accountArray without causing the array to be created. */
+/// The number of items in @c accountArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountArray_Count;
 
 @end
@@ -229,7 +225,7 @@ typedef GPB_ENUM(FankGetAccountResponse_FieldNumber) {
 @interface FankGetAccountResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) FankAccount *account;
-/** Test to see if @c account has been set. */
+/// Test to see if @c account has been set.
 @property(nonatomic, readwrite) BOOL hasAccount;
 
 @end
@@ -249,7 +245,7 @@ typedef GPB_ENUM(FankAuthorizeLinkAccountsRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountsArray;
-/** The number of items in @c accountsArray without causing the array to be created. */
+/// The number of items in @c accountsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
 
 @end

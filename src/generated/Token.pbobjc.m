@@ -62,12 +62,14 @@ static GPBFileDescriptor *TokenRoot_FileDescriptor(void) {
 @dynamic id_p;
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
+@dynamic replacedByTokenId;
 
 typedef struct Token__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   TokenPayload *payload;
   NSMutableArray *payloadSignaturesArray;
+  NSString *replacedByTokenId;
 } Token__storage_;
 
 // This method is threadsafe because it is initially called
@@ -102,6 +104,15 @@ typedef struct Token__storage_ {
         .offset = (uint32_t)offsetof(Token__storage_, payloadSignaturesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "replacedByTokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = Token_FieldNumber_ReplacedByTokenId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Token__storage_, replacedByTokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

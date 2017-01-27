@@ -35,11 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Enum TransferStatusCode
 
 typedef GPB_ENUM(TransferStatusCode) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
   TransferStatusCode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TransferStatusCode_Pending = 0,
   TransferStatusCode_Success = 1,
@@ -49,24 +47,20 @@ typedef GPB_ENUM(TransferStatusCode) {
 
 GPBEnumDescriptor *TransferStatusCode_EnumDescriptor(void);
 
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
 BOOL TransferStatusCode_IsValidValue(int32_t value);
 
 #pragma mark - TransferRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface TransferRoot : GPBRootObject
 @end
 
@@ -81,21 +75,17 @@ typedef GPB_ENUM(TransferStatus_FieldNumber) {
 
 @property(nonatomic, readwrite) TransferStatusCode code;
 
-/** Optional status details. */
+/// Optional status details.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *details;
 
 @end
 
-/**
- * Fetches the raw value of a @c TransferStatus's @c code property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
+/// Fetches the raw value of a @c TransferStatus's @c code property, even
+/// if the value was not defined by the enum at the time the code was generated.
 int32_t TransferStatus_Code_RawValue(TransferStatus *message);
-/**
- * Sets the raw value of an @c TransferStatus's @c code property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
+/// Sets the raw value of an @c TransferStatus's @c code property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
 void SetTransferStatus_Code_RawValue(TransferStatus *message, int32_t value);
 
 #pragma mark - Transfer
@@ -109,29 +99,27 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Status = 6,
 };
 
-/**
- * A transfer record as persisted on the ledger.
- **/
+/// A transfer record as persisted on the ledger.
 @interface Transfer : GPBMessage
 
-/** Computed as the hash of the transfer payload. */
+/// Computed as the hash of the transfer payload.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** Bank transaction reference id. */
+/// Bank transaction reference id.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *referenceId;
 
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferPayload *payload;
-/** Test to see if @c payload has been set. */
+/// Test to see if @c payload has been set.
 @property(nonatomic, readwrite) BOOL hasPayload;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *payloadSignaturesArray;
-/** The number of items in @c payloadSignaturesArray without causing the array to be created. */
+/// The number of items in @c payloadSignaturesArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferStatus *status;
-/** Test to see if @c status has been set. */
+/// Test to see if @c status has been set.
 @property(nonatomic, readwrite) BOOL hasStatus;
 
 @end
@@ -146,28 +134,26 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
   TransferPayload_FieldNumber_Description_p = 6,
 };
 
-/**
- * A transfer payload that is being signed by the redeemer and the bank.
- **/
+/// A transfer payload that is being signed by the redeemer and the bank.
 @interface TransferPayload : GPBMessage
 
-/** Client assigned unique request id. */
+/// Client assigned unique request id.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
-/** Token id. */
+/// Token id.
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
-/** Amount and currency. */
+/// Amount and currency.
 @property(nonatomic, readwrite, strong, null_resettable) Money *amount;
-/** Test to see if @c amount has been set. */
+/// Test to see if @c amount has been set.
 @property(nonatomic, readwrite) BOOL hasAmount;
 
-/** Transfer desitinations, sorted in priority order. */
+/// Transfer desitinations, sorted in priority order.
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
-/** The number of items in @c destinationsArray without causing the array to be created. */
+/// The number of items in @c destinationsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
-/** Optional */
+/// Optional
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 @end

@@ -28,16 +28,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - AuthRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface AuthRoot : GPBRootObject
 @end
 
@@ -52,11 +50,9 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
   HttpAuthPayload_FieldNumber_CreatedAtMs = 6,
 };
 
-/**
- * The payload is signed by the client for every HTTP request. It consists
- * of some of the HTTP request fields. We convert the proto into canonical
- * JSON and sign it.
- **/
+/// The payload is signed by the client for every HTTP request. It consists
+/// of some of the HTTP request fields. We convert the proto into canonical
+/// JSON and sign it.
 @interface HttpAuthPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *method;

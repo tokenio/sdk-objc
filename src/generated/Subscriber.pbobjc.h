@@ -29,11 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Enum Platform
 
 typedef GPB_ENUM(Platform) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
   Platform_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Platform_Invalid = 0,
   Platform_Ios = 1,
@@ -43,24 +41,20 @@ typedef GPB_ENUM(Platform) {
 
 GPBEnumDescriptor *Platform_EnumDescriptor(void);
 
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
 BOOL Platform_IsValidValue(int32_t value);
 
 #pragma mark - SubscriberRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface SubscriberRoot : GPBRootObject
 @end
 
@@ -76,23 +70,19 @@ typedef GPB_ENUM(Subscriber_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** e.g push token */
+/// e.g push token
 @property(nonatomic, readwrite, copy, null_resettable) NSString *target;
 
 @property(nonatomic, readwrite) Platform platform;
 
 @end
 
-/**
- * Fetches the raw value of a @c Subscriber's @c platform property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
+/// Fetches the raw value of a @c Subscriber's @c platform property, even
+/// if the value was not defined by the enum at the time the code was generated.
 int32_t Subscriber_Platform_RawValue(Subscriber *message);
-/**
- * Sets the raw value of an @c Subscriber's @c platform property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
+/// Sets the raw value of an @c Subscriber's @c platform property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
 void SetSubscriber_Platform_RawValue(Subscriber *message, int32_t value);
 
 NS_ASSUME_NONNULL_END

@@ -30,16 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - BanklinkRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface BanklinkRoot : GPBRootObject
 @end
 
@@ -51,10 +49,8 @@ typedef GPB_ENUM(AccountLinkingPayloads_FieldNumber) {
   AccountLinkingPayloads_FieldNumber_PayloadsArray = 3,
 };
 
-/**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * This message represents
- **/
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/// This message represents
 @interface AccountLinkingPayloads : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
@@ -62,7 +58,7 @@ typedef GPB_ENUM(AccountLinkingPayloads_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *payloadsArray;
-/** The number of items in @c payloadsArray without causing the array to be created. */
+/// The number of items in @c payloadsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger payloadsArray_Count;
 
 @end

@@ -37,16 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum NotifyStatus
 
-/**
- * The status returned when sending a notification. ACCEPTED means the notification was initiated, but
- * not necessarily successfully delivered
- **/
+/// The status returned when sending a notification. ACCEPTED means the notification was initiated, but
+/// not necessarily successfully delivered
 typedef GPB_ENUM(NotifyStatus) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
   NotifyStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   NotifyStatus_Invalid = 0,
   NotifyStatus_Accepted = 1,
@@ -55,20 +51,16 @@ typedef GPB_ENUM(NotifyStatus) {
 
 GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void);
 
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
 BOOL NotifyStatus_IsValidValue(int32_t value);
 
 #pragma mark - Enum Notification_Status
 
 typedef GPB_ENUM(Notification_Status) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
+  /// Value used if any message's field encounters a value that is not defined
+  /// by this enum. The message will also have C functions to get/set the rawValue
+  /// of the field.
   Notification_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Notification_Status_Invalid = 0,
   Notification_Status_Pending = 1,
@@ -77,24 +69,20 @@ typedef GPB_ENUM(Notification_Status) {
 
 GPBEnumDescriptor *Notification_Status_EnumDescriptor(void);
 
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
+/// Checks to see if the given value is defined by the enum or was not known at
+/// the time this source was generated.
 BOOL Notification_Status_IsValidValue(int32_t value);
 
 #pragma mark - NotificationRoot
 
-/**
- * Exposes the extension registry for this file.
- *
- * The base class provides:
- * @code
- *   + (GPBExtensionRegistry *)extensionRegistry;
- * @endcode
- * which is a @c GPBExtensionRegistry that includes all the extensions defined by
- * this file and all files that it depends on.
- **/
+/// Exposes the extension registry for this file.
+///
+/// The base class provides:
+/// @code
+///   + (GPBExtensionRegistry *)extensionRegistry;
+/// @endcode
+/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
+/// this file and all files that it depends on.
 @interface NotificationRoot : GPBRootObject
 @end
 
@@ -104,9 +92,7 @@ typedef GPB_ENUM(TransferProcessed_FieldNumber) {
   TransferProcessed_FieldNumber_TransferId = 1,
 };
 
-/**
- * A notification that a transfer was successfully processed.
- **/
+/// A notification that a transfer was successfully processed.
 @interface TransferProcessed : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
@@ -121,9 +107,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
   LinkAccounts_FieldNumber_AccountLinkPayloadsArray = 3,
 };
 
-/**
- * A notification that a bank wants to be linked.
- **/
+/// A notification that a bank wants to be linked.
 @interface LinkAccounts : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
@@ -131,7 +115,7 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
-/** The number of items in @c accountLinkPayloadsArray without causing the array to be created. */
+/// The number of items in @c accountLinkPayloadsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
 
 @end
@@ -142,9 +126,7 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
   StepUp_FieldNumber_TokenId = 1,
 };
 
-/**
- * A notification to step up / endorse a token.
- **/
+/// A notification to step up / endorse a token.
 @interface StepUp : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
@@ -158,15 +140,13 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
   AddKey_FieldNumber_Key = 2,
 };
 
-/**
- * A notification that a key wants to be added to a member.
- **/
+/// A notification that a key wants to be added to a member.
 @interface AddKey : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
-/** Test to see if @c key has been set. */
+/// Test to see if @c key has been set.
 @property(nonatomic, readwrite) BOOL hasKey;
 
 @end
@@ -178,17 +158,15 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
   LinkAccountsAndAddKey_FieldNumber_AddKey = 2,
 };
 
-/**
- * A notification that a bank wants to be linked, and keys want to be added.
- **/
+/// A notification that a bank wants to be linked, and keys want to be added.
 @interface LinkAccountsAndAddKey : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
-/** Test to see if @c linkAccounts has been set. */
+/// Test to see if @c linkAccounts has been set.
 @property(nonatomic, readwrite) BOOL hasLinkAccounts;
 
 @property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
-/** Test to see if @c addKey has been set. */
+/// Test to see if @c addKey has been set.
 @property(nonatomic, readwrite) BOOL hasAddKey;
 
 @end
@@ -212,9 +190,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_LinkAccountsAndAddKey = 5,
 };
 
-/**
- * A data that goes in a NotifyRequest
- **/
+/// A data that goes in a NotifyRequest
 @interface NotifyBody : GPBMessage
 
 @property(nonatomic, readonly) NotifyBody_Body_OneOfCase bodyOneOfCase;
@@ -231,9 +207,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @end
 
-/**
- * Clears whatever value was set for the oneof 'body'.
- **/
+/// Clears whatever value was set for the oneof 'body'.
 void NotifyBody_ClearBodyOneOfCase(NotifyBody *message);
 
 #pragma mark - Notification
@@ -245,36 +219,30 @@ typedef GPB_ENUM(Notification_FieldNumber) {
   Notification_FieldNumber_Status = 4,
 };
 
-/**
- * The record of a notification. Retrieved from notification service
- **/
+/// The record of a notification. Retrieved from notification service
 @interface Notification : GPBMessage
 
-/** A unique ID given to this notification */
+/// A unique ID given to this notification
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** The subscriber that was or will be notified */
+/// The subscriber that was or will be notified
 @property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
 
-/** Contents of the notification */
+/// Contents of the notification
 @property(nonatomic, readwrite, strong, null_resettable) NotificationContent *content;
-/** Test to see if @c content has been set. */
+/// Test to see if @c content has been set.
 @property(nonatomic, readwrite) BOOL hasContent;
 
 @property(nonatomic, readwrite) Notification_Status status;
 
 @end
 
-/**
- * Fetches the raw value of a @c Notification's @c status property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
+/// Fetches the raw value of a @c Notification's @c status property, even
+/// if the value was not defined by the enum at the time the code was generated.
 int32_t Notification_Status_RawValue(Notification *message);
-/**
- * Sets the raw value of an @c Notification's @c status property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
+/// Sets the raw value of an @c Notification's @c status property, allowing
+/// it to be set to a value that was not defined by the enum at the time the code
+/// was generated.
 void SetNotification_Status_RawValue(Notification *message, int32_t value);
 
 #pragma mark - NotificationContent
@@ -289,9 +257,7 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
   NotificationContent_FieldNumber_LocArgsArray = 7,
 };
 
-/**
- * The contents of a notification that was sent or will be sent
- **/
+/// The contents of a notification that was sent or will be sent
 @interface NotificationContent : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *type;
@@ -303,7 +269,7 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *locKey;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *locArgsArray;
-/** The number of items in @c locArgsArray without causing the array to be created. */
+/// The number of items in @c locArgsArray without causing the array to be created.
 @property(nonatomic, readonly) NSUInteger locArgsArray_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
