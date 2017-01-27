@@ -46,34 +46,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum TokenSignature_Action
 
-/// List of valid actions that one can perform on the Token. We use lowercase string value
-/// of the action when computing a signature.
+/**
+ * List of valid actions that one can perform on the Token. We use lowercase string value
+ * of the action when computing a signature.
+ **/
 typedef GPB_ENUM(TokenSignature_Action) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   TokenSignature_Action_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TokenSignature_Action_Invalid = 0,
 
-  /// Endorses token. Both payer and payer bank co-endorse the token.
+  /** Endorses token. Both payer and payer bank co-endorse the token. */
   TokenSignature_Action_Endorsed = 1,
 
-  /// Revoked by the payer or declined by the redeemer.
+  /** Revoked by the payer or declined by the redeemer. */
   TokenSignature_Action_Cancelled = 2,
 };
 
 GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL TokenSignature_Action_IsValidValue(int32_t value);
 
 #pragma mark - Enum TokenOperationResult_Status
 
 typedef GPB_ENUM(TokenOperationResult_Status) {
-  /// Value used if any message's field encounters a value that is not defined
-  /// by this enum. The message will also have C functions to get/set the rawValue
-  /// of the field.
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
   TokenOperationResult_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TokenOperationResult_Status_Invalid = 0,
   TokenOperationResult_Status_Success = 1,
@@ -82,20 +90,24 @@ typedef GPB_ENUM(TokenOperationResult_Status) {
 
 GPBEnumDescriptor *TokenOperationResult_Status_EnumDescriptor(void);
 
-/// Checks to see if the given value is defined by the enum or was not known at
-/// the time this source was generated.
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
 BOOL TokenOperationResult_Status_IsValidValue(int32_t value);
 
 #pragma mark - TokenRoot
 
-/// Exposes the extension registry for this file.
-///
-/// The base class provides:
-/// @code
-///   + (GPBExtensionRegistry *)extensionRegistry;
-/// @endcode
-/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
-/// this file and all files that it depends on.
+/**
+ * Exposes the extension registry for this file.
+ *
+ * The base class provides:
+ * @code
+ *   + (GPBExtensionRegistry *)extensionRegistry;
+ * @endcode
+ * which is a @c GPBExtensionRegistry that includes all the extensions defined by
+ * this file and all files that it depends on.
+ **/
 @interface TokenRoot : GPBRootObject
 @end
 
@@ -108,24 +120,26 @@ typedef GPB_ENUM(Token_FieldNumber) {
   Token_FieldNumber_ReplacedByTokenId = 4,
 };
 
-///
-/// Generic token envelope definition.
+/**
+ *
+ * Generic token envelope definition.
+ **/
 @interface Token : GPBMessage
 
-/// Computed as sha(token).
+/** Computed as sha(token). */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/// Token payload, being signed.
+/** Token payload, being signed. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
-/// Test to see if @c payload has been set.
+/** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
 
-/// Payload signatures.
+/** Payload signatures. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
-/// The number of items in @c payloadSignaturesArray without causing the array to be created.
+/** The number of items in @c payloadSignaturesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
-/// ID of the latest token replacing it
+/** ID of the latest token replacing it */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *replacedByTokenId;
 
 @end
@@ -142,17 +156,21 @@ typedef GPB_ENUM(TokenSignature_FieldNumber) {
 @property(nonatomic, readwrite) TokenSignature_Action action;
 
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
-/// Test to see if @c signature has been set.
+/** Test to see if @c signature has been set. */
 @property(nonatomic, readwrite) BOOL hasSignature;
 
 @end
 
-/// Fetches the raw value of a @c TokenSignature's @c action property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c TokenSignature's @c action property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t TokenSignature_Action_RawValue(TokenSignature *message);
-/// Sets the raw value of an @c TokenSignature's @c action property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c TokenSignature's @c action property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetTokenSignature_Action_RawValue(TokenSignature *message, int32_t value);
 
 #pragma mark - TokenMember
@@ -193,34 +211,34 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @interface TokenPayload : GPBMessage
 
-/// 1.0
+/** 1.0 */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *version;
 
-/// nonce, random string used to de-dupe tokens, set by client.
+/** nonce, random string used to de-dupe tokens, set by client. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
-/// Token issuer, bank.
+/** Token issuer, bank. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *issuer;
-/// Test to see if @c issuer has been set.
+/** Test to see if @c issuer has been set. */
 @property(nonatomic, readwrite) BOOL hasIssuer;
 
-/// Payer member.
+/** Payer member. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *from;
-/// Test to see if @c from has been set.
+/** Test to see if @c from has been set. */
 @property(nonatomic, readwrite) BOOL hasFrom;
 
-/// Payee member.
+/** Payee member. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
-/// Test to see if @c to has been set.
+/** Test to see if @c to has been set. */
 @property(nonatomic, readwrite) BOOL hasTo;
 
-/// Optional
+/** Optional */
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
 
-/// Optional
+/** Optional */
 @property(nonatomic, readwrite) int64_t expiresAtMs;
 
-/// Optional
+/** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 @property(nonatomic, readonly) TokenPayload_Body_OneOfCase bodyOneOfCase;
@@ -231,7 +249,9 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @end
 
-/// Clears whatever value was set for the oneof 'body'.
+/**
+ * Clears whatever value was set for the oneof 'body'.
+ **/
 void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
 
 #pragma mark - TransferBody
@@ -247,28 +267,28 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 
 @interface TransferBody : GPBMessage
 
-/// Redeemer member.
+/** Redeemer member. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer;
-/// Test to see if @c redeemer has been set.
+/** Test to see if @c redeemer has been set. */
 @property(nonatomic, readwrite) BOOL hasRedeemer;
 
-/// Transfer instructions.
+/** Transfer instructions. */
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
-/// Test to see if @c instructions has been set.
+/** Test to see if @c instructions has been set. */
 @property(nonatomic, readwrite) BOOL hasInstructions;
 
-/// Payer or redeemer member id.
+/** Payer or redeemer member id. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *feesPaidBy;
-/// Test to see if @c feesPaidBy has been set.
+/** Test to see if @c feesPaidBy has been set. */
 @property(nonatomic, readwrite) BOOL hasFeesPaidBy;
 
-/// Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+/** Optional: ISO4217, 3 letter currency code such as "USD" or "EUR". */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
 
-/// Optional: Token total lifetime amount. Double.
+/** Optional: Token total lifetime amount. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lifetimeAmount;
 
-/// Optional: Single token charge request acceptable range. Double.
+/** Optional: Single token charge request acceptable range. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
 
 @end
@@ -281,9 +301,9 @@ typedef GPB_ENUM(AccessBody_FieldNumber) {
 
 @interface AccessBody : GPBMessage
 
-/// Each entry defines an resources level
+/** Each entry defines an resources level */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessBody_Resource*> *resourcesArray;
-/// The number of items in @c resourcesArray without causing the array to be created.
+/** The number of items in @c resourcesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger resourcesArray_Count;
 
 @end
@@ -335,12 +355,16 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @end
 
-/// Clears whatever value was set for the oneof 'resource'.
+/**
+ * Clears whatever value was set for the oneof 'resource'.
+ **/
 void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message);
 
 #pragma mark - AccessBody_Resource_AllAddresses
 
-/// Provides access to all member addresses
+/**
+ * Provides access to all member addresses
+ **/
 @interface AccessBody_Resource_AllAddresses : GPBMessage
 
 @end
@@ -351,7 +375,9 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
   AccessBody_Resource_Address_FieldNumber_AddressId = 1,
 };
 
-/// Provides access to a specific member address
+/**
+ * Provides access to a specific member address
+ **/
 @interface AccessBody_Resource_Address : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
@@ -360,7 +386,9 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 
 #pragma mark - AccessBody_Resource_AllAccounts
 
-/// Provides access to all member accounts
+/**
+ * Provides access to all member accounts
+ **/
 @interface AccessBody_Resource_AllAccounts : GPBMessage
 
 @end
@@ -371,7 +399,9 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
   AccessBody_Resource_Account_FieldNumber_AccountId = 1,
 };
 
-/// Provides access to a specific member account balance
+/**
+ * Provides access to a specific member account balance
+ **/
 @interface AccessBody_Resource_Account : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
@@ -380,7 +410,9 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 
 #pragma mark - AccessBody_Resource_AllAccountTransactions
 
-/// Provides access to member transactions in all accounts
+/**
+ * Provides access to member transactions in all accounts
+ **/
 @interface AccessBody_Resource_AllAccountTransactions : GPBMessage
 
 @end
@@ -391,7 +423,9 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
   AccessBody_Resource_AccountTransactions_FieldNumber_AccountId = 1,
 };
 
-/// Provides access to a specific account transactions
+/**
+ * Provides access to a specific account transactions
+ **/
 @interface AccessBody_Resource_AccountTransactions : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
@@ -400,7 +434,9 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
 
 #pragma mark - AccessBody_Resource_AllAccountBalances
 
-/// Provides access to member balance on all accounts
+/**
+ * Provides access to member balance on all accounts
+ **/
 @interface AccessBody_Resource_AllAccountBalances : GPBMessage
 
 @end
@@ -411,7 +447,9 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
   AccessBody_Resource_AccountBalance_FieldNumber_AccountId = 1,
 };
 
-/// Provides access to a specific account balance
+/**
+ * Provides access to a specific account balance
+ **/
 @interface AccessBody_Resource_AccountBalance : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
@@ -425,24 +463,30 @@ typedef GPB_ENUM(TokenOperationResult_FieldNumber) {
   TokenOperationResult_FieldNumber_Status = 2,
 };
 
-///
-/// Token operation status
+/**
+ *
+ * Token operation status
+ **/
 @interface TokenOperationResult : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
-/// Test to see if @c token has been set.
+/** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @property(nonatomic, readwrite) TokenOperationResult_Status status;
 
 @end
 
-/// Fetches the raw value of a @c TokenOperationResult's @c status property, even
-/// if the value was not defined by the enum at the time the code was generated.
+/**
+ * Fetches the raw value of a @c TokenOperationResult's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
 int32_t TokenOperationResult_Status_RawValue(TokenOperationResult *message);
-/// Sets the raw value of an @c TokenOperationResult's @c status property, allowing
-/// it to be set to a value that was not defined by the enum at the time the code
-/// was generated.
+/**
+ * Sets the raw value of an @c TokenOperationResult's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
 void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int32_t value);
 
 NS_ASSUME_NONNULL_END

@@ -36,14 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - MemberRoot
 
-/// Exposes the extension registry for this file.
-///
-/// The base class provides:
-/// @code
-///   + (GPBExtensionRegistry *)extensionRegistry;
-/// @endcode
-/// which is a @c GPBExtensionRegistry that includes all the extensions defined by
-/// this file and all files that it depends on.
+/**
+ * Exposes the extension registry for this file.
+ *
+ * The base class provides:
+ * @code
+ *   + (GPBExtensionRegistry *)extensionRegistry;
+ * @endcode
+ * which is a @c GPBExtensionRegistry that includes all the extensions defined by
+ * this file and all files that it depends on.
+ **/
 @interface MemberRoot : GPBRootObject
 @end
 
@@ -53,11 +55,13 @@ typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
   MemberAddKeyOperation_FieldNumber_Key = 1,
 };
 
-/// Adds member key to the directory.
+/**
+ * Adds member key to the directory.
+ **/
 @interface MemberAddKeyOperation : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
-/// Test to see if @c key has been set.
+/** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
 
 @end
@@ -68,7 +72,9 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
   MemberRemoveKeyOperation_FieldNumber_KeyId = 1,
 };
 
-/// Removes member key from the directory.
+/**
+ * Removes member key from the directory.
+ **/
 @interface MemberRemoveKeyOperation : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
@@ -81,7 +87,9 @@ typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
   MemberUsernameOperation_FieldNumber_Username = 1,
 };
 
-/// Adds/removes member username to/from the directory.
+/**
+ * Adds/removes member username to/from the directory.
+ **/
 @interface MemberUsernameOperation : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
@@ -119,7 +127,9 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 
 @end
 
-/// Clears whatever value was set for the oneof 'operation'.
+/**
+ * Clears whatever value was set for the oneof 'operation'.
+ **/
 void MemberOperation_ClearOperationOneOfCase(MemberOperation *message);
 
 #pragma mark - MemberUpdate
@@ -130,8 +140,10 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
   MemberUpdate_FieldNumber_OperationsArray = 3,
 };
 
-/// Updates member information in the directory. The directory is append only
-/// log of operations.
+/**
+ * Updates member information in the directory. The directory is append only
+ * log of operations.
+ **/
 @interface MemberUpdate : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *prevHash;
@@ -139,7 +151,7 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MemberOperation*> *operationsArray;
-/// The number of items in @c operationsArray without causing the array to be created.
+/** The number of items in @c operationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger operationsArray_Count;
 
 @end
@@ -153,7 +165,9 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_KeysArray = 4,
 };
 
-/// A member record that is computed by replaying all the member updates.
+/**
+ * A member record that is computed by replaying all the member updates.
+ **/
 @interface Member : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
@@ -161,11 +175,11 @@ typedef GPB_ENUM(Member_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lastHash;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usernamesArray;
-/// The number of items in @c usernamesArray without causing the array to be created.
+/** The number of items in @c usernamesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usernamesArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
-/// The number of items in @c keysArray without causing the array to be created.
+/** The number of items in @c keysArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger keysArray_Count;
 
 @end
@@ -179,23 +193,25 @@ typedef GPB_ENUM(AddressRecord_FieldNumber) {
   AddressRecord_FieldNumber_AddressSignature = 4,
 };
 
-/// A member address record
+/**
+ * A member address record
+ **/
 @interface AddressRecord : GPBMessage
 
-/// Address id
+/** Address id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/// The display name of the address
+/** The display name of the address */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-/// Country specific JSON address
+/** Country specific JSON address */
 @property(nonatomic, readwrite, strong, null_resettable) Address *address;
-/// Test to see if @c address has been set.
+/** Test to see if @c address has been set. */
 @property(nonatomic, readwrite) BOOL hasAddress;
 
-/// member signature of the address
+/** member signature of the address */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *addressSignature;
-/// Test to see if @c addressSignature has been set.
+/** Test to see if @c addressSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasAddressSignature;
 
 @end
