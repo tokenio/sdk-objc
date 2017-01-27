@@ -117,6 +117,7 @@ typedef GPB_ENUM(Token_FieldNumber) {
   Token_FieldNumber_Id_p = 1,
   Token_FieldNumber_Payload = 2,
   Token_FieldNumber_PayloadSignaturesArray = 3,
+  Token_FieldNumber_ReplacedByTokenId = 4,
 };
 
 /**
@@ -137,6 +138,9 @@ typedef GPB_ENUM(Token_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenSignature*> *payloadSignaturesArray;
 /** The number of items in @c payloadSignaturesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
+
+/** ID of the latest token replacing it */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *replacedByTokenId;
 
 @end
 

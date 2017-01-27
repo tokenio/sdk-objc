@@ -101,6 +101,7 @@
         TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:access];
         XCTAssertEqual(TokenOperationResult_Status_Success, [replaced status]);
         XCTAssertEqual(2, [[replaced token] payloadSignaturesArray_Count]);
+        XCTAssert([[grantor getToken:token.id_p].replacedByTokenId isEqualToString:replaced.token.id_p]);
     }];
 }
 

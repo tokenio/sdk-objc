@@ -14,6 +14,7 @@ message Token {
   string id = 1;                                          // Computed as sha(token).
   TokenPayload payload = 2;                               // Token payload, being signed.
   repeated TokenSignature payload_signatures = 3;         // Payload signatures.
+  string replaced_by_token_id = 4;                        // ID of the latest token replacing it
 }
 
 message TokenSignature {
