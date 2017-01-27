@@ -35,6 +35,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 - (TKSignature*)signData:(NSData *)data usingKeyLevel:(Key_Level)keyLevel {
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
     CFErrorRef error = NULL;
+    if (!privateKeyRef) {
+        return nil;
+    }
 
     CFDataRef signRef = SecKeyCreateSignature(
             privateKeyRef,
@@ -99,9 +102,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
             accessFlags,
             &error);
     if (sacObject == nil) {
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error generating access controls: %@\n", error];
+        TKLogError(@"Error generating access controls: %@\n", error);
+        return nil;
     }
     
     CFMutableDictionaryRef accessControlDict = newCFDict;
@@ -123,9 +125,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef privateKeyRef = SecKeyCreateRandomKey(generateKeyRef, &error);
     if (privateKeyRef == nil) {
         CFRelease(privateKeyRef);
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error generating private key: %@\n", error];
+        TKLogError(@"Error generating private key: %@\n", error);
+        return nil;
     }
     
     Key* key = [self keyInfoForPrivateKey:privateKeyRef level:level];
@@ -155,9 +156,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     if (status != errSecSuccess) {
         status = SecItemCopyMatching(queryRef, &result);
         if (status != errSecSuccess) {
-            [NSException
-             raise:NSInvalidArgumentException
-             format:@"Error adding public key: %@\n", @(status)];
+            TKLogError(@"Error adding public key: %@\n", @(status));
+            return nil;
         }
     }
     NSData* keyBitsData = (__bridge NSData *)(result);
@@ -169,6 +169,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     NSData* puclicKeyData = [self publicKeyDataFromKeyRef:publicKeyRef];
     
     CFRelease(publicKeyRef);
+    if (!puclicKeyData) {
+        return nil;
+    }
     
     NSMutableData* keyWithHeaderData = [[QHex dataWithHexString:kKeyHeader] mutableCopy];
     [keyWithHeaderData appendData:puclicKeyData];
@@ -187,9 +190,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFDictionarySetValue(updateRef, kSecAttrLabel, (__bridge const void *)key.id_p);
     OSStatus status = SecItemUpdate(queryRef, updateRef);
     if (status != errSecSuccess) {
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error attaching key id label to public key: %@\n", @(status)];
+        TKLogError(@"Error attaching key id label to public key: %@\n", @(status));
+        return nil;
     }
     
     return key;
@@ -210,9 +212,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef keyRef;
     OSStatus status = SecItemCopyMatching(getKeyRef, (CFTypeRef *)&keyRef);
     if (status != errSecSuccess) {
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error retrieving private key: %@\n", @(status)];
+        TKLogError(@"Error retrieving private key: %@\n", @(status));
+        return nil;
     }
     
     return (SecKeyRef)keyRef;
@@ -229,9 +230,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     SecKeyRef keyRef;
     OSStatus status = SecItemCopyMatching(getKeyRef, (CFTypeRef *)&keyRef);
     if (status != errSecSuccess) {
-        [NSException
-         raise:NSInvalidArgumentException
-         format:@"Error retrieving public key for id %@ error: %@\n", keyId,  @(status)];
+        TKLogError(@"Error retrieving public key for id %@ error: %@\n", keyId,  @(status));
+        return nil;
     }
     
     return (SecKeyRef)keyRef;
