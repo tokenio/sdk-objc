@@ -30,7 +30,7 @@
 
     Key *low = [crypto generateKey:Key_Level_Low];
 
-    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low reason:nil];
     XCTAssertEqualObjects(signature.key.id_p, low.id_p);
     XCTAssert(signature.value.length > 0);
 
@@ -47,7 +47,8 @@
     Key *standard = [crypto generateKey:Key_Level_Standard];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:Key_Level_Standard];
+                                 usingKey:Key_Level_Standard
+                                    reason:nil];
     XCTAssertEqualObjects(signature.key.id_p, standard.id_p);
     XCTAssert(signature.value.length > 0);
 

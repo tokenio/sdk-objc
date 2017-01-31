@@ -32,7 +32,9 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return [self generateKeyPairWithLevel:level];
 }
 
-- (TKSignature*)signData:(NSData *)data usingKeyLevel:(Key_Level)keyLevel {
+- (TKSignature*)signData:(NSData *)data
+           usingKeyLevel:(Key_Level)keyLevel
+                  reason:(NSString *)reason {
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
     CFErrorRef error = NULL;
     if (!privateKeyRef) {

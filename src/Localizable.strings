@@ -1,0 +1,7 @@
+"Signature_Reason_Authentication" = "Approve authentication";
+"Signature_Reason_CreateMember" = "Approve creating a new member account";
+"Signature_Reason_UpdateMember" = "Approve updating account change";
+"Signature_Reason_EndorseToken" = "Approve endorsing the token";
+"Signature_Reason_CancelToken" = "Approve cancelling the token";
+"Signature_Reason_CreateTransfer" = "Approve creating the money transfer";
+"Signature_Reason_AddAddress" = "Approve adding an address to your account";

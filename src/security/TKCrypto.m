@@ -37,24 +37,27 @@
 }
 
 - (TKSignature *)sign:(GPBMessage *)message
-             usingKey:(Key_Level)keyLevel {
+             usingKey:(Key_Level)keyLevel
+               reason:(NSString *)reason {
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return [engine signData:jsonData usingKeyLevel:keyLevel];
+    return [engine signData:jsonData usingKeyLevel:keyLevel reason:reason];
 }
 
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
-             usingKey:(Key_Level)keyLevel {
+             usingKey:(Key_Level)keyLevel
+               reason:(NSString *)reason {
     NSData *payload = [self encodedPayloadFor:token with:action];
-    return [engine signData:payload usingKeyLevel:keyLevel];
+    return [engine signData:payload usingKeyLevel:keyLevel reason:reason];
 }
 
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
-                    usingKey:(Key_Level)keyLevel {
+                    usingKey:(Key_Level)keyLevel
+                      reason:(NSString *)reason {
     NSData *payload = [self encodedPayload:tokenPayload with:action];
-    return [engine signData:payload usingKeyLevel:keyLevel];
+    return [engine signData:payload usingKeyLevel:keyLevel reason:reason];
 }
 
 - (bool)verifySignature:(NSString *)signature

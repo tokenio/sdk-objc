@@ -76,7 +76,11 @@
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
     request.update.prevHash = member.lastHash;
 
-    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
+    TKSignature *signature = [crypto sign:request.update
+                                 usingKey:Key_Level_Privileged
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_UpdateMember",
+                                           @"Approve updating user account")];
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
@@ -339,7 +343,10 @@
                                                       tokenToCreate:tokenToCreate];
     TKSignature *signature = [crypto signPayload:tokenToCreate
                                           action:TokenSignature_Action_Endorsed
-                                        usingKey:Key_Level_Standard];
+                                        usingKey:Key_Level_Standard
+                                          reason:NSLocalizedString(
+                                                  @"Signature_Reason_EndorseToken",
+                                                  @"Approve endorsing token")];
     request.createToken.payloadSignature.memberId = memberId;
     request.createToken.payloadSignature.keyId = signature.key.id_p;
     request.createToken.payloadSignature.signature = signature.value;
@@ -418,7 +425,10 @@
              onError:(OnError)onError {
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:keyLevel];
+                                 usingKey:keyLevel
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_EndorseToken",
+                                           @"Approve endorsing token")];
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -446,7 +456,10 @@
             onError:(OnError)onError {
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Cancelled
-                                 usingKey:Key_Level_Low];
+                                 usingKey:Key_Level_Low
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_CancelToken",
+                                           @"Approve cancelling the token")];
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -472,7 +485,11 @@
 - (void)createTransfer:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:payload usingKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:payload
+                                 usingKey:Key_Level_Low
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_CreateTransfer",
+                                           @"Approve creating a transfer")];
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
     request.payloadSignature.memberId = memberId;
@@ -631,7 +648,11 @@
           withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess
            onError:(OnError)onError {
-    TKSignature *signature = [crypto sign:address usingKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:address
+                                 usingKey:Key_Level_Low
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_AddAddress",
+                                           @"Approve adding an address")];
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.address = address;
@@ -773,7 +794,10 @@
                                       tokenToCreate:(TokenPayload *)tokenToCreate {
     TKSignature *signature = [crypto sign:tokenToCancel
                                    action:TokenSignature_Action_Cancelled
-                                 usingKey:Key_Level_Low];
+                                 usingKey:Key_Level_Low
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_CancelToken",
+                                           @"Approve cancelling the token")];
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];
     request.cancelToken.tokenId = tokenToCancel.id_p;
     request.cancelToken.signature.memberId = memberId;

@@ -27,10 +27,12 @@
  *
  * @param data payload to sign
  * @param keyLevel level of the key to use
+ * @param reason the reason the data is being signed
  * @return payload signature
  */
 - (TKSignature *)signData:(NSData *)data
-            usingKeyLevel:(Key_Level)keyLevel;
+            usingKeyLevel:(Key_Level)keyLevel
+                   reason:(NSString *)reason;
 
 /**
  * Verifies the payload signature.
