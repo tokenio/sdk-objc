@@ -40,4 +40,5 @@
     NSString* string = TKLocalizedString(@"Signature_Reason_CreateMember", @"");
     XCTAssertEqualObjects(string, @"Overridden custom table string");
 }
+
 @end
