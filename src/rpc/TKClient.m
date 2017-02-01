@@ -80,7 +80,12 @@
                                  usingKey:Key_Level_Privileged
                                    reason:NSLocalizedString(
                                            @"Signature_Reason_UpdateMember",
-                                           @"Approve updating user account")];
+                                           @"Approve updating user account")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
@@ -317,7 +322,12 @@
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
     ReplaceTokenRequest *request = [self _createReplaceTokenRequest:tokenToCancel
-                                                      tokenToCreate:tokenToCreate];
+                                                      tokenToCreate:tokenToCreate
+                                                            onError:onError];
+    if (!request) {
+        return;
+    }
+
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -340,13 +350,26 @@
                      onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                        onError:(OnError)onError {
     ReplaceTokenRequest *request = [self _createReplaceTokenRequest:tokenToCancel
-                                                      tokenToCreate:tokenToCreate];
+                                                      tokenToCreate:tokenToCreate
+                                                            onError:onError];
+    if (!request) {
+        return;
+    }
+
+    NSString *reason = (tokenToCancel.payload.access != nil)
+            ? @"Signature_Reason_EndorseAccessToken"
+            : @"Signature_Reason_EndorseTransferToken";
     TKSignature *signature = [crypto signPayload:tokenToCreate
                                           action:TokenSignature_Action_Endorsed
                                         usingKey:Key_Level_Standard
                                           reason:NSLocalizedString(
-                                                  @"Signature_Reason_EndorseToken",
-                                                  @"Approve endorsing token")];
+                                                  reason,
+                                                  @"Approve endorsing token")
+                                         onError:onError];
+    if (!signature) {
+        return;
+    }
+
     request.createToken.payloadSignature.memberId = memberId;
     request.createToken.payloadSignature.keyId = signature.key.id_p;
     request.createToken.payloadSignature.signature = signature.value;
@@ -429,7 +452,12 @@
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:keyLevel
-                                   reason:NSLocalizedString(reason, @"Approve endorsing token")];
+                                   reason:NSLocalizedString(reason, @"Approve endorsing token")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -460,7 +488,12 @@
                                  usingKey:Key_Level_Low
                                    reason:NSLocalizedString(
                                            @"Signature_Reason_CancelToken",
-                                           @"Approve cancelling the token")];
+                                           @"Approve cancelling the token")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+
     CancelTokenRequest *request = [CancelTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -490,7 +523,12 @@
                                  usingKey:Key_Level_Low
                                    reason:NSLocalizedString(
                                            @"Signature_Reason_CreateTransfer",
-                                           @"Approve creating a transfer")];
+                                           @"Approve creating a transfer")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+
     CreateTransferRequest *request = [CreateTransferRequest message];
     request.payload = payload;
     request.payloadSignature.memberId = memberId;
@@ -653,7 +691,12 @@
                                  usingKey:Key_Level_Low
                                    reason:NSLocalizedString(
                                            @"Signature_Reason_AddAddress",
-                                           @"Approve adding an address")];
+                                           @"Approve adding an address")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+
     AddAddressRequest *request = [AddAddressRequest message];
     request.name = name;
     request.address = address;
@@ -792,13 +835,19 @@
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel
-                                      tokenToCreate:(TokenPayload *)tokenToCreate {
+                                      tokenToCreate:(TokenPayload *)tokenToCreate
+                                            onError:(OnError)onError {
     TKSignature *signature = [crypto sign:tokenToCancel
                                    action:TokenSignature_Action_Cancelled
                                  usingKey:Key_Level_Low
                                    reason:NSLocalizedString(
                                            @"Signature_Reason_CancelToken",
-                                           @"Approve cancelling the token")];
+                                           @"Approve cancelling the token")
+                                  onError:onError];
+    if (!signature) {
+        return nil;
+    }
+
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];
     request.cancelToken.tokenId = tokenToCancel.id_p;
     request.cancelToken.signature.memberId = memberId;
