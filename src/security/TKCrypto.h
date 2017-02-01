@@ -43,11 +43,14 @@
  * @param message message to sign
  * @param keyLevel key to use
  * @param reason the reason the data is being signed
+ * @param onError callback to invoke on errors or user not authorizing the
+ * signature
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)sign:(GPBMessage *)message
              usingKey:(Key_Level)keyLevel
-               reason:(NSString *)reason;
+               reason:(NSString *)reason
+              onError:(OnError)onError;
 
 /**
  * Signs a token with the secret key specified by the supplied type.
@@ -56,12 +59,15 @@
  * @param action action being signed on
  * @param keyLevel key to use
  * @param reason the reason the data is being signed
+ * @param onError callback to invoke on errors or user not authorizing the
+ * signature
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
              usingKey:(Key_Level)keyLevel
-               reason:(NSString *)reason;
+               reason:(NSString *)reason
+              onError:(OnError)onError;
 
 /**
  * Signs a token payload with the secret key specified by the supplied type.
@@ -70,12 +76,15 @@
  * @param action action being signed on
  * @param keyLevel key to use
  * @param reason the reason the data is being signed
+ * @param onError callback to invoke on errors or user not authorizing the
+ * signature
  * @return signed message, Base64 encoded
  */
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
                     usingKey:(Key_Level)keyLevel
-                      reason:(NSString *)reason;
+                      reason:(NSString *)reason
+                     onError:(OnError)onError;
 
 /**
  * Verifies a message signature.

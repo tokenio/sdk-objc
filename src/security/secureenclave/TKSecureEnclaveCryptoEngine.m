@@ -34,7 +34,8 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 
 - (TKSignature*)signData:(NSData *)data
            usingKeyLevel:(Key_Level)keyLevel
-                  reason:(NSString *)reason {
+                  reason:(NSString *)reason
+                 onError:(OnError)onError {
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel reason:reason];
     CFErrorRef error = NULL;
     if (!privateKeyRef) {
@@ -200,7 +201,6 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 }
 
 - (SecKeyRef)privateKeyForLevel:(Key_Level)level reason:(NSString *)reason {
-
     CFMutableDictionaryRef getKeyRef = newCFDict;
     CFDictionarySetValue(getKeyRef, kSecClass, kSecClassKey);
     CFDictionarySetValue(getKeyRef, kSecAttrKeyClass, kSecAttrKeyClassPrivate);

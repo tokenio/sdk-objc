@@ -34,7 +34,8 @@
 
 - (TKSignature *)signData:(NSData *)data
             usingKeyLevel:(Key_Level)keyLevel
-                   reason:(NSString *)reason {
+                   reason:(NSString *)reason
+                  onError:(OnError)onError {
     TKTokenSecretKey *key = [keyStore lookupKeyByLevel:keyLevel forMember:memberId];
     unsigned char signature[64];
     unsigned const char *sk = key.privateKey.bytes;
