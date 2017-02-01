@@ -38,26 +38,29 @@
 
 - (TKSignature *)sign:(GPBMessage *)message
              usingKey:(Key_Level)keyLevel
-               reason:(NSString *)reason {
+               reason:(NSString *)reason
+              onError:(OnError)onError {
     NSString *json = [TKJson serialize:message];
     NSData *jsonData = [json dataUsingEncoding:NSASCIIStringEncoding];
-    return [engine signData:jsonData usingKeyLevel:keyLevel reason:reason];
+    return [engine signData:jsonData usingKeyLevel:keyLevel reason:reason onError:onError];
 }
 
 - (TKSignature *)sign:(Token *)token
                action:(TokenSignature_Action)action
              usingKey:(Key_Level)keyLevel
-               reason:(NSString *)reason {
+               reason:(NSString *)reason
+              onError:(OnError)onError {
     NSData *payload = [self encodedPayloadFor:token with:action];
-    return [engine signData:payload usingKeyLevel:keyLevel reason:reason];
+    return [engine signData:payload usingKeyLevel:keyLevel reason:reason onError:onError];
 }
 
 - (TKSignature *)signPayload:(TokenPayload *)tokenPayload
                       action:(TokenSignature_Action)action
                     usingKey:(Key_Level)keyLevel
-                      reason:(NSString *)reason {
+                      reason:(NSString *)reason
+                     onError:(OnError)onError {
     NSData *payload = [self encodedPayload:tokenPayload with:action];
-    return [engine signData:payload usingKeyLevel:keyLevel reason:reason];
+    return [engine signData:payload usingKeyLevel:keyLevel reason:reason onError:onError];
 }
 
 - (bool)verifySignature:(NSString *)signature
