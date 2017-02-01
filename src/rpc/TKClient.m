@@ -12,7 +12,7 @@
 #import "PagedArray.h"
 #import "TKRpc.h"
 #import "TKSignature.h"
-
+#import "TKLocalizer.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -78,7 +78,7 @@
 
     TKSignature *signature = [crypto sign:request.update
                                  usingKey:Key_Level_Privileged
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_UpdateMember",
                                            @"Approve updating user account")];
     request.updateSignature.memberId = memberId;
@@ -344,7 +344,7 @@
     TKSignature *signature = [crypto signPayload:tokenToCreate
                                           action:TokenSignature_Action_Endorsed
                                         usingKey:Key_Level_Standard
-                                          reason:NSLocalizedString(
+                                          reason:TKLocalizedString(
                                                   @"Signature_Reason_EndorseToken",
                                                   @"Approve endorsing token")];
     request.createToken.payloadSignature.memberId = memberId;
@@ -429,7 +429,7 @@
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:keyLevel
-                                   reason:NSLocalizedString(reason, @"Approve endorsing token")];
+                                   reason:TKLocalizedString(reason, @"Approve endorsing token")];
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
@@ -458,7 +458,7 @@
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Cancelled
                                  usingKey:Key_Level_Low
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_CancelToken",
                                            @"Approve cancelling the token")];
     CancelTokenRequest *request = [CancelTokenRequest message];
@@ -488,7 +488,7 @@
                onError:(OnError)onError {
     TKSignature *signature = [crypto sign:payload
                                  usingKey:Key_Level_Low
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_CreateTransfer",
                                            @"Approve creating a transfer")];
     CreateTransferRequest *request = [CreateTransferRequest message];
@@ -651,7 +651,7 @@
            onError:(OnError)onError {
     TKSignature *signature = [crypto sign:address
                                  usingKey:Key_Level_Low
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_AddAddress",
                                            @"Approve adding an address")];
     AddAddressRequest *request = [AddAddressRequest message];
@@ -796,7 +796,7 @@
     TKSignature *signature = [crypto sign:tokenToCancel
                                    action:TokenSignature_Action_Cancelled
                                  usingKey:Key_Level_Low
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_CancelToken",
                                            @"Approve cancelling the token")];
     ReplaceTokenRequest *request = [ReplaceTokenRequest message];

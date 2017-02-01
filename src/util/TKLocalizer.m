@@ -22,14 +22,18 @@
 }
 
 - (NSString*)localizedStringForKey:(NSString *)key {
+    if (_stringsFile != nil) {
+        NSString* mainBundleCustomTableString = [NSBundle.mainBundle localizedStringForKey:key value:@"" table:_stringsFile];
+        if (![mainBundleCustomTableString isEqualToString:key]) {
+            return mainBundleCustomTableString;
+        }
+    }
+
     NSString* mainBundleString = [NSBundle.mainBundle localizedStringForKey:key value:@"" table:nil];
     if (![mainBundleString isEqualToString:key]) {
         return mainBundleString;
     }
-    NSString* mainBundleCustomTableString = [NSBundle.mainBundle localizedStringForKey:key value:@"" table:_stringsFile];
-    if (![mainBundleCustomTableString isEqualToString:key]) {
-        return mainBundleCustomTableString;
-    }
+    
     NSBundle* bundle = [NSBundle bundleForClass:[self class]];
     return [bundle localizedStringForKey:key value:@"" table:nil];
 }

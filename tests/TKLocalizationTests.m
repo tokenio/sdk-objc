@@ -37,7 +37,7 @@
 
 - (void)testOverrideCustomTableString {
     [TKLocalizer shared].stringsFile = @"CustomTable";
-    NSString* string = TKLocalizedString(@"Signature_Reason_EndorseAccessToken", @"");
+    NSString* string = TKLocalizedString(@"Signature_Reason_CreateMember", @"");
     XCTAssertEqualObjects(string, @"Overridden custom table string");
 }
 @end
