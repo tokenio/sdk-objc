@@ -133,7 +133,6 @@
 		ABA7BE7B3FD5403FD18AD799 /* TKRpc.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B9AEBEC4864DE6D12D90 /* TKRpc.h */; };
 		ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BE0106B24FCB0A9C556C /* key_exchange.c */; };
 		ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BC35315815FA7C52A197 /* TokenIO.h */; };
-		ABA7BEBE51BE6C8F14F8F422 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABA7B4210CE60337D8C14D2F /* Localizable.strings */; };
 		ABA7BEE68ED01F9216F1D387 /* TokenIOAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B5B3D15AD634892D98D4 /* TokenIOAsync.m */; };
 		ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2B002EB7F6F68C6DC25 /* TKRpcLog.m */; };
 		ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF342FAA1676FC1BC9EF /* TKRpcSyncCall.m */; };
@@ -143,6 +142,12 @@
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
+		DD0A77571E4225850058FB8A /* TokenSdk.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77561E4225850058FB8A /* TokenSdk.strings */; };
+		DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0A77581E4226B40058FB8A /* TKLocalizer.h */; };
+		DD0A775B1E4226B40058FB8A /* TKLocalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A77591E4226B40058FB8A /* TKLocalizer.m */; };
+		DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */; };
+		DD0A77601E4230A70058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A775E1E422FE40058FB8A /* Localizable.strings */; };
+		DD0A77621E4232E50058FB8A /* CustomTable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77611E4232E50058FB8A /* CustomTable.strings */; };
 		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
 		DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A51E00786800358830 /* TKLogManager.m */; };
 		DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A81E007E9000358830 /* TKLogTests.m */; };
@@ -266,7 +271,6 @@
 		ABA7B3B3B7497B3EC3C6F2F7 /* TKMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMember.m; sourceTree = "<group>"; };
 		ABA7B3F17C80BFB38B44A6CC /* TKKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKKeyStore.h; sourceTree = "<group>"; };
 		ABA7B420A006B6A5899509EA /* TKTokenCryptoEngineFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenCryptoEngineFactory.m; sourceTree = "<group>"; };
-		ABA7B4210CE60337D8C14D2F /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		ABA7B5B2892CFF8B1E4F0EE0 /* TKMemberAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberAsync.m; sourceTree = "<group>"; };
 		ABA7B5B3D15AD634892D98D4 /* TokenIOAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenIOAsync.m; sourceTree = "<group>"; };
 		ABA7B600FA6B997FDF5087F1 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
@@ -331,6 +335,12 @@
 		ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccountAsync.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		DD0A77561E4225850058FB8A /* TokenSdk.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TokenSdk.strings; path = src/resources/TokenSdk.strings; sourceTree = "<group>"; };
+		DD0A77581E4226B40058FB8A /* TKLocalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLocalizer.h; sourceTree = "<group>"; };
+		DD0A77591E4226B40058FB8A /* TKLocalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizer.m; sourceTree = "<group>"; };
+		DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizationTests.m; sourceTree = "<group>"; };
+		DD0A775E1E422FE40058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		DD0A77611E4232E50058FB8A /* CustomTable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CustomTable.strings; sourceTree = "<group>"; };
 		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
 		DD6AD2A51E00786800358830 /* TKLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogManager.m; sourceTree = "<group>"; };
 		DD6AD2A81E007E9000358830 /* TKLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogTests.m; sourceTree = "<group>"; };
@@ -517,8 +527,8 @@
 				ABA7BFE70DA2E2ABED08CD7B /* security */,
 				ABA7B92556DD88305DE6EDC5 /* util */,
 				37637B201D989A930043345F /* generated */,
+				DD0A77551E42254E0058FB8A /* resources */,
 				ABA7BAEECC1C790312E0C61B /* ed25519 */,
-				ABA7B4210CE60337D8C14D2F /* Localizable.strings */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -551,6 +561,9 @@
 				ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */,
 				ABA7B1B1F23CEC0666D7679A /* TKTestMemberKeys.m */,
 				ABA7B94B414BB097D0BDE68B /* TKTestMemberKeys.h */,
+				DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */,
+				DD0A775E1E422FE40058FB8A /* Localizable.strings */,
+				DD0A77611E4232E50058FB8A /* CustomTable.strings */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -631,6 +644,8 @@
 				ABA7B16EB35673E0ED34C018 /* TKUtil.m */,
 				ABA7BEE87D6C30096F9CADA3 /* TKJson.h */,
 				ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */,
+				DD0A77581E4226B40058FB8A /* TKLocalizer.h */,
+				DD0A77591E4226B40058FB8A /* TKLocalizer.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -696,6 +711,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DD0A77551E42254E0058FB8A /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				DD0A77561E4225850058FB8A /* TokenSdk.strings */,
+			);
+			name = resources;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		DDAA0D311E257C6000E9BB09 /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
@@ -754,6 +778,7 @@
 				ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */,
 				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
 				37637B521D989A930043345F /* Fank.pbobjc.h in Headers */,
+				DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
 				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
@@ -932,7 +957,7 @@
 				ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */,
 				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,
 				ABA7B103B5929B86EF4C8689 /* license.txt in Resources */,
-				ABA7BEBE51BE6C8F14F8F422 /* Localizable.strings in Resources */,
+				DD0A77571E4225850058FB8A /* TokenSdk.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,7 +972,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD0A77601E4230A70058FB8A /* Localizable.strings in Resources */,
 				DDAA0D6C1E257D7E00E9BB09 /* TokenSdk.framework in Resources */,
+				DD0A77621E4232E50058FB8A /* CustomTable.strings in Resources */,
 				DDAA0D421E257C6000E9BB09 /* LaunchScreen.storyboard in Resources */,
 				DDAA0D3F1E257C6000E9BB09 /* Assets.xcassets in Resources */,
 				DDAA0D3D1E257C6000E9BB09 /* Main.storyboard in Resources */,
@@ -1166,6 +1193,7 @@
 				37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */,
 				ABA7B7D66624F278B78581B1 /* TKMemberAsync.m in Sources */,
 				37637B591D989A930043345F /* Gateway.pbobjc.m in Sources */,
+				DD0A775B1E4226B40058FB8A /* TKLocalizer.m in Sources */,
 				ABA7BB461A7F37718AC111FC /* TKRpc.m in Sources */,
 				ABA7B72C231296BBE85D2752 /* TKCrypto.m in Sources */,
 				ABA7BAE5F33E9FD2D6D42E93 /* TKSignature.m in Sources */,
@@ -1200,6 +1228,7 @@
 				8A4A6D441DB06D3D005DCB70 /* TKStepUpTests.m in Sources */,
 				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
 				ABA7BCC4F2299658A6572FC6 /* TKTestMemberKeys.m in Sources */,
+				DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
