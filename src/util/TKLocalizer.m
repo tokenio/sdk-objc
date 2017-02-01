@@ -8,8 +8,6 @@
 
 #import "TKLocalizer.h"
 
-static NSString* kTKDefaultTable = @"TokenSdk";
-
 @implementation TKLocalizer
 
 + (instancetype)shared {
@@ -33,7 +31,7 @@ static NSString* kTKDefaultTable = @"TokenSdk";
         return mainBundleCustomTableString;
     }
     NSBundle* bundle = [NSBundle bundleForClass:[self class]];
-    return [bundle localizedStringForKey:key value:@"" table:kTKDefaultTable];
+    return [bundle localizedStringForKey:key value:@"" table:nil];
 }
 
 @end

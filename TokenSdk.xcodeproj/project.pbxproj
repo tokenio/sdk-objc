@@ -142,7 +142,7 @@
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
-		DD0A77571E4225850058FB8A /* TokenSdk.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77561E4225850058FB8A /* TokenSdk.strings */; };
+		DD0A77571E4225850058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77561E4225850058FB8A /* Localizable.strings */; };
 		DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0A77581E4226B40058FB8A /* TKLocalizer.h */; };
 		DD0A775B1E4226B40058FB8A /* TKLocalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A77591E4226B40058FB8A /* TKLocalizer.m */; };
 		DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */; };
@@ -335,7 +335,7 @@
 		ABA7BFD0B8AF4A53D14F385F /* TKAccountAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccountAsync.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
-		DD0A77561E4225850058FB8A /* TokenSdk.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TokenSdk.strings; path = src/resources/TokenSdk.strings; sourceTree = "<group>"; };
+		DD0A77561E4225850058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = src/resources/Localizable.strings; sourceTree = "<group>"; };
 		DD0A77581E4226B40058FB8A /* TKLocalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLocalizer.h; sourceTree = "<group>"; };
 		DD0A77591E4226B40058FB8A /* TKLocalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizer.m; sourceTree = "<group>"; };
 		DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizationTests.m; sourceTree = "<group>"; };
@@ -714,7 +714,7 @@
 		DD0A77551E42254E0058FB8A /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				DD0A77561E4225850058FB8A /* TokenSdk.strings */,
+				DD0A77561E4225850058FB8A /* Localizable.strings */,
 			);
 			name = resources;
 			path = ..;
@@ -957,7 +957,7 @@
 				ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */,
 				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,
 				ABA7B103B5929B86EF4C8689 /* license.txt in Resources */,
-				DD0A77571E4225850058FB8A /* TokenSdk.strings in Resources */,
+				DD0A77571E4225850058FB8A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
