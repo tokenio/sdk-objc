@@ -30,7 +30,7 @@
     token.payload.transfer.amount = @"100.23";
     
     Key *key = [crypto generateKey:Key_Level_Low];
-    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low];
+    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low reason:nil];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     
@@ -47,7 +47,8 @@
     Key *key = [crypto generateKey:Key_Level_Low];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:Key_Level_Low];
+                                 usingKey:Key_Level_Low
+                                   reason:nil];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     
@@ -71,7 +72,8 @@
     Key *key = [crypto generateKey:Key_Level_Privileged];
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
-                                 usingKey:Key_Level_Privileged];
+                                 usingKey:Key_Level_Privileged
+                                   reason:nil];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     

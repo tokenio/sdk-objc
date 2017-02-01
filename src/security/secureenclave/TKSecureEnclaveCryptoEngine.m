@@ -32,8 +32,10 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return [self generateKeyPairWithLevel:level];
 }
 
-- (TKSignature*)signData:(NSData *)data usingKeyLevel:(Key_Level)keyLevel {
-    SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel];
+- (TKSignature*)signData:(NSData *)data
+           usingKeyLevel:(Key_Level)keyLevel
+                  reason:(NSString *)reason {
+    SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel reason:reason];
     CFErrorRef error = NULL;
     if (!privateKeyRef) {
         return nil;
@@ -197,7 +199,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return key;
 }
 
-- (SecKeyRef)privateKeyForLevel:(Key_Level)level {
+- (SecKeyRef)privateKeyForLevel:(Key_Level)level reason:(NSString *)reason {
 
     CFMutableDictionaryRef getKeyRef = newCFDict;
     CFDictionarySetValue(getKeyRef, kSecClass, kSecClassKey);
@@ -207,8 +209,11 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 #endif
     CFDictionarySetValue(getKeyRef, kSecAttrLabel, (__bridge const void *)([self keyLabelForKeyLevel:level]));
     CFDictionarySetValue(getKeyRef, kSecReturnRef, kCFBooleanTrue);
-    CFDictionarySetValue(getKeyRef, kSecUseOperationPrompt, @"Authenticate to sign data");
-    
+    NSString *prompt = (reason != nil)
+            ? reason
+            : @"Authenticate to sign data";
+    CFDictionarySetValue(getKeyRef, kSecUseOperationPrompt, (__bridge const void *)prompt);
+
     SecKeyRef keyRef;
     OSStatus status = SecItemCopyMatching(getKeyRef, (CFTypeRef *)&keyRef);
     if (status != errSecSuccess) {

@@ -77,7 +77,11 @@
     request.update.memberId = memberId;
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
 
-    TKSignature *signature = [crypto sign:request.update usingKey:Key_Level_Privileged];
+    TKSignature *signature = [crypto sign:request.update
+                                 usingKey:Key_Level_Privileged
+                                   reason:NSLocalizedString(
+                                           @"Signature_Reason_CreateMember",
+                                           @"Approve create a new Token member account")];
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
