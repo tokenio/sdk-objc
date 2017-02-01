@@ -423,12 +423,13 @@
              withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
+    NSString *reason = (token.payload.access != nil)
+            ? @"Signature_Reason_EndorseAccessToken"
+            : @"Signature_Reason_EndorseTransferToken";
     TKSignature *signature = [crypto sign:token
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:keyLevel
-                                   reason:NSLocalizedString(
-                                           @"Signature_Reason_EndorseToken",
-                                           @"Approve endorsing token")];
+                                   reason:NSLocalizedString(reason, @"Approve endorsing token")];
     EndorseTokenRequest *request = [EndorseTokenRequest message];
     request.tokenId = token.id_p;
     request.signature.memberId = memberId;
