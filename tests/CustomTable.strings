@@ -1,0 +1,8 @@
+/* 
+  CustomTable.strings
+  TokenSdk
+
+  Created by Vadim on 2/1/17.
+  Copyright © 2017 Token Inc. All rights reserved.
+*/
+"Signature_Reason_CreateMember" = "Overridden custom table string";

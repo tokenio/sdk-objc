@@ -9,7 +9,7 @@
 #import "TKRpcLog.h"
 #import "TKRpc.h"
 #import "TKSignature.h"
-
+#import "TKLocalizer.h"
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;
@@ -79,7 +79,7 @@
 
     TKSignature *signature = [crypto sign:request.update
                                  usingKey:Key_Level_Privileged
-                                   reason:NSLocalizedString(
+                                   reason:TKLocalizedString(
                                            @"Signature_Reason_CreateMember",
                                            @"Approve create a new Token member account")
                                   onError:onError];

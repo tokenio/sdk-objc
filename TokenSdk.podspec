@@ -47,6 +47,11 @@ Pod::Spec.new do |s|
         ss.dependency "OrderedDictionary"
     end
 
+    # SDK resources
+    s.subspec "Resources" do |ss|
+        ss.source_files = "resources/*.*"
+    end
+
     currentdir = Dir.getwd
 
     s.pod_target_xcconfig = {

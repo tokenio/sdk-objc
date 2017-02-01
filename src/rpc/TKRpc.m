@@ -9,6 +9,7 @@
 #import "Auth.pbobjc.h"
 #import "TKCrypto.h"
 #import "TKSignature.h"
+#import "TKLocalizer.h"
 
 NSString *const kTokenRealm = @"Token";
 NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
@@ -47,7 +48,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     TKSignature *signature = [crypto
             sign:payload
         usingKey:Key_Level_Low
-          reason:NSLocalizedString(
+          reason:TKLocalizedString(
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")
          onError:nil];
