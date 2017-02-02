@@ -26,11 +26,13 @@
 }
 
 - (void)testDefaultString {
+    [TKLocalizer shared].stringsFile = nil;
     NSString* string = TKLocalizedString(@"Signature_Reason_UpdateMember", @"");
     XCTAssertEqualObjects(string, @"Authorize your Token account change");
 }
 
 - (void)testOverrideString {
+    [TKLocalizer shared].stringsFile = nil;
     NSString* string = TKLocalizedString(@"Signature_Reason_CreateMember", @"");
     XCTAssertEqualObjects(string, @"Overridden string");
 }

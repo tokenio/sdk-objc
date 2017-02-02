@@ -15,7 +15,7 @@
     static TKLocalizer* sharedInstance;
     
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[[self class] alloc] init];
+        sharedInstance = [[TKLocalizer alloc] init];
     });
     
     return sharedInstance;
@@ -23,7 +23,9 @@
 
 - (NSString*)localizedStringForKey:(NSString *)key {
     if (_stringsFile != nil) {
-        NSString* mainBundleCustomTableString = [NSBundle.mainBundle localizedStringForKey:key value:@"" table:_stringsFile];
+        NSString* mainBundleCustomTableString = [NSBundle.mainBundle localizedStringForKey:key
+                                                                                     value:@""
+                                                                                     table:_stringsFile];
         if (![mainBundleCustomTableString isEqualToString:key]) {
             return mainBundleCustomTableString;
         }
