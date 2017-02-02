@@ -16,7 +16,6 @@ static NSString* kTokenErrorDomain = @"io.tokensdk";
     return [NSError errorWithDomain:kTokenErrorDomain
                                code:errorCode
                            userInfo:@{NSLocalizedDescriptionKey: details}];
-
 }
 
 @end
