@@ -16,6 +16,7 @@
  #import "Transfer.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "Transaction.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -35,6 +36,7 @@
     registry = [[GPBExtensionRegistry alloc] init];
     [registry addExtensions:[MoneyRoot extensionRegistry]];
     [registry addExtensions:[SecurityRoot extensionRegistry]];
+    [registry addExtensions:[TransactionRoot extensionRegistry]];
     [registry addExtensions:[TransferinstructionsRoot extensionRegistry]];
   }
   return registry;
@@ -56,110 +58,6 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - Enum TransferStatusCode
-
-GPBEnumDescriptor *TransferStatusCode_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
-  if (!descriptor) {
-    static const char *valueNames =
-        "Pending\000Success\000Error\000Failed\000";
-    static const int32_t values[] = {
-        TransferStatusCode_Pending,
-        TransferStatusCode_Success,
-        TransferStatusCode_Error,
-        TransferStatusCode_Failed,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TransferStatusCode)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:TransferStatusCode_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL TransferStatusCode_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case TransferStatusCode_Pending:
-    case TransferStatusCode_Success:
-    case TransferStatusCode_Error:
-    case TransferStatusCode_Failed:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
-#pragma mark - TransferStatus
-
-@implementation TransferStatus
-
-@dynamic code;
-@dynamic details;
-
-typedef struct TransferStatus__storage_ {
-  uint32_t _has_storage_[1];
-  TransferStatusCode code;
-  NSString *details;
-} TransferStatus__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "code",
-        .dataTypeSpecific.enumDescFunc = TransferStatusCode_EnumDescriptor,
-        .number = TransferStatus_FieldNumber_Code,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TransferStatus__storage_, code),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
-        .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "details",
-        .dataTypeSpecific.className = NULL,
-        .number = TransferStatus_FieldNumber_Details,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TransferStatus__storage_, details),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[TransferStatus class]
-                                     rootClass:[TransferRoot class]
-                                          file:TransferRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(TransferStatus__storage_)
-                                         flags:0];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-int32_t TransferStatus_Code_RawValue(TransferStatus *message) {
-  GPBDescriptor *descriptor = [TransferStatus descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferStatus_FieldNumber_Code];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetTransferStatus_Code_RawValue(TransferStatus *message, int32_t value) {
-  GPBDescriptor *descriptor = [TransferStatus descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferStatus_FieldNumber_Code];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
-
 #pragma mark - Transfer
 
 @implementation Transfer
@@ -169,15 +67,15 @@ void SetTransferStatus_Code_RawValue(TransferStatus *message, int32_t value) {
 @dynamic createdAtMs;
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
-@dynamic hasStatus, status;
+@dynamic status;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
+  TransactionStatus status;
   NSString *id_p;
   NSString *referenceId;
   TransferPayload *payload;
   NSMutableArray *payloadSignaturesArray;
-  TransferStatus *status;
   int64_t createdAtMs;
 } Transfer__storage_;
 
@@ -234,12 +132,12 @@ typedef struct Transfer__storage_ {
       },
       {
         .name = "status",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferStatus),
+        .dataTypeSpecific.enumDescFunc = TransactionStatus_EnumDescriptor,
         .number = Transfer_FieldNumber_Status,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Transfer__storage_, status),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -257,6 +155,18 @@ typedef struct Transfer__storage_ {
 }
 
 @end
+
+int32_t Transfer_Status_RawValue(Transfer *message) {
+  GPBDescriptor *descriptor = [Transfer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransfer_Status_RawValue(Transfer *message, int32_t value) {
+  GPBDescriptor *descriptor = [Transfer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - TransferPayload
 

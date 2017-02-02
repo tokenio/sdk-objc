@@ -13,10 +13,11 @@ enum TransactionType {
 
 enum TransactionStatus {
   INVALID_STATUS = 0;
-  SUCCESS = 1;
-  FAILURE_INSUFFICIENT_FUNDS = 2;
+  PENDING = 1;
+  SUCCESS = 2;
+  FAILURE_INSUFFICIENT_FUNDS = 3;
   FAILURE_INVALID_CURRENCY = 4;
-  FAILURE_GENERIC = 3;
+  FAILURE_GENERIC = 5;
 }
 
 message Transaction {

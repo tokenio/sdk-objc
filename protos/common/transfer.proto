@@ -5,20 +5,9 @@ option java_outer_classname = "TransferProtos";
 
 import "money.proto";
 import "security.proto";
+import "transaction.proto";
 import "transferinstructions.proto";
 
-
-enum TransferStatusCode {
-  PENDING = 0;
-  SUCCESS = 1;
-  ERROR = 2;
-  FAILED = 3;
-}
-
-message TransferStatus {
-  TransferStatusCode code = 1;
-  string details = 2;  // Optional status details.
-}
 
 // A transfer record as persisted on the ledger.
 message Transfer {
@@ -27,7 +16,7 @@ message Transfer {
   int64 created_at_ms = 3;
   TransferPayload payload = 4;
   repeated io.token.proto.common.security.Signature payload_signatures = 5;
-  TransferStatus status = 6;
+  io.token.proto.common.transaction.TransactionStatus status = 6;
 }
 
 // A transfer payload that is being signed by the redeemer and the bank.

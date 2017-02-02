@@ -7,9 +7,8 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
-#import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "Token.pbobjc.h"
+#import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
 
 
@@ -48,6 +47,7 @@
 
         Transfer *transfer = [payee createTransfer:token];
         
+        XCTAssertEqual(TransactionStatus_Success, transfer.status);
         XCTAssertEqualObjects(@"", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -68,7 +68,8 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:@"test"];
-        
+
+        XCTAssertEqual(TransactionStatus_Success, transfer.status);
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
