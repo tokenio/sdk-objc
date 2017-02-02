@@ -7,3 +7,6 @@
 "Signature_Reason_CancelToken" = "UNDEFINED";
 "Signature_Reason_CreateTransfer" = "UNDEFINED";
 "Signature_Reason_AddAddress" = "UNDEFINED";
+
+"Private_Key_Not_Found" = "Private key not found";
+"User_Cancelled_Authentication" = "User cancelled authentication";

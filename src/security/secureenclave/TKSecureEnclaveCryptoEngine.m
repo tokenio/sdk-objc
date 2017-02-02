@@ -10,6 +10,8 @@
 #import "TKSignature.h"
 #import "TKLogManager.h"
 #import "QHex.h"
+#import "TKLocalizer.h"
+#import "TKError.h"
 
 // Header bytes (expected by OpenSSL) to be prepended to the raw public key data to
 // get the key in X509 format:
@@ -36,12 +38,14 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
            usingKeyLevel:(Key_Level)keyLevel
                   reason:(NSString *)reason
                  onError:(OnError)onError {
+    
     SecKeyRef privateKeyRef = [self privateKeyForLevel:keyLevel reason:reason];
-    CFErrorRef error = NULL;
     if (!privateKeyRef) {
+        onError([NSError errorFromErrorCode:kTKErrorKeyNotFound details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
         return nil;
     }
 
+    CFErrorRef error = NULL;
     CFDataRef signRef = SecKeyCreateSignature(
             privateKeyRef,
             kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
@@ -50,6 +54,12 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     if (signRef == nil) {
         CFRelease(privateKeyRef);
         TKLogError(@"Error signing data: %@", error);
+        if (CFErrorGetCode(error) == -2) {
+            onError([NSError errorFromErrorCode:kTKErrorUserCancelled details:TKLocalizedString(@"User_Cancelled_Authentication", @"User cancelled authentication")]);
+        } else {
+            onError(CFBridgingRelease(error));
+        }
+        CFRelease(error);
         return nil;
     }
     NSData* signatureData = (__bridge NSData *)(signRef);

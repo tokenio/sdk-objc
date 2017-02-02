@@ -148,6 +148,8 @@
 		DD0A77601E4230A70058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A775E1E422FE40058FB8A /* Localizable.strings */; };
 		DD0A77621E4232E50058FB8A /* CustomTable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77611E4232E50058FB8A /* CustomTable.strings */; };
 		DD0A77641E42668C0058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77631E42668C0058FB8A /* Localizable.strings */; };
+		DD0A77671E42AC040058FB8A /* TKError.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0A77651E42AC040058FB8A /* TKError.h */; };
+		DD0A77681E42AC040058FB8A /* TKError.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A77661E42AC040058FB8A /* TKError.m */; };
 		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
 		DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A51E00786800358830 /* TKLogManager.m */; };
 		DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6AD2A81E007E9000358830 /* TKLogTests.m */; };
@@ -341,6 +343,8 @@
 		DD0A775E1E422FE40058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		DD0A77611E4232E50058FB8A /* CustomTable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CustomTable.strings; sourceTree = "<group>"; };
 		DD0A77631E42668C0058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		DD0A77651E42AC040058FB8A /* TKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKError.h; sourceTree = "<group>"; };
+		DD0A77661E42AC040058FB8A /* TKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKError.m; sourceTree = "<group>"; };
 		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
 		DD6AD2A51E00786800358830 /* TKLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogManager.m; sourceTree = "<group>"; };
 		DD6AD2A81E007E9000358830 /* TKLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLogTests.m; sourceTree = "<group>"; };
@@ -646,6 +650,8 @@
 				ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */,
 				DD0A77581E4226B40058FB8A /* TKLocalizer.h */,
 				DD0A77591E4226B40058FB8A /* TKLocalizer.m */,
+				DD0A77651E42AC040058FB8A /* TKError.h */,
+				DD0A77661E42AC040058FB8A /* TKError.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -793,6 +799,7 @@
 				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
 				94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */,
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
+				DD0A77671E42AC040058FB8A /* TKError.h in Headers */,
 				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
 				ABA7BAEC959E3B2C59762FA6 /* fe.h in Headers */,
 				8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */,
@@ -1145,6 +1152,7 @@
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,
 				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
+				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,
 				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
 				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
