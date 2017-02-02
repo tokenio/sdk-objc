@@ -60,10 +60,11 @@ typedef GPB_ENUM(TransactionStatus) {
    **/
   TransactionStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TransactionStatus_InvalidStatus = 0,
-  TransactionStatus_Success = 1,
-  TransactionStatus_FailureInsufficientFunds = 2,
+  TransactionStatus_Pending = 1,
+  TransactionStatus_Success = 2,
+  TransactionStatus_FailureInsufficientFunds = 3,
   TransactionStatus_FailureInvalidCurrency = 4,
-  TransactionStatus_FailureGeneric = 3,
+  TransactionStatus_FailureGeneric = 5,
 };
 
 GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void);
