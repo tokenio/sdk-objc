@@ -6,6 +6,8 @@
 //  Copyright © 2017 Token Inc. All rights reserved.
 //
 
+@import LocalAuthentication;
+
 #import "TKSecureEnclaveCryptoEngine.h"
 #import "TKSignature.h"
 #import "TKLogManager.h"
@@ -54,7 +56,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     if (signRef == nil) {
         CFRelease(privateKeyRef);
         TKLogError(@"Error signing data: %@", error);
-        if (CFErrorGetCode(error) == -2) {
+        if (CFErrorGetCode(error) == kLAErrorUserCancel) {
             onError([NSError errorFromErrorCode:kTKErrorUserCancelled details:TKLocalizedString(@"User_Cancelled_Authentication", @"User cancelled authentication")]);
         } else {
             onError(CFBridgingRelease(error));
