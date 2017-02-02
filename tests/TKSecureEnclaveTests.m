@@ -10,6 +10,7 @@
 #import "TKCrypto.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKSignature.h"
+#import "TKError.h"
 
 @interface TKSecureEnclaveTests : XCTestCase
 
@@ -91,5 +92,23 @@
                            usingKeyId:key.id_p];
     XCTAssert(!success);
 }
+
+#if !(TARGET_IPHONE_SIMULATOR)
+- (void)testCancelSign {
+    Token *token = [Token message];
+    token.payload.transfer.amount = @"100.23";
+    
+    [crypto generateKey:Key_Level_Privileged];
+    __block NSInteger errorCode = 0;
+    [crypto sign:token
+          action:TokenSignature_Action_Endorsed
+        usingKey:Key_Level_Privileged
+          reason:@"Cancel Touch ID for test to succeed!"
+         onError:^(NSError *error) {
+             errorCode = error.code;
+         }];
+    XCTAssertEqual(errorCode, kTKErrorUserCancelled);
+}
+#endif
 
 @end
