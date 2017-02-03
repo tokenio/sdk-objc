@@ -139,7 +139,6 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     
     SecKeyRef privateKeyRef = SecKeyCreateRandomKey(generateKeyRef, &error);
     if (privateKeyRef == nil) {
-        CFRelease(privateKeyRef);
         TKLogError(@"Error generating private key: %@\n", error);
         return nil;
     }
