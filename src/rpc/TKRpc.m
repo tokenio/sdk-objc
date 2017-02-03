@@ -40,7 +40,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
        memberId:(NSString *)memberId
          crypto:(TKCrypto *)crypto
      onBehalfOf:(NSString *)onBehalfOfMemberId {
-    unsigned long now = (unsigned long)([[NSDate date] timeIntervalSince1970] * 1000);
+    unsigned long long now = (unsigned long long)([[NSDate date] timeIntervalSince1970] * 1000);
 
     GRpcAuthPayload *payload = [GRpcAuthPayload message];
     payload.request = [request data];
@@ -58,7 +58,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = signature.key.id_p;
     call.requestHeaders[@"token-signature"] = signature.value;
-    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%lu", now];
+    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%llu", now];
     
     [self _setSdkHeaders:call];
 
