@@ -10,6 +10,8 @@
 #import "TKCrypto.h"
 #import "TKSignature.h"
 #import "TKLocalizer.h"
+#import "TKLogManager.h"
+#import "TKJson.h"
 
 NSString *const kTokenRealm = @"Token";
 NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
@@ -65,6 +67,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     if (onBehalfOfMemberId) {
         call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
     }
+
+    // TODO: Remove this, added to debug a prod issue.
+    TKLogInfo(@"Auth key-id: %@", signature.key.id_p);
+    TKLogInfo(@"Auth signature: %@", signature.value);
+    TKLogInfo(@"Auth payload: %@", [TKJson serialize:request]);
 
     [self dispatch:call request:request];
 }
