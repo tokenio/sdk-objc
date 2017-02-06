@@ -60,7 +60,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-member-id"] = memberId;
     call.requestHeaders[@"token-key-id"] = signature.key.id_p;
     call.requestHeaders[@"token-signature"] = signature.value;
-    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat: @"%llu", now];
+    call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat:@"%llu", now];
     
     [self _setSdkHeaders:call];
 
@@ -72,6 +72,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     TKLogInfo(@"Auth key-id: %@", signature.key.id_p);
     TKLogInfo(@"Auth signature: %@", signature.value);
     TKLogInfo(@"Auth payload: %@", [TKJson serialize:request]);
+    TKLogInfo(@"Auth created-at: %llu", now);
 
     [self dispatch:call request:request];
 }
