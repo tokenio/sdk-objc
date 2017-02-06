@@ -51,6 +51,20 @@
 }
 
 /**
+ * base64Url encoding/decoding with padding.
+ */
+- (void)testBase64Url_differentLength_withPadding {
+    NSString *input = @"Born and raised in Pennsylvania, Swift moved to Nashville, Tennessee at age 14 to pursue a career in country music. She signed with the independent label Big Machine Records and became the youngest artist ever signed by the Sony/ATV Music publishing house. Her eponymous debut album in 2006 peaked at number five on Billboard 200 and spent the most weeks on the chart in the 2000s. The album's third single, \"Our Song\", made her the youngest person to single-handedly write and perform a number-one song on the Hot Country Songs chart. Swift's second album, Fearless, was released in 2008. Buoyed by the pop crossover success of the singles \"Love Story\" and \"You Belong with Me\", Fearless became the best-selling album of 2009 in the United States. The album won four Grammy Awards, with Swift becoming the youngest Album of the Year winner.";
+    for (int i = 0; i < input.length; i++) {
+        NSString *original = [input substringToIndex:i];
+        NSString *encoded = [TKUtil base64UrlEncodeData:[original dataUsingEncoding:NSASCIIStringEncoding] padding:true];
+        NSData *decodedData = [TKUtil base64UrlDecodeString:encoded];
+        NSString *decoded = [[NSString alloc] initWithData:decodedData encoding:NSASCIIStringEncoding];
+        XCTAssertEqualObjects(original, decoded);
+    }
+}
+
+/**
  * ID generation.
  */
 - (void)testId {

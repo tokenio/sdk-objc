@@ -19,7 +19,7 @@
 + (NSString *)nonce;
 
 /**
- * URL safe Base64 encoder implementation.
+ * Base64 encoder implementation.
  *
  * @param bytes data to encode
  * @param length number of bytes to encode
@@ -28,7 +28,16 @@
 + (NSString *)base64EncodeBytes:(const char *)bytes length:(NSUInteger)length;
 
 /**
- * URL safe Base64 encoder implementation.
+ * Base64Url encoder implementation.
+ *
+ * @param bytes data to encode
+ * @param length number of bytes to encode
+ * @return base64Url encoded data
+ */
++ (NSString *)base64UrlEncodeBytes:(const char *)bytes length:(NSUInteger)length;
+
+/**
+ * Base64 encoder implementation.
  *
  * @param data data to encode
  * @return base64 encoded data
@@ -36,7 +45,15 @@
 + (NSString *)base64EncodeData:(NSData *)data;
 
 /**
- * URL safe Base64 encoder implementation.
+ * Base64Url encoder implementation.
+ *
+ * @param data data to encode
+ * @return base64Url encoded data
+ */
++ (NSString *)base64UrlEncodeData:(NSData *)data;
+
+/**
+ * Base64 encoder implementation.
  *
  * @param data data to encode
  * @param padding if false, padding is stripped (= or == at the end of the message)
@@ -45,12 +62,29 @@
 + (NSString *)base64EncodeData:(NSData *)data padding:(bool)padding;
 
 /**
- * URL safe Base64 decoder implementation.
+ * Base64Url encoder implementation.
  *
- * @param base64String URL safe Base64 encoded string
+ * @param data data to encode
+ * @param padding if false, padding is stripped (= or == at the end of the message)
+ * @return base64Url encoded data
+ */
++ (NSString *)base64UrlEncodeData:(NSData *)data padding:(bool)padding;
+
+/**
+ * Base64 decoder implementation.
+ *
+ * @param base64String Base64 encoded string
  * @return decoded string
  */
 + (NSData *)base64DecodeString:(NSString *)base64String;
+
+/**
+ * Base64Url decoder implementation.
+ *
+ * @param base64UrlString Base64Url encoded string
+ * @return decoded string
+ */
++ (NSData *)base64UrlDecodeString:(NSString *)base64String;
 
 /**
  * Returns an ID for a given string. We hash the string value and Base64 encode
