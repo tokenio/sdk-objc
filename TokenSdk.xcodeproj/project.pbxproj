@@ -921,7 +921,7 @@
 				TargetAttributes = {
 					8A99090D1D890E820096A7FA = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 734Q44J6QX;
+						DevelopmentTeam = Q8C7Z534L7;
 						ProvisioningStyle = Automatic;
 					};
 					8A9909171D890E820096A7FA = {
@@ -1385,7 +1385,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 734Q44J6QX;
+				DEVELOPMENT_TEAM = Q8C7Z534L7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1420,7 +1420,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 734Q44J6QX;
+				DEVELOPMENT_TEAM = Q8C7Z534L7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

@@ -66,7 +66,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     }
     NSData* signatureData = (__bridge NSData *)(signRef);
 
-    NSString* signatureString = [TKUtil base64EncodeData:signatureData];
+    NSString* signatureString = [TKUtil base64UrlEncodeData:signatureData];
     TKSignature* tkSignature =  [TKSignature
             signature:signatureString
             signedWith:[self keyInfoForPrivateKey:privateKeyRef level:keyLevel]];
@@ -78,7 +78,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 - (bool)verifySignature:(NSString *)signature forData:(NSData *)data usingKeyId:(NSString *)keyId {
     SecKeyRef keyRef = [self publicKeyForKeyId:keyId];
     CFErrorRef error = NULL;
-    NSData* signatureData = [TKUtil base64DecodeString:signature];
+    NSData* signatureData = [TKUtil base64UrlDecodeString:signature];
     Boolean success = SecKeyVerifySignature(
             keyRef,
             kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
@@ -193,7 +193,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     Key *key = [Key message];
     key.level = level;
     key.algorithm = Key_Algorithm_EcdsaSha256;
-    key.publicKey = [TKUtil base64EncodeData:keyWithHeaderData];
+    key.publicKey = [TKUtil base64UrlEncodeData:keyWithHeaderData];
     key.id_p = [TKUtil idForData:keyWithHeaderData];
     
     CFMutableDictionaryRef queryRef = newCFDict;

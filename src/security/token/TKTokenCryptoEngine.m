@@ -43,7 +43,7 @@
 
     ed25519_sign(signature, data.bytes, data.length, pk, sk);
     return [TKSignature
-            signature:[TKUtil base64EncodeBytes:(const char *)signature length:sizeof(signature)]
+            signature:[TKUtil base64UrlEncodeBytes:(const char *)signature length:sizeof(signature)]
            signedWith:key.keyInfo];
 }
 
@@ -51,7 +51,7 @@
                 forData:(NSData *)data
              usingKeyId:(NSString *)keyId {
     NSData *publicKey = [keyStore lookupKeyById:keyId forMember:memberId].publicKey;
-    NSData *decodedSignature = [TKUtil base64DecodeString:signature];
+    NSData *decodedSignature = [TKUtil base64UrlDecodeString:signature];
     return ed25519_verify(decodedSignature.bytes, data.bytes, data.length, publicKey.bytes) != 0;
 }
 

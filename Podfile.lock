@@ -1,8 +1,8 @@
 PODS:
-  - "!ProtoCompiler (3.0.2)":
+  - '!ProtoCompiler (3.0.2)':
     - Protobuf (~> 3.0)
-  - "!ProtoCompiler-gRPCPlugin (1.0.2)":
-    - "!ProtoCompiler (= 3.0.2)"
+  - '!ProtoCompiler-gRPCPlugin (1.0.2)':
+    - '!ProtoCompiler (= 3.0.2)'
     - gRPC-ProtoRPC (= 1.0.2)
   - BoringSSL (7.0):
     - BoringSSL/Implementation (= 7.0)
@@ -29,13 +29,13 @@ PODS:
   - Protobuf (3.2.0)
 
 DEPENDENCIES:
-  - "!ProtoCompiler"
-  - "!ProtoCompiler-gRPCPlugin"
+  - '!ProtoCompiler'
+  - '!ProtoCompiler-gRPCPlugin'
   - OrderedDictionary
 
 SPEC CHECKSUMS:
-  "!ProtoCompiler": cfad9cbe5299a4923b1c3c8f150818c91efd0b6d
-  "!ProtoCompiler-gRPCPlugin": ee00d28bb35b26e2657f239833b8f2aa66724f96
+  '!ProtoCompiler': cfad9cbe5299a4923b1c3c8f150818c91efd0b6d
+  '!ProtoCompiler-gRPCPlugin': ee00d28bb35b26e2657f239833b8f2aa66724f96
   BoringSSL: 50035b9d9eeff5529587311782fc57c00ebf13ae
   gRPC: dd3a91e0fb770b9fc4f43d1292fb19f2a2e04158
   gRPC-Core: cc4a7613190ff0bc60a0c1e702ef07cd3f868ae6

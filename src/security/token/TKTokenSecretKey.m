@@ -34,7 +34,7 @@
     key.id_p = self.id;
     key.level = self.level;
     key.algorithm = Key_Algorithm_Ed25519;
-    key.publicKey = [TKUtil base64EncodeData:self.publicKey];
+    key.publicKey = [TKUtil base64UrlEncodeData:self.publicKey];
     return key;
 }
 

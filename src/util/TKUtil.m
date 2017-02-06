@@ -18,11 +18,27 @@
     return [self base64EncodeData:[NSData dataWithBytes:bytes length:length]];
 }
 
++ (NSString *)base64UrlEncodeBytes:(const char *)bytes length:(NSUInteger)length {
+    return [self base64UrlEncodeData:[NSData dataWithBytes:bytes length:length]];
+}
+
 + (NSString *)base64EncodeData:(NSData *)data {
     return [self base64EncodeData:data padding:false];
 }
 
++ (NSString *)base64UrlEncodeData:(NSData *)data {
+    return [self base64UrlEncodeData:data padding:false];
+}
+
 + (NSString *)base64EncodeData:(NSData *)data padding:(bool)padding {
+    NSString *base64String = [data base64EncodedStringWithOptions:0];
+    if (!padding) {
+        base64String = [base64String stringByReplacingOccurrencesOfString:@"=" withString:@""];
+    }
+    return base64String;
+}
+
++ (NSString *)base64UrlEncodeData:(NSData *)data padding:(bool)padding {
     NSString *base64String = [data base64EncodedStringWithOptions:0];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
     base64String = [base64String stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
@@ -33,6 +49,26 @@
 }
 
 + (NSData *)base64DecodeString:(NSString *)base64String {
+    NSString *copy = base64String;
+
+    int padding = copy.length % 4;
+    if (padding > 0) {
+        copy = [copy stringByPaddingToLength:copy.length + 4 - padding withString:@"=" startingAtIndex:0];
+    }
+
+    NSData *result = [[NSData alloc]
+                      initWithBase64EncodedString:copy
+                      options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    if (result == nil) {
+        [NSException
+         raise:NSInvalidArgumentException
+         format:@"Invalid Base64 string: %@", base64String];
+    }
+
+    return result;
+}
+
++ (NSData *)base64UrlDecodeString:(NSString *)base64String {
     NSString *copy = [base64String stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
     copy = [copy stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
 
@@ -66,7 +102,7 @@
     CC_SHA256(data.bytes, (int) data.length, digest);
 
     NSData *shaData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
-    NSString *shaString = [self base64EncodeData:shaData];
+    NSString *shaString = [self base64UrlEncodeData:shaData];
     return [shaString substringToIndex:16];
 }
 
