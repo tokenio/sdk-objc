@@ -168,15 +168,22 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+- (void)getNotifications:(NSString *)offset
+                   limit:(int)limit
+               onSuccess:(OnSuccessWithNotifications)onSuccess
                    onError:(OnError)onError {
     GetNotificationsRequest *request = [GetNotificationsRequest message];
+    request.page.offset = offset;
+    request.page.limit = limit;
     GRPCProtoCall *call = [gateway
                            RPCToGetNotificationsWithRequest:request
                            handler:^(GetNotificationsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.notificationsArray);
+                                   PagedArray<Notification *> *paged = [[PagedArray<Notification *> alloc]
+                                                                 initWith: response.notificationsArray
+                                                                 offset: response.offset];
+                                   onSuccess(paged);
                                } else {
                                    RpcLogError(error);
                                    onError(error);

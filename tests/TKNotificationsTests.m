@@ -119,10 +119,9 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testTransferNotification {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIO *tokenIO) {self
         [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
-
-        Token *token = [payer createTransferToken:payee.firstUsername
+        oP#{=        Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
@@ -151,10 +150,10 @@ void check(NSString *message, BOOL condition) {
  */
 - (void)waitForNotification:(NSString *)type {
     [self waitUntil:^{
-        NSArray<Notification *> *notifications = [payer getNotifications];
-        check(@"Notification count", notifications.count == 1);
+        PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil limit:100];
+        check(@"Notification count", notifications.items.count == 1);
 
-        Notification* notification = [notifications objectAtIndex:0];
+        Notification* notification = [notifications.items objectAtIndex:0];
         check(@"Delivery Status", notification.status == Notification_Status_Delivered);
         check(@"Notification Type", [notification.content.type isEqualToString:type]);
     }];

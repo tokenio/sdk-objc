@@ -52,7 +52,7 @@ typedef void (^OnSuccessWithSubscriber)(Subscriber *);
 typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> *);
 
 typedef void (^OnSuccessWithNotification)(Notification *);
-typedef void (^OnSuccessWithNotifications)(NSArray<Notification *> *);
+typedef void (^OnSuccessWithNotifications)(PagedArray<Notification *> *);
 
 typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);
 

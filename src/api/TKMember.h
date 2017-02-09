@@ -142,9 +142,11 @@
 
 /**
  * Get all notifications
- *
+ * @param offset offset to start at
+ * @param limit max number of records to return
  */
-- (NSArray<Notification *> *)getNotifications;
+- (PagedArray<Notification *> *)getNotificationsOffset:(NSString *)offset
+                                              limit:(int)limit;;
 
 /**
  * Get a notification by Id

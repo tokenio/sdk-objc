@@ -23,6 +23,9 @@
 
 @implementation SubscriberRoot
 
+// No extensions in the file and no imports, so no need to generate
+// +extensionRegistry.
+
 @end
 
 #pragma mark - SubscriberRoot_FileDescriptor
@@ -32,7 +35,7 @@ static GPBFileDescriptor *SubscriberRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPBDebugCheckRuntimeVersion();
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.subscriber"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -122,7 +125,7 @@ typedef struct Subscriber__storage_ {
         .number = Subscriber_FieldNumber_Platform,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Subscriber__storage_, platform),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -133,7 +136,7 @@ typedef struct Subscriber__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Subscriber__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

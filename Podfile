@@ -1,4 +1,4 @@
-TOKEN_PROTOS_VER = "1.0.217"
+TOKEN_PROTOS_VER = "1.0.222"
 platform :ios, '8.0'
 
 
