@@ -119,9 +119,9 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testTransferNotification {
-    [self run: ^(TokenIO *tokenIO) {self
+    [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
-        oP#{=        Token *token = [payer createTransferToken:payee.firstUsername
+        Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
                                              amount:100.99
                                            currency:@"USD"
