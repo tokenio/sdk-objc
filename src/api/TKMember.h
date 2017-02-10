@@ -146,7 +146,7 @@
  * @param limit max number of records to return
  */
 - (PagedArray<Notification *> *)getNotificationsOffset:(NSString *)offset
-                                              limit:(int)limit;;
+                                                 limit:(int)limit;
 
 /**
  * Get a notification by Id
