@@ -152,11 +152,14 @@
     }];
 }
 
-- (NSArray<Notification *> *)getNotifications {
+- (PagedArray<Notification *> *)getNotificationsOffset:(NSString *)offset
+                                                 limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getNotifications:call.onSuccess
-                           onError:call.onError];
+        [self.async getNotificationsOffset:offset
+                                     limit:limit
+                                 onSuccess:call.onSuccess
+                                   onError:call.onError];
     }];
 }
 

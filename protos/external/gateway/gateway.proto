@@ -5,15 +5,16 @@ import "google/api/annotations.proto";
 
 import "account.proto";
 import "address.proto";
+import "bankinfo.proto";
+import "banklink.proto";
 import "member.proto";
 import "money.proto";
 import "notification.proto";
 import "security.proto";
+import "subscriber.proto";
 import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
-import "subscriber.proto";
-import "bankinfo.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Paging details.
@@ -136,10 +137,12 @@ message NotifyResponse {
 }
 
 message GetNotificationsRequest {
+  Page page = 1;
 }
 
 message GetNotificationsResponse {
   repeated io.token.proto.common.notification.Notification notifications = 1;
+  string offset = 2;
 }
 
 message GetNotificationRequest {
@@ -329,6 +332,14 @@ message GetBankInfoResponse {
   io.token.proto.common.bank.BankInfo info = 1;
 }
 
+message CreateTestBankAccountRequest {
+  io.token.proto.common.money.Money balance = 1;
+}
+
+message CreateTestBankAccountResponse {
+  io.token.proto.banklink.AccountLinkingPayloads accountLinkingPayloads = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gateway Service.
 //
@@ -426,7 +437,7 @@ service GatewayService {
 
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
-        get: "/notifications"
+        get: "/notifications?offset={page.offset}&limit={page.limit}"
     };
   }
 
@@ -473,6 +484,12 @@ service GatewayService {
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}"
+    };
+  }
+
+  rpc CreateTestBankAccount (CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse) {
+    option (google.api.http) = {
+        post: "/test/create-account"
     };
   }
 

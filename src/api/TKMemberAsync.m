@@ -213,9 +213,13 @@
                   onError:onError];
 }
 
-- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+- (void)getNotificationsOffset:(NSString *)offset
+                         limit:(int)limit
+                     onSuccess:(OnSuccessWithNotifications)onSuccess
                onError:(OnError)onError {
-    [client getNotifications:onSuccess
+    [client getNotifications:offset
+                       limit:limit
+                   onSuccess:onSuccess
                    onError:onError];
 }
 

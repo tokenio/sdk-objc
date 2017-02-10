@@ -7,15 +7,16 @@
 #import "google/api/Annotations.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Address.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
+#import "Banklink.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Subscriber.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
-#import "Subscriber.pbobjc.h"
-#import "Bankinfo.pbobjc.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -203,6 +204,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
+
+- (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)

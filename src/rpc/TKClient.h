@@ -104,8 +104,12 @@
 /**
  * Get all notifications
  *
+ * @param offset offset to start at
+ * @param limit max number of records to return
  */
-- (void)getNotifications:(OnSuccessWithNotifications)onSuccess
+- (void)getNotifications:(NSString *)offset
+                   limit:(int)limit
+               onSuccess:(OnSuccessWithNotifications)onSuccess
                onError:(OnError)onError;
 
 

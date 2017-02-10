@@ -1,30 +1,30 @@
 PODS:
-  - '!ProtoCompiler (3.0.2)':
+  - '!ProtoCompiler (3.1.0)':
     - Protobuf (~> 3.0)
-  - '!ProtoCompiler-gRPCPlugin (1.0.2)':
-    - '!ProtoCompiler (= 3.0.2)'
-    - gRPC-ProtoRPC (= 1.0.2)
-  - BoringSSL (7.0):
-    - BoringSSL/Implementation (= 7.0)
-    - BoringSSL/Interface (= 7.0)
-  - BoringSSL/Implementation (7.0):
-    - BoringSSL/Interface (= 7.0)
-  - BoringSSL/Interface (7.0)
-  - gRPC (1.0.2):
-    - gRPC-Core (= 1.0.2)
-    - gRPC-RxLibrary (= 1.0.2)
-  - gRPC-Core (1.0.2):
-    - gRPC-Core/Implementation (= 1.0.2)
-    - gRPC-Core/Interface (= 1.0.2)
-  - gRPC-Core/Implementation (1.0.2):
-    - BoringSSL (~> 7.0)
-    - gRPC-Core/Interface (= 1.0.2)
-  - gRPC-Core/Interface (1.0.2)
-  - gRPC-ProtoRPC (1.0.2):
-    - gRPC (= 1.0.2)
-    - gRPC-RxLibrary (= 1.0.2)
+  - '!ProtoCompiler-gRPCPlugin (1.1.0)':
+    - '!ProtoCompiler (= 3.1.0)'
+    - gRPC-ProtoRPC (= 1.1.0)
+  - BoringSSL (8.0):
+    - BoringSSL/Implementation (= 8.0)
+    - BoringSSL/Interface (= 8.0)
+  - BoringSSL/Implementation (8.0):
+    - BoringSSL/Interface (= 8.0)
+  - BoringSSL/Interface (8.0)
+  - gRPC (1.1.0):
+    - gRPC-Core (= 1.1.0)
+    - gRPC-RxLibrary (= 1.1.0)
+  - gRPC-Core (1.1.0):
+    - gRPC-Core/Implementation (= 1.1.0)
+    - gRPC-Core/Interface (= 1.1.0)
+  - gRPC-Core/Implementation (1.1.0):
+    - BoringSSL (~> 8.0)
+    - gRPC-Core/Interface (= 1.1.0)
+  - gRPC-Core/Interface (1.1.0)
+  - gRPC-ProtoRPC (1.1.0):
+    - gRPC (= 1.1.0)
+    - gRPC-RxLibrary (= 1.1.0)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.0.2)
+  - gRPC-RxLibrary (1.1.0)
   - OrderedDictionary (1.4)
   - Protobuf (3.2.0)
 
@@ -34,16 +34,16 @@ DEPENDENCIES:
   - OrderedDictionary
 
 SPEC CHECKSUMS:
-  '!ProtoCompiler': cfad9cbe5299a4923b1c3c8f150818c91efd0b6d
-  '!ProtoCompiler-gRPCPlugin': ee00d28bb35b26e2657f239833b8f2aa66724f96
-  BoringSSL: 50035b9d9eeff5529587311782fc57c00ebf13ae
-  gRPC: dd3a91e0fb770b9fc4f43d1292fb19f2a2e04158
-  gRPC-Core: cc4a7613190ff0bc60a0c1e702ef07cd3f868ae6
-  gRPC-ProtoRPC: 11533510522a5e9627883a597a796cfe6bef05f3
-  gRPC-RxLibrary: 02cc70b76bc0c5bc622ba27595cca2598d9fe528
+  '!ProtoCompiler': c2097b831fccad44e95f19cf95879ce160689306
+  '!ProtoCompiler-gRPCPlugin': cf7ff11d58fa9f6b13b66319a7c2537fe3f2abdf
+  BoringSSL: bafdcc5b88bac8ee45d7d207c507697f8c75b2fc
+  gRPC: 2762200b04314dabc9fec3541d1ff475a63af3fc
+  gRPC-Core: e341f77a880a20a507f9c988ce5fb021b6a5ddfa
+  gRPC-ProtoRPC: ef704b04fdfebb0221df26886b6a6e7fd20100d5
+  gRPC-RxLibrary: 8f4a1514a8746d7696441358353debac4242a33e
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
 
-PODFILE CHECKSUM: 48db8f483605d3dc795f6a2a4c9e1fe4b09761a5
+PODFILE CHECKSUM: a1fd12562c217027e2c1e904350cea998b65ab7d
 
 COCOAPODS: 1.1.1
