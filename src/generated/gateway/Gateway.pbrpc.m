@@ -250,6 +250,18 @@
              responseClass:[LinkAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark UnlinkAccounts(UnlinkAccountsRequest) returns (UnlinkAccountsResponse)
+
+- (void)unlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUnlinkAccountsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToUnlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UnlinkAccounts"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[UnlinkAccountsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetAccount(GetAccountRequest) returns (GetAccountResponse)
 
 - (void)getAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler{

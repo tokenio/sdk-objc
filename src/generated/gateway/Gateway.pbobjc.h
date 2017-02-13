@@ -550,6 +550,26 @@ typedef GPB_ENUM(LinkAccountsResponse_FieldNumber) {
 
 @end
 
+#pragma mark - UnlinkAccountsRequest
+
+typedef GPB_ENUM(UnlinkAccountsRequest_FieldNumber) {
+  UnlinkAccountsRequest_FieldNumber_AccountIdsArray = 1,
+};
+
+@interface UnlinkAccountsRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountIdsArray;
+/** The number of items in @c accountIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountIdsArray_Count;
+
+@end
+
+#pragma mark - UnlinkAccountsResponse
+
+@interface UnlinkAccountsResponse : GPBMessage
+
+@end
+
 #pragma mark - GetAccountRequest
 
 typedef GPB_ENUM(GetAccountRequest_FieldNumber) {

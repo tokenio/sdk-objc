@@ -167,6 +167,13 @@ message LinkAccountsResponse {
   repeated io.token.proto.common.account.Account accounts = 1;
 }
 
+message UnlinkAccountsRequest {
+  repeated string account_ids = 1;
+}
+
+message UnlinkAccountsResponse {
+}
+
 message GetAccountRequest {
   string account_id = 1;
 }
@@ -454,6 +461,12 @@ service GatewayService {
   rpc LinkAccounts (LinkAccountsRequest) returns (LinkAccountsResponse) {
     option (google.api.http) = {
         post: "/accounts"
+    };
+  }
+
+  rpc UnlinkAccounts (UnlinkAccountsRequest) returns (UnlinkAccountsResponse) {
+    option (google.api.http) = {
+        delete: "/accounts"
     };
   }
 

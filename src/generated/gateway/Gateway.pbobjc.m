@@ -1531,6 +1531,79 @@ typedef struct LinkAccountsResponse__storage_ {
 
 @end
 
+#pragma mark - UnlinkAccountsRequest
+
+@implementation UnlinkAccountsRequest
+
+@dynamic accountIdsArray, accountIdsArray_Count;
+
+typedef struct UnlinkAccountsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *accountIdsArray;
+} UnlinkAccountsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountIdsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = UnlinkAccountsRequest_FieldNumber_AccountIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UnlinkAccountsRequest__storage_, accountIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UnlinkAccountsRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UnlinkAccountsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UnlinkAccountsResponse
+
+@implementation UnlinkAccountsResponse
+
+
+typedef struct UnlinkAccountsResponse__storage_ {
+  uint32_t _has_storage_[1];
+} UnlinkAccountsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UnlinkAccountsResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(UnlinkAccountsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - GetAccountRequest
 
 @implementation GetAccountRequest

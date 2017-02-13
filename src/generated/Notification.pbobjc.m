@@ -446,7 +446,6 @@ void NotifyBody_ClearBodyOneOfCase(NotifyBody *message) {
 @dynamic subscriberId;
 @dynamic hasContent, content;
 @dynamic status;
-@dynamic createdAtMs;
 
 typedef struct Notification__storage_ {
   uint32_t _has_storage_[1];
@@ -454,7 +453,6 @@ typedef struct Notification__storage_ {
   NSString *id_p;
   NSString *subscriberId;
   NotificationContent *content;
-  int64_t createdAtMs;
 } Notification__storage_;
 
 // This method is threadsafe because it is initially called
@@ -498,15 +496,6 @@ typedef struct Notification__storage_ {
         .offset = (uint32_t)offsetof(Notification__storage_, status),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
-        .number = Notification_FieldNumber_CreatedAtMs,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(Notification__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -583,6 +572,7 @@ BOOL Notification_Status_IsValidValue(int32_t value__) {
 @dynamic locKey;
 @dynamic locArgsArray, locArgsArray_Count;
 @dynamic payload;
+@dynamic createdAtMs;
 
 typedef struct NotificationContent__storage_ {
   uint32_t _has_storage_[1];
@@ -592,6 +582,7 @@ typedef struct NotificationContent__storage_ {
   NSString *payload;
   NSString *locKey;
   NSMutableArray *locArgsArray;
+  int64_t createdAtMs;
 } NotificationContent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -635,6 +626,15 @@ typedef struct NotificationContent__storage_ {
         .offset = (uint32_t)offsetof(NotificationContent__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationContent_FieldNumber_CreatedAtMs,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(NotificationContent__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
       {
         .name = "locKey",

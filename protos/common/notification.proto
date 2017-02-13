@@ -70,9 +70,6 @@ message Notification {
     DELIVERED = 2;
   }
   Status status = 4;
-
-  // Time the notification was created
-  int64 created_at_ms = 5;
 }
 
 // The contents of a notification that was sent or will be sent
@@ -83,4 +80,5 @@ message NotificationContent {
   string loc_key = 6;
   repeated string loc_args = 7;
   string payload = 4;
+  int64 created_at_ms = 5;
 }

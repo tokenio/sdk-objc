@@ -246,7 +246,6 @@ typedef GPB_ENUM(Notification_FieldNumber) {
   Notification_FieldNumber_SubscriberId = 2,
   Notification_FieldNumber_Content = 3,
   Notification_FieldNumber_Status = 4,
-  Notification_FieldNumber_CreatedAtMs = 5,
 };
 
 /**
@@ -266,9 +265,6 @@ typedef GPB_ENUM(Notification_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasContent;
 
 @property(nonatomic, readwrite) Notification_Status status;
-
-/** Time the notification was created */
-@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
 
@@ -291,6 +287,7 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
   NotificationContent_FieldNumber_Title = 2,
   NotificationContent_FieldNumber_Body = 3,
   NotificationContent_FieldNumber_Payload = 4,
+  NotificationContent_FieldNumber_CreatedAtMs = 5,
   NotificationContent_FieldNumber_LocKey = 6,
   NotificationContent_FieldNumber_LocArgsArray = 7,
 };
@@ -313,6 +310,8 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger locArgsArray_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
 
