@@ -216,6 +216,17 @@
              onError:(OnError)onError;
 
 /**
+ * Unlinks bank accounts previously linked via linkAccounts call.
+ *
+ * @param accountIds account ids to unlink
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Looks up funding bank accounts linked to Token.
  *
  * @param onSuccess callback invoked on success

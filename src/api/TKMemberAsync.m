@@ -253,6 +253,14 @@
                  onError:onError];
 }
 
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
+    [client unlinkAccounts:accountIds
+                 onSuccess:onSuccess
+                    onError:onError];
+}
+
 - (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
             onError:(OnError)onError {
     [client getAccounts:

@@ -55,6 +55,10 @@
         XCTAssertNotNil(accounts[0].id);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(bankId, accounts[0].bankId);
+
+        [member unlinkAccounts:@[accounts[0].id]];
+        accounts = [member getAccounts];
+        XCTAssert(accounts.count == 0);
     }];
 }
 
