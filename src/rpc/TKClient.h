@@ -144,6 +144,7 @@
         withPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError;
+
 /**
  * Unlinks token accounts.
  *

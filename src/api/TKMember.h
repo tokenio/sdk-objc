@@ -180,7 +180,7 @@
  *
  * @param accountIds account ids to unlink
  */
-- (void)unlinkAccounts:(NSArray <NSString *> *)accountIds;
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds;
 
 /**
  * Looks up funding bank accounts linked to Token.

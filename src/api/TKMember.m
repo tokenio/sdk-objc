@@ -196,7 +196,7 @@
     }];
 }
 
-- (void)unlinkAccounts:(NSArray <NSString *> *)accountIds {
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async unlinkAccounts:accountIds
