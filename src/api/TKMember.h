@@ -176,6 +176,13 @@
                          withPayloads:(NSArray<SealedMessage*> *)payloads;
 
 /**
+ * Unlinks bank accounts previously linked via linkAccounts call.
+ *
+ * @param accountIds account ids to unlink
+ */
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds;
+
+/**
  * Looks up funding bank accounts linked to Token.
  *
  * @return list of accounts

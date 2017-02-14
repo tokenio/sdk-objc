@@ -146,6 +146,15 @@
              onError:(OnError)onError;
 
 /**
+ * Unlinks token accounts.
+ *
+ * @param accountIds account ids to unlink
+ */
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Looks up linked member accounts.
  */
 - (void)getAccounts:(OnSuccessWithAccounts)onSuccess

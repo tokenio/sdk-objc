@@ -21,58 +21,57 @@
 @implementation TKAccountsTests {
     TKMember *member;
     FankClient *fankClient;
+    NSArray<TKAccount *> *accounts;
+    NSString *bankId;
 }
 
 - (void)setUp {
     [super setUp];
 
     [self run: ^(TokenIO *tokenIO) {
+        bankId = @"iron";
         member = [self createMember:tokenIO];
         NSString *firstName = [@"FirstName-" stringByAppendingString:[TKUtil nonce]];
         NSString *lastName = [@"LastName-" stringByAppendingString:[TKUtil nonce]];
         fankClient = [self.bank addClientWithFirstName:firstName lastName:lastName];
-    }];
-}
-
-- (void)testLinkAccounts {
-    [self run: ^(TokenIO *tokenIO) {
-        NSString *bankId = @"iron";
-        
         FankAccount *checking = [self.bank addAccountWithName: @"Checking"
                                                     forClient: fankClient
                                             withAccountNumber: [@"iban:checking-" stringByAppendingString:[TKUtil nonce]]
                                                        amount: @"1000000.00"
                                                      currency: @"USD"];
-        
+
         NSArray<SealedMessage*> *payloads = [self.bank authorizeAccountLinkingFor: member.firstUsername
                                                                          clientId: fankClient.id_p
                                                                    accountNumbers: [NSArray arrayWithObjects: checking.accountNumber, nil]];
-        
-        NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                                 withPayloads:payloads];
+        accounts = [member linkAccounts:bankId
+                           withPayloads:payloads];
+    }];
+}
 
+- (void)testLinkAccounts {
+    [self run: ^(TokenIO *tokenIO) {
         XCTAssert(accounts.count == 1);
         XCTAssertNotNil(accounts[0].id);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(bankId, accounts[0].bankId);
+
+        [member unlinkAccounts:@[accounts[0].id]];
+        accounts = [member getAccounts];
+        XCTAssert(accounts.count == 0);
     }];
 }
 
 - (void)testLookupAccounts {
-    [self testLinkAccounts];
-
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<TKAccount *> *accounts = [member getAccounts];
+        accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
     }];
 }
 
 - (void)testLookupAccount {
-    [self testLinkAccounts];
-
     [self run: ^(TokenIO *tokenIO) {
-        NSArray<TKAccount *> *accounts = [member getAccounts];
+        accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(@"iron", accounts[0].bankId);

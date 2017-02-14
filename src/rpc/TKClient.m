@@ -260,6 +260,27 @@
     [self _startCall:call withRequest:request];
 }
 
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
+    UnlinkAccountsRequest *request = [UnlinkAccountsRequest message];
+    request.accountIdsArray = [NSMutableArray arrayWithArray: accountIds];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToUnlinkAccountsWithRequest:request
+                           handler:^(UnlinkAccountsResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   RpcLogError(error);
+                                   onError(error);
+                               }
+                           }];
+    [self _startCall:call withRequest:request];
+}
+
 - (void)getAccounts:(OnSuccessWithAccounts)onSuccess
             onError:(OnError)onError {
     GetAccountsRequest *request = [GetAccountsRequest message];
