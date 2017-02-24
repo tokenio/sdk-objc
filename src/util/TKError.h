@@ -14,6 +14,9 @@ typedef enum {
     
     /* Private key couldn't be retrieved from key storage */
     kTKErrorKeyNotFound = 102,
+
+    /* Raised when an SDK version is no longer supported by the server */
+    kTKErrorSdkVersionMismatch = 103,
 } TKErrorCode;
 
 

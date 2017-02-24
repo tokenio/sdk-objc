@@ -11,6 +11,7 @@
 @class GatewayService;
 @class Member;
 @class TKCrypto;
+@class TKRpcErrorHandler;
 
 /**
  * Similar to TKClient but is only used for a handful of requests that
@@ -22,10 +23,12 @@
 /**
  * @param gateway gRPC client
  * @param timeoutMs gRPC timeout in ms
+ * @param errorHandler error handler to handle RPC errors
  * @return new unauthenticated client
  */
 - (id)initWithGateway:(GatewayService *)gateway
-            timeoutMs:(int)timeoutMs;
+            timeoutMs:(int)timeoutMs
+         errorHandler:(TKRpcErrorHandler *)errorHandler;
 
 /**
  * Creates new member ID. After the method returns the ID is reserved on

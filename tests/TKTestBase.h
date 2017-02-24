@@ -9,6 +9,7 @@
 @class TKMember;
 @class TKAccount;
 @class TKBankClient;
+@class HostAndPort;
 
 typedef void (^AsyncTestBlock)(TokenIO *);
 typedef id (^AsyncTestBlockWithResult)(TokenIO *);
@@ -57,5 +58,14 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @return
  */
 - (TKAccount *)createAccount:(TokenIO *)tokenIO;
+
+/**
+ * Formats HostAndPort instance.
+ *
+ * @param var env variable holding connection details
+ * @param port default port number
+ * @return HostAndPort instance
+ */
+- (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port;
 
 @end

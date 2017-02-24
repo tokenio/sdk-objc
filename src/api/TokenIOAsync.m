@@ -14,12 +14,15 @@
 #import "TKUnauthenticatedClient.h"
 #import "TKClient.h"
 #import "DeviceInfo.h"
+#import "TKRpcErrorHandler.h"
 
 
 @implementation TokenIOAsync {
     GatewayService *gateway;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
+    TKRpcErrorHandler *errorHandler;
+    OnError globalRpcErrorCallback;
 }
 
 + (TokenIOBuilder *)builder {
@@ -30,12 +33,13 @@
               port:(int)port
          timeoutMs:(int)timeout
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
-            useSsl:(BOOL)useSsl {
+            useSsl:(BOOL)useSsl
+globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     self = [super init];
     
     if (self) {
         NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
-        
+
         if (!useSsl) {
             [GRPCCall useInsecureConnectionsForHost:address];
         }
@@ -43,6 +47,8 @@
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
+        globalRpcErrorCallback = globalRpcErrorCallback_;
+        errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback];
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
     }
@@ -59,7 +65,8 @@
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
     [client createMemberId:
                     ^(NSString *memberId) {
                         [self _addKeysAndUsername:client
@@ -76,7 +83,8 @@
                 onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
     [client getMemberId:username
               onSuccess:^(NSString *memberId) {
                   if (memberId) {
@@ -97,7 +105,8 @@
             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
     [client getMemberId:username
               onSuccess:^(NSString *memberId) { onSuccess([memberId length] != 0); }
                 onError:onError];
@@ -110,7 +119,8 @@
     TKClient *client = [[TKClient alloc] initWithGateway:gateway
                                                   crypto:crypto
                                                timeoutMs:timeoutMs
-                                                memberId:memberId];
+                                                memberId:memberId
+                                            errorHandler:errorHandler];
     [client getMember: ^(Member *member) {
                 onSuccess([TKMemberAsync
                         member:member
@@ -127,7 +137,8 @@
                    onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
     [client notifyLinkAccounts:username
                         bankId:bankId
                       bankName:bankName
@@ -143,7 +154,8 @@
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
     [client notifyAddKey:username
                  keyName:keyName
                      key:key
@@ -161,7 +173,8 @@
                             onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
-                  timeoutMs:timeoutMs];
+                  timeoutMs:timeoutMs
+              errorHandler:errorHandler];
     [client notifyLinkAccountsAndAddKey:username
                                  bankId:bankId
                                bankName:bankName
@@ -186,6 +199,7 @@
                     onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
+    TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback];
 
     NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
     for (Key *key in keys) {
@@ -206,7 +220,8 @@
                            initWithGateway:gateway
                                     crypto:crypto
                                  timeoutMs:timeoutMs
-                                  memberId:memberId];
+                                  memberId:memberId
+                              errorHandler:errorHandler];
                    onSuccess([TKMemberAsync
                            member:member
                         useClient:newClient]);

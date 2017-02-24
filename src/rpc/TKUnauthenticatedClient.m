@@ -10,17 +10,22 @@
 #import "TKRpc.h"
 #import "TKSignature.h"
 #import "TKLocalizer.h"
+#import "TKRpcErrorHandler.h"
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;
     TKRpc *rpc;
+    TKRpcErrorHandler *errorHandler;
 }
 
-- (id)initWithGateway:(GatewayService *)gateway_ timeoutMs:(int)timeoutMs_ {
+- (id)initWithGateway:(GatewayService *)gateway_
+            timeoutMs:(int)timeoutMs_
+         errorHandler:(TKRpcErrorHandler *) errorHandler_ {
     self = [super init];
 
     if (self) {
         gateway = gateway_;
+        errorHandler = errorHandler_;
         rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
     }
 
@@ -40,8 +45,7 @@
                                          RpcLogCompleted(response);
                                          onSuccess(response.memberId);
                                      } else {
-                                         RpcLogError(error);
-                                         onError(error);
+                                         [errorHandler handle:onError withError:error];
                                      }
                                  }];
     [rpc execute:call request:request];
@@ -61,8 +65,7 @@
                                            RpcLogCompleted(response);
                                            onSuccess(response.memberId);
                                        } else {
-                                           RpcLogError(error);
-                                           onError(error);
+                                           [errorHandler handle:onError withError:error];
                                        }
                                    }];
     [rpc execute:call request:request];
@@ -99,8 +102,7 @@
                                          RpcLogCompleted(response);
                                          onSuccess(response.member);
                                      } else {
-                                         RpcLogError(error);
-                                         onError(error);
+                                         [errorHandler handle:onError withError:error];
                                      }
                                  }];
     [rpc execute:call request:request];
@@ -126,8 +128,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -151,8 +152,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -183,8 +183,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];

@@ -41,10 +41,7 @@
     dispatch_semaphore_wait(isDone, DISPATCH_TIME_FOREVER);
 
     if (error) {
-        @throw [NSException
-                exceptionWithName:error.localizedDescription
-                           reason:error.localizedFailureReason
-                         userInfo:error.userInfo];
+        @throw error;
     }
 
     return result;

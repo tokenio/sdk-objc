@@ -25,6 +25,7 @@
         self.port = 9000;
         self.timeoutMs = 10 * 1000; // 10 seconds.
         self.useSsl = YES;
+        self.globalRpcErrorCallback =^(NSError *error) {/* noop default callback */};
     }
 
     return self;
@@ -47,7 +48,8 @@
                     port:self.port
                timeoutMs:self.timeoutMs
                   crypto:cryptoEngineFactory
-                  useSsl:self.useSsl];
+                  useSsl:self.useSsl
+  globalRpcErrorCallback:self.globalRpcErrorCallback];
 }
 
 @end

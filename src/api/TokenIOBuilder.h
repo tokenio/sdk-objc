@@ -4,6 +4,7 @@
 //
 
 #import <objc/NSObject.h>
+#import "TKTypedef.h"
 
 
 @class TokenIO;
@@ -22,6 +23,11 @@
 @property (readwrite) int timeoutMs;
 @property (readwrite) BOOL useSsl;
 @property (readwrite) id<TKKeyStore> keyStore;
+/**
+ * Optional callback to invoke when a cross-cutting RPC error is raised (for example: kTKErrorSdkVersionMismatch).
+ * This is in addition to the rpc-specific onError handler, which is still invoked after the rpcErrorCallback.
+ */
+@property (readwrite) OnError globalRpcErrorCallback;
 
 - (id)init;
 
