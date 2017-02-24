@@ -16,6 +16,10 @@ void RpcLogError(NSError *error) {
     TKLogError(@"RPC >> ERROR: %@", error)
 }
 
+void RpcLogErrorDetails(NSString *message) {
+    TKLogError(@"RPC >> ERROR DETAILS: %@", message);
+}
+
 void RpcLogCompleted(GPBMessage *response) {
     TKLogInfo(@"RPC >> %@", response)
 }

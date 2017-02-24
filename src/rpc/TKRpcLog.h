@@ -10,5 +10,6 @@
 
 void RpcLogStart(GPBMessage *request);
 void RpcLogError(NSError *error);
+void RpcLogErrorDetails(NSString *message);
 void RpcLogCompleted(GPBMessage *response);
 
