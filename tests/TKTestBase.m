@@ -6,6 +6,7 @@
 #import "Money.pbobjc.h"
 #import "bankapi/Fank.pbobjc.h"
 
+#import "HostAndPort.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
@@ -13,14 +14,6 @@
 #import "TKMember.h"
 #import "TKAccount.h"
 #import "TKTestKeyStore.h"
-
-@interface HostAndPort : NSObject
-@property NSString *host;
-@property int port;
-@end
-
-@implementation HostAndPort
-@end
 
 
 @implementation TKTestBase {

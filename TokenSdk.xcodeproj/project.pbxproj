@@ -42,6 +42,10 @@
 		37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B4B1D989A930043345F /* Transfer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3777163E1D99BF6800287239 /* TokenSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 3777163D1D99BF6800287239 /* TokenSdk.h */; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
+		62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */; };
+		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
+		62DE96D6F9FB39557C01B484 /* HostAndPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE98B689D2C43491570541 /* HostAndPort.m */; };
+		62DE99DE93002AC87D315E8A /* TKRpcErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */; };
 		8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */; };
 		8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A1FA0D31DAEE92400DFB258 /* Fank.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */; };
@@ -57,6 +61,7 @@
 		8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */; };
 		8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */; };
+		94DC2AD21E5E5E180088F55A /* TKErrorHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */; };
 		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
 		94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAE5321DF218880023AAA8 /* PagedArray.h */; };
 		94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE5341DF21A590023AAA8 /* PagedArray.m */; };
@@ -231,6 +236,11 @@
 		37637B4B1D989A930043345F /* Transfer.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transfer.pbobjc.m; sourceTree = "<group>"; };
 		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
 		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
+		62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKErrorHandlerTests.m; sourceTree = "<group>"; };
+		62DE98B689D2C43491570541 /* HostAndPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostAndPort.m; sourceTree = "<group>"; };
+		62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcErrorHandler.h; sourceTree = "<group>"; };
+		62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcErrorHandler.m; sourceTree = "<group>"; };
+		62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostAndPort.h; sourceTree = "<group>"; };
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
 		8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transferinstructions.pbobjc.h; sourceTree = "<group>"; };
 		8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transferinstructions.pbobjc.m; sourceTree = "<group>"; };
@@ -568,6 +578,9 @@
 				DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */,
 				DD0A775E1E422FE40058FB8A /* Localizable.strings */,
 				DD0A77611E4232E50058FB8A /* CustomTable.strings */,
+				62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */,
+				62DE98B689D2C43491570541 /* HostAndPort.m */,
+				62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -669,6 +682,8 @@
 				ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */,
 				ABA7BA942D3FB2A2456397EA /* TKRpc.m */,
 				ABA7B9AEBEC4864DE6D12D90 /* TKRpc.h */,
+				62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */,
+				62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */,
 			);
 			path = rpc;
 			sourceTree = "<group>";
@@ -840,6 +855,8 @@
 				ABA7B34BF0A1DB2C1A5C388B /* DeviceInfo.h in Headers */,
 				ABA7B841C5B557B7A8C108DE /* TKTestMemberKeys.h in Headers */,
 				ABA7B702776867CC05577BE2 /* TKTokenCryptoEngineFactory.h in Headers */,
+				62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */,
+				62DE9511FC4092414C75372D /* HostAndPort.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1211,6 +1228,8 @@
 				ABA7B3A5D11DF3FEA61A4ACA /* DeviceInfo.m in Sources */,
 				ABA7B7774C5089BDF4D65DCE /* TKTestMemberKeys.m in Sources */,
 				ABA7B89E47011348D075E22B /* TKTokenCryptoEngineFactory.m in Sources */,
+				62DE99DE93002AC87D315E8A /* TKRpcErrorHandler.m in Sources */,
+				62DE96D6F9FB39557C01B484 /* HostAndPort.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,6 +1243,7 @@
 				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
 				8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */,
+				94DC2AD21E5E5E180088F55A /* TKErrorHandlerTests.m in Sources */,
 				1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */,
 				ABA7BC12F2DE08B6AEEC7F35 /* TKTestBase.m in Sources */,
 				ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */,

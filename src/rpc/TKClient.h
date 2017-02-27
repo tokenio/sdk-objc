@@ -18,6 +18,7 @@
 @class Transfer;
 @class TransferPayload;
 @class TKCrypto;
+@class TKRpcErrorHandler;
 
 
 /**
@@ -31,12 +32,14 @@
  * @param gateway gateway gRPC client
  * @param crypto crypto module to use
  * @param timeoutMs gRPC timeout in ms
+ * @param errorHandler error handler to handle RPC errors
  * @return newly created client
  */
 - (id)initWithGateway:(GatewayService *)gateway
                crypto:(TKCrypto *)crypto
             timeoutMs:(int)timeoutMs
-             memberId:(NSString *)memberId;
+             memberId:(NSString *)memberId
+         errorHandler:(TKRpcErrorHandler *)errorHandler;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used

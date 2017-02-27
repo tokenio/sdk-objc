@@ -44,12 +44,14 @@
  * @param timeout timeout value in ms
  * @param crypto crypto module to use
  * @param useSsl use SSL if true
+ * @param globalRpcErrorCallback_ global RPC error callback to invoke on error
  */
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
-            useSsl:(BOOL)useSsl;
+            useSsl:(BOOL)useSsl
+globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the

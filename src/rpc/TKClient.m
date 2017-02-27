@@ -9,10 +9,10 @@
 
 #import "TKClient.h"
 #import "TKRpcLog.h"
-#import "PagedArray.h"
 #import "TKRpc.h"
 #import "TKSignature.h"
 #import "TKLocalizer.h"
+#import "TKRpcErrorHandler.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -20,12 +20,14 @@
     TKRpc *rpc;
     NSString *memberId;
     NSString *onBehalfOfMemberId;
+    TKRpcErrorHandler *errorHandler;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
                crypto:(TKCrypto *)crypto_
             timeoutMs:(int)timeoutMs_
-             memberId:(NSString *)memberId_ {
+             memberId:(NSString *)memberId_
+         errorHandler:(TKRpcErrorHandler *)errorHandler_ {
     self = [super init];
     
     if (self) {
@@ -33,6 +35,7 @@
         crypto = crypto_;
         memberId = memberId_;
         rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
+        errorHandler = errorHandler_;
     }
     
     return self;
@@ -58,8 +61,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.member);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }
                            ];
@@ -98,8 +100,7 @@
                                          RpcLogCompleted(response);
                                          onSuccess(response.member);
                                      } else {
-                                         RpcLogError(error);
-                                         onError(error);
+                                         [errorHandler handle:onError withError:error];
                                      }
                                  }
     ];
@@ -121,8 +122,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscriber);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -139,8 +139,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscribersArray);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -160,8 +159,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscriber);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -185,8 +183,7 @@
                                                                  offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -206,8 +203,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.notification);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -227,8 +223,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -252,8 +247,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.accountsArray);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -274,8 +268,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     [self _startCall:call withRequest:request];
@@ -293,8 +286,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.accountsArray);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -315,8 +307,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.account);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -337,8 +328,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -365,8 +355,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -410,8 +399,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -432,11 +420,9 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
-                           }
-                           ];
+                           }];
     
     [self _startCall:call withRequest:request];
 }
@@ -462,8 +448,7 @@
                                                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -500,8 +485,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -536,8 +520,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -572,8 +555,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.transfer);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -595,8 +577,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.transfer);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -625,8 +606,7 @@
                                                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -648,8 +628,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.current);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -673,8 +652,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.transaction);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -703,8 +681,7 @@
                                                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -741,8 +718,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.address);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -764,8 +740,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.address);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -785,8 +760,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.addressesArray);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -808,8 +782,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -829,8 +802,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.banksArray);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
 
@@ -852,8 +824,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.info);
                                } else {
-                                   RpcLogError(error);
-                                   onError(error);
+                                   [errorHandler handle:onError withError:error];
                                }
                            }];
 

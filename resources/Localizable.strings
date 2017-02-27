@@ -10,3 +10,5 @@
 
 "Private_Key_Not_Found" = "Private key not found";
 "User_Cancelled_Authentication" = "User cancelled authentication";
+
+"Sdk_Version_Mismatch" = "Please upgrade your app to the latest version";
