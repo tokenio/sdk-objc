@@ -14,7 +14,7 @@
     NSMutableDictionary *customErrorLookup;
 }
 
-- (id)initWithGlobalRpcErrorCallback:(OnError) globalRpcErrorCallback_ {
+- (id)initWithGlobalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     self = [super init];
     if (self) {
         globalRpcErrorCallback = globalRpcErrorCallback_;
@@ -29,8 +29,8 @@
     return self;
 }
 
-- (void)handle:(OnError) onError
-     withError:(NSError *) error {
+- (void)handle:(OnError)onError
+     withError:(NSError *)error {
 
     RpcLogError(error);
     if (error.domain && [error.domain isEqualToString:@"io.grpc"]) {

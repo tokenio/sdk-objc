@@ -56,7 +56,7 @@
         @try {
             [syncCall run:^{
                 dispatch_after(
-                        dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_MSEC),
+                        dispatch_time(DISPATCH_TIME_NOW, 15000 * NSEC_PER_MSEC),
                         dispatch_get_main_queue(), ^{
                             [call cancel];
                         });

@@ -22,7 +22,6 @@
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
     TKRpcErrorHandler *errorHandler;
-    OnError globalRpcErrorCallback;
 }
 
 + (TokenIOBuilder *)builder {
@@ -47,8 +46,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
-        globalRpcErrorCallback = globalRpcErrorCallback_;
-        errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback];
+        errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback_];
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
     }
@@ -199,7 +197,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                     onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
-    TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback];
 
     NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
     for (Key *key in keys) {

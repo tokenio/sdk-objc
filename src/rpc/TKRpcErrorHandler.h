@@ -16,7 +16,7 @@
  * @param globalRpcErrorCallback_ global RPC error callback
  * @return TKRpcErrorHandler instance
  */
-- (id)initWithGlobalRpcErrorCallback:(OnError) globalRpcErrorCallback_;
+- (id)initWithGlobalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
 
 /**
  * Handles RPC error and calls the provided onError.
@@ -24,7 +24,7 @@
  * @param onError invoked on error
  * @param error RPC error raised
  */
-- (void)handle:(OnError) onError
-     withError:(NSError *) error;
+- (void)handle:(OnError)onError
+     withError:(NSError *)error;
 
 @end

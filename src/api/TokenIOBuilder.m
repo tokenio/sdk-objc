@@ -25,7 +25,7 @@
         self.port = 9000;
         self.timeoutMs = 10 * 1000; // 10 seconds.
         self.useSsl = YES;
-        self.globalRpcErrorCallback =^(NSError *error) {/* noop default callback */};
+        self.globalRpcErrorCallback = ^(NSError *error) {/* noop default callback */};
     }
 
     return self;
