@@ -25,17 +25,8 @@
 
 @implementation NotificationRoot
 
-+ (GPBExtensionRegistry*)extensionRegistry {
-  // This is called by +initialize so there is no need to worry
-  // about thread safety and initialization of registry.
-  static GPBExtensionRegistry* registry = nil;
-  if (!registry) {
-    GPBDebugCheckRuntimeVersion();
-    registry = [[GPBExtensionRegistry alloc] init];
-    [registry addExtensions:[SecurityRoot extensionRegistry]];
-  }
-  return registry;
-}
+// No extensions in the file and none of the imports (direct or indirect)
+// defined extensions, so no need to generate +extensionRegistry.
 
 @end
 
@@ -46,7 +37,7 @@ static GPBFileDescriptor *NotificationRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPBDebugCheckRuntimeVersion();
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.notification"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -123,7 +114,7 @@ typedef struct TransferProcessed__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferProcessed__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -188,7 +179,7 @@ typedef struct LinkAccounts__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(LinkAccounts__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -231,7 +222,7 @@ typedef struct StepUp__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(StepUp__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -285,7 +276,7 @@ typedef struct AddKey__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AddKey__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -339,7 +330,7 @@ typedef struct LinkAccountsAndAddKey__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(LinkAccountsAndAddKey__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -427,7 +418,7 @@ typedef struct NotifyBody__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NotifyBody__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     static const char *oneofs[] = {
       "body",
     };
@@ -503,7 +494,7 @@ typedef struct Notification__storage_ {
         .number = Notification_FieldNumber_Status,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Notification__storage_, status),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -514,7 +505,7 @@ typedef struct Notification__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Notification__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -671,7 +662,7 @@ typedef struct NotificationContent__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NotificationContent__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

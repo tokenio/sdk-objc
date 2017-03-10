@@ -23,6 +23,9 @@
 
 @implementation AuthRoot
 
+// No extensions in the file and no imports, so no need to generate
+// +extensionRegistry.
+
 @end
 
 #pragma mark - AuthRoot_FileDescriptor
@@ -32,7 +35,7 @@ static GPBFileDescriptor *AuthRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPBDebugCheckRuntimeVersion();
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.gateway"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -128,7 +131,7 @@ typedef struct HttpAuthPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(HttpAuthPayload__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -182,7 +185,7 @@ typedef struct GRpcAuthPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GRpcAuthPayload__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

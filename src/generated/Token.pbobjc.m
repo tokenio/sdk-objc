@@ -26,18 +26,8 @@
 
 @implementation TokenRoot
 
-+ (GPBExtensionRegistry*)extensionRegistry {
-  // This is called by +initialize so there is no need to worry
-  // about thread safety and initialization of registry.
-  static GPBExtensionRegistry* registry = nil;
-  if (!registry) {
-    GPBDebugCheckRuntimeVersion();
-    registry = [[GPBExtensionRegistry alloc] init];
-    [registry addExtensions:[SecurityRoot extensionRegistry]];
-    [registry addExtensions:[TransferinstructionsRoot extensionRegistry]];
-  }
-  return registry;
-}
+// No extensions in the file and none of the imports (direct or indirect)
+// defined extensions, so no need to generate +extensionRegistry.
 
 @end
 
@@ -48,7 +38,7 @@ static GPBFileDescriptor *TokenRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPBDebugCheckRuntimeVersion();
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.token"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -122,7 +112,7 @@ typedef struct Token__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Token__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -156,7 +146,7 @@ typedef struct TokenSignature__storage_ {
         .number = TokenSignature_FieldNumber_Action,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TokenSignature__storage_, action),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -176,7 +166,7 @@ typedef struct TokenSignature__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TokenSignature__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -278,7 +268,7 @@ typedef struct TokenMember__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TokenMember__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -421,7 +411,7 @@ typedef struct TokenPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TokenPayload__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     static const char *oneofs[] = {
       "body",
     };
@@ -530,7 +520,7 @@ typedef struct TransferBody__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferBody__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -573,7 +563,7 @@ typedef struct AccessBody__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -620,7 +610,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllAddresses,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAddresses),
-        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -629,7 +619,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllAccounts,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAccounts),
-        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -638,7 +628,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllTransactions,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allTransactions),
-        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -647,7 +637,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllBalances,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allBalances),
-        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -694,7 +684,7 @@ typedef struct AccessBody_Resource__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     static const char *oneofs[] = {
       "resource",
     };
@@ -706,6 +696,7 @@ typedef struct AccessBody_Resource__storage_ {
         "\004\001\014\000\002\013\000\003\017\000\004\013\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -740,7 +731,8 @@ typedef struct AccessBody_Resource_AllAddresses__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(AccessBody_Resource_AllAddresses__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -783,7 +775,8 @@ typedef struct AccessBody_Resource_Address__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_Address__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -813,7 +806,8 @@ typedef struct AccessBody_Resource_AllAccounts__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(AccessBody_Resource_AllAccounts__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -856,7 +850,8 @@ typedef struct AccessBody_Resource_Account__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_Account__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -886,7 +881,8 @@ typedef struct AccessBody_Resource_AllAccountTransactions__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(AccessBody_Resource_AllAccountTransactions__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -929,7 +925,8 @@ typedef struct AccessBody_Resource_AccountTransactions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_AccountTransactions__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -959,7 +956,8 @@ typedef struct AccessBody_Resource_AllAccountBalances__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(AccessBody_Resource_AllAccountBalances__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -1002,7 +1000,8 @@ typedef struct AccessBody_Resource_AccountBalance__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_AccountBalance__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -1045,7 +1044,7 @@ typedef struct TokenOperationResult__storage_ {
         .number = TokenOperationResult_FieldNumber_Status,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TokenOperationResult__storage_, status),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -1056,7 +1055,7 @@ typedef struct TokenOperationResult__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TokenOperationResult__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
