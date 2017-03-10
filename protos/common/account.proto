@@ -11,9 +11,16 @@ message AccountLinkPayload {
   int64 expiration_ms = 4;
 }
 
+// Optional account tag data.
+message AccountTag {
+  string key = 1;
+  string value = 2;
+}
+
 // Bank Service Account representation.
 message Account {
   string id = 1;
   string name = 2;
   string bank_id = 3;
+  repeated AccountTag tags = 4;
 }

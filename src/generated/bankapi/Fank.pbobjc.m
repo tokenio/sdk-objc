@@ -15,6 +15,7 @@
 
  #import "bankapi/Fank.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
+ #import "Account.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Security.pbobjc.h"
@@ -378,6 +379,7 @@ typedef struct FankGetClientResponse__storage_ {
 @dynamic name;
 @dynamic accountNumber;
 @dynamic hasBalance, balance;
+@dynamic tagsArray, tagsArray_Count;
 
 typedef struct FankAddAccountRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -385,6 +387,7 @@ typedef struct FankAddAccountRequest__storage_ {
   NSString *name;
   NSString *accountNumber;
   Money *balance;
+  NSMutableArray *tagsArray;
 } FankAddAccountRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -427,6 +430,15 @@ typedef struct FankAddAccountRequest__storage_ {
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, balance),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "tagsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccountTag),
+        .number = FankAddAccountRequest_FieldNumber_TagsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, tagsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -728,6 +740,566 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAuthorizeLinkAccountsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankBankBalanceSummary
+
+@implementation FankBankBalanceSummary
+
+@dynamic bankId;
+@dynamic hasTotalBalance, totalBalance;
+
+typedef struct FankBankBalanceSummary__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bankId;
+  Money *totalBalance;
+} FankBankBalanceSummary__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankBalanceSummary_FieldNumber_BankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankBankBalanceSummary__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "totalBalance",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = FankBankBalanceSummary_FieldNumber_TotalBalance,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankBankBalanceSummary__storage_, totalBalance),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankBankBalanceSummary class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankBankBalanceSummary__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankBankBalance
+
+@implementation FankBankBalance
+
+@dynamic fromBankId;
+@dynamic toBankId;
+@dynamic hasBankBalance, bankBalance;
+
+typedef struct FankBankBalance__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *fromBankId;
+  NSString *toBankId;
+  Money *bankBalance;
+} FankBankBalance__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fromBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankBalance_FieldNumber_FromBankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankBankBalance__storage_, fromBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "toBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankBalance_FieldNumber_ToBankId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankBankBalance__storage_, toBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankBalance",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = FankBankBalance_FieldNumber_BankBalance,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FankBankBalance__storage_, bankBalance),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankBankBalance class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankBankBalance__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankBankTransactionFxDetails
+
+@implementation FankBankTransactionFxDetails
+
+@dynamic hasFromAmount, fromAmount;
+@dynamic hasToAmount, toAmount;
+@dynamic exchangeRate;
+
+typedef struct FankBankTransactionFxDetails__storage_ {
+  uint32_t _has_storage_[1];
+  Money *fromAmount;
+  Money *toAmount;
+  NSString *exchangeRate;
+} FankBankTransactionFxDetails__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fromAmount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = FankBankTransactionFxDetails_FieldNumber_FromAmount,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankBankTransactionFxDetails__storage_, fromAmount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "toAmount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = FankBankTransactionFxDetails_FieldNumber_ToAmount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankBankTransactionFxDetails__storage_, toAmount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "exchangeRate",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransactionFxDetails_FieldNumber_ExchangeRate,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FankBankTransactionFxDetails__storage_, exchangeRate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankBankTransactionFxDetails class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankBankTransactionFxDetails__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankBankTransaction
+
+@implementation FankBankTransaction
+
+@dynamic fromBankId;
+@dynamic fromBankAccount;
+@dynamic toBankId;
+@dynamic toBankAccount;
+@dynamic hasAmount, amount;
+@dynamic createdAtMs;
+@dynamic hasFxDetails, fxDetails;
+
+typedef struct FankBankTransaction__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *fromBankId;
+  NSString *fromBankAccount;
+  NSString *toBankId;
+  NSString *toBankAccount;
+  Money *amount;
+  FankBankTransactionFxDetails *fxDetails;
+  int64_t createdAtMs;
+} FankBankTransaction__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fromBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransaction_FieldNumber_FromBankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, fromBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "fromBankAccount",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransaction_FieldNumber_FromBankAccount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, fromBankAccount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "toBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransaction_FieldNumber_ToBankId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, toBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "toBankAccount",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransaction_FieldNumber_ToBankAccount,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, toBankAccount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = FankBankTransaction_FieldNumber_Amount,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = FankBankTransaction_FieldNumber_CreatedAtMs,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "fxDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(FankBankTransactionFxDetails),
+        .number = FankBankTransaction_FieldNumber_FxDetails,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FankBankTransaction__storage_, fxDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankBankTransaction class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankBankTransaction__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetBankBalanceRequest
+
+@implementation FankGetBankBalanceRequest
+
+
+typedef struct FankGetBankBalanceRequest__storage_ {
+  uint32_t _has_storage_[1];
+} FankGetBankBalanceRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetBankBalanceRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(FankGetBankBalanceRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetBankBalanceResponse
+
+@implementation FankGetBankBalanceResponse
+
+@dynamic summariesArray, summariesArray_Count;
+@dynamic balancesArray, balancesArray_Count;
+
+typedef struct FankGetBankBalanceResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *summariesArray;
+  NSMutableArray *balancesArray;
+} FankGetBankBalanceResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "summariesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(FankBankBalanceSummary),
+        .number = FankGetBankBalanceResponse_FieldNumber_SummariesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankGetBankBalanceResponse__storage_, summariesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "balancesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(FankBankBalance),
+        .number = FankGetBankBalanceResponse_FieldNumber_BalancesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankGetBankBalanceResponse__storage_, balancesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetBankBalanceResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetBankBalanceResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetBankTransactionsRequest
+
+@implementation FankGetBankTransactionsRequest
+
+@dynamic fromBankId;
+@dynamic toBankId;
+
+typedef struct FankGetBankTransactionsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *fromBankId;
+  NSString *toBankId;
+} FankGetBankTransactionsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fromBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetBankTransactionsRequest_FieldNumber_FromBankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetBankTransactionsRequest__storage_, fromBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "toBankId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetBankTransactionsRequest_FieldNumber_ToBankId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankGetBankTransactionsRequest__storage_, toBankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetBankTransactionsRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetBankTransactionsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetBankTransactionsResponse
+
+@implementation FankGetBankTransactionsResponse
+
+@dynamic transactionsArray, transactionsArray_Count;
+
+typedef struct FankGetBankTransactionsResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *transactionsArray;
+} FankGetBankTransactionsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transactionsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(FankBankTransaction),
+        .number = FankGetBankTransactionsResponse_FieldNumber_TransactionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankGetBankTransactionsResponse__storage_, transactionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetBankTransactionsResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetBankTransactionsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankSettleTransactionsRequest
+
+@implementation FankSettleTransactionsRequest
+
+@dynamic currency;
+
+typedef struct FankSettleTransactionsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *currency;
+} FankSettleTransactionsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FankSettleTransactionsRequest_FieldNumber_Currency,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankSettleTransactionsRequest__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankSettleTransactionsRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankSettleTransactionsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankSettleTransactionsResponse
+
+@implementation FankSettleTransactionsResponse
+
+@dynamic settledAtMs;
+
+typedef struct FankSettleTransactionsResponse__storage_ {
+  uint32_t _has_storage_[1];
+  int64_t settledAtMs;
+} FankSettleTransactionsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "settledAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = FankSettleTransactionsResponse_FieldNumber_SettledAtMs,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankSettleTransactionsResponse__storage_, settledAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankSettleTransactionsResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankSettleTransactionsResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

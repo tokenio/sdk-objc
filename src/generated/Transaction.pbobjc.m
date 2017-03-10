@@ -85,12 +85,14 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "InvalidStatus\000Pending\000Success\000FailureIns"
-        "ufficientFunds\000FailureInvalidCurrency\000Fa"
-        "ilurePermissionDenied\000FailureGeneric\000";
+        "InvalidStatus\000Pending\000Processing\000Success"
+        "\000FailureInsufficientFunds\000FailureInvalid"
+        "Currency\000FailurePermissionDenied\000Failure"
+        "Generic\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Pending,
+        TransactionStatus_Processing,
         TransactionStatus_Success,
         TransactionStatus_FailureInsufficientFunds,
         TransactionStatus_FailureInvalidCurrency,
@@ -114,6 +116,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
   switch (value__) {
     case TransactionStatus_InvalidStatus:
     case TransactionStatus_Pending:
+    case TransactionStatus_Processing:
     case TransactionStatus_Success:
     case TransactionStatus_FailureInsufficientFunds:
     case TransactionStatus_FailureInvalidCurrency:

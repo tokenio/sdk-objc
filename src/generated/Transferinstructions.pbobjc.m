@@ -160,6 +160,7 @@ typedef struct Source__storage_ {
 @dynamic iban;
 @dynamic ach;
 @dynamic local;
+@dynamic tips;
 
 typedef struct Destination__storage_ {
   uint32_t _has_storage_[2];
@@ -167,6 +168,7 @@ typedef struct Destination__storage_ {
   DestinationIban *iban;
   DestinationAch *ach;
   DestinationLocal *local;
+  DestinationTips *tips;
 } Destination__storage_;
 
 // This method is threadsafe because it is initially called
@@ -208,6 +210,15 @@ typedef struct Destination__storage_ {
         .number = Destination_FieldNumber_Local,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Destination__storage_, local),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "tips",
+        .dataTypeSpecific.className = GPBStringifySymbol(DestinationTips),
+        .number = Destination_FieldNumber_Tips,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Destination__storage_, tips),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -505,6 +516,49 @@ typedef struct DestinationLocal__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DestinationLocal__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - DestinationTips
+
+@implementation DestinationTips
+
+@dynamic username;
+
+typedef struct DestinationTips__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *username;
+} DestinationTips__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = DestinationTips_FieldNumber_Username,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(DestinationTips__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DestinationTips class]
+                                     rootClass:[TransferinstructionsRoot class]
+                                          file:TransferinstructionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(DestinationTips__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

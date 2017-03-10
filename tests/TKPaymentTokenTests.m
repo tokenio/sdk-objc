@@ -9,7 +9,7 @@
 #import "TokenIO.h"
 #import "Account.pbobjc.h"
 #import "Token.pbobjc.h"
-
+#import "Transferinstructions.pbobjc.h"
 
 @interface TKPaymentTokenTests : TKTestBase
 @end
@@ -34,15 +34,23 @@
 
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
+        Destination *destination = [[Destination alloc] init];
+        DestinationTips *tips = [[DestinationTips alloc] init];
+        [tips setUsername:@"username"];
+        [destination setTips: tips];
+        NSArray<Destination *> *destinations = @[destination];
+
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id
                                            amount:100.99
                                          currency:@"USD"
-                                      description:@"transfer test"];
+                                      description:@"transfer test"
+                                     destinations:destinations];
         
         XCTAssertEqualObjects(@"100.99", token.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
         XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
+        XCTAssertEqual(token.payload.transfer.instructions.destinationsArray.count, 1);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
 }

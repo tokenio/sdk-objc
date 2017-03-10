@@ -27,6 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountTag;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - AccountRoot
@@ -69,12 +71,31 @@ typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
 
 @end
 
+#pragma mark - AccountTag
+
+typedef GPB_ENUM(AccountTag_FieldNumber) {
+  AccountTag_FieldNumber_Key = 1,
+  AccountTag_FieldNumber_Value = 2,
+};
+
+/**
+ * Optional account tag data.
+ **/
+@interface AccountTag : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *key;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *value;
+
+@end
+
 #pragma mark - Account
 
 typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Id_p = 1,
   Account_FieldNumber_Name = 2,
   Account_FieldNumber_BankId = 3,
+  Account_FieldNumber_TagsArray = 4,
 };
 
 /**
@@ -87,6 +108,10 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
+/** The number of items in @c tagsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 

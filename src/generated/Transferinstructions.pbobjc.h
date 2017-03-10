@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class DestinationBic;
 @class DestinationIban;
 @class DestinationLocal;
+@class DestinationTips;
 @class Source;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -125,6 +126,7 @@ typedef GPB_ENUM(Destination_FieldNumber) {
   Destination_FieldNumber_Iban = 2,
   Destination_FieldNumber_Ach = 3,
   Destination_FieldNumber_Local = 4,
+  Destination_FieldNumber_Tips = 5,
 };
 
 typedef GPB_ENUM(Destination_Destination_OneOfCase) {
@@ -133,6 +135,7 @@ typedef GPB_ENUM(Destination_Destination_OneOfCase) {
   Destination_Destination_OneOfCase_Iban = 2,
   Destination_Destination_OneOfCase_Ach = 3,
   Destination_Destination_OneOfCase_Local = 4,
+  Destination_Destination_OneOfCase_Tips = 5,
 };
 
 /**
@@ -150,6 +153,8 @@ typedef GPB_ENUM(Destination_Destination_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) DestinationAch *ach;
 
 @property(nonatomic, readwrite, strong, null_resettable) DestinationLocal *local;
+
+@property(nonatomic, readwrite, strong, null_resettable) DestinationTips *tips;
 
 @end
 
@@ -244,6 +249,21 @@ typedef GPB_ENUM(DestinationLocal_FieldNumber) {
 
 /** Optional when coming from the client, required at the bank. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - DestinationTips
+
+typedef GPB_ENUM(DestinationTips_FieldNumber) {
+  DestinationTips_FieldNumber_Username = 1,
+};
+
+/**
+ * Token Instant Payment Service
+ **/
+@interface DestinationTips : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
 @end
 

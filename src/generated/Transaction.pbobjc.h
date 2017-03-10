@@ -64,6 +64,7 @@ typedef GPB_ENUM(TransactionStatus) {
   TransactionStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TransactionStatus_InvalidStatus = 0,
   TransactionStatus_Pending = 1,
+  TransactionStatus_Processing = 7,
   TransactionStatus_Success = 2,
   TransactionStatus_FailureInsufficientFunds = 3,
   TransactionStatus_FailureInvalidCurrency = 4,

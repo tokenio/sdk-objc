@@ -29,6 +29,7 @@ CF_EXTERN_C_BEGIN
 
 @class Account;
 @class AccountLinkingPayloads;
+@class AccountTag;
 @class Address;
 @class AddressRecord;
 @class Bank;
@@ -1093,6 +1094,7 @@ typedef GPB_ENUM(GetBankInfoResponse_FieldNumber) {
 
 typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
   CreateTestBankAccountRequest_FieldNumber_Balance = 1,
+  CreateTestBankAccountRequest_FieldNumber_TagsArray = 2,
 };
 
 @interface CreateTestBankAccountRequest : GPBMessage
@@ -1100,6 +1102,11 @@ typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
 /** Test to see if @c balance has been set. */
 @property(nonatomic, readwrite) BOOL hasBalance;
+
+/** Optional tags for fank */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
+/** The number of items in @c tagsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 

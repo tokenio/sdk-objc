@@ -27,7 +27,12 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountTag;
 @class FankAccount;
+@class FankBankBalance;
+@class FankBankBalanceSummary;
+@class FankBankTransaction;
+@class FankBankTransactionFxDetails;
 @class FankClient;
 @class Money;
 
@@ -152,6 +157,7 @@ typedef GPB_ENUM(FankAddAccountRequest_FieldNumber) {
   FankAddAccountRequest_FieldNumber_Name = 2,
   FankAddAccountRequest_FieldNumber_AccountNumber = 3,
   FankAddAccountRequest_FieldNumber_Balance = 4,
+  FankAddAccountRequest_FieldNumber_TagsArray = 5,
 };
 
 @interface FankAddAccountRequest : GPBMessage
@@ -165,6 +171,10 @@ typedef GPB_ENUM(FankAddAccountRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
 /** Test to see if @c balance has been set. */
 @property(nonatomic, readwrite) BOOL hasBalance;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
+/** The number of items in @c tagsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 
@@ -254,6 +264,178 @@ typedef GPB_ENUM(FankAuthorizeLinkAccountsRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountsArray;
 /** The number of items in @c accountsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
+
+@end
+
+#pragma mark - FankBankBalanceSummary
+
+typedef GPB_ENUM(FankBankBalanceSummary_FieldNumber) {
+  FankBankBalanceSummary_FieldNumber_BankId = 1,
+  FankBankBalanceSummary_FieldNumber_TotalBalance = 2,
+};
+
+@interface FankBankBalanceSummary : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *totalBalance;
+/** Test to see if @c totalBalance has been set. */
+@property(nonatomic, readwrite) BOOL hasTotalBalance;
+
+@end
+
+#pragma mark - FankBankBalance
+
+typedef GPB_ENUM(FankBankBalance_FieldNumber) {
+  FankBankBalance_FieldNumber_FromBankId = 1,
+  FankBankBalance_FieldNumber_ToBankId = 2,
+  FankBankBalance_FieldNumber_BankBalance = 3,
+};
+
+@interface FankBankBalance : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fromBankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *toBankId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *bankBalance;
+/** Test to see if @c bankBalance has been set. */
+@property(nonatomic, readwrite) BOOL hasBankBalance;
+
+@end
+
+#pragma mark - FankBankTransactionFxDetails
+
+typedef GPB_ENUM(FankBankTransactionFxDetails_FieldNumber) {
+  FankBankTransactionFxDetails_FieldNumber_FromAmount = 1,
+  FankBankTransactionFxDetails_FieldNumber_ToAmount = 2,
+  FankBankTransactionFxDetails_FieldNumber_ExchangeRate = 3,
+};
+
+@interface FankBankTransactionFxDetails : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *fromAmount;
+/** Test to see if @c fromAmount has been set. */
+@property(nonatomic, readwrite) BOOL hasFromAmount;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *toAmount;
+/** Test to see if @c toAmount has been set. */
+@property(nonatomic, readwrite) BOOL hasToAmount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *exchangeRate;
+
+@end
+
+#pragma mark - FankBankTransaction
+
+typedef GPB_ENUM(FankBankTransaction_FieldNumber) {
+  FankBankTransaction_FieldNumber_FromBankId = 1,
+  FankBankTransaction_FieldNumber_FromBankAccount = 2,
+  FankBankTransaction_FieldNumber_ToBankId = 3,
+  FankBankTransaction_FieldNumber_ToBankAccount = 4,
+  FankBankTransaction_FieldNumber_Amount = 5,
+  FankBankTransaction_FieldNumber_CreatedAtMs = 6,
+  FankBankTransaction_FieldNumber_FxDetails = 7,
+};
+
+@interface FankBankTransaction : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fromBankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fromBankAccount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *toBankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *toBankAccount;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *amount;
+/** Test to see if @c amount has been set. */
+@property(nonatomic, readwrite) BOOL hasAmount;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+@property(nonatomic, readwrite, strong, null_resettable) FankBankTransactionFxDetails *fxDetails;
+/** Test to see if @c fxDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasFxDetails;
+
+@end
+
+#pragma mark - FankGetBankBalanceRequest
+
+@interface FankGetBankBalanceRequest : GPBMessage
+
+@end
+
+#pragma mark - FankGetBankBalanceResponse
+
+typedef GPB_ENUM(FankGetBankBalanceResponse_FieldNumber) {
+  FankGetBankBalanceResponse_FieldNumber_SummariesArray = 1,
+  FankGetBankBalanceResponse_FieldNumber_BalancesArray = 2,
+};
+
+@interface FankGetBankBalanceResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankBankBalanceSummary*> *summariesArray;
+/** The number of items in @c summariesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger summariesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankBankBalance*> *balancesArray;
+/** The number of items in @c balancesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger balancesArray_Count;
+
+@end
+
+#pragma mark - FankGetBankTransactionsRequest
+
+typedef GPB_ENUM(FankGetBankTransactionsRequest_FieldNumber) {
+  FankGetBankTransactionsRequest_FieldNumber_FromBankId = 1,
+  FankGetBankTransactionsRequest_FieldNumber_ToBankId = 2,
+};
+
+@interface FankGetBankTransactionsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fromBankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *toBankId;
+
+@end
+
+#pragma mark - FankGetBankTransactionsResponse
+
+typedef GPB_ENUM(FankGetBankTransactionsResponse_FieldNumber) {
+  FankGetBankTransactionsResponse_FieldNumber_TransactionsArray = 1,
+};
+
+@interface FankGetBankTransactionsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankBankTransaction*> *transactionsArray;
+/** The number of items in @c transactionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transactionsArray_Count;
+
+@end
+
+#pragma mark - FankSettleTransactionsRequest
+
+typedef GPB_ENUM(FankSettleTransactionsRequest_FieldNumber) {
+  FankSettleTransactionsRequest_FieldNumber_Currency = 1,
+};
+
+@interface FankSettleTransactionsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+@end
+
+#pragma mark - FankSettleTransactionsResponse
+
+typedef GPB_ENUM(FankSettleTransactionsResponse_FieldNumber) {
+  FankSettleTransactionsResponse_FieldNumber_SettledAtMs = 1,
+};
+
+@interface FankSettleTransactionsResponse : GPBMessage
+
+/** The settlement date */
+@property(nonatomic, readwrite) int64_t settledAtMs;
 
 @end
 

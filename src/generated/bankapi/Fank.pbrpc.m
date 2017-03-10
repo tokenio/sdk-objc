@@ -106,4 +106,76 @@
              responseClass:[AccountLinkingPayloads class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetBankBalance(GetBankBalanceRequest) returns (GetBankBalanceResponse)
+
+/**
+ * 
+ * Retruns a list of bank balances netted by counterparty and the balance currency.
+ * The balance is based on unsettled transactions for the current busness day.
+ * 
+ */
+- (void)getBankBalanceWithRequest:(FankGetBankBalanceRequest *)request handler:(void(^)(FankGetBankBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBankBalanceWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Retruns a list of bank balances netted by counterparty and the balance currency.
+ * The balance is based on unsettled transactions for the current busness day.
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetBankBalanceWithRequest:(FankGetBankBalanceRequest *)request handler:(void(^)(FankGetBankBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBankBalance"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetBankBalanceResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetBankTransactions(GetBankTransactionsRequest) returns (GetBankTransactionsResponse)
+
+/**
+ * 
+ * Returns a list of unsettled transactions originated from the given bank (from-bank-id).
+ * The conterparty parameter allows for filtering of the result
+ * to include transactions targeting a particular counterparty (to-bank-id).
+ * 
+ */
+- (void)getBankTransactionsWithRequest:(FankGetBankTransactionsRequest *)request handler:(void(^)(FankGetBankTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBankTransactionsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Returns a list of unsettled transactions originated from the given bank (from-bank-id).
+ * The conterparty parameter allows for filtering of the result
+ * to include transactions targeting a particular counterparty (to-bank-id).
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetBankTransactionsWithRequest:(FankGetBankTransactionsRequest *)request handler:(void(^)(FankGetBankTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBankTransactions"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetBankTransactionsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark SettleTransactions(SettleTransactionsRequest) returns (SettleTransactionsResponse)
+
+/**
+ * 
+ * Performs a net settlement operation of all unsetlled transactions in the ledger.
+ * 
+ */
+- (void)settleTransactionsWithRequest:(FankSettleTransactionsRequest *)request handler:(void(^)(FankSettleTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSettleTransactionsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Performs a net settlement operation of all unsetlled transactions in the ledger.
+ * 
+ */
+- (GRPCProtoCall *)RPCToSettleTransactionsWithRequest:(FankSettleTransactionsRequest *)request handler:(void(^)(FankSettleTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SettleTransactions"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankSettleTransactionsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 @end

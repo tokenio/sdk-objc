@@ -25,6 +25,7 @@ message Destination {
     DestinationIban iban = 2;
     DestinationAch ach = 3;
     DestinationLocal local = 4;
+    DestinationTips tips = 5;
   }
 }
 
@@ -51,6 +52,11 @@ message DestinationAch {
 
 // Local transfer within the same bank.
 message DestinationLocal {
-    string account_id = 1;      // Required when coming from the client.
-    string account_number = 2;  // Optional when coming from the client, required at the bank.
+  string account_id = 1;      // Required when coming from the client.
+  string account_number = 2;  // Optional when coming from the client, required at the bank.
+}
+
+// Token Instant Payment Service
+message DestinationTips {
+  string username = 1;
 }
