@@ -27,8 +27,20 @@
 
 @implementation TransferRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPBDebugCheckRuntimeVersion();
+    registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[MoneyRoot extensionRegistry]];
+    [registry addExtensions:[SecurityRoot extensionRegistry]];
+    [registry addExtensions:[TransactionRoot extensionRegistry]];
+    [registry addExtensions:[TransferinstructionsRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -39,7 +51,7 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    GPBDebugCheckRuntimeVersion();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.transfer"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -124,7 +136,7 @@ typedef struct Transfer__storage_ {
         .number = Transfer_FieldNumber_Status,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Transfer__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -135,7 +147,7 @@ typedef struct Transfer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Transfer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -234,7 +246,7 @@ typedef struct TransferPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

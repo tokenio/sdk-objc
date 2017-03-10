@@ -24,9 +24,6 @@
 
 @implementation SecurityRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
-
 @end
 
 #pragma mark - SecurityRoot_FileDescriptor
@@ -36,7 +33,7 @@ static GPBFileDescriptor *SecurityRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    GPBDebugCheckRuntimeVersion();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.security"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -90,7 +87,7 @@ typedef struct Key__storage_ {
         .number = Key_FieldNumber_Level,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Key__storage_, level),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -99,7 +96,7 @@ typedef struct Key__storage_ {
         .number = Key_FieldNumber_Algorithm,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Key__storage_, algorithm),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -110,7 +107,7 @@ typedef struct Key__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Key__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -273,7 +270,7 @@ typedef struct Signature__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Signature__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -350,7 +347,7 @@ typedef struct SealedMessage__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     static const char *oneofs[] = {
       "method",
     };
@@ -391,8 +388,7 @@ typedef struct SealedMessage_NoopMethod__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(SealedMessage_NoopMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -468,8 +464,7 @@ typedef struct SealedMessage_RsaMethod__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage_RsaMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -567,8 +562,7 @@ typedef struct SealedMessage_RsaAesMethod__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage_RsaAesMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

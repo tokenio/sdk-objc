@@ -30,7 +30,7 @@
   // about thread safety and initialization of registry.
   static GPBExtensionRegistry* registry = nil;
   if (!registry) {
-    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    GPBDebugCheckRuntimeVersion();
     registry = [[GPBExtensionRegistry alloc] init];
     static GPBExtensionDescription descriptions[] = {
       {
@@ -41,7 +41,7 @@
         .enumDescriptorFunc = NULL,
         .fieldNumber = 72295728,
         .dataType = GPBDataTypeMessage,
-        .options = GPBExtensionNone,
+        .options = 0,
       },
     };
     for (size_t i = 0; i < sizeof(descriptions) / sizeof(descriptions[0]); ++i) {
@@ -51,8 +51,8 @@
       [self globallyRegisterExtension:extension];
       [extension release];
     }
-    // None of the imports (direct or indirect) defined extensions, so no need to add
-    // them to this registry.
+    [registry addExtensions:[HTTPRoot extensionRegistry]];
+    [registry addExtensions:[GPBDescriptorRoot extensionRegistry]];
   }
   return registry;
 }

@@ -14,6 +14,7 @@ enum TransactionType {
 enum TransactionStatus {
   INVALID_STATUS = 0;
   PENDING = 1;
+  PROCESSING = 7;
   SUCCESS = 2;
   FAILURE_INSUFFICIENT_FUNDS = 3;
   FAILURE_INVALID_CURRENCY = 4;

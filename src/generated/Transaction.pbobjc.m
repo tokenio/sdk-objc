@@ -24,8 +24,17 @@
 
 @implementation TransactionRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPBDebugCheckRuntimeVersion();
+    registry = [[GPBExtensionRegistry alloc] init];
+    [registry addExtensions:[MoneyRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -36,7 +45,7 @@ static GPBFileDescriptor *TransactionRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    GPBDebugCheckRuntimeVersion();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"io.token.proto.common.transaction"
                                                      syntax:GPBFileSyntaxProto3];
   }
@@ -85,12 +94,14 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "InvalidStatus\000Pending\000Success\000FailureIns"
-        "ufficientFunds\000FailureInvalidCurrency\000Fa"
-        "ilurePermissionDenied\000FailureGeneric\000";
+        "InvalidStatus\000Pending\000Processing\000Success"
+        "\000FailureInsufficientFunds\000FailureInvalid"
+        "Currency\000FailurePermissionDenied\000Failure"
+        "Generic\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Pending,
+        TransactionStatus_Processing,
         TransactionStatus_Success,
         TransactionStatus_FailureInsufficientFunds,
         TransactionStatus_FailureInvalidCurrency,
@@ -114,6 +125,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
   switch (value__) {
     case TransactionStatus_InvalidStatus:
     case TransactionStatus_Pending:
+    case TransactionStatus_Processing:
     case TransactionStatus_Success:
     case TransactionStatus_FailureInsufficientFunds:
     case TransactionStatus_FailureInvalidCurrency:
@@ -169,7 +181,7 @@ typedef struct Transaction__storage_ {
         .number = Transaction_FieldNumber_Type,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Transaction__storage_, type),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -178,7 +190,7 @@ typedef struct Transaction__storage_ {
         .number = Transaction_FieldNumber_Status,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Transaction__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -225,7 +237,7 @@ typedef struct Transaction__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Transaction__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:0];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
