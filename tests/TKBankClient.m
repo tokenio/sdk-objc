@@ -37,8 +37,8 @@
     FankAddClientRequest *request = [FankAddClientRequest message];
     request.firstName = firstName;
     request.lastName = lastName;
-    UNIHTTPJsonResponse *response = [self putCall:[NSString stringWithFormat:@"%@%@", url, @"/clients"]
-                                         withData:[TKJson serializeNsData:request]];
+    UNIHTTPJsonResponse *response = [self httpPutCall:[NSString stringWithFormat:@"%@%@", url, @"/clients"]
+                                             withData:[TKJson serializeData:request]];
     return [TKJson deserializeMessageOfClass:[FankClient class]
                               fromDictionary:response.body.object[@"client"]];
 }
@@ -56,8 +56,8 @@
     request.balance.value = amount;
     request.balance.currency = currency;
     NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/accounts", url, client.id_p];
-    UNIHTTPJsonResponse *response = [self putCall:urlPath
-                                         withData:[TKJson serializeNsData:request]];
+    UNIHTTPJsonResponse *response = [self httpPutCall:urlPath
+                                             withData:[TKJson serializeData:request]];
     return [TKJson deserializeMessageOfClass:[FankAccount class]
                               fromDictionary:response.body.object[@"account"]];
 }
@@ -70,14 +70,14 @@
     request.clientId = clientId;
     [request.accountsArray addObjectsFromArray:accountNumbers];
     NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/link-accounts", url, clientId];
-    UNIHTTPJsonResponse *response = [self putCall:urlPath
-                                         withData:[TKJson serializeNsData:request]];
+    UNIHTTPJsonResponse *response = [self httpPutCall:urlPath
+                                             withData:[TKJson serializeData:request]];
     AccountLinkingPayloads *payloads = [TKJson deserializeMessageOfClass:[AccountLinkingPayloads class]
                                                           fromDictionary:response.body.object];
     return payloads.payloadsArray;
 }
 
-- (UNIHTTPJsonResponse *)putCall:(NSString *)url withData:(NSData *)data {
+- (UNIHTTPJsonResponse *)httpPutCall:(NSString *)url withData:(NSData *)data {
     return [[UNIRest putEntity:^(UNIBodyRequest *request) {
         [request setUrl:url];
         [request setHeaders:headers];

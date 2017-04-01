@@ -32,7 +32,4 @@
 - (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers;
-
-- (UNIHTTPJsonResponse *)putCall:(NSString *)url withData:(NSData *)data;
-
 @end

@@ -14,7 +14,7 @@
 
 @implementation TKJson
 
-+ (NSData *)serializeNsData:(GPBMessage *)message {
++ (NSData *)serializeData:(GPBMessage *)message {
     NSString *serialized = [self serialize:message];
     return [serialized dataUsingEncoding:NSUTF8StringEncoding];
 }
@@ -40,7 +40,7 @@
 }
 
 + (NSString *)serializeBase64:(GPBMessage *)message {
-    NSData *serialized = [self serializeNsData:message];
+    NSData *serialized = [self serializeData:message];
     return [TKUtil base64EncodeData:serialized];
 }
 

@@ -23,7 +23,7 @@
  * @param message proto buffer message
  * @return NSData
  */
-+ (NSData *)serializeNsData:(GPBMessage *)message;
++ (NSData *)serializeData:(GPBMessage *)message;
 
 /**
  * Converts proto buffer message into JSON string.
