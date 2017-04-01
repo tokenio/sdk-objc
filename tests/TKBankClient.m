@@ -4,17 +4,17 @@
 //
 
 #import <GRPCClient/GRPCCall+ChannelArg.h>
-#import <GRPCCLient/GRPCCall+Tests.h>
+
 
 #import "bankapi/Fank.pbrpc.h"
-#import "bankapi/Fank.pbobjc.h"
+#import "TKJson.h"
 
 #import "TKBankClient.h"
-#import "TKRpcSyncCall.h"
 
 
 @implementation TKBankClient {
-    FankFankService *fank;
+    NSString *url;
+    NSDictionary* headers;
 }
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl {
@@ -25,14 +25,9 @@
     self = [super init];
 
     if (self) {
-        NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
-    
-        if (!useSsl) {
-            [GRPCCall useInsecureConnectionsForHost:address];
-        }
-        
-        [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
-        fank = [FankFankService serviceWithHost:address];
+        NSString *protocol = useSsl ? @"https" : @"http";
+        url = [NSString stringWithFormat:@"%@://%@:%d", protocol, host, port];
+        headers = @{@"user-agent": @"Token-iOS/1.0"};
     }
 
     return self;
@@ -42,19 +37,12 @@
     FankAddClientRequest *request = [FankAddClientRequest message];
     request.firstName = firstName;
     request.lastName = lastName;
-    
-    TKRpcSyncCall<FankClient *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [fank addClientWithRequest:request
-                           handler:^(FankAddClientResponse *response, NSError *error) {
-                               if (response) {
-                                   call.onSuccess(response.client);
-                               } else {
-                                   call.onError(error);
-                               }
-                           }];
-    }];
+    UNIHTTPJsonResponse *response = [self putCall:[NSString stringWithFormat:@"%@%@", url, @"/clients"]
+                                         withData:[TKJson serializeNsData:request]];
+    return [TKJson deserializeMessageOfClass:[FankClient class]
+                              fromDictionary:response.body.object[@"client"]];
 }
+
 
 - (FankAccount *)addAccountWithName:(NSString *)name
                       forClient:(FankClient *)client
@@ -67,40 +55,34 @@
     request.accountNumber = accountNumber;
     request.balance.value = amount;
     request.balance.currency = currency;
-    
-    TKRpcSyncCall<FankAccount *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [fank addAccountWithRequest:request
-                            handler:^(FankAddAccountResponse *response, NSError *error) {
-                                if (response) {
-                                    call.onSuccess(response.account);
-                                } else {
-                                    call.onError(error);
-                                }
-                            }];
-    }];
+    NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/accounts", url, client.id_p];
+    UNIHTTPJsonResponse *response = [self putCall:urlPath
+                                         withData:[TKJson serializeNsData:request]];
+    return [TKJson deserializeMessageOfClass:[FankAccount class]
+                              fromDictionary:response.body.object[@"account"]];
 }
 
 - (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers {
-    TKRpcSyncCall<NSArray<SealedMessage*> *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        FankAuthorizeLinkAccountsRequest *request = [FankAuthorizeLinkAccountsRequest message];
-        request.username = username;
-        request.clientId = clientId;
-        [request.accountsArray addObjectsFromArray:accountNumbers];
+    FankAuthorizeLinkAccountsRequest *request = [FankAuthorizeLinkAccountsRequest message];
+    request.username = username;
+    request.clientId = clientId;
+    [request.accountsArray addObjectsFromArray:accountNumbers];
+    NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/link-accounts", url, clientId];
+    UNIHTTPJsonResponse *response = [self putCall:urlPath
+                                         withData:[TKJson serializeNsData:request]];
+    AccountLinkingPayloads *payloads = [TKJson deserializeMessageOfClass:[AccountLinkingPayloads class]
+                                                          fromDictionary:response.body.object];
+    return payloads.payloadsArray;
+}
 
-        [fank authorizeLinkAccountsWithRequest:request
-                                       handler:
-                                           ^(AccountLinkingPayloads *response, NSError *error) {
-                                               if (response) {
-                                                   call.onSuccess(response.payloadsArray);
-                                               } else {
-                                                   call.onError(error);
-                                               }
-                                           }];
-    }];
+- (UNIHTTPJsonResponse *)putCall:(NSString *)url withData:(NSData *)data {
+    return [[UNIRest putEntity:^(UNIBodyRequest *request) {
+        [request setUrl:url];
+        [request setHeaders:headers];
+        [request setBody:data];
+    }] asJson];
 }
 
 @end
