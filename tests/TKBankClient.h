@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UNIRest.h>
 #import "Security.pbobjc.h"
 
 @class FankAccount;
@@ -31,5 +32,4 @@
 - (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers;
-
 @end

@@ -6,6 +6,7 @@ target 'TokenSdk' do
   pod '!ProtoCompiler'
   pod '!ProtoCompiler-gRPCPlugin'
   pod "OrderedDictionary"
+  pod 'Unirest', '~>1.1.4'
 
 
   target 'TokenSdkTests' do

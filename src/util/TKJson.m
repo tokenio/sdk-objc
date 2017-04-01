@@ -14,6 +14,11 @@
 
 @implementation TKJson
 
++ (NSData *)serializeData:(GPBMessage *)message {
+    NSString *serialized = [self serialize:message];
+    return [serialized dataUsingEncoding:NSUTF8StringEncoding];
+}
+
 /**
  * Serializes proto message to a JSON string. Some limitations apply. We
  * currently don't handle timestamps, durations and primitive wrapper types
@@ -35,9 +40,8 @@
 }
 
 + (NSString *)serializeBase64:(GPBMessage *)message {
-    NSString *serialized = [self serialize:message];
-    NSData *serializedData = [serialized dataUsingEncoding:NSUTF8StringEncoding];
-    return [TKUtil base64EncodeData:serializedData];
+    NSData *serialized = [self serializeData:message];
+    return [TKUtil base64EncodeData:serialized];
 }
 
 /**

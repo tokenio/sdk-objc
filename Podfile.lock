@@ -27,11 +27,13 @@ PODS:
   - gRPC-RxLibrary (1.1.0)
   - OrderedDictionary (1.4)
   - Protobuf (3.2.0)
+  - Unirest (1.1.4)
 
 DEPENDENCIES:
   - "!ProtoCompiler"
   - "!ProtoCompiler-gRPCPlugin"
   - OrderedDictionary
+  - Unirest (~> 1.1.4)
 
 SPEC CHECKSUMS:
   "!ProtoCompiler": c2097b831fccad44e95f19cf95879ce160689306
@@ -43,7 +45,8 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: 8f4a1514a8746d7696441358353debac4242a33e
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
-PODFILE CHECKSUM: c0a5292e0874332915bc6e7e6e7535d38cd01146
+PODFILE CHECKSUM: 2b444b851fa7de38b8671559e1d3d416758b25a4
 
 COCOAPODS: 1.1.1

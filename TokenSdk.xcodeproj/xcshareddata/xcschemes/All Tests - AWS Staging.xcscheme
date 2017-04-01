@@ -69,7 +69,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "TOKEN_BANK"
-            value = "fank-grpc.stg.token.io:443"
+            value = "fank.stg.token.io:443"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

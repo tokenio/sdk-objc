@@ -18,6 +18,14 @@
 @interface TKJson : NSObject
 
 /**
+ * Converts proto buffer message into NSData.
+ *
+ * @param message proto buffer message
+ * @return NSData
+ */
++ (NSData *)serializeData:(GPBMessage *)message;
+
+/**
  * Converts proto buffer message into JSON string.
  *
  * @param message proto buffer message
