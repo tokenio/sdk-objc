@@ -27,7 +27,7 @@
     NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
     useSsl = sslOverride ? [sslOverride boolValue] : NO;
 
-    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:9100];
+    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:8100];
     _bank = [TKBankClient bankClientWithHost:fank.host
                                         port:fank.port
                                       useSsl:useSsl];
