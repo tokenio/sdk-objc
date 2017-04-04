@@ -126,10 +126,19 @@
 
 - (Subscriber *)subscribeToNotifications:(NSString *)target
                                 platform:(Platform)platform {
+    return [self subscribeToNotifications:target
+                                 platform:platform
+                               withBankId:nil];
+}
+
+- (Subscriber *)subscribeToNotifications:(NSString *)target
+                                platform:(Platform)platform
+                                withBankId:(NSString *)bankId{
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async subscribeToNotifications:target
                                     platform:platform
+                                  withBankId:bankId
                                    onSuccess:call.onSuccess
                                      onError:call.onError];
     }];

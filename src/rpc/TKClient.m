@@ -110,11 +110,15 @@
 
 - (void)subscribeToNotifications:(NSString *)target
                         platform:(Platform)platform
+                      withBankId:(NSString *)bankId
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
     SubscribeToNotificationsRequest *request = [SubscribeToNotificationsRequest message];
     request.target = target;
     request.platform = platform;
+    if (bankId != nil) {
+        request.bankId = bankId;
+    }
     GRPCProtoCall *call = [gateway
                            RPCToSubscribeToNotificationsWithRequest:request
                            handler:^(SubscribeToNotificationsResponse *response, NSError *error) {

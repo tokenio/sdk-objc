@@ -128,6 +128,17 @@
                                 platform:(Platform)platform;
 
 /**
+ * Subscribes a device to receive push notifications
+ *
+ * @param target target to send push to (push token)
+ * @param platform target platform for notification (e.g. Platform_Ios)
+ * @param bankId id of the bank to proxy notification through
+ */
+- (Subscriber *)subscribeToNotifications:(NSString *)target
+                                platform:(Platform)platform
+                              withBankId:(NSString *)bankId;
+
+/**
  * Get all subscribers
  *
  */

@@ -320,6 +320,7 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
   SubscribeToNotificationsRequest_FieldNumber_Target = 1,
   SubscribeToNotificationsRequest_FieldNumber_Platform = 2,
+  SubscribeToNotificationsRequest_FieldNumber_BankId = 3,
 };
 
 @interface SubscribeToNotificationsRequest : GPBMessage
@@ -328,6 +329,9 @@ typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *target;
 
 @property(nonatomic, readwrite) enum Platform platform;
+
+/** optional proxy bank id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
 

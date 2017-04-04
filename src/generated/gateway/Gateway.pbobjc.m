@@ -807,11 +807,13 @@ typedef struct DeleteAddressResponse__storage_ {
 
 @dynamic target;
 @dynamic platform;
+@dynamic bankId;
 
 typedef struct SubscribeToNotificationsRequest__storage_ {
   uint32_t _has_storage_[1];
   Platform platform;
   NSString *target;
+  NSString *bankId;
 } SubscribeToNotificationsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -837,6 +839,15 @@ typedef struct SubscribeToNotificationsRequest__storage_ {
         .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, platform),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = SubscribeToNotificationsRequest_FieldNumber_BankId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
