@@ -118,9 +118,25 @@ void check(NSString *message, BOOL condition) {
     }];
 }
 
+- (void)testGetSubscribersWithBankId {
+    [self run: ^(TokenIO *tokenIO) {
+        Subscriber *subscriber = [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test withBankId:@"iron"];
+        
+        XCTAssert([payer getSubscribers].count == 1);
+        
+        Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
+        XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
+        XCTAssert([subscriber.target isEqualToString:lookedUp.target]);
+        XCTAssert(subscriber.platform == lookedUp.platform);
+    }];
+}
+
+
 - (void)testTransferNotification {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test withBankId:@"iron"];
+
         Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
                                              amount:100.99

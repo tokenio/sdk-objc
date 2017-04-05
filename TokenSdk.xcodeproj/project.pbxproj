@@ -948,7 +948,7 @@
 					};
 					DDAA0D2F1E257C6000E9BB09 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 734Q44J6QX;
+						DevelopmentTeam = Q8C7Z534L7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1542,7 +1542,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 734Q44J6QX;
+				DEVELOPMENT_TEAM = Q8C7Z534L7;
 				INFOPLIST_FILE = TestHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1556,7 +1556,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 734Q44J6QX;
+				DEVELOPMENT_TEAM = Q8C7Z534L7;
 				INFOPLIST_FILE = TestHost/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
