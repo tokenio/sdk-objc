@@ -87,12 +87,16 @@ BOOL Platform_IsValidValue(int32_t value__) {
 @dynamic id_p;
 @dynamic target;
 @dynamic platform;
+@dynamic memberId;
+@dynamic bankId;
 
 typedef struct Subscriber__storage_ {
   uint32_t _has_storage_[1];
   Platform platform;
   NSString *id_p;
   NSString *target;
+  NSString *memberId;
+  NSString *bankId;
 } Subscriber__storage_;
 
 // This method is threadsafe because it is initially called
@@ -128,6 +132,24 @@ typedef struct Subscriber__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = Subscriber_FieldNumber_MemberId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Subscriber__storage_, memberId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = Subscriber_FieldNumber_BankId,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Subscriber__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Subscriber class]
@@ -137,6 +159,11 @@ typedef struct Subscriber__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Subscriber__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\004\010\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

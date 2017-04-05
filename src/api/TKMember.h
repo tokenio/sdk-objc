@@ -119,7 +119,7 @@
 - (void)removeUsernames:(NSArray<NSString *> *)usernames;
 
 /**
- * Subscribes a device to receive push notifications
+ * Subscribes a device to receive push notifications.
  *
  * @param target target to send push to (push token)
  * @param platform target platform for notification (e.g. Platform_Ios)
@@ -128,13 +128,24 @@
                                 platform:(Platform)platform;
 
 /**
- * Get all subscribers
+ * Subscribes a device to receive push notifications.
+ *
+ * @param target target to send push to (push token)
+ * @param platform target platform for notification (e.g. Platform_Ios)
+ * @param bankId id of the bank to proxy notification through
+ */
+- (Subscriber *)subscribeToNotifications:(NSString *)target
+                                platform:(Platform)platform
+                              withBankId:(NSString *)bankId;
+
+/**
+ * Get all subscribers.
  *
  */
 - (NSArray<Subscriber *> *)getSubscribers;
 
 /**
- * Get a subscriber by Id
+ * Get a subscriber by Id.
  *
  * @param subscriberId id of subscriber to get
  */
@@ -142,7 +153,8 @@
 
 
 /**
- * Get all notifications
+ * Get all notifications.
+ 
  * @param offset offset to start at
  * @param limit max number of records to return
  */
@@ -150,7 +162,7 @@
                                                  limit:(int)limit;
 
 /**
- * Get a notification by Id
+ * Get a notification by Id.
  *
  * @param notificationId id of notification to get
  */
@@ -158,7 +170,7 @@
 
 
 /**
- * Unsubscribes a device from push notifications
+ * Unsubscribes a device from push notifications.
  *
  * @param subscriberId id of the subscriber to remove
  */

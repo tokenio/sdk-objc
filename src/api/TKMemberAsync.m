@@ -191,10 +191,12 @@
 
 - (void)subscribeToNotifications:(NSString *)target
                         platform:(Platform)platform
+                      withBankId:(NSString*)bankId
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
     [client subscribeToNotifications:target
                             platform:platform
+                          withBankId:bankId
                            onSuccess:onSuccess
                              onError:onError];
 }

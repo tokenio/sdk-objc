@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum Platform
 
+/**
+ * Platform of a subscriber, used to determine how to send a notification
+ * to the subscriber. Each platform has a different notification method.
+ **/
 typedef GPB_ENUM(Platform) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -39,8 +43,14 @@ typedef GPB_ENUM(Platform) {
    **/
   Platform_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Platform_Invalid = 0,
+
+  /** IOS app */
   Platform_Ios = 1,
+
+  /** Android app */
   Platform_Android = 2,
+
+  /** Used to testing purposes */
   Platform_Test = 3,
 };
 
@@ -73,8 +83,13 @@ typedef GPB_ENUM(Subscriber_FieldNumber) {
   Subscriber_FieldNumber_Id_p = 1,
   Subscriber_FieldNumber_Target = 2,
   Subscriber_FieldNumber_Platform = 3,
+  Subscriber_FieldNumber_MemberId = 4,
+  Subscriber_FieldNumber_BankId = 5,
 };
 
+/**
+ * Subscriber object. Represent a subscription to notifications for a member.
+ **/
 @interface Subscriber : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
@@ -83,6 +98,11 @@ typedef GPB_ENUM(Subscriber_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *target;
 
 @property(nonatomic, readwrite) Platform platform;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+/** optional bank id to proxy notification */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
 
