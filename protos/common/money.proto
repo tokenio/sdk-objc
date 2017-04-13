@@ -5,5 +5,33 @@ option java_outer_classname = "MoneyProtos";
 
 message Money {
   string currency = 1;
-  string value = 2;         // double amount in the string format.
+  string value = 2;           // double amount in the string format.
+}
+
+message Fee {
+  Money amount = 1;           // The fee amount
+  string description = 2;     // The fee description
+}
+
+message FxRate {
+  string base_currency = 1;   // the base amount: 'EUR' in 'EUR/USD'
+  string quote_currency = 2;  // the quote amount: 'USD' in 'EUR/USD'
+  string rate = 3;            // the fx rate double amount in the string format.
+  int64 created_at_ms = 5;    // the time of the fx rate
+}
+
+message FxQuote {
+  string id = 1;              // the fx quote id
+  Money from_amount = 2;      // the base amount to be converted
+  Money to_amount = 3;        // the quote amount
+  FxRate fx_rate = 4;         // the fx rate details
+}
+
+message TransferQuote {
+  string id = 1;              // the quote id
+  string reference_id = 3;    // The reference id of the quote requester
+  Money fees_total = 4;       // The total fee amount
+  repeated Fee fees = 5;      // A collection of applicable fees
+  FxQuote fx_quote = 6;       // Optional FX Quote
+  int64 expires_at_ms = 7;    // The quote expiration time
 }

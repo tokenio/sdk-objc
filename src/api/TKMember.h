@@ -121,22 +121,11 @@
 /**
  * Subscribes a device to receive push notifications.
  *
- * @param target target to send push to (push token)
- * @param platform target platform for notification (e.g. Platform_Ios)
+ * @param handler handler that will send the notifications to this subscriber
+ * @param handlerInstructions instructions on how to send the notification
  */
-- (Subscriber *)subscribeToNotifications:(NSString *)target
-                                platform:(Platform)platform;
-
-/**
- * Subscribes a device to receive push notifications.
- *
- * @param target target to send push to (push token)
- * @param platform target platform for notification (e.g. Platform_Ios)
- * @param bankId id of the bank to proxy notification through
- */
-- (Subscriber *)subscribeToNotifications:(NSString *)target
-                                platform:(Platform)platform
-                              withBankId:(NSString *)bankId;
+- (Subscriber *)subscribeToNotifications:(NSString *)handler
+                     handlerInstructions:(NSMutableDictionary<NSString *, NSString *> *)handerInstructions;
 
 /**
  * Get all subscribers.

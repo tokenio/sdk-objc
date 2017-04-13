@@ -20,6 +20,7 @@
 
     TKAccount *payeeAccount;
     TKMember *payee;
+    NSMutableDictionary * instructions;
 }
 
 /**
@@ -44,12 +45,15 @@ void check(NSString *message, BOOL condition) {
 
         payeeAccount = [self createAccount:tokenIO];
         payee = payeeAccount.member;
+        instructions = [NSMutableDictionary dictionaryWithDictionary:@{
+                    @"PLATFORM": @"TEST",
+                    @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"}];
     }];
 }
 
 - (void)testTransfer {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
@@ -65,7 +69,7 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         [tokenIO notifyLinkAccounts:payer.firstUsername
                              bankId:@"iron"
@@ -78,8 +82,7 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
-
+        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername
                       keyName:@"Chrome 53.0"
@@ -89,9 +92,38 @@ void check(NSString *message, BOOL condition) {
     }];
 }
 
+- (void)testNotifyAddKeyIos {
+    [self run: ^(TokenIO *tokenIO) {
+        NSMutableDictionary * instructionsDev = [NSMutableDictionary dictionaryWithDictionary:@{
+                        @"PLATFORM": @"IOS",
+                        @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"}];
+        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructionsDev];
+        XCTAssert([subscriber.handlerInstructions[@"DEVELOPMENT"] isEqualToString:@"false"]);
+        Key *key = [[payerAnotherDevice keys] firstObject];
+        [tokenIO notifyAddKey:payer.firstUsername
+                      keyName:@"Chrome 53.0"
+                          key:key];
+    }];
+}
+
+- (void)testNotifyAddKeyIosDev {
+    [self run: ^(TokenIO *tokenIO) {
+        NSMutableDictionary * instructionsDev = [NSMutableDictionary dictionaryWithDictionary:@{
+                        @"PLATFORM": @"IOS",
+                        @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979",
+                        @"DEVELOPMENT": @"true"}];
+        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructionsDev];
+        XCTAssert([subscriber.handlerInstructions[@"DEVELOPMENT"] isEqualToString:@"true"]);
+        Key *key = [[payerAnotherDevice keys] firstObject];
+        [tokenIO notifyAddKey:payer.firstUsername
+                      keyName:@"Chrome 53.0"
+                          key:key];
+    }];
+}
+
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
@@ -107,36 +139,38 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testGetSubscribers {
     [self run: ^(TokenIO *tokenIO) {
-        Subscriber *subscriber = [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         XCTAssert([payer getSubscribers].count == 1);
 
         Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
         XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-        XCTAssert([subscriber.target isEqualToString:lookedUp.target]);
-        XCTAssert(subscriber.platform == lookedUp.platform);
+        XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
+        XCTAssert([subscriber.handlerInstructions[@"PLATFORM"]
+                   isEqualToString:lookedUp.handlerInstructions[@"PLATFORM"]]);
     }];
 }
 
 - (void)testGetSubscribersWithBankId {
     [self run: ^(TokenIO *tokenIO) {
-        Subscriber *subscriber = [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test withBankId:@"iron"];
+        NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
+        Subscriber * subscriber = [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
         
         XCTAssert([payer getSubscribers].count == 1);
         
         Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
         XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-        XCTAssert([subscriber.target isEqualToString:lookedUp.target]);
-        XCTAssert(subscriber.platform == lookedUp.platform);
+        XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
     }];
 }
 
 
 - (void)testTransferNotification {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test withBankId:@"iron"];
-
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
+        [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
+        
         Token *token = [payer createTransferToken:payee.firstUsername
                                forAccount:payerAccount.id
                                              amount:100.99
@@ -150,8 +184,9 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testGetNotifications {
     [self run: ^(TokenIO *tokenIO) {
-        [payer subscribeToNotifications:[TKUtil nonce] platform:Platform_Test];
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
+        
         Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername keyName:@"Chrome 53.0" key:key];
 

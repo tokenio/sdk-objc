@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class FankBankTransactionFxDetails;
 @class FankClient;
 @class Money;
+@class Notification;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -436,6 +437,61 @@ typedef GPB_ENUM(FankSettleTransactionsResponse_FieldNumber) {
 
 /** The settlement date */
 @property(nonatomic, readwrite) int64_t settledAtMs;
+
+@end
+
+#pragma mark - FankGetNotificationRequest
+
+typedef GPB_ENUM(FankGetNotificationRequest_FieldNumber) {
+  FankGetNotificationRequest_FieldNumber_SubscriberId = 1,
+  FankGetNotificationRequest_FieldNumber_NotificationId = 2,
+};
+
+@interface FankGetNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+#pragma mark - FankGetNotificationResponse
+
+typedef GPB_ENUM(FankGetNotificationResponse_FieldNumber) {
+  FankGetNotificationResponse_FieldNumber_Notification = 1,
+};
+
+@interface FankGetNotificationResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
+/** Test to see if @c notification has been set. */
+@property(nonatomic, readwrite) BOOL hasNotification;
+
+@end
+
+#pragma mark - FankGetNotificationsRequest
+
+typedef GPB_ENUM(FankGetNotificationsRequest_FieldNumber) {
+  FankGetNotificationsRequest_FieldNumber_SubscriberId = 1,
+};
+
+@interface FankGetNotificationsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@end
+
+#pragma mark - FankGetNotificationsResponse
+
+typedef GPB_ENUM(FankGetNotificationsResponse_FieldNumber) {
+  FankGetNotificationsResponse_FieldNumber_NotificationsArray = 1,
+};
+
+@interface FankGetNotificationsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
+/** The number of items in @c notificationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger notificationsArray_Count;
 
 @end
 

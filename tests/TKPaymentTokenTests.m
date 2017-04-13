@@ -36,7 +36,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Destination *destination = [[Destination alloc] init];
         DestinationTips *tips = [[DestinationTips alloc] init];
-        [tips setUsername:@"username"];
+        [tips setAccountId:@"username"];
         [destination setTips: tips];
         NSArray<Destination *> *destinations = @[destination];
 

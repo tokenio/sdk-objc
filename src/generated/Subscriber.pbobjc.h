@@ -29,39 +29,6 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - Enum Platform
-
-/**
- * Platform of a subscriber, used to determine how to send a notification
- * to the subscriber. Each platform has a different notification method.
- **/
-typedef GPB_ENUM(Platform) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Platform_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Platform_Invalid = 0,
-
-  /** IOS app */
-  Platform_Ios = 1,
-
-  /** Android app */
-  Platform_Android = 2,
-
-  /** Used to testing purposes */
-  Platform_Test = 3,
-};
-
-GPBEnumDescriptor *Platform_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL Platform_IsValidValue(int32_t value);
-
 #pragma mark - SubscriberRoot
 
 /**
@@ -81,10 +48,8 @@ BOOL Platform_IsValidValue(int32_t value);
 
 typedef GPB_ENUM(Subscriber_FieldNumber) {
   Subscriber_FieldNumber_Id_p = 1,
-  Subscriber_FieldNumber_Target = 2,
-  Subscriber_FieldNumber_Platform = 3,
-  Subscriber_FieldNumber_MemberId = 4,
-  Subscriber_FieldNumber_BankId = 5,
+  Subscriber_FieldNumber_Handler = 2,
+  Subscriber_FieldNumber_HandlerInstructions = 3,
 };
 
 /**
@@ -94,29 +59,15 @@ typedef GPB_ENUM(Subscriber_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** e.g push token */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *target;
+/** Determines who is handling/sending the notification (e.g. token) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *handler;
 
-@property(nonatomic, readwrite) Platform platform;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
-
-/** optional bank id to proxy notification */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+/** contains information on how to send the notifications */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *handlerInstructions;
+/** The number of items in @c handlerInstructions without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger handlerInstructions_Count;
 
 @end
-
-/**
- * Fetches the raw value of a @c Subscriber's @c platform property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Subscriber_Platform_RawValue(Subscriber *message);
-/**
- * Sets the raw value of an @c Subscriber's @c platform property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetSubscriber_Platform_RawValue(Subscriber *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

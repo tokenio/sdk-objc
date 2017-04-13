@@ -124,21 +124,12 @@
     }];
 }
 
-- (Subscriber *)subscribeToNotifications:(NSString *)target
-                                platform:(Platform)platform {
-    return [self subscribeToNotifications:target
-                                 platform:platform
-                               withBankId:nil];
-}
-
-- (Subscriber *)subscribeToNotifications:(NSString *)target
-                                platform:(Platform)platform
-                                withBankId:(NSString *)bankId{
+- (Subscriber *)subscribeToNotifications:(NSString *)handler
+                     handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async subscribeToNotifications:target
-                                    platform:platform
-                                  withBankId:bankId
+        [self.async subscribeToNotifications:handler
+                         handlerInstructions:handlerInstructions
                                    onSuccess:call.onSuccess
                                      onError:call.onError];
     }];

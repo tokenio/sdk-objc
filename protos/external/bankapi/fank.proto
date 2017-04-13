@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "account.proto";
 import "money.proto";
 import "banklink.proto";
-import "security.proto";
+import "notification.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Common data structures.
@@ -135,6 +135,23 @@ message SettleTransactionsResponse {
   int64 settled_at_ms = 1;            // The settlement date
 }
 
+message GetNotificationRequest {
+  string subscriber_id = 1;
+  string notification_id = 2;
+}
+
+message GetNotificationResponse {
+  io.token.proto.common.notification.Notification notification = 1;
+}
+
+message GetNotificationsRequest {
+  string subscriber_id = 1;
+}
+
+message GetNotificationsResponse {
+  repeated io.token.proto.common.notification.Notification notifications = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fank testing API, used to create accounts on the fly. Used for testing.
 //
@@ -180,6 +197,23 @@ service FankService {
       returns (io.token.proto.banklink.AccountLinkingPayloads) {
     option (google.api.http) = {
         get: "/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
+    };
+  }
+
+  //
+  // Used by clients to make sure that notifications were routed and correctly delivered to
+  // the fank. This is mainly for testing the flow where a notification is sent through a bank
+  // instead of straight to devices.
+  //
+  rpc GetNotification (GetNotificationRequest) returns (GetNotificationResponse) {
+    option (google.api.http) = {
+        get: "/subscribers/{subscriber_id}/notifications/{notification_id}"
+    };
+  }
+
+  rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
+    option (google.api.http) = {
+        get: "/subscribers/{subscriber_id}/notifications"
     };
   }
 

@@ -255,7 +255,7 @@ typedef GPB_ENUM(DestinationLocal_FieldNumber) {
 #pragma mark - DestinationTips
 
 typedef GPB_ENUM(DestinationTips_FieldNumber) {
-  DestinationTips_FieldNumber_Username = 1,
+  DestinationTips_FieldNumber_AccountId = 1,
 };
 
 /**
@@ -263,7 +263,11 @@ typedef GPB_ENUM(DestinationTips_FieldNumber) {
  **/
 @interface DestinationTips : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+/**
+ * Temporary solution that relies on routable properties of the account id.
+ * The actual solution will probably be populated with the bank id and local account identifier.
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 

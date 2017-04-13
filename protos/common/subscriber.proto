@@ -2,20 +2,12 @@ syntax = "proto3";
 package io.token.proto.common.subscriber;
 option java_outer_classname = "SubscriberProtos";
 
-// Platform of a subscriber, used to determine how to send a notification
-// to the subscriber. Each platform has a different notification method.
-enum Platform {
-    INVALID = 0;
-    IOS = 1;             // IOS app
-    ANDROID = 2;         // Android app
-    TEST = 3;            // Used to testing purposes
-}
-
 // Subscriber object. Represent a subscription to notifications for a member.
 message Subscriber {
     string id = 1;
-    string target = 2;      // e.g push token
-    io.token.proto.common.subscriber.Platform platform = 3;
-    string memberId = 4;
-    string bank_id = 5;     // optional bank id to proxy notification
+
+    string handler = 2; // Determines who is handling/sending the notification (e.g. token)
+
+    // contains information on how to send the notifications
+    map<string, string> handler_instructions = 3;
 }
