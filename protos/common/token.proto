@@ -4,6 +4,7 @@ package io.token.proto.common.token;
 option java_outer_classname = "TokenProtos";
 
 import "security.proto";
+import "money.proto";
 import "transferinstructions.proto";
 
 
@@ -64,6 +65,7 @@ message TransferBody {
   string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
+  io.token.proto.common.money.TransferQuote quote = 7;                               // Optional: Transfer fees and fx charges.
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

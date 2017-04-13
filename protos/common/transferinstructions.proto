@@ -58,5 +58,7 @@ message DestinationLocal {
 
 // Token Instant Payment Service
 message DestinationTips {
-  string username = 1;
+  // Temporary solution that relies on routable properties of the account id.
+  // The actual solution will probably be populated with the bank id and local account identifier.
+  string account_id = 1;
 }

@@ -805,15 +805,13 @@ typedef struct DeleteAddressResponse__storage_ {
 
 @implementation SubscribeToNotificationsRequest
 
-@dynamic target;
-@dynamic platform;
-@dynamic bankId;
+@dynamic handler;
+@dynamic handlerInstructions, handlerInstructions_Count;
 
 typedef struct SubscribeToNotificationsRequest__storage_ {
   uint32_t _has_storage_[1];
-  Platform platform;
-  NSString *target;
-  NSString *bankId;
+  NSString *handler;
+  NSMutableDictionary *handlerInstructions;
 } SubscribeToNotificationsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -823,30 +821,21 @@ typedef struct SubscribeToNotificationsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "target",
+        .name = "handler",
         .dataTypeSpecific.className = NULL,
-        .number = SubscribeToNotificationsRequest_FieldNumber_Target,
+        .number = SubscribeToNotificationsRequest_FieldNumber_Handler,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, target),
+        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, handler),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "platform",
-        .dataTypeSpecific.enumDescFunc = Platform_EnumDescriptor,
-        .number = SubscribeToNotificationsRequest_FieldNumber_Platform,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, platform),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "bankId",
+        .name = "handlerInstructions",
         .dataTypeSpecific.className = NULL,
-        .number = SubscribeToNotificationsRequest_FieldNumber_BankId,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, bankId),
-        .flags = GPBFieldOptional,
+        .number = SubscribeToNotificationsRequest_FieldNumber_HandlerInstructions,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(SubscribeToNotificationsRequest__storage_, handlerInstructions),
+        .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
     };
@@ -865,18 +854,6 @@ typedef struct SubscribeToNotificationsRequest__storage_ {
 }
 
 @end
-
-int32_t SubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message) {
-  GPBDescriptor *descriptor = [SubscribeToNotificationsRequest descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:SubscribeToNotificationsRequest_FieldNumber_Platform];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetSubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message, int32_t value) {
-  GPBDescriptor *descriptor = [SubscribeToNotificationsRequest descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:SubscribeToNotificationsRequest_FieldNumber_Platform];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
 
 #pragma mark - SubscribeToNotificationsResponse
 

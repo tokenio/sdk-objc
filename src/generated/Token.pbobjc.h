@@ -44,6 +44,7 @@ CF_EXTERN_C_BEGIN
 @class TokenSignature;
 @class TransferBody;
 @class TransferInstructions;
+@class TransferQuote;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -266,6 +267,7 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
   TransferBody_FieldNumber_Currency = 4,
   TransferBody_FieldNumber_LifetimeAmount = 5,
   TransferBody_FieldNumber_Amount = 6,
+  TransferBody_FieldNumber_Quote = 7,
 };
 
 @interface TransferBody : GPBMessage
@@ -293,6 +295,11 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 
 /** Optional: Single token charge request acceptable range. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+/** Optional: Transfer fees and fx charges. */
+@property(nonatomic, readwrite, strong, null_resettable) TransferQuote *quote;
+/** Test to see if @c quote has been set. */
+@property(nonatomic, readwrite) BOOL hasQuote;
 
 @end
 

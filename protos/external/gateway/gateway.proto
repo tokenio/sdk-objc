@@ -99,9 +99,8 @@ message DeleteAddressResponse {}
 //
 
 message SubscribeToNotificationsRequest {
-  string target = 1;   // e.g push token
-  io.token.proto.common.subscriber.Platform platform = 2;
-  string bank_id = 3;  // optional proxy bank id
+  string handler = 1; // Who is sending the notification
+  map<string, string> handler_instructions = 2;
 }
 
 message SubscribeToNotificationsResponse {

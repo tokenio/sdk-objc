@@ -15,6 +15,7 @@
 
  #import "Token.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "Money.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -441,6 +442,7 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 @dynamic currency;
 @dynamic lifetimeAmount;
 @dynamic amount;
+@dynamic hasQuote, quote;
 
 typedef struct TransferBody__storage_ {
   uint32_t _has_storage_[1];
@@ -450,6 +452,7 @@ typedef struct TransferBody__storage_ {
   NSString *currency;
   NSString *lifetimeAmount;
   NSString *amount;
+  TransferQuote *quote;
 } TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -511,6 +514,15 @@ typedef struct TransferBody__storage_ {
         .offset = (uint32_t)offsetof(TransferBody__storage_, amount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "quote",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .number = TransferBody_FieldNumber_Quote,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(TransferBody__storage_, quote),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

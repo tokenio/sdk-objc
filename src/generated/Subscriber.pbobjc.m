@@ -42,61 +42,19 @@ static GPBFileDescriptor *SubscriberRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - Enum Platform
-
-GPBEnumDescriptor *Platform_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
-  if (!descriptor) {
-    static const char *valueNames =
-        "Invalid\000Ios\000Android\000Test\000";
-    static const int32_t values[] = {
-        Platform_Invalid,
-        Platform_Ios,
-        Platform_Android,
-        Platform_Test,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Platform)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:Platform_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL Platform_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case Platform_Invalid:
-    case Platform_Ios:
-    case Platform_Android:
-    case Platform_Test:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
 #pragma mark - Subscriber
 
 @implementation Subscriber
 
 @dynamic id_p;
-@dynamic target;
-@dynamic platform;
-@dynamic memberId;
-@dynamic bankId;
+@dynamic handler;
+@dynamic handlerInstructions, handlerInstructions_Count;
 
 typedef struct Subscriber__storage_ {
   uint32_t _has_storage_[1];
-  Platform platform;
   NSString *id_p;
-  NSString *target;
-  NSString *memberId;
-  NSString *bankId;
+  NSString *handler;
+  NSMutableDictionary *handlerInstructions;
 } Subscriber__storage_;
 
 // This method is threadsafe because it is initially called
@@ -115,39 +73,21 @@ typedef struct Subscriber__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "target",
+        .name = "handler",
         .dataTypeSpecific.className = NULL,
-        .number = Subscriber_FieldNumber_Target,
+        .number = Subscriber_FieldNumber_Handler,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Subscriber__storage_, target),
+        .offset = (uint32_t)offsetof(Subscriber__storage_, handler),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "platform",
-        .dataTypeSpecific.enumDescFunc = Platform_EnumDescriptor,
-        .number = Subscriber_FieldNumber_Platform,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Subscriber__storage_, platform),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-      {
-        .name = "memberId",
+        .name = "handlerInstructions",
         .dataTypeSpecific.className = NULL,
-        .number = Subscriber_FieldNumber_MemberId,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Subscriber__storage_, memberId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "bankId",
-        .dataTypeSpecific.className = NULL,
-        .number = Subscriber_FieldNumber_BankId,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(Subscriber__storage_, bankId),
-        .flags = GPBFieldOptional,
+        .number = Subscriber_FieldNumber_HandlerInstructions,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Subscriber__storage_, handlerInstructions),
+        .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
     };
@@ -159,11 +99,6 @@ typedef struct Subscriber__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Subscriber__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\004\010\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -171,18 +106,6 @@ typedef struct Subscriber__storage_ {
 }
 
 @end
-
-int32_t Subscriber_Platform_RawValue(Subscriber *message) {
-  GPBDescriptor *descriptor = [Subscriber descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Subscriber_FieldNumber_Platform];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetSubscriber_Platform_RawValue(Subscriber *message, int32_t value) {
-  GPBDescriptor *descriptor = [Subscriber descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Subscriber_FieldNumber_Platform];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
 
 
 #pragma clang diagnostic pop

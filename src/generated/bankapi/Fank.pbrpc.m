@@ -106,6 +106,44 @@
              responseClass:[AccountLinkingPayloads class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
+
+/**
+ * 
+ * Used by clients to make sure that notifications were routed and correctly delivered to
+ * the fank. This is mainly for testing the flow where a notification is sent through a bank
+ * instead of straight to devices.
+ * 
+ */
+- (void)getNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Used by clients to make sure that notifications were routed and correctly delivered to
+ * the fank. This is mainly for testing the flow where a notification is sent through a bank
+ * instead of straight to devices.
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse)
+
+- (void)getNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetNotificationsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetNotifications"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetNotificationsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetBankBalance(GetBankBalanceRequest) returns (GetBankBalanceResponse)
 
 /**

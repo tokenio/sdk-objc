@@ -189,14 +189,12 @@
                  onError:onError];
 }
 
-- (void)subscribeToNotifications:(NSString *)target
-                        platform:(Platform)platform
-                      withBankId:(NSString*)bankId
+- (void)subscribeToNotifications:(NSString *)handler
+             handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError {
-    [client subscribeToNotifications:target
-                            platform:platform
-                          withBankId:bankId
+    [client subscribeToNotifications:handler
+                 handlerInstructions:handlerInstructions
                            onSuccess:onSuccess
                              onError:onError];
 }

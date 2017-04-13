@@ -8,7 +8,7 @@
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Banklink.pbobjc.h"
-#import "Security.pbobjc.h"
+#import "Notification.pbobjc.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -62,6 +62,34 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToAuthorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(AccountLinkingPayloads *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
+
+/**
+ * 
+ * Used by clients to make sure that notifications were routed and correctly delivered to
+ * the fank. This is mainly for testing the flow where a notification is sent through a bank
+ * instead of straight to devices.
+ * 
+ */
+- (void)getNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * 
+ * Used by clients to make sure that notifications were routed and correctly delivered to
+ * the fank. This is mainly for testing the flow where a notification is sent through a bank
+ * instead of straight to devices.
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse)
+
+- (void)getNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetBankBalance(GetBankBalanceRequest) returns (GetBankBalanceResponse)

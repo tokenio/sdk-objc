@@ -18,7 +18,7 @@
  #import "Account.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Banklink.pbobjc.h"
- #import "Security.pbobjc.h"
+ #import "Notification.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -1300,6 +1300,189 @@ typedef struct FankSettleTransactionsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankSettleTransactionsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetNotificationRequest
+
+@implementation FankGetNotificationRequest
+
+@dynamic subscriberId;
+@dynamic notificationId;
+
+typedef struct FankGetNotificationRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *subscriberId;
+  NSString *notificationId;
+} FankGetNotificationRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "subscriberId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetNotificationRequest_FieldNumber_SubscriberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetNotificationRequest__storage_, subscriberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "notificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetNotificationRequest_FieldNumber_NotificationId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankGetNotificationRequest__storage_, notificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetNotificationRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetNotificationRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetNotificationResponse
+
+@implementation FankGetNotificationResponse
+
+@dynamic hasNotification, notification;
+
+typedef struct FankGetNotificationResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Notification *notification;
+} FankGetNotificationResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notification",
+        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .number = FankGetNotificationResponse_FieldNumber_Notification,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetNotificationResponse__storage_, notification),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetNotificationResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetNotificationResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetNotificationsRequest
+
+@implementation FankGetNotificationsRequest
+
+@dynamic subscriberId;
+
+typedef struct FankGetNotificationsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *subscriberId;
+} FankGetNotificationsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "subscriberId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetNotificationsRequest_FieldNumber_SubscriberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetNotificationsRequest__storage_, subscriberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetNotificationsRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetNotificationsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetNotificationsResponse
+
+@implementation FankGetNotificationsResponse
+
+@dynamic notificationsArray, notificationsArray_Count;
+
+typedef struct FankGetNotificationsResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *notificationsArray;
+} FankGetNotificationsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notificationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .number = FankGetNotificationsResponse_FieldNumber_NotificationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankGetNotificationsResponse__storage_, notificationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetNotificationsResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetNotificationsResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

@@ -529,11 +529,11 @@ typedef struct DestinationLocal__storage_ {
 
 @implementation DestinationTips
 
-@dynamic username;
+@dynamic accountId;
 
 typedef struct DestinationTips__storage_ {
   uint32_t _has_storage_[1];
-  NSString *username;
+  NSString *accountId;
 } DestinationTips__storage_;
 
 // This method is threadsafe because it is initially called
@@ -543,11 +543,11 @@ typedef struct DestinationTips__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "username",
+        .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = DestinationTips_FieldNumber_Username,
+        .number = DestinationTips_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(DestinationTips__storage_, username),
+        .offset = (uint32_t)offsetof(DestinationTips__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

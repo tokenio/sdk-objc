@@ -52,7 +52,6 @@ CF_EXTERN_C_BEGIN
 @class Transfer;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
-GPB_ENUM_FWD_DECLARE(Platform);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -318,34 +317,20 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 #pragma mark - SubscribeToNotificationsRequest
 
 typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
-  SubscribeToNotificationsRequest_FieldNumber_Target = 1,
-  SubscribeToNotificationsRequest_FieldNumber_Platform = 2,
-  SubscribeToNotificationsRequest_FieldNumber_BankId = 3,
+  SubscribeToNotificationsRequest_FieldNumber_Handler = 1,
+  SubscribeToNotificationsRequest_FieldNumber_HandlerInstructions = 2,
 };
 
 @interface SubscribeToNotificationsRequest : GPBMessage
 
-/** e.g push token */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *target;
+/** Who is sending the notification */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *handler;
 
-@property(nonatomic, readwrite) enum Platform platform;
-
-/** optional proxy bank id */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *handlerInstructions;
+/** The number of items in @c handlerInstructions without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger handlerInstructions_Count;
 
 @end
-
-/**
- * Fetches the raw value of a @c SubscribeToNotificationsRequest's @c platform property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t SubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message);
-/**
- * Sets the raw value of an @c SubscribeToNotificationsRequest's @c platform property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetSubscribeToNotificationsRequest_Platform_RawValue(SubscribeToNotificationsRequest *message, int32_t value);
 
 #pragma mark - SubscribeToNotificationsResponse
 
