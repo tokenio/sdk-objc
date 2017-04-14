@@ -1,50 +1,50 @@
 PODS:
-  - '!ProtoCompiler (3.1.0)':
+  - "!ProtoCompiler (3.2.0)":
     - Protobuf (~> 3.0)
-  - '!ProtoCompiler-gRPCPlugin (1.1.0)':
-    - '!ProtoCompiler (= 3.1.0)'
-    - gRPC-ProtoRPC (= 1.1.0)
+  - "!ProtoCompiler-gRPCPlugin (1.2.0)":
+    - "!ProtoCompiler (= 3.2.0)"
+    - gRPC-ProtoRPC (= 1.2.0)
   - BoringSSL (8.0):
     - BoringSSL/Implementation (= 8.0)
     - BoringSSL/Interface (= 8.0)
   - BoringSSL/Implementation (8.0):
     - BoringSSL/Interface (= 8.0)
   - BoringSSL/Interface (8.0)
-  - gRPC (1.1.0):
-    - gRPC-Core (= 1.1.0)
-    - gRPC-RxLibrary (= 1.1.0)
-  - gRPC-Core (1.1.0):
-    - gRPC-Core/Implementation (= 1.1.0)
-    - gRPC-Core/Interface (= 1.1.0)
-  - gRPC-Core/Implementation (1.1.0):
+  - gRPC (1.2.0):
+    - gRPC-Core (= 1.2.0)
+    - gRPC-RxLibrary (= 1.2.0)
+  - gRPC-Core (1.2.0):
+    - gRPC-Core/Implementation (= 1.2.0)
+    - gRPC-Core/Interface (= 1.2.0)
+  - gRPC-Core/Implementation (1.2.0):
     - BoringSSL (~> 8.0)
-    - gRPC-Core/Interface (= 1.1.0)
-  - gRPC-Core/Interface (1.1.0)
-  - gRPC-ProtoRPC (1.1.0):
-    - gRPC (= 1.1.0)
-    - gRPC-RxLibrary (= 1.1.0)
+    - gRPC-Core/Interface (= 1.2.0)
+  - gRPC-Core/Interface (1.2.0)
+  - gRPC-ProtoRPC (1.2.0):
+    - gRPC (= 1.2.0)
+    - gRPC-RxLibrary (= 1.2.0)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.1.0)
+  - gRPC-RxLibrary (1.2.0)
   - OrderedDictionary (1.4)
-  - Protobuf (3.2.0)
+  - Protobuf (3.2.1)
   - Unirest (1.1.4)
 
 DEPENDENCIES:
-  - '!ProtoCompiler'
-  - '!ProtoCompiler-gRPCPlugin'
+  - "!ProtoCompiler"
+  - "!ProtoCompiler-gRPCPlugin"
   - OrderedDictionary
   - Unirest (~> 1.1.4)
 
 SPEC CHECKSUMS:
-  '!ProtoCompiler': c2097b831fccad44e95f19cf95879ce160689306
-  '!ProtoCompiler-gRPCPlugin': cf7ff11d58fa9f6b13b66319a7c2537fe3f2abdf
+  "!ProtoCompiler": b66c7c0c1d911ad1490dcbfce30e1508739d8309
+  "!ProtoCompiler-gRPCPlugin": e971571341f3b0e834e5592eb684de97b4978382
   BoringSSL: bafdcc5b88bac8ee45d7d207c507697f8c75b2fc
-  gRPC: 2762200b04314dabc9fec3541d1ff475a63af3fc
-  gRPC-Core: e341f77a880a20a507f9c988ce5fb021b6a5ddfa
-  gRPC-ProtoRPC: ef704b04fdfebb0221df26886b6a6e7fd20100d5
-  gRPC-RxLibrary: 8f4a1514a8746d7696441358353debac4242a33e
+  gRPC: a7cdb9882aff57b83a1a96d7f1b902527abee3ff
+  gRPC-Core: 81c86a58e64f62d5635697e9141b300ec6023132
+  gRPC-ProtoRPC: 01d9c0ba95d63e402fa7a9251bd439c5dc5ccb2e
+  gRPC-RxLibrary: 0da081dd7e8cd31313affcd65f36f80124b013c0
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
-  Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  Protobuf: 2ccbaf193f6c65adc67745453ca0c13234c32796
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
 PODFILE CHECKSUM: 8f5c2082b500f9168822663ae0c30b9c942d8ebb
