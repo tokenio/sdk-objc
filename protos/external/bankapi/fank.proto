@@ -187,14 +187,14 @@ service FankService {
   }
 
   rpc AuthorizeLinkAccounts (AuthorizeLinkAccountsRequest)
-      returns (io.token.proto.banklink.AccountLinkingPayloads) {
+      returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
         put: "/clients/{client_id}/link-accounts"
     };
   }
 
   rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
-      returns (io.token.proto.banklink.AccountLinkingPayloads) {
+      returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
         get: "/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
     };

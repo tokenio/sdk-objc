@@ -31,6 +31,8 @@ CF_EXTERN_C_BEGIN
 @class FxQuote;
 @class FxRate;
 @class Money;
+@class Signature;
+@class TransferQuote;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -176,6 +178,25 @@ typedef GPB_ENUM(TransferQuote_FieldNumber) {
 
 /** The quote expiration time */
 @property(nonatomic, readwrite) int64_t expiresAtMs;
+
+@end
+
+#pragma mark - SignedTransferQuote
+
+typedef GPB_ENUM(SignedTransferQuote_FieldNumber) {
+  SignedTransferQuote_FieldNumber_Quote = 1,
+  SignedTransferQuote_FieldNumber_Signature = 2,
+};
+
+@interface SignedTransferQuote : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferQuote *quote;
+/** Test to see if @c quote has been set. */
+@property(nonatomic, readwrite) BOOL hasQuote;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
 
 @end
 

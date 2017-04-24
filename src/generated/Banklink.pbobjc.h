@@ -46,27 +46,24 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BanklinkRoot : GPBRootObject
 @end
 
-#pragma mark - AccountLinkingPayloads
+#pragma mark - BankAuthorization
 
-typedef GPB_ENUM(AccountLinkingPayloads_FieldNumber) {
-  AccountLinkingPayloads_FieldNumber_BankId = 1,
-  AccountLinkingPayloads_FieldNumber_BankName = 2,
-  AccountLinkingPayloads_FieldNumber_PayloadsArray = 3,
+typedef GPB_ENUM(BankAuthorization_FieldNumber) {
+  BankAuthorization_FieldNumber_BankId = 1,
+  BankAuthorization_FieldNumber_AccountsArray = 2,
 };
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * This message represents
  **/
-@interface AccountLinkingPayloads : GPBMessage
+@interface BankAuthorization : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *payloadsArray;
-/** The number of items in @c payloadsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger payloadsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountsArray;
+/** The number of items in @c accountsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountsArray_Count;
 
 @end
 

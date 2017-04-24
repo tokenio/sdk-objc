@@ -3,6 +3,8 @@ package io.token.proto.common.transferinstructions;
 
 option java_outer_classname = "TransferInstructionsProtos";
 
+import "banklink.proto";
+import "security.proto";
 
 // Money transfer instructions.
 message TransferInstructions {
@@ -10,55 +12,58 @@ message TransferInstructions {
   repeated Destination destinations = 2;        // Transfer desitination.
 }
 
-// Money transfer source. This could be an transferDest id assigned by Token or
-// real bank transferDest number.
+// Money transfer source. This could be either a token account or a bank authorization.
 message Source {
-  string account_id = 1;      // Required when coming from the client.
-  string account_number = 2;  // Optional when coming from the client, required at the bank.
-}
 
-// Money transfer destination. The desitination is described differently
-// depending on the transfer method being used.
-message Destination {
-  oneof destination {
-    DestinationBic swift = 1;
-    DestinationIban iban = 2;
-    DestinationAch ach = 3;
-    DestinationLocal local = 4;
-    DestinationTips tips = 5;
+  // Token Acccount Source
+  message TokenSource {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  // One-time encrypted authorization to an account
+  message BankAuthorizationSource {
+    io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
+  }
+
+  oneof source {
+    TokenSource tokenSource = 1;
+    BankAuthorizationSource bankAuthorizationSource = 2;
   }
 }
 
-// SWIFT transfer destination.
-message DestinationBic {
-  string bic = 1;
-  string account = 2;
+// Money transfer destination. The destination is described differently
+// depending on the transfer method being used.
+message Destination {
+
+  // Token account Destination
+  message TokenDestination {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  // SWIFT tranfer destination
+  message SwiftDestination {
+    string bic = 1;
+    string account = 2;
+  }
+
+  // SEPA transfer destination
+  message SepaDestination {
+    string iban = 1;
+  }
+
+  // ACH transfer destination
+  message AchDestination {
+    string routing = 1;
+    string account = 2;
+  }
+
+  oneof destination {
+    TokenDestination tokenDestination = 1;
+    SwiftDestination swiftDestination = 2;
+    SepaDestination sepaDestination = 3;
+    AchDestination achDestination = 4;
+  }
 }
 
-// IBAN transfer destination, can be used with different transfer methods.
-message DestinationIban {
-  enum Method { INVALID = 0; SWIFT = 1; SEPA = 2; }
-
-  Method method = 1;
-  string iban = 2;
-  string name = 3;
-}
-
-// ACH transfer destination.
-message DestinationAch {
-  string routing = 1;
-  string account = 2;
-}
-
-// Local transfer within the same bank.
-message DestinationLocal {
-  string account_id = 1;      // Required when coming from the client.
-  string account_number = 2;  // Optional when coming from the client, required at the bank.
-}
-
-// Token Instant Payment Service
-message DestinationTips {
-  // Temporary solution that relies on routable properties of the account id.
-  // The actual solution will probably be populated with the bank id and local account identifier.
-  string account_id = 1;
-}

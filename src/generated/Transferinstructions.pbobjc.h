@@ -27,37 +27,17 @@
 
 CF_EXTERN_C_BEGIN
 
+@class BankAuthorization;
 @class Destination;
-@class DestinationAch;
-@class DestinationBic;
-@class DestinationIban;
-@class DestinationLocal;
-@class DestinationTips;
+@class Destination_AchDestination;
+@class Destination_SepaDestination;
+@class Destination_SwiftDestination;
+@class Destination_TokenDestination;
 @class Source;
+@class Source_BankAuthorizationSource;
+@class Source_TokenSource;
 
 NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark - Enum DestinationIban_Method
-
-typedef GPB_ENUM(DestinationIban_Method) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  DestinationIban_Method_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  DestinationIban_Method_Invalid = 0,
-  DestinationIban_Method_Swift = 1,
-  DestinationIban_Method_Sepa = 2,
-};
-
-GPBEnumDescriptor *DestinationIban_Method_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL DestinationIban_Method_IsValidValue(int32_t value);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -101,60 +81,101 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 #pragma mark - Source
 
 typedef GPB_ENUM(Source_FieldNumber) {
-  Source_FieldNumber_AccountId = 1,
-  Source_FieldNumber_AccountNumber = 2,
+  Source_FieldNumber_TokenSource = 1,
+  Source_FieldNumber_BankAuthorizationSource = 2,
+};
+
+typedef GPB_ENUM(Source_Source_OneOfCase) {
+  Source_Source_OneOfCase_GPBUnsetOneOfCase = 0,
+  Source_Source_OneOfCase_TokenSource = 1,
+  Source_Source_OneOfCase_BankAuthorizationSource = 2,
 };
 
 /**
- * Money transfer source. This could be an transferDest id assigned by Token or
- * real bank transferDest number.
+ * Money transfer source. This could be either a token account or a bank authorization.
  **/
 @interface Source : GPBMessage
 
-/** Required when coming from the client. */
+@property(nonatomic, readonly) Source_Source_OneOfCase sourceOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) Source_TokenSource *tokenSource;
+
+@property(nonatomic, readwrite, strong, null_resettable) Source_BankAuthorizationSource *bankAuthorizationSource;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'source'.
+ **/
+void Source_ClearSourceOneOfCase(Source *message);
+
+#pragma mark - Source_TokenSource
+
+typedef GPB_ENUM(Source_TokenSource_FieldNumber) {
+  Source_TokenSource_FieldNumber_MemberId = 1,
+  Source_TokenSource_FieldNumber_AccountId = 2,
+};
+
+/**
+ * Token Acccount Source
+ **/
+@interface Source_TokenSource : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
-/** Optional when coming from the client, required at the bank. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+@end
+
+#pragma mark - Source_BankAuthorizationSource
+
+typedef GPB_ENUM(Source_BankAuthorizationSource_FieldNumber) {
+  Source_BankAuthorizationSource_FieldNumber_BankAuthorization = 1,
+};
+
+/**
+ * One-time encrypted authorization to an account
+ **/
+@interface Source_BankAuthorizationSource : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
+/** Test to see if @c bankAuthorization has been set. */
+@property(nonatomic, readwrite) BOOL hasBankAuthorization;
 
 @end
 
 #pragma mark - Destination
 
 typedef GPB_ENUM(Destination_FieldNumber) {
-  Destination_FieldNumber_Swift = 1,
-  Destination_FieldNumber_Iban = 2,
-  Destination_FieldNumber_Ach = 3,
-  Destination_FieldNumber_Local = 4,
-  Destination_FieldNumber_Tips = 5,
+  Destination_FieldNumber_TokenDestination = 1,
+  Destination_FieldNumber_SwiftDestination = 2,
+  Destination_FieldNumber_SepaDestination = 3,
+  Destination_FieldNumber_AchDestination = 4,
 };
 
 typedef GPB_ENUM(Destination_Destination_OneOfCase) {
   Destination_Destination_OneOfCase_GPBUnsetOneOfCase = 0,
-  Destination_Destination_OneOfCase_Swift = 1,
-  Destination_Destination_OneOfCase_Iban = 2,
-  Destination_Destination_OneOfCase_Ach = 3,
-  Destination_Destination_OneOfCase_Local = 4,
-  Destination_Destination_OneOfCase_Tips = 5,
+  Destination_Destination_OneOfCase_TokenDestination = 1,
+  Destination_Destination_OneOfCase_SwiftDestination = 2,
+  Destination_Destination_OneOfCase_SepaDestination = 3,
+  Destination_Destination_OneOfCase_AchDestination = 4,
 };
 
 /**
- * Money transfer destination. The desitination is described differently
+ * Money transfer destination. The destination is described differently
  * depending on the transfer method being used.
  **/
 @interface Destination : GPBMessage
 
 @property(nonatomic, readonly) Destination_Destination_OneOfCase destinationOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) DestinationBic *swift;
+@property(nonatomic, readwrite, strong, null_resettable) Destination_TokenDestination *tokenDestination;
 
-@property(nonatomic, readwrite, strong, null_resettable) DestinationIban *iban;
+@property(nonatomic, readwrite, strong, null_resettable) Destination_SwiftDestination *swiftDestination;
 
-@property(nonatomic, readwrite, strong, null_resettable) DestinationAch *ach;
+@property(nonatomic, readwrite, strong, null_resettable) Destination_SepaDestination *sepaDestination;
 
-@property(nonatomic, readwrite, strong, null_resettable) DestinationLocal *local;
-
-@property(nonatomic, readwrite, strong, null_resettable) DestinationTips *tips;
+@property(nonatomic, readwrite, strong, null_resettable) Destination_AchDestination *achDestination;
 
 @end
 
@@ -163,17 +184,35 @@ typedef GPB_ENUM(Destination_Destination_OneOfCase) {
  **/
 void Destination_ClearDestinationOneOfCase(Destination *message);
 
-#pragma mark - DestinationBic
+#pragma mark - Destination_TokenDestination
 
-typedef GPB_ENUM(DestinationBic_FieldNumber) {
-  DestinationBic_FieldNumber_Bic = 1,
-  DestinationBic_FieldNumber_Account = 2,
+typedef GPB_ENUM(Destination_TokenDestination_FieldNumber) {
+  Destination_TokenDestination_FieldNumber_MemberId = 1,
+  Destination_TokenDestination_FieldNumber_AccountId = 2,
 };
 
 /**
- * SWIFT transfer destination.
+ * Token account Destination
  **/
-@interface DestinationBic : GPBMessage
+@interface Destination_TokenDestination : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - Destination_SwiftDestination
+
+typedef GPB_ENUM(Destination_SwiftDestination_FieldNumber) {
+  Destination_SwiftDestination_FieldNumber_Bic = 1,
+  Destination_SwiftDestination_FieldNumber_Account = 2,
+};
+
+/**
+ * SWIFT tranfer destination
+ **/
+@interface Destination_SwiftDestination : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
@@ -181,93 +220,36 @@ typedef GPB_ENUM(DestinationBic_FieldNumber) {
 
 @end
 
-#pragma mark - DestinationIban
+#pragma mark - Destination_SepaDestination
 
-typedef GPB_ENUM(DestinationIban_FieldNumber) {
-  DestinationIban_FieldNumber_Method = 1,
-  DestinationIban_FieldNumber_Iban = 2,
-  DestinationIban_FieldNumber_Name = 3,
+typedef GPB_ENUM(Destination_SepaDestination_FieldNumber) {
+  Destination_SepaDestination_FieldNumber_Iban = 1,
 };
 
 /**
- * IBAN transfer destination, can be used with different transfer methods.
+ * SEPA transfer destination
  **/
-@interface DestinationIban : GPBMessage
-
-@property(nonatomic, readwrite) DestinationIban_Method method;
+@interface Destination_SepaDestination : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
 @end
 
-/**
- * Fetches the raw value of a @c DestinationIban's @c method property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t DestinationIban_Method_RawValue(DestinationIban *message);
-/**
- * Sets the raw value of an @c DestinationIban's @c method property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetDestinationIban_Method_RawValue(DestinationIban *message, int32_t value);
+#pragma mark - Destination_AchDestination
 
-#pragma mark - DestinationAch
-
-typedef GPB_ENUM(DestinationAch_FieldNumber) {
-  DestinationAch_FieldNumber_Routing = 1,
-  DestinationAch_FieldNumber_Account = 2,
+typedef GPB_ENUM(Destination_AchDestination_FieldNumber) {
+  Destination_AchDestination_FieldNumber_Routing = 1,
+  Destination_AchDestination_FieldNumber_Account = 2,
 };
 
 /**
- * ACH transfer destination.
+ * ACH transfer destination
  **/
-@interface DestinationAch : GPBMessage
+@interface Destination_AchDestination : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
-
-@end
-
-#pragma mark - DestinationLocal
-
-typedef GPB_ENUM(DestinationLocal_FieldNumber) {
-  DestinationLocal_FieldNumber_AccountId = 1,
-  DestinationLocal_FieldNumber_AccountNumber = 2,
-};
-
-/**
- * Local transfer within the same bank.
- **/
-@interface DestinationLocal : GPBMessage
-
-/** Required when coming from the client. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-/** Optional when coming from the client, required at the bank. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
-
-@end
-
-#pragma mark - DestinationTips
-
-typedef GPB_ENUM(DestinationTips_FieldNumber) {
-  DestinationTips_FieldNumber_AccountId = 1,
-};
-
-/**
- * Token Instant Payment Service
- **/
-@interface DestinationTips : GPBMessage
-
-/**
- * Temporary solution that relies on routable properties of the account id.
- * The actual solution will probably be populated with the bank id and local account identifier.
- **/
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 

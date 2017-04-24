@@ -1,6 +1,8 @@
 syntax = "proto3";
 package io.token.proto.common.money;
 
+import "security.proto";
+
 option java_outer_classname = "MoneyProtos";
 
 message Money {
@@ -34,4 +36,9 @@ message TransferQuote {
   repeated Fee fees = 5;      // A collection of applicable fees
   FxQuote fx_quote = 6;       // Optional FX Quote
   int64 expires_at_ms = 7;    // The quote expiration time
+}
+
+message SignedTransferQuote {
+  TransferQuote quote = 1;
+  io.token.proto.common.security.Signature signature = 2;
 }

@@ -28,11 +28,11 @@
 CF_EXTERN_C_BEGIN
 
 @class Account;
-@class AccountLinkingPayloads;
 @class AccountTag;
 @class Address;
 @class AddressRecord;
 @class Bank;
+@class BankAuthorization;
 @class BankInfo;
 @class Member;
 @class MemberUpdate;
@@ -42,7 +42,6 @@ CF_EXTERN_C_BEGIN
 @class Page;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
-@class SealedMessage;
 @class Signature;
 @class Subscriber;
 @class Token;
@@ -511,18 +510,14 @@ typedef GPB_ENUM(GetNotificationResponse_FieldNumber) {
 #pragma mark - LinkAccountsRequest
 
 typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
-  LinkAccountsRequest_FieldNumber_BankId = 1,
-  LinkAccountsRequest_FieldNumber_AccountLinkPayloadsArray = 2,
+  LinkAccountsRequest_FieldNumber_BankAuthorization = 1,
 };
 
 @interface LinkAccountsRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
-
-/** encrypted AccountsLinkPayload */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
-/** The number of items in @c accountLinkPayloadsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
+/** Test to see if @c bankAuthorization has been set. */
+@property(nonatomic, readwrite) BOOL hasBankAuthorization;
 
 @end
 
@@ -1102,14 +1097,14 @@ typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
 #pragma mark - CreateTestBankAccountResponse
 
 typedef GPB_ENUM(CreateTestBankAccountResponse_FieldNumber) {
-  CreateTestBankAccountResponse_FieldNumber_AccountLinkingPayloads = 1,
+  CreateTestBankAccountResponse_FieldNumber_BankAuthorization = 1,
 };
 
 @interface CreateTestBankAccountResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) AccountLinkingPayloads *accountLinkingPayloads;
-/** Test to see if @c accountLinkingPayloads has been set. */
-@property(nonatomic, readwrite) BOOL hasAccountLinkingPayloads;
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
+/** Test to see if @c bankAuthorization has been set. */
+@property(nonatomic, readwrite) BOOL hasBankAuthorization;
 
 @end
 

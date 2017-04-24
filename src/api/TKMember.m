@@ -182,12 +182,10 @@
     }];
 }
 
-- (NSArray<TKAccount*> *)linkAccounts:(NSString *)bankId
-                          withPayloads:(NSArray<SealedMessage*> *)payloads {
+- (NSArray<TKAccount*> *)linkAccounts:(BankAuthorization *)bankAuthorization {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async linkAccounts:bankId
-                     withPayloads:payloads
+        [self.async linkAccounts:bankAuthorization
                        onSuccess:
          ^(NSArray<TKAccountAsync *> *accounts) {
              call.onSuccess([self _asyncToSync:accounts]);
