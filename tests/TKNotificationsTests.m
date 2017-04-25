@@ -75,11 +75,12 @@ void check(NSString *message, BOOL condition) {
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-
+        BankAuthorization* auth = [BankAuthorization message];
+        auth.bankId = @"iron";
+        [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
+        
         [tokenIO notifyLinkAccounts:payer.firstUsername
-                             bankId:@"iron"
-                           bankName:@"bank-name"
-                accountLinkPayloads:@[[SealedMessage new]]];
+                      authorization:auth];
 
         [self waitForNotification:@"LINK_ACCOUNTS"];
     }];
@@ -131,10 +132,11 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         Key *key = [[payerAnotherDevice keys] firstObject];
+        BankAuthorization* auth = [BankAuthorization message];
+        auth.bankId = @"iron";
+        [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
         [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
-                                      bankId:@"iron"
-                                    bankName:@"bank-name"
-                         accountLinkPayloads:@[[SealedMessage new]]
+                               authorization:auth
                                      keyName:@"Chrome 53.0"
                                          key:key];
 

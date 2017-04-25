@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.notification;
 
 import "security.proto";
+import "banklink.proto";
 
 option java_outer_classname = "NotificationProtos";
 
@@ -12,9 +13,7 @@ message TransferProcessed {
 
 // A notification that a bank wants to be linked.
 message LinkAccounts {
-    string bank_id = 1;
-    string bank_name = 2;
-    repeated io.token.proto.common.security.SealedMessage account_link_payloads = 3;
+    io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
 }
 
 // A notification to step up / endorse a token.

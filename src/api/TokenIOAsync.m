@@ -128,9 +128,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)notifyLinkAccounts:(NSString *)username
-                    bankId:(NSString *)bankId
-                  bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
+             authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
@@ -138,9 +136,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                   timeoutMs:timeoutMs
                errorHandler:errorHandler];
     [client notifyLinkAccounts:username
-                        bankId:bankId
-                      bankName:bankName
-           accountLinkPayloads:accountLinkPayloads
+                 authorization:authorization
                      onSuccess:onSuccess
                        onError:onError];
 }
@@ -162,9 +158,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
-                             bankId:(NSString *)bankId
-                           bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                      authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key
                           onSuccess:(OnSuccess)onSuccess
@@ -174,9 +168,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                   timeoutMs:timeoutMs
               errorHandler:errorHandler];
     [client notifyLinkAccountsAndAddKey:username
-                                 bankId:bankId
-                               bankName:bankName
-                    accountLinkPayloads:accountLinkPayloads
+                          authorization:authorization
                                 keyName:keyName
                                     key:key
                               onSuccess:onSuccess

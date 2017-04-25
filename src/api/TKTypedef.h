@@ -10,6 +10,7 @@
 @class TKMemberAsync;
 @class TKAccountAsync;
 @class AddressRecord;
+@class BankAuthorization;
 @class Subscriber;
 @class Notification;
 @class PagedArray<Token>;

@@ -28,11 +28,11 @@
 CF_EXTERN_C_BEGIN
 
 @class AddKey;
+@class BankAuthorization;
 @class Key;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
-@class SealedMessage;
 @class StepUp;
 @class TransferProcessed;
 
@@ -119,9 +119,7 @@ typedef GPB_ENUM(TransferProcessed_FieldNumber) {
 #pragma mark - LinkAccounts
 
 typedef GPB_ENUM(LinkAccounts_FieldNumber) {
-  LinkAccounts_FieldNumber_BankId = 1,
-  LinkAccounts_FieldNumber_BankName = 2,
-  LinkAccounts_FieldNumber_AccountLinkPayloadsArray = 3,
+  LinkAccounts_FieldNumber_BankAuthorization = 1,
 };
 
 /**
@@ -129,13 +127,9 @@ typedef GPB_ENUM(LinkAccounts_FieldNumber) {
  **/
 @interface LinkAccounts : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankName;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountLinkPayloadsArray;
-/** The number of items in @c accountLinkPayloadsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger accountLinkPayloadsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
+/** Test to see if @c bankAuthorization has been set. */
+@property(nonatomic, readwrite) BOOL hasBankAuthorization;
 
 @end
 

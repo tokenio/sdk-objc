@@ -70,15 +70,11 @@
 }
 
 - (void)notifyLinkAccounts:(NSString *)username
-                    bankId:(NSString *)bankId
-                  bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads {
+             authorization:(BankAuthorization *)authorization{
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccounts:username
-                                bankId:bankId
-                              bankName:bankName
-                   accountLinkPayloads:accountLinkPayloads
+                         authorization:authorization
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
          ];
@@ -101,17 +97,13 @@
 }
 
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
-                             bankId:(NSString *)bankId
-                           bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                      authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccountsAndAddKey:username
-                                         bankId:bankId
-                                       bankName:bankName
-                            accountLinkPayloads:accountLinkPayloads
+                                  authorization:authorization
                                         keyName:keyName
                                             key:key
                                       onSuccess:^(void) {

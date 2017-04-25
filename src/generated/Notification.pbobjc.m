@@ -15,6 +15,7 @@
 
  #import "Notification.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "Banklink.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -127,15 +128,11 @@ typedef struct TransferProcessed__storage_ {
 
 @implementation LinkAccounts
 
-@dynamic bankId;
-@dynamic bankName;
-@dynamic accountLinkPayloadsArray, accountLinkPayloadsArray_Count;
+@dynamic hasBankAuthorization, bankAuthorization;
 
 typedef struct LinkAccounts__storage_ {
   uint32_t _has_storage_[1];
-  NSString *bankId;
-  NSString *bankName;
-  NSMutableArray *accountLinkPayloadsArray;
+  BankAuthorization *bankAuthorization;
 } LinkAccounts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -145,30 +142,12 @@ typedef struct LinkAccounts__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "bankId",
-        .dataTypeSpecific.className = NULL,
-        .number = LinkAccounts_FieldNumber_BankId,
+        .name = "bankAuthorization",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAuthorization),
+        .number = LinkAccounts_FieldNumber_BankAuthorization,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(LinkAccounts__storage_, bankId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "bankName",
-        .dataTypeSpecific.className = NULL,
-        .number = LinkAccounts_FieldNumber_BankName,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(LinkAccounts__storage_, bankName),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "accountLinkPayloadsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
-        .number = LinkAccounts_FieldNumber_AccountLinkPayloadsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(LinkAccounts__storage_, accountLinkPayloadsArray),
-        .flags = GPBFieldRepeated,
+        .offset = (uint32_t)offsetof(LinkAccounts__storage_, bankAuthorization),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -180,6 +159,11 @@ typedef struct LinkAccounts__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(LinkAccounts__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\021\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

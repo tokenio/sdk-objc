@@ -109,16 +109,12 @@
 }
 
 - (void)notifyLinkAccounts:(NSString *)username
-                    bankId:(NSString *)bankId
-                  bankName:(NSString *)bankName
-       accountLinkPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
+             authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.body.linkAccounts.bankId = bankId;
-    request.body.linkAccounts.bankName = bankName;
-    request.body.linkAccounts.accountLinkPayloadsArray = [NSMutableArray arrayWithArray:accountLinkPayloads];
+    request.body.linkAccounts.bankAuthorization = authorization;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
@@ -159,19 +155,14 @@
 }
 
 - (void)notifyLinkAccountsAndAddKey:(NSString *)username
-                             bankId:(NSString *)bankId
-                           bankName:(NSString *)bankName
-                accountLinkPayloads:(NSArray<SealedMessage *> *)accountLinkPayloads
+                      authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.username = username;
-    request.body.linkAccountsAndAddKey.linkAccounts.bankId = bankId;
-    request.body.linkAccountsAndAddKey.linkAccounts.bankName = bankName;
-    request.body.linkAccountsAndAddKey.linkAccounts.accountLinkPayloadsArray
-            = [NSMutableArray arrayWithArray:accountLinkPayloads];
+    request.body.linkAccountsAndAddKey.linkAccounts.bankAuthorization = authorization;
     request.body.linkAccountsAndAddKey.addKey.name = keyName;
     request.body.linkAccountsAndAddKey.addKey.key = key;
     RpcLogStart(request);
