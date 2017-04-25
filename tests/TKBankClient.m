@@ -72,9 +72,9 @@
     NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/link-accounts", url, clientId];
     UNIHTTPJsonResponse *response = [self httpPutCall:urlPath
                                              withData:[TKJson serializeData:request]];
-    AccountLinkingPayloads *payloads = [TKJson deserializeMessageOfClass:[AccountLinkingPayloads class]
+    BankAuthorization *auth = [TKJson deserializeMessageOfClass:[BankAuthorization class]
                                                           fromDictionary:response.body.object];
-    return payloads.payloadsArray;
+    return auth.accountsArray;
 }
 
 - (UNIHTTPJsonResponse *)httpPutCall:(NSString *)url withData:(NSData *)data {

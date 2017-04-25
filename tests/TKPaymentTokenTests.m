@@ -35,9 +35,8 @@
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
         Destination *destination = [[Destination alloc] init];
-        DestinationTips *tips = [[DestinationTips alloc] init];
-        [tips setAccountId:@"username"];
-        [destination setTips: tips];
+    
+        destination.tokenDestination.accountId = payeeAccount.id;
         NSArray<Destination *> *destinations = @[destination];
 
         Token *token = [payer createTransferToken:payee.firstUsername

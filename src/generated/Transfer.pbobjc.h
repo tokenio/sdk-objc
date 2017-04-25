@@ -124,7 +124,7 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 /** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
-/** Transfer desitinations, sorted in priority order. */
+/** Transfer destinations, sorted in priority order. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;

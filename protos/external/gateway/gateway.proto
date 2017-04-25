@@ -158,9 +158,7 @@ message GetNotificationResponse {
 //
 
 message LinkAccountsRequest {
-  string bank_id = 1;
-  // encrypted AccountsLinkPayload
-  repeated io.token.proto.common.security.SealedMessage account_link_payloads = 2;
+  io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
 }
 
 message LinkAccountsResponse {
@@ -345,7 +343,7 @@ message CreateTestBankAccountRequest {
 }
 
 message CreateTestBankAccountResponse {
-  io.token.proto.banklink.AccountLinkingPayloads accountLinkingPayloads = 1;
+  io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

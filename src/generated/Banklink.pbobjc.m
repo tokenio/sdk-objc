@@ -43,20 +43,18 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - AccountLinkingPayloads
+#pragma mark - BankAuthorization
 
-@implementation AccountLinkingPayloads
+@implementation BankAuthorization
 
 @dynamic bankId;
-@dynamic bankName;
-@dynamic payloadsArray, payloadsArray_Count;
+@dynamic accountsArray, accountsArray_Count;
 
-typedef struct AccountLinkingPayloads__storage_ {
+typedef struct BankAuthorization__storage_ {
   uint32_t _has_storage_[1];
   NSString *bankId;
-  NSString *bankName;
-  NSMutableArray *payloadsArray;
-} AccountLinkingPayloads__storage_;
+  NSMutableArray *accountsArray;
+} BankAuthorization__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -67,38 +65,29 @@ typedef struct AccountLinkingPayloads__storage_ {
       {
         .name = "bankId",
         .dataTypeSpecific.className = NULL,
-        .number = AccountLinkingPayloads_FieldNumber_BankId,
+        .number = BankAuthorization_FieldNumber_BankId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountLinkingPayloads__storage_, bankId),
+        .offset = (uint32_t)offsetof(BankAuthorization__storage_, bankId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "bankName",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountLinkingPayloads_FieldNumber_BankName,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccountLinkingPayloads__storage_, bankName),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "payloadsArray",
+        .name = "accountsArray",
         .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
-        .number = AccountLinkingPayloads_FieldNumber_PayloadsArray,
+        .number = BankAuthorization_FieldNumber_AccountsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(AccountLinkingPayloads__storage_, payloadsArray),
+        .offset = (uint32_t)offsetof(BankAuthorization__storage_, accountsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccountLinkingPayloads class]
+        [GPBDescriptor allocDescriptorForClass:[BankAuthorization class]
                                      rootClass:[BanklinkRoot class]
                                           file:BanklinkRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccountLinkingPayloads__storage_)
+                                   storageSize:sizeof(BankAuthorization__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

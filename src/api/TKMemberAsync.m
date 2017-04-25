@@ -240,12 +240,10 @@
 }
 
 
-- (void)linkAccounts:(NSString *)bankId
-         withPayloads:(NSArray<SealedMessage *> *)payloads
+- (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
              onError:(OnError)onError {
-    [client linkAccounts:bankId
-            withPayloads:payloads
+    [client linkAccounts:bankAuthorization
                onSuccess:
      ^(NSArray<Account *> *accounts) {
          onSuccess([self _mapAccounts:accounts]);
@@ -393,7 +391,7 @@
     payload.from = payer;
     payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
     payload.transfer.currency = currency;
-    payload.transfer.instructions.source.accountId = accountId;
+    payload.transfer.instructions.source.tokenSource.accountId = accountId;
     
     if (redeemerUsername) {
         payload.transfer.redeemer.username = redeemerUsername;
@@ -498,6 +496,7 @@
                   amount:nil
                 currency:nil
              description:nil
+             destination:nil
                onSuccess:onSuccess
                  onError:onError];
 }
@@ -506,6 +505,7 @@
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
+           destination:(Destination *)destination
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
@@ -520,6 +520,9 @@
     }
     if (description) {
         payload.description_p = description;
+    }
+    if (destination) {
+        [payload.destinationsArray addObject:destination];
     }
     
     [client createTransfer:payload

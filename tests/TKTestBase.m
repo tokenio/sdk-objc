@@ -117,12 +117,14 @@
                      currency:@"USD"];
     
     NSString *clientId = fankClient.id_p;
-    NSArray<SealedMessage*> *payloads = [_bank authorizeAccountLinkingFor:member.firstUsername
+    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:member.firstUsername
                                                                  clientId:clientId
                                                            accountNumbers:@[bankAccountNumber]];
-                             
-    NSArray<TKAccount *> *accounts = [member linkAccounts:bankId
-                                              withPayloads:payloads];
+    BankAuthorization * auth = [BankAuthorization message];
+    auth.bankId = bankId;
+    [auth.accountsArray addObjectsFromArray:encAccounts];
+
+    NSArray<TKAccount *> *accounts = [member linkAccounts:auth];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }

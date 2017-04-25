@@ -2,9 +2,9 @@ syntax = "proto3";
 package io.token.proto.common.account;
 option java_outer_classname = "AccountProtos";
 
-// The payload of the account linking request. Used for serialization only.
+// The payload of the bank authorization request. Used for serialization only.
 // The value of the payload is encrypted as a serialized JSON object.
-message AccountLinkPayload {
+message PlaintextBankAuthorization {
   string username = 1;
   string account_name = 2;
   string account_number = 3;

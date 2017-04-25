@@ -231,13 +231,11 @@
 }
 
 
-- (void)linkAccounts:(NSString *)bankId
-        withPayloads:(NSArray<SealedMessage*> *)accountLinkPayloads
+- (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithAccounts)onSuccess
              onError:(OnError)onError {
     LinkAccountsRequest *request = [LinkAccountsRequest message];
-    request.bankId = bankId;
-    request.accountLinkPayloadsArray = [NSMutableArray arrayWithArray: accountLinkPayloads];
+    request.bankAuthorization = bankAuthorization;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

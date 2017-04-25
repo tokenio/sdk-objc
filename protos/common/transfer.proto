@@ -24,7 +24,7 @@ message TransferPayload {
   string nonce = 1;                                                                  // Client assigned unique request id.
   string token_id = 2;                                                               // Token id.
   io.token.proto.common.money.Money amount = 3;                                      // Amount and currency.
-  repeated io.token.proto.common.transferinstructions.Destination destinations = 5;  // Transfer desitinations, sorted in priority order.
+  repeated io.token.proto.common.transferinstructions.Destination destinations = 5;  // Transfer destinations, sorted in priority order.
   string description = 6;                                                            // Optional
 }
 

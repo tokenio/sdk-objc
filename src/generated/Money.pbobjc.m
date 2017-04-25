@@ -14,6 +14,7 @@
 #endif
 
  #import "Money.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,8 +24,8 @@
 
 @implementation MoneyRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
+// No extensions in the file and none of the imports (direct or indirect)
+// defined extensions, so no need to generate +extensionRegistry.
 
 @end
 
@@ -391,6 +392,60 @@ typedef struct TransferQuote__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferQuote__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SignedTransferQuote
+
+@implementation SignedTransferQuote
+
+@dynamic hasQuote, quote;
+@dynamic hasSignature, signature;
+
+typedef struct SignedTransferQuote__storage_ {
+  uint32_t _has_storage_[1];
+  TransferQuote *quote;
+  Signature *signature;
+} SignedTransferQuote__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "quote",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .number = SignedTransferQuote_FieldNumber_Quote,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SignedTransferQuote__storage_, quote),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = SignedTransferQuote_FieldNumber_Signature,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SignedTransferQuote__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SignedTransferQuote class]
+                                     rootClass:[MoneyRoot class]
+                                          file:MoneyRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SignedTransferQuote__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

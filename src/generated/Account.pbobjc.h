@@ -46,20 +46,20 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AccountRoot : GPBRootObject
 @end
 
-#pragma mark - AccountLinkPayload
+#pragma mark - PlaintextBankAuthorization
 
-typedef GPB_ENUM(AccountLinkPayload_FieldNumber) {
-  AccountLinkPayload_FieldNumber_Username = 1,
-  AccountLinkPayload_FieldNumber_AccountName = 2,
-  AccountLinkPayload_FieldNumber_AccountNumber = 3,
-  AccountLinkPayload_FieldNumber_ExpirationMs = 4,
+typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
+  PlaintextBankAuthorization_FieldNumber_Username = 1,
+  PlaintextBankAuthorization_FieldNumber_AccountName = 2,
+  PlaintextBankAuthorization_FieldNumber_AccountNumber = 3,
+  PlaintextBankAuthorization_FieldNumber_ExpirationMs = 4,
 };
 
 /**
- * The payload of the account linking request. Used for serialization only.
+ * The payload of the bank authorization request. Used for serialization only.
  * The value of the payload is encrypted as a serialized JSON object.
  **/
-@interface AccountLinkPayload : GPBMessage
+@interface PlaintextBankAuthorization : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
