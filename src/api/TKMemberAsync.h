@@ -508,6 +508,7 @@
  * @param amount transfer amount
  * @param currency transfer currency code, e.g. "EUR"
  * @param description transfer description
+ * @param destination transfer destination
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
@@ -515,6 +516,7 @@
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
+           destination:(Destination *)destination
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

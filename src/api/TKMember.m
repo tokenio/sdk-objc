@@ -435,10 +435,29 @@
                             amount:amount
                           currency:currency
                        description:description
+                       destination:nil
                          onSuccess:call.onSuccess
                            onError:call.onError];
     }];
 }
+
+- (Transfer *)createTransfer:(Token *)token
+                      amount:(NSNumber *)amount
+                    currency:(NSString *)currency
+                 description:(NSString *)description
+                 destination:(Destination *)destination {
+    TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createTransfer:token
+                            amount:amount
+                          currency:currency
+                       description:description
+                       destination:destination
+                         onSuccess:call.onSuccess
+                           onError:call.onError];
+    }];
+}
+
 
 - (Transaction *)getTransaction:(NSString *)transactionId
                      forAccount:(NSString *)accountId {

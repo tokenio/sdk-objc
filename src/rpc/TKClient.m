@@ -236,7 +236,6 @@
              onError:(OnError)onError {
     LinkAccountsRequest *request = [LinkAccountsRequest message];
     request.bankAuthorization = bankAuthorization;
-    // request.accountLinkPayloadsArray = [NSMutableArray arrayWithArray: accountLinkPayloads];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

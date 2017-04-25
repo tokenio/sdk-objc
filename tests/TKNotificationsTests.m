@@ -8,6 +8,8 @@
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "Transfer.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
+
 
 
 @interface TKNotificationsTests : TKTestBase
@@ -61,7 +63,10 @@ void check(NSString *message, BOOL condition) {
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-        [payee createTransfer:token];
+        
+        Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.accountId = payeeAccount.id;
+        [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
         [self waitForNotification:@"TRANSFER_PROCESSED"];
     }];
@@ -177,7 +182,10 @@ void check(NSString *message, BOOL condition) {
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-        Transfer *transfer = [payee createTransfer:token];
+        
+        Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.accountId = payeeAccount.id;
+        Transfer *transfer = [payee createTransfer:token amount:@(100.99) currency:@"USD" description:@"" destination:destination];
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }

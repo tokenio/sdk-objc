@@ -11,6 +11,8 @@
 #import "Money.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
+
 
 
 @interface TKTransactionsTests : TKTestBase
@@ -50,10 +52,14 @@
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+        
+        Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token
                                             amount:@100.99
                                           currency:@"USD"
-                                       description:@"full amount"];
+                                       description:@"full amount"
+                                       destination:destination];
         
         Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
         
@@ -73,9 +79,12 @@
                                            currency:@"USD"
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two"];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three"];
+        
+        Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.accountId = payeeAccount.id;
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
+        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];
         
         PagedArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
         XCTAssertEqual(3, lookedUp.items.count);
