@@ -81,6 +81,33 @@
     }];
 }
 
+- (void)testRedeemTokenDestination {
+    [self run: ^(TokenIO *tokenIO) {
+        Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.accountId = payeeAccount.id;
+        NSArray<Destination*> *destinations = [NSArray arrayWithObjects:destination, nil];
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"
+                                     destinations:destinations];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+        
+
+        Transfer *transfer = [payee createTransfer:token amount:@(50.1) currency:@"USD" description:@"lunch" destination:destination];
+        
+        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
+    }];
+}
+
+
 - (void)testLookupTransfer {
     [self run: ^(TokenIO *tokenIO) {
         Token *token = [payer createTransferToken:payee.firstUsername
