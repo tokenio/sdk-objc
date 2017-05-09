@@ -7,6 +7,7 @@ import "account.proto";
 import "address.proto";
 import "bankinfo.proto";
 import "banklink.proto";
+import "blob.proto";
 import "member.proto";
 import "money.proto";
 import "notification.proto";
@@ -213,6 +214,35 @@ message GetTransactionsRequest {
 message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Blobs
+//
+
+message CreateBlobRequest {
+  io.token.proto.common.blob.Blob.Payload payload = 1;
+}
+
+message CreateBlobResponse {
+  string blob_id = 1;
+}
+
+message GetBlobRequest {
+  string blob_id = 1;
+}
+
+message GetBlobResponse {
+  io.token.proto.common.blob.Blob blob = 1;
+}
+
+message GetTokenBlobRequest {
+  string token_id = 1;
+  string blob_id = 2;
+}
+
+message GetTokenBlobResponse {
+  io.token.proto.common.blob.Blob blob = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -502,6 +532,28 @@ service GatewayService {
   rpc CreateTestBankAccount (CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse) {
     option (google.api.http) = {
         post: "/test/create-account"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Blobs.
+  //
+
+  rpc CreateBlob (CreateBlobRequest) returns (CreateBlobResponse) {
+    option (google.api.http) = {
+        post: "/blobs"
+    };
+  }
+
+  rpc GetBlob (GetBlobRequest) returns (GetBlobResponse) {
+    option (google.api.http) = {
+        get: "/blobs/{blob_id}"
+    };
+  }
+
+  rpc GetTokenBlob (GetTokenBlobRequest) returns (GetTokenBlobResponse) {
+    option (google.api.http) = {
+        get: "/token/{token_id}/blobs/{blob_id}"
     };
   }
 

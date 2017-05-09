@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountRoute;
 @class AccountTag;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -51,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
   PlaintextBankAuthorization_FieldNumber_Username = 1,
   PlaintextBankAuthorization_FieldNumber_AccountName = 2,
-  PlaintextBankAuthorization_FieldNumber_AccountNumber = 3,
+  PlaintextBankAuthorization_FieldNumber_Account = 3,
   PlaintextBankAuthorization_FieldNumber_ExpirationMs = 4,
 };
 
@@ -65,7 +66,9 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountName;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+@property(nonatomic, readwrite, strong, null_resettable) AccountRoute *account;
+/** Test to see if @c account has been set. */
+@property(nonatomic, readwrite) BOOL hasAccount;
 
 @property(nonatomic, readwrite) int64_t expirationMs;
 
@@ -96,6 +99,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Name = 2,
   Account_FieldNumber_BankId = 3,
   Account_FieldNumber_TagsArray = 4,
+  Account_FieldNumber_Bic = 5,
 };
 
 /**
@@ -109,9 +113,26 @@ typedef GPB_ENUM(Account_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
 /** The number of items in @c tagsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
+
+@end
+
+#pragma mark - AccountRoute
+
+typedef GPB_ENUM(AccountRoute_FieldNumber) {
+  AccountRoute_FieldNumber_Bic = 1,
+  AccountRoute_FieldNumber_Account = 2,
+};
+
+@interface AccountRoute : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
 
 @end
 

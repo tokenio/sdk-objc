@@ -37,6 +37,7 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccountTransactions;
 @class AccessBody_Resource_AllAccounts;
 @class AccessBody_Resource_AllAddresses;
+@class Attachment;
 @class Signature;
 @class Token;
 @class TokenMember;
@@ -268,6 +269,7 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
   TransferBody_FieldNumber_LifetimeAmount = 5,
   TransferBody_FieldNumber_Amount = 6,
   TransferBody_FieldNumber_Quote = 7,
+  TransferBody_FieldNumber_AttachmentsArray = 8,
 };
 
 @interface TransferBody : GPBMessage
@@ -300,6 +302,11 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferQuote *quote;
 /** Test to see if @c quote has been set. */
 @property(nonatomic, readwrite) BOOL hasQuote;
+
+/** Optional: file / data attachments */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Attachment*> *attachmentsArray;
+/** The number of items in @c attachmentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger attachmentsArray_Count;
 
 @end
 

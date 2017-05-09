@@ -1,0 +1,24 @@
+syntax = "proto3";
+package io.token.proto.common.blob;
+option java_outer_classname = "BlobProtos";
+
+// Representation of a blob of data.
+message Blob {
+  string id = 1;             // Hash of the payload, route, shard
+
+  message Payload {
+    string owner_id = 1;     // Who will own this blob (member id)
+    string type = 2;         // Mime type
+    string name = 3;         // Name of file
+    bytes data = 4;          // Data
+  }
+
+  Payload payload = 2;
+}
+
+// Attachment of a blob to a token.
+message Attachment {
+  string blob_id = 1;
+  string type = 2;
+  string name = 3;
+}

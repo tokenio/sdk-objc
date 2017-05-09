@@ -46,6 +46,8 @@
 		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
 		62DE96D6F9FB39557C01B484 /* HostAndPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE98B689D2C43491570541 /* HostAndPort.m */; };
 		62DE99DE93002AC87D315E8A /* TKRpcErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */; };
+		8A040B781EBE8F9E00425C3A /* Blob.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */; };
+		8A040B791EBE8F9E00425C3A /* Blob.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */; };
 		8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A1FA0D31DAEE92400DFB258 /* Fank.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */; };
@@ -242,6 +244,8 @@
 		62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcErrorHandler.m; sourceTree = "<group>"; };
 		62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostAndPort.h; sourceTree = "<group>"; };
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
+		8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.pbobjc.h; sourceTree = "<group>"; };
+		8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Blob.pbobjc.m; sourceTree = "<group>"; };
 		8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transferinstructions.pbobjc.h; sourceTree = "<group>"; };
 		8A0734571DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transferinstructions.pbobjc.m; sourceTree = "<group>"; };
 		8A1FA0D11DAEE92400DFB258 /* Fank.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fank.pbrpc.h; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */,
+				8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */,
 				8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */,
 				8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */,
 				FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */,
@@ -838,6 +844,7 @@
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
 				ABA7B8307EEF340231A27C67 /* TKAccount.h in Headers */,
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
+				8A040B781EBE8F9E00425C3A /* Blob.pbobjc.h in Headers */,
 				ABA7B84C3E4141392B53FC47 /* TKAccountAsync.h in Headers */,
 				DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */,
 				ABA7B932650CECAE9F596A92 /* TokenIOAsync.h in Headers */,
@@ -1020,7 +1027,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		26000291B9806E14A4C54910 /* 📦 Embed Pods Frameworks */ = {
@@ -1155,7 +1162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1190,6 +1197,7 @@
 				ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */,
 				ABA7B847267CDA906A218BBB /* ge.c in Sources */,
 				8A1FA0D41DAEE92400DFB258 /* Fank.pbrpc.m in Sources */,
+				8A040B791EBE8F9E00425C3A /* Blob.pbobjc.m in Sources */,
 				ABA7BA98793B0592D11A83BB /* sc.c in Sources */,
 				94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */,
 				37637B671D989A930043345F /* Notification.pbobjc.m in Sources */,

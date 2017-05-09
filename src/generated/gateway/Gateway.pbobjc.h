@@ -34,6 +34,8 @@ CF_EXTERN_C_BEGIN
 @class Bank;
 @class BankAuthorization;
 @class BankInfo;
+@class Blob;
+@class Blob_Payload;
 @class Member;
 @class MemberUpdate;
 @class Money;
@@ -694,6 +696,87 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 
 /** Optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@end
+
+#pragma mark - CreateBlobRequest
+
+typedef GPB_ENUM(CreateBlobRequest_FieldNumber) {
+  CreateBlobRequest_FieldNumber_Payload = 1,
+};
+
+@interface CreateBlobRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob_Payload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
+#pragma mark - CreateBlobResponse
+
+typedef GPB_ENUM(CreateBlobResponse_FieldNumber) {
+  CreateBlobResponse_FieldNumber_BlobId = 1,
+};
+
+@interface CreateBlobResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *blobId;
+
+@end
+
+#pragma mark - GetBlobRequest
+
+typedef GPB_ENUM(GetBlobRequest_FieldNumber) {
+  GetBlobRequest_FieldNumber_BlobId = 1,
+};
+
+@interface GetBlobRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *blobId;
+
+@end
+
+#pragma mark - GetBlobResponse
+
+typedef GPB_ENUM(GetBlobResponse_FieldNumber) {
+  GetBlobResponse_FieldNumber_Blob = 1,
+};
+
+@interface GetBlobResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob *blob;
+/** Test to see if @c blob has been set. */
+@property(nonatomic, readwrite) BOOL hasBlob;
+
+@end
+
+#pragma mark - GetTokenBlobRequest
+
+typedef GPB_ENUM(GetTokenBlobRequest_FieldNumber) {
+  GetTokenBlobRequest_FieldNumber_TokenId = 1,
+  GetTokenBlobRequest_FieldNumber_BlobId = 2,
+};
+
+@interface GetTokenBlobRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *blobId;
+
+@end
+
+#pragma mark - GetTokenBlobResponse
+
+typedef GPB_ENUM(GetTokenBlobResponse_FieldNumber) {
+  GetTokenBlobResponse_FieldNumber_Blob = 1,
+};
+
+@interface GetTokenBlobResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob *blob;
+/** Test to see if @c blob has been set. */
+@property(nonatomic, readwrite) BOOL hasBlob;
 
 @end
 

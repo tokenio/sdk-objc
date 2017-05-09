@@ -3,8 +3,9 @@ package io.token.proto.common.token;
 
 option java_outer_classname = "TokenProtos";
 
-import "security.proto";
+import "blob.proto";
 import "money.proto";
+import "security.proto";
 import "transferinstructions.proto";
 
 
@@ -66,6 +67,7 @@ message TransferBody {
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
   io.token.proto.common.money.TransferQuote quote = 7;                               // Optional: Transfer fees and fx charges.
+  repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
