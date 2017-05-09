@@ -9,6 +9,7 @@
 #import "Address.pbobjc.h"
 #import "Bankinfo.pbobjc.h"
 #import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
@@ -218,6 +219,39 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateBlob(CreateBlobRequest) returns (CreateBlobResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Blobs.
+ * 
+ * 
+ */
+- (void)createBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Blobs.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToCreateBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBlob(GetBlobRequest) returns (GetBlobResponse)
+
+- (void)getBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetTokenBlob(GetTokenBlobRequest) returns (GetTokenBlobResponse)
+
+- (void)getTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)

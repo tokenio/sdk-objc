@@ -334,6 +334,54 @@
              responseClass:[CreateTestBankAccountResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark CreateBlob(CreateBlobRequest) returns (CreateBlobResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Blobs.
+ * 
+ * 
+ */
+- (void)createBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateBlobWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Blobs.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToCreateBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateBlob"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateBlobResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetBlob(GetBlobRequest) returns (GetBlobResponse)
+
+- (void)getBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBlobWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBlob"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetBlobResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetTokenBlob(GetTokenBlobRequest) returns (GetTokenBlobResponse)
+
+- (void)getTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTokenBlobWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTokenBlob"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTokenBlobResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
 
 /**

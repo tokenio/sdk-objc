@@ -14,8 +14,9 @@
 #endif
 
  #import "Token.pbobjc.h"
- #import "Security.pbobjc.h"
+ #import "Blob.pbobjc.h"
  #import "Money.pbobjc.h"
+ #import "Security.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -443,6 +444,7 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 @dynamic lifetimeAmount;
 @dynamic amount;
 @dynamic hasQuote, quote;
+@dynamic attachmentsArray, attachmentsArray_Count;
 
 typedef struct TransferBody__storage_ {
   uint32_t _has_storage_[1];
@@ -453,6 +455,7 @@ typedef struct TransferBody__storage_ {
   NSString *lifetimeAmount;
   NSString *amount;
   TransferQuote *quote;
+  NSMutableArray *attachmentsArray;
 } TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -522,6 +525,15 @@ typedef struct TransferBody__storage_ {
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(TransferBody__storage_, quote),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "attachmentsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Attachment),
+        .number = TransferBody_FieldNumber_AttachmentsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(TransferBody__storage_, attachmentsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

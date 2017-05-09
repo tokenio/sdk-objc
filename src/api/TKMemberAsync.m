@@ -391,6 +391,7 @@
     payload.from = payer;
     payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
     payload.transfer.currency = currency;
+    payload.transfer.instructions.source.tokenSource.memberId = self.id;
     payload.transfer.instructions.source.tokenSource.accountId = accountId;
     
     if (redeemerUsername) {

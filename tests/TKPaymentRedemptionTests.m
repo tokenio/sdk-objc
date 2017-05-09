@@ -48,7 +48,10 @@
 
         Destination *destination = [[Destination alloc] init];
         destination.tokenDestination.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(50.1) currency:@"USD" description:@"lunch" destination:destination];
+        Transfer *transfer = [payee createTransfer:token amount:@(50.1)
+                                          currency:@"USD"
+                                       description:@"lunch"
+                                       destination:destination];
         
         XCTAssertEqual(TransactionStatus_Success, transfer.status);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
