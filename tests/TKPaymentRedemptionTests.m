@@ -88,6 +88,7 @@
     [self run: ^(TokenIO *tokenIO) {
         Destination *destination = [[Destination alloc] init];
         destination.tokenDestination.accountId = payeeAccount.id;
+        destination.tokenDestination.memberId = payee.id;
         NSArray<Destination*> *destinations = [NSArray arrayWithObjects:destination, nil];
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id
