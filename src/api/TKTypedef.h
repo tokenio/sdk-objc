@@ -1,6 +1,8 @@
 @class Member;
 @class NSError;
 @class Account;
+@class Blob;
+@class Attachment;
 @class Money;
 @class TKAccount;
 @class Token;
@@ -40,6 +42,10 @@ typedef void (^OnSuccessWithTokens)(PagedArray<Token *> *);
 
 typedef void (^OnSuccessWithTransfer)(Transfer *);
 typedef void (^OnSuccessWithTransfers)(PagedArray<Transfer *> *);
+
+typedef void (^OnSuccessWithBlob)(Blob *);
+
+typedef void (^OnSuccessWithAttachment)(Attachment *);
 
 typedef void (^OnSuccessWithMoney)(Money *);
 

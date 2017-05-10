@@ -550,6 +550,15 @@
                       onError:(OnError)onError;
 
 /**
+ *
+ * @param onError invoked on error
+ */
+- (void)createBlob:(Blob_Payload *)payload
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError;
+
+
+/**
  * Returns a list of all token enabled banks.
  *
  * @param onSuccess invoked on success

@@ -686,6 +686,75 @@
     [self _startCall:call withRequest:request];
 }
 
+- (void)createBlob:(Blob_Payload *)payload
+                    onSuccess:(OnSuccessWithAttachment)onSuccess
+                      onError:(OnError)onError {
+    CreateBlobRequest *request = [CreateBlobRequest message];
+    request.payload = payload;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToCreateBlobWithRequest:request
+                           handler:
+                           ^(CreateBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   
+                                   onSuccess(response.blobId);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError {
+    GetBlobRequest *request = [GetBlobRequest message];
+    request.blobId = blobId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBlobWithRequest:request
+                           handler:
+                           ^(GetBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.blob);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
+           onSuccess:(OnSuccessWithBlob)onSuccess
+             onError:(OnError)onError {
+    GetTokenBlobRequest *request = [GetTokenBlobRequest message];
+    request.tokenId = tokenId;
+    request.blobId = blobId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetTokenBlobWithRequest:request
+                           handler:
+                           ^(GetTokenBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.blob);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
 - (void)addAddress:(Address *)address
           withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess

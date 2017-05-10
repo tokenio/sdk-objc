@@ -312,6 +312,38 @@
                       onError:(OnError)onError;
 
 /**
+ * Uploads a blob to the server.
+ *
+ * @param payload the blob payload
+ * @return attachment
+ */
+- (void)createBlob:(Blob_Payload *)payload
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError;
+
+/**
+ * Downloads a blob from the server.
+ *
+ * @param blobId id of the blob
+ * @return Blob
+ */
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError;
+
+/**
+ * Downloads a blob from the server, attached to the given token.
+ *
+ * @param tokenId id of the token
+ * @param blobId id of the blob
+ * @return Blob
+ */
+- (void)getBlob:(NSString *)tokenId
+     withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
+
+/**
  * Creates a new member address
  *
  * @param data the address
