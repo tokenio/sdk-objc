@@ -41,7 +41,7 @@
         Money *balance = [payerAccount getBalance];
         XCTAssert(balance.value > 0);
         XCTAssertEqualObjects(@"USD", balance.currency);
-    }];
+    }];     
 }
 
 - (void)testLookupTransaction {

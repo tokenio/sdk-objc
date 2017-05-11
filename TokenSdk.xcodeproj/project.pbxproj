@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B7089581EC3AA3500438CA1 /* TKBlobstoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7089561EC39C9A00438CA1 /* TKBlobstoreTests.m */; };
 		1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */; };
 		1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C72251DAF128600E9FC84 /* Subscriber.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */; };
@@ -198,6 +199,7 @@
 /* Begin PBXFileReference section */
 		0867CB9D057EBAA4E9BE6791 /* libPods-sdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17987F26F8CA75E8D7FFFCFA /* Pods-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.release.xcconfig"; sourceTree = "<group>"; };
+		1B7089561EC39C9A00438CA1 /* TKBlobstoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBlobstoreTests.m; sourceTree = "<group>"; };
 		1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscriber.pbobjc.h; sourceTree = "<group>"; };
 		1B7C72251DAF128600E9FC84 /* Subscriber.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscriber.pbobjc.m; sourceTree = "<group>"; };
 		1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKNotificationsTests.m; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				ABA7BB049B4A62BA1298FB44 /* TKAccountsTests.m */,
 				ABA7BE6DB20F554716095C1D /* TKPaymentTokenTests.m */,
 				ABA7B6D4261319EE62D05C22 /* TKPaymentRedemptionTests.m */,
+				1B7089561EC39C9A00438CA1 /* TKBlobstoreTests.m */,
 				ABA7BC8D1168FBC4BC96ADEE /* TKBankClient.m */,
 				ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */,
 				ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */,
@@ -1258,6 +1261,7 @@
 				DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
+				1B7089581EC3AA3500438CA1 /* TKBlobstoreTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKPaymentTokenTests.m in Sources */,
 				ABA7BCE18E38B97DB6EAF624 /* TKPaymentRedemptionTests.m in Sources */,
 				8AC7AB821DB56E9B00FD4176 /* TKAccessTokenTests.m in Sources */,

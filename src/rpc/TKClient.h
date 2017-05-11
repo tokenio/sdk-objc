@@ -338,7 +338,7 @@
  * @param blobId id of the blob
  * @return Blob
  */
-- (void)getBlob:(NSString *)tokenId
+- (void)getTokenBlob:(NSString *)tokenId
      withBlobId:(NSString *)blobId
       onSuccess:(OnSuccessWithBlob)onSuccess
         onError:(OnError)onError;

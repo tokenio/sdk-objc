@@ -411,6 +411,48 @@
                 onError:onError];
 }
 
+- (void)createTransferToken:(NSString *)redeemerUsername
+                 forAccount:(NSString *)accountId
+                     amount:(double)amount
+                   currency:(NSString *)currency
+                description:(NSString *)description
+               destinations:(NSArray<Destination *> *)destinations
+                attachments:(NSArray<Attachment *> *)attachments
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError {
+    TokenMember *payer = [TokenMember message];
+    payer.id_p = self.id;
+    
+    TokenPayload *payload = [TokenPayload message];
+    payload.version = @"1.0";
+    payload.nonce = [TKUtil nonce];
+    payload.from = payer;
+    payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
+    payload.transfer.currency = currency;
+    payload.transfer.instructions.source.tokenSource.memberId = self.id;
+    payload.transfer.instructions.source.tokenSource.accountId = accountId;
+    
+    if (redeemerUsername) {
+        payload.transfer.redeemer.username = redeemerUsername;
+    }
+    
+    if (description) {
+        payload.description_p = description;
+    }
+    
+    if (destinations) {
+        [payload.transfer.instructions.destinationsArray addObjectsFromArray:destinations];
+    }
+    
+    if (attachments) {
+        [payload.transfer.attachmentsArray addObjectsFromArray:attachments];
+    }
+    
+    [client createToken:payload
+              onSuccess:^(Token *token) { onSuccess(token); }
+                onError:onError];
+}
+
 - (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
@@ -551,6 +593,32 @@
                       forAccount:accountId
                        onSuccess:onSuccess
                          onError:onError];
+}
+
+- (void)createBlob:(Blob_Payload *)payload
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+                      onError:(OnError)onError {
+    [client createBlob:payload
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError {
+    [client getBlob:blobId
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError {
+    [client getTokenBlob:tokenId
+              withBlobId:blobId
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
 - (void)getBalance:(NSString *)accountId

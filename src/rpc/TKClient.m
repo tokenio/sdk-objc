@@ -699,8 +699,11 @@
                            ^(CreateBlobResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   
-                                   onSuccess(response.blobId);
+                                   Attachment *attachment = [Attachment message];
+                                   attachment.blobId = response.blobId;
+                                   attachment.name = payload.name;
+                                   attachment.type = payload.type;
+                                   onSuccess(attachment);
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

@@ -10,6 +10,7 @@
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "PagedArray.h"
@@ -316,6 +317,27 @@
                   destinations:(NSArray<Destination *> *)destinations;
 
 /**
+ * Creates a new transfer token.
+ *
+ * @param redeemerUsername redeemer token username
+ * @param accountId the funding account id
+ * @param amount transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param redeemer redeemer username
+ * @param description transfer description, optional
+ * @param destinations transfer destinations, optional
+ * @param attachments file attachments
+ * @return transfer token returned by the server
+ */
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description
+                  destinations:(NSArray<Destination *> *)destinations
+                   attachments:(NSArray<Attachment *> *)attachments;
+
+/**
  * Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
@@ -447,6 +469,32 @@
 - (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                                limit:(int)limit
                                           forAccount:(NSString *)accountId;
+
+/**
+ * Uploads a blob to the server.
+ *
+ * @param payload the blob payload
+ * @return attachment
+ */
+- (Attachment *)createBlob:(Blob_Payload *)payload;
+
+/**
+ * Gets a blob.
+ *
+ * @param blobId Id of the blob.
+ * @return Blob
+ */
+- (Blob *)getBlob:(NSString *)blobId;
+
+/**
+ * Gets a blob attached to a token.
+ *
+ * @param tokenId id of the token
+ * @param blobId Id of the blob
+ * @return Blob
+ */
+- (Blob *)getTokenBlob:(NSString *)tokenId
+            withBlobId:(NSString *)blobId;
 
 /**
  * Returns a list of all token enabled banks.

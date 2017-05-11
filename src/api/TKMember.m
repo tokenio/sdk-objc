@@ -337,6 +337,27 @@
     }];
 }
 
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description
+                  destinations:(NSArray<Destination *> *)destinations
+                   attachments:(NSArray<Attachment *> *)attachments {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createTransferToken:redeemerUsername
+                             forAccount:accountId
+                                 amount:amount
+                               currency:currency
+                            description:description
+                           destinations:destinations
+                            attachments:attachments
+                              onSuccess:call.onSuccess
+                                onError:call.onError];
+    }];
+}
+
 - (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
@@ -480,6 +501,35 @@
                                forAccount:accountId
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
+    }];
+}
+
+- (Attachment *)createBlob:(Blob_Payload *)payload {
+    TKRpcSyncCall<Attachment *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createBlob:payload
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
+- (Blob *)getBlob:(NSString *)blobId {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBlob:blobId
+                  onSuccess:call.onSuccess
+                    onError:call.onError];
+    }];
+}
+
+- (Blob *)getTokenBlob:(NSString *)tokenId
+            withBlobId:(NSString *)blobId {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getTokenBlob:tokenId
+                      withBlobId:blobId
+                       onSuccess:call.onSuccess
+                         onError:call.onError];
     }];
 }
 

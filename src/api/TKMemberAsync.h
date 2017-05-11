@@ -10,6 +10,8 @@
 #import "Subscriber.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Blob.pbobjc.h"
+
 
 
 @class Member;
@@ -393,6 +395,29 @@
                     onError:(OnError)onError;
 
 /**
+ * Creates a new transfer token.
+ *
+ * @param redeemerUsername redeemer username
+ * @param accountId the funding account id
+ * @param amount transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param description transfer description, optional
+ * @param destinations transfer destinations, optional
+ * @param attachments file attachments, optional
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)createTransferToken:(NSString *)redeemerUsername
+                 forAccount:(NSString *)accountId
+                     amount:(double)amount
+                   currency:(NSString *)currency
+                description:(NSString *)description
+               destinations:(NSArray<Destination *> *)destinations
+                attachments:(NSArray<Attachment *> *)attachments
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError;
+
+/**
  * Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
@@ -550,13 +575,39 @@
                       onError:(OnError)onError;
 
 /**
+ * Uploads a blob to the server.
  *
+ * @param payload the blob payload
+ * @param onSuccess invoked on success
  * @param onError invoked on error
  */
 - (void)createBlob:(Blob_Payload *)payload
-                    onSuccess:(OnSuccessWithTransactions)onSuccess
-                      onError:(OnError)onError;
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError;
 
+/**
+ * Gets a blob.
+ *
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getBlob:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
+
+/**
+ * Gets a blob attached to a token.
+ *
+ * @param tokenId id of the token
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getTokenBlob:(NSString *)tokenId
+     withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Returns a list of all token enabled banks.

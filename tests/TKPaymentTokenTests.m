@@ -38,6 +38,7 @@
     
         destination.tokenDestination.accountId = payeeAccount.id;
         destination.tokenDestination.memberId = payee.id;
+
         NSArray<Destination *> *destinations = @[destination];
 
         Token *token = [payer createTransferToken:payee.firstUsername
