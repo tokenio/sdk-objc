@@ -81,16 +81,16 @@ BOOL NotifyStatus_IsValidValue(int32_t value__) {
   }
 }
 
-#pragma mark - TransferProcessed
+#pragma mark - PayerTransferProcessed
 
-@implementation TransferProcessed
+@implementation PayerTransferProcessed
 
 @dynamic transferId;
 
-typedef struct TransferProcessed__storage_ {
+typedef struct PayerTransferProcessed__storage_ {
   uint32_t _has_storage_[1];
   NSString *transferId;
-} TransferProcessed__storage_;
+} PayerTransferProcessed__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -101,20 +101,63 @@ typedef struct TransferProcessed__storage_ {
       {
         .name = "transferId",
         .dataTypeSpecific.className = NULL,
-        .number = TransferProcessed_FieldNumber_TransferId,
+        .number = PayerTransferProcessed_FieldNumber_TransferId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TransferProcessed__storage_, transferId),
+        .offset = (uint32_t)offsetof(PayerTransferProcessed__storage_, transferId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[TransferProcessed class]
+        [GPBDescriptor allocDescriptorForClass:[PayerTransferProcessed class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(TransferProcessed__storage_)
+                                   storageSize:sizeof(PayerTransferProcessed__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - PayeeTransferProcessed
+
+@implementation PayeeTransferProcessed
+
+@dynamic transferId;
+
+typedef struct PayeeTransferProcessed__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *transferId;
+} PayeeTransferProcessed__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transferId",
+        .dataTypeSpecific.className = NULL,
+        .number = PayeeTransferProcessed_FieldNumber_TransferId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PayeeTransferProcessed__storage_, transferId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PayeeTransferProcessed class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PayeeTransferProcessed__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -328,19 +371,21 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 @implementation NotifyBody
 
 @dynamic bodyOneOfCase;
-@dynamic transferProcessed;
+@dynamic payerTransferProcessed;
 @dynamic linkAccounts;
 @dynamic stepUp;
 @dynamic addKey;
 @dynamic linkAccountsAndAddKey;
+@dynamic payeeTransferProcessed;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
-  TransferProcessed *transferProcessed;
+  PayerTransferProcessed *payerTransferProcessed;
   LinkAccounts *linkAccounts;
   StepUp *stepUp;
   AddKey *addKey;
   LinkAccountsAndAddKey *linkAccountsAndAddKey;
+  PayeeTransferProcessed *payeeTransferProcessed;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -350,11 +395,11 @@ typedef struct NotifyBody__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "transferProcessed",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferProcessed),
-        .number = NotifyBody_FieldNumber_TransferProcessed,
+        .name = "payerTransferProcessed",
+        .dataTypeSpecific.className = GPBStringifySymbol(PayerTransferProcessed),
+        .number = NotifyBody_FieldNumber_PayerTransferProcessed,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(NotifyBody__storage_, transferProcessed),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, payerTransferProcessed),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -391,6 +436,15 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_LinkAccountsAndAddKey,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, linkAccountsAndAddKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "payeeTransferProcessed",
+        .dataTypeSpecific.className = GPBStringifySymbol(PayeeTransferProcessed),
+        .number = NotifyBody_FieldNumber_PayeeTransferProcessed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, payeeTransferProcessed),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

@@ -68,7 +68,7 @@ void check(NSString *message, BOOL condition) {
         destination.tokenDestination.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
-        [self waitForNotification:@"TRANSFER_PROCESSED"];
+        [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
     }];
 }
 
