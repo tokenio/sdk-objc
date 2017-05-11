@@ -46,33 +46,31 @@
 
 - (void)testBlobs {
     [self run: ^(TokenIO *tokenIO) {
-        Blob_Payload *payload = [Blob_Payload message];
-        payload.name = @"file.json";
-        payload.type = @"application/json";
-        payload.ownerId = payer.id;
-        payload.data_p = [self randomData:100];
-        Attachment *attachment = [payer createBlob:payload];
-        
-        XCTAssertEqualObjects(attachment.name, payload.name);
-        XCTAssertEqualObjects(attachment.type, payload.type);
+        NSData *data = [self randomData:100];
+        Attachment *attachment = [payer createBlob:payer.id
+                                          withType:@"application/json"
+                                          withName:@"file.json"
+                                          withData:data];
+        NSLog(@"%@", attachment);
+        XCTAssertEqualObjects(attachment.name, @"file.json");
+        XCTAssertEqualObjects(attachment.type, @"application/json");
         XCTAssert(attachment.blobId.length > 5);
         
         Blob* blob = [payer getBlob:attachment.blobId];
         
-        XCTAssertEqualObjects(blob.payload.name, payload.name);
-        XCTAssertEqualObjects(blob.payload.type, payload.type);
-        XCTAssert([payload.data isEqualToData:blob.payload.data]);
+        XCTAssertEqualObjects(blob.payload.name, @"file.json");
+        XCTAssertEqualObjects(blob.payload.type, @"application/json");
+        XCTAssert([blob.payload.data_p isEqualToData:data]);
         XCTAssert((blob.payload.data_p.length == 100));
     }];
 }
     - (void)testTokenBlobs {
         [self run: ^(TokenIO *tokenIO) {
-            Blob_Payload *payload = [Blob_Payload message];
-            payload.name = @"file.json";
-            payload.type = @"application/json";
-            payload.ownerId = payer.id;
-            payload.data_p = [self randomData:200];
-            Attachment *attachment = [payer createBlob:payload];
+            NSData *data = [self randomData:200];
+            Attachment *attachment = [payer createBlob:payer.id
+                                              withType:@"application/json"
+                                              withName:@"file.json"
+                                              withData:data];
             NSArray<Attachment*> *attachments = [NSArray arrayWithObjects:attachment, nil];
             NSMutableArray<Destination*> *destinations = [NSMutableArray array];
             Token *token = [payer createTransferToken:payee.firstUsername
@@ -85,9 +83,9 @@
             [payer endorseToken:token withKey:Key_Level_Standard];
             Blob* blob = [payer getTokenBlob:token.id_p withBlobId:attachment.blobId];
 
-            XCTAssertEqualObjects(blob.payload.name, payload.name);
-            XCTAssertEqualObjects(blob.payload.type, payload.type);
-            XCTAssert([payload.data isEqualToData:blob.payload.data]);
+            XCTAssertEqualObjects(blob.payload.name, @"file.json");
+            XCTAssertEqualObjects(blob.payload.type, @"application/json");
+            XCTAssert([blob.payload.data_p isEqualToData:data]);
             XCTAssert((blob.payload.data_p.length == 200));
         }];
 }

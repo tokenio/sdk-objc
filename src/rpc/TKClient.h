@@ -314,10 +314,16 @@
 /**
  * Uploads a blob to the server.
  *
- * @param payload the blob payload
+ * @param ownerId owner of the blob
+ * @param type MIME type of the file
+ * @param name name of the file
+ * @param data binary data
  * @return attachment
  */
-- (void)createBlob:(Blob_Payload *)payload
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
          onSuccess:(OnSuccessWithAttachment)onSuccess
            onError:(OnError)onError;
 

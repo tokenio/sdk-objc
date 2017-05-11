@@ -595,10 +595,16 @@
                          onError:onError];
 }
 
-- (void)createBlob:(Blob_Payload *)payload
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
          onSuccess:(OnSuccessWithAttachment)onSuccess
-                      onError:(OnError)onError {
-    [client createBlob:payload
+           onError:(OnError)onError {
+    [client createBlob:ownerId
+              withType:type
+              withName:name
+              withData:data
              onSuccess:onSuccess
                onError:onError];
 }

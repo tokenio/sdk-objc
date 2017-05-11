@@ -504,10 +504,16 @@
     }];
 }
 
-- (Attachment *)createBlob:(Blob_Payload *)payload {
+- (Attachment *)createBlob:(NSString *)ownerId
+                  withType:(NSString *)type
+                  withName:(NSString *)name
+                  withData:(NSData * )data {
     TKRpcSyncCall<Attachment *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createBlob:payload
+        [self.async createBlob:ownerId
+                      withType:type
+                      withName:name
+                      withData:data
                      onSuccess:call.onSuccess
                        onError:call.onError];
     }];

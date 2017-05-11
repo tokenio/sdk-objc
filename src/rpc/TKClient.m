@@ -686,11 +686,18 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)createBlob:(Blob_Payload *)payload
-                    onSuccess:(OnSuccessWithAttachment)onSuccess
-                      onError:(OnError)onError {
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData *)data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError {
     CreateBlobRequest *request = [CreateBlobRequest message];
-    request.payload = payload;
+    Blob_Payload * payload = [Blob_Payload message];
+    request.payload.ownerId = ownerId;
+    request.payload.type = type;
+    request.payload.name = name;
+    request.payload.data_p = data;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -701,8 +708,8 @@
                                    RpcLogCompleted(response);
                                    Attachment *attachment = [Attachment message];
                                    attachment.blobId = response.blobId;
-                                   attachment.name = payload.name;
-                                   attachment.type = payload.type;
+                                   attachment.name = name;
+                                   attachment.type = type;
                                    onSuccess(attachment);
                                } else {
                                    [errorHandler handle:onError withError:error];
