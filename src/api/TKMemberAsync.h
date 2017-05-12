@@ -393,6 +393,29 @@
                     onError:(OnError)onError;
 
 /**
+ * Creates a new transfer token.
+ *
+ * @param redeemerUsername redeemer username
+ * @param accountId the funding account id
+ * @param amount transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param description transfer description, optional
+ * @param destinations transfer destinations, optional
+ * @param to payee username, optional
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)createTransferToken:(NSString *)redeemerUsername
+                 forAccount:(NSString *)accountId
+                     amount:(double)amount
+                   currency:(NSString *)currency
+                description:(NSString *)description
+               destinations:(NSArray<Destination *> *)destinations
+                         to:(NSString *)to
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError;
+
+/**
  * Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object

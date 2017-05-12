@@ -382,6 +382,26 @@
                destinations:(NSArray<Destination *> *)destinations
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
+    [self createTransferToken:redeemerUsername
+                   forAccount:accountId
+                       amount:amount
+                     currency:currency
+                  description:description
+                 destinations:destinations
+                           to:nil
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (void)createTransferToken:(NSString *)redeemerUsername
+                 forAccount:(NSString *)accountId
+                     amount:(double)amount
+                   currency:(NSString *)currency
+                description:(NSString *)description
+               destinations:(NSArray<Destination *> *)destinations
+                         to:(NSString *)toUsername
+                  onSuccess:(OnSuccessWithToken)onSuccess
+                    onError:(OnError)onError {
     TokenMember *payer = [TokenMember message];
     payer.id_p = self.id;
     
@@ -406,6 +426,11 @@
         [payload.transfer.instructions.destinationsArray addObjectsFromArray:destinations];
     }
     
+    if (toUsername) {
+        payload.to = [TokenMember message];
+        payload.to.username = toUsername;
+    }
+
     [client createToken:payload
               onSuccess:^(Token *token) { onSuccess(token); }
                 onError:onError];

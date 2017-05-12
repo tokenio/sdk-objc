@@ -316,6 +316,27 @@
                   destinations:(NSArray<Destination *> *)destinations;
 
 /**
+ * Creates a new transfer token.
+ *
+ * @param redeemerUsername redeemer token username
+ * @param accountId the funding account id
+ * @param amount transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param redeemer redeemer username
+ * @param description transfer description, optional
+ * @param destinations transfer destinations, optional
+ * @param to payee username
+ * @return transfer token returned by the server
+ */
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description
+                  destinations:(NSArray<Destination *> *)destinations
+                            to:(NSString *)toUsername;
+
+/**
  * Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
