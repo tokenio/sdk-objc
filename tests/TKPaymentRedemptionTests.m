@@ -47,13 +47,14 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
 
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token amount:@(50.1)
                                           currency:@"USD"
                                        description:@"lunch"
                                        destination:destination];
         
-        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -74,10 +75,15 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:@"test" destination:destination];
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@99.12
+                                          currency:@"USD"
+                                       description:@"test"
+                                       destination:destination];
 
-        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -98,19 +104,20 @@
                                      destinations:destinations];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
-        
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-        
 
-        Transfer *transfer = [payee createTransfer:token amount:@(50.1) currency:@"USD" description:@"lunch" destination:destination];
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@(50.1)
+                                          currency:@"USD"
+                                       description:@"lunch"
+                                       destination:destination];
         
-        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }
-
 
 - (void)testLookupTransfer {
     [self run: ^(TokenIO *tokenIO) {
@@ -125,6 +132,7 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:nil destination:destination];
         Transfer *lookedUp = [payer getTransfer:transfer.id_p];
@@ -146,6 +154,7 @@
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil destination:destination];

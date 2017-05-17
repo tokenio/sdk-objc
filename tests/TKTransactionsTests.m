@@ -54,6 +54,7 @@
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token
                                             amount:@100.99
@@ -81,6 +82,7 @@
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
