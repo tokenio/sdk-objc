@@ -4,6 +4,6 @@ xcodebuild \
     -workspace TokenSdk.xcworkspace \
     -scheme "All Tests - AWS Development" \
     -sdk iphonesimulator \
-    -destination "platform=iOS Simulator,name=iPhone 7,OS=10.2" \
+    -destination "platform=iOS Simulator,name=iPhone 7,OS=10.3" \
     test
 
