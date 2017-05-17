@@ -132,6 +132,7 @@ typedef GPB_ENUM(AccountRoute_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
+/** Bank decides format. If bank uses, e.g., "CH12345", that's great. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
 
 @end

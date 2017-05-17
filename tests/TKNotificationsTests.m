@@ -65,6 +65,7 @@ void check(NSString *message, BOOL condition) {
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
@@ -186,8 +187,13 @@ void check(NSString *message, BOOL condition) {
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = payeeAccount.member.id;
         destination.tokenDestination.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(100.99) currency:@"USD" description:@"" destination:destination];
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@(100.99)
+                                          currency:@"USD"
+                                       description:@""
+                                       destination:destination];
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }

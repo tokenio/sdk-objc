@@ -31,6 +31,8 @@ CF_EXTERN_C_BEGIN
 @class Money;
 @class Signature;
 @class TransferPayload;
+@class TransferQuote_Fee;
+@class TransferQuote_FxRate;
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -59,6 +61,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Payload = 4,
   Transfer_FieldNumber_PayloadSignaturesArray = 5,
   Transfer_FieldNumber_Status = 6,
+  Transfer_FieldNumber_OrderId = 7,
 };
 
 /**
@@ -83,6 +86,9 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
 @property(nonatomic, readwrite) enum TransactionStatus status;
+
+/** Currency Ledger order id. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *orderId;
 
 @end
 
@@ -131,6 +137,84 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 
 /** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@end
+
+#pragma mark - TransferQuote
+
+typedef GPB_ENUM(TransferQuote_FieldNumber) {
+  TransferQuote_FieldNumber_Id_p = 1,
+  TransferQuote_FieldNumber_AccountCurrency = 2,
+  TransferQuote_FieldNumber_FeesTotal = 3,
+  TransferQuote_FieldNumber_FeesArray = 4,
+  TransferQuote_FieldNumber_FxRate = 5,
+  TransferQuote_FieldNumber_ExpiresAtMs = 7,
+};
+
+/**
+ * A bank quote for a transfer
+ **/
+@interface TransferQuote : GPBMessage
+
+/** the quote id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/** the account currency */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountCurrency;
+
+/** The total fee amount */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *feesTotal;
+
+/** A collection of applicable fees */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferQuote_Fee*> *feesArray;
+/** The number of items in @c feesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger feesArray_Count;
+
+/** Optional FX Quote */
+@property(nonatomic, readwrite, strong, null_resettable) TransferQuote_FxRate *fxRate;
+/** Test to see if @c fxRate has been set. */
+@property(nonatomic, readwrite) BOOL hasFxRate;
+
+/** The quote expiration time */
+@property(nonatomic, readwrite) int64_t expiresAtMs;
+
+@end
+
+#pragma mark - TransferQuote_Fee
+
+typedef GPB_ENUM(TransferQuote_Fee_FieldNumber) {
+  TransferQuote_Fee_FieldNumber_Amount = 1,
+  TransferQuote_Fee_FieldNumber_Description_p = 2,
+};
+
+@interface TransferQuote_Fee : GPBMessage
+
+/** The fee amount */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+/** The fee description */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@end
+
+#pragma mark - TransferQuote_FxRate
+
+typedef GPB_ENUM(TransferQuote_FxRate_FieldNumber) {
+  TransferQuote_FxRate_FieldNumber_BaseCurrency = 2,
+  TransferQuote_FxRate_FieldNumber_QuoteCurrency = 3,
+  TransferQuote_FxRate_FieldNumber_Rate = 4,
+};
+
+@interface TransferQuote_FxRate : GPBMessage
+
+/** the base amount: 'EUR' in 'EUR/USD' */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *baseCurrency;
+
+/** the quote amount: 'USD' in 'EUR/USD' */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *quoteCurrency;
+
+/** the fx rate double amount in the string format. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rate;
 
 @end
 

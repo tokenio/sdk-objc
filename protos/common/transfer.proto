@@ -8,7 +8,6 @@ import "security.proto";
 import "transaction.proto";
 import "transferinstructions.proto";
 
-
 // A transfer record as persisted on the ledger.
 message Transfer {
   string id = 1;                               // Computed as the hash of the transfer payload.
@@ -17,6 +16,7 @@ message Transfer {
   TransferPayload payload = 4;
   repeated io.token.proto.common.security.Signature payload_signatures = 5;
   io.token.proto.common.transaction.TransactionStatus status = 6;
+  string order_id = 7;                         // Currency Ledger order id.
 }
 
 // A transfer payload that is being signed by the redeemer and the bank.
@@ -28,3 +28,23 @@ message TransferPayload {
   string description = 6;                                                            // Optional
 }
 
+// A bank quote for a transfer
+message TransferQuote {
+  string id = 1;                // the quote id
+  string account_currency = 2;  // the account currency
+  string fees_total = 3;        // The total fee amount
+  repeated Fee fees = 4;        // A collection of applicable fees
+  FxRate fx_rate = 5;           // Optional FX Quote
+  int64 expires_at_ms = 7;      // The quote expiration time
+
+  message Fee {
+    string amount = 1;          // The fee amount
+    string description = 2;     // The fee description
+  }
+
+  message FxRate {
+    string base_currency = 2;   // the base amount: 'EUR' in 'EUR/USD'
+    string quote_currency = 3;  // the quote amount: 'USD' in 'EUR/USD'
+    string rate = 4;            // the fx rate double amount in the string format.
+  }
+}

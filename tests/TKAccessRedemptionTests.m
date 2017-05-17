@@ -145,6 +145,7 @@
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = redeemerAccount.member.id;
         destination.tokenDestination.accountId = redeemerAccount.id;
         [redeemer createTransfer:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
         
@@ -177,8 +178,13 @@
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
         Destination *destination = [[Destination alloc] init];
+        destination.tokenDestination.memberId = redeemerAccount.member.id;
         destination.tokenDestination.accountId = redeemerAccount.id;
-        [redeemer createTransfer:transferToken amount:@(50) currency:@"USD" description:@"lunch" destination:destination];
+        [redeemer createTransfer:transferToken
+                          amount:@(50)
+                        currency:@"USD"
+                     description:@"lunch"
+                     destination:destination];
         
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];

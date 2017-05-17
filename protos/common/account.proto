@@ -29,5 +29,5 @@ message Account {
 
 message AccountRoute {
   string bic = 1;
-  string account = 2;
+  string account = 2;  // Bank decides format. If bank uses, e.g., "CH12345", that's great.
 }
