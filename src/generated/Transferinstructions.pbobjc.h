@@ -27,7 +27,9 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Address;
 @class BankAuthorization;
+@class CustomerData;
 @class Destination;
 @class Destination_AchDestination;
 @class Destination_SepaDestination;
@@ -38,6 +40,27 @@ CF_EXTERN_C_BEGIN
 @class Source_TokenSource;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum PurposeOfPayment
+
+typedef GPB_ENUM(PurposeOfPayment) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  PurposeOfPayment_Invalid = 0,
+  PurposeOfPayment_Other = 1,
+};
+
+GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL PurposeOfPayment_IsValidValue(int32_t value);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -59,6 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_Source = 1,
   TransferInstructions_FieldNumber_DestinationsArray = 2,
+  TransferInstructions_FieldNumber_TransferPurpose = 3,
 };
 
 /**
@@ -76,6 +100,41 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
+/** Transfer purpose. */
+@property(nonatomic, readwrite) PurposeOfPayment transferPurpose;
+
+@end
+
+/**
+ * Fetches the raw value of a @c TransferInstructions's @c transferPurpose property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message);
+/**
+ * Sets the raw value of an @c TransferInstructions's @c transferPurpose property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value);
+
+#pragma mark - CustomerData
+
+typedef GPB_ENUM(CustomerData_FieldNumber) {
+  CustomerData_FieldNumber_LegalNamesArray = 1,
+  CustomerData_FieldNumber_Address = 2,
+};
+
+@interface CustomerData : GPBMessage
+
+/** Repeated in case of joint account holders. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *legalNamesArray;
+/** The number of items in @c legalNamesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger legalNamesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+/** Test to see if @c address has been set. */
+@property(nonatomic, readwrite) BOOL hasAddress;
+
 @end
 
 #pragma mark - Source
@@ -83,6 +142,7 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 typedef GPB_ENUM(Source_FieldNumber) {
   Source_FieldNumber_TokenSource = 1,
   Source_FieldNumber_BankAuthorizationSource = 2,
+  Source_FieldNumber_CustomerData = 3,
 };
 
 typedef GPB_ENUM(Source_Source_OneOfCase) {
@@ -101,6 +161,10 @@ typedef GPB_ENUM(Source_Source_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Source_TokenSource *tokenSource;
 
 @property(nonatomic, readwrite, strong, null_resettable) Source_BankAuthorizationSource *bankAuthorizationSource;
+
+@property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
+/** Test to see if @c customerData has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomerData;
 
 @end
 
@@ -151,6 +215,7 @@ typedef GPB_ENUM(Destination_FieldNumber) {
   Destination_FieldNumber_SwiftDestination = 2,
   Destination_FieldNumber_SepaDestination = 3,
   Destination_FieldNumber_AchDestination = 4,
+  Destination_FieldNumber_CustomerData = 5,
 };
 
 typedef GPB_ENUM(Destination_Destination_OneOfCase) {
@@ -176,6 +241,10 @@ typedef GPB_ENUM(Destination_Destination_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Destination_SepaDestination *sepaDestination;
 
 @property(nonatomic, readwrite, strong, null_resettable) Destination_AchDestination *achDestination;
+
+@property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
+/** Test to see if @c customerData has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomerData;
 
 @end
 

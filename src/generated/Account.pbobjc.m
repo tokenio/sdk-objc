@@ -55,7 +55,7 @@ typedef struct PlaintextBankAuthorization__storage_ {
   uint32_t _has_storage_[1];
   NSString *username;
   NSString *accountName;
-  AccountRoute *account;
+  BankAccount *account;
   int64_t expirationMs;
 } PlaintextBankAuthorization__storage_;
 
@@ -85,7 +85,7 @@ typedef struct PlaintextBankAuthorization__storage_ {
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountRoute),
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
         .number = PlaintextBankAuthorization_FieldNumber_Account,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PlaintextBankAuthorization__storage_, account),
@@ -179,7 +179,6 @@ typedef struct AccountTag__storage_ {
 @dynamic id_p;
 @dynamic name;
 @dynamic bankId;
-@dynamic bic;
 @dynamic tagsArray, tagsArray_Count;
 
 typedef struct Account__storage_ {
@@ -188,7 +187,6 @@ typedef struct Account__storage_ {
   NSString *name;
   NSString *bankId;
   NSMutableArray *tagsArray;
-  NSString *bic;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -233,15 +231,6 @@ typedef struct Account__storage_ {
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
-      {
-        .name = "bic",
-        .dataTypeSpecific.className = NULL,
-        .number = Account_FieldNumber_Bic,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(Account__storage_, bic),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Account class]
@@ -259,18 +248,18 @@ typedef struct Account__storage_ {
 
 @end
 
-#pragma mark - AccountRoute
+#pragma mark - BankAccount
 
-@implementation AccountRoute
+@implementation BankAccount
 
 @dynamic bic;
 @dynamic account;
 
-typedef struct AccountRoute__storage_ {
+typedef struct BankAccount__storage_ {
   uint32_t _has_storage_[1];
   NSString *bic;
   NSString *account;
-} AccountRoute__storage_;
+} BankAccount__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -281,29 +270,29 @@ typedef struct AccountRoute__storage_ {
       {
         .name = "bic",
         .dataTypeSpecific.className = NULL,
-        .number = AccountRoute_FieldNumber_Bic,
+        .number = BankAccount_FieldNumber_Bic,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountRoute__storage_, bic),
+        .offset = (uint32_t)offsetof(BankAccount__storage_, bic),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "account",
         .dataTypeSpecific.className = NULL,
-        .number = AccountRoute_FieldNumber_Account,
+        .number = BankAccount_FieldNumber_Account,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccountRoute__storage_, account),
+        .offset = (uint32_t)offsetof(BankAccount__storage_, account),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccountRoute class]
+        [GPBDescriptor allocDescriptorForClass:[BankAccount class]
                                      rootClass:[AccountRoot class]
                                           file:AccountRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccountRoute__storage_)
+                                   storageSize:sizeof(BankAccount__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

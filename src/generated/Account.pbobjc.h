@@ -27,8 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
-@class AccountRoute;
 @class AccountTag;
+@class BankAccount;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -66,7 +66,7 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountName;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccountRoute *account;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
 /** Test to see if @c account has been set. */
 @property(nonatomic, readwrite) BOOL hasAccount;
 
@@ -99,11 +99,10 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Name = 2,
   Account_FieldNumber_BankId = 3,
   Account_FieldNumber_TagsArray = 4,
-  Account_FieldNumber_Bic = 5,
 };
 
 /**
- * Bank Service Account representation.
+ * Token linked account.
  **/
 @interface Account : GPBMessage
 
@@ -113,22 +112,24 @@ typedef GPB_ENUM(Account_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
-
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
 /** The number of items in @c tagsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 @end
 
-#pragma mark - AccountRoute
+#pragma mark - BankAccount
 
-typedef GPB_ENUM(AccountRoute_FieldNumber) {
-  AccountRoute_FieldNumber_Bic = 1,
-  AccountRoute_FieldNumber_Account = 2,
+typedef GPB_ENUM(BankAccount_FieldNumber) {
+  BankAccount_FieldNumber_Bic = 1,
+  BankAccount_FieldNumber_Account = 2,
 };
 
-@interface AccountRoute : GPBMessage
+/**
+ * Account information as seen by the bank. This is what the end user links with
+ * the bank and what Token uses when it talks to the bank.
+ **/
+@interface BankAccount : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 

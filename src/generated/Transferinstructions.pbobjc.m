@@ -14,6 +14,7 @@
 #endif
 
  #import "Transferinstructions.pbobjc.h"
+ #import "Address.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -45,15 +46,51 @@ static GPBFileDescriptor *TransferinstructionsRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum PurposeOfPayment
+
+GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Other\000";
+    static const int32_t values[] = {
+        PurposeOfPayment_Invalid,
+        PurposeOfPayment_Other,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PurposeOfPayment)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:PurposeOfPayment_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL PurposeOfPayment_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case PurposeOfPayment_Invalid:
+    case PurposeOfPayment_Other:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - TransferInstructions
 
 @implementation TransferInstructions
 
 @dynamic hasSource, source;
 @dynamic destinationsArray, destinationsArray_Count;
+@dynamic transferPurpose;
 
 typedef struct TransferInstructions__storage_ {
   uint32_t _has_storage_[1];
+  PurposeOfPayment transferPurpose;
   Source *source;
   NSMutableArray *destinationsArray;
 } TransferInstructions__storage_;
@@ -82,6 +119,15 @@ typedef struct TransferInstructions__storage_ {
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "transferPurpose",
+        .dataTypeSpecific.enumDescFunc = PurposeOfPayment_EnumDescriptor,
+        .number = TransferInstructions_FieldNumber_TransferPurpose,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, transferPurpose),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TransferInstructions class]
@@ -99,6 +145,72 @@ typedef struct TransferInstructions__storage_ {
 
 @end
 
+int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message) {
+  GPBDescriptor *descriptor = [TransferInstructions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferInstructions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - CustomerData
+
+@implementation CustomerData
+
+@dynamic legalNamesArray, legalNamesArray_Count;
+@dynamic hasAddress, address;
+
+typedef struct CustomerData__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *legalNamesArray;
+  Address *address;
+} CustomerData__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "legalNamesArray",
+        .dataTypeSpecific.className = NULL,
+        .number = CustomerData_FieldNumber_LegalNamesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(CustomerData__storage_, legalNamesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "address",
+        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .number = CustomerData_FieldNumber_Address,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CustomerData__storage_, address),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CustomerData class]
+                                     rootClass:[TransferinstructionsRoot class]
+                                          file:TransferinstructionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CustomerData__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - Source
 
 @implementation Source
@@ -106,11 +218,13 @@ typedef struct TransferInstructions__storage_ {
 @dynamic sourceOneOfCase;
 @dynamic tokenSource;
 @dynamic bankAuthorizationSource;
+@dynamic hasCustomerData, customerData;
 
 typedef struct Source__storage_ {
   uint32_t _has_storage_[2];
   Source_TokenSource *tokenSource;
   Source_BankAuthorizationSource *bankAuthorizationSource;
+  CustomerData *customerData;
 } Source__storage_;
 
 // This method is threadsafe because it is initially called
@@ -135,6 +249,15 @@ typedef struct Source__storage_ {
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Source__storage_, bankAuthorizationSource),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "customerData",
+        .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
+        .number = Source_FieldNumber_CustomerData,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Source__storage_, customerData),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -283,6 +406,7 @@ typedef struct Source_BankAuthorizationSource__storage_ {
 @dynamic swiftDestination;
 @dynamic sepaDestination;
 @dynamic achDestination;
+@dynamic hasCustomerData, customerData;
 
 typedef struct Destination__storage_ {
   uint32_t _has_storage_[2];
@@ -290,6 +414,7 @@ typedef struct Destination__storage_ {
   Destination_SwiftDestination *swiftDestination;
   Destination_SepaDestination *sepaDestination;
   Destination_AchDestination *achDestination;
+  CustomerData *customerData;
 } Destination__storage_;
 
 // This method is threadsafe because it is initially called
@@ -332,6 +457,15 @@ typedef struct Destination__storage_ {
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Destination__storage_, achDestination),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "customerData",
+        .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
+        .number = Destination_FieldNumber_CustomerData,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Destination__storage_, customerData),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };

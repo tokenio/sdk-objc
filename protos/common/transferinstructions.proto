@@ -3,13 +3,25 @@ package io.token.proto.common.transferinstructions;
 
 option java_outer_classname = "TransferInstructionsProtos";
 
+import "address.proto";
 import "banklink.proto";
 import "security.proto";
+
+enum PurposeOfPayment {
+  INVALID = 0;
+  OTHER = 1;
+}
 
 // Money transfer instructions.
 message TransferInstructions {
   Source source = 1;                            // Transfer source.
   repeated Destination destinations = 2;        // Transfer desitination.
+  PurposeOfPayment transfer_purpose = 3;        // Transfer purpose.
+}
+
+message CustomerData {
+  repeated string legal_names = 1;              // Repeated in case of joint account holders.
+  io.token.proto.common.address.Address address = 2;
 }
 
 // Money transfer source. This could be either a token account or a bank authorization.
@@ -30,6 +42,8 @@ message Source {
     TokenSource tokenSource = 1;
     BankAuthorizationSource bankAuthorizationSource = 2;
   }
+
+  CustomerData customer_data = 3;
 }
 
 // Money transfer destination. The destination is described differently
@@ -65,5 +79,7 @@ message Destination {
     SepaDestination sepaDestination = 3;
     AchDestination achDestination = 4;
   }
+
+  CustomerData customer_data = 5;
 }
 
