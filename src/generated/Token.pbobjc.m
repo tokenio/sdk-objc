@@ -17,6 +17,7 @@
  #import "Blob.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "Transfer.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -439,23 +440,21 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 
 @dynamic hasRedeemer, redeemer;
 @dynamic hasInstructions, instructions;
-@dynamic hasFeesPaidBy, feesPaidBy;
 @dynamic currency;
 @dynamic lifetimeAmount;
 @dynamic amount;
-@dynamic hasQuote, quote;
 @dynamic attachmentsArray, attachmentsArray_Count;
+@dynamic hasPricing, pricing;
 
 typedef struct TransferBody__storage_ {
   uint32_t _has_storage_[1];
   TokenMember *redeemer;
   TransferInstructions *instructions;
-  TokenMember *feesPaidBy;
   NSString *currency;
   NSString *lifetimeAmount;
   NSString *amount;
-  TransferQuote *quote;
   NSMutableArray *attachmentsArray;
+  TransferBody_Pricing *pricing;
 } TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -483,19 +482,10 @@ typedef struct TransferBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "feesPaidBy",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = TransferBody_FieldNumber_FeesPaidBy,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(TransferBody__storage_, feesPaidBy),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "currency",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_Currency,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferBody__storage_, currency),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -504,7 +494,7 @@ typedef struct TransferBody__storage_ {
         .name = "lifetimeAmount",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_LifetimeAmount,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(TransferBody__storage_, lifetimeAmount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -513,19 +503,10 @@ typedef struct TransferBody__storage_ {
         .name = "amount",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_Amount,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TransferBody__storage_, amount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "quote",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
-        .number = TransferBody_FieldNumber_Quote,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(TransferBody__storage_, quote),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "attachmentsArray",
@@ -534,6 +515,15 @@ typedef struct TransferBody__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferBody__storage_, attachmentsArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "pricing",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferBody_Pricing),
+        .number = TransferBody_FieldNumber_Pricing,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(TransferBody__storage_, pricing),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -552,6 +542,145 @@ typedef struct TransferBody__storage_ {
 }
 
 @end
+
+#pragma mark - TransferBody_Pricing
+
+@implementation TransferBody_Pricing
+
+@dynamic hasSourceQuote, sourceQuote;
+@dynamic hasDestinationQuote, destinationQuote;
+@dynamic feesPaidBy;
+@dynamic fxPerformdBy;
+
+typedef struct TransferBody_Pricing__storage_ {
+  uint32_t _has_storage_[1];
+  TransferBody_Pricing_Responsiblity feesPaidBy;
+  TransferBody_Pricing_Responsiblity fxPerformdBy;
+  TransferQuote *sourceQuote;
+  TransferQuote *destinationQuote;
+} TransferBody_Pricing__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "sourceQuote",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .number = TransferBody_Pricing_FieldNumber_SourceQuote,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferBody_Pricing__storage_, sourceQuote),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "destinationQuote",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .number = TransferBody_Pricing_FieldNumber_DestinationQuote,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TransferBody_Pricing__storage_, destinationQuote),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "feesPaidBy",
+        .dataTypeSpecific.enumDescFunc = TransferBody_Pricing_Responsiblity_EnumDescriptor,
+        .number = TransferBody_Pricing_FieldNumber_FeesPaidBy,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(TransferBody_Pricing__storage_, feesPaidBy),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "fxPerformdBy",
+        .dataTypeSpecific.enumDescFunc = TransferBody_Pricing_Responsiblity_EnumDescriptor,
+        .number = TransferBody_Pricing_FieldNumber_FxPerformdBy,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TransferBody_Pricing__storage_, fxPerformdBy),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransferBody_Pricing class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransferBody_Pricing__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferBody)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t TransferBody_Pricing_FeesPaidBy_RawValue(TransferBody_Pricing *message) {
+  GPBDescriptor *descriptor = [TransferBody_Pricing descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferBody_Pricing_FieldNumber_FeesPaidBy];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransferBody_Pricing_FeesPaidBy_RawValue(TransferBody_Pricing *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferBody_Pricing descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferBody_Pricing_FieldNumber_FeesPaidBy];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t TransferBody_Pricing_FxPerformdBy_RawValue(TransferBody_Pricing *message) {
+  GPBDescriptor *descriptor = [TransferBody_Pricing descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferBody_Pricing_FieldNumber_FxPerformdBy];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransferBody_Pricing_FxPerformdBy_RawValue(TransferBody_Pricing *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferBody_Pricing descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferBody_Pricing_FieldNumber_FxPerformdBy];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum TransferBody_Pricing_Responsiblity
+
+GPBEnumDescriptor *TransferBody_Pricing_Responsiblity_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Source\000Destination\000Shared\000";
+    static const int32_t values[] = {
+        TransferBody_Pricing_Responsiblity_Invalid,
+        TransferBody_Pricing_Responsiblity_Source,
+        TransferBody_Pricing_Responsiblity_Destination,
+        TransferBody_Pricing_Responsiblity_Shared,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TransferBody_Pricing_Responsiblity)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:TransferBody_Pricing_Responsiblity_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL TransferBody_Pricing_Responsiblity_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case TransferBody_Pricing_Responsiblity_Invalid:
+    case TransferBody_Pricing_Responsiblity_Source:
+    case TransferBody_Pricing_Responsiblity_Destination:
+    case TransferBody_Pricing_Responsiblity_Shared:
+      return YES;
+    default:
+      return NO;
+  }
+}
 
 #pragma mark - AccessBody
 
