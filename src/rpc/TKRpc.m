@@ -69,10 +69,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     }
 
     // TODO: Remove this, added to debug a prod issue.
-    TKLogInfo(@"Auth key-id: %@", signature.key.id_p);
-    TKLogInfo(@"Auth signature: %@", signature.value);
-    TKLogInfo(@"Auth payload: %@", [TKJson serialize:request]);
-    TKLogInfo(@"Auth created-at: %llu", now);
+    TKLogVerbose(@"Auth key-id: %@", signature.key.id_p);
+    TKLogVerbose(@"Auth signature: %@", signature.value);
+    TKLogVerbose(@"Auth payload: %@", [TKJson serialize:request]);
+    TKLogVerbose(@"Auth created-at: %llu", now);
 
     [self dispatch:call request:request];
 }
