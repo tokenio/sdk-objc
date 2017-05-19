@@ -8,7 +8,6 @@
 #import "TKTestBase.h"
 #import "TokenIO.h"
 #import "Account.pbobjc.h"
-#import "Token.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
 @interface TKPaymentTokenTests : TKTestBase
@@ -34,12 +33,12 @@
 
 - (void)testCreateToken {
     [self run: ^(TokenIO *tokenIO) {
-        Destination *destination = [[Destination alloc] init];
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     
-        destination.tokenDestination.accountId = payeeAccount.id;
-        destination.tokenDestination.memberId = payee.id;
+        destination.account.token.accountId = payeeAccount.id;
+        destination.account.token.memberId = payee.id;
 
-        NSArray<Destination *> *destinations = @[destination];
+        NSArray<TransferEndpoint *> *destinations = @[destination];
 
         Token *token = [payer createTransferToken:payee.firstUsername
                                        forAccount:payerAccount.id
