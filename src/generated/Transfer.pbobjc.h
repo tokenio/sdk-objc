@@ -27,9 +27,9 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Destination;
 @class Money;
 @class Signature;
+@class TransferEndpoint;
 @class TransferPayload;
 @class TransferQuote_Fee;
 @class TransferQuote_FxRate;
@@ -131,7 +131,7 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasAmount;
 
 /** Transfer destinations, sorted in priority order. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 

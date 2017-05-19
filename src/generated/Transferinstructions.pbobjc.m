@@ -14,6 +14,7 @@
 #endif
 
  #import "Transferinstructions.pbobjc.h"
+ #import "Account.pbobjc.h"
  #import "Address.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Security.pbobjc.h"
@@ -21,7 +22,6 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 
 #pragma mark - TransferinstructionsRoot
 
@@ -80,83 +80,6 @@ BOOL PurposeOfPayment_IsValidValue(int32_t value__) {
   }
 }
 
-#pragma mark - TransferInstructions
-
-@implementation TransferInstructions
-
-@dynamic hasSource, source;
-@dynamic destinationsArray, destinationsArray_Count;
-@dynamic transferPurpose;
-
-typedef struct TransferInstructions__storage_ {
-  uint32_t _has_storage_[1];
-  PurposeOfPayment transferPurpose;
-  Source *source;
-  NSMutableArray *destinationsArray;
-} TransferInstructions__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "source",
-        .dataTypeSpecific.className = GPBStringifySymbol(Source),
-        .number = TransferInstructions_FieldNumber_Source,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TransferInstructions__storage_, source),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
-        .number = TransferInstructions_FieldNumber_DestinationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "transferPurpose",
-        .dataTypeSpecific.enumDescFunc = PurposeOfPayment_EnumDescriptor,
-        .number = TransferInstructions_FieldNumber_TransferPurpose,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TransferInstructions__storage_, transferPurpose),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[TransferInstructions class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(TransferInstructions__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message) {
-  GPBDescriptor *descriptor = [TransferInstructions descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value) {
-  GPBDescriptor *descriptor = [TransferInstructions descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
-
 #pragma mark - CustomerData
 
 @implementation CustomerData
@@ -211,21 +134,18 @@ typedef struct CustomerData__storage_ {
 
 @end
 
-#pragma mark - Source
+#pragma mark - TransferEndpoint
 
-@implementation Source
+@implementation TransferEndpoint
 
-@dynamic sourceOneOfCase;
-@dynamic tokenSource;
-@dynamic bankAuthorizationSource;
+@dynamic hasAccount, account;
 @dynamic hasCustomerData, customerData;
 
-typedef struct Source__storage_ {
-  uint32_t _has_storage_[2];
-  Source_TokenSource *tokenSource;
-  Source_BankAuthorizationSource *bankAuthorizationSource;
+typedef struct TransferEndpoint__storage_ {
+  uint32_t _has_storage_[1];
+  BankAccount *account;
   CustomerData *customerData;
-} Source__storage_;
+} TransferEndpoint__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -234,112 +154,32 @@ typedef struct Source__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "tokenSource",
-        .dataTypeSpecific.className = GPBStringifySymbol(Source_TokenSource),
-        .number = Source_FieldNumber_TokenSource,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Source__storage_, tokenSource),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "bankAuthorizationSource",
-        .dataTypeSpecific.className = GPBStringifySymbol(Source_BankAuthorizationSource),
-        .number = Source_FieldNumber_BankAuthorizationSource,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Source__storage_, bankAuthorizationSource),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .name = "account",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .number = TransferEndpoint_FieldNumber_Account,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferEndpoint__storage_, account),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "customerData",
         .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
-        .number = Source_FieldNumber_CustomerData,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Source__storage_, customerData),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Source class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Source__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    static const char *oneofs[] = {
-      "source",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\002\001\013\000\002\027\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-void Source_ClearSourceOneOfCase(Source *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
-#pragma mark - Source_TokenSource
-
-@implementation Source_TokenSource
-
-@dynamic memberId;
-@dynamic accountId;
-
-typedef struct Source_TokenSource__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *memberId;
-  NSString *accountId;
-} Source_TokenSource__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "memberId",
-        .dataTypeSpecific.className = NULL,
-        .number = Source_TokenSource_FieldNumber_MemberId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Source_TokenSource__storage_, memberId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "accountId",
-        .dataTypeSpecific.className = NULL,
-        .number = Source_TokenSource_FieldNumber_AccountId,
+        .number = TransferEndpoint_FieldNumber_CustomerData,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Source_TokenSource__storage_, accountId),
+        .offset = (uint32_t)offsetof(TransferEndpoint__storage_, customerData),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Source_TokenSource class]
+        [GPBDescriptor allocDescriptorForClass:[TransferEndpoint class]
                                      rootClass:[TransferinstructionsRoot class]
                                           file:TransferinstructionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Source_TokenSource__storage_)
+                                   storageSize:sizeof(TransferEndpoint__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Source)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -348,16 +188,20 @@ typedef struct Source_TokenSource__storage_ {
 
 @end
 
-#pragma mark - Source_BankAuthorizationSource
+#pragma mark - TransferInstructions
 
-@implementation Source_BankAuthorizationSource
+@implementation TransferInstructions
 
-@dynamic hasBankAuthorization, bankAuthorization;
+@dynamic hasSource, source;
+@dynamic destinationsArray, destinationsArray_Count;
+@dynamic transferPurpose;
 
-typedef struct Source_BankAuthorizationSource__storage_ {
+typedef struct TransferInstructions__storage_ {
   uint32_t _has_storage_[1];
-  BankAuthorization *bankAuthorization;
-} Source_BankAuthorizationSource__storage_;
+  PurposeOfPayment transferPurpose;
+  TransferEndpoint *source;
+  NSMutableArray *destinationsArray;
+} TransferInstructions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -366,188 +210,41 @@ typedef struct Source_BankAuthorizationSource__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "bankAuthorization",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAuthorization),
-        .number = Source_BankAuthorizationSource_FieldNumber_BankAuthorization,
+        .name = "source",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .number = TransferInstructions_FieldNumber_Source,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Source_BankAuthorizationSource__storage_, bankAuthorization),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Source_BankAuthorizationSource class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Source_BankAuthorizationSource__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\021\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Source)];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - Destination
-
-@implementation Destination
-
-@dynamic destinationOneOfCase;
-@dynamic tokenDestination;
-@dynamic swiftDestination;
-@dynamic sepaDestination;
-@dynamic achDestination;
-@dynamic hasCustomerData, customerData;
-
-typedef struct Destination__storage_ {
-  uint32_t _has_storage_[2];
-  Destination_TokenDestination *tokenDestination;
-  Destination_SwiftDestination *swiftDestination;
-  Destination_SepaDestination *sepaDestination;
-  Destination_AchDestination *achDestination;
-  CustomerData *customerData;
-} Destination__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "tokenDestination",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination_TokenDestination),
-        .number = Destination_FieldNumber_TokenDestination,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Destination__storage_, tokenDestination),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "swiftDestination",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination_SwiftDestination),
-        .number = Destination_FieldNumber_SwiftDestination,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Destination__storage_, swiftDestination),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "sepaDestination",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination_SepaDestination),
-        .number = Destination_FieldNumber_SepaDestination,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Destination__storage_, sepaDestination),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "achDestination",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination_AchDestination),
-        .number = Destination_FieldNumber_AchDestination,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(Destination__storage_, achDestination),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "customerData",
-        .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
-        .number = Destination_FieldNumber_CustomerData,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Destination__storage_, customerData),
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, source),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Destination class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Destination__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    static const char *oneofs[] = {
-      "destination",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\004\001\020\000\002\020\000\003\017\000\004\016\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-void Destination_ClearDestinationOneOfCase(Destination *message) {
-  GPBDescriptor *descriptor = [message descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
-}
-#pragma mark - Destination_TokenDestination
-
-@implementation Destination_TokenDestination
-
-@dynamic memberId;
-@dynamic accountId;
-
-typedef struct Destination_TokenDestination__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *memberId;
-  NSString *accountId;
-} Destination_TokenDestination__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
       {
-        .name = "memberId",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_TokenDestination_FieldNumber_MemberId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Destination_TokenDestination__storage_, memberId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .name = "destinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .number = TransferInstructions_FieldNumber_DestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "accountId",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_TokenDestination_FieldNumber_AccountId,
+        .name = "transferPurpose",
+        .dataTypeSpecific.enumDescFunc = PurposeOfPayment_EnumDescriptor,
+        .number = TransferInstructions_FieldNumber_TransferPurpose,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Destination_TokenDestination__storage_, accountId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, transferPurpose),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Destination_TokenDestination class]
+        [GPBDescriptor allocDescriptorForClass:[TransferInstructions class]
                                      rootClass:[TransferinstructionsRoot class]
                                           file:TransferinstructionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Destination_TokenDestination__storage_)
+                                   storageSize:sizeof(TransferInstructions__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Destination)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -556,159 +253,17 @@ typedef struct Destination_TokenDestination__storage_ {
 
 @end
 
-#pragma mark - Destination_SwiftDestination
-
-@implementation Destination_SwiftDestination
-
-@dynamic bic;
-@dynamic account;
-
-typedef struct Destination_SwiftDestination__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *bic;
-  NSString *account;
-} Destination_SwiftDestination__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "bic",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_SwiftDestination_FieldNumber_Bic,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Destination_SwiftDestination__storage_, bic),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "account",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_SwiftDestination_FieldNumber_Account,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Destination_SwiftDestination__storage_, account),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Destination_SwiftDestination class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Destination_SwiftDestination__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Destination)];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
+int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message) {
+  GPBDescriptor *descriptor = [TransferInstructions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+  return GPBGetMessageInt32Field(message, field);
 }
 
-@end
-
-#pragma mark - Destination_SepaDestination
-
-@implementation Destination_SepaDestination
-
-@dynamic iban;
-
-typedef struct Destination_SepaDestination__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *iban;
-} Destination_SepaDestination__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "iban",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_SepaDestination_FieldNumber_Iban,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Destination_SepaDestination__storage_, iban),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Destination_SepaDestination class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Destination_SepaDestination__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Destination)];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
+void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferInstructions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
-
-@end
-
-#pragma mark - Destination_AchDestination
-
-@implementation Destination_AchDestination
-
-@dynamic routing;
-@dynamic account;
-
-typedef struct Destination_AchDestination__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *routing;
-  NSString *account;
-} Destination_AchDestination__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "routing",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_AchDestination_FieldNumber_Routing,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Destination_AchDestination__storage_, routing),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "account",
-        .dataTypeSpecific.className = NULL,
-        .number = Destination_AchDestination_FieldNumber_Account,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Destination_AchDestination__storage_, account),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[Destination_AchDestination class]
-                                     rootClass:[TransferinstructionsRoot class]
-                                          file:TransferinstructionsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(Destination_AchDestination__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Destination)];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
 
 
 #pragma clang diagnostic pop

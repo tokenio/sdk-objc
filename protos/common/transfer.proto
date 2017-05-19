@@ -21,11 +21,11 @@ message Transfer {
 
 // A transfer payload that is being signed by the redeemer and the bank.
 message TransferPayload {
-  string nonce = 1;                                                                  // Client assigned unique request id.
-  string token_id = 2;                                                               // Token id.
-  io.token.proto.common.money.Money amount = 3;                                      // Amount and currency.
-  repeated io.token.proto.common.transferinstructions.Destination destinations = 5;  // Transfer destinations, sorted in priority order.
-  string description = 6;                                                            // Optional
+  string nonce = 1;                                                                       // Client assigned unique request id.
+  string token_id = 2;                                                                    // Token id.
+  io.token.proto.common.money.Money amount = 3;                                           // Amount and currency.
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5;  // Transfer destinations, sorted in priority order.
+  string description = 6;                                                                 // Optional
 }
 
 // A bank quote for a transfer

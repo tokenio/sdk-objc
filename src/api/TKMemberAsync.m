@@ -12,7 +12,6 @@
 #import "TKMember.h"
 #import "TKMemberAsync.h"
 #import "TKClient.h"
-#import "TKAccountAsync.h"
 
 
 @implementation TKMemberAsync {
@@ -379,7 +378,7 @@
                      amount:(double)amount
                    currency:(NSString *)currency
                 description:(NSString *)description
-               destinations:(NSArray<Destination *> *)destinations
+               destinations:(NSArray<TransferEndpoint *> *)destinations
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError {
     TokenMember *payer = [TokenMember message];
@@ -391,8 +390,8 @@
     payload.from = payer;
     payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
     payload.transfer.currency = currency;
-    payload.transfer.instructions.source.tokenSource.memberId = self.id;
-    payload.transfer.instructions.source.tokenSource.accountId = accountId;
+    payload.transfer.instructions.source.account.token.memberId = self.id;
+    payload.transfer.instructions.source.account.token.accountId = accountId;
     
     if (redeemerUsername) {
         payload.transfer.redeemer.username = redeemerUsername;
@@ -506,7 +505,7 @@
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
-           destination:(Destination *)destination
+           destination:(TransferEndpoint *)destination
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];

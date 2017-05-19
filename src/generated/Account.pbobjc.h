@@ -29,6 +29,12 @@ CF_EXTERN_C_BEGIN
 
 @class AccountTag;
 @class BankAccount;
+@class BankAccount_Ach;
+@class BankAccount_Sepa;
+@class BankAccount_Swift;
+@class BankAccount_Token;
+@class BankAccount_TokenAuthorization;
+@class BankAuthorization;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -121,8 +127,20 @@ typedef GPB_ENUM(Account_FieldNumber) {
 #pragma mark - BankAccount
 
 typedef GPB_ENUM(BankAccount_FieldNumber) {
-  BankAccount_FieldNumber_Bic = 1,
-  BankAccount_FieldNumber_Account = 2,
+  BankAccount_FieldNumber_Token = 1,
+  BankAccount_FieldNumber_TokenAuthorization = 2,
+  BankAccount_FieldNumber_Swift = 3,
+  BankAccount_FieldNumber_Sepa = 4,
+  BankAccount_FieldNumber_Ach = 5,
+};
+
+typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
+  BankAccount_Account_OneOfCase_GPBUnsetOneOfCase = 0,
+  BankAccount_Account_OneOfCase_Token = 1,
+  BankAccount_Account_OneOfCase_TokenAuthorization = 2,
+  BankAccount_Account_OneOfCase_Swift = 3,
+  BankAccount_Account_OneOfCase_Sepa = 4,
+  BankAccount_Account_OneOfCase_Ach = 5,
 };
 
 /**
@@ -131,9 +149,107 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
  **/
 @interface BankAccount : GPBMessage
 
+@property(nonatomic, readonly) BankAccount_Account_OneOfCase accountOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Token *token;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Swift *swift;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Sepa *sepa;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'account'.
+ **/
+void BankAccount_ClearAccountOneOfCase(BankAccount *message);
+
+#pragma mark - BankAccount_Token
+
+typedef GPB_ENUM(BankAccount_Token_FieldNumber) {
+  BankAccount_Token_FieldNumber_MemberId = 1,
+  BankAccount_Token_FieldNumber_AccountId = 2,
+};
+
+/**
+ * Token account Destination
+ **/
+@interface BankAccount_Token : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - BankAccount_TokenAuthorization
+
+typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
+  BankAccount_TokenAuthorization_FieldNumber_Authorization = 1,
+};
+
+/**
+ * One-time encrypted authorization for an account
+ **/
+@interface BankAccount_TokenAuthorization : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;
+/** Test to see if @c authorization has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorization;
+
+@end
+
+#pragma mark - BankAccount_Swift
+
+typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
+  BankAccount_Swift_FieldNumber_Bic = 1,
+  BankAccount_Swift_FieldNumber_Account = 2,
+};
+
+/**
+ * SWIFT tranfer
+ **/
+@interface BankAccount_Swift : GPBMessage
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
-/** Bank decides format. If bank uses, e.g., "CH12345", that's great. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+
+@end
+
+#pragma mark - BankAccount_Sepa
+
+typedef GPB_ENUM(BankAccount_Sepa_FieldNumber) {
+  BankAccount_Sepa_FieldNumber_Iban = 1,
+};
+
+/**
+ * SEPA transfer
+ **/
+@interface BankAccount_Sepa : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@end
+
+#pragma mark - BankAccount_Ach
+
+typedef GPB_ENUM(BankAccount_Ach_FieldNumber) {
+  BankAccount_Ach_FieldNumber_Routing = 1,
+  BankAccount_Ach_FieldNumber_Account = 2,
+};
+
+/**
+ * ACH transfer
+ **/
+@interface BankAccount_Ach : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
 
 @end

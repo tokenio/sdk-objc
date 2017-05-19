@@ -221,7 +221,7 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
         .number = TransferPayload_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, destinationsArray),
