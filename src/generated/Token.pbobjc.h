@@ -38,15 +38,14 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccounts;
 @class AccessBody_Resource_AllAddresses;
 @class Attachment;
+@class Pricing;
 @class Signature;
 @class Token;
 @class TokenMember;
 @class TokenPayload;
 @class TokenSignature;
 @class TransferBody;
-@class TransferBody_Pricing;
 @class TransferInstructions;
-@class TransferQuote;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,29 +78,6 @@ GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL TokenSignature_Action_IsValidValue(int32_t value);
-
-#pragma mark - Enum TransferBody_Pricing_Responsiblity
-
-typedef GPB_ENUM(TransferBody_Pricing_Responsiblity) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  TransferBody_Pricing_Responsiblity_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  TransferBody_Pricing_Responsiblity_Invalid = 0,
-  TransferBody_Pricing_Responsiblity_Source = 1,
-  TransferBody_Pricing_Responsiblity_Destination = 2,
-  TransferBody_Pricing_Responsiblity_Shared = 3,
-};
-
-GPBEnumDescriptor *TransferBody_Pricing_Responsiblity_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL TransferBody_Pricing_Responsiblity_IsValidValue(int32_t value);
 
 #pragma mark - Enum TokenOperationResult_Status
 
@@ -322,60 +298,11 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger attachmentsArray_Count;
 
 /** Optional: Transfer fees and fx charges. */
-@property(nonatomic, readwrite, strong, null_resettable) TransferBody_Pricing *pricing;
+@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing;
 /** Test to see if @c pricing has been set. */
 @property(nonatomic, readwrite) BOOL hasPricing;
 
 @end
-
-#pragma mark - TransferBody_Pricing
-
-typedef GPB_ENUM(TransferBody_Pricing_FieldNumber) {
-  TransferBody_Pricing_FieldNumber_SourceQuote = 1,
-  TransferBody_Pricing_FieldNumber_DestinationQuote = 2,
-  TransferBody_Pricing_FieldNumber_FeesPaidBy = 3,
-  TransferBody_Pricing_FieldNumber_FxPerformdBy = 4,
-};
-
-@interface TransferBody_Pricing : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) TransferQuote *sourceQuote;
-/** Test to see if @c sourceQuote has been set. */
-@property(nonatomic, readwrite) BOOL hasSourceQuote;
-
-@property(nonatomic, readwrite, strong, null_resettable) TransferQuote *destinationQuote;
-/** Test to see if @c destinationQuote has been set. */
-@property(nonatomic, readwrite) BOOL hasDestinationQuote;
-
-@property(nonatomic, readwrite) TransferBody_Pricing_Responsiblity feesPaidBy;
-
-@property(nonatomic, readwrite) TransferBody_Pricing_Responsiblity fxPerformdBy;
-
-@end
-
-/**
- * Fetches the raw value of a @c TransferBody_Pricing's @c feesPaidBy property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t TransferBody_Pricing_FeesPaidBy_RawValue(TransferBody_Pricing *message);
-/**
- * Sets the raw value of an @c TransferBody_Pricing's @c feesPaidBy property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetTransferBody_Pricing_FeesPaidBy_RawValue(TransferBody_Pricing *message, int32_t value);
-
-/**
- * Fetches the raw value of a @c TransferBody_Pricing's @c fxPerformdBy property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t TransferBody_Pricing_FxPerformdBy_RawValue(TransferBody_Pricing *message);
-/**
- * Sets the raw value of an @c TransferBody_Pricing's @c fxPerformdBy property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetTransferBody_Pricing_FxPerformdBy_RawValue(TransferBody_Pricing *message, int32_t value);
 
 #pragma mark - AccessBody
 
