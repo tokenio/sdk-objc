@@ -5,6 +5,7 @@ option java_outer_classname = "TokenProtos";
 
 import "blob.proto";
 import "money.proto";
+import "pricing.proto";
 import "security.proto";
 import "transfer.proto";
 import "transferinstructions.proto";
@@ -67,21 +68,7 @@ message TransferBody {
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
   repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
-  Pricing pricing = 9;                                                               // Optional: Transfer fees and fx charges.
-
-  message Pricing {
-    io.token.proto.common.transfer.TransferQuote source_quote = 1;
-    io.token.proto.common.transfer.TransferQuote destination_quote = 2;
-    Responsiblity fees_paid_by = 3;
-    Responsiblity fx_performd_by = 4;
-
-    enum Responsiblity {
-      INVALID = 0;
-      SOURCE = 1;
-      DESTINATION = 2;
-      SHARED = 3;
-    }
-  }
+  io.token.proto.common.pricing.Pricing pricing = 9;                                 // Optional: Transfer fees and fx charges.
 }
 
 

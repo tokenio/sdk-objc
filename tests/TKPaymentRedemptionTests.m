@@ -55,7 +55,7 @@
                                        description:@"lunch"
                                        destination:destination];
         
-        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
+        XCTAssertEqual(TransactionStatus_Success, transfer.status);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -84,7 +84,7 @@
                                        description:@"test"
                                        destination:destination];
 
-        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
+        XCTAssertEqual(TransactionStatus_Success, transfer.status);
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
