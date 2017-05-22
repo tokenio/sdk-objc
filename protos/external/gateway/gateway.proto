@@ -553,7 +553,7 @@ service GatewayService {
 
   rpc GetTokenBlob (GetTokenBlobRequest) returns (GetTokenBlobResponse) {
     option (google.api.http) = {
-        get: "/token/{token_id}/blobs/{blob_id}"
+        get: "/tokens/{token_id}/blobs/{blob_id}"
     };
   }
 

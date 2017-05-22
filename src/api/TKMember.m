@@ -324,6 +324,22 @@
                       currency:(NSString *)currency
                    description:(NSString *)description
                   destinations:(NSArray<TransferEndpoint *> *)destinations {
+    return [self createTransferToken:redeemerUsername
+                          forAccount:accountId
+                              amount:amount
+                            currency:currency
+                         description:description
+                        destinations:destinations
+                                  to:nil];
+}
+
+- (Token *)createTransferToken:(NSString *)redeemerUsername
+                    forAccount:(NSString *)accountId
+                        amount:(double)amount
+                      currency:(NSString *)currency
+                   description:(NSString *)description
+                  destinations:(NSArray<TransferEndpoint *> *)destinations
+                            to:(NSString *)toUsername {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTransferToken:redeemerUsername
@@ -332,6 +348,7 @@
                                  currency:currency
                               description:description
                              destinations:destinations
+                                       to:toUsername
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
     }];

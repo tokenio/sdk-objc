@@ -70,9 +70,32 @@ void check(NSString *message, BOOL condition) {
         destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
-        [self waitForNotification:@"TRANSFER_PROCESSED"];
+        [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
     }];
 }
+
+- (void)testNotifyPayeeTransfer {
+    [self run: ^(TokenIO *tokenIO) {
+        [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
+
+        Token *token = [payer createTransferToken:payee.firstUsername
+                                       forAccount:payerAccount.id
+                                           amount:100.99
+                                         currency:@"USD"
+                                      description:@"transfer test"
+                                     destinations:nil
+                                               to:payee.firstUsername];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
+
+        [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
+    }];
+}
+
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
@@ -215,16 +238,27 @@ void check(NSString *message, BOOL condition) {
  * Wait for the delivered notification of the specified type.
  *
  * @param type notification type
+ * @param member user to check notifications for
  */
-- (void)waitForNotification:(NSString *)type {
+- (void)waitForNotification:(NSString *)type
+                     member:(TKMember *)member {
     [self waitUntil:^{
-        PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil limit:100];
+        PagedArray<Notification *> *notifications = [member getNotificationsOffset:nil limit:100];
         check(@"Notification count", notifications.items.count == 1);
 
         Notification* notification = [notifications.items objectAtIndex:0];
         check(@"Delivery Status", notification.status == Notification_Status_Delivered);
         check(@"Notification Type", [notification.content.type isEqualToString:type]);
     }];
+}
+
+/**
+ * Wait for the delivered notification of the specified type.
+ *
+ * @param type notification type
+ */
+- (void)waitForNotification:(NSString *)type {
+    [self waitForNotification:type member:payer];
 }
 
 /**
