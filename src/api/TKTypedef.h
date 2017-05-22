@@ -21,43 +21,43 @@
 @class DeviceInfo;
 
 typedef void (^OnSuccess)();
-typedef void (^OnError)(NSError *);
+typedef void (^OnError)( NSError * _Nonnull);
 
 typedef void (^OnSuccessWithBoolean)(BOOL);
-typedef void (^OnSuccessWithString)(NSString *);
+typedef void (^OnSuccessWithString)(NSString * _Nonnull);
 
-typedef void (^OnSuccessWithMember)(Member *);
-typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync *);
+typedef void (^OnSuccessWithMember)(Member * _Nonnull);
+typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync * _Nonnull);
 
-typedef void (^OnSuccessWithAccounts)(NSArray<Account *> *);
-typedef void (^OnSuccessWithTKAccountsAsync)(NSArray<TKAccountAsync *> *);
+typedef void (^OnSuccessWithAccounts)(NSArray<Account *> * _Nonnull);
+typedef void (^OnSuccessWithTKAccountsAsync)(NSArray<TKAccountAsync *> * _Nonnull);
 
-typedef void (^OnSuccessWithAccount)(Account *);
-typedef void (^OnSuccessWithTKAccountAsync)(TKAccountAsync *);
+typedef void (^OnSuccessWithAccount)(Account * _Nonnull);
+typedef void (^OnSuccessWithTKAccountAsync)(TKAccountAsync * _Nonnull);
 
-typedef void (^OnSuccessWithToken)(Token *);
-typedef void (^OnSuccessWithTokens)(PagedArray<Token *> *);
+typedef void (^OnSuccessWithToken)(Token * _Nonnull);
+typedef void (^OnSuccessWithTokens)(PagedArray<Token *> * _Nonnull);
 
-typedef void (^OnSuccessWithTransfer)(Transfer *);
-typedef void (^OnSuccessWithTransfers)(PagedArray<Transfer *> *);
+typedef void (^OnSuccessWithTransfer)(Transfer * _Nonnull);
+typedef void (^OnSuccessWithTransfers)(PagedArray<Transfer *> * _Nonnull);
 
-typedef void (^OnSuccessWithMoney)(Money *);
+typedef void (^OnSuccessWithMoney)(Money * _Nonnull);
 
-typedef void (^OnSuccessWithTransaction)(Transaction *);
-typedef void (^OnSuccessWithTransactions)(PagedArray<Transaction *> *);
+typedef void (^OnSuccessWithTransaction)(Transaction * _Nonnull);
+typedef void (^OnSuccessWithTransactions)(PagedArray<Transaction *> * _Nonnull);
 
-typedef void (^OnSuccessWithAddress)(AddressRecord *);
-typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> *);
+typedef void (^OnSuccessWithAddress)(AddressRecord * _Nonnull);
+typedef void (^OnSuccessWithAddresses)(NSArray<AddressRecord *> * _Nonnull);
 
-typedef void (^OnSuccessWithSubscriber)(Subscriber *);
-typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> *);
+typedef void (^OnSuccessWithSubscriber)(Subscriber * _Nonnull);
+typedef void (^OnSuccessWithSubscribers)(NSArray<Subscriber *> * _Nonnull);
 
-typedef void (^OnSuccessWithNotification)(Notification *);
-typedef void (^OnSuccessWithNotifications)(PagedArray<Notification *> *);
+typedef void (^OnSuccessWithNotification)(Notification * _Nonnull);
+typedef void (^OnSuccessWithNotifications)(PagedArray<Notification *> * _Nonnull);
 
-typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult *);
+typedef void (^OnSuccessWithTokenOperationResult)(TokenOperationResult * _Nonnull);
 
-typedef void (^OnSuccessWithBanks)(NSArray<Bank *> *);
-typedef void (^OnSuccessWithBankInfo)(BankInfo *);
+typedef void (^OnSuccessWithBanks)(NSArray<Bank *> * _Nonnull);
+typedef void (^OnSuccessWithBankInfo)(BankInfo * _Nonnull);
 
-typedef void (^OnSuccessWithDeviceInfo)(DeviceInfo *);
+typedef void (^OnSuccessWithDeviceInfo)(DeviceInfo * _Nonnull);
