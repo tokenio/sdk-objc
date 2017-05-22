@@ -13,10 +13,7 @@
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
-#import "Token.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
-#import "PagedArray.h"
-
 
 
 @interface TKAccessRedemptionTests : TKTestBase
@@ -144,8 +141,9 @@
                                                 description:@"transfer test"];
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = redeemerAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = redeemerAccount.member.id;
+        destination.account.token.accountId = redeemerAccount.id;
         [redeemer createTransfer:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
@@ -176,9 +174,14 @@
                                                 description:@"transfer test"];
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = redeemerAccount.id;
-        [redeemer createTransfer:transferToken amount:@(50) currency:@"USD" description:@"lunch" destination:destination];
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = redeemerAccount.member.id;
+        destination.account.token.accountId = redeemerAccount.id;
+        [redeemer createTransfer:transferToken
+                          amount:@(50)
+                        currency:@"USD"
+                     description:@"lunch"
+                     destination:destination];
         
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];

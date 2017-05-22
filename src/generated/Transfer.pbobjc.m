@@ -56,6 +56,7 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 @dynamic status;
+@dynamic orderId;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
@@ -64,6 +65,7 @@ typedef struct Transfer__storage_ {
   NSString *referenceId;
   TransferPayload *payload;
   NSMutableArray *payloadSignaturesArray;
+  NSString *orderId;
   int64_t createdAtMs;
 } Transfer__storage_;
 
@@ -126,6 +128,15 @@ typedef struct Transfer__storage_ {
         .offset = (uint32_t)offsetof(Transfer__storage_, status),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "orderId",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_OrderId,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Transfer__storage_, orderId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -210,7 +221,7 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
         .number = TransferPayload_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, destinationsArray),

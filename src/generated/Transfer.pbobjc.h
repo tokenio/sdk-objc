@@ -27,9 +27,9 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Destination;
 @class Money;
 @class Signature;
+@class TransferEndpoint;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 
@@ -59,6 +59,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Payload = 4,
   Transfer_FieldNumber_PayloadSignaturesArray = 5,
   Transfer_FieldNumber_Status = 6,
+  Transfer_FieldNumber_OrderId = 7,
 };
 
 /**
@@ -83,6 +84,9 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
 
 @property(nonatomic, readwrite) enum TransactionStatus status;
+
+/** Currency Ledger order id. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *orderId;
 
 @end
 
@@ -125,7 +129,7 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasAmount;
 
 /** Transfer destinations, sorted in priority order. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 

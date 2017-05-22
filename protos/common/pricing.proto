@@ -1,0 +1,49 @@
+syntax = "proto3";
+package io.token.proto.common.pricing;
+
+option java_outer_classname = "PricingProtos";
+
+// A bank quote for a transfer
+message TransferQuote {
+  string id = 1;                // the quote id
+  string account_currency = 2;  // the account currency
+  string fees_total = 3;        // The total fee amount
+  repeated Fee fees = 4;        // A collection of applicable fees
+  repeated FxRate rates = 5;    // FX Rate chain
+  int64 expires_at_ms = 7;      // The quote expiration time
+
+  message Fee {
+    string amount = 1;          // The fee amount
+    string description = 2;     // The fee description
+  }
+
+  message FxRate {
+    string base_currency = 2;   // the base amount: 'EUR' in 'EUR/USD'
+    string quote_currency = 3;  // the quote amount: 'USD' in 'EUR/USD'
+    string rate = 4;            // the fx rate double amount in the string format.
+  }
+}
+
+message Pricing {
+  TransferQuote source_quote = 1;
+  TransferQuote destination_quote = 2;
+  PricingInstructions instructions = 3;
+}
+
+enum FeeResponsibility {
+  INVALID_FEE = 0;
+  SOURCE_FEE = 1;
+  DESTINATION_FEE = 2;
+  SHARED_FEE = 3;
+}
+
+enum FxResponsibility {
+  INVALID_FX = 0;
+  SOURCE_FX = 1;
+  SHARED_FX = 2;
+}
+
+message PricingInstructions {
+  FeeResponsibility fees_paid_by = 1;
+  FxResponsibility fx_performed_by = 2;
+}

@@ -21,7 +21,7 @@
 @class Address;
 @class AddressRecord;
 @class AccessBody_Resource;
-@class Destination;
+@class TransferEndpoint;
 
 
 /**
@@ -313,7 +313,7 @@
                         amount:(double)amount
                       currency:(NSString *)currency
                    description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations;
+                  destinations:(NSArray<TransferEndpoint *> *)destinations;
 
 /**
  * Creates a new transfer token.
@@ -333,7 +333,7 @@
                         amount:(double)amount
                       currency:(NSString *)currency
                    description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations
+                  destinations:(NSArray<TransferEndpoint *> *)destinations
                             to:(NSString *)toUsername;
 
 /**
@@ -445,7 +445,7 @@
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
-                 destination:(Destination * )destination;
+                 destination:(TransferEndpoint *)destination;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.

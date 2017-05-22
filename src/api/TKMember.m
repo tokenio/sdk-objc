@@ -323,7 +323,7 @@
                         amount:(double)amount
                       currency:(NSString *)currency
                    description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations {
+                  destinations:(NSArray<TransferEndpoint *> *)destinations {
     return [self createTransferToken:redeemerUsername
                           forAccount:accountId
                               amount:amount
@@ -338,7 +338,7 @@
                         amount:(double)amount
                       currency:(NSString *)currency
                    description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations
+                  destinations:(NSArray<TransferEndpoint *> *)destinations
                             to:(NSString *)toUsername {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
@@ -462,7 +462,7 @@
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
-                 destination:(Destination *)destination {
+                 destination:(TransferEndpoint *)destination {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTransfer:token

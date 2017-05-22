@@ -27,17 +27,33 @@
 
 CF_EXTERN_C_BEGIN
 
-@class BankAuthorization;
-@class Destination;
-@class Destination_AchDestination;
-@class Destination_SepaDestination;
-@class Destination_SwiftDestination;
-@class Destination_TokenDestination;
-@class Source;
-@class Source_BankAuthorizationSource;
-@class Source_TokenSource;
+@class Address;
+@class BankAccount;
+@class CustomerData;
+@class TransferEndpoint;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum PurposeOfPayment
+
+typedef GPB_ENUM(PurposeOfPayment) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  PurposeOfPayment_Invalid = 0,
+  PurposeOfPayment_Other = 1,
+};
+
+GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL PurposeOfPayment_IsValidValue(int32_t value);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -54,11 +70,54 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TransferinstructionsRoot : GPBRootObject
 @end
 
+#pragma mark - CustomerData
+
+typedef GPB_ENUM(CustomerData_FieldNumber) {
+  CustomerData_FieldNumber_LegalNamesArray = 1,
+  CustomerData_FieldNumber_Address = 2,
+};
+
+@interface CustomerData : GPBMessage
+
+/** Repeated in case of joint account holders. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *legalNamesArray;
+/** The number of items in @c legalNamesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger legalNamesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) Address *address;
+/** Test to see if @c address has been set. */
+@property(nonatomic, readwrite) BOOL hasAddress;
+
+@end
+
+#pragma mark - TransferEndpoint
+
+typedef GPB_ENUM(TransferEndpoint_FieldNumber) {
+  TransferEndpoint_FieldNumber_Account = 1,
+  TransferEndpoint_FieldNumber_CustomerData = 2,
+};
+
+/**
+ * Money transfer source or destination account.
+ **/
+@interface TransferEndpoint : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
+/** Test to see if @c account has been set. */
+@property(nonatomic, readwrite) BOOL hasAccount;
+
+@property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
+/** Test to see if @c customerData has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomerData;
+
+@end
+
 #pragma mark - TransferInstructions
 
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_Source = 1,
   TransferInstructions_FieldNumber_DestinationsArray = 2,
+  TransferInstructions_FieldNumber_TransferPurpose = 3,
 };
 
 /**
@@ -67,191 +126,31 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 @interface TransferInstructions : GPBMessage
 
 /** Transfer source. */
-@property(nonatomic, readwrite, strong, null_resettable) Source *source;
+@property(nonatomic, readwrite, strong, null_resettable) TransferEndpoint *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 
 /** Transfer desitination. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Destination*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
-@end
-
-#pragma mark - Source
-
-typedef GPB_ENUM(Source_FieldNumber) {
-  Source_FieldNumber_TokenSource = 1,
-  Source_FieldNumber_BankAuthorizationSource = 2,
-};
-
-typedef GPB_ENUM(Source_Source_OneOfCase) {
-  Source_Source_OneOfCase_GPBUnsetOneOfCase = 0,
-  Source_Source_OneOfCase_TokenSource = 1,
-  Source_Source_OneOfCase_BankAuthorizationSource = 2,
-};
-
-/**
- * Money transfer source. This could be either a token account or a bank authorization.
- **/
-@interface Source : GPBMessage
-
-@property(nonatomic, readonly) Source_Source_OneOfCase sourceOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) Source_TokenSource *tokenSource;
-
-@property(nonatomic, readwrite, strong, null_resettable) Source_BankAuthorizationSource *bankAuthorizationSource;
+/** Transfer purpose. */
+@property(nonatomic, readwrite) PurposeOfPayment transferPurpose;
 
 @end
 
 /**
- * Clears whatever value was set for the oneof 'source'.
+ * Fetches the raw value of a @c TransferInstructions's @c transferPurpose property, even
+ * if the value was not defined by the enum at the time the code was generated.
  **/
-void Source_ClearSourceOneOfCase(Source *message);
-
-#pragma mark - Source_TokenSource
-
-typedef GPB_ENUM(Source_TokenSource_FieldNumber) {
-  Source_TokenSource_FieldNumber_MemberId = 1,
-  Source_TokenSource_FieldNumber_AccountId = 2,
-};
-
+int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message);
 /**
- * Token Acccount Source
+ * Sets the raw value of an @c TransferInstructions's @c transferPurpose property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
  **/
-@interface Source_TokenSource : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-@end
-
-#pragma mark - Source_BankAuthorizationSource
-
-typedef GPB_ENUM(Source_BankAuthorizationSource_FieldNumber) {
-  Source_BankAuthorizationSource_FieldNumber_BankAuthorization = 1,
-};
-
-/**
- * One-time encrypted authorization to an account
- **/
-@interface Source_BankAuthorizationSource : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
-/** Test to see if @c bankAuthorization has been set. */
-@property(nonatomic, readwrite) BOOL hasBankAuthorization;
-
-@end
-
-#pragma mark - Destination
-
-typedef GPB_ENUM(Destination_FieldNumber) {
-  Destination_FieldNumber_TokenDestination = 1,
-  Destination_FieldNumber_SwiftDestination = 2,
-  Destination_FieldNumber_SepaDestination = 3,
-  Destination_FieldNumber_AchDestination = 4,
-};
-
-typedef GPB_ENUM(Destination_Destination_OneOfCase) {
-  Destination_Destination_OneOfCase_GPBUnsetOneOfCase = 0,
-  Destination_Destination_OneOfCase_TokenDestination = 1,
-  Destination_Destination_OneOfCase_SwiftDestination = 2,
-  Destination_Destination_OneOfCase_SepaDestination = 3,
-  Destination_Destination_OneOfCase_AchDestination = 4,
-};
-
-/**
- * Money transfer destination. The destination is described differently
- * depending on the transfer method being used.
- **/
-@interface Destination : GPBMessage
-
-@property(nonatomic, readonly) Destination_Destination_OneOfCase destinationOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) Destination_TokenDestination *tokenDestination;
-
-@property(nonatomic, readwrite, strong, null_resettable) Destination_SwiftDestination *swiftDestination;
-
-@property(nonatomic, readwrite, strong, null_resettable) Destination_SepaDestination *sepaDestination;
-
-@property(nonatomic, readwrite, strong, null_resettable) Destination_AchDestination *achDestination;
-
-@end
-
-/**
- * Clears whatever value was set for the oneof 'destination'.
- **/
-void Destination_ClearDestinationOneOfCase(Destination *message);
-
-#pragma mark - Destination_TokenDestination
-
-typedef GPB_ENUM(Destination_TokenDestination_FieldNumber) {
-  Destination_TokenDestination_FieldNumber_MemberId = 1,
-  Destination_TokenDestination_FieldNumber_AccountId = 2,
-};
-
-/**
- * Token account Destination
- **/
-@interface Destination_TokenDestination : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-@end
-
-#pragma mark - Destination_SwiftDestination
-
-typedef GPB_ENUM(Destination_SwiftDestination_FieldNumber) {
-  Destination_SwiftDestination_FieldNumber_Bic = 1,
-  Destination_SwiftDestination_FieldNumber_Account = 2,
-};
-
-/**
- * SWIFT tranfer destination
- **/
-@interface Destination_SwiftDestination : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
-
-@end
-
-#pragma mark - Destination_SepaDestination
-
-typedef GPB_ENUM(Destination_SepaDestination_FieldNumber) {
-  Destination_SepaDestination_FieldNumber_Iban = 1,
-};
-
-/**
- * SEPA transfer destination
- **/
-@interface Destination_SepaDestination : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
-
-@end
-
-#pragma mark - Destination_AchDestination
-
-typedef GPB_ENUM(Destination_AchDestination_FieldNumber) {
-  Destination_AchDestination_FieldNumber_Routing = 1,
-  Destination_AchDestination_FieldNumber_Account = 2,
-};
-
-/**
- * ACH transfer destination
- **/
-@interface Destination_AchDestination : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
-
-@end
+void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

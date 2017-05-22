@@ -62,6 +62,8 @@
 		8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */; };
 		8AED88F31E27F02A001AD3F7 /* Banklink.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */; };
 		8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */; };
+		946239B71ED114F200C47BD0 /* Pricing.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */; };
 		94DC2AD21E5E5E180088F55A /* TKErrorHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */; };
 		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
@@ -263,6 +265,10 @@
 		8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAccessRedemptionTests.m; sourceTree = "<group>"; };
 		8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banklink.pbobjc.h; sourceTree = "<group>"; };
 		8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
+		946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pricing.pbobjc.h; sourceTree = "<group>"; };
+		946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pricing.pbobjc.m; sourceTree = "<group>"; };
+		946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Pricing.pbobjc.m; path = src/generated/Pricing.pbobjc.m; sourceTree = "<group>"; };
+		946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Pricing.pbobjc.h; path = src/generated/Pricing.pbobjc.h; sourceTree = "<group>"; };
 		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
 		94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenConfig.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
@@ -416,6 +422,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */,
+				946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */,
 				8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */,
 				8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */,
 				8AED88F11E27F02A001AD3F7 /* Banklink.pbobjc.h */,
@@ -519,6 +527,8 @@
 		8A9909041D890E820096A7FA = {
 			isa = PBXGroup;
 			children = (
+				946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */,
+				946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */,
 				8A9909101D890E820096A7FA /* src */,
 				8A99091C1D890E820096A7FA /* tests */,
 				DDAA0D311E257C6000E9BB09 /* TestHost */,
@@ -798,6 +808,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
 				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */,
@@ -1172,6 +1183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				946239B71ED114F200C47BD0 /* Pricing.pbobjc.m in Sources */,
 				1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */,
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,
 				ABA7B3247F83509D9AB5E5B5 /* TKMember.m in Sources */,

@@ -8,8 +8,8 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -53,8 +53,9 @@
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token
                                             amount:@100.99
                                           currency:@"USD"
@@ -80,8 +81,9 @@
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];

@@ -8,7 +8,6 @@ import "security.proto";
 import "transaction.proto";
 import "transferinstructions.proto";
 
-
 // A transfer record as persisted on the ledger.
 message Transfer {
   string id = 1;                               // Computed as the hash of the transfer payload.
@@ -17,14 +16,15 @@ message Transfer {
   TransferPayload payload = 4;
   repeated io.token.proto.common.security.Signature payload_signatures = 5;
   io.token.proto.common.transaction.TransactionStatus status = 6;
+  string order_id = 7;                         // Currency Ledger order id.
 }
 
 // A transfer payload that is being signed by the redeemer and the bank.
 message TransferPayload {
-  string nonce = 1;                                                                  // Client assigned unique request id.
-  string token_id = 2;                                                               // Token id.
-  io.token.proto.common.money.Money amount = 3;                                      // Amount and currency.
-  repeated io.token.proto.common.transferinstructions.Destination destinations = 5;  // Transfer destinations, sorted in priority order.
-  string description = 6;                                                            // Optional
+  string nonce = 1;                                                                       // Client assigned unique request id.
+  string token_id = 2;                                                                    // Token id.
+  io.token.proto.common.money.Money amount = 3;                                           // Amount and currency.
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5;  // Transfer destinations, sorted in priority order.
+  string description = 6;                                                                 // Optional
 }
 

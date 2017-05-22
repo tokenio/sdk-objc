@@ -3,12 +3,14 @@ syntax = "proto3";
 package io.token.proto.common.account;
 option java_outer_classname = "AccountProtos";
 
+import "banklink.proto";
+
 // The payload of the bank authorization request. Used for serialization only.
 // The value of the payload is encrypted as a serialized JSON object.
 message PlaintextBankAuthorization {
   string username = 1;
   string account_name = 2;
-  AccountRoute account = 3;
+  BankAccount account = 3;
   int64 expiration_ms = 4;
 }
 
@@ -18,16 +20,50 @@ message AccountTag {
   string value = 2;
 }
 
-// Bank Service Account representation.
+// Token linked account.
 message Account {
   string id = 1;
   string name = 2;
   string bank_id = 3;
-  string bic = 5;
   repeated AccountTag tags = 4;
 }
 
-message AccountRoute {
-  string bic = 1;
-  string account = 2;
+// Account information as seen by the bank. This is what the end user links with
+// the bank and what Token uses when it talks to the bank.
+message BankAccount {
+  // Token account Destination
+  message Token {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  // One-time encrypted authorization for an account
+  message TokenAuthorization {
+    io.token.proto.banklink.BankAuthorization authorization = 1;
+  }
+
+  // SWIFT tranfer
+  message Swift {
+    string bic = 1;
+    string account = 2;
+  }
+
+  // SEPA transfer
+  message Sepa {
+    string iban = 1;
+  }
+
+  // ACH transfer
+  message Ach {
+    string routing = 1;
+    string account = 2;
+  }
+
+  oneof account {
+    Token token = 1;
+    TokenAuthorization token_authorization = 2;
+    Swift swift = 3;
+    Sepa sepa = 4;
+    Ach ach = 5;
+  }
 }

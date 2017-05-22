@@ -8,12 +8,33 @@
 
 #import <Foundation/Foundation.h>
 
-#define  TKLogInfo(...)         if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logInfo:)]) { \
+#define  TKLogVerbose(...)         if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logVerbose:)]) { \
+                                    [[TKLogManager shared].logDelegate logVerbose:__VA_ARGS__]; \
+                                } \
+                                if (![TKLogManager shared].muteNSLog) { \
+                                    NSLog(__VA_ARGS__); \
+                                }
+
+#define  TKLogDebug(...)       if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logDebug:)]) { \
+                                    [[TKLogManager shared].logDelegate logDebug:__VA_ARGS__]; \
+                                } \
+                                if (![TKLogManager shared].muteNSLog) { \
+                                    NSLog(__VA_ARGS__); \
+                                }                                
+
+#define  TKLogInfo(...)       if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logInfo:)]) { \
                                     [[TKLogManager shared].logDelegate logInfo:__VA_ARGS__]; \
                                 } \
                                 if (![TKLogManager shared].muteNSLog) { \
                                     NSLog(__VA_ARGS__); \
                                 }
+
+#define  TKLogWarning(...)       if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logWarning:)]) { \
+                                    [[TKLogManager shared].logDelegate logWarning:__VA_ARGS__]; \
+                                } \
+                                if (![TKLogManager shared].muteNSLog) { \
+                                    NSLog(__VA_ARGS__); \
+                                }                                
 
 #define  TKLogError(...)       if ([[TKLogManager shared].logDelegate respondsToSelector:@selector(logError:)]) { \
                                     [[TKLogManager shared].logDelegate logError:__VA_ARGS__]; \
@@ -32,7 +53,10 @@
 @protocol TKExternalLoggerDelegate <NSObject>
 
 @optional
+- (void)logVerbose:(NSString*)format, ...;
+- (void)logDebug:(NSString*)format, ...;
 - (void)logInfo:(NSString*)format, ...;
+- (void)logWarning:(NSString*)format, ...;
 - (void)logError:(NSString*)format, ...;
 @end
 

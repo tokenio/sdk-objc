@@ -15,7 +15,7 @@
 @class Member;
 @class TKClient;
 @class TKCrypto;
-@class Destination;
+@class TransferEndpoint;
 
 /**
  * Represents a Member in the Token system. Each member has an active secret
@@ -388,7 +388,7 @@
                      amount:(double)amount
                    currency:(NSString *)currency
                 description:(NSString *)description
-                destinations:(NSArray<Destination *> *)destinations
+                destinations:(NSArray<TransferEndpoint *> *)destinations
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError;
 
@@ -539,7 +539,7 @@
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
-           destination:(Destination *)destination
+           destination:(TransferEndpoint *)destination
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

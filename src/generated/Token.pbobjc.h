@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccounts;
 @class AccessBody_Resource_AllAddresses;
 @class Attachment;
+@class Pricing;
 @class Signature;
 @class Token;
 @class TokenMember;
@@ -45,7 +46,6 @@ CF_EXTERN_C_BEGIN
 @class TokenSignature;
 @class TransferBody;
 @class TransferInstructions;
-@class TransferQuote;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -264,12 +264,11 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
 typedef GPB_ENUM(TransferBody_FieldNumber) {
   TransferBody_FieldNumber_Redeemer = 1,
   TransferBody_FieldNumber_Instructions = 2,
-  TransferBody_FieldNumber_FeesPaidBy = 3,
   TransferBody_FieldNumber_Currency = 4,
   TransferBody_FieldNumber_LifetimeAmount = 5,
   TransferBody_FieldNumber_Amount = 6,
-  TransferBody_FieldNumber_Quote = 7,
   TransferBody_FieldNumber_AttachmentsArray = 8,
+  TransferBody_FieldNumber_Pricing = 9,
 };
 
 @interface TransferBody : GPBMessage
@@ -284,11 +283,6 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 /** Test to see if @c instructions has been set. */
 @property(nonatomic, readwrite) BOOL hasInstructions;
 
-/** Payer or redeemer member id. */
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *feesPaidBy;
-/** Test to see if @c feesPaidBy has been set. */
-@property(nonatomic, readwrite) BOOL hasFeesPaidBy;
-
 /** Optional: ISO4217, 3 letter currency code such as "USD" or "EUR". */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
 
@@ -298,15 +292,15 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 /** Optional: Single token charge request acceptable range. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
 
-/** Optional: Transfer fees and fx charges. */
-@property(nonatomic, readwrite, strong, null_resettable) TransferQuote *quote;
-/** Test to see if @c quote has been set. */
-@property(nonatomic, readwrite) BOOL hasQuote;
-
 /** Optional: file / data attachments */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Attachment*> *attachmentsArray;
 /** The number of items in @c attachmentsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger attachmentsArray_Count;
+
+/** Optional: Transfer fees and fx charges. */
+@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing;
+/** Test to see if @c pricing has been set. */
+@property(nonatomic, readwrite) BOOL hasPricing;
 
 @end
 

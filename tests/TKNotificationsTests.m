@@ -6,6 +6,7 @@
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
+#import "Account.pbobjc.h"
 #import "TokenIO.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
@@ -64,8 +65,9 @@ void check(NSString *message, BOOL condition) {
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
         [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
@@ -85,8 +87,9 @@ void check(NSString *message, BOOL condition) {
                                                to:payee.firstUsername];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
 
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
         [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
@@ -207,9 +210,14 @@ void check(NSString *message, BOOL condition) {
                                         description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(100.99) currency:@"USD" description:@"" destination:destination];
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@(100.99)
+                                          currency:@"USD"
+                                       description:@""
+                                       destination:destination];
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }
