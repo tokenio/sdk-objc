@@ -410,7 +410,7 @@
                      amount:(double)amount
                    currency:(NSString *)currency
                 description:(NSString *)description
-               destinations:(NSArray<Destination *> *)destinations
+               destinations:(NSArray<TransferEndpoint *> *)destinations
                          to:(NSString *)to
                   onSuccess:(OnSuccessWithToken)onSuccess
                     onError:(OnError)onError;
