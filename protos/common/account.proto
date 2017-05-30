@@ -42,7 +42,7 @@ message BankAccount {
     io.token.proto.banklink.BankAuthorization authorization = 1;
   }
 
-  // SWIFT tranfer
+  // SWIFT transfer
   message Swift {
     string bic = 1;
     string account = 2;

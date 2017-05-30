@@ -85,15 +85,20 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "InvalidStatus\000Pending\000Processing\000Success"
-        "\000FailureInsufficientFunds\000FailureInvalid"
-        "Currency\000FailurePermissionDenied\000Failure"
-        "Generic\000";
+        "InvalidStatus\000Pending\000Accepted\000Delayed\000P"
+        "rocessing\000Success\000FailureCanceled\000Failur"
+        "eRejected\000FailureInsufficientFunds\000Failu"
+        "reInvalidCurrency\000FailurePermissionDenie"
+        "d\000FailureGeneric\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Pending,
+        TransactionStatus_Accepted,
+        TransactionStatus_Delayed,
         TransactionStatus_Processing,
         TransactionStatus_Success,
+        TransactionStatus_FailureCanceled,
+        TransactionStatus_FailureRejected,
         TransactionStatus_FailureInsufficientFunds,
         TransactionStatus_FailureInvalidCurrency,
         TransactionStatus_FailurePermissionDenied,
@@ -116,8 +121,12 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
   switch (value__) {
     case TransactionStatus_InvalidStatus:
     case TransactionStatus_Pending:
+    case TransactionStatus_Accepted:
+    case TransactionStatus_Delayed:
     case TransactionStatus_Processing:
     case TransactionStatus_Success:
+    case TransactionStatus_FailureCanceled:
+    case TransactionStatus_FailureRejected:
     case TransactionStatus_FailureInsufficientFunds:
     case TransactionStatus_FailureInvalidCurrency:
     case TransactionStatus_FailurePermissionDenied:

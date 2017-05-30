@@ -211,7 +211,7 @@ typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
 };
 
 /**
- * SWIFT tranfer
+ * SWIFT transfer
  **/
 @interface BankAccount_Swift : GPBMessage
 

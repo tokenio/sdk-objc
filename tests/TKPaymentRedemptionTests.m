@@ -54,8 +54,10 @@
                                           currency:@"USD"
                                        description:@"lunch"
                                        destination:destination];
-        
-        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        bool transferComplete = transfer.status == TransactionStatus_Success
+            || transfer.status == TransactionStatus_Accepted
+            || transfer.status == TransactionStatus_Processing;
+        XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -84,7 +86,10 @@
                                        description:@"test"
                                        destination:destination];
 
-        XCTAssertEqual(TransactionStatus_Success, transfer.status);
+        bool transferComplete = transfer.status == TransactionStatus_Success
+            || transfer.status == TransactionStatus_Accepted
+            || transfer.status == TransactionStatus_Processing;
+        XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
@@ -113,7 +118,10 @@
                                        description:@"lunch"
                                        destination:destination];
         
-        XCTAssertEqual(TransactionStatus_Processing, transfer.status);
+        bool transferComplete = transfer.status == TransactionStatus_Success
+            || transfer.status == TransactionStatus_Accepted
+            || transfer.status == TransactionStatus_Processing;
+        XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
         XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
