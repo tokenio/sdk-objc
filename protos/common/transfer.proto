@@ -17,6 +17,12 @@ message Transfer {
   repeated io.token.proto.common.security.Signature payload_signatures = 5;
   io.token.proto.common.transaction.TransactionStatus status = 6;
   string order_id = 7;                         // Currency Ledger order id.
+  Method method = 8;
+
+  enum Method {
+    DEFAULT = 0;
+    INSTANT = 1;
+  }
 }
 
 // A transfer payload that is being signed by the redeemer and the bank.
@@ -27,4 +33,3 @@ message TransferPayload {
   repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5;  // Transfer destinations, sorted in priority order.
   string description = 6;                                                                 // Optional
 }
-

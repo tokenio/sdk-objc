@@ -14,14 +14,15 @@
 #import "Transferinstructions.pbobjc.h"
 
 
-@interface TKPaymentRedemptionTests : TKTestBase
+@interface TKTransferTokenRedemptionTests : TKTestBase
 @end
 
-@implementation TKPaymentRedemptionTests {
+@implementation TKTransferTokenRedemptionTests {
     TKAccount *payerAccount;
     TKMember *payer;
     TKAccount *payeeAccount;
     TKMember *payee;
+    BankAuthorization *auth;
 }
 
 - (void)setUp {
@@ -32,16 +33,17 @@
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
         payee = payeeAccount.member;
+        auth = [self createBankAuthorization:tokenIO username:payer.firstUsername];
     }];
 }
 
 - (void)testRedeemToken {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                           amount:100.99
-                                         currency:@"USD"
-                                      description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
@@ -55,7 +57,34 @@
                                        description:@"lunch"
                                        destination:destination];
         bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Accepted
+            || transfer.status == TransactionStatus_Processing;
+        XCTAssert(transferComplete);
+        XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
+    }];
+}
+
+- (void)testRedeemTokenBankAuthorization {
+    [self run: ^(TokenIO *tokenIO) {
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.bankAuthorization = auth;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+        token = [endorsedResult token];
+        
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        Transfer *transfer = [payee createTransfer:token amount:@(50.1)
+                                          currency:@"USD"
+                                       description:@"lunch"
+                                       destination:destination];
+        bool transferComplete = transfer.status == TransactionStatus_Success
             || transfer.status == TransactionStatus_Processing;
         XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
@@ -66,11 +95,11 @@
 
 - (void)testRedeemToken_withParams {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                           amount:100.99
-                                         currency:@"USD"
-                                      description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         
         token = [endorsedResult token];
@@ -87,7 +116,6 @@
                                        destination:destination];
 
         bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Accepted
             || transfer.status == TransactionStatus_Processing;
         XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
@@ -102,12 +130,12 @@
         destination.account.token.accountId = payeeAccount.id;
         destination.account.token.memberId = payee.id;
         NSArray<TransferEndpoint *> *destinations = [NSArray arrayWithObjects:destination, nil];
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                           amount:100.99
-                                         currency:@"USD"
-                                      description:@"transfer test"
-                                     destinations:destinations];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        builder.destinations = destinations;
+        Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
@@ -119,7 +147,6 @@
                                        destination:destination];
         
         bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Accepted
             || transfer.status == TransactionStatus_Processing;
         XCTAssert(transferComplete);
         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
@@ -130,11 +157,11 @@
 
 - (void)testLookupTransfer {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                           amount:100.99
-                                         currency:@"USD"
-                                      description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.42
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
@@ -152,11 +179,11 @@
 
 - (void)testLookupTransfers {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                           amount:100.99
-                                         currency:@"USD"
-                                      description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         

@@ -44,6 +44,11 @@
     return member.id_p;
 }
 
+- (TKClient *)getClient {
+    NSLog(@"%@", client);
+    return client;
+}
+
 - (NSString *)firstUsername {
     return member.usernamesArray[0];
 }
@@ -340,99 +345,10 @@
                       onError:onError];
 }
 
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError {
-    [self createTransferToken:redeemerUsername
-                   forAccount:accountId
-                       amount:amount
-                     currency:currency
-                  description:nil
-                  destinations:nil
-                    onSuccess:onSuccess
-                      onError:onError];
-}
-
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError {
-    [self createTransferToken:redeemerUsername
-                   forAccount:accountId
-                       amount:amount
-                     currency:currency
-                  description:description
-                 destinations:nil
-                    onSuccess:onSuccess
-                      onError:onError];
-}
-
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-               destinations:(NSArray<TransferEndpoint *> *)destinations
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError {
-    [self createTransferToken:redeemerUsername
-                   forAccount:accountId
-                       amount:amount
-                     currency:currency
-                  description:description
-                 destinations:destinations
-                           to:nil
-                    onSuccess:onSuccess
-                      onError:onError];
-}
-
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-               destinations:(NSArray<TransferEndpoint *> *)destinations
-                         to:(NSString *)toUsername
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError {
-    TokenMember *payer = [TokenMember message];
-    payer.id_p = self.id;
-    
-    TokenPayload *payload = [TokenPayload message];
-    payload.version = @"1.0";
-    payload.nonce = [TKUtil nonce];
-    payload.from = payer;
-    payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", amount];
-    payload.transfer.currency = currency;
-    payload.transfer.instructions.source.account.token.memberId = self.id;
-    payload.transfer.instructions.source.account.token.accountId = accountId;
-    
-    if (redeemerUsername) {
-        payload.transfer.redeemer.username = redeemerUsername;
-    }
-    
-    if (description) {
-        payload.description_p = description;
-    }
-
-    if (destinations) {
-        [payload.transfer.instructions.destinationsArray addObjectsFromArray:destinations];
-    }
-    
-    if (toUsername) {
-        payload.to = [TokenMember message];
-        payload.to.username = toUsername;
-    }
-
-    [client createToken:payload
-              onSuccess:^(Token *token) { onSuccess(token); }
-                onError:onError];
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency {
+    TransferTokenBuilder * builder = [TransferTokenBuilder alloc];
+    return [builder init:self lifetimeAmount:amount currency:currency];
 }
 
 - (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
@@ -575,6 +491,38 @@
                       forAccount:accountId
                        onSuccess:onSuccess
                          onError:onError];
+}
+
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError {
+    [client createBlob:ownerId
+              withType:type
+              withName:name
+              withData:data
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError {
+    [client getBlob:blobId
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError {
+    [client getTokenBlob:tokenId
+              withBlobId:blobId
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
 - (void)getBalance:(NSString *)accountId

@@ -134,11 +134,12 @@
         TKMember *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
-        Token *transferToken = [grantor createTransferToken:redeemer.firstUsername
-                                                 forAccount:grantorAccount.id
-                                                     amount:100.99
-                                                   currency:@"USD"
-                                                description:@"transfer test"];
+        TransferTokenBuilder *builder = [grantor createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = grantorAccount.id;
+        builder.redeemerUsername = redeemer.firstUsername;
+        Token *transferToken = [builder execute];
+        
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
@@ -167,11 +168,11 @@
         TKMember *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
-        Token *transferToken = [grantor createTransferToken:redeemer.firstUsername
-                                                 forAccount:grantorAccount.id
-                                                     amount:100.99
-                                                   currency:@"USD"
-                                                description:@"transfer test"];
+        TransferTokenBuilder *builder = [grantor createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = grantorAccount.id;
+        builder.redeemerUsername = redeemer.firstUsername;
+        Token *transferToken = [builder execute];
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];

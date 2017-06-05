@@ -68,23 +68,14 @@ typedef GPB_ENUM(TransactionStatus) {
   /** the transaction is pending submission */
   TransactionStatus_Pending = 1,
 
-  /** the transaction has been accepted but not yet processed */
-  TransactionStatus_Accepted = 8,
-
-  /** the processing of the transaction has been delayed (sanctions) */
-  TransactionStatus_Delayed = 9,
-
   /** the transaction is being processed */
   TransactionStatus_Processing = 7,
 
   /** the transaction has been successful */
   TransactionStatus_Success = 2,
 
-  /** the transaction has been canceled by the remitter */
+  /** the transaction has been canceled */
   TransactionStatus_FailureCanceled = 10,
-
-  /** the transaction has been rejected by the beneficiary */
-  TransactionStatus_FailureRejected = 11,
 
   /** the transaction has failed due to insufficient funds */
   TransactionStatus_FailureInsufficientFunds = 3,

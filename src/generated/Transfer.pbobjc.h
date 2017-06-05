@@ -35,6 +35,27 @@ GPB_ENUM_FWD_DECLARE(TransactionStatus);
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum Transfer_Method
+
+typedef GPB_ENUM(Transfer_Method) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Transfer_Method_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Transfer_Method_Default = 0,
+  Transfer_Method_Instant = 1,
+};
+
+GPBEnumDescriptor *Transfer_Method_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Transfer_Method_IsValidValue(int32_t value);
+
 #pragma mark - TransferRoot
 
 /**
@@ -60,6 +81,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_PayloadSignaturesArray = 5,
   Transfer_FieldNumber_Status = 6,
   Transfer_FieldNumber_OrderId = 7,
+  Transfer_FieldNumber_Method = 8,
 };
 
 /**
@@ -88,6 +110,8 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 /** Currency Ledger order id. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *orderId;
 
+@property(nonatomic, readwrite) Transfer_Method method;
+
 @end
 
 /**
@@ -101,6 +125,18 @@ int32_t Transfer_Status_RawValue(Transfer *message);
  * was generated.
  **/
 void SetTransfer_Status_RawValue(Transfer *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c Transfer's @c method property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Transfer_Method_RawValue(Transfer *message);
+/**
+ * Sets the raw value of an @c Transfer's @c method property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTransfer_Method_RawValue(Transfer *message, int32_t value);
 
 #pragma mark - TransferPayload
 

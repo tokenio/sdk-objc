@@ -6,6 +6,7 @@
 #import <XCTest/XCTest.h>
 
 @class TokenIO;
+@class BankAuthorization;
 @class TKMember;
 @class TKAccount;
 @class TKBankClient;
@@ -58,6 +59,16 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @return
  */
 - (TKAccount *)createAccount:(TokenIO *)tokenIO;
+
+/**
+ * Creates a new bank authorization for a member
+ *
+ * @param tokenIO
+ * @param username
+ * @return
+ */
+- (BankAuthorization *)createBankAuthorization:(TokenIO *)tokenIO
+                                      username:(NSString *)username;
 
 /**
  * Formats HostAndPort instance.

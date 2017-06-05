@@ -294,64 +294,9 @@
     }];
 }
 
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency {
-    return [self createTransferToken:redeemerUsername
-                          forAccount:accountId
-                              amount:amount
-                            currency:currency
-                         description:nil];
-}
-
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description {
-    return [self createTransferToken:redeemerUsername
-                          forAccount:accountId
-                              amount:amount
-                            currency:currency
-                         description:description
-                        destinations:nil];
-}
-
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<TransferEndpoint *> *)destinations {
-    return [self createTransferToken:redeemerUsername
-                          forAccount:accountId
-                              amount:amount
-                            currency:currency
-                         description:description
-                        destinations:destinations
-                                  to:nil];
-}
-
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<TransferEndpoint *> *)destinations
-                            to:(NSString *)toUsername {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createTransferToken:redeemerUsername
-                             forAccount:accountId
-                                   amount:amount
-                                 currency:currency
-                              description:description
-                             destinations:destinations
-                                       to:toUsername
-                                onSuccess:call.onSuccess
-                                  onError:call.onError];
-    }];
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency {
+    return [self.async createTransferToken:amount currency:currency];
 }
 
 - (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig {
@@ -497,6 +442,41 @@
                                forAccount:accountId
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
+    }];
+}
+
+- (Attachment *)createBlob:(NSString *)ownerId
+                  withType:(NSString *)type
+                  withName:(NSString *)name
+                  withData:(NSData * )data {
+    TKRpcSyncCall<Attachment *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createBlob:ownerId
+                      withType:type
+                      withName:name
+                      withData:data
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
+- (Blob *)getBlob:(NSString *)blobId {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBlob:blobId
+                  onSuccess:call.onSuccess
+                    onError:call.onError];
+    }];
+}
+
+- (Blob *)getTokenBlob:(NSString *)tokenId
+            withBlobId:(NSString *)blobId {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getTokenBlob:tokenId
+                      withBlobId:blobId
+                       onSuccess:call.onSuccess
+                         onError:call.onError];
     }];
 }
 

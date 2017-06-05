@@ -41,16 +41,16 @@
         Money *balance = [payerAccount getBalance];
         XCTAssert(balance.value > 0);
         XCTAssertEqualObjects(@"USD", balance.currency);
-    }];
+    }];     
 }
 
 - (void)testLookupTransaction {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
@@ -74,11 +74,11 @@
 
 - (void)testLookupTransactions {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                             amount:49.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:49.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];

@@ -129,6 +129,32 @@
     return accounts[0];
 }
 
+- (BankAuthorization *)createBankAuthorization:(TokenIO *)token
+                              username:(NSString *)username {
+    NSString *firstName = @"Test";
+    NSString *lastName = @"Testoff";
+    NSString *bankId = @"iron";
+    NSString *accountName = @"Checking";
+    NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
+    
+    FankClient *fankClient = [_bank addClientWithFirstName:firstName lastName:lastName];
+    [_bank addAccountWithName:accountName
+                    forClient:fankClient
+            withAccountNumber:bankAccountNumber
+                       amount:@"1000000.00"
+                     currency:@"USD"];
+    
+    NSString *clientId = fankClient.id_p;
+    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:username
+                                                                 clientId:clientId
+                                                           accountNumbers:@[bankAccountNumber]];
+    BankAuthorization * auth = [BankAuthorization message];
+    auth.bankId = bankId;
+    [auth.accountsArray addObjectsFromArray:encAccounts];
+
+    return auth;
+}
+
 - (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port {
     NSString *override = [[[NSProcessInfo processInfo] environment] objectForKey:var];
     NSArray<NSString *> *parts = [override componentsSeparatedByString:@":"];

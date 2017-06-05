@@ -14,12 +14,9 @@ enum TransactionType {
 enum TransactionStatus {
   INVALID_STATUS = 0;             // invalid status
   PENDING = 1;                    // the transaction is pending submission
-  ACCEPTED = 8;                   // the transaction has been accepted but not yet processed
-  DELAYED = 9;                    // the processing of the transaction has been delayed (sanctions)
   PROCESSING = 7;                 // the transaction is being processed
   SUCCESS = 2;                    // the transaction has been successful
-  FAILURE_CANCELED = 10;          // the transaction has been canceled by the remitter
-  FAILURE_REJECTED = 11;          // the transaction has been rejected by the beneficiary
+  FAILURE_CANCELED = 10;          // the transaction has been canceled
   FAILURE_INSUFFICIENT_FUNDS = 3; // the transaction has failed due to insufficient funds
   FAILURE_INVALID_CURRENCY = 4;   // the transaction has failed due to currency mismatch
   FAILURE_PERMISSION_DENIED = 6;  // the transaction has failed due to access violation

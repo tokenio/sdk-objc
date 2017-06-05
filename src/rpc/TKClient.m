@@ -326,6 +326,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
+                                   RpcLogError(error);
                                    [errorHandler handle:onError withError:error];
                                }
                            }];
@@ -678,6 +679,85 @@
                                                                  initWith: response.transactionsArray
                                                                    offset: response.offset];
                                    onSuccess(paged);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData *)data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError {
+    CreateBlobRequest *request = [CreateBlobRequest message];
+    Blob_Payload * payload = [Blob_Payload message];
+    request.payload.ownerId = ownerId;
+    request.payload.type = type;
+    request.payload.name = name;
+    request.payload.data_p = data;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToCreateBlobWithRequest:request
+                           handler:
+                           ^(CreateBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   Attachment *attachment = [Attachment message];
+                                   attachment.blobId = response.blobId;
+                                   attachment.name = name;
+                                   attachment.type = type;
+                                   onSuccess(attachment);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError {
+    GetBlobRequest *request = [GetBlobRequest message];
+    request.blobId = blobId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBlobWithRequest:request
+                           handler:
+                           ^(GetBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.blob);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
+           onSuccess:(OnSuccessWithBlob)onSuccess
+             onError:(OnError)onError {
+    GetTokenBlobRequest *request = [GetTokenBlobRequest message];
+    request.tokenId = tokenId;
+    request.blobId = blobId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetTokenBlobWithRequest:request
+                           handler:
+                           ^(GetTokenBlobResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.blob);
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

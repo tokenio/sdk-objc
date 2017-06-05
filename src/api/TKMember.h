@@ -6,10 +6,12 @@
 #import <Foundation/Foundation.h>
 
 #import "AccessTokenConfig.h"
+#import "TransferTokenBuilder.h"
 #import "TKTypedef.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "PagedArray.h"
@@ -266,78 +268,16 @@
 - (void)deleteAddressWithId:(NSString *)addressId;
 
 /**
- * Creates a new transfer token.
+ * Creates a new transfer token builder.
  *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
+ * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
- * @return transfer token returned by the server
+ * @return transfer token builder, can be executed to create a token
  */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency;
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency;
 
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<TransferEndpoint *> *)destinations;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param to payee username
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<TransferEndpoint *> *)destinations
-                            to:(NSString *)toUsername;
-
-/**
- * Creates a new access token for a list of resources.
+/** Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
  * @return the created access token
@@ -468,6 +408,38 @@
 - (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                                limit:(int)limit
                                           forAccount:(NSString *)accountId;
+
+/**
+ * Uploads a blob to the server.
+ *
+ * @param ownerId owner of the blob
+ * @param type MIME type of the file
+ * @param name name of the file
+ * @param data binary data
+ * @return attachment
+ */
+- (Attachment *)createBlob:(NSString *)ownerId
+                  withType:(NSString *)type
+                  withName:(NSString *)name
+                  withData:(NSData * )data;
+
+/**
+ * Gets a blob.
+ *
+ * @param blobId Id of the blob.
+ * @return Blob
+ */
+- (Blob *)getBlob:(NSString *)blobId;
+
+/**
+ * Gets a blob attached to a token.
+ *
+ * @param tokenId id of the token
+ * @param blobId Id of the blob
+ * @return Blob
+ */
+- (Blob *)getTokenBlob:(NSString *)tokenId
+            withBlobId:(NSString *)blobId;
 
 /**
  * Returns a list of all token enabled banks.

@@ -10,6 +10,8 @@
 #import "Subscriber.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Blob.pbobjc.h"
+
 
 
 @class Member;
@@ -40,6 +42,9 @@
  */
 + (TKMemberAsync *)member:(Member *)member
                 useClient:(TKClient *)client;
+
+
+- (TKClient *)getClient;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used
@@ -336,84 +341,14 @@
                     onError:(OnError)onError;
 
 /**
- * Creates a new transfer token.
+ * Creates a new transfer token builder.
  *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
+ * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
+ * @return the transfer token builder
  */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                    onSuccess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-                destinations:(NSArray<TransferEndpoint *> *)destinations
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param to payee username, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-               destinations:(NSArray<TransferEndpoint *> *)destinations
-                         to:(NSString *)to
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency;
 
 /**
  * Creates a new access token for a list of resources.
@@ -571,6 +506,47 @@
                    forAccount:(NSString *)accountId
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
+
+/**
+ * Uploads a blob to the server.
+ *
+ * @param ownerId owner of the blob
+ * @param type MIME type of the file
+ * @param name name of the file
+ * @param data binary data
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError;
+
+/**
+ * Gets a blob.
+ *
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getBlob:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
+
+/**
+ * Gets a blob attached to a token.
+ *
+ * @param tokenId id of the token
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getTokenBlob:(NSString *)tokenId
+     withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Returns a list of all token enabled banks.
