@@ -64,30 +64,31 @@
         XCTAssert((blob.payload.data_p.length == 100));
     }];
 }
-    - (void)testTokenBlobs {
-        [self run: ^(TokenIO *tokenIO) {
-            NSData *data = [self randomData:200];
-            Attachment *attachment = [payer createBlob:payer.id
-                                              withType:@"application/json"
-                                              withName:@"file.json"
-                                              withData:data];
-            NSArray<Attachment*> *attachments = [NSArray arrayWithObjects:attachment, nil];
-            
-            TransferTokenBuilder *builder = [payer createTransferToken:100.11
-                                                              currency:@"USD"];
-            builder.accountId = payerAccount.id;
-            builder.redeemerUsername = payee.firstUsername;
-            builder.attachments = attachments;
-            Token *token = [builder execute];
-            
-            [payer endorseToken:token withKey:Key_Level_Standard];
-            Blob* blob = [payer getTokenBlob:token.id_p withBlobId:attachment.blobId];
 
-            XCTAssertEqualObjects(blob.payload.name, @"file.json");
-            XCTAssertEqualObjects(blob.payload.type, @"application/json");
-            XCTAssert([blob.payload.data_p isEqualToData:data]);
-            XCTAssert((blob.payload.data_p.length == 200));
-        }];
+- (void)testTokenBlobs {
+    [self run: ^(TokenIO *tokenIO) {
+        NSData *data = [self randomData:200];
+        Attachment *attachment = [payer createBlob:payer.id
+                                          withType:@"application/json"
+                                          withName:@"file.json"
+                                          withData:data];
+        NSArray<Attachment*> *attachments = [NSArray arrayWithObjects:attachment, nil];
+        
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        builder.attachments = attachments;
+        Token *token = [builder execute];
+        
+        [payer endorseToken:token withKey:Key_Level_Standard];
+        Blob* blob = [payer getTokenBlob:token.id_p withBlobId:attachment.blobId];
+
+        XCTAssertEqualObjects(blob.payload.name, @"file.json");
+        XCTAssertEqualObjects(blob.payload.type, @"application/json");
+        XCTAssert([blob.payload.data_p isEqualToData:data]);
+        XCTAssert((blob.payload.data_p.length == 200));
+    }];
 }
 
 @end
