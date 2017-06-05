@@ -12,14 +12,15 @@ enum TransactionType {
 }
 
 enum TransactionStatus {
-  INVALID_STATUS = 0;
-  PENDING = 1;
-  PROCESSING = 7;
-  SUCCESS = 2;
-  FAILURE_INSUFFICIENT_FUNDS = 3;
-  FAILURE_INVALID_CURRENCY = 4;
-  FAILURE_PERMISSION_DENIED = 6;
-  FAILURE_GENERIC = 5;
+  INVALID_STATUS = 0;             // invalid status
+  PENDING = 1;                    // the transaction is pending submission
+  PROCESSING = 7;                 // the transaction is being processed
+  SUCCESS = 2;                    // the transaction has been successful
+  FAILURE_CANCELED = 10;          // the transaction has been canceled
+  FAILURE_INSUFFICIENT_FUNDS = 3; // the transaction has failed due to insufficient funds
+  FAILURE_INVALID_CURRENCY = 4;   // the transaction has failed due to currency mismatch
+  FAILURE_PERMISSION_DENIED = 6;  // the transaction has failed due to access violation
+  FAILURE_GENERIC = 5;            // the transaction has failed due to other reasons
 }
 
 message Transaction {

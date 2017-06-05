@@ -62,13 +62,31 @@ typedef GPB_ENUM(TransactionStatus) {
    * of the field.
    **/
   TransactionStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  /** invalid status */
   TransactionStatus_InvalidStatus = 0,
+
+  /** the transaction is pending submission */
   TransactionStatus_Pending = 1,
+
+  /** the transaction is being processed */
   TransactionStatus_Processing = 7,
+
+  /** the transaction has been successful */
   TransactionStatus_Success = 2,
+
+  /** the transaction has been canceled */
+  TransactionStatus_FailureCanceled = 10,
+
+  /** the transaction has failed due to insufficient funds */
   TransactionStatus_FailureInsufficientFunds = 3,
+
+  /** the transaction has failed due to currency mismatch */
   TransactionStatus_FailureInvalidCurrency = 4,
+
+  /** the transaction has failed due to access violation */
   TransactionStatus_FailurePermissionDenied = 6,
+
+  /** the transaction has failed due to other reasons */
   TransactionStatus_FailureGeneric = 5,
 };
 

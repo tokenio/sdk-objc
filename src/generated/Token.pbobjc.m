@@ -16,7 +16,9 @@
  #import "Token.pbobjc.h"
  #import "Blob.pbobjc.h"
  #import "Money.pbobjc.h"
+ #import "Pricing.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "Transfer.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -439,23 +441,21 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 
 @dynamic hasRedeemer, redeemer;
 @dynamic hasInstructions, instructions;
-@dynamic hasFeesPaidBy, feesPaidBy;
 @dynamic currency;
 @dynamic lifetimeAmount;
 @dynamic amount;
-@dynamic hasQuote, quote;
 @dynamic attachmentsArray, attachmentsArray_Count;
+@dynamic hasPricing, pricing;
 
 typedef struct TransferBody__storage_ {
   uint32_t _has_storage_[1];
   TokenMember *redeemer;
   TransferInstructions *instructions;
-  TokenMember *feesPaidBy;
   NSString *currency;
   NSString *lifetimeAmount;
   NSString *amount;
-  TransferQuote *quote;
   NSMutableArray *attachmentsArray;
+  Pricing *pricing;
 } TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -483,19 +483,10 @@ typedef struct TransferBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "feesPaidBy",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
-        .number = TransferBody_FieldNumber_FeesPaidBy,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(TransferBody__storage_, feesPaidBy),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "currency",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_Currency,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferBody__storage_, currency),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -504,7 +495,7 @@ typedef struct TransferBody__storage_ {
         .name = "lifetimeAmount",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_LifetimeAmount,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(TransferBody__storage_, lifetimeAmount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -513,19 +504,10 @@ typedef struct TransferBody__storage_ {
         .name = "amount",
         .dataTypeSpecific.className = NULL,
         .number = TransferBody_FieldNumber_Amount,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TransferBody__storage_, amount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "quote",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
-        .number = TransferBody_FieldNumber_Quote,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(TransferBody__storage_, quote),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "attachmentsArray",
@@ -534,6 +516,15 @@ typedef struct TransferBody__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferBody__storage_, attachmentsArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "pricing",
+        .dataTypeSpecific.className = GPBStringifySymbol(Pricing),
+        .number = TransferBody_FieldNumber_Pricing,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(TransferBody__storage_, pricing),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };

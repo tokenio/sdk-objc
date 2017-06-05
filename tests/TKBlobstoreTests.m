@@ -72,14 +72,14 @@
                                               withName:@"file.json"
                                               withData:data];
             NSArray<Attachment*> *attachments = [NSArray arrayWithObjects:attachment, nil];
-            NSMutableArray<Destination*> *destinations = [NSMutableArray array];
-            Token *token = [payer createTransferToken:payee.firstUsername
-                                           forAccount:payerAccount.id
-                                               amount:100.99
-                                             currency:@"USD"
-                                          description:@"transfer test"
-                                         destinations:destinations
-                                          attachments:attachments];
+            
+            TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                              currency:@"USD"];
+            builder.accountId = payerAccount.id;
+            builder.redeemerUsername = payee.firstUsername;
+            builder.attachments = attachments;
+            Token *token = [builder execute];
+            
             [payer endorseToken:token withKey:Key_Level_Standard];
             Blob* blob = [payer getTokenBlob:token.id_p withBlobId:attachment.blobId];
 

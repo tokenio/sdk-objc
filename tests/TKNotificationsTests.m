@@ -6,6 +6,7 @@
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
+#import "Account.pbobjc.h"
 #import "TokenIO.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
@@ -57,20 +58,44 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
-        Token *token = [payer createTransferToken:payee.firstUsername
-                               forAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
+        
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
-        [self waitForNotification:@"TRANSFER_PROCESSED"];
+        [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
     }];
 }
+
+- (void)testNotifyPayeeTransfer {
+    [self run: ^(TokenIO *tokenIO) {
+        [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        builder.toUsername = payee.firstUsername;
+        Token *token = [builder execute];
+        
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
+
+        [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
+    }];
+}
+
 
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
@@ -88,7 +113,7 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testNotifyAddKey {
     [self run: ^(TokenIO *tokenIO) {
-        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyAddKey:payer.firstUsername
                       keyName:@"Chrome 53.0"
@@ -97,6 +122,27 @@ void check(NSString *message, BOOL condition) {
         [self waitForNotification:@"ADD_KEY"];
     }];
 }
+
+
+- (void)testStepUp {
+    [self run: ^(TokenIO *tokenIO) {
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
+        
+        TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
+        XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
+        
+        [self waitForNotification:@"STEP_UP"];
+        
+        result = [payer endorseToken:token withKey:Key_Level_Standard];
+        XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
+    }];
+}
+
 
 - (void)testNotifyAddKeyIos {
     [self run: ^(TokenIO *tokenIO) {
@@ -177,17 +223,22 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
         [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         
-        Token *token = [payer createTransferToken:payee.firstUsername
-                               forAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(100.99) currency:@"USD" description:@"" destination:destination];
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        Transfer *transfer = [payee createTransfer:token
+                                            amount:@(100.99)
+                                          currency:@"USD"
+                                       description:@""
+                                       destination:destination];
         XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
     }];
 }
@@ -208,16 +259,27 @@ void check(NSString *message, BOOL condition) {
  * Wait for the delivered notification of the specified type.
  *
  * @param type notification type
+ * @param member user to check notifications for
  */
-- (void)waitForNotification:(NSString *)type {
+- (void)waitForNotification:(NSString *)type
+                     member:(TKMember *)member {
     [self waitUntil:^{
-        PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil limit:100];
+        PagedArray<Notification *> *notifications = [member getNotificationsOffset:nil limit:100];
         check(@"Notification count", notifications.items.count == 1);
 
         Notification* notification = [notifications.items objectAtIndex:0];
         check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-        check(@"Notification Type", [notification.content.type isEqualToString:type]);
+            check(@"Notification Type", [notification.content.type isEqualToString:type]);
     }];
+}
+
+/**
+ * Wait for the delivered notification of the specified type.
+ *
+ * @param type notification type
+ */
+- (void)waitForNotification:(NSString *)type {
+    [self waitForNotification:type member:payer];
 }
 
 /**

@@ -17,7 +17,7 @@
 @class Member;
 @class TKClient;
 @class TKCrypto;
-@class Destination;
+@class TransferEndpoint;
 
 /**
  * Represents a Member in the Token system. Each member has an active secret
@@ -42,6 +42,9 @@
  */
 + (TKMemberAsync *)member:(Member *)member
                 useClient:(TKClient *)client;
+
+
+- (TKClient *)client;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used
@@ -338,84 +341,13 @@
                     onError:(OnError)onError;
 
 /**
- * Creates a new transfer token.
+ * Creates a new transfer token builder.
  *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
+ * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
  */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                    onSuccess:(OnSuccessWithToken)onSuccess
-                      onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-                destinations:(NSArray<Destination *> *)destinations
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param attachments file attachments, optional
- * @param onSuccess callback invoked on success
- * @param onError callback invoked on error
- */
-- (void)createTransferToken:(NSString *)redeemerUsername
-                 forAccount:(NSString *)accountId
-                     amount:(double)amount
-                   currency:(NSString *)currency
-                description:(NSString *)description
-               destinations:(NSArray<Destination *> *)destinations
-                attachments:(NSArray<Attachment *> *)attachments
-                  onSuccess:(OnSuccessWithToken)onSuccess
-                    onError:(OnError)onError;
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency;
 
 /**
  * Creates a new access token for a list of resources.
@@ -541,7 +473,7 @@
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
-           destination:(Destination *)destination
+           destination:(TransferEndpoint *)destination
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

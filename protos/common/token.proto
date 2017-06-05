@@ -5,7 +5,9 @@ option java_outer_classname = "TokenProtos";
 
 import "blob.proto";
 import "money.proto";
+import "pricing.proto";
 import "security.proto";
+import "transfer.proto";
 import "transferinstructions.proto";
 
 
@@ -62,13 +64,14 @@ message TokenPayload {
 message TransferBody {
   TokenMember redeemer = 1;                                                          // Redeemer member.
   io.token.proto.common.transferinstructions.TransferInstructions instructions = 2;  // Transfer instructions.
-  TokenMember fees_paid_by = 3;                                                      // Payer or redeemer member id.
   string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
-  io.token.proto.common.money.TransferQuote quote = 7;                               // Optional: Transfer fees and fx charges.
   repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
+  io.token.proto.common.pricing.Pricing pricing = 9;                                 // Optional: Transfer fees and fx charges.
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Access Token

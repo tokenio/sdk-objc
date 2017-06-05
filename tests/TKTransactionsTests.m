@@ -8,8 +8,8 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
+#import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "Token.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -46,15 +46,16 @@
 
 - (void)testLookupTransaction {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                             amount:100.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         Transfer *transfer = [payee createTransfer:token
                                             amount:@100.99
                                           currency:@"USD"
@@ -73,15 +74,16 @@
 
 - (void)testLookupTransactions {
     [self run: ^(TokenIO *tokenIO) {
-        Token *token = [payer createTransferToken:payee.firstUsername
-                                       forAccount:payerAccount.id
-                                             amount:49.99
-                                           currency:@"USD"
-                                        description:@"transfer test"];
+        TransferTokenBuilder *builder = [payer createTransferToken:49.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
-        Destination *destination = [[Destination alloc] init];
-        destination.tokenDestination.accountId = payeeAccount.id;
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
         [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];

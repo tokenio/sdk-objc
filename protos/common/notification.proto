@@ -6,9 +6,14 @@ import "banklink.proto";
 
 option java_outer_classname = "NotificationProtos";
 
-// A notification that a transfer was successfully processed.
-message TransferProcessed {
+// A notification to the payer that a transfer was successfully processed.
+message PayerTransferProcessed {
     string transfer_id = 1;
+}
+
+// A notification to the payee that a transfer was successfully processed.
+message PayeeTransferProcessed {
+  string transfer_id = 1;
 }
 
 // A notification that a bank wants to be linked.
@@ -36,11 +41,12 @@ message LinkAccountsAndAddKey {
 // A data that goes in a NotifyRequest
 message NotifyBody {
     oneof body {
-        io.token.proto.common.notification.TransferProcessed transfer_processed = 1;
+        io.token.proto.common.notification.PayerTransferProcessed payer_transfer_processed = 1;
         io.token.proto.common.notification.LinkAccounts link_accounts = 2;
         io.token.proto.common.notification.StepUp step_up = 3;
         io.token.proto.common.notification.AddKey add_key = 4;
         io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
+        io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
     }
 }
 

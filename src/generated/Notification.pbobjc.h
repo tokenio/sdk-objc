@@ -33,8 +33,9 @@ CF_EXTERN_C_BEGIN
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
+@class PayeeTransferProcessed;
+@class PayerTransferProcessed;
 @class StepUp;
-@class TransferProcessed;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -101,16 +102,31 @@ BOOL Notification_Status_IsValidValue(int32_t value);
 @interface NotificationRoot : GPBRootObject
 @end
 
-#pragma mark - TransferProcessed
+#pragma mark - PayerTransferProcessed
 
-typedef GPB_ENUM(TransferProcessed_FieldNumber) {
-  TransferProcessed_FieldNumber_TransferId = 1,
+typedef GPB_ENUM(PayerTransferProcessed_FieldNumber) {
+  PayerTransferProcessed_FieldNumber_TransferId = 1,
 };
 
 /**
- * A notification that a transfer was successfully processed.
+ * A notification to the payer that a transfer was successfully processed.
  **/
-@interface TransferProcessed : GPBMessage
+@interface PayerTransferProcessed : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
+
+@end
+
+#pragma mark - PayeeTransferProcessed
+
+typedef GPB_ENUM(PayeeTransferProcessed_FieldNumber) {
+  PayeeTransferProcessed_FieldNumber_TransferId = 1,
+};
+
+/**
+ * A notification to the payee that a transfer was successfully processed.
+ **/
+@interface PayeeTransferProcessed : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
@@ -193,20 +209,22 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
 #pragma mark - NotifyBody
 
 typedef GPB_ENUM(NotifyBody_FieldNumber) {
-  NotifyBody_FieldNumber_TransferProcessed = 1,
+  NotifyBody_FieldNumber_PayerTransferProcessed = 1,
   NotifyBody_FieldNumber_LinkAccounts = 2,
   NotifyBody_FieldNumber_StepUp = 3,
   NotifyBody_FieldNumber_AddKey = 4,
   NotifyBody_FieldNumber_LinkAccountsAndAddKey = 5,
+  NotifyBody_FieldNumber_PayeeTransferProcessed = 6,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_GPBUnsetOneOfCase = 0,
-  NotifyBody_Body_OneOfCase_TransferProcessed = 1,
+  NotifyBody_Body_OneOfCase_PayerTransferProcessed = 1,
   NotifyBody_Body_OneOfCase_LinkAccounts = 2,
   NotifyBody_Body_OneOfCase_StepUp = 3,
   NotifyBody_Body_OneOfCase_AddKey = 4,
   NotifyBody_Body_OneOfCase_LinkAccountsAndAddKey = 5,
+  NotifyBody_Body_OneOfCase_PayeeTransferProcessed = 6,
 };
 
 /**
@@ -216,7 +234,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @property(nonatomic, readonly) NotifyBody_Body_OneOfCase bodyOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) TransferProcessed *transferProcessed;
+@property(nonatomic, readwrite, strong, null_resettable) PayerTransferProcessed *payerTransferProcessed;
 
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccounts *linkAccounts;
 
@@ -225,6 +243,8 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
 
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccountsAndAddKey *linkAccountsAndAddKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) PayeeTransferProcessed *payeeTransferProcessed;
 
 @end
 

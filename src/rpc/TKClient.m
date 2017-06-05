@@ -319,6 +319,7 @@
     request.payload = payload;
     RpcLogStart(request);
     
+    NSLog(@"About to execute in client");
     GRPCProtoCall *call = [gateway
                            RPCToCreateTokenWithRequest:request
                            handler:^(CreateTokenResponse *response, NSError *error) {
@@ -326,6 +327,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
+                                   RpcLogError(error);
                                    [errorHandler handle:onError withError:error];
                                }
                            }];

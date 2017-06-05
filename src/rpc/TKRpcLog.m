@@ -9,7 +9,7 @@
 #import "TKLogManager.h"
 
 void RpcLogStart(GPBMessage *request) {
-    TKLogInfo(@"RPC << %@", request)
+    TKLogDebug(@"RPC << %@", request)
 }
 
 void RpcLogError(NSError *error) {
@@ -21,5 +21,5 @@ void RpcLogErrorDetails(NSString *message) {
 }
 
 void RpcLogCompleted(GPBMessage *response) {
-    TKLogInfo(@"RPC >> %@", response)
+    TKLogDebug(@"RPC >> %@", response)
 }

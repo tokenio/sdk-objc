@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 #import "AccessTokenConfig.h"
+#import "TransferTokenBuilder.h"
 #import "TKTypedef.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
@@ -22,7 +23,7 @@
 @class Address;
 @class AddressRecord;
 @class AccessBody_Resource;
-@class Destination;
+@class TransferEndpoint;
 
 
 /**
@@ -267,78 +268,16 @@
 - (void)deleteAddressWithId:(NSString *)addressId;
 
 /**
- * Creates a new transfer token.
+ * Creates a new transfer token builder.
  *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
+ * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
- * @return transfer token returned by the server
+ * @return transfer token builder, can be executed to create a token
  */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency;
+- (TransferTokenBuilder *)createTransferToken:(double)amount
+                                     currency:(NSString *)currency;
 
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations;
-
-/**
- * Creates a new transfer token.
- *
- * @param redeemerUsername redeemer token username
- * @param accountId the funding account id
- * @param amount transfer amount
- * @param currency currency code, e.g. "USD"
- * @param redeemer redeemer username
- * @param description transfer description, optional
- * @param destinations transfer destinations, optional
- * @param attachments file attachments
- * @return transfer token returned by the server
- */
-- (Token *)createTransferToken:(NSString *)redeemerUsername
-                    forAccount:(NSString *)accountId
-                        amount:(double)amount
-                      currency:(NSString *)currency
-                   description:(NSString *)description
-                  destinations:(NSArray<Destination *> *)destinations
-                   attachments:(NSArray<Attachment *> *)attachments;
-
-/**
- * Creates a new access token for a list of resources.
+/** Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
  * @return the created access token
@@ -446,7 +385,7 @@
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
-                 destination:(Destination * )destination;
+                 destination:(TransferEndpoint *)destination;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.

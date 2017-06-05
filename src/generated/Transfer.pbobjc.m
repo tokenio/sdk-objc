@@ -56,14 +56,18 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 @dynamic status;
+@dynamic orderId;
+@dynamic method;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
   TransactionStatus status;
+  Transfer_Method method;
   NSString *id_p;
   NSString *referenceId;
   TransferPayload *payload;
   NSMutableArray *payloadSignaturesArray;
+  NSString *orderId;
   int64_t createdAtMs;
 } Transfer__storage_;
 
@@ -127,6 +131,24 @@ typedef struct Transfer__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
+      {
+        .name = "orderId",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_OrderId,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Transfer__storage_, orderId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "method",
+        .dataTypeSpecific.enumDescFunc = Transfer_Method_EnumDescriptor,
+        .number = Transfer_FieldNumber_Method,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Transfer__storage_, method),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Transfer class]
@@ -154,6 +176,52 @@ void SetTransfer_Status_RawValue(Transfer *message, int32_t value) {
   GPBDescriptor *descriptor = [Transfer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Status];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t Transfer_Method_RawValue(Transfer *message) {
+  GPBDescriptor *descriptor = [Transfer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Method];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransfer_Method_RawValue(Transfer *message, int32_t value) {
+  GPBDescriptor *descriptor = [Transfer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Method];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Transfer_Method
+
+GPBEnumDescriptor *Transfer_Method_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Default\000Instant\000";
+    static const int32_t values[] = {
+        Transfer_Method_Default,
+        Transfer_Method_Instant,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Transfer_Method)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Transfer_Method_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Transfer_Method_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Transfer_Method_Default:
+    case Transfer_Method_Instant:
+      return YES;
+    default:
+      return NO;
+  }
 }
 
 #pragma mark - TransferPayload
@@ -210,7 +278,7 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Destination),
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
         .number = TransferPayload_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, destinationsArray),
