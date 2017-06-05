@@ -22,7 +22,6 @@
     TKMember *payer;
     TKAccount *payeeAccount;
     TKMember *payee;
-    BankAuthorization *auth;
 }
 
 - (void)setUp {
@@ -33,7 +32,6 @@
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
         payee = payeeAccount.member;
-        auth = [self createBankAuthorization:tokenIO username:payer.firstUsername];
     }];
 }
 
@@ -69,18 +67,21 @@
     [self run: ^(TokenIO *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
-        builder.bankAuthorization = auth;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.bankAuthorization = [self createBankAuthorization:tokenIO username:payer.firstUsername];
+        builder.redeemerUsername = payer.firstUsername;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+        NSLog(@"%@", payee.firstUsername);
+        NSLog(@"%@", payee.firstUsername);
+        
 
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(50.1)
+        Transfer *transfer = [payer createTransfer:token amount:@(50.1)
                                           currency:@"USD"
                                        description:@"lunch"
                                        destination:destination];
