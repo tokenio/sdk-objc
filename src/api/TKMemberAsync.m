@@ -44,8 +44,9 @@
     return member.id_p;
 }
 
-- (TKClient *)client {
-    return self.client;
+- (TKClient *)getClient {
+    NSLog(@"%@", client);
+    return client;
 }
 
 - (NSString *)firstUsername {

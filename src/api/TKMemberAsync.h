@@ -44,7 +44,7 @@
                 useClient:(TKClient *)client;
 
 
-- (TKClient *)client;
+- (TKClient *)getClient;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used

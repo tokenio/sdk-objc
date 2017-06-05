@@ -35,7 +35,7 @@
     [self run: ^(TokenIO *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
-        builder.accountId = payeeAccount.id;
+        builder.accountId = payerAccount.id;
         builder.redeemerUsername = payee.firstUsername;
         Token *token = [builder execute];
     }];
@@ -69,7 +69,7 @@
         
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
-        builder.accountId = payeeAccount.id;
+        builder.accountId = payerAccount.id;
         builder.destinations = destinations;
         XCTAssertThrows([builder execute]);
     }];
@@ -86,21 +86,24 @@
         
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
-        builder.accountId = payeeAccount.id;
+        builder.accountId = payerAccount.id;
         builder.redeemerUsername = payee.firstUsername;
         builder.redeemerMemberId = payee.id;
         builder.toUsername = payee.firstUsername;
         builder.toMemberId = payee.id;
         builder.destinations = destinations;
-        builder.effectiveAtMs = CFAbsoluteTimeGetCurrent();
-        builder.expiresAtMs = CFAbsoluteTimeGetCurrent() + 10000;
+        builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
+        builder.expiresAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0 + 100000;
         builder.descr = @"Test token";
         builder.chargeAmount = 20;
         
         Token *token = [builder execute];
         
-        
-        XCTAssertEqual(token.payload.description, @"Test token");
+        XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
+        XCTAssertEqualObjects(payee.firstUsername, token.payload.to.username);
+        XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
+        XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
+        XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
     }];
 }
 

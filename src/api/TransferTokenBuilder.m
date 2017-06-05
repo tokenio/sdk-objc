@@ -25,6 +25,7 @@
     
     self = [super init];
     if (self) {
+        self.member = member;
         self.lifetimeAmount = lifetimeAmount;
         self.currency = currency;
     }
@@ -70,7 +71,7 @@
     
     if (self.accountId) {
         payload.transfer.instructions.source.account.token.memberId = [self.member id];
-        payload.transfer.instructions.source.account.token.memberId = self.accountId;
+        payload.transfer.instructions.source.account.token.accountId = self.accountId;
     }
     
     if (self.bankAuthorization) {
@@ -112,13 +113,11 @@
     if (self.attachments) {
         [payload.transfer.attachmentsArray addObjectsFromArray:self.attachments];
     }
-    NSLog(@"About to execute call");
-    return [[self.member client] createToken:payload
-              onSuccess:^(Token *token) {
-                  NSLog(@"%@", token);
-                  onSuccess(token);
-              }
-                onError:onError];
+    [[self.member getClient] createToken:payload
+                            onSuccess:^(Token *token) {
+                                onSuccess(token);
+                            }
+                              onError:onError];
 }
 
 @end
