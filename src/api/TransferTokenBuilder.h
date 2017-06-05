@@ -27,12 +27,31 @@
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 @property (readwrite) NSArray<Attachment*> *attachments;
 
+/**
+ * Initializes the transfer token builder.
+ *
+ * @param member the payer of the token
+ * @param lifetimeAmount the total lifetime amount of the token
+ * @param currency the currency of the token
+ * @return transfer token builder
+ */
 - (id)init:(TKMemberAsync *)member
     lifetimeAmount:(double)lifetimeAmount
           currency:(NSString*)currency;
 
+/**
+ * Executes the request, creating the token
+ *
+ * @return transfer token
+ */
 - (Token *)execute;
 
+/**
+ * Executes the request, creating the token, async
+ *
+ * @param onSuccess
+ * @param onError
+ */
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError;
 

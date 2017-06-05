@@ -345,6 +345,7 @@
  *
  * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
+ * @return the transfer token builder
  */
 - (TransferTokenBuilder *)createTransferToken:(double)amount
                                      currency:(NSString *)currency;
