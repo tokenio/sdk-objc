@@ -11,7 +11,7 @@
 @class TKMember;
 @class TokenIOAsync;
 @class DeviceInfo;
-
+@class TokenPayload;
 
 /**
  * Use this class to create to create a new member using `createMember`
@@ -73,6 +73,17 @@
  * @return logged in member
  */
 - (TKMember *)loginMember:(NSString *)memberId;
+
+/**
+ * Sends a notification to request payment
+ *
+ * @param username username to notify
+ * @param token payload of a token to be sent
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token;
 
 /**
  * Sends a notification to request linking of accounts

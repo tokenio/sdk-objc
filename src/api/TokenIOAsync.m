@@ -127,6 +127,20 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
               onError:onError];
 }
 
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
+    [client notifyPaymentRequest:username
+                           token:token
+                       onSuccess:onSuccess
+                         onError:onError];
+}
+
 - (void)notifyLinkAccounts:(NSString *)username
              authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess

@@ -96,7 +96,6 @@ void check(NSString *message, BOOL condition) {
     }];
 }
 
-
 - (void)testNotifyLinkAccounts {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
@@ -123,6 +122,17 @@ void check(NSString *message, BOOL condition) {
     }];
 }
 
+- (void)testNotifyPaymentRequest {
+    [self run: ^(TokenIO *tokenIO) {
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        TokenPayload *token = [TokenPayload message];
+        token.from.username = payer.firstUsername;
+        [tokenIO notifyPaymentRequest:payer.firstUsername
+                                token:token];
+
+        [self waitForNotification:@"PAYMENT_REQUEST"];
+    }];
+}
 
 - (void)testStepUp {
     [self run: ^(TokenIO *tokenIO) {

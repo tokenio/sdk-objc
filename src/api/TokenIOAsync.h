@@ -16,6 +16,7 @@
 @class TKMember;
 @class TokenIO;
 @protocol TKCryptoEngineFactory;
+@class TokenPayload;
 
 /**
  * Use this class to create to create a new member using `createMember`
@@ -94,6 +95,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
 - (void)loginMember:(NSString *)memberId
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError;
+
+/**
+ * Sends a notification to request payment
+ *
+ * @param username username to notify
+ * @param token payload of a token to be sent
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError;
 
 /**
  * Sends a notification to request linking of accounts

@@ -256,6 +256,7 @@ typedef struct Account__storage_ {
 
 @dynamic accountOneOfCase;
 @dynamic token;
+@dynamic member;
 @dynamic tokenAuthorization;
 @dynamic swift;
 @dynamic sepa;
@@ -268,6 +269,7 @@ typedef struct BankAccount__storage_ {
   BankAccount_Swift *swift;
   BankAccount_Sepa *sepa;
   BankAccount_Ach *ach;
+  BankAccount_Member *member;
 } BankAccount__storage_;
 
 // This method is threadsafe because it is initially called
@@ -318,6 +320,15 @@ typedef struct BankAccount__storage_ {
         .number = BankAccount_FieldNumber_Ach,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(BankAccount__storage_, ach),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "member",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount_Member),
+        .number = BankAccount_FieldNumber_Member,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(BankAccount__storage_, member),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -394,6 +405,50 @@ typedef struct BankAccount_Token__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankAccount_Token__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BankAccount)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - BankAccount_Member
+
+@implementation BankAccount_Member
+
+@dynamic memeberId;
+
+typedef struct BankAccount_Member__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memeberId;
+} BankAccount_Member__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memeberId",
+        .dataTypeSpecific.className = NULL,
+        .number = BankAccount_Member_FieldNumber_MemeberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BankAccount_Member__storage_, memeberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BankAccount_Member class]
+                                     rootClass:[AccountRoot class]
+                                          file:AccountRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BankAccount_Member__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BankAccount)];
     NSAssert(descriptor == nil, @"Startup recursed!");

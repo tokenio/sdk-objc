@@ -65,6 +65,19 @@
                  onError:(OnError)onError;
 
 /**
+ * Sends a notification to request payment
+ *
+ * @param username username to notify
+ * @param token payload of a token to be sent
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError;
+
+/**
  * Sends a notification to request linking of accounts
  *
  * @param username username to notify
