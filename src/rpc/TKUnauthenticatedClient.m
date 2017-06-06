@@ -108,6 +108,28 @@
     [rpc execute:call request:request];
 }
 
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError {
+    NotifyRequest *request = [NotifyRequest message];
+    request.username = username;
+    request.body.paymentRequest.payload = token;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToNotifyWithRequest:request
+                           handler:^(NotifyResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
 - (void)notifyLinkAccounts:(NSString *)username
              authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess

@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class AccountTag;
 @class BankAccount;
 @class BankAccount_Ach;
+@class BankAccount_Member;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
 @class BankAccount_Token;
@@ -132,11 +133,13 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_Swift = 3,
   BankAccount_FieldNumber_Sepa = 4,
   BankAccount_FieldNumber_Ach = 5,
+  BankAccount_FieldNumber_Member = 6,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_GPBUnsetOneOfCase = 0,
   BankAccount_Account_OneOfCase_Token = 1,
+  BankAccount_Account_OneOfCase_Member = 6,
   BankAccount_Account_OneOfCase_TokenAuthorization = 2,
   BankAccount_Account_OneOfCase_Swift = 3,
   BankAccount_Account_OneOfCase_Sepa = 4,
@@ -152,6 +155,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readonly) BankAccount_Account_OneOfCase accountOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Token *token;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Member *member;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization;
 
@@ -183,6 +188,21 @@ typedef GPB_ENUM(BankAccount_Token_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - BankAccount_Member
+
+typedef GPB_ENUM(BankAccount_Member_FieldNumber) {
+  BankAccount_Member_FieldNumber_MemeberId = 1,
+};
+
+/**
+ * Default account Destination
+ **/
+@interface BankAccount_Member : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memeberId;
 
 @end
 

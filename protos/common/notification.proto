@@ -1,8 +1,9 @@
 syntax = "proto3";
 package io.token.proto.common.notification;
 
-import "security.proto";
 import "banklink.proto";
+import "security.proto";
+import "token.proto";
 
 option java_outer_classname = "NotificationProtos";
 
@@ -38,6 +39,11 @@ message LinkAccountsAndAddKey {
     AddKey add_key = 2;
 }
 
+// A notification to request a payment
+message PaymentRequest {
+  io.token.proto.common.token.TokenPayload payload = 1;
+}
+
 // A data that goes in a NotifyRequest
 message NotifyBody {
     oneof body {
@@ -47,6 +53,7 @@ message NotifyBody {
         io.token.proto.common.notification.AddKey add_key = 4;
         io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
         io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
+        io.token.proto.common.notification.PaymentRequest payment_request = 7;
     }
 }
 

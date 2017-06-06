@@ -69,6 +69,18 @@
     }];
 }
 
+- (void)notifyPaymentRequest:(NSString *)username
+                       token:(TokenPayload *)token {
+    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async notifyPaymentRequest:username
+                                   token:token
+                             onSuccess:^(void) {call.onSuccess(nil);}
+                               onError:call.onError
+         ];
+    }];
+}
+
 - (void)notifyLinkAccounts:(NSString *)username
              authorization:(BankAuthorization *)authorization{
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];

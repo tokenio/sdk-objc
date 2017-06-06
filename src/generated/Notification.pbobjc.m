@@ -14,8 +14,9 @@
 #endif
 
  #import "Notification.pbobjc.h"
- #import "Security.pbobjc.h"
  #import "Banklink.pbobjc.h"
+ #import "Security.pbobjc.h"
+ #import "Token.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -366,6 +367,49 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 
 @end
 
+#pragma mark - PaymentRequest
+
+@implementation PaymentRequest
+
+@dynamic hasPayload, payload;
+
+typedef struct PaymentRequest__storage_ {
+  uint32_t _has_storage_[1];
+  TokenPayload *payload;
+} PaymentRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = PaymentRequest_FieldNumber_Payload,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PaymentRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PaymentRequest class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PaymentRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - NotifyBody
 
 @implementation NotifyBody
@@ -377,6 +421,7 @@ typedef struct LinkAccountsAndAddKey__storage_ {
 @dynamic addKey;
 @dynamic linkAccountsAndAddKey;
 @dynamic payeeTransferProcessed;
+@dynamic paymentRequest;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -386,6 +431,7 @@ typedef struct NotifyBody__storage_ {
   AddKey *addKey;
   LinkAccountsAndAddKey *linkAccountsAndAddKey;
   PayeeTransferProcessed *payeeTransferProcessed;
+  PaymentRequest *paymentRequest;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -445,6 +491,15 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_PayeeTransferProcessed,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, payeeTransferProcessed),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "paymentRequest",
+        .dataTypeSpecific.className = GPBStringifySymbol(PaymentRequest),
+        .number = NotifyBody_FieldNumber_PaymentRequest,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, paymentRequest),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

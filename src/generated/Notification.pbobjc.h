@@ -35,7 +35,9 @@ CF_EXTERN_C_BEGIN
 @class NotificationContent;
 @class PayeeTransferProcessed;
 @class PayerTransferProcessed;
+@class PaymentRequest;
 @class StepUp;
+@class TokenPayload;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -206,6 +208,23 @@ typedef GPB_ENUM(LinkAccountsAndAddKey_FieldNumber) {
 
 @end
 
+#pragma mark - PaymentRequest
+
+typedef GPB_ENUM(PaymentRequest_FieldNumber) {
+  PaymentRequest_FieldNumber_Payload = 1,
+};
+
+/**
+ * A notification to request a payment
+ **/
+@interface PaymentRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
 #pragma mark - NotifyBody
 
 typedef GPB_ENUM(NotifyBody_FieldNumber) {
@@ -215,6 +234,7 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_AddKey = 4,
   NotifyBody_FieldNumber_LinkAccountsAndAddKey = 5,
   NotifyBody_FieldNumber_PayeeTransferProcessed = 6,
+  NotifyBody_FieldNumber_PaymentRequest = 7,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -225,6 +245,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_AddKey = 4,
   NotifyBody_Body_OneOfCase_LinkAccountsAndAddKey = 5,
   NotifyBody_Body_OneOfCase_PayeeTransferProcessed = 6,
+  NotifyBody_Body_OneOfCase_PaymentRequest = 7,
 };
 
 /**
@@ -245,6 +266,8 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) LinkAccountsAndAddKey *linkAccountsAndAddKey;
 
 @property(nonatomic, readwrite, strong, null_resettable) PayeeTransferProcessed *payeeTransferProcessed;
+
+@property(nonatomic, readwrite, strong, null_resettable) PaymentRequest *paymentRequest;
 
 @end
 
