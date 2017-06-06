@@ -79,8 +79,6 @@
  *
  * @param username username to notify
  * @param token payload of a token to be sent
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
  */
 - (void)notifyPaymentRequest:(NSString *)username
                        token:(TokenPayload *)token;

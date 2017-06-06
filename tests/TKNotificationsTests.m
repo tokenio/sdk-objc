@@ -127,6 +127,10 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         TokenPayload *token = [TokenPayload message];
         token.from.username = payer.firstUsername;
+        token.to.username = payee.firstUsername;
+        token.transfer.amount = @"50";
+        token.transfer.lifetimeAmount = @"100";
+        token.transfer.currency = @"EUR";
         [tokenIO notifyPaymentRequest:payer.firstUsername
                                 token:token];
 
