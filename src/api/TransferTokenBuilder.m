@@ -113,6 +113,15 @@
     if (self.attachments) {
         [payload.transfer.attachmentsArray addObjectsFromArray:self.attachments];
     }
+    
+    if (self.pricing) {
+        payload.transfer.pricing = self.pricing;
+    }
+    
+    if (self.purposeOfPayment) {
+        payload.transfer.instructions.transferPurpose = self.purposeOfPayment;
+    }
+    
     [[self.member getClient] createToken:payload
                             onSuccess:^(Token *token) {
                                 onSuccess(token);

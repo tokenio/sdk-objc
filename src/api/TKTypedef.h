@@ -21,6 +21,7 @@
 @class Bank;
 @class BankInfo;
 @class DeviceInfo;
+@class Pricing;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)( NSError * _Nonnull);

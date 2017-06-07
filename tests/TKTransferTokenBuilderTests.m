@@ -9,6 +9,7 @@
 #import "TokenIO.h"
 #import "Account.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
+#import "Pricing.pbobjc.h"
 
 @interface TKTransferTokenBuilderTests : TKTestBase
 @end
@@ -83,6 +84,9 @@
         destination.account.token.memberId = payee.id;
         
         NSArray<TransferEndpoint *> *destinations = @[destination];
+        Pricing *pricing = [Pricing message];
+        pricing.sourceQuote.feesTotal = @"0.45";
+        pricing.sourceQuote.accountCurrency = @"GBP";
         
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
@@ -94,6 +98,8 @@
         builder.destinations = destinations;
         builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
         builder.expiresAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0 + 100000;
+        builder.purposeOfPayment = PurposeOfPayment_Other;
+        builder.pricing = pricing;
         builder.descr = @"Test token";
         builder.chargeAmount = 20;
         
@@ -102,6 +108,8 @@
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
         XCTAssertEqualObjects(payee.firstUsername, token.payload.to.username);
         XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
+        XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.transferPurpose);
+        XCTAssertEqualObjects(pricing.sourceQuote, token.payload.transfer.pricing.sourceQuote);
         XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
         XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
     }];

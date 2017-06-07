@@ -5,6 +5,7 @@
 
 #import <objc/NSObject.h>
 #import "TKTypedef.h"
+#import "Transferinstructions.pbobjc.h"
 
 @class TransferEndpoint;
 
@@ -24,6 +25,8 @@
 @property (readwrite) NSString* toUsername;
 @property (readwrite) NSString* toMemberId;
 @property (readwrite) NSString* descr;
+@property (readwrite) Pricing* pricing;
+@property (readwrite) PurposeOfPayment purposeOfPayment;
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 @property (readwrite) NSArray<Attachment*> *attachments;
 
