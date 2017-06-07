@@ -45,6 +45,12 @@ typedef GPB_ENUM(PurposeOfPayment) {
   PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   PurposeOfPayment_Invalid = 0,
   PurposeOfPayment_Other = 1,
+  PurposeOfPayment_PersonalExpenses = 2,
+  PurposeOfPayment_PurchaseOfShares = 3,
+  PurposeOfPayment_TransferToYourOwnAccount = 4,
+  PurposeOfPayment_PurchaseOfProperty = 5,
+  PurposeOfPayment_FamilyMaintenance = 6,
+  PurposeOfPayment_Savings = 7,
 };
 
 GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void);

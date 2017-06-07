@@ -52,10 +52,18 @@ GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Invalid\000Other\000";
+        "Invalid\000Other\000PersonalExpenses\000PurchaseO"
+        "fShares\000TransferToYourOwnAccount\000Purchas"
+        "eOfProperty\000FamilyMaintenance\000Savings\000";
     static const int32_t values[] = {
         PurposeOfPayment_Invalid,
         PurposeOfPayment_Other,
+        PurposeOfPayment_PersonalExpenses,
+        PurposeOfPayment_PurchaseOfShares,
+        PurposeOfPayment_TransferToYourOwnAccount,
+        PurposeOfPayment_PurchaseOfProperty,
+        PurposeOfPayment_FamilyMaintenance,
+        PurposeOfPayment_Savings,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PurposeOfPayment)
@@ -74,6 +82,12 @@ BOOL PurposeOfPayment_IsValidValue(int32_t value__) {
   switch (value__) {
     case PurposeOfPayment_Invalid:
     case PurposeOfPayment_Other:
+    case PurposeOfPayment_PersonalExpenses:
+    case PurposeOfPayment_PurchaseOfShares:
+    case PurposeOfPayment_TransferToYourOwnAccount:
+    case PurposeOfPayment_PurchaseOfProperty:
+    case PurposeOfPayment_FamilyMaintenance:
+    case PurposeOfPayment_Savings:
       return YES;
     default:
       return NO;

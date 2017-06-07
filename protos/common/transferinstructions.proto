@@ -11,6 +11,12 @@ import "security.proto";
 enum PurposeOfPayment {
   INVALID = 0;
   OTHER = 1;
+  PERSONAL_EXPENSES = 2;
+  PURCHASE_OF_SHARES = 3;
+  TRANSFER_TO_YOUR_OWN_ACCOUNT = 4;
+  PURCHASE_OF_PROPERTY = 5;
+  FAMILY_MAINTENANCE = 6;
+  SAVINGS = 7;
 }
 
 message CustomerData {
