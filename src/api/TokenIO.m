@@ -58,6 +58,17 @@
     return [result boolValue];
 }
 
+- (NSString *)getMemberId:(NSString *)username {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+    NSString *result = [call run:^{
+        [self.async getMemberId:username
+                         onSuccess:call.onSuccess
+                           onError:call.onError];
+    }];
+    return result;
+}
+
+
 - (TKMember *)loginMember:(NSString *)memberId {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{

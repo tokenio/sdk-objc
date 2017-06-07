@@ -27,7 +27,7 @@ typedef void (^OnSuccess)();
 typedef void (^OnError)( NSError * _Nonnull);
 
 typedef void (^OnSuccessWithBoolean)(BOOL);
-typedef void (^OnSuccessWithString)(NSString * _Nonnull);
+typedef void (^OnSuccessWithString)(NSString *_Nullable);
 
 typedef void (^OnSuccessWithMember)(Member * _Nonnull);
 typedef void (^OnSuccessWithTKMemberAsync)(TKMemberAsync * _Nonnull);
@@ -44,9 +44,9 @@ typedef void (^OnSuccessWithTokens)(PagedArray<Token *> * _Nonnull);
 typedef void (^OnSuccessWithTransfer)(Transfer * _Nonnull);
 typedef void (^OnSuccessWithTransfers)(PagedArray<Transfer *> * _Nonnull);
 
-typedef void (^OnSuccessWithBlob)(Blob *);
+typedef void (^OnSuccessWithBlob)(Blob *_Nullable);
 
-typedef void (^OnSuccessWithAttachment)(Attachment *);
+typedef void (^OnSuccessWithAttachment)(Attachment *_Nullable);
 
 typedef void (^OnSuccessWithMoney)(Money * _Nonnull);
 

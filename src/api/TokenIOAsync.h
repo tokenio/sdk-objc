@@ -86,6 +86,16 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
             onError:(OnError)onError;
 
 /**
+ * Looks up member id for a given username.
+ *
+ * @param username username to check
+ * @return member id if username already exists, nil otherwise
+ */
+- (void)getMemberId:(NSString *)username
+          onSuccess:(OnSuccessWithString)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Logs in an existing member to the system.
  *
  * @param memberId member id

@@ -63,6 +63,17 @@
     }];
 }
 
+- (void)testGetMemberID {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
+        TKMember *member = [self createMember:tokenIO];
+        
+        XCTAssertNil([tokenIO getMemberId:username]);
+        [member addUsername:username];
+        XCTAssertTrue([[tokenIO getMemberId:username] isEqualToString:member.id]);
+    }];
+}
+
 - (void)testAddUsername {
     [self run: ^(TokenIO *tokenIO) {
         NSString *username2 = [@"username-" stringByAppendingString:[TKUtil nonce]];

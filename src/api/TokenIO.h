@@ -48,6 +48,14 @@
 - (BOOL)usernameExists:(NSString *)username;
 
 /**
+ * Looks up member id for a given username.
+ *
+ * @param username username to check
+ * @return member id if username already exists, nil otherwise
+ */
+- (NSString *)getMemberId:(NSString *)username;
+
+/**
  * Creates a new Token member with a set of auto generated keys and the
  * given username.
  *

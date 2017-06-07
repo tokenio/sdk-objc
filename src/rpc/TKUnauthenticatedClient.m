@@ -63,7 +63,12 @@
                                    handler:^(GetMemberIdResponse *response, NSError *error) {
                                        if (response) {
                                            RpcLogCompleted(response);
-                                           onSuccess(response.memberId);
+                                           if (response.memberId && response.memberId.length) {
+                                               onSuccess(response.memberId);
+                                           }
+                                           else{
+                                               onSuccess(nil);
+                                           }
                                        } else {
                                            [errorHandler handle:onError withError:error];
                                        }

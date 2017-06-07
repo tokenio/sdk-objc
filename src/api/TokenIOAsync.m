@@ -110,6 +110,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                 onError:onError];
 }
 
+- (void)getMemberId:(NSString *)username
+          onSuccess:(OnSuccessWithString)onSuccess
+            onError:(OnError)onError;{
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+                                       initWithGateway:gateway
+                                       timeoutMs:timeoutMs
+                                       errorHandler:errorHandler];
+    [client getMemberId:username
+              onSuccess:onSuccess
+                onError:onError];
+}
+
+
 - (void)loginMember:(NSString *)memberId
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
