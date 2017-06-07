@@ -75,7 +75,7 @@ BOOL Transfer_Method_IsValidValue(int32_t value);
 
 typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Id_p = 1,
-  Transfer_FieldNumber_ReferenceId = 2,
+  Transfer_FieldNumber_TransactionId = 2,
   Transfer_FieldNumber_CreatedAtMs = 3,
   Transfer_FieldNumber_Payload = 4,
   Transfer_FieldNumber_PayloadSignaturesArray = 5,
@@ -93,7 +93,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** Bank transaction reference id. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *referenceId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
@@ -141,7 +141,7 @@ void SetTransfer_Method_RawValue(Transfer *message, int32_t value);
 #pragma mark - TransferPayload
 
 typedef GPB_ENUM(TransferPayload_FieldNumber) {
-  TransferPayload_FieldNumber_Nonce = 1,
+  TransferPayload_FieldNumber_RefId = 1,
   TransferPayload_FieldNumber_TokenId = 2,
   TransferPayload_FieldNumber_Amount = 3,
   TransferPayload_FieldNumber_DestinationsArray = 5,
@@ -154,7 +154,7 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 @interface TransferPayload : GPBMessage
 
 /** Client assigned unique request id. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
 
 /** Token id. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;

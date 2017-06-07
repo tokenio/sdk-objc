@@ -62,7 +62,7 @@
                                        description:@"full amount"
                                        destination:destination];
         
-        Transaction *transaction = [payerAccount getTransaction:transfer.referenceId];
+        Transaction *transaction = [payerAccount getTransaction:transfer.transactionId];
         
         XCTAssertEqualWithAccuracy(100.99, [transaction.amount.value doubleValue], 0.0);
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);

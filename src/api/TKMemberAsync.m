@@ -451,7 +451,7 @@
                onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
     payload.tokenId = token.id_p;
-    payload.nonce = [TKUtil nonce];
+    payload.refId = [TKUtil nonce];
     
     if (amount) {
         payload.amount.value = [amount stringValue];

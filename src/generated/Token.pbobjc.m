@@ -287,7 +287,7 @@ typedef struct TokenMember__storage_ {
 
 @dynamic bodyOneOfCase;
 @dynamic version;
-@dynamic nonce;
+@dynamic refId;
 @dynamic hasIssuer, issuer;
 @dynamic hasFrom, from;
 @dynamic hasTo, to;
@@ -300,7 +300,7 @@ typedef struct TokenMember__storage_ {
 typedef struct TokenPayload__storage_ {
   uint32_t _has_storage_[2];
   NSString *version;
-  NSString *nonce;
+  NSString *refId;
   TokenMember *issuer;
   TokenMember *from;
   TokenMember *to;
@@ -327,11 +327,11 @@ typedef struct TokenPayload__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "nonce",
+        .name = "refId",
         .dataTypeSpecific.className = NULL,
-        .number = TokenPayload_FieldNumber_Nonce,
+        .number = TokenPayload_FieldNumber_RefId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TokenPayload__storage_, nonce),
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, refId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

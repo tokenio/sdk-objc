@@ -197,7 +197,7 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 
 typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Version = 1,
-  TokenPayload_FieldNumber_Nonce = 2,
+  TokenPayload_FieldNumber_RefId = 2,
   TokenPayload_FieldNumber_Issuer = 3,
   TokenPayload_FieldNumber_From = 4,
   TokenPayload_FieldNumber_To = 5,
@@ -219,8 +219,8 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** 1.0 */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *version;
 
-/** nonce, random string used to de-dupe tokens, set by client. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+/** random string used to de-dupe tokens, set by client. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
 
 /** Token issuer, bank. */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *issuer;

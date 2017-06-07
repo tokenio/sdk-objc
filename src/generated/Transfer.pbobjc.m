@@ -51,7 +51,7 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 @implementation Transfer
 
 @dynamic id_p;
-@dynamic referenceId;
+@dynamic transactionId;
 @dynamic createdAtMs;
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
@@ -64,7 +64,7 @@ typedef struct Transfer__storage_ {
   TransactionStatus status;
   Transfer_Method method;
   NSString *id_p;
-  NSString *referenceId;
+  NSString *transactionId;
   TransferPayload *payload;
   NSMutableArray *payloadSignaturesArray;
   NSString *orderId;
@@ -87,11 +87,11 @@ typedef struct Transfer__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "referenceId",
+        .name = "transactionId",
         .dataTypeSpecific.className = NULL,
-        .number = Transfer_FieldNumber_ReferenceId,
+        .number = Transfer_FieldNumber_TransactionId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Transfer__storage_, referenceId),
+        .offset = (uint32_t)offsetof(Transfer__storage_, transactionId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -228,7 +228,7 @@ BOOL Transfer_Method_IsValidValue(int32_t value__) {
 
 @implementation TransferPayload
 
-@dynamic nonce;
+@dynamic refId;
 @dynamic tokenId;
 @dynamic hasAmount, amount;
 @dynamic destinationsArray, destinationsArray_Count;
@@ -236,7 +236,7 @@ BOOL Transfer_Method_IsValidValue(int32_t value__) {
 
 typedef struct TransferPayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *nonce;
+  NSString *refId;
   NSString *tokenId;
   Money *amount;
   NSMutableArray *destinationsArray;
@@ -250,11 +250,11 @@ typedef struct TransferPayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "nonce",
+        .name = "refId",
         .dataTypeSpecific.className = NULL,
-        .number = TransferPayload_FieldNumber_Nonce,
+        .number = TransferPayload_FieldNumber_RefId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(TransferPayload__storage_, nonce),
+        .offset = (uint32_t)offsetof(TransferPayload__storage_, refId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

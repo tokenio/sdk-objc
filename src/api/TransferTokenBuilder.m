@@ -63,7 +63,7 @@
     
     TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
-    payload.nonce = [TKUtil nonce];
+    payload.refId = [TKUtil nonce];
     payload.from = payer;
     payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", self.lifetimeAmount];
     payload.transfer.amount = [NSString stringWithFormat:@"%g", self.chargeAmount];
