@@ -526,13 +526,13 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)createTransfer:(TransferPayload *)payload
+- (void)redeemToken:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
     TKSignature *signature = [crypto sign:payload
                                  usingKey:Key_Level_Low
                                    reason:TKLocalizedString(
-                                           @"Signature_Reason_CreateTransfer",
+                                           @"Signature_Reason_redeemToken",
                                            @"Approve creating a transfer")
                                   onError:onError];
     if (!signature) {

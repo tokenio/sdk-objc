@@ -380,20 +380,20 @@
     }];
 }
 
-- (Transfer *)createTransfer:(Token *)token {
-    return [self createTransfer:token
+- (Transfer *)redeemToken:(Token *)token {
+    return [self redeemToken:token
                          amount:nil
                        currency:nil
                     description:nil];
 }
 
-- (Transfer *)createTransfer:(Token *)token
+- (Transfer *)redeemToken:(Token *)token
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createTransfer:token
+        [self.async redeemToken:token
                             amount:amount
                           currency:currency
                        description:description
@@ -403,14 +403,14 @@
     }];
 }
 
-- (Transfer *)createTransfer:(Token *)token
+- (Transfer *)redeemToken:(Token *)token
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
                  destination:(TransferEndpoint *)destination {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createTransfer:token
+        [self.async redeemToken:token
                             amount:amount
                           currency:currency
                        description:description

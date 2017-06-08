@@ -145,7 +145,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = redeemerAccount.member.id;
         destination.account.token.accountId = redeemerAccount.id;
-        [redeemer createTransfer:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
+        [redeemer redeemToken:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
         [access forAllTransactions];
@@ -178,7 +178,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = redeemerAccount.member.id;
         destination.account.token.accountId = redeemerAccount.id;
-        [redeemer createTransfer:transferToken
+        [redeemer redeemToken:transferToken
                           amount:@(50)
                         currency:@"USD"
                      description:@"lunch"

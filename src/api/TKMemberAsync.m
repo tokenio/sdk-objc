@@ -430,10 +430,10 @@
                 onError:onError];
 }
 
-- (void)createTransfer:(Token *)token
+- (void)redeemToken:(Token *)token
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError {
-    [self createTransfer:token
+    [self redeemToken:token
                   amount:nil
                 currency:nil
              description:nil
@@ -442,7 +442,7 @@
                  onError:onError];
 }
 
-- (void)createTransfer:(Token *)token
+- (void)redeemToken:(Token *)token
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
@@ -466,7 +466,7 @@
         [payload.destinationsArray addObject:destination];
     }
     
-    [client createTransfer:payload
+    [client redeemToken:payload
                  onSuccess:onSuccess
                    onError:onError];
 }

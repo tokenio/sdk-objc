@@ -355,7 +355,7 @@
  * @param token transfer token to redeem
  * @return transfer record
  */
-- (Transfer *)createTransfer:(Token *)token;
+- (Transfer *)redeemToken:(Token *)token;
 
 /**
  * Redeems a transfer token.
@@ -366,7 +366,7 @@
  * @param description transfer description
  * @return transfer record
  */
-- (Transfer *)createTransfer:(Token *)token
+- (Transfer *)redeemToken:(Token *)token
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description;
@@ -381,7 +381,7 @@
  * @param destination transfer destination
  * @return transfer record
  */
-- (Transfer *)createTransfer:(Token *)token
+- (Transfer *)redeemToken:(Token *)token
                       amount:(NSNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description

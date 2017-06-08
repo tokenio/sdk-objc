@@ -248,7 +248,7 @@
  *
  * @param transfer transfer parameters, such as amount, currency, etc
  */
-- (void)createTransfer:(TransferPayload *)payload
+- (void)redeemToken:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 

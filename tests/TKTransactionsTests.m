@@ -56,7 +56,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token
+        Transfer *transfer = [payee redeemToken:token
                                             amount:@100.99
                                           currency:@"USD"
                                        description:@"full amount"
@@ -84,9 +84,9 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];
         
         PagedArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
         XCTAssertEqual(3, lookedUp.items.count);

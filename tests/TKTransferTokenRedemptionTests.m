@@ -50,7 +50,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@(50.1)
+        Transfer *transfer = [payee redeemToken:token amount:@(50.1)
                                           currency:@"USD"
                                        description:@"lunch"
                                        destination:destination];
@@ -81,7 +81,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payer createTransfer:token amount:@(50.1)
+        Transfer *transfer = [payer redeemToken:token amount:@(50.1)
                                           currency:@"USD"
                                        description:@"lunch"
                                        destination:destination];
@@ -110,7 +110,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token
+        Transfer *transfer = [payee redeemToken:token
                                             amount:@99.12
                                           currency:@"USD"
                                        description:@"test"
@@ -141,7 +141,7 @@
         token = [endorsedResult token];
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
 
-        Transfer *transfer = [payee createTransfer:token
+        Transfer *transfer = [payee redeemToken:token
                                             amount:@(50.1)
                                           currency:@"USD"
                                        description:@"lunch"
@@ -171,7 +171,7 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token amount:@99.12 currency:@"USD" description:nil destination:destination];
+        Transfer *transfer = [payee redeemToken:token amount:@99.12 currency:@"USD" description:nil destination:destination];
         Transfer *lookedUp = [payer getTransfer:transfer.id_p];
         
         XCTAssertEqualObjects(transfer, lookedUp);
@@ -193,9 +193,9 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil destination:destination];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil destination:destination];
-        [payee createTransfer:token amount:@11.11 currency:@"USD" description:nil destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:nil destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:nil destination:destination];
+        [payee redeemToken:token amount:@11.11 currency:@"USD" description:nil destination:destination];
         
         PagedArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
                                                             limit:100

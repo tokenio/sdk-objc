@@ -69,7 +69,7 @@ void check(NSString *message, BOOL condition) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
+        [payee redeemToken:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
         [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
     }];
@@ -90,7 +90,7 @@ void check(NSString *message, BOOL condition) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        [payee createTransfer:token amount:@(50) currency:@"USD" description:@"" destination:destination];
+        [payee redeemToken:token amount:@(50) currency:@"USD" description:@"" destination:destination];
 
         [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
     }];
@@ -248,7 +248,7 @@ void check(NSString *message, BOOL condition) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee createTransfer:token
+        Transfer *transfer = [payee redeemToken:token
                                             amount:@(100.99)
                                           currency:@"USD"
                                        description:@""

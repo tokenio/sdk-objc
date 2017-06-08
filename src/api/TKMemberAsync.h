@@ -455,7 +455,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTransfer:(Token *)token
+- (void)redeemToken:(Token *)token
              onSuccess:(OnSuccessWithTransfer)onSuccess
                onError:(OnError)onError;
 
@@ -470,7 +470,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createTransfer:(Token *)token
+- (void)redeemToken:(Token *)token
                 amount:(NSNumber *)amount
               currency:(NSString *)currency
            description:(NSString *)description
