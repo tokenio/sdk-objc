@@ -11,7 +11,7 @@ import "transferinstructions.proto";
 // A transfer record as persisted on the ledger.
 message Transfer {
   string id = 1;                               // Computed as the hash of the transfer payload.
-  string reference_id = 2;                     // Bank transaction reference id.
+  string transaction_id = 2;                   // Bank transaction reference id.
   int64 created_at_ms = 3;
   TransferPayload payload = 4;
   repeated io.token.proto.common.security.Signature payload_signatures = 5;
@@ -27,7 +27,7 @@ message Transfer {
 
 // A transfer payload that is being signed by the redeemer and the bank.
 message TransferPayload {
-  string nonce = 1;                                                                       // Client assigned unique request id.
+  string ref_id = 1;                                                                      // Client assigned unique request id.
   string token_id = 2;                                                                    // Token id.
   io.token.proto.common.money.Money amount = 3;                                           // Amount and currency.
   repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5;  // Transfer destinations, sorted in priority order.

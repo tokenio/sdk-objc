@@ -22,7 +22,7 @@
     if (self) {
         payload = [TokenPayload message];
         payload.version = @"1.0";
-        payload.nonce = [TKUtil nonce];
+        payload.refId = [TKUtil nonce];
         payload.to.username = redeemerUsername;
         resources = [[NSMutableSet alloc] init];
     }
@@ -34,7 +34,7 @@
     if (self) {
         payload = [payloadToInitFrom copy];
         [payload.access clear];
-        payload.nonce = [TKUtil nonce];
+        payload.refId = [TKUtil nonce];
         resources = [[NSMutableSet alloc] init];
     }
     return self;

@@ -37,11 +37,6 @@ message BankAccount {
     string account_id = 2;
   }
 
-  // Default account Destination
-  message Member {
-    string memeber_id = 1;
-  }
-
   // One-time encrypted authorization for an account
   message TokenAuthorization {
     io.token.proto.banklink.BankAuthorization authorization = 1;
@@ -66,7 +61,6 @@ message BankAccount {
 
   oneof account {
     Token token = 1;
-    Member member = 6;
     TokenAuthorization token_authorization = 2;
     Swift swift = 3;
     Sepa sepa = 4;

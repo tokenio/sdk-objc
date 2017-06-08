@@ -174,7 +174,7 @@
         TokenPayload *payload = [access toTokenPayload];
         NSUInteger count = [payload.access resourcesArray_Count];
         XCTAssertEqual(2, count);
-        XCTAssertNotEqual(token.payload.nonce, payload.nonce);
+        XCTAssertNotEqual(token.payload.refId, payload.refId);
     }];
 }
 
