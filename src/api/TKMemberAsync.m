@@ -355,9 +355,9 @@
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
     [accessTokenConfig from:self.id];
-    [client createToken:[accessTokenConfig toTokenPayload]
-              onSuccess:^(Token *token) { onSuccess(token); }
-                onError:onError];
+    [client createAccessToken:[accessTokenConfig toTokenPayload]
+                    onSuccess:^(Token *token) { onSuccess(token); }
+                      onError:onError];
 }
 
 - (void)replaceAccessToken:(Token *)tokenToCancel

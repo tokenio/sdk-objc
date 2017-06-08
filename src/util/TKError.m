@@ -15,7 +15,14 @@ static NSString* kTokenErrorDomain = @"io.tokensdk";
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details {
     return [NSError errorWithDomain:kTokenErrorDomain
                                code:errorCode
-                           userInfo:@{NSLocalizedDescriptionKey: details}];
+                           userInfo:@{ NSLocalizedDescriptionKey: details }];
+}
+
++ (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
+    return [NSError errorWithDomain:kTokenErrorDomain
+                               code:status
+                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
+                                           stringWithFormat:@"Failed to create token %d", status] }];
 }
 
 @end

@@ -49,6 +49,49 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum TransferTokenStatus
+
+/**
+ *
+ * Describes token creation error codes.
+ **/
+typedef GPB_ENUM(TransferTokenStatus) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  TransferTokenStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  TransferTokenStatus_Invalid = 0,
+  TransferTokenStatus_Success = 1,
+
+  /** the request has been rejected */
+  TransferTokenStatus_FailureRejected = 2,
+
+  /** the request has failed due to insufficient funds */
+  TransferTokenStatus_FailureInsufficientFunds = 3,
+
+  /** the request has failed, becuase currency is invalid/unsupported */
+  TransferTokenStatus_FailureInvalidCurrency = 4,
+
+  /** the request has failed, source account not found */
+  TransferTokenStatus_FailureSourceAccountNotFound = 5,
+
+  /** the request has failed, destination account not found */
+  TransferTokenStatus_FailureDestinationAccountNotFound = 6,
+
+  /** the request has failed due to other reasons */
+  TransferTokenStatus_FailureGeneric = 9,
+};
+
+GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL TransferTokenStatus_IsValidValue(int32_t value);
+
 #pragma mark - Enum TokenSignature_Action
 
 /**

@@ -121,12 +121,12 @@
     if (self.purposeOfPayment) {
         payload.transfer.instructions.transferPurpose = self.purposeOfPayment;
     }
-    
-    [[self.member getClient] createToken:payload
-                            onSuccess:^(Token *token) {
-                                onSuccess(token);
-                            }
-                              onError:onError];
+
+    [[self.member getClient] createTransferToken:payload
+                                       onSuccess:^(Token *token) {
+                                           onSuccess(token);
+                                       }
+                                         onError:onError];
 }
 
 @end

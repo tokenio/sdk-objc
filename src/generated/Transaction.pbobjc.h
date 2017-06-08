@@ -74,7 +74,7 @@ typedef GPB_ENUM(TransactionStatus) {
   /** the transaction has been successful */
   TransactionStatus_Success = 2,
 
-  /** the transaction has been canceled */
+  /** the transaction has been canceled, rolled back */
   TransactionStatus_FailureCanceled = 10,
 
   /** the transaction has failed due to insufficient funds */
@@ -85,6 +85,9 @@ typedef GPB_ENUM(TransactionStatus) {
 
   /** the transaction has failed due to access violation */
   TransactionStatus_FailurePermissionDenied = 6,
+
+  /** the transaction has failed because the quote has expired */
+  TransactionStatus_FailureQuoteExpired = 11,
 
   /** the transaction has failed due to other reasons */
   TransactionStatus_FailureGeneric = 5,

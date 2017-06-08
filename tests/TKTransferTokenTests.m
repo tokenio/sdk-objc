@@ -55,6 +55,30 @@
     }];
 }
 
+- (void)testCreateToken_invalidCurrency {
+    [self run: ^(TokenIO *tokenIO) {
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        
+        destination.account.token.accountId = payeeAccount.id;
+        destination.account.token.memberId = payee.id;
+        
+        NSArray<TransferEndpoint *> *destinations = @[destination];
+        
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"XXX"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        builder.destinations = destinations;
+        
+        @try {
+            [builder execute];
+        } @catch(NSError *error) {
+            XCTAssertTrue(error.code == TransferTokenStatus_FailureInvalidCurrency);
+            return;
+        }
+    }];
+}
+
 - (void)testLookupToken {
     [self run: ^(TokenIO *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
