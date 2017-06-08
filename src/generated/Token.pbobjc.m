@@ -49,6 +49,55 @@ static GPBFileDescriptor *TokenRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum TransferTokenStatus
+
+GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Success\000FailureRejected\000FailureI"
+        "nsufficientFunds\000FailureInvalidCurrency\000"
+        "FailureSourceAccountNotFound\000FailureDest"
+        "inationAccountNotFound\000FailureGeneric\000";
+    static const int32_t values[] = {
+        TransferTokenStatus_Invalid,
+        TransferTokenStatus_Success,
+        TransferTokenStatus_FailureRejected,
+        TransferTokenStatus_FailureInsufficientFunds,
+        TransferTokenStatus_FailureInvalidCurrency,
+        TransferTokenStatus_FailureSourceAccountNotFound,
+        TransferTokenStatus_FailureDestinationAccountNotFound,
+        TransferTokenStatus_FailureGeneric,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TransferTokenStatus)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:TransferTokenStatus_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL TransferTokenStatus_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case TransferTokenStatus_Invalid:
+    case TransferTokenStatus_Success:
+    case TransferTokenStatus_FailureRejected:
+    case TransferTokenStatus_FailureInsufficientFunds:
+    case TransferTokenStatus_FailureInvalidCurrency:
+    case TransferTokenStatus_FailureSourceAccountNotFound:
+    case TransferTokenStatus_FailureDestinationAccountNotFound:
+    case TransferTokenStatus_FailureGeneric:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - Token
 
 @implementation Token

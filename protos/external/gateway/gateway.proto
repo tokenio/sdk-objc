@@ -249,11 +249,20 @@ message GetTokenBlobResponse {
 // Tokens
 //
 
-message CreateTokenRequest {
+message CreateTransferTokenRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
 }
 
-message CreateTokenResponse {
+message CreateTransferTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+  io.token.proto.common.token.TransferTokenStatus status = 2;
+}
+
+message CreateAccessTokenRequest {
+  io.token.proto.common.token.TokenPayload payload = 1;
+}
+
+message CreateAccessTokenResponse {
   io.token.proto.common.token.Token token = 1;
 }
 
@@ -561,9 +570,15 @@ service GatewayService {
   // Tokens.
   //
 
-  rpc CreateToken (CreateTokenRequest) returns (CreateTokenResponse) {
+  rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
     option (google.api.http) = {
-        post: "/tokens"
+        post: "/tokens?type=transfer"
+    };
+  }
+
+  rpc CreateAccessToken (CreateAccessTokenRequest) returns (CreateAccessTokenResponse) {
+    option (google.api.http) = {
+        post: "/tokens?type=access"
     };
   }
 

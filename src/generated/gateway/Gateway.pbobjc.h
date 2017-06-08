@@ -53,6 +53,7 @@ CF_EXTERN_C_BEGIN
 @class Transfer;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
+GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -780,13 +781,13 @@ typedef GPB_ENUM(GetTokenBlobResponse_FieldNumber) {
 
 @end
 
-#pragma mark - CreateTokenRequest
+#pragma mark - CreateTransferTokenRequest
 
-typedef GPB_ENUM(CreateTokenRequest_FieldNumber) {
-  CreateTokenRequest_FieldNumber_Payload = 1,
+typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
+  CreateTransferTokenRequest_FieldNumber_Payload = 1,
 };
 
-@interface CreateTokenRequest : GPBMessage
+@interface CreateTransferTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
@@ -794,13 +795,56 @@ typedef GPB_ENUM(CreateTokenRequest_FieldNumber) {
 
 @end
 
-#pragma mark - CreateTokenResponse
+#pragma mark - CreateTransferTokenResponse
 
-typedef GPB_ENUM(CreateTokenResponse_FieldNumber) {
-  CreateTokenResponse_FieldNumber_Token = 1,
+typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
+  CreateTransferTokenResponse_FieldNumber_Token = 1,
+  CreateTransferTokenResponse_FieldNumber_Status = 2,
 };
 
-@interface CreateTokenResponse : GPBMessage
+@interface CreateTransferTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+/** Test to see if @c token has been set. */
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@property(nonatomic, readwrite) enum TransferTokenStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c CreateTransferTokenResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t CreateTransferTokenResponse_Status_RawValue(CreateTransferTokenResponse *message);
+/**
+ * Sets the raw value of an @c CreateTransferTokenResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCreateTransferTokenResponse_Status_RawValue(CreateTransferTokenResponse *message, int32_t value);
+
+#pragma mark - CreateAccessTokenRequest
+
+typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
+  CreateAccessTokenRequest_FieldNumber_Payload = 1,
+};
+
+@interface CreateAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
+#pragma mark - CreateAccessTokenResponse
+
+typedef GPB_ENUM(CreateAccessTokenResponse_FieldNumber) {
+  CreateAccessTokenResponse_FieldNumber_Token = 1,
+};
+
+@interface CreateAccessTokenResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /** Test to see if @c token has been set. */

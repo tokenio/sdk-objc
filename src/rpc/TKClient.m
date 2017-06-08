@@ -13,6 +13,7 @@
 #import "TKSignature.h"
 #import "TKLocalizer.h"
 #import "TKRpcErrorHandler.h"
+#import "TKError.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -312,25 +313,52 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)createToken:(TokenPayload *)payload
+- (void)createTransferToken:(TokenPayload *)payload
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
-    CreateTokenRequest *request = [CreateTokenRequest message];
+    CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
-                           RPCToCreateTokenWithRequest:request
-                           handler:^(CreateTokenResponse *response, NSError *error) {
+                           RPCToCreateTransferTokenWithRequest:request
+                           handler:^(CreateTransferTokenResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.token);
+                                   if (response.status == TransferTokenStatus_Success) {
+                                       onSuccess(response.token);
+                                   } else {
+                                       onError([NSError
+                                                errorFromTransferTokenStatus:response.status]);
+                                   }
                                } else {
                                    RpcLogError(error);
                                    [errorHandler handle:onError withError:error];
                                }
                            }];
     
+    [self _startCall:call withRequest:request];
+}
+
+- (void)createAccessToken:(TokenPayload *)payload
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+    CreateAccessTokenRequest *request = [CreateAccessTokenRequest message];
+    request.payload = payload;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToCreateAccessTokenWithRequest:request
+                                handler:^(CreateAccessTokenResponse *response, NSError *error) {
+                                    if (response) {
+                                        RpcLogCompleted(response);
+                                        onSuccess(response.token);
+                                    } else {
+                                        RpcLogError(error);
+                                        [errorHandler handle:onError withError:error];
+                                    }
+                                }];
+
     [self _startCall:call withRequest:request];
 }
 

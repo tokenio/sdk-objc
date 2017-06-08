@@ -16,10 +16,11 @@ enum TransactionStatus {
   PENDING = 1;                    // the transaction is pending submission
   PROCESSING = 7;                 // the transaction is being processed
   SUCCESS = 2;                    // the transaction has been successful
-  FAILURE_CANCELED = 10;          // the transaction has been canceled
+  FAILURE_CANCELED = 10;          // the transaction has been canceled, rolled back
   FAILURE_INSUFFICIENT_FUNDS = 3; // the transaction has failed due to insufficient funds
   FAILURE_INVALID_CURRENCY = 4;   // the transaction has failed due to currency mismatch
   FAILURE_PERMISSION_DENIED = 6;  // the transaction has failed due to access violation
+  FAILURE_QUOTE_EXPIRED = 11;     // the transaction has failed because the quote has expired
   FAILURE_GENERIC = 5;            // the transaction has failed due to other reasons
 }
 

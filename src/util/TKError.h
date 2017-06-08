@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TokenSdk.h"
 
 typedef enum {
     /* The operation was cancelled by user (like cancelling out of Touch ID prompt). */
@@ -23,5 +24,6 @@ typedef enum {
 @interface NSError (TokenSdk)
 
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString*)details;
++ (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 
 @end

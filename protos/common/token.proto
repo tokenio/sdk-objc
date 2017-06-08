@@ -10,7 +10,6 @@ import "security.proto";
 import "transfer.proto";
 import "transferinstructions.proto";
 
-
 //
 // Generic token envelope definition.
 //
@@ -57,9 +56,24 @@ message TokenPayload {
   }
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfer Token
 //
+
+//
+// Describes token creation error codes.
+//
+enum TransferTokenStatus {
+  INVALID = 0;
+  SUCCESS = 1;
+  FAILURE_REJECTED = 2;                      // the request has been rejected
+  FAILURE_INSUFFICIENT_FUNDS = 3;            // the request has failed due to insufficient funds
+  FAILURE_INVALID_CURRENCY = 4;              // the request has failed, becuase currency is invalid/unsupported
+  FAILURE_SOURCE_ACCOUNT_NOT_FOUND = 5;      // the request has failed, source account not found
+  FAILURE_DESTINATION_ACCOUNT_NOT_FOUND = 6; // the request has failed, destination account not found
+  FAILURE_GENERIC = 9;                       // the request has failed due to other reasons
+}
 
 message TransferBody {
   TokenMember redeemer = 1;                                                          // Redeemer member.
@@ -70,7 +84,6 @@ message TransferBody {
   repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
   io.token.proto.common.pricing.Pricing pricing = 9;                                 // Optional: Transfer fees and fx charges.
 }
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

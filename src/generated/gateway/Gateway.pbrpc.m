@@ -382,7 +382,7 @@
              responseClass:[GetTokenBlobResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -390,8 +390,8 @@
  * 
  * 
  */
-- (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCreateTokenWithRequest:request handler:handler] start];
+- (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateTransferTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -400,10 +400,22 @@
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CreateToken"
+- (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateTransferToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[CreateTokenResponse class]
+             responseClass:[CreateTransferTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
+
+- (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateAccessTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateAccessToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark GetToken(GetTokenRequest) returns (GetTokenResponse)

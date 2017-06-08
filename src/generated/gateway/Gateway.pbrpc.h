@@ -254,7 +254,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  */
-- (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,7 +270,14 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  */
-- (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
+
+- (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetToken(GetTokenRequest) returns (GetTokenResponse)

@@ -172,7 +172,16 @@
  *
  * @param payload transfer token payload
  */
-- (void)createToken:(TokenPayload *)payload
+- (void)createTransferToken:(TokenPayload *)payload
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
+
+/**
+ * Creates a new access token.
+ *
+ * @param payload access token payload
+ */
+- (void)createAccessToken:(TokenPayload *)payload
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError;
 
