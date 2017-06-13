@@ -126,6 +126,7 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         TokenPayload *token = [TokenPayload message];
+        token.description_p = @"Description: 🍷🌺🌹";
         token.from.username = payer.firstUsername;
         token.to.username = payee.firstUsername;
         token.transfer.amount = @"50";
