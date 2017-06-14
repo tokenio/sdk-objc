@@ -23,7 +23,7 @@
     if (self) {
         self.host = @"api.token.io";
         self.port = 9000;
-        self.timeoutMs = 10 * 1000; // 10 seconds.
+        self.timeoutMs = 60 * 1000; // 60 seconds.
         self.useSsl = YES;
         self.globalRpcErrorCallback = ^(NSError *error) {/* noop default callback */};
     }

@@ -3,7 +3,7 @@
 # gRPC.
 #
 
-def Pod::tokenSdkVer; "1.0.49"; end
+def Pod::tokenSdkVer; "1.0.50"; end
 
 Pod::Spec.new do |s|
     s.name     = "TokenSdk"
