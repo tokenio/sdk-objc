@@ -42,6 +42,7 @@ CF_EXTERN_C_BEGIN
 @class Notification;
 @class NotifyBody;
 @class Page;
+@class Profile;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
 @class Signature;
@@ -313,6 +314,60 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 #pragma mark - DeleteAddressResponse
 
 @interface DeleteAddressResponse : GPBMessage
+
+@end
+
+#pragma mark - SetProfileRequest
+
+typedef GPB_ENUM(SetProfileRequest_FieldNumber) {
+  SetProfileRequest_FieldNumber_Profile = 1,
+};
+
+@interface SetProfileRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
+/** Test to see if @c profile has been set. */
+@property(nonatomic, readwrite) BOOL hasProfile;
+
+@end
+
+#pragma mark - SetProfileResponse
+
+typedef GPB_ENUM(SetProfileResponse_FieldNumber) {
+  SetProfileResponse_FieldNumber_Profile = 1,
+};
+
+@interface SetProfileResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
+/** Test to see if @c profile has been set. */
+@property(nonatomic, readwrite) BOOL hasProfile;
+
+@end
+
+#pragma mark - GetProfileRequest
+
+typedef GPB_ENUM(GetProfileRequest_FieldNumber) {
+  GetProfileRequest_FieldNumber_MemberId = 1,
+};
+
+@interface GetProfileRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@end
+
+#pragma mark - GetProfileResponse
+
+typedef GPB_ENUM(GetProfileResponse_FieldNumber) {
+  GetProfileResponse_FieldNumber_Profile = 1,
+};
+
+@interface GetProfileResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
+/** Test to see if @c profile has been set. */
+@property(nonatomic, readwrite) BOOL hasProfile;
 
 @end
 

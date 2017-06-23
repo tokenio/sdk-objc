@@ -95,6 +95,22 @@ message DeleteAddressRequest {
 
 message DeleteAddressResponse {}
 
+message SetProfileRequest {
+  io.token.proto.common.member.Profile profile = 1;
+}
+
+message SetProfileResponse {
+  io.token.proto.common.member.Profile profile = 1;
+}
+
+message GetProfileRequest {
+  string member_id = 1;
+}
+
+message GetProfileResponse {
+  io.token.proto.common.member.Profile profile = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service
 //
@@ -408,6 +424,17 @@ service GatewayService {
   rpc GetMember (GetMemberRequest) returns (GetMemberResponse) {
     option (google.api.http) = {
         get: "/members"
+    };
+  }
+
+  rpc SetProfile (SetProfileRequest) returns (SetProfileResponse) {
+    option (google.api.http) = {
+        post: "/members/profile"
+    };
+  }
+  rpc GetProfile (GetProfileRequest) returns (GetProfileResponse) {
+    option (google.api.http) = {
+        get: "/members/{member_id}/profile"
     };
   }
 

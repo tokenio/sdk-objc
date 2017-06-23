@@ -58,7 +58,8 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
         "Invalid\000Success\000FailureRejected\000FailureI"
         "nsufficientFunds\000FailureInvalidCurrency\000"
         "FailureSourceAccountNotFound\000FailureDest"
-        "inationAccountNotFound\000FailureGeneric\000";
+        "inationAccountNotFound\000FailureCustomerNo"
+        "tFound\000FailureGeneric\000";
     static const int32_t values[] = {
         TransferTokenStatus_Invalid,
         TransferTokenStatus_Success,
@@ -67,6 +68,7 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
         TransferTokenStatus_FailureInvalidCurrency,
         TransferTokenStatus_FailureSourceAccountNotFound,
         TransferTokenStatus_FailureDestinationAccountNotFound,
+        TransferTokenStatus_FailureCustomerNotFound,
         TransferTokenStatus_FailureGeneric,
     };
     GPBEnumDescriptor *worker =
@@ -91,6 +93,7 @@ BOOL TransferTokenStatus_IsValidValue(int32_t value__) {
     case TransferTokenStatus_FailureInvalidCurrency:
     case TransferTokenStatus_FailureSourceAccountNotFound:
     case TransferTokenStatus_FailureDestinationAccountNotFound:
+    case TransferTokenStatus_FailureCustomerNotFound:
     case TransferTokenStatus_FailureGeneric:
       return YES;
     default:

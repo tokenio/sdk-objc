@@ -15,6 +15,7 @@
 #import "Token.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "PagedArray.h"
+#import "Member.pbobjc.h"
 
 
 @class Member;
@@ -455,5 +456,23 @@
  * @return bank linking information
  */
 - (BankInfo *)getBankInfo:(NSString *)bankId;
+
+
+/**
+ * Returns profile of a given member id
+ *
+ * @param target member id
+ * @return profile in the server
+ */
+- (Profile *)getProfile:(NSString *)targetMemberId;
+
+
+/**
+ * Set Profile for the current user
+ *
+ * @param profile you want to set
+ * @return profile in the server
+ */
+- (Profile *)setProfile:(Profile *)profile;
 
 @end

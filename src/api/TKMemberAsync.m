@@ -547,6 +547,22 @@
                 onError:onError];
 }
 
+- (void)getProfile:(NSString *) targetMemberId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    [client getProfile:targetMemberId
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    [client setProfile:profile
+             onSuccess:onSuccess
+               onError:onError];
+}
+    
 #pragma mark private
 
 - (NSArray<TKAccountAsync *> *)_mapAccounts:(NSArray<Account *> *)accounts {

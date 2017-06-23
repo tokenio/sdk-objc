@@ -53,3 +53,9 @@ message AddressRecord {
   io.token.proto.common.address.Address address = 3; // Country specific JSON address
   io.token.proto.common.security.Signature address_signature = 4; // member signature of the address
 }
+
+// Public profile
+message Profile {
+  string display_name_first = 1;
+  string display_name_last = 2;
+}

@@ -219,6 +219,24 @@ typedef GPB_ENUM(AddressRecord_FieldNumber) {
 
 @end
 
+#pragma mark - Profile
+
+typedef GPB_ENUM(Profile_FieldNumber) {
+  Profile_FieldNumber_DisplayNameFirst = 1,
+  Profile_FieldNumber_DisplayNameLast = 2,
+};
+
+/**
+ * Public profile
+ **/
+@interface Profile : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameFirst;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameLast;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

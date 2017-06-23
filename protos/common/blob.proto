@@ -6,11 +6,17 @@ option java_outer_classname = "BlobProtos";
 message Blob {
   string id = 1;             // Hash of the payload, route, shard
 
+  enum AccessMode {
+    DEFAULT = 0; // Owner or token-participants can read.
+    PUBLIC = 1;  // Anyone can read. Good for, e.g., profile pictures
+  }
+
   message Payload {
-    string owner_id = 1;     // Who will own this blob (member id)
-    string type = 2;         // Mime type
-    string name = 3;         // Name of file
-    bytes data = 4;          // Data
+    string owner_id = 1;        // Who owns this blob (member id)
+    string type = 2;            // Mime type
+    string name = 3;            // Name of file
+    bytes data = 4;             // Data
+    AccessMode access_mode = 5; // Is it public?
   }
 
   Payload payload = 2;

@@ -568,4 +568,25 @@
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError;
 
+/**
+ * Returns profile of target member ID
+ *
+ * @param target Member Id
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getProfile:(NSString *) targetMemberId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
+
+/**
+* Set profile to current member
+*
+* @param target Member Id
+* @param onSuccess invoked on success
+* @param onError invoked on error
+*/
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
 @end
