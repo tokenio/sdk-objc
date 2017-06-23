@@ -41,7 +41,6 @@
         
         XCTAssertEqualObjects(profile.displayNameFirst, result.displayNameFirst);
         XCTAssertEqualObjects(profile.displayNameLast, result.displayNameLast);
-        
     }];
 }
 
