@@ -17,7 +17,7 @@
 
 @end
 
-@implementation TKProfileTests{
+@implementation TKProfileTests {
     TKMember* member;
 }
 

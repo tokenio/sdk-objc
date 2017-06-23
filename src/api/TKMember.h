@@ -459,19 +459,19 @@
 
 
 /**
- * Returns profile of a given member id
+ * Returns profile for the given member id.
  *
- * @param target member id
- * @return profile in the server
+ * @param id of the member to lookup the profile for
+ * @return updated profile
  */
 - (Profile *)getProfile:(NSString *)targetMemberId;
 
 
 /**
- * Set Profile for the current user
+ * Updates caller profile.
  *
- * @param profile you want to set
- * @return profile in the server
+ * @param profile to set
+ * @return updated profile
  */
 - (Profile *)setProfile:(Profile *)profile;
 

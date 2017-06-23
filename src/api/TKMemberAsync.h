@@ -569,9 +569,9 @@
             onError:(OnError)onError;
 
 /**
- * Returns profile of target member ID
+ * Returns profile for the given member id.
  *
- * @param target Member Id
+ * @param id of the member to lookup the profile for
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
@@ -579,13 +579,14 @@
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
 
+
 /**
-* Set profile to current member
-*
-* @param target Member Id
-* @param onSuccess invoked on success
-* @param onError invoked on error
-*/
+ * Updates caller profile.
+ *
+ * @param profile to set
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
 - (void)setProfile:(Profile *)profile
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
