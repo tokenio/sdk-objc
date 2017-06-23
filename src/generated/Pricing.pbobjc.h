@@ -116,10 +116,13 @@ typedef GPB_ENUM(TransferQuote_FieldNumber) {
 /** the account currency */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountCurrency;
 
-/** The total fee amount */
+/** Total fee amount, e.g., "0.25". String representing number in account currency. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *feesTotal;
 
-/** A collection of applicable fees */
+/**
+ * A collection of applicable fees. These line items are for informational purposes only.
+ * (The Token network uses `fees_total` as amount to charge.)
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferQuote_Fee*> *feesArray;
 /** The number of items in @c feesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger feesArray_Count;

@@ -58,6 +58,30 @@
              responseClass:[GetMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark SetProfile(SetProfileRequest) returns (SetProfileResponse)
+
+- (void)setProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetProfileWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSetProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetProfile"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[SetProfileResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetProfile(GetProfileRequest) returns (GetProfileResponse)
+
+- (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetProfileWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetProfile"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetProfileResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
 
 - (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{

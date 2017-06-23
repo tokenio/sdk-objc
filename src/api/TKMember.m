@@ -508,6 +508,24 @@
 
 }
 
+- (Profile *)getProfile:(NSString *)targetMemberId{
+    TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getProfile:targetMemberId
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
+- (Profile *)setProfile:(Profile *)profile{
+    TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async setProfile:profile
+                     onSuccess:call.onSuccess
+                       onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {

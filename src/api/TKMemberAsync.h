@@ -568,4 +568,26 @@
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError;
 
+/**
+ * Returns profile for the given member id.
+ *
+ * @param id of the member to lookup the profile for
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getProfile:(NSString *) targetMemberId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
+
+
+/**
+ * Updates caller profile.
+ *
+ * @param profile to set
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
 @end

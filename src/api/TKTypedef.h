@@ -22,6 +22,7 @@
 @class BankInfo;
 @class DeviceInfo;
 @class Pricing;
+@class Profile;
 
 typedef void (^OnSuccess)();
 typedef void (^OnError)( NSError * _Nonnull);
@@ -68,3 +69,5 @@ typedef void (^OnSuccessWithBanks)(NSArray<Bank *> * _Nonnull);
 typedef void (^OnSuccessWithBankInfo)(BankInfo * _Nonnull);
 
 typedef void (^OnSuccessWithDeviceInfo)(DeviceInfo * _Nonnull);
+
+typedef void (^OnSuccessWithProfile)(Profile * _Nonnull);

@@ -31,6 +31,30 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum Blob_AccessMode
+
+typedef GPB_ENUM(Blob_AccessMode) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Blob_AccessMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  /** Owner or token-participants can read. */
+  Blob_AccessMode_Default = 0,
+
+  /** Anyone can read. Good for, e.g., profile pictures */
+  Blob_AccessMode_Public = 1,
+};
+
+GPBEnumDescriptor *Blob_AccessMode_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Blob_AccessMode_IsValidValue(int32_t value);
+
 #pragma mark - BlobRoot
 
 /**
@@ -74,11 +98,12 @@ typedef GPB_ENUM(Blob_Payload_FieldNumber) {
   Blob_Payload_FieldNumber_Type = 2,
   Blob_Payload_FieldNumber_Name = 3,
   Blob_Payload_FieldNumber_Data_p = 4,
+  Blob_Payload_FieldNumber_AccessMode = 5,
 };
 
 @interface Blob_Payload : GPBMessage
 
-/** Who will own this blob (member id) */
+/** Who owns this blob (member id) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *ownerId;
 
 /** Mime type */
@@ -90,7 +115,22 @@ typedef GPB_ENUM(Blob_Payload_FieldNumber) {
 /** Data */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *data_p;
 
+/** Is it public? */
+@property(nonatomic, readwrite) Blob_AccessMode accessMode;
+
 @end
+
+/**
+ * Fetches the raw value of a @c Blob_Payload's @c accessMode property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Blob_Payload_AccessMode_RawValue(Blob_Payload *message);
+/**
+ * Sets the raw value of an @c Blob_Payload's @c accessMode property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetBlob_Payload_AccessMode_RawValue(Blob_Payload *message, int32_t value);
 
 #pragma mark - Attachment
 

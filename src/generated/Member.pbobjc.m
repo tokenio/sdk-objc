@@ -479,6 +479,60 @@ typedef struct AddressRecord__storage_ {
 
 @end
 
+#pragma mark - Profile
+
+@implementation Profile
+
+@dynamic displayNameFirst;
+@dynamic displayNameLast;
+
+typedef struct Profile__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *displayNameFirst;
+  NSString *displayNameLast;
+} Profile__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "displayNameFirst",
+        .dataTypeSpecific.className = NULL,
+        .number = Profile_FieldNumber_DisplayNameFirst,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Profile__storage_, displayNameFirst),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "displayNameLast",
+        .dataTypeSpecific.className = NULL,
+        .number = Profile_FieldNumber_DisplayNameLast,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Profile__storage_, displayNameLast),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Profile class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Profile__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

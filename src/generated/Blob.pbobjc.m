@@ -96,6 +96,40 @@ typedef struct Blob__storage_ {
 
 @end
 
+#pragma mark - Enum Blob_AccessMode
+
+GPBEnumDescriptor *Blob_AccessMode_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Default\000Public\000";
+    static const int32_t values[] = {
+        Blob_AccessMode_Default,
+        Blob_AccessMode_Public,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Blob_AccessMode)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Blob_AccessMode_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Blob_AccessMode_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Blob_AccessMode_Default:
+    case Blob_AccessMode_Public:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - Blob_Payload
 
 @implementation Blob_Payload
@@ -104,9 +138,11 @@ typedef struct Blob__storage_ {
 @dynamic type;
 @dynamic name;
 @dynamic data_p;
+@dynamic accessMode;
 
 typedef struct Blob_Payload__storage_ {
   uint32_t _has_storage_[1];
+  Blob_AccessMode accessMode;
   NSString *ownerId;
   NSString *type;
   NSString *name;
@@ -155,6 +191,15 @@ typedef struct Blob_Payload__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBytes,
       },
+      {
+        .name = "accessMode",
+        .dataTypeSpecific.enumDescFunc = Blob_AccessMode_EnumDescriptor,
+        .number = Blob_Payload_FieldNumber_AccessMode,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Blob_Payload__storage_, accessMode),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Blob_Payload class]
@@ -172,6 +217,18 @@ typedef struct Blob_Payload__storage_ {
 }
 
 @end
+
+int32_t Blob_Payload_AccessMode_RawValue(Blob_Payload *message) {
+  GPBDescriptor *descriptor = [Blob_Payload descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Blob_Payload_FieldNumber_AccessMode];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetBlob_Payload_AccessMode_RawValue(Blob_Payload *message, int32_t value) {
+  GPBDescriptor *descriptor = [Blob_Payload descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Blob_Payload_FieldNumber_AccessMode];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - Attachment
 

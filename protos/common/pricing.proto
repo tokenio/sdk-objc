@@ -7,8 +7,14 @@ option java_outer_classname = "PricingProtos";
 message TransferQuote {
   string id = 1;                // the quote id
   string account_currency = 2;  // the account currency
-  string fees_total = 3;        // The total fee amount
-  repeated Fee fees = 4;        // A collection of applicable fees
+
+  // Total fee amount, e.g., "0.25". String representing number in account currency.
+  string fees_total = 3;
+
+  // A collection of applicable fees. These line items are for informational purposes only.
+  // (The Token network uses `fees_total` as amount to charge.)
+  repeated Fee fees = 4;
+
   repeated FxRate rates = 5;    // FX Rate chain
   int64 expires_at_ms = 7;      // The quote expiration time
 

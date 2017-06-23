@@ -415,4 +415,23 @@
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError;
 
+/**
+ * Returns profile of a given member id
+ *
+ * @param target member id
+ * @return profile in the server
+ */
+- (void)getProfile:(NSString *)targetMemberId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
+
+/**
+ * Set Profile for the current user
+ *
+ * @param profile you want to set
+ * @return profile in the server
+ */
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
 @end

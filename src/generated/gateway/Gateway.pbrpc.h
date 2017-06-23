@@ -1,6 +1,7 @@
 #import "gateway/Gateway.pbobjc.h"
 
 #import <ProtoRPC/ProtoService.h>
+#import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
@@ -43,6 +44,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetProfile(SetProfileRequest) returns (SetProfileResponse)
+
+- (void)setProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetProfile(GetProfileRequest) returns (GetProfileResponse)
+
+- (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)

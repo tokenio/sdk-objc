@@ -722,7 +722,7 @@
          onSuccess:(OnSuccessWithAttachment)onSuccess
            onError:(OnError)onError {
     CreateBlobRequest *request = [CreateBlobRequest message];
-    Blob_Payload * payload = [Blob_Payload message];
+    //Blob_Payload * payload = [Blob_Payload message];
     request.payload.ownerId = ownerId;
     request.payload.type = type;
     request.payload.name = name;
@@ -934,6 +934,50 @@
                                }
                            }];
 
+    [self _startCall:call withRequest:request];
+}
+
+- (void)getProfile:(NSString *)targetMemberId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    GetProfileRequest *request = [GetProfileRequest message];
+    request.memberId = targetMemberId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetProfileWithRequest:request
+                           handler:
+                           ^(GetProfileResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.profile);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+
+    [self _startCall:call withRequest:request];
+}
+
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    SetProfileRequest *request = [SetProfileRequest message];
+    request.profile = profile;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToSetProfileWithRequest:request
+                           handler:
+                           ^(SetProfileResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.profile);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
     [self _startCall:call withRequest:request];
 }
 
