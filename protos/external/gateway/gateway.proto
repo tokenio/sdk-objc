@@ -47,6 +47,7 @@ message UpdateMemberResponse {
 }
 
 message GetMemberRequest {
+  string member_id = 1;
 }
 
 message GetMemberResponse {
@@ -109,6 +110,22 @@ message GetProfileRequest {
 
 message GetProfileResponse {
   io.token.proto.common.member.Profile profile = 1;
+}
+
+message SetProfilePictureRequest {
+  io.token.proto.common.blob.Blob.Payload payload = 1;
+}
+
+message SetProfilePictureResponse {
+}
+
+message GetProfilePictureRequest {
+  string member_id = 1;
+  io.token.proto.common.member.ProfilePictureSize size = 2;
+}
+
+message GetProfilePictureResponse {
+  io.token.proto.common.blob.Blob blob = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +440,7 @@ service GatewayService {
 
   rpc GetMember (GetMemberRequest) returns (GetMemberResponse) {
     option (google.api.http) = {
-        get: "/members"
+        get: "/members/{member_id}"
     };
   }
 
@@ -432,9 +449,22 @@ service GatewayService {
         post: "/members/profile"
     };
   }
+
   rpc GetProfile (GetProfileRequest) returns (GetProfileResponse) {
     option (google.api.http) = {
         get: "/members/{member_id}/profile"
+    };
+  }
+
+  rpc SetProfilePicture (SetProfilePictureRequest) returns (SetProfilePictureResponse) {
+    option (google.api.http) = {
+        post: "/members/profilepicture"
+    };
+  }
+
+  rpc GetProfilePicture (GetProfilePictureRequest) returns (GetProfilePictureResponse) {
+    option (google.api.http) = {
+        get: "/members/{member_id}/profilepicture/{size}"
     };
   }
 

@@ -56,15 +56,6 @@
 - (void)clearAccessToken;
 
 /**
- * Looks up member information for the current user. The user is defined by
- * the key used for authentication.
- *
- * @return member information
- */
-- (void)getMember:(OnSuccessWithMember)onSuccess
-          onError:(OnError)onError;
-
-/**
  * Updates a Token member by adding/removing keys/usernames. The operations
  * are batched together and sent to the server.
  *

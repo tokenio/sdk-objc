@@ -82,6 +82,30 @@
              responseClass:[GetProfileResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark SetProfilePicture(SetProfilePictureRequest) returns (SetProfilePictureResponse)
+
+- (void)setProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetProfilePictureWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSetProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetProfilePicture"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[SetProfilePictureResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetProfilePicture(GetProfilePictureRequest) returns (GetProfilePictureResponse)
+
+- (void)getProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetProfilePictureWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetProfilePicture"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetProfilePictureResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
 
 - (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{

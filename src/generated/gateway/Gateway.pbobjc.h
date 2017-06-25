@@ -54,6 +54,7 @@ CF_EXTERN_C_BEGIN
 @class Transfer;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
+GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -175,7 +176,13 @@ typedef GPB_ENUM(UpdateMemberResponse_FieldNumber) {
 
 #pragma mark - GetMemberRequest
 
+typedef GPB_ENUM(GetMemberRequest_FieldNumber) {
+  GetMemberRequest_FieldNumber_MemberId = 1,
+};
+
 @interface GetMemberRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
 
@@ -368,6 +375,67 @@ typedef GPB_ENUM(GetProfileResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
 /** Test to see if @c profile has been set. */
 @property(nonatomic, readwrite) BOOL hasProfile;
+
+@end
+
+#pragma mark - SetProfilePictureRequest
+
+typedef GPB_ENUM(SetProfilePictureRequest_FieldNumber) {
+  SetProfilePictureRequest_FieldNumber_Payload = 1,
+};
+
+@interface SetProfilePictureRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob_Payload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
+#pragma mark - SetProfilePictureResponse
+
+@interface SetProfilePictureResponse : GPBMessage
+
+@end
+
+#pragma mark - GetProfilePictureRequest
+
+typedef GPB_ENUM(GetProfilePictureRequest_FieldNumber) {
+  GetProfilePictureRequest_FieldNumber_MemberId = 1,
+  GetProfilePictureRequest_FieldNumber_Size = 2,
+};
+
+@interface GetProfilePictureRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite) enum ProfilePictureSize size;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetProfilePictureRequest's @c size property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetProfilePictureRequest_Size_RawValue(GetProfilePictureRequest *message);
+/**
+ * Sets the raw value of an @c GetProfilePictureRequest's @c size property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetProfilePictureRequest_Size_RawValue(GetProfilePictureRequest *message, int32_t value);
+
+#pragma mark - GetProfilePictureResponse
+
+typedef GPB_ENUM(GetProfilePictureResponse_FieldNumber) {
+  GetProfilePictureResponse_FieldNumber_Blob = 1,
+};
+
+@interface GetProfilePictureResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob *blob;
+/** Test to see if @c blob has been set. */
+@property(nonatomic, readwrite) BOOL hasBlob;
 
 @end
 

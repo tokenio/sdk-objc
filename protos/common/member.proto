@@ -59,3 +59,12 @@ message Profile {
   string display_name_first = 1;
   string display_name_last = 2;
 }
+
+// Profile picture sizes
+enum ProfilePictureSize {
+  INVALID = 0;
+  ORIGINAL = 1;
+  SMALL = 2;
+  MEDIUM = 3;
+  LARGE = 4;
+}

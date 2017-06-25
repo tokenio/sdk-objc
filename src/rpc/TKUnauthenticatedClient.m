@@ -76,6 +76,28 @@
     [rpc execute:call request:request];
 }
 
+- (void)getMember:(NSString *)memberId
+        onSuccess:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError {
+    GetMemberRequest *request = [GetMemberRequest message];
+    request.memberId = memberId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+            RPCToGetMemberWithRequest:request
+                              handler:^(GetMemberResponse *response, NSError *error) {
+                                  if (response) {
+                                      RpcLogCompleted(response);
+                                      onSuccess(response.member);
+                                  } else {
+                                      [errorHandler handle:onError withError:error];
+                                  }
+                              }
+    ];
+
+    [rpc execute:call request:request];
+}
+
 - (void)createMember:(NSString *)memberId
                   crypto:(TKCrypto *)crypto
           operations:(NSArray<MemberOperation *> *)operations
