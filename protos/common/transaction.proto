@@ -21,6 +21,8 @@ enum TransactionStatus {
   FAILURE_INVALID_CURRENCY = 4;   // the transaction has failed due to currency mismatch
   FAILURE_PERMISSION_DENIED = 6;  // the transaction has failed due to access violation
   FAILURE_QUOTE_EXPIRED = 11;     // the transaction has failed because the quote has expired
+  FAILURE_INVALID_AMOUNT = 12;    // the transaction has failed due to invalid amount
+  FAILURE_INVALID_QUOTE = 13;     // the transaction has failed due to invalid quote (wrong fx rate)
   FAILURE_GENERIC = 5;            // the transaction has failed due to other reasons
 }
 

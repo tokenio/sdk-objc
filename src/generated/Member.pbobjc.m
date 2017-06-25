@@ -45,6 +45,46 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum ProfilePictureSize
+
+GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Original\000Small\000Medium\000Large\000";
+    static const int32_t values[] = {
+        ProfilePictureSize_Invalid,
+        ProfilePictureSize_Original,
+        ProfilePictureSize_Small,
+        ProfilePictureSize_Medium,
+        ProfilePictureSize_Large,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(ProfilePictureSize)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:ProfilePictureSize_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL ProfilePictureSize_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case ProfilePictureSize_Invalid:
+    case ProfilePictureSize_Original:
+    case ProfilePictureSize_Small:
+    case ProfilePictureSize_Medium:
+    case ProfilePictureSize_Large:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - MemberAddKeyOperation
 
 @implementation MemberAddKeyOperation

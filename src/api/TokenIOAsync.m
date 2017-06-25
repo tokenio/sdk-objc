@@ -122,22 +122,24 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                 onError:onError];
 }
 
-
 - (void)loginMember:(NSString *)memberId
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
-    TKCrypto *crypto = [self _createCrypto:memberId];
-    TKClient *client = [[TKClient alloc] initWithGateway:gateway
-                                                  crypto:crypto
-                                               timeoutMs:timeoutMs
-                                                memberId:memberId
-                                            errorHandler:errorHandler];
-    [client getMember: ^(Member *member) {
-                onSuccess([TKMemberAsync
-                        member:member
-                     useClient:client]);
-            }
-              onError:onError];
+    TKUnauthenticatedClient *unauthenticatedClient = [[TKUnauthenticatedClient alloc]
+            initWithGateway:gateway
+                  timeoutMs:timeoutMs
+               errorHandler:errorHandler];
+    [unauthenticatedClient getMember:memberId
+                           onSuccess:^(Member *member) {
+                               TKCrypto *crypto = [self _createCrypto:memberId];
+                               TKClient *client = [[TKClient alloc] initWithGateway:gateway
+                                                                             crypto:crypto
+                                                                          timeoutMs:timeoutMs
+                                                                           memberId:memberId
+                                                                       errorHandler:errorHandler];
+                               onSuccess([TKMemberAsync member:member useClient:client]);
+                           }
+                             onError:onError];
 }
 
 - (void)notifyPaymentRequest:(NSString *)username

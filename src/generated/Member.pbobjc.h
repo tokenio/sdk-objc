@@ -37,6 +37,31 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum ProfilePictureSize
+
+/** Profile picture sizes */
+typedef GPB_ENUM(ProfilePictureSize) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  ProfilePictureSize_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  ProfilePictureSize_Invalid = 0,
+  ProfilePictureSize_Original = 1,
+  ProfilePictureSize_Small = 2,
+  ProfilePictureSize_Medium = 3,
+  ProfilePictureSize_Large = 4,
+};
+
+GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL ProfilePictureSize_IsValidValue(int32_t value);
+
 #pragma mark - MemberRoot
 
 /**

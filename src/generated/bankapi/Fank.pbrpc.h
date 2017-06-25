@@ -1,7 +1,6 @@
 #import "bankapi/Fank.pbobjc.h"
 
 #import <ProtoRPC/ProtoService.h>
-#import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 

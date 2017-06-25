@@ -65,6 +65,17 @@
                  onError:(OnError)onError;
 
 /**
+ * Looks up member information for the current user. The user is defined by
+ * the key used for authentication.
+ *
+ * @param memberId member id
+ * @return member information
+ */
+- (void)getMember:(NSString *)memberId
+        onSuccess:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError;
+
+/**
  * Sends a notification to request payment
  *
  * @param username username to notify

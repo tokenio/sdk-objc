@@ -83,6 +83,9 @@ typedef GPB_ENUM(TransferTokenStatus) {
   /** the request has failed, customer data not found */
   TransferTokenStatus_FailureCustomerNotFound = 7,
 
+  /** the request has failed, becuase the amount is invalid */
+  TransferTokenStatus_FailureInvalidAmount = 10,
+
   /** the request has failed due to other reasons */
   TransferTokenStatus_FailureGeneric = 9,
 };

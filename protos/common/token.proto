@@ -73,6 +73,7 @@ enum TransferTokenStatus {
   FAILURE_SOURCE_ACCOUNT_NOT_FOUND = 5;      // the request has failed, source account not found
   FAILURE_DESTINATION_ACCOUNT_NOT_FOUND = 6; // the request has failed, destination account not found
   FAILURE_CUSTOMER_NOT_FOUND = 7;            // the request has failed, customer data not found
+  FAILURE_INVALID_AMOUNT = 10;               // the request has failed, becuase the amount is invalid
   FAILURE_GENERIC = 9;                       // the request has failed due to other reasons
 }
 

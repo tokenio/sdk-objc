@@ -1,7 +1,6 @@
 #import "gateway/Gateway.pbobjc.h"
 
 #import <ProtoRPC/ProtoService.h>
-#import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
@@ -58,6 +57,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetProfilePicture(SetProfilePictureRequest) returns (SetProfilePictureResponse)
+
+- (void)setProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetProfilePicture(GetProfilePictureRequest) returns (GetProfilePictureResponse)
+
+- (void)getProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)

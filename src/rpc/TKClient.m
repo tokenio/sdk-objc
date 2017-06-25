@@ -50,26 +50,6 @@
     onBehalfOfMemberId = nil;
 }
 
-- (void)getMember:(OnSuccessWithMember)onSuccess
-          onError:(OnError)onError {
-    GetMemberRequest *request = [GetMemberRequest message];
-    RpcLogStart(request);
-    
-    GRPCProtoCall *call = [gateway
-                           RPCToGetMemberWithRequest:request
-                           handler:^(GetMemberResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.member);
-                               } else {
-                                   [errorHandler handle:onError withError:error];
-                               }
-                           }
-                           ];
-    
-    [self _startCall:call withRequest:request];
-}
-
 - (void)updateMember:(Member *)member
           operations:(NSArray<MemberOperation *> *)operations
             onSuccess:(OnSuccessWithMember)onSuccess

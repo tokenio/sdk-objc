@@ -307,9 +307,11 @@ typedef struct UpdateMemberResponse__storage_ {
 
 @implementation GetMemberRequest
 
+@dynamic memberId;
 
 typedef struct GetMemberRequest__storage_ {
   uint32_t _has_storage_[1];
+  NSString *memberId;
 } GetMemberRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -317,12 +319,23 @@ typedef struct GetMemberRequest__storage_ {
 + (GPBDescriptor *)descriptor {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetMemberRequest_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetMemberRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetMemberRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetMemberRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -965,6 +978,188 @@ typedef struct GetProfileResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetProfileResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SetProfilePictureRequest
+
+@implementation SetProfilePictureRequest
+
+@dynamic hasPayload, payload;
+
+typedef struct SetProfilePictureRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Blob_Payload *payload;
+} SetProfilePictureRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(Blob_Payload),
+        .number = SetProfilePictureRequest_FieldNumber_Payload,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SetProfilePictureRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetProfilePictureRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SetProfilePictureRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SetProfilePictureResponse
+
+@implementation SetProfilePictureResponse
+
+
+typedef struct SetProfilePictureResponse__storage_ {
+  uint32_t _has_storage_[1];
+} SetProfilePictureResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetProfilePictureResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(SetProfilePictureResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetProfilePictureRequest
+
+@implementation GetProfilePictureRequest
+
+@dynamic memberId;
+@dynamic size;
+
+typedef struct GetProfilePictureRequest__storage_ {
+  uint32_t _has_storage_[1];
+  ProfilePictureSize size;
+  NSString *memberId;
+} GetProfilePictureRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetProfilePictureRequest_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetProfilePictureRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "size",
+        .dataTypeSpecific.enumDescFunc = ProfilePictureSize_EnumDescriptor,
+        .number = GetProfilePictureRequest_FieldNumber_Size,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetProfilePictureRequest__storage_, size),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetProfilePictureRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetProfilePictureRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetProfilePictureRequest_Size_RawValue(GetProfilePictureRequest *message) {
+  GPBDescriptor *descriptor = [GetProfilePictureRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetProfilePictureRequest_FieldNumber_Size];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetProfilePictureRequest_Size_RawValue(GetProfilePictureRequest *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetProfilePictureRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetProfilePictureRequest_FieldNumber_Size];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - GetProfilePictureResponse
+
+@implementation GetProfilePictureResponse
+
+@dynamic hasBlob, blob;
+
+typedef struct GetProfilePictureResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Blob *blob;
+} GetProfilePictureResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "blob",
+        .dataTypeSpecific.className = GPBStringifySymbol(Blob),
+        .number = GetProfilePictureResponse_FieldNumber_Blob,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetProfilePictureResponse__storage_, blob),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetProfilePictureResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetProfilePictureResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
