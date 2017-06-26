@@ -58,6 +58,8 @@
         [member setProfilePicture:member.id withType:@"image/jpg" withName:@"testImage" withData:UIImageJPEGRepresentation(image, 1.0)];
         
         Blob *blob = [member getProfilePicture:member.id size:ProfilePictureSize_Small];
+        XCTAssertNotNil(blob);
+        XCTAssertNotNil(blob.data);
         
         UIImage* resultImage = [UIImage imageWithData:blob.data];
         

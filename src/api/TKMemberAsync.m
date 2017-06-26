@@ -547,10 +547,10 @@
                 onError:onError];
 }
 
-- (void)getProfile:(NSString *)targetMemberId
+- (void)getProfile:(NSString *)ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError {
-    [client getProfile:targetMemberId
+    [client getProfile:ownerId
              onSuccess:onSuccess
                onError:onError];
 }
@@ -563,11 +563,11 @@
                onError:onError];
 }
 
-- (void)getProfilePicture:(NSString *)targetMemberId
+- (void)getProfilePicture:(NSString *)ownerId
                      size:(ProfilePictureSize)size
                 onSuccess:(OnSuccessWithBlob)onSuccess
                   onError:(OnError)onError {
-    [client getProfilePicture:targetMemberId
+    [client getProfilePicture:ownerId
                          size:size
                     onSuccess:onSuccess
                       onError:onError];

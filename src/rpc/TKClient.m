@@ -917,11 +917,11 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)getProfile:(NSString *)targetMemberId
+- (void)getProfile:(NSString *)ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError {
     GetProfileRequest *request = [GetProfileRequest message];
-    request.memberId = targetMemberId;
+    request.memberId = ownerId;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -961,12 +961,12 @@
     [self _startCall:call withRequest:request];
 }
 
-- (void)getProfilePicture:(NSString *)targetMemberId
+- (void)getProfilePicture:(NSString *)ownerId
                      size:(ProfilePictureSize)size
                 onSuccess:(OnSuccessWithBlob)onSuccess
                   onError:(OnError)onError {
     GetProfilePictureRequest *request = [GetProfilePictureRequest message];
-    request.memberId = targetMemberId;
+    request.memberId = ownerId;
     request.size = size;
     RpcLogStart(request);
     
@@ -996,6 +996,7 @@
     request.payload.type = type;
     request.payload.name = name;
     request.payload.data_p = data;
+    request.payload.accessMode = Blob_AccessMode_Public;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

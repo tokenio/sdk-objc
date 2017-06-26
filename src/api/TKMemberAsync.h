@@ -575,7 +575,7 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getProfile:(NSString *) targetMemberId
+- (void)getProfile:(NSString *) ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
 
@@ -594,12 +594,12 @@
 /**
  * Returns profile picture of a given member id and size
  *
- * @param targetMemberId target member id
- * @param size target image size
+ * @param ownerId onwer member id
+ * @param size image size
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getProfilePicture:(NSString *)targetMemberId
+- (void)getProfilePicture:(NSString *)ownerId
                      size:(ProfilePictureSize) size
                 onSuccess:(OnSuccessWithBlob)onSuccess
                   onError:(OnError)onError;
