@@ -475,4 +475,26 @@
  */
 - (Profile *)setProfile:(Profile *)profile;
 
+
+/**
+ * Returns profile picture of a given member id and size
+ *
+ * @param targetMemberId target member id
+ * @param size target image size
+* @return updated profile
+ */
+- (Blob *)getProfilePicture:(NSString *)targetMemberId
+                     size:(ProfilePictureSize) size;
+/**
+ * Set profile picture for the current user
+ *
+ * @param ownerId owner of the picture
+ * @param type MIME type of the file
+ * @param name name of the file
+ * @param data binary data
+ */
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data;
 @end

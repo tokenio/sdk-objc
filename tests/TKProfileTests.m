@@ -44,5 +44,46 @@
     }];
 }
 
+- (void)testProfilePicture {
+    [self run: ^(TokenIO *tokenIO) {
+        //create picture
+        UIGraphicsBeginImageContext(CGSizeMake(500, 500));
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetFillColorWithColor(context, [UIColor colorWithRed:0x12/255.f green:0x34/255.f blue:0x56/255.f alpha:1].CGColor);
+        CGContextFillRect(context, CGRectMake(0, 0, 500, 500));
+        UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        
+        [member setProfilePicture:member.id withType:@"image/jpg" withName:@"testImage" withData:UIImageJPEGRepresentation(image, 1.0)];
+        
+        Blob *blob = [member getProfilePicture:member.id size:ProfilePictureSize_Small];
+        
+        UIImage* resultImage = [UIImage imageWithData:blob.data];
+        
+        // get pixels
+        uint32_t* rgbImageBuf = (uint32_t*)malloc(resultImage.size.width * resultImage.size.height * 4);
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        context = CGBitmapContextCreate(rgbImageBuf,
+                                                     resultImage.size.width,
+                                                     resultImage.size.height,
+                                                     8,
+                                                     resultImage.size.width * 4 ,
+                                                     colorSpace,
+                                                     kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+        CGContextDrawImage(context, CGRectMake(0, 0, resultImage.size.width, resultImage.size.height), resultImage.CGImage);
+        
+        XCTAssertTrue(rgbImageBuf[0] == 0x123456ff);
+        
+        
+        if (rgbImageBuf) {
+            free(rgbImageBuf);
+        }
+        CGContextRelease(context);
+        CGColorSpaceRelease(colorSpace);
+        
+    }];
+}
+
 
 @end

@@ -526,6 +526,33 @@
     }];
 }
 
+- (Blob *)getProfilePicture:(NSString *)targetMemberId
+                       size:(ProfilePictureSize) size {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getProfilePicture:targetMemberId
+                                 size:size
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async setProfilePicture:ownerId
+                             withType:type
+                             withName:name
+                             withData:data
+                            onSuccess:^{ call.onSuccess(nil); }
+                              onError:call.onError];
+         
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {

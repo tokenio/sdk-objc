@@ -961,6 +961,59 @@
     [self _startCall:call withRequest:request];
 }
 
+- (void)getProfilePicture:(NSString *)targetMemberId
+                     size:(ProfilePictureSize)size
+                onSuccess:(OnSuccessWithBlob)onSuccess
+                  onError:(OnError)onError {
+    GetProfilePictureRequest *request = [GetProfilePictureRequest message];
+    request.memberId = targetMemberId;
+    request.size = size;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetProfilePictureWithRequest:request
+                           handler:
+                           ^(GetProfilePictureResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.blob);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    SetProfilePictureRequest *request = [SetProfilePictureRequest message];
+    request.payload.ownerId = ownerId;
+    request.payload.type = type;
+    request.payload.name = name;
+    request.payload.data_p = data;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToSetProfilePictureWithRequest:request
+                           handler:
+                           ^(SetProfilePictureResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call withRequest:request];
+}
+
+
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel

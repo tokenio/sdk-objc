@@ -590,4 +590,33 @@
 - (void)setProfile:(Profile *)profile
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
+
+/**
+ * Returns profile picture of a given member id and size
+ *
+ * @param targetMemberId target member id
+ * @param size target image size
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getProfilePicture:(NSString *)targetMemberId
+                     size:(ProfilePictureSize) size
+                onSuccess:(OnSuccessWithBlob)onSuccess
+                  onError:(OnError)onError;
+/**
+ * Set profile picture for the current user
+ *
+ * @param ownerId owner of the picture
+ * @param type MIME type of the file
+ * @param name name of the file
+ * @param data binary data
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
 @end
