@@ -547,10 +547,10 @@
                 onError:onError];
 }
 
-- (void)getProfile:(NSString *) targetMemberId
+- (void)getProfile:(NSString *)ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError {
-    [client getProfile:targetMemberId
+    [client getProfile:ownerId
              onSuccess:onSuccess
                onError:onError];
 }
@@ -562,7 +562,30 @@
              onSuccess:onSuccess
                onError:onError];
 }
-    
+
+- (void)getProfilePicture:(NSString *)ownerId
+                     size:(ProfilePictureSize)size
+                onSuccess:(OnSuccessWithBlob)onSuccess
+                  onError:(OnError)onError {
+    [client getProfilePicture:ownerId
+                         size:size
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    [client setProfilePicture:ownerId
+                     withType:type
+                     withName:name
+                     withData:data
+                    onSuccess:onSuccess
+                      onError:onError];
+}
 #pragma mark private
 
 - (NSArray<TKAccountAsync *> *)_mapAccounts:(NSArray<Account *> *)accounts {

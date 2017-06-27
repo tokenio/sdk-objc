@@ -508,10 +508,10 @@
 
 }
 
-- (Profile *)getProfile:(NSString *)targetMemberId{
+- (Profile *)getProfile:(NSString *)ownerId{
     TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getProfile:targetMemberId
+        [self.async getProfile:ownerId
                      onSuccess:call.onSuccess
                        onError:call.onError];
     }];
@@ -523,6 +523,33 @@
         [self.async setProfile:profile
                      onSuccess:call.onSuccess
                        onError:call.onError];
+    }];
+}
+
+- (Blob *)getProfilePicture:(NSString *)ownerId
+                       size:(ProfilePictureSize) size {
+    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getProfilePicture:ownerId
+                                 size:size
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async setProfilePicture:ownerId
+                             withType:type
+                             withName:name
+                             withData:data
+                            onSuccess:^{ call.onSuccess(nil); }
+                              onError:call.onError];
+         
     }];
 }
 
