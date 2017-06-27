@@ -54,14 +54,14 @@
         UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
+        NSData* data = UIImagePNGRepresentation(image);
+        [member setProfilePicture:member.id withType:@"image/png" withName:@"testImage" withData:data];
         
-        [member setProfilePicture:member.id withType:@"image/jpg" withName:@"testImage" withData:UIImageJPEGRepresentation(image, 1.0)];
-        
-        Blob *blob = [member getProfilePicture:member.id size:ProfilePictureSize_Small];
+        Blob *blob = [member getProfilePicture:member.id size:ProfilePictureSize_Original];
         XCTAssertNotNil(blob);
         XCTAssertNotNil(blob.data);
         
-        UIImage* resultImage = [UIImage imageWithData:blob.data];
+        UIImage* resultImage = [UIImage imageWithData:data];
         
         // get pixels
         uint32_t* rgbImageBuf = (uint32_t*)malloc(resultImage.size.width * resultImage.size.height * 4);
