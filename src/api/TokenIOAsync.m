@@ -150,6 +150,9 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
             initWithGateway:gateway
                   timeoutMs:timeoutMs
                errorHandler:errorHandler];
+    if ([token.refId length] == 0) {
+        token.refId = [TKUtil nonce];
+    }
     [client notifyPaymentRequest:username
                            token:token
                        onSuccess:onSuccess

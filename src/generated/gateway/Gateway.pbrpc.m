@@ -274,6 +274,18 @@
              responseClass:[GetNotificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark RequestTransfer(RequestTransferRequest) returns (RequestTransferResponse)
+
+- (void)requestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToRequestTransferWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToRequestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"RequestTransfer"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[RequestTransferResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**

@@ -633,6 +633,47 @@ typedef GPB_ENUM(GetNotificationResponse_FieldNumber) {
 
 @end
 
+#pragma mark - RequestTransferRequest
+
+typedef GPB_ENUM(RequestTransferRequest_FieldNumber) {
+  RequestTransferRequest_FieldNumber_Username = 1,
+  RequestTransferRequest_FieldNumber_TokenPayload = 2,
+};
+
+@interface RequestTransferRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *tokenPayload;
+/** Test to see if @c tokenPayload has been set. */
+@property(nonatomic, readwrite) BOOL hasTokenPayload;
+
+@end
+
+#pragma mark - RequestTransferResponse
+
+typedef GPB_ENUM(RequestTransferResponse_FieldNumber) {
+  RequestTransferResponse_FieldNumber_Status = 1,
+};
+
+@interface RequestTransferResponse : GPBMessage
+
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c RequestTransferResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t RequestTransferResponse_Status_RawValue(RequestTransferResponse *message);
+/**
+ * Sets the raw value of an @c RequestTransferResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message, int32_t value);
+
 #pragma mark - LinkAccountsRequest
 
 typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {

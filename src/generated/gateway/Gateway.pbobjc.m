@@ -1790,6 +1790,115 @@ typedef struct GetNotificationResponse__storage_ {
 
 @end
 
+#pragma mark - RequestTransferRequest
+
+@implementation RequestTransferRequest
+
+@dynamic username;
+@dynamic hasTokenPayload, tokenPayload;
+
+typedef struct RequestTransferRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *username;
+  TokenPayload *tokenPayload;
+} RequestTransferRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = RequestTransferRequest_FieldNumber_Username,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestTransferRequest__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tokenPayload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = RequestTransferRequest_FieldNumber_TokenPayload,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestTransferRequest__storage_, tokenPayload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestTransferRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestTransferRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestTransferResponse
+
+@implementation RequestTransferResponse
+
+@dynamic status;
+
+typedef struct RequestTransferResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NotifyStatus status;
+} RequestTransferResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = NotifyStatus_EnumDescriptor,
+        .number = RequestTransferResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestTransferResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestTransferResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestTransferResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t RequestTransferResponse_Status_RawValue(RequestTransferResponse *message) {
+  GPBDescriptor *descriptor = [RequestTransferResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestTransferResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [RequestTransferResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestTransferResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - LinkAccountsRequest
 
 @implementation LinkAccountsRequest
