@@ -139,14 +139,14 @@
                        token:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
-    NotifyRequest *request = [NotifyRequest message];
+    RequestTransferRequest *request = [RequestTransferRequest message];
     request.username = username;
-    request.body.paymentRequest.payload = token;
+    request.tokenPayload = token;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-            RPCToNotifyWithRequest:request
-                           handler:^(NotifyResponse *response, NSError *error) {
+            RPCToRequestTransferWithRequest:request
+                           handler:^(RequestTransferResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess();

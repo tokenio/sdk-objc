@@ -187,6 +187,15 @@ message GetNotificationResponse {
   io.token.proto.common.notification.Notification notification = 1;
 }
 
+message RequestTransferRequest {
+  string username = 1;
+  io.token.proto.common.token.TokenPayload token_payload = 2;
+}
+
+message RequestTransferResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
 //
@@ -546,6 +555,12 @@ service GatewayService {
   rpc GetNotification (GetNotificationRequest) returns (GetNotificationResponse) {
     option (google.api.http) = {
         get: "/notifications/{notification_id}"
+    };
+  }
+
+  rpc RequestTransfer (RequestTransferRequest) returns (RequestTransferResponse) {
+    option (google.api.http) = {
+        post: "/request-transfer"
     };
   }
 
