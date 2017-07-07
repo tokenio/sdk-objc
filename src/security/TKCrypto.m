@@ -96,7 +96,7 @@
     NSString * jsonToken = [TKJson serialize:tokenPayload];
     NSString * payload = [jsonToken stringByAppendingFormat:@".%@", [actionName lowercaseString]];
 
-    return [payload dataUsingEncoding:NSASCIIStringEncoding];
+    return [payload dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

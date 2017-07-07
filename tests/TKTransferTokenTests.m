@@ -138,6 +138,28 @@
     }];
 }
 
+- (void)testEndorseToken_Unicode {
+    [self run: ^(TokenIO *tokenIO) {
+        NSString *descr = @"e\u0301\U0001F30D\U0001F340🇧🇭👰🏿👩‍👩‍👧‍👧我"; // decomposed é, globe, leaf; real unicode symbols
+
+        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerUsername = payee.firstUsername;
+        builder.descr = descr;
+        Token *token = [builder execute];
+
+        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+        Token* endorsed = [endorsedResult token];
+
+        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
+
+        XCTAssertEqualObjects(descr, endorsed.payload.description_p);
+        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+    }];
+}
 
 - (void)testCancelToken {
     [self run: ^(TokenIO *tokenIO) {
