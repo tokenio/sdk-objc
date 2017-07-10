@@ -29,6 +29,7 @@
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 @property (readwrite) NSArray<Attachment*> *attachments;
+@property (readwrite) NSString* refId;
 
 /**
  * Initializes the transfer token builder.
