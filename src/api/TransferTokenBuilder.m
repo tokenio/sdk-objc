@@ -63,11 +63,17 @@
     
     TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
-    payload.refId = [TKUtil nonce];
     payload.from = payer;
     payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", self.lifetimeAmount];
     payload.transfer.amount = [NSString stringWithFormat:@"%g", self.chargeAmount];
     payload.transfer.currency = self.currency;
+    
+    if (self.refId) {
+        payload.refId = self.refId;
+    }
+    else {
+        payload.refId = [TKUtil nonce];
+    }
     
     if (self.accountId) {
         payload.transfer.instructions.source.account.token.memberId = [self.member id];
