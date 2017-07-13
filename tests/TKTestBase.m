@@ -4,7 +4,7 @@
 //
 
 #import "Money.pbobjc.h"
-#import "bankapi/Fank.pbobjc.h"
+#import "fank/Fank.pbobjc.h"
 
 #import "HostAndPort.h"
 #import "TKTestBase.h"
