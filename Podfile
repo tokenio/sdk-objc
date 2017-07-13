@@ -22,10 +22,6 @@ require 'open-uri'
 # Fetches specified proto files from the artifact repository.
 #
 def fetch_protos()
-    def downloadProto(version, type)
-        download("io/token/proto", "tokenio-proto", type, version)
-    end
-
     def download(path, name, type, version)
         file = "#{name}-#{type}-#{version}.jar"
         puts("Downloading #{file} ...")
@@ -45,12 +41,12 @@ def fetch_protos()
     system("rm protos/common/*.proto")
     system("rm -rf protos/external")
 
-    file = downloadProto(TOKEN_PROTOS_VER, :external)
+    file = download("io/token/proto", "tokenio-proto", "external", TOKEN_PROTOS_VER)
     system("unzip -d protos/external -o #{file} 'bankapi/banklink.proto'")
     system("unzip -d protos/external -o #{file} 'gateway/*.proto'")
     system("rm -f #{file}");
 
-    file = downloadProto(TOKEN_PROTOS_VER, :common)
+    file = download("io/token/proto", "tokenio-proto", "common", TOKEN_PROTOS_VER)
     system("unzip -d protos/common -o #{file} '*.proto'")
     system("unzip -d protos/common -o #{file} 'google/api/*.proto'")
     system("rm -f #{file}");
