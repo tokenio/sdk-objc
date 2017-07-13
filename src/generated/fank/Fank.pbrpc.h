@@ -1,6 +1,7 @@
-#import "bankapi/Fank.pbobjc.h"
+#import "fank/Fank.pbobjc.h"
 
 #import <ProtoRPC/ProtoService.h>
+#import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
@@ -90,63 +91,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetBankBalance(GetBankBalanceRequest) returns (GetBankBalanceResponse)
-
-/**
- * 
- * Retruns a list of bank balances netted by counterparty and the balance currency.
- * The balance is based on unsettled transactions for the current busness day.
- * 
- */
-- (void)getBankBalanceWithRequest:(FankGetBankBalanceRequest *)request handler:(void(^)(FankGetBankBalanceResponse *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * 
- * Retruns a list of bank balances netted by counterparty and the balance currency.
- * The balance is based on unsettled transactions for the current busness day.
- * 
- */
-- (GRPCProtoCall *)RPCToGetBankBalanceWithRequest:(FankGetBankBalanceRequest *)request handler:(void(^)(FankGetBankBalanceResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetBankTransactions(GetBankTransactionsRequest) returns (GetBankTransactionsResponse)
-
-/**
- * 
- * Returns a list of unsettled transactions originated from the given bank (from-bank-id).
- * The conterparty parameter allows for filtering of the result
- * to include transactions targeting a particular counterparty (to-bank-id).
- * 
- */
-- (void)getBankTransactionsWithRequest:(FankGetBankTransactionsRequest *)request handler:(void(^)(FankGetBankTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * 
- * Returns a list of unsettled transactions originated from the given bank (from-bank-id).
- * The conterparty parameter allows for filtering of the result
- * to include transactions targeting a particular counterparty (to-bank-id).
- * 
- */
-- (GRPCProtoCall *)RPCToGetBankTransactionsWithRequest:(FankGetBankTransactionsRequest *)request handler:(void(^)(FankGetBankTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SettleTransactions(SettleTransactionsRequest) returns (SettleTransactionsResponse)
-
-/**
- * 
- * Performs a net settlement operation of all unsetlled transactions in the ledger.
- * 
- */
-- (void)settleTransactionsWithRequest:(FankSettleTransactionsRequest *)request handler:(void(^)(FankSettleTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * 
- * Performs a net settlement operation of all unsetlled transactions in the ledger.
- * 
- */
-- (GRPCProtoCall *)RPCToSettleTransactionsWithRequest:(FankSettleTransactionsRequest *)request handler:(void(^)(FankSettleTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

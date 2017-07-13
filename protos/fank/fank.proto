@@ -23,17 +23,17 @@ message Client {
 
 message Account {
   string name = 2;
-  string account_number = 3;
-  io.token.proto.common.money.Money balance = 4;
+  string account_number = 4;
+  io.token.proto.common.money.Money balance = 5;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Requests/Responses for the API.
 //
-
 message AddClientRequest {
-  string first_name = 1;
-  string last_name = 2;
+  string bic = 1;
+  string first_name = 2;
+  string last_name = 3;
 }
 
 message AddClientResponse {
@@ -41,7 +41,8 @@ message AddClientResponse {
 }
 
 message GetClientRequest {
-  string client_id = 1;
+  string bic = 1;
+  string client_id = 2;
 }
 
 message GetClientResponse {
@@ -49,11 +50,11 @@ message GetClientResponse {
 }
 
 message AddAccountRequest {
-  string client_id = 1;
-  string name = 2;
-  string account_number = 3;
-  io.token.proto.common.money.Money balance = 4;
-  repeated io.token.proto.common.account.AccountTag tags = 5;
+  string bic = 1;
+  string client_id = 2;
+  string name = 3;
+  string account_number = 4;
+  io.token.proto.common.money.Money balance = 5;
 }
 
 message AddAccountResponse {
@@ -61,7 +62,8 @@ message AddAccountResponse {
 }
 
 message GetAccountsRequest {
-  string client_id = 1;
+  string bic = 1;
+  string client_id = 2;
 }
 
 message GetAccountsResponse {
@@ -69,8 +71,9 @@ message GetAccountsResponse {
 }
 
 message GetAccountRequest {
-  string client_id = 1;
-  string account_number = 2;
+  string bic = 1;
+  string client_id = 2;
+  string account_number = 3;
 }
 
 message GetAccountResponse {
@@ -78,61 +81,10 @@ message GetAccountResponse {
 }
 
 message AuthorizeLinkAccountsRequest {
-  string username = 1;
-  string client_id = 2;
-  repeated string accounts = 3;
-}
-
-message BankBalanceSummary {
-  string bank_id = 1;
-  io.token.proto.common.money.Money total_balance = 2;
-}
-
-message BankBalance {
-  string from_bank_id = 1;
-  string to_bank_id = 2;
-  io.token.proto.common.money.Money bank_balance = 3;
-}
-
-message BankTransactionFxDetails {
-  io.token.proto.common.money.Money from_amount = 1;
-  io.token.proto.common.money.Money to_amount = 2;
-  string exchange_rate = 3;
-}
-
-message BankTransaction {
-  string from_bank_id = 1;
-  string from_bank_account = 2;
-  string to_bank_id = 3;
-  string to_bank_account = 4;
-  io.token.proto.common.money.Money amount = 5;
-  int64 created_at_ms = 6;
-  BankTransactionFxDetails fx_details = 7;
-}
-
-message GetBankBalanceRequest {
-}
-
-message GetBankBalanceResponse {
-  repeated BankBalanceSummary summaries = 1;
-  repeated BankBalance balances = 2;
-}
-
-message GetBankTransactionsRequest {
-  string from_bank_id = 1;
-  string to_bank_id = 2;
-}
-
-message GetBankTransactionsResponse {
-  repeated BankTransaction transactions = 1;
-}
-
-message SettleTransactionsRequest {
-  string currency = 1;
-}
-
-message SettleTransactionsResponse {
-  int64 settled_at_ms = 1;            // The settlement date
+  string bic = 1;
+  string username = 2;
+  string client_id = 3;
+  repeated string accounts = 4;
 }
 
 message GetNotificationRequest {
@@ -158,45 +110,45 @@ message GetNotificationsResponse {
 service FankService {
   rpc AddClient (AddClientRequest) returns (AddClientResponse) {
     option (google.api.http) = {
-        put: "/clients"
+        put: "/banks/{bic}/clients"
     };
   }
 
   rpc GetClient (GetClientRequest) returns (GetClientResponse) {
     option (google.api.http) = {
-        get: "/clients/{client_id}"
+        get: "/banks/{bic}/clients/{client_id}"
     };
   }
 
   rpc AddAccount (AddAccountRequest) returns (AddAccountResponse) {
     option (google.api.http) = {
-        put: "/clients/{client_id}/accounts"
+        put: "/banks/{bic}/clients/{client_id}/accounts"
     };
   }
 
   rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {
     option (google.api.http) = {
-        get: "/clients/{client_id}/accounts"
+        get: "/banks/{bic}/clients/{client_id}/accounts"
     };
   }
 
   rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
     option (google.api.http) = {
-        get: "/clients/{client_id}/accounts/{account_number}"
+        get: "/banks/{bic}/clients/{client_id}/accounts/{account_number}"
     };
   }
 
   rpc AuthorizeLinkAccounts (AuthorizeLinkAccountsRequest)
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
-        put: "/clients/{client_id}/link-accounts"
+        put: "/banks/{bic}/clients/{client_id}/link-accounts"
     };
   }
 
   rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
-        get: "/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
+        get: "/banks/{bic}/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
     };
   }
 
@@ -214,36 +166,6 @@ service FankService {
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
         get: "/subscribers/{subscriber_id}/notifications"
-    };
-  }
-
-  //
-  // Retruns a list of bank balances netted by counterparty and the balance currency.
-  // The balance is based on unsettled transactions for the current busness day.
-  //
-  rpc GetBankBalance (GetBankBalanceRequest) returns (GetBankBalanceResponse) {
-    option (google.api.http) = {
-        get: "/ledger/balances"
-    };
-  }
-
-  //
-  // Returns a list of unsettled transactions originated from the given bank (from-bank-id).
-  // The conterparty parameter allows for filtering of the result
-  // to include transactions targeting a particular counterparty (to-bank-id).
-  //
-  rpc GetBankTransactions (GetBankTransactionsRequest) returns (GetBankTransactionsResponse) {
-    option (google.api.http) = {
-        get: "/ledger/banks/{from_bank_id}/transactions?counterparty={to_bank_id}"
-    };
-  }
-
-  //
-  // Performs a net settlement operation of all unsetlled transactions in the ledger.
-  //
-  rpc SettleTransactions (SettleTransactionsRequest) returns (SettleTransactionsResponse) {
-    option (google.api.http) = {
-        put: "/ledger/currencies/{currency}/settle"
     };
   }
 }

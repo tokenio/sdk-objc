@@ -95,6 +95,9 @@ typedef GPB_ENUM(TransactionStatus) {
   /** the transaction has failed due to invalid quote (wrong fx rate) */
   TransactionStatus_FailureInvalidQuote = 13,
 
+  /** the transaction has failed to complete within alotted time */
+  TransactionStatus_FailureExpired = 14,
+
   /** the transaction has failed due to other reasons */
   TransactionStatus_FailureGeneric = 5,
 };

@@ -6,7 +6,7 @@
 #import <GRPCClient/GRPCCall+ChannelArg.h>
 
 
-#import "bankapi/Fank.pbrpc.h"
+#import "fank/Fank.pbrpc.h"
 #import "TKJson.h"
 
 #import "TKBankClient.h"
@@ -16,6 +16,8 @@
     NSString *url;
     NSDictionary* headers;
 }
+
+static NSString *const TEST_BIC = @"IRONUSCA000";
 
 + (TKBankClient *)bankClientWithHost:(NSString *)host port:(int)port useSsl:(BOOL)useSsl {
     return [[TKBankClient alloc] initWithHost:host port:port useSsl:useSsl];
@@ -37,7 +39,7 @@
     FankAddClientRequest *request = [FankAddClientRequest message];
     request.firstName = firstName;
     request.lastName = lastName;
-    UNIHTTPJsonResponse *response = [self httpPutCall:[NSString stringWithFormat:@"%@%@", url, @"/clients"]
+    UNIHTTPJsonResponse *response = [self httpPutCall:[NSString stringWithFormat:@"%@/banks/%@/clients", url, TEST_BIC]
                                              withData:[TKJson serializeData:request]];
     return [TKJson deserializeMessageOfClass:[FankClient class]
                               fromDictionary:response.body.object[@"client"]];
@@ -55,7 +57,7 @@
     request.accountNumber = accountNumber;
     request.balance.value = amount;
     request.balance.currency = currency;
-    NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/accounts", url, client.id_p];
+    NSString *urlPath = [NSString stringWithFormat:@"%@/banks/%@/clients/%@/accounts", url, TEST_BIC, client.id_p];
     UNIHTTPJsonResponse *response = [self httpPutCall:urlPath
                                              withData:[TKJson serializeData:request]];
     return [TKJson deserializeMessageOfClass:[FankAccount class]
@@ -69,7 +71,7 @@
     request.username = username;
     request.clientId = clientId;
     [request.accountsArray addObjectsFromArray:accountNumbers];
-    NSString *urlPath = [NSString stringWithFormat:@"%@/clients/%@/link-accounts", url, clientId];
+    NSString *urlPath = [NSString stringWithFormat:@"%@/banks/%@/clients/%@/link-accounts", url, TEST_BIC, clientId];
     UNIHTTPJsonResponse *response = [self httpPutCall:urlPath
                                              withData:[TKJson serializeData:request]];
     BankAuthorization *auth = [TKJson deserializeMessageOfClass:[BankAuthorization class]

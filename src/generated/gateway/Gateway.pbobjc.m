@@ -4086,12 +4086,10 @@ typedef struct GetBankInfoResponse__storage_ {
 @implementation CreateTestBankAccountRequest
 
 @dynamic hasBalance, balance;
-@dynamic tagsArray, tagsArray_Count;
 
 typedef struct CreateTestBankAccountRequest__storage_ {
   uint32_t _has_storage_[1];
   Money *balance;
-  NSMutableArray *tagsArray;
 } CreateTestBankAccountRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -4107,15 +4105,6 @@ typedef struct CreateTestBankAccountRequest__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreateTestBankAccountRequest__storage_, balance),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "tagsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountTag),
-        .number = CreateTestBankAccountRequest_FieldNumber_TagsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(CreateTestBankAccountRequest__storage_, tagsArray),
-        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

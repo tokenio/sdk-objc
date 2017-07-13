@@ -420,7 +420,6 @@ message GetBankInfoResponse {
 
 message CreateTestBankAccountRequest {
   io.token.proto.common.money.Money balance = 1;
-  repeated io.token.proto.common.account.AccountTag tags = 2;    // Optional tags for fank
 }
 
 message CreateTestBankAccountResponse {

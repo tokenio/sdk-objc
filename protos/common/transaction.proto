@@ -23,6 +23,7 @@ enum TransactionStatus {
   FAILURE_QUOTE_EXPIRED = 11;     // the transaction has failed because the quote has expired
   FAILURE_INVALID_AMOUNT = 12;    // the transaction has failed due to invalid amount
   FAILURE_INVALID_QUOTE = 13;     // the transaction has failed due to invalid quote (wrong fx rate)
+  FAILURE_EXPIRED = 14;           // the transaction has failed to complete within alotted time
   FAILURE_GENERIC = 5;            // the transaction has failed due to other reasons
 }
 

@@ -12,7 +12,7 @@
 #import "TokenIO.h"
 #import "TKBankClient.h"
 #import "TKUtil.h"
-#import "bankapi/Fank.pbobjc.h"
+#import "fank/Fank.pbobjc.h"
 
 
 @interface TKAccountsTests : TKTestBase
