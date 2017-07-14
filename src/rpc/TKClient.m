@@ -560,7 +560,14 @@
                            ^(CreateTransferResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.transfer);
+                                   if (response.transfer.status == TransactionStatus_Pending ||
+                                       response.transfer.status == TransactionStatus_Success ||
+                                       response.transfer.status == TransactionStatus_Processing ) {
+                                       onSuccess(response.transfer);
+                                   } else {
+                                       onError([NSError
+                                                errorFromTransactionStatus:response.transfer.status]);
+                                   }
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }
