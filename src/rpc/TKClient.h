@@ -246,7 +246,7 @@
 /**
  * Redeems a transfer token.
  *
- * @param transfer transfer parameters, such as amount, currency, etc
+ * @param payload transfer payload
  */
 - (void)redeemToken:(TransferPayload *)payload
              onSuccess:(OnSuccessWithTransfer)onSuccess

@@ -25,4 +25,11 @@ static NSString* kTokenErrorDomain = @"io.tokensdk";
                                            stringWithFormat:@"Failed to create token %d", status] }];
 }
 
++ (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
+    return [NSError errorWithDomain:kTokenErrorDomain
+                               code:status
+                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
+                                                                  stringWithFormat:@"Failed to redeem token %d", status] }];
+}
+
 @end

@@ -25,5 +25,6 @@ typedef enum {
 
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString*)details;
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
++ (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
 
 @end
