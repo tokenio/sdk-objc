@@ -158,36 +158,6 @@ void check(NSString *message, BOOL condition) {
     }];
 }
 
-
-- (void)testNotifyAddKeyIos {
-    [self run: ^(TokenIO *tokenIO) {
-        NSMutableDictionary * instructionsDev = [NSMutableDictionary dictionaryWithDictionary:@{
-                        @"PLATFORM": @"IOS",
-                        @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"}];
-        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructionsDev];
-        XCTAssert([subscriber.handlerInstructions[@"DEVELOPMENT"] isEqualToString:@"false"]);
-        Key *key = [[payerAnotherDevice keys] firstObject];
-        [tokenIO notifyAddKey:payer.firstUsername
-                      keyName:@"Chrome 53.0"
-                          key:key];
-    }];
-}
-
-- (void)testNotifyAddKeyIosDev {
-    [self run: ^(TokenIO *tokenIO) {
-        NSMutableDictionary * instructionsDev = [NSMutableDictionary dictionaryWithDictionary:@{
-                        @"PLATFORM": @"IOS",
-                        @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979",
-                        @"DEVELOPMENT": @"true"}];
-        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructionsDev];
-        XCTAssert([subscriber.handlerInstructions[@"DEVELOPMENT"] isEqualToString:@"true"]);
-        Key *key = [[payerAnotherDevice keys] firstObject];
-        [tokenIO notifyAddKey:payer.firstUsername
-                      keyName:@"Chrome 53.0"
-                          key:key];
-    }];
-}
-
 - (void)testNotifyLinkAccountsAndAddKey {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
