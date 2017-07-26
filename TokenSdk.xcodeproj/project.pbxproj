@@ -43,6 +43,10 @@
 		37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B4A1D989A930043345F /* Transfer.pbobjc.h */; };
 		37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B4B1D989A930043345F /* Transfer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3777163E1D99BF6800287239 /* TokenSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 3777163D1D99BF6800287239 /* TokenSdk.h */; };
+		4B240F841F28096300497B2D /* TKHasher.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B240F821F28096300497B2D /* TKHasher.h */; };
+		4B240F851F28096300497B2D /* TKHasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B240F831F28096300497B2D /* TKHasher.m */; };
+		4B240F8C1F28135000497B2D /* Base58.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B240F8A1F28135000497B2D /* Base58.c */; };
+		4B240F8D1F28135000497B2D /* Base58.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B240F8B1F28135000497B2D /* Base58.h */; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
 		62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */; };
 		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
@@ -246,6 +250,10 @@
 		37637B4B1D989A930043345F /* Transfer.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transfer.pbobjc.m; sourceTree = "<group>"; };
 		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
 		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
+		4B240F821F28096300497B2D /* TKHasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKHasher.h; sourceTree = "<group>"; };
+		4B240F831F28096300497B2D /* TKHasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHasher.m; sourceTree = "<group>"; };
+		4B240F8A1F28135000497B2D /* Base58.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base58.c; sourceTree = "<group>"; };
+		4B240F8B1F28135000497B2D /* Base58.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base58.h; sourceTree = "<group>"; };
 		62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKErrorHandlerTests.m; sourceTree = "<group>"; };
 		62DE98B689D2C43491570541 /* HostAndPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostAndPort.m; sourceTree = "<group>"; };
 		62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcErrorHandler.h; sourceTree = "<group>"; };
@@ -796,8 +804,12 @@
 		DDF54B001E31796A00BE739B /* util */ = {
 			isa = PBXGroup;
 			children = (
+				4B240F8B1F28135000497B2D /* Base58.h */,
+				4B240F8A1F28135000497B2D /* Base58.c */,
 				DDF54B011E31797900BE739B /* QHex.h */,
 				DDF54B021E31797900BE739B /* QHex.m */,
+				4B240F821F28096300497B2D /* TKHasher.h */,
+				4B240F831F28096300497B2D /* TKHasher.m */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -821,6 +833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
+				4B240F841F28096300497B2D /* TKHasher.h in Headers */,
 				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				ABA7BC0BB1D940B3E988BEA2 /* TKMember.h in Headers */,
@@ -851,6 +864,7 @@
 				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
 				FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */,
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
+				4B240F8D1F28135000497B2D /* Base58.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
 				3777163E1D99BF6800287239 /* TokenSdk.h in Headers */,
@@ -1203,6 +1217,7 @@
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIO.m in Sources */,
+				4B240F8C1F28135000497B2D /* Base58.c in Sources */,
 				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
 				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
 				37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */,
@@ -1216,6 +1231,7 @@
 				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,
 				8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */,
 				DDF54B041E31797900BE739B /* QHex.m in Sources */,
+				4B240F851F28096300497B2D /* TKHasher.m in Sources */,
 				FAE918CC1F17E70B001692CF /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
 				ABA7BF199ADA616314789B0D /* TKRpcLog.m in Sources */,
