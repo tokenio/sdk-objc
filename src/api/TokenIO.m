@@ -69,11 +69,12 @@
 }
 
 
-- (TKMember *)loginMember:(NSString *)memberId {
+- (TKMember *)loginMember:(NSString *)memberId usernames:(NSArray<NSString*> *)usernames {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
                 loginMember:memberId
+                  usernames:usernames
                    onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                     onError:call.onError
         ];

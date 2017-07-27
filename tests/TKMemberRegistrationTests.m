@@ -36,7 +36,7 @@
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstUsername];
         [member approveKeys:newDevice.keys];
 
-        TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
+        TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId usernames:@[member.firstUsername]];
         XCTAssertEqualObjects(member.firstUsername, memberNewDevice.firstUsername);
         XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
     }];
@@ -45,7 +45,7 @@
 - (void)testLoginMember {
     [self run: ^(TokenIO *tokenIO) {
         TKMember *created = [self createMember:tokenIO];
-        TKMember *loggedIn = [tokenIO loginMember:created.id];
+        TKMember *loggedIn = [tokenIO loginMember:created.id usernames:@[created.firstUsername]];
         XCTAssert(loggedIn.id.length > 0);
         XCTAssertEqual(loggedIn.keys.count, 3);
         XCTAssertEqualObjects(created.firstUsername, loggedIn.firstUsername);

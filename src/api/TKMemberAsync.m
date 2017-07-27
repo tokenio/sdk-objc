@@ -9,6 +9,7 @@
 
 #import "Transferinstructions.pbobjc.h"
 #import "TKAccount.h"
+#import "TKHasher.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
 #import "TKClient.h"
@@ -17,20 +18,24 @@
 @implementation TKMemberAsync {
     TKClient *client;
     Member *member;
+    NSMutableArray<NSString *> *usernames;
 }
 
 + (TKMemberAsync *)member:(Member *)member
+                usernames:(NSArray<NSString *> *)usernames
                 useClient:(TKClient *)client {
-    return [[TKMemberAsync alloc] initWithMember:member useClient:client];
+    return [[TKMemberAsync alloc] initWithMember:member usernames:usernames useClient:client];
 }
 
 - (id)initWithMember:(Member *)member_
+           usernames:(NSArray<NSString *> *)usernames_
            useClient:(TKClient *)client_ {
     self = [super init];
     
     if (self) {
         member = member_;
         client = client_;
+        usernames = [usernames_ mutableCopy];
     }
     
     return self;
@@ -50,7 +55,7 @@
 }
 
 - (NSString *)firstUsername {
-    return member.usernamesArray[0];
+    return usernames.count > 0 ? usernames[0] : nil;
 }
 
 - (NSArray<NSString *> *)keys {
@@ -62,7 +67,7 @@
 }
 
 - (NSArray<NSString *> *)usernames {
-    return [member.usernamesArray copy];
+    return [NSArray arrayWithArray:usernames];
 }
 
 - (void)useAccessToken:(NSString *)accessTokenId {
@@ -141,21 +146,22 @@
                onError:onError];
 }
 
-- (void)addUsernames:(NSArray<NSString *> *)usernames
+- (void)addUsernames:(NSArray<NSString *> *)toAddUsernames
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray<MemberOperation *> *addUsernames = [NSMutableArray array];
-    for (NSString *username in usernames) {
+    NSMutableArray<MemberOperation *> *addUsernameOps = [NSMutableArray array];
+    for (NSString *username in toAddUsernames) {
         MemberOperation *addUsername = [MemberOperation message];
-        addUsername.addUsername.username = username;
-        [addUsernames addObject:addUsername];
+        addUsername.addUsername.username = [TKHasher serializedSha256:username];
+        [addUsernameOps addObject:addUsername];
     }
     [client updateMember:retainedMember
-              operations:[addUsernames copy]
+              operations:[addUsernameOps copy]
                onSuccess:
                        ^(Member *m) {
+                           [usernames addObjectsFromArray:toAddUsernames];
                            [retainedMember clear];
                            [retainedMember mergeFrom:m];
                            onSuccess();
@@ -171,21 +177,22 @@
                   onError:onError];
 }
 
-- (void)removeUsernames:(NSArray<NSString *> *)usernames
+- (void)removeUsernames:(NSArray<NSString *> *)toRemoveUsernames
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray *removeUsernames = [NSMutableArray array];
-    for (NSString *username in usernames) {
+    NSMutableArray *removeUsernameOps = [NSMutableArray array];
+    for (NSString *username in toRemoveUsernames) {
         MemberOperation *removeUsername = [MemberOperation message];
-        removeUsername.removeUsername.username = username;
-        [removeUsernames addObject:removeUsername];
+        removeUsername.removeUsername.username = [TKHasher serializedSha256:username];
+        [removeUsernameOps addObject:removeUsername];
     }
     [client updateMember:retainedMember
-              operations:[removeUsernames copy]
+              operations:[removeUsernameOps copy]
                onSuccess:
                        ^(Member *m) {
+                           [usernames removeObjectsInArray:toRemoveUsernames];
                            [retainedMember clear];
                            [retainedMember mergeFrom:m];
                            onSuccess();
