@@ -99,12 +99,10 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
  * Logs in an existing member to the system.
  *
  * @param memberId member id
- * @param usernames usernames
  * @param key secret/public key pair to use
  * @return logged in member
  */
 - (void)loginMember:(NSString *)memberId
-          usernames:(NSArray<NSString*> *)usernames
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError;
 

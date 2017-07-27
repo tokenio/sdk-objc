@@ -45,12 +45,12 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
 - (id)runWithResult:(AsyncTestBlockWithResult)block;
 
 /**
- * Creates a new member with a specified username and key.
+ * Creates a new member with an auto generated username and key.
  *
  * @param tokenIO
  * @return
  */
-- (TKMember *)createMember:(TokenIO *)token;
+- (TKMember *)createMember:(TokenIO *)tokenIO;
 
 /**
  * Creates a new member/account.

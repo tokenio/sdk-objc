@@ -13,7 +13,7 @@
 
 @implementation TKHasher
 
-+ (NSData *)sha256:(NSString *)input
++ (NSData *)hash:(NSString *)input
 {
     const char* input_cstr = [input UTF8String];
     unsigned char* output_buf = malloc(CC_SHA256_DIGEST_LENGTH);
@@ -26,8 +26,10 @@
     return output;
 }
 
-+ (NSString *)serializedSha256:(NSString *)input {
-    return [[NSString alloc] initWithData: [TKHasher encodeBase58:[TKHasher sha256:input]] encoding:NSUTF8StringEncoding];
++ (NSString *)hashAndSerialize:(NSString *)input {
+    // TODO(PR-998): Revert this change
+    return input;
+    //return [[NSString alloc] initWithData: [TKHasher encodeBase58:[TKHasher hash:input]] encoding:NSUTF8StringEncoding];
 }
 
 + (NSData *)encodeBase58:(NSData *)data {

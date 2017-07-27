@@ -22,20 +22,18 @@
 }
 
 + (TKMemberAsync *)member:(Member *)member
-                usernames:(NSArray<NSString *> *)usernames
                 useClient:(TKClient *)client {
-    return [[TKMemberAsync alloc] initWithMember:member usernames:usernames useClient:client];
+    return [[TKMemberAsync alloc] initWithMember:member useClient:client];
 }
 
 - (id)initWithMember:(Member *)member_
-           usernames:(NSArray<NSString *> *)usernames_
            useClient:(TKClient *)client_ {
     self = [super init];
     
     if (self) {
         member = member_;
         client = client_;
-        usernames = [usernames_ mutableCopy];
+        usernames = [NSMutableArray arrayWithArray:member.usernamesArray];
     }
     
     return self;
@@ -154,7 +152,7 @@
     NSMutableArray<MemberOperation *> *addUsernameOps = [NSMutableArray array];
     for (NSString *username in toAddUsernames) {
         MemberOperation *addUsername = [MemberOperation message];
-        addUsername.addUsername.username = [TKHasher serializedSha256:username];
+        addUsername.addUsername.username = [TKHasher hashAndSerialize:username];
         [addUsernameOps addObject:addUsername];
     }
     [client updateMember:retainedMember
@@ -185,7 +183,7 @@
     NSMutableArray *removeUsernameOps = [NSMutableArray array];
     for (NSString *username in toRemoveUsernames) {
         MemberOperation *removeUsername = [MemberOperation message];
-        removeUsername.removeUsername.username = [TKHasher serializedSha256:username];
+        removeUsername.removeUsername.username = [TKHasher hashAndSerialize:username];
         [removeUsernameOps addObject:removeUsername];
     }
     [client updateMember:retainedMember

@@ -41,7 +41,6 @@
  * Use `TokenIO` or `TokenIOAsync` to obtain an instance of this class.
  */
 + (TKMemberAsync *)member:(Member *)member
-                usernames:(NSArray<NSString *>*)usernames
                 useClient:(TKClient *)client;
 
 
