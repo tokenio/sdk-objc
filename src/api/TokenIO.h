@@ -78,10 +78,9 @@
  * Logs in an existing member to the system.
  *
  * @param memberId member id
- * @param usernames usernames
  * @return logged in member
  */
-- (TKMember *)loginMember:(NSString *)memberId usernames:(NSArray<NSString*> *)usernames;
+- (TKMember *)loginMember:(NSString *)memberId;
 
 /**
  * Sends a notification to request payment

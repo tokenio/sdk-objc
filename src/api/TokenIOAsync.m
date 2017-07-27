@@ -124,7 +124,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)loginMember:(NSString *)memberId
-          usernames:(NSArray<NSString *> *)usernames
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
             onError:(OnError)onError {
     TKUnauthenticatedClient *unauthenticatedClient = [[TKUnauthenticatedClient alloc]
@@ -139,7 +138,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                                           timeoutMs:timeoutMs
                                                                            memberId:memberId
                                                                        errorHandler:errorHandler];
-                               onSuccess([TKMemberAsync member:member usernames:usernames useClient:client]);
+                               onSuccess([TKMemberAsync member:member useClient:client]);
                            }
                              onError:onError];
 }
@@ -232,7 +231,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     }
 
     MemberOperation *addUsername = [MemberOperation message];
-    addUsername.addUsername.username = [TKHasher serializedSha256:username];
+    addUsername.addUsername.username = [TKHasher hashAndSerialize:username];
     [operations addObject:addUsername];
 
     [client createMember:memberId
@@ -247,7 +246,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                               errorHandler:errorHandler];
                    onSuccess([TKMemberAsync
                            member:member
-                           usernames: @[username]
                         useClient:newClient]);
                }
                  onError:onError];

@@ -10,7 +10,7 @@
 
 @interface TKHasher : NSObject
 
-+ (NSData *)sha256:(NSString *)input;
-+ (NSString *)serializedSha256:(NSString *)input;
++ (NSData *)hash:(NSString *)input;
++ (NSString *)hashAndSerialize:(NSString *)input;
 
 @end
