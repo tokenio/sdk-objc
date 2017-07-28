@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "TokenSdk.h"
 
+static NSString* kTokenErrorDomain = @"io.tokensdk";
+
 typedef enum {
     /* The operation was cancelled by user (like cancelling out of Touch ID prompt). */
     kTKErrorUserCancelled = 101,

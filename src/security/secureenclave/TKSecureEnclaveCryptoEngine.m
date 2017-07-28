@@ -58,10 +58,10 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         TKLogError(@"Error signing data: %@", error);
         if (CFErrorGetCode(error) == kLAErrorUserCancel) {
             onError([NSError errorFromErrorCode:kTKErrorUserCancelled details:TKLocalizedString(@"User_Cancelled_Authentication", @"User cancelled authentication")]);
+            CFRelease(error);
         } else {
             onError(CFBridgingRelease(error));
         }
-        CFRelease(error);
         return nil;
     }
     NSData* signatureData = (__bridge NSData *)(signRef);

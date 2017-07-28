@@ -8,8 +8,6 @@
 
 #import "TKError.h"
 
-static NSString* kTokenErrorDomain = @"io.tokensdk";
-
 @implementation NSError (TokenSdk)
 
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details {
