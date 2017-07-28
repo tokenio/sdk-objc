@@ -68,11 +68,11 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
         call.requestHeaders[@"token-on-behalf-of"] = onBehalfOfMemberId;
     }
 
-    // TODO: Remove this, added to debug a prod issue.
-    TKLogVerbose(@"Auth key-id: %@", signature.key.id_p);
-    TKLogVerbose(@"Auth signature: %@", signature.value);
-    TKLogVerbose(@"Auth payload: %@", [TKJson serialize:request]);
-    TKLogVerbose(@"Auth created-at: %llu", now);
+    // Keep it in comment in case we need it in the future.
+    // TKLogVerbose(@"Auth key-id: %@", signature.key.id_p);
+    // TKLogVerbose(@"Auth signature: %@", signature.value);
+    // TKLogVerbose(@"Auth payload: %@", [TKJson serialize:request]);
+    // TKLogVerbose(@"Auth created-at: %llu", now);
 
     [self dispatch:call request:request];
 }

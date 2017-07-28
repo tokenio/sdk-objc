@@ -57,9 +57,13 @@
         }
 
         // Invoke RPC call private callback now.
-        onError(mappedError);
+        if (onError) {
+            onError(mappedError);
+        }
     } else {
-        onError(error);
+        if (onError) {
+            onError(error);
+        }
     }
 }
 

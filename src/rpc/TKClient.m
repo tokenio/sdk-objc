@@ -308,8 +308,10 @@
                                    if (response.status == TransferTokenStatus_Success) {
                                        onSuccess(response.token);
                                    } else {
-                                       onError([NSError
-                                                errorFromTransferTokenStatus:response.status]);
+                                       if (onError) {
+                                           onError([NSError
+                                                    errorFromTransferTokenStatus:response.status]);
+                                       }
                                    }
                                } else {
                                    RpcLogError(error);
@@ -565,8 +567,10 @@
                                        response.transfer.status == TransactionStatus_Processing ) {
                                        onSuccess(response.transfer);
                                    } else {
-                                       onError([NSError
-                                                errorFromTransactionStatus:response.transfer.status]);
+                                       if (onError) {
+                                           onError([NSError
+                                                    errorFromTransactionStatus:response.transfer.status]);
+                                       }
                                    }
                                } else {
                                    [errorHandler handle:onError withError:error];
