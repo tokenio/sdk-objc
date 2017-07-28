@@ -55,6 +55,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                   @"Approve authentication")
          onError:^(NSError *error) {
              //TODO: We shall convey it back to the user.
+             TKLogError(@"Local authorization in excuting grpc call failed with error %@",error);
          }];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
