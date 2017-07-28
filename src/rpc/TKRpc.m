@@ -53,7 +53,9 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
           reason:TKLocalizedString(
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")
-         onError:nil];
+         onError:^(NSError *error) {
+             //TODO: We shall convey it back to the user.
+         }];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
