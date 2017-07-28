@@ -91,11 +91,9 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                       NSArray<Key *> *keys = [crypto generateKeys];
                       onSuccess([DeviceInfo deviceInfo:memberId keys:keys]);
                   } else {
-                      if (onError) {
-                          onError([NSError errorWithDomain:@"io.grpc"
-                                                      code:GRPCErrorCodeNotFound
-                                                  userInfo:nil]);
-                      }
+                      onError([NSError errorWithDomain:@"io.grpc"
+                                                  code:GRPCErrorCodeNotFound
+                                              userInfo:nil]);
                   }
               }
                 onError:onError];
