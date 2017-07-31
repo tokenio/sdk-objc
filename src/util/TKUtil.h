@@ -81,7 +81,7 @@
 /**
  * Base64Url decoder implementation.
  *
- * @param base64UrlString Base64Url encoded string
+ * @param base64String Base64Url encoded string
  * @return decoded string
  */
 + (NSData *)base64UrlDecodeString:(NSString *)base64String;
@@ -99,7 +99,7 @@
  * Returns an ID for a given string. We hash the string value and Base64 encode
  * the result. Has to match what we do on the server.
  *
- * @param string content to generate an id for
+ * @param buffer content to generate an id for
  * @return id
  */
 + (NSString *)idForBytes:(const char *)buffer;
@@ -108,7 +108,7 @@
  * Returns an ID for a given data. We hash the data value and Base64 encode
  * the result. Has to match what we do on the server.
  *
- * @param string content to generate an id for
+ * @param data content to generate an id for
  * @return id
  */
 + (NSString *)idForData:(NSData *)data;

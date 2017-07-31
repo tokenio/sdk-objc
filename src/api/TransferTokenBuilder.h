@@ -53,8 +53,8 @@
 /**
  * Executes the request, creating the token, async
  *
- * @param onSuccess
- * @param onError
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
                 onError:(OnError)onError;

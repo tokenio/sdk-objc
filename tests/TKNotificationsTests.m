@@ -34,7 +34,7 @@
  */
 void check(NSString *message, BOOL condition) {
     if (!condition) {
-        [NSException raise:message format:message];
+        [NSException raise:message format:@"%@", message];
     }
 }
 
@@ -286,7 +286,7 @@ void check(NSString *message, BOOL condition) {
             if (now - start < 5) {
                 usleep(waitTimeMs * 1000);
             } else {
-                raise;
+                @throw;
             }
         }
     }

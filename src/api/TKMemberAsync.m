@@ -56,8 +56,8 @@
     return usernames.count > 0 ? usernames[0] : nil;
 }
 
-- (NSArray<NSString *> *)keys {
-    NSMutableArray<NSString *> *result = [NSMutableArray array];
+- (NSArray<Key *> *)keys {
+    NSMutableArray<Key *> *result = [NSMutableArray array];
     for (Key *key in member.keysArray) {
         [result addObject:key];
     }

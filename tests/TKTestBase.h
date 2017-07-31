@@ -47,25 +47,25 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
 /**
  * Creates a new member with an auto generated username and key.
  *
- * @param tokenIO
- * @return
+ * @param tokenIO an entry point for Token API
+ * @return a member
  */
 - (TKMember *)createMember:(TokenIO *)tokenIO;
 
 /**
  * Creates a new member/account.
  *
- * @param tokenIO
- * @return
+ * @param tokenIO an entry point for Token API
+ * @return an account
  */
 - (TKAccount *)createAccount:(TokenIO *)tokenIO;
 
 /**
  * Creates a new bank authorization for a member
  *
- * @param tokenIO
- * @param username
- * @return
+ * @param tokenIO an entry point for Token API
+ * @param username member username
+ * @return a bank authorization
  */
 - (BankAuthorization *)createBankAuthorization:(TokenIO *)tokenIO
                                       username:(NSString *)username;

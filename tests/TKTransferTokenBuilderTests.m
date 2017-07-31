@@ -39,6 +39,7 @@
         builder.accountId = payerAccount.id;
         builder.redeemerUsername = payee.firstUsername;
         Token *token = [builder execute];
+        XCTAssertNotNil(token);
     }];
 }
 

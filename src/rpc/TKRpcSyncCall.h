@@ -33,16 +33,12 @@
 - (T)run:(void(^)())block;
 
 /**
- * Invoked by the RPC block to signal that call completed successfully.
- *
- * @param result RPC call result
+ * @brief Invoked by the RPC block to signal that call completed successfully.
  */
 @property (readonly, retain) void(^onSuccess)(T);
 
 /**
- * Invoked by the RPC block to signal that call completed with an error.
- *
- * @param error error information
+ * @brief Invoked by the RPC block to signal that call completed with an error.
  */
 @property (readonly, retain) OnError onError;
 

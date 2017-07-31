@@ -43,23 +43,22 @@
  * @param host host to connect to
  * @param port gRPC port to connect to
  * @param timeout timeout value in ms
- * @param crypto crypto module to use
+ * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
- * @param globalRpcErrorCallback_ global RPC error callback to invoke on error
+ * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout
-            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
+            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
             useSsl:(BOOL)useSsl
-globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
+globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the
  * given username.
  *
  * @param username member username to use, must be unique
- * @return newly created member
  */
 - (void)createMember:(NSString *)username
             onSucess:(OnSuccessWithTKMemberAsync)onSuccess
@@ -89,7 +88,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
  * Looks up member id for a given username.
  *
  * @param username username to check
- * @return member id if username already exists, nil otherwise
  */
 - (void)getMemberId:(NSString *)username
           onSuccess:(OnSuccessWithString)onSuccess
@@ -99,8 +97,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_;
  * Logs in an existing member to the system.
  *
  * @param memberId member id
- * @param key secret/public key pair to use
- * @return logged in member
  */
 - (void)loginMember:(NSString *)memberId
            onSucess:(OnSuccessWithTKMemberAsync)onSuccess

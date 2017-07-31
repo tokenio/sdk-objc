@@ -1525,6 +1525,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35FC84ADBDD603291F3377B5 /* Pods-TokenSdkTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1559,6 +1561,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
