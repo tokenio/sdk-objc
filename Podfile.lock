@@ -49,7 +49,7 @@ SPEC CHECKSUMS:
   gRPC-Core: 642d29e59e5490374622b0629c2dd1c4c111775c
   gRPC-ProtoRPC: 675ef3d484c06967ed2a5f5ee0e510a3756f755e
   gRPC-RxLibrary: 7a25c5c25282669a82d1783d7e8a036f53e8ef27
-  nanopb: 22bc080fa3955e2116b6ff3ee6c2cb3c15ab97cb
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
