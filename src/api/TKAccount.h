@@ -34,8 +34,7 @@
 /**
  * Looks up account balance.
  *
- * @param onSuccess invoked on success
- * @param onError invoked on error
+ * @return a balance amount
  */
 - (Money *)getBalance;
 

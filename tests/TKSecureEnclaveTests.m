@@ -11,6 +11,7 @@
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKSignature.h"
 #import "TKError.h"
+#import "TKLogManager.h"
 
 @interface TKSecureEnclaveTests : XCTestCase
 
@@ -31,7 +32,12 @@
     token.payload.transfer.amount = @"100.23";
     
     Key *key = [crypto generateKey:Key_Level_Low];
-    TKSignature *signature = [crypto sign:token usingKey:Key_Level_Low reason:nil onError:nil];
+    TKSignature *signature = [crypto sign:token
+                                 usingKey:Key_Level_Low
+                                   reason:nil
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSignAndVerify_message sign fail with error %@", error);
+                                  }];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     
@@ -50,7 +56,9 @@
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:Key_Level_Low
                                    reason:nil
-                                  onError:nil];
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSignAndVerify_token sign fail with error %@", error);
+                                  }];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     
@@ -76,7 +84,9 @@
                                    action:TokenSignature_Action_Endorsed
                                  usingKey:Key_Level_Privileged
                                    reason:nil
-                                  onError:nil];
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSignAndVerify_token_touchID sign fail with error %@", error);
+                                  }];
     XCTAssertEqualObjects(signature.key.id_p, key.id_p);
     XCTAssert(signature.value.length > 0);
     

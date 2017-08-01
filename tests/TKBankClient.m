@@ -79,9 +79,9 @@ static NSString *const TEST_BIC = @"IRONUSCA000";
     return auth.accountsArray;
 }
 
-- (UNIHTTPJsonResponse *)httpPutCall:(NSString *)url withData:(NSData *)data {
+- (UNIHTTPJsonResponse *)httpPutCall:(NSString *)url_ withData:(NSData *)data {
     return [[UNIRest putEntity:^(UNIBodyRequest *request) {
-        [request setUrl:url];
+        [request setUrl:url_];
         [request setHeaders:headers];
         [request setBody:data];
     }] asJson];

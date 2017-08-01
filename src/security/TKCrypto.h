@@ -24,7 +24,6 @@
 /**
  * Generates a set of keys to be used by a given member.
  *
- * @param level key level
  * @return the newly created key pair information
  */
 - (NSArray<Key *> *)generateKeys;
@@ -91,7 +90,7 @@
  *
  * @param signature signature to verify
  * @param message message to verify the signature for
- * @param keyType key to use
+ * @param keyId key to use
  * @return true if signature verifies
  */
 - (bool)verifySignature:(NSString *)signature
@@ -104,7 +103,7 @@
  * @param signature signature to verify
  * @param token token to verify the signature for
  * @param action action to verify the signature for
- * @param keyType key to use
+ * @param keyId key to use
  * @return true if signature verifies
  */
 - (bool)verifySignature:(NSString *)signature
