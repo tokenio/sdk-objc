@@ -41,7 +41,8 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
         request:(GPBMessage *)request
        memberId:(NSString *)memberId
          crypto:(TKCrypto *)crypto
-     onBehalfOf:(NSString *)onBehalfOfMemberId {
+     onBehalfOf:(NSString *)onBehalfOfMemberId
+        onError:(OnError)onError { 
     unsigned long long now = (unsigned long long)([[NSDate date] timeIntervalSince1970] * 1000);
 
     GRpcAuthPayload *payload = [GRpcAuthPayload message];
@@ -53,10 +54,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
           reason:TKLocalizedString(
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")
-         onError:^(NSError *error) {
-             //TODO: We shall convey it back to the user.
-             TKLogError(@"Local authorization in excuting grpc call failed with error %@",error);
-         }];
+         onError:onError];
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;

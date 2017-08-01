@@ -9,11 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "TokenSdk.h"
 
+/*
+ * Generic token error.
+ */
 static NSString* kTokenErrorDomain = @"io.tokensdk";
+/*
+ * Token error from TransferTokenStatus.
+ */
+static NSString* kTokenTransferErrorDomain = @"io.tokensdk.transfer";
+/*
+ * Token error from TransactionStatus.
+ */
+static NSString* kTokenTransactionErrorDomain = @"io.tokensdk.transaction";
 
 typedef enum {
     /* The operation was cancelled by user (like cancelling out of Touch ID prompt). */
-    kTKErrorUserCancelled = 101,
+    //Deprecated 
+    //kTKErrorUserCancelled = 101,
     
     /* Private key couldn't be retrieved from key storage */
     kTKErrorKeyNotFound = 102,

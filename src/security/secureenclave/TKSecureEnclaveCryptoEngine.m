@@ -47,21 +47,16 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         return nil;
     }
 
-    CFErrorRef error = NULL;
+    NSError *error;
     CFDataRef signRef = SecKeyCreateSignature(
             privateKeyRef,
             kSecKeyAlgorithmECDSASignatureMessageX962SHA256,
             (__bridge CFDataRef)data,
-            &error);
+            (void *)&error);
     if (signRef == nil) {
         CFRelease(privateKeyRef);
         TKLogError(@"Error signing data: %@", error);
-        if (CFErrorGetCode(error) == kLAErrorUserCancel) {
-            onError([NSError errorFromErrorCode:kTKErrorUserCancelled details:TKLocalizedString(@"User_Cancelled_Authentication", @"User cancelled authentication")]);
-            CFRelease(error);
-        } else {
-            onError(CFBridgingRelease(error));
-        }
+        onError(error);
         return nil;
     }
     NSData* signatureData = (__bridge NSData *)(signRef);

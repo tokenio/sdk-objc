@@ -117,7 +117,7 @@
          onError:^(NSError *error) {
              errorCode = error.code;
          }];
-    XCTAssertEqual(errorCode, kTKErrorUserCancelled);
+    XCTAssertEqual(errorCode, );
 }
 #endif
 

@@ -86,7 +86,9 @@
                                  }
     ];
 
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)subscribeToNotifications:(NSString *)handler
@@ -107,7 +109,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
@@ -124,7 +128,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 
@@ -144,7 +150,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getNotifications:(NSString *)offset
@@ -168,7 +176,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 
@@ -188,7 +198,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 
@@ -208,7 +220,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 
@@ -230,7 +244,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
@@ -250,7 +266,9 @@
                                    [errorHandler handle:onError withError:error];
                                }
                            }];
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getAccounts:(OnSuccessWithAccounts)onSuccess
@@ -269,7 +287,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getAccount:(NSString *)accountId
@@ -290,7 +310,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)createTransferToken:(TokenPayload *)payload
@@ -317,7 +339,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)createAccessToken:(TokenPayload *)payload
@@ -339,7 +363,9 @@
                                     }
                                 }];
 
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)replaceToken:(Token *)tokenToCancel
@@ -366,7 +392,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)replaceAndEndorseToken:(Token *)tokenToCancel
@@ -410,7 +438,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getToken:(NSString *)tokenId
@@ -431,7 +461,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTokensOfType:(GetTokensRequest_Type)type
@@ -459,7 +491,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)endorseToken:(Token *)token
@@ -496,7 +530,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)cancelToken:(Token *)token
@@ -531,7 +567,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)redeemToken:(TransferPayload *)payload
@@ -573,7 +611,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTransfer:(NSString *)transferId
@@ -595,7 +635,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTransfersOffset:(NSString *)offset
@@ -624,7 +666,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getBalance:(NSString *)accountId
@@ -646,7 +690,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
@@ -670,7 +716,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTransactionsOffset:(NSString *)offset
@@ -699,7 +747,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)createBlob:(NSString *)ownerId
@@ -732,7 +782,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getBlob:(NSString *)blobId
@@ -754,7 +806,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getTokenBlob:(NSString *)tokenId
@@ -778,7 +832,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)addAddress:(Address *)address
@@ -815,7 +871,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getAddressById:(NSString *)addressId
@@ -837,7 +895,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getAddresses:(OnSuccessWithAddresses)onSuccess
@@ -857,7 +917,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)deleteAddressById:(NSString *)addressId
@@ -879,7 +941,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getBanks:(OnSuccessWithBanks)onSuccess
@@ -899,7 +963,9 @@
                                }
                            }];
 
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getBankInfo:(NSString *) bankId
@@ -921,7 +987,9 @@
                                }
                            }];
 
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getProfile:(NSString *)ownerId
@@ -943,7 +1011,9 @@
                                }
                            }];
 
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)setProfile:(Profile *)profile
@@ -965,7 +1035,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getProfilePicture:(NSString *)ownerId
@@ -989,7 +1061,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)setProfilePicture:(NSString *)ownerId
@@ -1018,7 +1092,9 @@
                                }
                            }];
     
-    [self _startCall:call withRequest:request];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 
@@ -1047,12 +1123,15 @@
     return request;
 }
 
-- (void)_startCall:(GRPCProtoCall *)call withRequest:(GPBMessage *)request {
+- (void)_startCall:(GRPCProtoCall *)call
+       withRequest:(GPBMessage *)request
+           onError:(OnError)onError {
     [rpc execute:call
          request:request
         memberId:memberId
           crypto:crypto
-      onBehalfOf:onBehalfOfMemberId];
+      onBehalfOf:onBehalfOfMemberId
+     onError:onError];
 }
 
 @end

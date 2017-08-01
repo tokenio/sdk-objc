@@ -17,14 +17,14 @@
 }
 
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
-    return [NSError errorWithDomain:kTokenErrorDomain
+    return [NSError errorWithDomain:kTokenTransferErrorDomain
                                code:status
                            userInfo:@{ NSLocalizedDescriptionKey:[NSString
                                            stringWithFormat:@"Failed to create token %d", status] }];
 }
 
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
-    return [NSError errorWithDomain:kTokenErrorDomain
+    return [NSError errorWithDomain:kTokenTransactionErrorDomain
                                code:status
                            userInfo:@{ NSLocalizedDescriptionKey:[NSString
                                                                   stringWithFormat:@"Failed to redeem token %d", status] }];
