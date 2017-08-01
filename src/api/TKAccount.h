@@ -34,7 +34,7 @@
 /**
  * Looks up account balance.
  *
- * @return a balance money
+ * @return a balance amount
  */
 - (Money *)getBalance;
 
