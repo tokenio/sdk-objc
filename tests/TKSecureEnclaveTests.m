@@ -13,6 +13,8 @@
 #import "TKError.h"
 #import "TKLogManager.h"
 
+@import LocalAuthentication;
+
 @interface TKSecureEnclaveTests : XCTestCase
 
 @end
@@ -117,7 +119,7 @@
          onError:^(NSError *error) {
              errorCode = error.code;
          }];
-    XCTAssertEqual(errorCode, );
+    XCTAssertEqual(errorCode, kLAErrorUserCancel);
 }
 #endif
 
