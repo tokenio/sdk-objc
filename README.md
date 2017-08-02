@@ -46,7 +46,7 @@ Client Usage
 The SDK can be added to a client directly from git.
 
 ```
-  pod 'TokenSdk',  :git => 'https://bitbucket.org/tokenio/sdk-objc',:submodules => true
+  pod 'TokenSdk',  :git => 'https://github.com/tokenio/sdk-objc',:submodules => true
 ```
 
 or referenced locally in a Podfile
