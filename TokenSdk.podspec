@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.license  = "New BSD"
     s.authors  = { "Token" => "eng@token.io" }
     s.homepage = "http://www.token.io/"
-    s.source = { :git => "https://bitbucket.org/tokenio/sdk-objc",
+    s.source = { :git => "https://github.com/tokenio/sdk-objc",
                  :tag => "v1.0.57",
                  :submodules => true }
     s.summary = "Token Objective-C SDK"

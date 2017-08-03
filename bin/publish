@@ -87,7 +87,7 @@ function tag_release {
 }
 
 function publish_podspec {
-    pod repo add token-cocoa-pods git@bitbucket.org:tokenio/token-cocoa-pods.git && true
+    pod repo add token-cocoa-pods git@github.com:tokenio/token-cocoa-pods.git && true
     pod repo update
     # TODO: remove --allow-warnings when all warnings are fixed.
     pod repo push token-cocoa-pods ${spec} --verbose --allow-warnings
