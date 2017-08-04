@@ -13,6 +13,8 @@
 #import "TKError.h"
 #import "TKLogManager.h"
 
+@import LocalAuthentication;
+
 @interface TKSecureEnclaveTests : XCTestCase
 
 @end
