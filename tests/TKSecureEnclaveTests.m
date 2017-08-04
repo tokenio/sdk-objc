@@ -119,7 +119,7 @@
          onError:^(NSError *error) {
              errorCode = error.code;
          }];
-    XCTAssertEqual(errorCode, kLAErrorUserCancel);
+    XCTAssertEqual(errorCode, kTKErrorUserCancelled);
 }
 #endif
 

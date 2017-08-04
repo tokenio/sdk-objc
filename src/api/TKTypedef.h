@@ -25,10 +25,10 @@
 @class Profile;
 
 typedef void (^ _Nonnull OnSuccess)();
-typedef void (^ _Nonnull OnError)( NSError * _Nonnull);
+typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithBoolean)(BOOL);
-typedef void (^ _Nonnull OnSuccessWithString)(NSString *_Nullable);
+typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKMemberAsync)(TKMemberAsync * _Nonnull);
@@ -45,9 +45,9 @@ typedef void (^ _Nonnull OnSuccessWithTokens)(PagedArray<Token *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransfer)(Transfer * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransfers)(PagedArray<Transfer *> * _Nonnull);
 
-typedef void (^ _Nonnull OnSuccessWithBlob)(Blob *_Nullable);
+typedef void (^ _Nonnull OnSuccessWithBlob)(Blob * _Nullable);
 
-typedef void (^ _Nonnull OnSuccessWithAttachment)(Attachment *_Nullable);
+typedef void (^ _Nonnull OnSuccessWithAttachment)(Attachment * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMoney)(Money * _Nonnull);
 

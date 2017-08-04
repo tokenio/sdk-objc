@@ -16,6 +16,13 @@
                            userInfo:@{ NSLocalizedDescriptionKey: details }];
 }
 
++ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error {
+    return [NSError errorWithDomain:kTokenErrorDomain
+                               code:errorCode
+                           userInfo:@{ NSLocalizedDescriptionKey: details ,
+                                       TKEncapsulatedErrorKey: error }];
+}
+
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
     return [NSError errorWithDomain:kTokenTransferErrorDomain
                                code:status

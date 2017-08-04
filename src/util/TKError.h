@@ -12,32 +12,40 @@
 /*
  * Generic token error.
  */
-static NSString* kTokenErrorDomain = @"io.tokensdk";
+static NSString *const kTokenErrorDomain = @"io.tokensdk";
 /*
  * Token error from TransferTokenStatus.
  */
-static NSString* kTokenTransferErrorDomain = @"io.tokensdk.transfer";
+static NSString *const kTokenTransferErrorDomain = @"io.tokensdk.transfer";
 /*
  * Token error from TransactionStatus.
  */
-static NSString* kTokenTransactionErrorDomain = @"io.tokensdk.transaction";
+static NSString *const kTokenTransactionErrorDomain = @"io.tokensdk.transaction";
+
+/*
+ * Errors detail encapsulated by
+ */
+static NSString *const TKEncapsulatedErrorKey = @"TKEncapsulatedErrorKey";
 
 typedef enum {
     /* The operation was cancelled by user (like cancelling out of Touch ID prompt). */
-    //Deprecated 
-    //kTKErrorUserCancelled = 101,
+    kTKErrorUserCancelled = 101,
+    
+    /* The operation was failed to identify the user (like failure of Touch ID prompt). */
+    kTKErrorUserInvalid = 102,
     
     /* Private key couldn't be retrieved from key storage */
-    kTKErrorKeyNotFound = 102,
+    kTKErrorKeyNotFound = 103,
 
     /* Raised when an SDK version is no longer supported by the server */
-    kTKErrorSdkVersionMismatch = 103,
+    kTKErrorSdkVersionMismatch = 104,
 } TKErrorCode;
 
 
 @interface NSError (TokenSdk)
 
-+ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString*)details;
++ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details;
++ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error;
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
 
