@@ -101,7 +101,6 @@
  *
  * @param field field descriptor
  * @param message message containing the field
- * @return
  */
 + (NSObject *)_serialize:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.fieldType) {
@@ -123,7 +122,6 @@
  *
  * @param field map field descriptor
  * @param message message containing the field
- * @return
  */
 + (NSObject *)_serializeMap:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSMutableDictionary<NSString*, NSObject*> *keysToValues = GPBGetMessageMapField(message, field);
@@ -139,7 +137,6 @@
  *
  * @param field repeated field descriptor
  * @param message message containing the field
- * @return
  */
 + (NSObject *)_serializeRepeated:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     NSArray<NSObject*> *values = GPBGetMessageRepeatedField(message, field);
@@ -156,7 +153,6 @@
  *
  * @param field field descriptor
  * @param message message containing the field
- * @return
  */
 + (NSObject *)_serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.dataType) {
@@ -202,7 +198,6 @@
  * of a primitive type.
  *
  * @param object object to serialize
- * @return
  */
 + (NSObject *)_serializeValue:(NSObject *)object {
     if ([object isKindOfClass:[GPBMessage class]]) {
@@ -229,7 +224,6 @@
  *
  * @param message message object to deserialize
  * @param dictionary dictionary created form JSON
- * @return
  */
 + (void)_deserializeMessage:(GPBMessage*)message fromDictionary:(NSDictionary*)dictionary {
     GPBDescriptor *descriptor = [message descriptor];
@@ -249,7 +243,6 @@
  * @param field field descriptor
  * @param message message containing the field
  * @param value value to deserialize the field from
- * @return
  */
 + (void)_deserializeField:(GPBFieldDescriptor *)field inMessage:(GPBMessage *)message fromValue:(id)value {
     switch (field.fieldType) {
@@ -272,7 +265,6 @@
  * @param field field descriptor
  * @param message message containing the field
  * @param value value to deserialize the field from
- * @return
  */
 + (void)_deserializeSingle:(GPBFieldDescriptor*)field inMessage:(GPBMessage *)message fromValue:(id)value {
     id valueObject = [self _deserializedObjectForField:field fromValue:value];
@@ -379,7 +371,6 @@
  * @param field field descriptor
  * @param message message containing the field
  * @param array array to deserialize the field from
- * @return
  */
 + (void)_deserializeRepeated:(GPBFieldDescriptor*)field inMessage:(GPBMessage *)message fromArray:(NSArray*)array {
     if (![array isKindOfClass:[NSArray class]]) {
@@ -452,8 +443,7 @@
  *
  * @param field field descriptor
  * @param message message containing the field
- * @param array array to deserialize the field from
- * @return
+ * @param dictionary array to deserialize the field from
  */
 + (void)_deserializeMap:(GPBFieldDescriptor*)field inMessage:(GPBMessage *)message fromDictionary:(NSDictionary*)dictionary {
     if (![dictionary isKindOfClass:[NSDictionary class]]) {

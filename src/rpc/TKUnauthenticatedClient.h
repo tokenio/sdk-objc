@@ -44,7 +44,6 @@
  * Looks up member id for a given username.
  *
  * @param username username to check
- * @return member id if username already exists, nil otherwise
  */
 - (void)getMemberId:(NSString *)username
           onSuccess:(OnSuccessWithString)onSuccess
@@ -56,7 +55,6 @@
  * @param memberId member id
  * @param crypto crypto engine to use
  * @param operations a set of operations that setup member keys and/or usernames
- * @return member information
  */
 - (void)createMember:(NSString *)memberId
                   crypto:(TKCrypto *)crypto
@@ -69,7 +67,6 @@
  * the key used for authentication.
  *
  * @param memberId member id
- * @return member information
  */
 - (void)getMember:(NSString *)memberId
         onSuccess:(OnSuccessWithMember)onSuccess
@@ -106,7 +103,7 @@
  *
  * @param username username to notify
  * @param keyName optional key name
- * @param publicKey key in string form
+ * @param key key in string form
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
