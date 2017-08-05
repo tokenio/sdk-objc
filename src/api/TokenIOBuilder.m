@@ -10,7 +10,7 @@
 
 #import "TokenIOBuilder.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
+#import "TokenIOSync.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKTokenCryptoEngineFactory.h"
 
@@ -32,10 +32,6 @@
 }
 
 - (TokenIO *)build {
-    return [self buildAsync].sync;
-}
-
-- (TokenIOAsync *)buildAsync {
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     if (self.keyStore) {
         cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:self.keyStore];
@@ -43,7 +39,7 @@
         cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
     }
 
-    return [[TokenIOAsync alloc]
+    return [[TokenIO alloc]
             initWithHost:self.host
                     port:self.port
                timeoutMs:self.timeoutMs

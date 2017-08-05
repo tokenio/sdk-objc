@@ -8,6 +8,7 @@
 #import "TKTestBase.h"
 #import "Account.pbobjc.h"
 #import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
