@@ -10,7 +10,7 @@
 
 #import "TransferTokenBuilder.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
+#import "TokenIOSync.h"
 #import "TKClient.h"
 #import "TKMemberAsync.h"
 #import "Transferinstructions.pbobjc.h"

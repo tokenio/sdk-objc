@@ -32,15 +32,9 @@
 - (id)init;
 
 /**
- * Creates a synchronous Token client object that is used as the 
+ * Creates a Token client object that is used as the
  * entry point to the Token API.
  */
 - (TokenIO *)build;
-
-/**
- * Creates an asynchronous Token client object that is used as the
- * entry point to the Token API.
- */
-- (TokenIOAsync *)buildAsync;
 
 @end

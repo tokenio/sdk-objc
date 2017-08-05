@@ -11,6 +11,7 @@
 #import "TKTestBase.h"
 #import "TKUtil.h"
 #import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "TKMember.h"
 
 @interface TKProfileTests : TKTestBase
