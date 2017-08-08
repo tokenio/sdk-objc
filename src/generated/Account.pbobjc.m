@@ -48,14 +48,14 @@ static GPBFileDescriptor *AccountRoot_FileDescriptor(void) {
 
 @implementation PlaintextBankAuthorization
 
-@dynamic username;
+@dynamic memberId;
 @dynamic accountName;
 @dynamic hasAccount, account;
 @dynamic expirationMs;
 
 typedef struct PlaintextBankAuthorization__storage_ {
   uint32_t _has_storage_[1];
-  NSString *username;
+  NSString *memberId;
   NSString *accountName;
   BankAccount *account;
   int64_t expirationMs;
@@ -68,11 +68,11 @@ typedef struct PlaintextBankAuthorization__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "username",
+        .name = "memberId",
         .dataTypeSpecific.className = NULL,
-        .number = PlaintextBankAuthorization_FieldNumber_Username,
+        .number = PlaintextBankAuthorization_FieldNumber_MemberId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(PlaintextBankAuthorization__storage_, username),
+        .offset = (uint32_t)offsetof(PlaintextBankAuthorization__storage_, memberId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

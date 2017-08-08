@@ -41,7 +41,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllAddresses];
         Token *token = [grantor createAccessToken:access];
 
@@ -59,7 +59,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAddress:address.id_p];
         Token *token = [grantor createAccessToken:access];
 
@@ -74,7 +74,7 @@
 
 - (void)testAnyBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllBalances];
         Token *token = [grantor createAccessToken:access];
 
@@ -88,7 +88,7 @@
 
 - (void)testBalanceToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAccountBalances:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
 
@@ -102,7 +102,7 @@
 
 - (void)testAnyAccountToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllAccounts];
         Token *token = [grantor createAccessToken:access];
 
@@ -116,7 +116,7 @@
 
 - (void)testAccountToken {
     [self run: ^(TokenIO *tokenIO) {
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAccount:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
 
@@ -137,7 +137,7 @@
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
-        builder.redeemerUsername = redeemer.firstUsername;
+        builder.redeemerAlias = redeemer.firstAlias;
         Token *transferToken = [builder execute];
         
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
@@ -147,7 +147,7 @@
         destination.account.token.accountId = redeemerAccount.id;
         [redeemer redeemToken:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
         
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAllTransactions];
         Token *accessToken = [grantor createAccessToken:access];
         
@@ -171,7 +171,7 @@
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
-        builder.redeemerUsername = redeemer.firstUsername;
+        builder.redeemerAlias = redeemer.firstAlias;
         Token *transferToken = [builder execute];
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
@@ -185,7 +185,7 @@
                      destination:destination];
         
         
-        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstUsername];
+        AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAccountTransactions:grantorAccount.id];
         Token *accessToken = [grantor createAccessToken:access];
 

@@ -19,6 +19,7 @@
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
+#import "Alias.pbobjc.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -74,11 +75,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
+#pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
 
-- (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)resolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
@@ -252,9 +253,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
 
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Testing.
+ * 
+ */
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Testing.
+ * 
+ */
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetTestBankNotification(GetTestBankNotificationRequest) returns (GetTestBankNotificationResponse)
+
+- (void)getTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetTestBankNotifications(GetTestBankNotificationsRequest) returns (GetTestBankNotificationsResponse)
+
+- (void)getTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateBlob(CreateBlobRequest) returns (CreateBlobResponse)

@@ -64,11 +64,11 @@ static NSString *const TEST_BIC = @"IRONUSCA000";
                               fromDictionary:response.body.object[@"account"]];
 }
 
-- (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)username
+- (NSArray<SealedMessage*> *)authorizeAccountLinkingFor:(NSString *)memberId
                                           clientId:(NSString *)clientId
                                     accountNumbers:(NSArray<NSString *> *)accountNumbers {
     FankAuthorizeLinkAccountsRequest *request = [FankAuthorizeLinkAccountsRequest message];
-    request.username = username;
+    request.memberId = memberId;
     request.clientId = clientId;
     [request.accountsArray addObjectsFromArray:accountNumbers];
     NSString *urlPath = [NSString stringWithFormat:@"%@/banks/%@/clients/%@/link-accounts", url, TEST_BIC, clientId];

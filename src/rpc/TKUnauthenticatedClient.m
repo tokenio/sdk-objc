@@ -11,6 +11,7 @@
 #import "TKSignature.h"
 #import "TKLocalizer.h"
 #import "TKRpcErrorHandler.h"
+#import "TKHasher.h"
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;
@@ -51,20 +52,20 @@
     [rpc execute:call request:request];
 }
 
-- (void)getMemberId:(NSString *)username
+- (void)getMemberId:(Alias *)alias
           onSuccess:(OnSuccessWithString)onSuccess
             onError:(OnError)onError {
-    GetMemberIdRequest *request = [GetMemberIdRequest message];
-    request.username = username;
+    ResolveAliasRequest *request = [ResolveAliasRequest message];
+    request.alias = alias;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway
-            RPCToGetMemberIdWithRequest:request
-                                   handler:^(GetMemberIdResponse *response, NSError *error) {
+            RPCToResolveAliasWithRequest:request
+                                   handler:^(ResolveAliasResponse *response, NSError *error) {
                                        if (response) {
                                            RpcLogCompleted(response);
-                                           if (response.memberId && response.memberId.length) {
-                                               onSuccess(response.memberId);
+                                           if (response.hasMember) {
+                                               onSuccess(response.member.id_p);
                                            }
                                            else{
                                                onSuccess(nil);
@@ -135,12 +136,12 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyPaymentRequest:(NSString *)username
+- (void)notifyPaymentRequest:(Alias *)alias
                        token:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
     RequestTransferRequest *request = [RequestTransferRequest message];
-    request.username = username;
+    request.alias = alias;
     request.tokenPayload = token;
     RpcLogStart(request);
 
@@ -157,12 +158,12 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyLinkAccounts:(NSString *)username
+- (void)notifyLinkAccounts:(Alias *)alias
              authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.username = username;
+    request.alias = alias;
     request.body.linkAccounts.bankAuthorization = authorization;
     RpcLogStart(request);
 
@@ -179,13 +180,13 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyAddKey:(NSString *)username
+- (void)notifyAddKey:(Alias *)alias
              keyName:(NSString *)keyName
                  key:(Key *)key
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.username = username;
+    request.alias = alias;
     request.body.addKey.name = keyName;
     request.body.addKey.key = key;
     RpcLogStart(request);
@@ -203,14 +204,14 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString *)username
+- (void)notifyLinkAccountsAndAddKey:(Alias *)alias
                       authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
-    request.username = username;
+    request.alias = alias;
     request.body.linkAccountsAndAddKey.linkAccounts.bankAuthorization = authorization;
     request.body.linkAccountsAndAddKey.addKey.name = keyName;
     request.body.linkAccountsAndAddKey.addKey.key = key;

@@ -5,6 +5,7 @@ option java_outer_classname = "MemberProtos";
 
 import "address.proto";
 import "security.proto";
+import "alias.proto";
 
 // Adds member key to the directory.
 message MemberAddKeyOperation {
@@ -16,18 +17,26 @@ message MemberRemoveKeyOperation {
   string key_id = 1;
 }
 
-// Adds/removes member username to/from the directory.
+// Adds/removes member alias to/from the directory.
+message MemberAliasOperation {
+  string alias_hash = 1;
+}
+
+// TODO(PR-1161): Remove this when we no longer require backwards compatibility with usernames
 message MemberUsernameOperation {
   string username = 1;
 }
 
 message MemberOperation {
-  oneof operation {
-    MemberAddKeyOperation add_key = 1;
-    MemberRemoveKeyOperation remove_key = 2;
-    MemberUsernameOperation add_username = 3;
-    MemberUsernameOperation remove_username = 4;
-  }
+   oneof operation {
+     MemberAddKeyOperation add_key = 1;
+     MemberRemoveKeyOperation remove_key = 2;
+     MemberAliasOperation add_alias = 5;
+     MemberAliasOperation remove_alias = 4;
+
+     // TODO(PR-1161): Remove this when we no longer require bakcwards compatibility with usernames
+     MemberUsernameOperation add_username = 3;
+   }
 }
 
 // Updates member information in the directory. The directory is append only
@@ -42,7 +51,7 @@ message MemberUpdate {
 message Member {
   string id = 1;
   string last_hash = 2;
-  repeated string usernames = 3;
+  repeated string alias_hashes = 3;
   repeated io.token.proto.common.security.Key keys = 4;
 }
 
@@ -58,6 +67,10 @@ message AddressRecord {
 message Profile {
   string display_name_first = 1;
   string display_name_last = 2;
+  string original_picture_id = 3;   // Ignored in set profile request
+  string small_picture_id = 4;      // Ignored in set profile request
+  string medium_picture_id = 5;     // Ignored in set profile request
+  string large_picture_id = 6;      // Ignored in set profile request
 }
 
 // Profile picture sizes

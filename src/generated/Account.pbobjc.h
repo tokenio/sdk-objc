@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - PlaintextBankAuthorization
 
 typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
-  PlaintextBankAuthorization_FieldNumber_Username = 1,
+  PlaintextBankAuthorization_FieldNumber_MemberId = 1,
   PlaintextBankAuthorization_FieldNumber_AccountName = 2,
   PlaintextBankAuthorization_FieldNumber_Account = 3,
   PlaintextBankAuthorization_FieldNumber_ExpirationMs = 4,
@@ -68,7 +68,7 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
  **/
 @interface PlaintextBankAuthorization : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountName;
 

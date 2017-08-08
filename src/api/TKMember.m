@@ -28,16 +28,16 @@
     return self.async.id;
 }
 
-- (NSString *)firstUsername {
-    return self.async.firstUsername;
+- (Alias *)firstAlias {
+    return self.async.firstAlias;
 }
 
 - (NSArray<Key *> *)keys {
     return self.async.keys;
 }
 
-- (NSArray<NSString *> *)usernames {
-    return self.async.usernames;
+- (NSArray<Alias *> *)aliases {
+    return self.async.aliases;
 }
 
 - (void)useAccessToken:(NSString *)accessTokenId {
@@ -88,37 +88,37 @@
     }];
 }
 
-- (void)addUsername:(NSString *)username {
+- (void)addAlias:(Alias *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async addUsername:username
+        [self.async addAlias:alias
                    onSuccess:^{ call.onSuccess(nil); }
                      onError:call.onError];
     }];
 }
 
-- (void)addUsernames:(NSArray<NSString *> *)usernames {
+- (void)addAliases:(NSArray<Alias *> *)aliases {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async addUsernames:usernames
+        [self.async addAliases:aliases
                        onSuccess:^{ call.onSuccess(nil); }
                          onError:call.onError];
     }];
 }
 
-- (void)removeUsername:(NSString *)username {
+- (void)removeAlias:(Alias *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async removeUsername:username
+        [self.async removeAlias:alias
                       onSuccess:^{ call.onSuccess(nil); }
                         onError:call.onError];
     }];
 }
 
-- (void)removeUsernames:(NSArray<NSString *> *)usernames {
+- (void)removeAliases:(NSArray<Alias *> *)aliases {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async removeUsernames:usernames
+        [self.async removeAliases:aliases
                        onSuccess:^{ call.onSuccess(nil); }
                          onError:call.onError];
     }];

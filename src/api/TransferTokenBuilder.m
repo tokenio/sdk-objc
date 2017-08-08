@@ -50,7 +50,7 @@
                   userInfo:nil];
     }
     
-    if (!self.redeemerMemberId && !self.redeemerUsername) {
+    if (!self.redeemerMemberId && !self.redeemerAlias) {
          @throw [NSException
          exceptionWithName:@"InvalidTokenException"
                     reason:@"No redeemer found on token"
@@ -84,16 +84,16 @@
         payload.transfer.instructions.source.account.tokenAuthorization.authorization = self.bankAuthorization;
     }
     
-    if (self.redeemerUsername) {
-        payload.transfer.redeemer.username = self.redeemerUsername;
+    if (self.redeemerAlias) {
+        payload.transfer.redeemer.alias = self.redeemerAlias;
     }
     
     if (self.redeemerMemberId) {
         payload.transfer.redeemer.id_p = self.redeemerMemberId;
     }
     
-    if (self.toUsername) {
-        payload.to.username = self.toUsername;
+    if (self.toAlias) {
+        payload.to.alias = self.toAlias;
     }
     
     if (self.toMemberId) {

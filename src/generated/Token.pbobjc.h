@@ -37,6 +37,7 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccountTransactions;
 @class AccessBody_Resource_AllAccounts;
 @class AccessBody_Resource_AllAddresses;
+@class Alias;
 @class Attachment;
 @class Pricing;
 @class Signature;
@@ -232,6 +233,7 @@ void SetTokenSignature_Action_RawValue(TokenSignature *message, int32_t value);
 typedef GPB_ENUM(TokenMember_FieldNumber) {
   TokenMember_FieldNumber_Id_p = 1,
   TokenMember_FieldNumber_Username = 2,
+  TokenMember_FieldNumber_Alias = 3,
 };
 
 @interface TokenMember : GPBMessage
@@ -239,6 +241,10 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @end
 

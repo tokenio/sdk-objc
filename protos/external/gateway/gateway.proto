@@ -16,6 +16,7 @@ import "subscriber.proto";
 import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
+import "alias.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Paging details.
@@ -26,7 +27,7 @@ message Page {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Member registration, key and username management.
+// Member registration, key and alias management.
 //
 
 message CreateMemberRequest {
@@ -54,12 +55,12 @@ message GetMemberResponse {
   io.token.proto.common.member.Member member = 1;
 }
 
-message GetMemberIdRequest {
-  string username = 1;
+message ResolveAliasRequest {
+  io.token.proto.common.alias.Alias alias = 1;
 }
 
-message GetMemberIdResponse {
-  string member_id = 1;
+message ResolveAliasResponse {
+  io.token.proto.common.token.TokenMember member = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +163,7 @@ message UnsubscribeFromNotificationsRequest {
 message UnsubscribeFromNotificationsResponse {}
 
 message NotifyRequest {
-  string username = 1;
+  io.token.proto.common.alias.Alias alias = 1;
   io.token.proto.common.notification.NotifyBody body = 2;
 }
 
@@ -188,7 +189,7 @@ message GetNotificationResponse {
 }
 
 message RequestTransferRequest {
-  string username = 1;
+  io.token.proto.common.alias.Alias alias = 1;
   io.token.proto.common.token.TokenPayload token_payload = 2;
 }
 
@@ -418,6 +419,12 @@ message GetBankInfoResponse {
   io.token.proto.common.bank.BankInfo info = 1;
 }
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Testing API calls
+//
+
 message CreateTestBankAccountRequest {
   io.token.proto.common.money.Money balance = 1;
 }
@@ -426,12 +433,29 @@ message CreateTestBankAccountResponse {
   io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
 }
 
+message GetTestBankNotificationRequest {
+  string subscriber_id = 1;
+  string notification_id = 2;
+}
+
+message GetTestBankNotificationResponse {
+  io.token.proto.common.notification.Notification notification = 1;
+}
+
+message GetTestBankNotificationsRequest {
+  string subscriber_id = 1;
+}
+
+message GetTestBankNotificationsResponse {
+  repeated io.token.proto.common.notification.Notification notifications = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gateway Service.
 //
 service GatewayService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Member registration, key and username mamangement.
+  // Member registration, key and alias mamangement.
   //
 
   rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
@@ -454,7 +478,7 @@ service GatewayService {
 
   rpc SetProfile (SetProfileRequest) returns (SetProfileResponse) {
     option (google.api.http) = {
-        post: "/members/profile"
+        put: "/profile"
     };
   }
 
@@ -466,7 +490,7 @@ service GatewayService {
 
   rpc SetProfilePicture (SetProfilePictureRequest) returns (SetProfilePictureResponse) {
     option (google.api.http) = {
-        post: "/members/profilepicture"
+        put: "/profilepicture"
     };
   }
 
@@ -476,9 +500,9 @@ service GatewayService {
     };
   }
 
-  rpc GetMemberId (GetMemberIdRequest) returns (GetMemberIdResponse) {
+  rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
-      get: "/memberid?username={username}"
+      get: "/memberid?alias={alias}"
     };
   }
 
@@ -609,11 +633,28 @@ service GatewayService {
     };
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Testing.
+  //
   rpc CreateTestBankAccount (CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse) {
     option (google.api.http) = {
         post: "/test/create-account"
     };
   }
+
+  rpc GetTestBankNotification (GetTestBankNotificationRequest) returns (GetTestBankNotificationResponse) {
+    option (google.api.http) = {
+        get: "/test/subscribers/{subscriber_id}/notifications/{notification_id}"
+    };
+  }
+
+  rpc GetTestBankNotifications (GetTestBankNotificationsRequest) returns (GetTestBankNotificationsResponse) {
+    option (google.api.http) = {
+        get: "/test/subscribers/{subscriber_id}/notifications"
+    };
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Blobs.

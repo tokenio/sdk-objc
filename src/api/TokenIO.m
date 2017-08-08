@@ -28,19 +28,19 @@
     return self;
 }
 
-- (TKMember *)createMember:(NSString *)username {
+- (TKMember *)createMember:(Alias *)alias {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async createMember:username
+        [self.async createMember:alias
                         onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
                          onError:call.onError];
     }];
 }
 
-- (DeviceInfo *)provisionDevice:(NSString *)username {
+- (DeviceInfo *)provisionDevice:(Alias *)alias {
     TKRpcSyncCall<DeviceInfo *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async provisionDevice:username
+        [self.async provisionDevice:alias
                           onSuccess:^(DeviceInfo *deviceInfo) {
                               call.onSuccess(deviceInfo);
                           }
@@ -48,20 +48,20 @@
     }];
 }
 
-- (BOOL)usernameExists:(NSString *)username {
+- (BOOL)aliasExists:(Alias *)alias {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{
-        [self.async usernameExists:username
+        [self.async aliasExists:alias
                       onSuccess:^(BOOL exists) { call.onSuccess(@(exists)); }
                         onError:call.onError];
     }];
     return [result boolValue];
 }
 
-- (NSString *)getMemberId:(NSString *)username {
+- (NSString *)getMemberId:(Alias *)alias {
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     NSString *result = [call run:^{
-        [self.async getMemberId:username
+        [self.async getMemberId:alias
                          onSuccess:call.onSuccess
                            onError:call.onError];
     }];
@@ -80,11 +80,11 @@
     }];
 }
 
-- (void)notifyPaymentRequest:(NSString *)username
+- (void)notifyPaymentRequest:(Alias *)alias
                        token:(TokenPayload *)token {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyPaymentRequest:username
+        [self.async notifyPaymentRequest:alias
                                    token:token
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
@@ -92,11 +92,11 @@
     }];
 }
 
-- (void)notifyLinkAccounts:(NSString *)username
+- (void)notifyLinkAccounts:(Alias *)alias
              authorization:(BankAuthorization *)authorization{
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyLinkAccounts:username
+        [self.async notifyLinkAccounts:alias
                          authorization:authorization
                              onSuccess:^(void) {call.onSuccess(nil);}
                                onError:call.onError
@@ -104,12 +104,12 @@
     }];
 }
 
-- (void)notifyAddKey:(NSString *)username
+- (void)notifyAddKey:(Alias *)alias
              keyName:(NSString *)keyName
                  key:(Key *)key {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyAddKey:username
+        [self.async notifyAddKey:alias
                          keyName:keyName
                              key:key
                        onSuccess:^(void) {
@@ -119,13 +119,13 @@
     }];
 }
 
-- (void)notifyLinkAccountsAndAddKey:(NSString *)username
+- (void)notifyLinkAccountsAndAddKey:(Alias *)alias
                       authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key {
     TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyLinkAccountsAndAddKey:username
+        [self.async notifyLinkAccountsAndAddKey:alias
                                   authorization:authorization
                                         keyName:keyName
                                             key:key

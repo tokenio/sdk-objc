@@ -40,7 +40,7 @@
                                                        amount: @"1000000.00"
                                                      currency: @"USD"];
 
-        NSArray<SealedMessage*> *encAccounts = [self.bank authorizeAccountLinkingFor: member.firstUsername
+        NSArray<SealedMessage*> *encAccounts = [self.bank authorizeAccountLinkingFor: member.id
                                                                          clientId: fankClient.id_p
                                                                    accountNumbers: [NSArray arrayWithObjects: checking.accountNumber, nil]];
         BankAuthorization* auth = [BankAuthorization message];

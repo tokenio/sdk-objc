@@ -9,6 +9,7 @@ import "pricing.proto";
 import "security.proto";
 import "transfer.proto";
 import "transferinstructions.proto";
+import "alias.proto";
 
 //
 // Generic token envelope definition.
@@ -36,6 +37,7 @@ message TokenSignature {
 message TokenMember {
   string id = 1;
   string username = 2;
+  io.token.proto.common.alias.Alias alias = 3;
 }
 
 message TokenPayload {

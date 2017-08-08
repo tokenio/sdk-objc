@@ -82,7 +82,7 @@ message GetAccountResponse {
 
 message AuthorizeLinkAccountsRequest {
   string bic = 1;
-  string username = 2;
+  string memberId = 2;
   string client_id = 3;
   repeated string accounts = 4;
 }
@@ -148,7 +148,7 @@ service FankService {
   rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
-        get: "/banks/{bic}/clients/{client_id}/link-accounts?username={username}&accounts={accounts}"
+        get: "/banks/{bic}/clients/{client_id}/link-accounts?memberId={memberId}&accounts={accounts}"
     };
   }
 

@@ -733,14 +733,14 @@ typedef struct FankGetAccountResponse__storage_ {
 @implementation FankAuthorizeLinkAccountsRequest
 
 @dynamic bic;
-@dynamic username;
+@dynamic memberId;
 @dynamic clientId;
 @dynamic accountsArray, accountsArray_Count;
 
 typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *bic;
-  NSString *username;
+  NSString *memberId;
   NSString *clientId;
   NSMutableArray *accountsArray;
 } FankAuthorizeLinkAccountsRequest__storage_;
@@ -761,12 +761,12 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "username",
+        .name = "memberId",
         .dataTypeSpecific.className = NULL,
-        .number = FankAuthorizeLinkAccountsRequest_FieldNumber_Username,
+        .number = FankAuthorizeLinkAccountsRequest_FieldNumber_MemberId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, username),
-        .flags = GPBFieldOptional,
+        .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, memberId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeString,
       },
       {
@@ -796,6 +796,11 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAuthorizeLinkAccountsRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\002\010\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

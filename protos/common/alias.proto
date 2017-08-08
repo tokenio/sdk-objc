@@ -1,0 +1,17 @@
+syntax = "proto3";
+package io.token.proto.common.alias;
+option java_outer_classname = "AliasProtos";
+
+message Alias {
+  Type type = 1;
+  string value = 2;
+
+  enum Type {
+    INVALID = 0;
+    UNKNOWN = 1;
+    EMAIL = 2;
+    PHONE = 3;
+    DOMAIN = 4;
+    USERNAME = 5;
+  }
+}

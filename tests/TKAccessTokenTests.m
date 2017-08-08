@@ -37,7 +37,7 @@
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAddress:address.id_p];
         token = [grantor createAccessToken:access];
     }];
@@ -98,7 +98,7 @@
     [self run: ^(TokenIO *tokenIO){
         TKAccount *account = [self createAccount:tokenIO];
         TKMember *grantor2 = account.member;
-        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstUsername];
+        AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         Address *payload1 = [Address message];
         Address *payload2 = [Address message];
         Address *payload3 = [Address message];

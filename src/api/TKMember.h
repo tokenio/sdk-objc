@@ -8,6 +8,7 @@
 #import "AccessTokenConfig.h"
 #import "TransferTokenBuilder.h"
 #import "TKTypedef.h"
+#import "Alias.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Banklink.pbobjc.h"
@@ -40,9 +41,9 @@
 
 @property (readonly, retain) TKMemberAsync *async;
 @property (readonly, retain) NSString *id;
-@property (readonly, retain) NSString *firstUsername;
-@property (readonly, retain) NSArray<NSString*> *usernames;
-@property (readonly, retain) NSArray<Key*> *keys;
+@property (readonly, retain) Alias *firstAlias;
+@property (readonly, retain) NSArray<Alias *> *aliases;
+@property (readonly, retain) NSArray<Key *> *keys;
 
 /**
  * Creates new member that is implemented by delegating all the calls to the
@@ -95,32 +96,32 @@
 - (void)removeKeys:(NSArray<NSString *> *)keyIds;
 
 /**
- * Adds a new username for the member.
+ * Adds a new alias for the member.
  *
- * @param username username, e.g. 'john', must be unique
+ * @param alias alias, e.g. 'john', must be unique
  */
-- (void)addUsername:(NSString *)username;
+- (void)addAlias:(Alias *)alias;
 
 /**
- * Adds a new set of usernames for the member.
+ * Adds a new set of aliases for the member.
  *
- * @param usernames set of usernames
+ * @param aliases set of aliases
  */
-- (void)addUsernames:(NSArray<NSString *> *)usernames;
+- (void)addAliases:(NSArray<NSString *> *)aliases;
 
 /**
- * Removes an username for the member.
+ * Removes an alias for the member.
  *
- * @param username username, e.g. 'john'
+ * @param alias alias, e.g. 'john'
  */
-- (void)removeUsername:(NSString *)username;
+- (void)removeAlias:(Alias *)alias;
 
 /**
- * Removes a of usernames for the member.
+ * Removes a of aliases for the member.
  *
- * @param usernames set of usernames
+ * @param aliases set of aliases
  */
-- (void)removeUsernames:(NSArray<NSString *> *)usernames;
+- (void)removeAliases:(NSArray<NSString *> *)aliases;
 
 /**
  * Subscribes a device to receive push notifications.

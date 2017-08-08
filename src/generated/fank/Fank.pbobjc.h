@@ -261,7 +261,7 @@ typedef GPB_ENUM(FankGetAccountResponse_FieldNumber) {
 
 typedef GPB_ENUM(FankAuthorizeLinkAccountsRequest_FieldNumber) {
   FankAuthorizeLinkAccountsRequest_FieldNumber_Bic = 1,
-  FankAuthorizeLinkAccountsRequest_FieldNumber_Username = 2,
+  FankAuthorizeLinkAccountsRequest_FieldNumber_MemberId = 2,
   FankAuthorizeLinkAccountsRequest_FieldNumber_ClientId = 3,
   FankAuthorizeLinkAccountsRequest_FieldNumber_AccountsArray = 4,
 };
@@ -270,7 +270,7 @@ typedef GPB_ENUM(FankAuthorizeLinkAccountsRequest_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 

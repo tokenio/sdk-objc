@@ -18,7 +18,7 @@
 @implementation TKMemberAsync {
     TKClient *client;
     Member *member;
-    NSMutableArray<NSString *> *usernames;
+    NSMutableArray<Alias *> *aliases;
 }
 
 + (TKMemberAsync *)member:(Member *)member
@@ -33,7 +33,14 @@
     if (self) {
         member = member_;
         client = client_;
-        usernames = [NSMutableArray arrayWithArray:member.usernamesArray];
+        aliases = [NSMutableArray array];
+        //TODO(PR-1006): Remove when alias sync is implemented
+        for (NSString *alias in member.aliasHashesArray) {
+            Alias *typedAlias = [Alias new];
+            typedAlias.type = Alias_Type_Email;
+            typedAlias.value = alias;
+            [aliases addObject:typedAlias];
+        }
     }
     
     return self;
@@ -52,8 +59,8 @@
     return client;
 }
 
-- (NSString *)firstUsername {
-    return usernames.count > 0 ? usernames[0] : nil;
+- (Alias *)firstAlias {
+    return aliases.count > 0 ? aliases[0] : nil;
 }
 
 - (NSArray<Key *> *)keys {
@@ -64,8 +71,8 @@
     return result;
 }
 
-- (NSArray<NSString *> *)usernames {
-    return [NSArray arrayWithArray:usernames];
+- (NSArray<Alias *> *)aliases {
+    return [NSArray arrayWithArray:aliases];
 }
 
 - (void)useAccessToken:(NSString *)accessTokenId {
@@ -136,30 +143,30 @@
                  onError:onError];
 }
 
-- (void)addUsername:(NSString *)username
+- (void)addAlias:(Alias *)alias
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError {
-    [self addUsernames:@[username]
+    [self addAliases:@[alias]
              onSuccess:onSuccess
                onError:onError];
 }
 
-- (void)addUsernames:(NSArray<NSString *> *)toAddUsernames
+- (void)addAliases:(NSArray<Alias *> *)toAddAliases
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray<MemberOperation *> *addUsernameOps = [NSMutableArray array];
-    for (NSString *username in toAddUsernames) {
-        MemberOperation *addUsername = [MemberOperation message];
-        addUsername.addUsername.username = [TKHasher hashAndSerialize:username];
-        [addUsernameOps addObject:addUsername];
+    NSMutableArray<MemberOperation *> *addAliasOps = [NSMutableArray array];
+    for (Alias *alias in toAddAliases) {
+        MemberOperation *addAlias = [MemberOperation message];
+        addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
+        [addAliasOps addObject:addAlias];
     }
     [client updateMember:retainedMember
-              operations:[addUsernameOps copy]
+              operations:[addAliasOps copy]
                onSuccess:
                        ^(Member *m) {
-                           [usernames addObjectsFromArray:toAddUsernames];
+                           [aliases addObjectsFromArray:toAddAliases];
                            [retainedMember clear];
                            [retainedMember mergeFrom:m];
                            onSuccess();
@@ -167,30 +174,30 @@
                  onError:onError];
 }
 
-- (void)removeUsername:(NSString *)username
+- (void)removeAlias:(Alias *)alias
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError {
-    [self removeUsernames:@[username]
+    [self removeAliases:@[alias]
                 onSuccess:onSuccess
                   onError:onError];
 }
 
-- (void)removeUsernames:(NSArray<NSString *> *)toRemoveUsernames
+- (void)removeAliases:(NSArray<Alias *> *)toRemoveAliases
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
-    NSMutableArray *removeUsernameOps = [NSMutableArray array];
-    for (NSString *username in toRemoveUsernames) {
-        MemberOperation *removeUsername = [MemberOperation message];
-        removeUsername.removeUsername.username = [TKHasher hashAndSerialize:username];
-        [removeUsernameOps addObject:removeUsername];
+    NSMutableArray *removeAliasOps = [NSMutableArray array];
+    for (Alias *alias in toRemoveAliases) {
+        MemberOperation *removeAlias = [MemberOperation message];
+        removeAlias.removeAlias.aliasHash = [TKHasher hashAlias:alias];
+        [removeAliasOps addObject:removeAlias];
     }
     [client updateMember:retainedMember
-              operations:[removeUsernameOps copy]
+              operations:[removeAliasOps copy]
                onSuccess:
                        ^(Member *m) {
-                           [usernames removeObjectsInArray:toRemoveUsernames];
+                           [aliases removeObjectsInArray:toRemoveAliases];
                            [retainedMember clear];
                            [retainedMember mergeFrom:m];
                            onSuccess();

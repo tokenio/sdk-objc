@@ -77,7 +77,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         builder.attachments = attachments;
         Token *token = [builder execute];
         

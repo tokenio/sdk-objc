@@ -38,12 +38,12 @@
         TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:^(NSError *error) {
             XCTAssertTrue(error.code == kTKErrorSdkVersionMismatch);
         }];
-        GetMemberIdRequest *request = [GetMemberIdRequest message];
-        request.username = @"";
+        ResolveAliasRequest *request = [ResolveAliasRequest message];
+        request.alias = [Alias message];
         TKRpcSyncCall<NSNumber *> *syncCall = [TKRpcSyncCall create];
         GRPCProtoCall *call = [gateway
-                RPCToGetMemberIdWithRequest:request
-                                    handler:^(GetMemberIdResponse *response, NSError *error) {
+                RPCToResolveAliasWithRequest:request
+                                    handler:^(ResolveAliasResponse *response, NSError *error) {
                                         if (response) {
                                             XCTFail(@"onSuccess called but expected onError");
                                         } else {
