@@ -56,7 +56,7 @@
 - (void)clearAccessToken;
 
 /**
- * Updates a Token member by adding/removing keys/usernames. The operations
+ * Updates a Token member by adding/removing keys/aliases. The operations
  * are batched together and sent to the server.
  *
  * @param member member to update

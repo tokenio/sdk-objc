@@ -25,8 +25,8 @@
     [super setUp];
     
     [self run: ^(TokenIO *tokenIO) {
-        NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
-        member = [tokenIO createMember:username];
+        Alias *alias = [self generateAlias];
+        member = [tokenIO createMember:alias];
     }];
 }
 

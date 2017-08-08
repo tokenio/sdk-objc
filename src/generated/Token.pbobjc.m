@@ -20,6 +20,7 @@
  #import "Security.pbobjc.h"
  #import "Transfer.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
+ #import "Alias.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -288,11 +289,13 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value__) {
 
 @dynamic id_p;
 @dynamic username;
+@dynamic hasAlias, alias;
 
 typedef struct TokenMember__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *username;
+  Alias *alias;
 } TokenMember__storage_;
 
 // This method is threadsafe because it is initially called
@@ -318,6 +321,15 @@ typedef struct TokenMember__storage_ {
         .offset = (uint32_t)offsetof(TokenMember__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = TokenMember_FieldNumber_Alias,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(TokenMember__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -3,6 +3,8 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+#import "Alias.pbobjc.h"
+
 #import <XCTest/XCTest.h>
 
 @class TokenIO;
@@ -45,7 +47,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
 - (id)runWithResult:(AsyncTestBlockWithResult)block;
 
 /**
- * Creates a new member with an auto generated username and key.
+ * Creates a new member with an auto generated alias and key.
  *
  * @param tokenIO an entry point for Token API
  * @return a member
@@ -64,11 +66,11 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * Creates a new bank authorization for a member
  *
  * @param tokenIO an entry point for Token API
- * @param username member username
+ * @param memberId member ID
  * @return a bank authorization
  */
 - (BankAuthorization *)createBankAuthorization:(TokenIO *)tokenIO
-                                      username:(NSString *)username;
+                                      memberId:(NSString *)memberId;
 
 /**
  * Formats HostAndPort instance.
@@ -78,5 +80,11 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @return HostAndPort instance
  */
 - (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port;
+
+/**
+ * Creates a random alias with type email.
+ * @return Alias with type email
+ */
+- (Alias *)generateAlias;
 
 @end

@@ -4,6 +4,7 @@
 //
 
 #import <objc/NSObject.h>
+#import "gateway/Gateway.pbrpc.h"
 #import "TKTypedef.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -20,16 +21,16 @@
 @property (readwrite) BankAuthorization *bankAuthorization;
 @property (readwrite) int64_t expiresAtMs;
 @property (readwrite) int64_t effectiveAtMs;
-@property (readwrite) NSString* redeemerUsername;
+@property (readwrite) Alias *redeemerAlias;
 @property (readwrite) NSString* redeemerMemberId;
-@property (readwrite) NSString* toUsername;
-@property (readwrite) NSString* toMemberId;
-@property (readwrite) NSString* descr;
-@property (readwrite) Pricing* pricing;
+@property (readwrite) Alias *toAlias;
+@property (readwrite) NSString *toMemberId;
+@property (readwrite) NSString *descr;
+@property (readwrite) Pricing *pricing;
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 @property (readwrite) NSArray<Attachment*> *attachments;
-@property (readwrite) NSString* refId;
+@property (readwrite) NSString *refId;
 
 /**
  * Initializes the transfer token builder.

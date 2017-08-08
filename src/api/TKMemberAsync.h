@@ -32,8 +32,8 @@
 
 @property (readonly, retain) TKMember *sync;
 @property (readonly, retain) NSString *id;
-@property (readonly, retain) NSString *firstUsername;
-@property (readonly, retain) NSArray<NSString *> *usernames;
+@property (readonly, retain) Alias *firstAlias;
+@property (readonly, retain) NSArray<Alias *> *aliases;
 @property (readonly, retain) NSArray<Key *> *keys;
 
 /**
@@ -107,46 +107,46 @@
           onError:(OnError)onError;
 
 /**
- * Adds a new username for the member.
+ * Adds a new alias for the member.
  *
- * @param username username, e.g. 'john', must be unique
+ * @param alias alias, e.g. 'john', must be unique
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addUsername:(NSString *)username
+- (void)addAlias:(Alias *)alias
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
 
 /**
- * Adds a set of usernames for the member.
+ * Adds a set of aliases for the member.
  *
- * @param usernames set of usernames
+ * @param aliases set of aliases
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addUsernames:(NSArray<NSString *> *)usernames
+- (void)addAliases:(NSArray<Alias *> *)aliases
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError;
 
 /**
- * Removes an username for the member.
+ * Removes an alias for the member.
  *
- * @param username username, e.g. 'john'
+ * @param alias alias, e.g. 'john'
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeUsername:(NSString *)username
+- (void)removeAlias:(Alias *)alias
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
 /**
- * Removes a set of usernames for the member.
+ * Removes a set of aliases for the member.
  *
- * @param usernames set of usernames
+ * @param aliases set of aliases
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeUsernames:(NSArray<NSString *> *)usernames
+- (void)removeAliases:(NSArray<Alias *> *)aliases
               onSuccess:(OnSuccess)onSuccess
                 onError:(OnError)onError;
 

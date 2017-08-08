@@ -17,11 +17,11 @@
 }
 
 /**
- * Creates a new instance with a provided redeemer username (the 'payload.to' field).
+ * Creates a new instance with a provided redeemer alias (the 'payload.to' field).
  *
- * @param redeemerUsername username of the token redeemer
+ * @param redeemerAlias alias of the token redeemer
  */
-+ (AccessTokenConfig *)create:(NSString *)redeemerUsername;
++ (AccessTokenConfig *)create:(Alias *)redeemerAlias;
 
 /**
  * Creates a new instance from an existing token payload.
@@ -31,11 +31,11 @@
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom;
 
  /**
- * Creates a new instance with a provided redeemer username (the 'payload.to' field).
+ * Creates a new instance with a provided redeemer alias (the 'payload.to' field).
  *
- * @param redeemerUsername username of the token redeemer
+ * @param redeemerAlias alias of the token redeemer
  */
-- (id)initWithRedeemer:(NSString *)redeemerUsername;
+- (id)initWithRedeemer:(Alias *)redeemerAlias;
 
 /**
  * Creates a new instance from an existing token payload.

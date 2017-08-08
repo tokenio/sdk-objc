@@ -96,8 +96,7 @@
 }
 
 - (TKMember *)createMember:(TokenIO *)token {
-    NSString *username = [@"username-" stringByAppendingString:[TKUtil nonce]];
-    return [token createMember:username];
+    return [token createMember:[self generateAlias]];
 }
 
 - (TKAccount *)createAccount:(TokenIO *)token {
@@ -117,7 +116,7 @@
                      currency:@"USD"];
     
     NSString *clientId = fankClient.id_p;
-    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:member.firstUsername
+    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:member.id
                                                                  clientId:clientId
                                                            accountNumbers:@[bankAccountNumber]];
     BankAuthorization * auth = [BankAuthorization message];
@@ -130,7 +129,7 @@
 }
 
 - (BankAuthorization *)createBankAuthorization:(TokenIO *)token
-                              username:(NSString *)username {
+                              memberId:(NSString *)memberId {
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";
     NSString *bankId = @"iron";
@@ -145,7 +144,7 @@
                      currency:@"USD"];
     
     NSString *clientId = fankClient.id_p;
-    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:username
+    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:memberId
                                                                  clientId:clientId
                                                            accountNumbers:@[bankAccountNumber]];
     BankAuthorization * auth = [BankAuthorization message];
@@ -177,6 +176,13 @@
 
     NSLog(@"Targeting %@: %@:%d", var, hostAndPort.host, hostAndPort.port);
     return hostAndPort;
+}
+
+- (Alias *)generateAlias {
+    Alias *alias = [Alias new];
+    alias.value = [[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"@token.io"];
+    alias.type = Alias_Type_Email;
+    return alias;
 }
 
 @end

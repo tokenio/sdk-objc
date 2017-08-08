@@ -9,21 +9,21 @@
 
 @implementation AccessTokenConfig
 
-+ (AccessTokenConfig *)create:(NSString *)redeemerUsername {
-    return [[AccessTokenConfig alloc] initWithRedeemer:redeemerUsername];
++ (AccessTokenConfig *)create:(Alias *)redeemerAlias {
+    return [[AccessTokenConfig alloc] initWithRedeemer:redeemerAlias];
 }
 
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom {
     return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
 }
 
-- (id)initWithRedeemer:(NSString *)redeemerUsername {
+- (id)initWithRedeemer:(Alias *)redeemerAlias {
     self = [super init];
     if (self) {
         payload = [TokenPayload message];
         payload.version = @"1.0";
         payload.refId = [TKUtil nonce];
-        payload.to.username = redeemerUsername;
+        payload.to.alias = redeemerAlias;
         resources = [[NSMutableSet alloc] init];
     }
     return self;

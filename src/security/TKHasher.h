@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "gateway/Gateway.pbrpc.h"
 
 @interface TKHasher : NSObject
 
-+ (NSData *)hash:(NSString *)input;
-+ (NSString *)hashAndSerialize:(NSString *)input;
++ (NSData *)hashData:(NSData *)input;
++ (NSData *)hashString:(NSString *)input;
+
++ (NSString *)serializeReadable:(NSData *)data;
++ (NSString *)hashAlias:(Alias *)alias;
 
 @end

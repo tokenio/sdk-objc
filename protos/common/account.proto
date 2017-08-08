@@ -8,7 +8,7 @@ import "banklink.proto";
 // The payload of the bank authorization request. Used for serialization only.
 // The value of the payload is encrypted as a serialized JSON object.
 message PlaintextBankAuthorization {
-  string username = 1;
+  string member_id = 1;
   string account_name = 2;
   BankAccount account = 3;
   int64 expiration_ms = 4;

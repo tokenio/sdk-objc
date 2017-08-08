@@ -61,7 +61,7 @@ void check(NSString *message, BOOL condition) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
@@ -81,8 +81,8 @@ void check(NSString *message, BOOL condition) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
-        builder.toUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
@@ -103,7 +103,7 @@ void check(NSString *message, BOOL condition) {
         auth.bankId = @"iron";
         [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
         
-        [tokenIO notifyLinkAccounts:payer.firstUsername
+        [tokenIO notifyLinkAccounts:payer.firstAlias
                       authorization:auth];
 
         [self waitForNotification:@"LINK_ACCOUNTS"];
@@ -114,7 +114,7 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIO *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
-        [tokenIO notifyAddKey:payer.firstUsername
+        [tokenIO notifyAddKey:payer.firstAlias
                       keyName:@"Chrome 53.0"
                           key:key];
 
@@ -127,12 +127,12 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         TokenPayload *token = [TokenPayload message];
         token.description_p = @"Description: 🍷🌺🌹";
-        token.from.username = payer.firstUsername;
-        token.to.username = payee.firstUsername;
+        token.from.alias = payer.firstAlias;
+        token.to.alias = payee.firstAlias;
         token.transfer.amount = @"50";
         token.transfer.lifetimeAmount = @"100";
         token.transfer.currency = @"EUR";
-        [tokenIO notifyPaymentRequest:payer.firstUsername
+        [tokenIO notifyPaymentRequest:payer.firstAlias
                                 token:token];
 
         [self waitForNotification:@"PAYMENT_REQUEST"];
@@ -145,7 +145,7 @@ void check(NSString *message, BOOL condition) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
@@ -166,7 +166,7 @@ void check(NSString *message, BOOL condition) {
         BankAuthorization* auth = [BankAuthorization message];
         auth.bankId = @"iron";
         [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
-        [tokenIO notifyLinkAccountsAndAddKey:payer.firstUsername
+        [tokenIO notifyLinkAccountsAndAddKey:payer.firstAlias
                                authorization:auth
                                      keyName:@"Chrome 53.0"
                                          key:key];
@@ -211,7 +211,7 @@ void check(NSString *message, BOOL condition) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
@@ -234,7 +234,7 @@ void check(NSString *message, BOOL condition) {
 
         
         Key *key = [[payerAnotherDevice keys] firstObject];
-        [tokenIO notifyAddKey:payer.firstUsername keyName:@"Chrome 53.0" key:key];
+        [tokenIO notifyAddKey:payer.firstAlias keyName:@"Chrome 53.0" key:key];
 
         [self waitForNotification:@"ADD_KEY"];
     }];

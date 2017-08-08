@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class Account;
 @class Address;
 @class AddressRecord;
+@class Alias;
 @class Bank;
 @class BankAuthorization;
 @class BankInfo;
@@ -47,6 +48,7 @@ CF_EXTERN_C_BEGIN
 @class Signature;
 @class Subscriber;
 @class Token;
+@class TokenMember;
 @class TokenOperationResult;
 @class TokenPayload;
 @class Transaction;
@@ -199,27 +201,31 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetMemberIdRequest
+#pragma mark - ResolveAliasRequest
 
-typedef GPB_ENUM(GetMemberIdRequest_FieldNumber) {
-  GetMemberIdRequest_FieldNumber_Username = 1,
+typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
+  ResolveAliasRequest_FieldNumber_Alias = 1,
 };
 
-@interface GetMemberIdRequest : GPBMessage
+@interface ResolveAliasRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @end
 
-#pragma mark - GetMemberIdResponse
+#pragma mark - ResolveAliasResponse
 
-typedef GPB_ENUM(GetMemberIdResponse_FieldNumber) {
-  GetMemberIdResponse_FieldNumber_MemberId = 1,
+typedef GPB_ENUM(ResolveAliasResponse_FieldNumber) {
+  ResolveAliasResponse_FieldNumber_Member = 1,
 };
 
-@interface GetMemberIdResponse : GPBMessage
+@interface ResolveAliasResponse : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *member;
+/** Test to see if @c member has been set. */
+@property(nonatomic, readwrite) BOOL hasMember;
 
 @end
 
@@ -537,13 +543,15 @@ typedef GPB_ENUM(UnsubscribeFromNotificationsRequest_FieldNumber) {
 #pragma mark - NotifyRequest
 
 typedef GPB_ENUM(NotifyRequest_FieldNumber) {
-  NotifyRequest_FieldNumber_Username = 1,
+  NotifyRequest_FieldNumber_Alias = 1,
   NotifyRequest_FieldNumber_Body = 2,
 };
 
 @interface NotifyRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @property(nonatomic, readwrite, strong, null_resettable) NotifyBody *body;
 /** Test to see if @c body has been set. */
@@ -635,13 +643,15 @@ typedef GPB_ENUM(GetNotificationResponse_FieldNumber) {
 #pragma mark - RequestTransferRequest
 
 typedef GPB_ENUM(RequestTransferRequest_FieldNumber) {
-  RequestTransferRequest_FieldNumber_Username = 1,
+  RequestTransferRequest_FieldNumber_Alias = 1,
   RequestTransferRequest_FieldNumber_TokenPayload = 2,
 };
 
 @interface RequestTransferRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *tokenPayload;
 /** Test to see if @c tokenPayload has been set. */
@@ -1389,6 +1399,61 @@ typedef GPB_ENUM(CreateTestBankAccountResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
 /** Test to see if @c bankAuthorization has been set. */
 @property(nonatomic, readwrite) BOOL hasBankAuthorization;
+
+@end
+
+#pragma mark - GetTestBankNotificationRequest
+
+typedef GPB_ENUM(GetTestBankNotificationRequest_FieldNumber) {
+  GetTestBankNotificationRequest_FieldNumber_SubscriberId = 1,
+  GetTestBankNotificationRequest_FieldNumber_NotificationId = 2,
+};
+
+@interface GetTestBankNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+#pragma mark - GetTestBankNotificationResponse
+
+typedef GPB_ENUM(GetTestBankNotificationResponse_FieldNumber) {
+  GetTestBankNotificationResponse_FieldNumber_Notification = 1,
+};
+
+@interface GetTestBankNotificationResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
+/** Test to see if @c notification has been set. */
+@property(nonatomic, readwrite) BOOL hasNotification;
+
+@end
+
+#pragma mark - GetTestBankNotificationsRequest
+
+typedef GPB_ENUM(GetTestBankNotificationsRequest_FieldNumber) {
+  GetTestBankNotificationsRequest_FieldNumber_SubscriberId = 1,
+};
+
+@interface GetTestBankNotificationsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
+
+@end
+
+#pragma mark - GetTestBankNotificationsResponse
+
+typedef GPB_ENUM(GetTestBankNotificationsResponse_FieldNumber) {
+  GetTestBankNotificationsResponse_FieldNumber_NotificationsArray = 1,
+};
+
+@interface GetTestBankNotificationsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
+/** The number of items in @c notificationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger notificationsArray_Count;
 
 @end
 

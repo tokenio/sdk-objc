@@ -43,13 +43,13 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         builder.destinations = destinations;
         Token *token = [builder execute];
         
         XCTAssertEqualObjects(@"100.99", token.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
-        XCTAssertEqualObjects(payee.firstUsername, token.payload.transfer.redeemer.username);
+        XCTAssertEqualObjects(payee.firstAlias, token.payload.transfer.redeemer.alias);
         XCTAssertEqual(token.payload.transfer.instructions.destinationsArray.count, 1);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
@@ -67,7 +67,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"XXX"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         builder.destinations = destinations;
         
         @try {
@@ -84,7 +84,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         Token *lookedUp = [payer getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
@@ -96,19 +96,19 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         [builder execute];
         
         TransferTokenBuilder *builder2 = [payer createTransferToken:100.22
                                                           currency:@"USD"];
         builder2.accountId = payerAccount.id;
-        builder2.redeemerUsername = payee.firstUsername;
+        builder2.redeemerAlias = payee.firstAlias;
         [builder2 execute];
         
         TransferTokenBuilder *builder3 = [payer createTransferToken:100.33
                                                           currency:@"USD"];
         builder3.accountId = payerAccount.id;
-        builder3.redeemerUsername = payee.firstUsername;
+        builder3.redeemerAlias = payee.firstAlias;
         [builder3 execute];
         
         PagedArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
@@ -122,7 +122,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -145,7 +145,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         builder.descr = descr;
         Token *token = [builder execute];
 
@@ -166,7 +166,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         TokenOperationResult *cancelledResult = [payer cancelToken:token];

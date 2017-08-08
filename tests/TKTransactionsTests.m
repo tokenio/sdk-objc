@@ -49,7 +49,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
@@ -77,7 +77,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:49.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerUsername = payee.firstUsername;
+        builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         

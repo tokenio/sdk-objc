@@ -106,16 +106,16 @@
              responseClass:[GetProfilePictureResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetMemberId(GetMemberIdRequest) returns (GetMemberIdResponse)
+#pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
 
-- (void)getMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetMemberIdWithRequest:request handler:handler] start];
+- (void)resolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToResolveAliasWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetMemberIdWithRequest:(GetMemberIdRequest *)request handler:(void(^)(GetMemberIdResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetMemberId"
+- (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ResolveAlias"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetMemberIdResponse class]
+             responseClass:[ResolveAliasResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
@@ -384,14 +384,48 @@
 }
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
 
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Testing.
+ * 
+ */
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTestBankAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Testing.
+ * 
+ */
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTestBankAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[CreateTestBankAccountResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetTestBankNotification(GetTestBankNotificationRequest) returns (GetTestBankNotificationResponse)
+
+- (void)getTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTestBankNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTestBankNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTestBankNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetTestBankNotifications(GetTestBankNotificationsRequest) returns (GetTestBankNotificationsResponse)
+
+- (void)getTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTestBankNotificationsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTestBankNotifications"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTestBankNotificationsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateBlob(CreateBlobRequest) returns (CreateBlobResponse)

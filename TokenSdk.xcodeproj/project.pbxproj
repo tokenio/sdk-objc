@@ -47,6 +47,8 @@
 		4B240F851F28096300497B2D /* TKHasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B240F831F28096300497B2D /* TKHasher.m */; };
 		4B240F8C1F28135000497B2D /* Base58.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B240F8A1F28135000497B2D /* Base58.c */; };
 		4B240F8D1F28135000497B2D /* Base58.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B240F8B1F28135000497B2D /* Base58.h */; };
+		4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B3814061F394B0200557EEF /* Alias.pbobjc.h */; };
+		4B3814091F394B0200557EEF /* Alias.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3814071F394B0200557EEF /* Alias.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
 		62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */; };
 		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
@@ -254,6 +256,8 @@
 		4B240F831F28096300497B2D /* TKHasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHasher.m; sourceTree = "<group>"; };
 		4B240F8A1F28135000497B2D /* Base58.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base58.c; sourceTree = "<group>"; };
 		4B240F8B1F28135000497B2D /* Base58.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base58.h; sourceTree = "<group>"; };
+		4B3814061F394B0200557EEF /* Alias.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.pbobjc.h; sourceTree = "<group>"; };
+		4B3814071F394B0200557EEF /* Alias.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.pbobjc.m; sourceTree = "<group>"; };
 		62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKErrorHandlerTests.m; sourceTree = "<group>"; };
 		62DE98B689D2C43491570541 /* HostAndPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostAndPort.m; sourceTree = "<group>"; };
 		62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcErrorHandler.h; sourceTree = "<group>"; };
@@ -438,6 +442,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				4B3814061F394B0200557EEF /* Alias.pbobjc.h */,
+				4B3814071F394B0200557EEF /* Alias.pbobjc.m */,
 				FAE918C61F17E6FE001692CF /* fank */,
 				946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */,
 				946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */,
@@ -841,6 +847,7 @@
 				ABA7BEAFFA13B3E10325E528 /* TokenIO.h in Headers */,
 				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
 				DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */,
+				4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
 				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
@@ -1210,6 +1217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B3814091F394B0200557EEF /* Alias.pbobjc.m in Sources */,
 				946239B71ED114F200C47BD0 /* Pricing.pbobjc.m in Sources */,
 				1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */,
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,

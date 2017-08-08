@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class Address;
 @class Key;
 @class MemberAddKeyOperation;
+@class MemberAliasOperation;
 @class MemberOperation;
 @class MemberRemoveKeyOperation;
 @class MemberUsernameOperation;
@@ -109,6 +110,21 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
 
 @end
 
+#pragma mark - MemberAliasOperation
+
+typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
+  MemberAliasOperation_FieldNumber_AliasHash = 1,
+};
+
+/**
+ * Adds/removes member alias to/from the directory.
+ **/
+@interface MemberAliasOperation : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
+
+@end
+
 #pragma mark - MemberUsernameOperation
 
 typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
@@ -116,7 +132,7 @@ typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
 };
 
 /**
- * Adds/removes member username to/from the directory.
+ * TODO(PR-1161): Remove this when we no longer require backwards compatibility with usernames
  **/
 @interface MemberUsernameOperation : GPBMessage
 
@@ -130,15 +146,17 @@ typedef GPB_ENUM(MemberOperation_FieldNumber) {
   MemberOperation_FieldNumber_AddKey = 1,
   MemberOperation_FieldNumber_RemoveKey = 2,
   MemberOperation_FieldNumber_AddUsername = 3,
-  MemberOperation_FieldNumber_RemoveUsername = 4,
+  MemberOperation_FieldNumber_RemoveAlias = 4,
+  MemberOperation_FieldNumber_AddAlias = 5,
 };
 
 typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_GPBUnsetOneOfCase = 0,
   MemberOperation_Operation_OneOfCase_AddKey = 1,
   MemberOperation_Operation_OneOfCase_RemoveKey = 2,
+  MemberOperation_Operation_OneOfCase_AddAlias = 5,
+  MemberOperation_Operation_OneOfCase_RemoveAlias = 4,
   MemberOperation_Operation_OneOfCase_AddUsername = 3,
-  MemberOperation_Operation_OneOfCase_RemoveUsername = 4,
 };
 
 @interface MemberOperation : GPBMessage
@@ -149,9 +167,12 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberRemoveKeyOperation *removeKey;
 
-@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *addUsername;
+@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *addAlias;
 
-@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *removeUsername;
+@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *removeAlias;
+
+/** TODO(PR-1161): Remove this when we no longer require bakcwards compatibility with usernames */
+@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *addUsername;
 
 @end
 
@@ -189,7 +210,7 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
 typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_Id_p = 1,
   Member_FieldNumber_LastHash = 2,
-  Member_FieldNumber_UsernamesArray = 3,
+  Member_FieldNumber_AliasHashesArray = 3,
   Member_FieldNumber_KeysArray = 4,
 };
 
@@ -202,9 +223,9 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lastHash;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usernamesArray;
-/** The number of items in @c usernamesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usernamesArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *aliasHashesArray;
+/** The number of items in @c aliasHashesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger aliasHashesArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
 /** The number of items in @c keysArray without causing the array to be created. */
@@ -249,6 +270,10 @@ typedef GPB_ENUM(AddressRecord_FieldNumber) {
 typedef GPB_ENUM(Profile_FieldNumber) {
   Profile_FieldNumber_DisplayNameFirst = 1,
   Profile_FieldNumber_DisplayNameLast = 2,
+  Profile_FieldNumber_OriginalPictureId = 3,
+  Profile_FieldNumber_SmallPictureId = 4,
+  Profile_FieldNumber_MediumPictureId = 5,
+  Profile_FieldNumber_LargePictureId = 6,
 };
 
 /**
@@ -259,6 +284,18 @@ typedef GPB_ENUM(Profile_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameFirst;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameLast;
+
+/** Ignored in set profile request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *originalPictureId;
+
+/** Ignored in set profile request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *smallPictureId;
+
+/** Ignored in set profile request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *mediumPictureId;
+
+/** Ignored in set profile request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *largePictureId;
 
 @end
 
