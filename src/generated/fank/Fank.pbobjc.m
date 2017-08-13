@@ -15,7 +15,6 @@
 
  #import "fank/Fank.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
- #import "Account.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Notification.pbobjc.h"

@@ -3,7 +3,6 @@ package io.token.proto.bankapi;
 option objc_class_prefix = "Fank";
 
 import "google/api/annotations.proto";
-import "account.proto";
 import "money.proto";
 import "banklink.proto";
 import "notification.proto";

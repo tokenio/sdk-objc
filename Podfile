@@ -1,5 +1,5 @@
-TOKEN_PROTOS_VER = "1.0.362"
-FANK_PROTOS_VER = "1.0.8"
+TOKEN_PROTOS_VER = "1.0.364"
+FANK_PROTOS_VER = "1.0.9"
 platform :ios, '8.0'
 
 
