@@ -502,7 +502,7 @@ service GatewayService {
 
   rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
-      get: "/memberid?alias={alias}"
+      get: "/resolve-alias?value={alias.value}&type={alias.type}"
     };
   }
 

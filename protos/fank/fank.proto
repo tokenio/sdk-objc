@@ -148,7 +148,7 @@ service FankService {
   rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
-        get: "/banks/{bic}/clients/{client_id}/link-accounts?memberId={memberId}&accounts={accounts}"
+        get: "/banks/{bic}/clients/{client_id}/link-accounts?member-id={memberId}&accounts={accounts}"
     };
   }
 
