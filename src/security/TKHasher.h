@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "gateway/Gateway.pbrpc.h"
+//#import "gateway/Gateway.pbrpc.h"
+
+@class Alias;
 
 @interface TKHasher : NSObject
 

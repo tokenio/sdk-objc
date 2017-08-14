@@ -5,7 +5,6 @@ option java_outer_classname = "MemberProtos";
 
 import "address.proto";
 import "security.proto";
-import "alias.proto";
 
 // Adds member key to the directory.
 message MemberAddKeyOperation {

@@ -4,11 +4,12 @@
 //
 
 #import <objc/NSObject.h>
-#import "gateway/Gateway.pbrpc.h"
+//#import "gateway/Gateway.pbrpc.h"
 #import "TKTypedef.h"
 #import "Transferinstructions.pbobjc.h"
 
 @class TransferEndpoint;
+@class Alias;
 
 @interface TransferTokenBuilder : NSObject
 
