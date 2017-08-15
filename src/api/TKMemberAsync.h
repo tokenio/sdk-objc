@@ -38,7 +38,7 @@
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
- * Use `TokenIO` or `TokenIOAsync` to obtain an instance of this class.
+ * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMemberAsync *)member:(Member *)member
                 useClient:(TKClient *)client;

@@ -2,7 +2,7 @@
 #import "TKJson.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Address.pbobjc.h"
 #import "Member.pbobjc.h"
 
@@ -17,13 +17,13 @@
 - (void)setUp {
     [super setUp];
 
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         member = [self createMember:tokenIO];
     }];
 }
 
 - (void)testCreateAddress {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSString *name = @"address_name";
         Address *payload = [Address message];
 
@@ -35,7 +35,7 @@
 }
 
 - (void)testCreateAdnGetAddress {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSString *name = @"address_name";
         Address *payload = [Address message];
 
@@ -47,7 +47,7 @@
 }
 
 - (void)testCreateAdnGetAddresses {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSString *name_1 = @"address_name_1";
         Address *data_1 = [Address message];
         NSString *name_2 = @"address_name_2";
@@ -64,7 +64,7 @@
 }
 
 - (void)testGetAddresses_NotFound {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSArray<AddressRecord *> *result = [member getAddresses];
 
         XCTAssertEqual(result.count, 0);
@@ -72,14 +72,14 @@
 }
 
 - (void)testGetAddress_NotFound {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         XCTAssertThrows([member getAddressWithId:@"invalidAddressId"]);
 
     }];
 }
 
 - (void)testDeleteAddress {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSString *name = @"address_name";
         Address *payload = [Address message];
 
@@ -97,7 +97,7 @@
 }
 
 - (void)testDeleteAddress_NotFound {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         XCTAssertThrows(
                 [member deleteAddressWithId:@"invalidAddressId"]);
     }];

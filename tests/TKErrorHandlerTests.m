@@ -22,7 +22,7 @@
 }
 
 - (void)testErrorHandler {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
 
         NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
         BOOL useSsl = sslOverride ? [sslOverride boolValue] : NO;

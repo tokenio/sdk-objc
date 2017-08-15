@@ -8,7 +8,7 @@
 
 #import "HostAndPort.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
 #import "TKBankClient.h"
 #import "TKMember.h"
@@ -17,7 +17,7 @@
 
 
 @implementation TKTestBase {
-    TokenIO *tokenIO;
+    TokenIOSync *tokenIO;
     dispatch_queue_t queue;
     BOOL useSsl;
 }
@@ -36,7 +36,7 @@
 }
 
 - (void)run:(AsyncTestBlock)block {
-   [self runWithResult: ^id(TokenIO *tio) {
+   [self runWithResult: ^id(TokenIOSync *tio) {
        block(tio);
        return nil;
    }];
@@ -51,13 +51,13 @@
         @try {
             HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
 
-            TokenIOBuilder *builder = [TokenIO builder];
+            TokenIOBuilder *builder = [TokenIOSync builder];
             builder.host = gateway.host;
             builder.port = gateway.port;
             builder.useSsl = useSsl;
             builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
             builder.keyStore = [[TKTestKeyStore alloc] init];
-            tokenIO = [builder build];
+            tokenIO = [builder buildSync];
 
             result = block(tokenIO);
         } @catch(NSException *e) {
@@ -95,11 +95,11 @@
     return result;
 }
 
-- (TKMember *)createMember:(TokenIO *)token {
+- (TKMember *)createMember:(TokenIOSync *)token {
     return [token createMember:[self generateAlias]];
 }
 
-- (TKAccountSync *)createAccount:(TokenIO *)token {
+- (TKAccountSync *)createAccount:(TokenIOSync *)token {
     TKMember *member = [self createMember:token];
 
     NSString *firstName = @"Test";
@@ -128,7 +128,7 @@
     return accounts[0];
 }
 
-- (BankAuthorization *)createBankAuthorization:(TokenIO *)token
+- (BankAuthorization *)createBankAuthorization:(TokenIOSync *)token
                               memberId:(NSString *)memberId {
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";

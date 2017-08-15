@@ -7,7 +7,7 @@
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "Account.pbobjc.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -41,7 +41,7 @@ void check(NSString *message, BOOL condition) {
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payerAnotherDevice = [self createMember:tokenIO];
@@ -55,7 +55,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testTransfer {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
@@ -76,7 +76,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testNotifyPayeeTransfer {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
@@ -97,7 +97,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testNotifyLinkAccounts {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         BankAuthorization* auth = [BankAuthorization message];
         auth.bankId = @"iron";
@@ -111,7 +111,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testNotifyAddKey {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
         [tokenIO notifyAddKey:payer.firstAlias
@@ -123,7 +123,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testNotifyPaymentRequest {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         TokenPayload *token = [TokenPayload message];
         token.description_p = @"Description: 🍷🌺🌹";
@@ -140,7 +140,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testStepUp {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
@@ -159,7 +159,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testNotifyLinkAccountsAndAddKey {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         Key *key = [[payerAnotherDevice keys] firstObject];
@@ -176,7 +176,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testGetSubscribers {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         XCTAssert([payer getSubscribers].count == 1);
@@ -190,7 +190,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testGetSubscribersWithBankId {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
         Subscriber * subscriber = [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
         
@@ -204,7 +204,7 @@ void check(NSString *message, BOOL condition) {
 
 
 - (void)testTransferNotification {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
         [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
@@ -229,7 +229,7 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testGetNotifications {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         
@@ -276,7 +276,7 @@ void check(NSString *message, BOOL condition) {
 - (void)waitUntil:(void (^)(void))block {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
     for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
-        typedef void (^AsyncTestBlock)(TokenIO *);
+        typedef void (^AsyncTestBlock)(TokenIOSync *);
         @try {
             block();
             return;

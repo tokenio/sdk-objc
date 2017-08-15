@@ -9,7 +9,7 @@
 #import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
@@ -29,7 +29,7 @@
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         grantorAccount = [self createAccount:tokenIO];
         grantor = [grantorAccount member];
         grantee = [self createMember:tokenIO];
@@ -37,7 +37,7 @@
 }
 
 - (void)testAnyAddressToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
@@ -55,7 +55,7 @@
 }
 
 - (void)testAddressToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
@@ -73,7 +73,7 @@
 }
 
 - (void)testAnyBalanceToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllBalances];
         Token *token = [grantor createAccessToken:access];
@@ -87,7 +87,7 @@
 }
 
 - (void)testBalanceToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAccountBalances:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
@@ -101,7 +101,7 @@
 }
 
 - (void)testAnyAccountToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllAccounts];
         Token *token = [grantor createAccessToken:access];
@@ -115,7 +115,7 @@
 }
 
 - (void)testAccountToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAccount:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
@@ -129,7 +129,7 @@
 }
 
 - (void)testAnyAccountTransactionsToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
         TKMember *redeemer = redeemerAccount.member;
         
@@ -163,7 +163,7 @@
 }
 
 - (void)testTransactionsToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
         TKMember *redeemer = redeemerAccount.member;
         

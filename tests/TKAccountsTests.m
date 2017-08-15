@@ -9,7 +9,7 @@
 #import "TKJson.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "TKBankClient.h"
 #import "TKUtil.h"
 #import "fank/Fank.pbobjc.h"
@@ -28,7 +28,7 @@
 - (void)setUp {
     [super setUp];
 
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         bankId = @"iron";
         member = [self createMember:tokenIO];
         NSString *firstName = [@"FirstName-" stringByAppendingString:[TKUtil nonce]];
@@ -51,7 +51,7 @@
 }
 
 - (void)testLinkAccounts {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         XCTAssert(accounts.count == 1);
         XCTAssertNotNil(accounts[0].id);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
@@ -64,7 +64,7 @@
 }
 
 - (void)testLookupAccounts {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
@@ -72,7 +72,7 @@
 }
 
 - (void)testLookupAccount {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         accounts = [member getAccounts];
         XCTAssert(accounts.count == 1);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);

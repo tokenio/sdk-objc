@@ -15,8 +15,8 @@
 #import "TKMember.h"
 #import "TKMemberAsync.h"
 #import "TKTypedef.h"
+#import "TokenIOSync.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
 #import "TokenIOBuilder.h"
 
 

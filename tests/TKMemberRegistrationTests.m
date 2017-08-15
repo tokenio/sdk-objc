@@ -14,7 +14,7 @@
 @implementation TKMemberRegistrationTests
 
 - (void)testCreateMember {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         TKMember *member = [tokenIO createMember:alias];
         XCTAssert(member.id.length > 0);
@@ -25,14 +25,14 @@
 
 - (void)testProvisionNewDevice {
     // Create a member.
-    TKMember *member = [self runWithResult:^TKMember *(TokenIO *tokenIO) {
+    TKMember *member = [self runWithResult:^TKMember *(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         return [tokenIO createMember:alias];
     }];
 
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstAlias];
         [member approveKeys:newDevice.keys];
 
@@ -43,7 +43,7 @@
 }
 
 - (void)testLoginMember {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TKMember *created = [self createMember:tokenIO];
         TKMember *loggedIn = [tokenIO loginMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
@@ -53,7 +53,7 @@
 }
 
 - (void)testAliasExists {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         TKMember *member = [self createMember:tokenIO];
         
@@ -64,7 +64,7 @@
 }
 
 - (void)testGetMemberID {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         TKMember *member = [self createMember:tokenIO];
         
@@ -75,7 +75,7 @@
 }
 
 - (void)testAddAlias {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
@@ -88,7 +88,7 @@
 }
 
 - (void)testAddAliases {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
@@ -100,7 +100,7 @@
 }
 
 - (void)testRemoveAlias {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
 
         TKMember *member = [self createMember:tokenIO];
@@ -113,7 +113,7 @@
 }
 
 - (void)testRemoveAliases {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 

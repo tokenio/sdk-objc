@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "TransferTokenBuilder.h"
+#import "TokenIOSync.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
 #import "TKClient.h"
 #import "TKMemberAsync.h"
 #import "Transferinstructions.pbobjc.h"

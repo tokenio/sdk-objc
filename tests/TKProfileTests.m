@@ -10,7 +10,7 @@
 
 #import "TKTestBase.h"
 #import "TKUtil.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "TKMember.h"
 
 @interface TKProfileTests : TKTestBase
@@ -24,14 +24,14 @@
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         member = [tokenIO createMember:alias];
     }];
 }
 
 - (void)testProfile {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Profile* profile = [[Profile alloc] init];
         profile.displayNameFirst = @"Meimei";
         profile.displayNameLast = @"Han";
@@ -45,7 +45,7 @@
 }
 
 - (void)testProfilePicture {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         //create picture
         UIGraphicsBeginImageContext(CGSizeMake(500, 500));
         CGContextRef context = UIGraphicsGetCurrentContext();
