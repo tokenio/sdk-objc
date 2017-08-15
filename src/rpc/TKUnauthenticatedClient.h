@@ -44,7 +44,7 @@
  * Looks up member id for a given alias.
  *
  * @param alias alias to check
- * @return member id if alias already exists, nil otherwise
+ * @param onSuccess invoked if successful; return member id if alias already exists, nil otherwise
  */
 - (void)getMemberId:(Alias *)alias
           onSuccess:(OnSuccessWithString)onSuccess
@@ -56,7 +56,7 @@
  * @param memberId member id
  * @param crypto crypto engine to use
  * @param operations a set of operations that setup member keys and/or aliases
- * @return member information
+ * @param onSuccess invoked if successful; return member information
  */
 - (void)createMember:(NSString *)memberId
                   crypto:(TKCrypto *)crypto
