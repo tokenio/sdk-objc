@@ -3,7 +3,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
@@ -18,9 +18,9 @@
 @end
 
 @implementation TKTransferTokenRedemptionTests {
-    TKAccount *payerAccount;
+    TKAccountSync *payerAccount;
     TKMember *payer;
-    TKAccount *payeeAccount;
+    TKAccountSync *payeeAccount;
     TKMember *payee;
 }
 

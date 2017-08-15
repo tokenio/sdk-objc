@@ -7,7 +7,7 @@
 //
 
 #import "AccessTokenConfig.h"
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
@@ -96,7 +96,7 @@
 
 - (void)testReplaceTokenLarge {
     [self run: ^(TokenIO *tokenIO){
-        TKAccount *account = [self createAccount:tokenIO];
+        TKAccountSync *account = [self createAccount:tokenIO];
         TKMember *grantor2 = account.member;
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         Address *payload1 = [Address message];

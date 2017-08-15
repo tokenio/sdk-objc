@@ -3,7 +3,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "Account.pbobjc.h"
@@ -17,11 +17,11 @@
 @end
 
 @implementation TKNotificationsTests {
-    TKAccount *payerAccount;
+    TKAccountSync *payerAccount;
     TKMember *payer;
     TKMember *payerAnotherDevice;
 
-    TKAccount *payeeAccount;
+    TKAccountSync *payeeAccount;
     TKMember *payee;
     NSMutableDictionary * instructions;
 }

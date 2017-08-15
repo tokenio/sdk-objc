@@ -12,7 +12,7 @@
 #import "TokenIOBuilder.h"
 #import "TKBankClient.h"
 #import "TKMember.h"
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKTestKeyStore.h"
 
 
@@ -99,7 +99,7 @@
     return [token createMember:[self generateAlias]];
 }
 
-- (TKAccount *)createAccount:(TokenIO *)token {
+- (TKAccountSync *)createAccount:(TokenIO *)token {
     TKMember *member = [self createMember:token];
 
     NSString *firstName = @"Test";
@@ -123,7 +123,7 @@
     auth.bankId = bankId;
     [auth.accountsArray addObjectsFromArray:encAccounts];
 
-    NSArray<TKAccount *> *accounts = [member linkAccounts:auth];
+    NSArray<TKAccountSync *> *accounts = [member linkAccounts:auth];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }

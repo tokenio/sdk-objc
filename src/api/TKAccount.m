@@ -3,67 +3,77 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
+#import "Account.pbobjc.h"
+#import "Money.pbobjc.h"
+
 #import "TKMember.h"
-#import "TKRpcSyncCall.h"
-#import "TKAccountAsync.h"
+#import "TKClient.h"
+#import "TKAccount.h"
+#import "TKAccountSync.h"
 
 
-@implementation TKAccount
-
-+ (TKAccount *)account:(TKAccountAsync *)delegate {
-    return [[TKAccount alloc] initWithDelegate:delegate];
+@implementation TKAccount {
+    Account *account;
+    TKClient *client;
 }
 
-- (id)initWithDelegate:(TKAccountAsync *)delegate_ {
++ (TKAccount *)account:(Account *)account of:(TKMember *)member useClient:(TKClient *)client {
+    return [[TKAccount alloc] initWithAccount:account of:member useClient:client];
+}
+
+- (id)initWithAccount:(Account *)account_ of:(TKMember *)member useClient:(TKClient *)client_ {
     self = [super init];
+
     if (self) {
-        _async = delegate_;
+        account = account_;
+        client = client_;
+        _member = member;
     }
+
     return self;
 }
 
+- (TKAccountSync *)sync {
+    return [TKAccountSync account:self];
+}
+
 - (NSString *)id {
-    return self.async.id;
+    return account.id_p;
 }
 
 - (NSString *)name {
-    return self.async.name;
+    return account.name;
 }
 
 - (NSString *)bankId {
-    return self.async.bankId;
+    return account.bankId;
 }
 
-- (TKMember *)member {
-    return self.async.member;
+- (void)getBalance:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError {
+    [client getBalance:account.id_p
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (Money *)getBalance {
-    TKRpcSyncCall<Money *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getBalance:call.onSuccess onError:call.onError];
-    }];
+- (void)getTransaction:(NSString *)transactionId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError {
+    [client getTransaction:transactionId
+                forAccount:account.id_p
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (Transaction *)getTransaction:(NSString *)transactionId {
-    TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransaction:transactionId
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
-    }];
-}
-
-- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                               limit:(int)limit {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransactionsOffset:offset
-                                    limit:limit
-                                onSuccess:call.onSuccess
-                                  onError:call.onError];
-    }];
+- (void)getTransactionsOffset:(NSString *)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError {
+    return [client getTransactionsOffset:offset
+                                   limit:limit
+                              forAccount:account.id_p
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 @end

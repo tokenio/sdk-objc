@@ -4,7 +4,7 @@
 //
 
 #import "Transaction.pbobjc.h"
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
@@ -19,9 +19,9 @@
 @end
 
 @implementation TKTransactionsTests {
-    TKAccount *payerAccount;
+    TKAccountSync *payerAccount;
     TKMember *payer;
-    TKAccount *payeeAccount;
+    TKAccountSync *payeeAccount;
     TKMember *payee;
 }
 

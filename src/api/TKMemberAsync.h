@@ -216,7 +216,7 @@
  * @param onError callback invoked on error
  */
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
-           onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
+           onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -236,7 +236,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
+- (void)getAccounts:(OnSuccessWithTKAccounts)onSuccess
             onError:(OnError)onError;
 
 /**
@@ -245,7 +245,7 @@
  * @param accountId account id
  */
 - (void)getAccount:(NSString *)accountId
-         onSuccess:(OnSuccessWithTKAccountAsync)onSuccess
+         onSuccess:(OnSuccessWithTKAccount)onSuccess
            onError:(OnError)onError;
 
 /**

@@ -10,7 +10,7 @@
 @class TokenIO;
 @class BankAuthorization;
 @class TKMember;
-@class TKAccount;
+@class TKAccountSync;
 @class TKBankClient;
 @class HostAndPort;
 
@@ -60,7 +60,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @param tokenIO an entry point for Token API
  * @return an account
  */
-- (TKAccount *)createAccount:(TokenIO *)tokenIO;
+- (TKAccountSync *)createAccount:(TokenIO *)tokenIO;
 
 /**
  * Creates a new bank authorization for a member

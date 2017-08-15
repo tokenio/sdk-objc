@@ -3,11 +3,11 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
 #import "TKRpcSyncCall.h"
-#import "TKAccountAsync.h"
+#import "TKAccount.h"
 
 
 @implementation TKMember
@@ -182,12 +182,12 @@
     }];
 }
 
-- (NSArray<TKAccount*> *)linkAccounts:(BankAuthorization *)bankAuthorization {
+- (NSArray<TKAccountSync *> *)linkAccounts:(BankAuthorization *)bankAuthorization {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async linkAccounts:bankAuthorization
                        onSuccess:
-         ^(NSArray<TKAccountAsync *> *accounts) {
+         ^(NSArray<TKAccount *> *accounts) {
              call.onSuccess([self _asyncToSync:accounts]);
          }
                          onError:call.onError];
@@ -203,26 +203,27 @@
     }];
 }
 
-- (NSArray<TKAccount *> *)getAccounts {
+- (NSArray<TKAccountSync *> *)getAccounts {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
          getAccounts:
-         ^(NSArray<TKAccountAsync *> *accounts) {
+         ^(NSArray<TKAccount *> *accounts) {
              call.onSuccess([self _asyncToSync:accounts]);
          }
          onError:call.onError];
     }];
 }
 
-- (TKAccount *)getAccount:(NSString *)accountId {
-    TKRpcSyncCall<TKAccount *> *call = [TKRpcSyncCall create];
+- (TKAccountSync *)getAccount:(NSString *)accountId {
+    TKRpcSyncCall<TKAccountSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
          getAccount:accountId
          onSuccess:
-         ^(TKAccountAsync *account) {
-             call.onSuccess(account.sync);
+         ^(TKAccount *account) {
+             TKAccountSync* syncAccount = [TKAccountSync account:account];
+             call.onSuccess(syncAccount);
          }
          onError:call.onError];
     }];
@@ -555,12 +556,13 @@
 
 #pragma mark private
 
-- (NSArray<TKAccount *> *)_asyncToSync:(NSArray<TKAccountAsync *> *)accounts {
-    NSMutableArray<TKAccount *> *sync = [NSMutableArray array];
-    for (TKAccountAsync *a in accounts) {
-        [sync addObject:a.sync];
+- (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {
+    NSMutableArray<TKAccountSync *> *syncAccounts = [NSMutableArray array];
+    for (TKAccount *asyncAccount in asyncAccounts) {
+        TKAccountSync* syncAccount = [TKAccountSync account:asyncAccount];
+        [syncAccounts addObject:syncAccount];
     }
-    return sync;
+    return syncAccounts;
 }
 
 @end

@@ -8,7 +8,7 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "Transferinstructions.pbobjc.h"
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKHasher.h"
 #import "TKMember.h"
 #import "TKMemberAsync.h"
@@ -257,7 +257,7 @@
 
 
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
-           onSuccess:(OnSuccessWithTKAccountsAsync)onSuccess
+           onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError {
     [client linkAccounts:bankAuthorization
                onSuccess:
@@ -275,7 +275,7 @@
                     onError:onError];
 }
 
-- (void)getAccounts:(OnSuccessWithTKAccountsAsync)onSuccess
+- (void)getAccounts:(OnSuccessWithTKAccounts)onSuccess
             onError:(OnError)onError {
     [client getAccounts:
      ^(NSArray<Account *> *accounts) {
@@ -285,7 +285,7 @@
 }
 
 - (void)getAccount:(NSString *)accountId
-         onSuccess:(OnSuccessWithTKAccountAsync)onSuccess
+         onSuccess:(OnSuccessWithTKAccount)onSuccess
            onError:(OnError)onError {
     [client getAccount:accountId
              onSuccess:^(Account * account) {
@@ -600,17 +600,17 @@
 }
 #pragma mark private
 
-- (NSArray<TKAccountAsync *> *)_mapAccounts:(NSArray<Account *> *)accounts {
-    NSMutableArray<TKAccountAsync *> *result = [NSMutableArray array];
+- (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {
+    NSMutableArray<TKAccount *> *result = [NSMutableArray array];
     for (Account *a in accounts) {
-        TKAccountAsync *tkAccount = [TKAccountAsync account:a of:self.sync useClient:client];
+        TKAccount *tkAccount = [TKAccount account:a of:self.sync useClient:client];
         [result addObject:tkAccount];
     }
     return result;
 }
 
-- (TKAccountAsync *)_mapAccount:(Account *)account {
-    return [TKAccountAsync account:account of:self.sync useClient:client];
+- (TKAccount *)_mapAccount:(Account *)account {
+    return [TKAccount account:account of:self.sync useClient:client];
 }
 
 @end

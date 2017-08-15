@@ -5,7 +5,7 @@
 
 #import "Account.pbobjc.h"
 
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKJson.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
@@ -21,7 +21,7 @@
 @implementation TKAccountsTests {
     TKMember *member;
     FankClient *fankClient;
-    NSArray<TKAccount *> *accounts;
+    NSArray<TKAccountSync *> *accounts;
     NSString *bankId;
 }
 
@@ -78,7 +78,7 @@
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(@"iron", accounts[0].bankId);
         
-        TKAccount *account = [member getAccount:accounts[0].id];
+        TKAccountSync *account = [member getAccount:accounts[0].id];
         XCTAssertEqualObjects(@"Checking", account.name);
         XCTAssertEqualObjects(@"iron", account.bankId);
     }];

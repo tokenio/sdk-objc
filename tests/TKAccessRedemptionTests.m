@@ -6,7 +6,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
+#import "TKAccountSync.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
 #import "TokenIO.h"
@@ -21,7 +21,7 @@
 @end
 
 @implementation TKAccessRedemptionTests {
-    TKAccount *grantorAccount;
+    TKAccountSync *grantorAccount;
     TKMember *grantor;
     TKMember *grantee;
 }
@@ -109,7 +109,7 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+        TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
     }];
 }
@@ -123,14 +123,14 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+        TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
     }];
 }
 
 - (void)testAnyAccountTransactionsToken {
     [self run: ^(TokenIO *tokenIO) {
-        TKAccount *redeemerAccount = [self createAccount:tokenIO];
+        TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
         TKMember *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
@@ -164,7 +164,7 @@
 
 - (void)testTransactionsToken {
     [self run: ^(TokenIO *tokenIO) {
-        TKAccount *redeemerAccount = [self createAccount:tokenIO];
+        TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
         TKMember *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
