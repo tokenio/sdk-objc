@@ -6,54 +6,47 @@
 #import <Foundation/Foundation.h>
 
 #import "AccessTokenConfig.h"
-#import "TransferTokenBuilder.h"
 #import "TKTypedef.h"
-#import "Alias.pbobjc.h"
 #import "Subscriber.pbobjc.h"
-#import "Security.pbobjc.h"
 #import "Banklink.pbobjc.h"
+#import "Security.pbobjc.h"
 #import "Blob.pbobjc.h"
-#import "Token.pbobjc.h"
-#import "Notification.pbobjc.h"
-#import "PagedArray.h"
-#import "Member.pbobjc.h"
+
 
 
 @class Member;
 @class TKClient;
-@class TKMemberAsync;
-@class Address;
-@class AddressRecord;
-@class AccessBody_Resource;
+@class TKCrypto;
 @class TransferEndpoint;
-
 
 /**
  * Represents a Member in the Token system. Each member has an active secret
  * and public key pair that is used to perform authentication.
- *
+ * 
  * <p>
- * The class provides synchronous API with `TKMemberAsync` providing a asynchronous
- * version. `TKMemberAsync` instance can be obtained by calling `async` method.
+ * The class provides async API
  * </p>
  */
 @interface TKMember : NSObject
 
-@property (readonly, retain) TKMemberAsync *async;
 @property (readonly, retain) NSString *id;
 @property (readonly, retain) Alias *firstAlias;
 @property (readonly, retain) NSArray<Alias *> *aliases;
 @property (readonly, retain) NSArray<Key *> *keys;
 
 /**
- * Creates new member that is implemented by delegating all the calls to the
- * asynchonous implementation `TKMemberAsync`.
+ * Creates new member instance. The method is not meant to be invoked directly.
+ * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
-+ (TKMember *)member:(TKMemberAsync *)delegate;
++ (TKMember *)member:(Member *)member
+                useClient:(TKClient *)client;
+
+
+- (TKClient *)getClient;
 
 /**
  * Sets the On-Behalf-Of authentication value to be used
- * with this client.  The value must correspond to an existing
+ * with this client. The value must correspond to an existing
  * Access Token ID issued for the client member.
  *
  * @param accessTokenId the access token id
@@ -70,161 +63,221 @@
  * of valid keys for the member.
  *
  * @param key to add to the approved list
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)approveKey:(Key *)key;
+- (void)approveKey:(Key *)key
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError;
 
 /**
- * Approves a set of keys owned by this member. The keys are added to the list
+ * Adds a set of keys owned by this member. The keys are added to the list
  * of valid keys for the member.
  *
  * @param keys to add to the approved list
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)approveKeys:(NSArray<Key *> *)keys;
+- (void)approveKeys:(NSArray<Key *> *)keys
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Removes a key owned by this member.
  *
  * @param keyId key ID of the key to remove
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)removeKey:(NSString *)keyId;
+- (void)removeKey:(NSString *)keyId
+        onSuccess:(OnSuccess)onSuccess
+          onError:(OnError)onError;
 
 /**
  * Removes a set of keys owned by this member.
  *
- * @param keyIds key IDs of the keys to remove
+ * @param keyIds key IDs of the key to remove
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)removeKeys:(NSArray<NSString *> *)keyIds;
+- (void)removeKeys:(NSArray<NSString *> *)keyIds
+        onSuccess:(OnSuccess)onSuccess
+          onError:(OnError)onError;
 
 /**
  * Adds a new alias for the member.
  *
  * @param alias alias, e.g. 'john', must be unique
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)addAlias:(Alias *)alias;
+- (void)addAlias:(Alias *)alias
+       onSuccess:(OnSuccess)onSuccess
+         onError:(OnError)onError;
 
 /**
- * Adds a new set of aliases for the member.
+ * Adds a set of aliases for the member.
  *
  * @param aliases set of aliases
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)addAliases:(NSArray<NSString *> *)aliases;
+- (void)addAliases:(NSArray<Alias *> *)aliases
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Removes an alias for the member.
  *
  * @param alias alias, e.g. 'john'
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)removeAlias:(Alias *)alias;
+- (void)removeAlias:(Alias *)alias
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError;
 
 /**
- * Removes a of aliases for the member.
+ * Removes a set of aliases for the member.
  *
  * @param aliases set of aliases
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)removeAliases:(NSArray<NSString *> *)aliases;
+- (void)removeAliases:(NSArray<Alias *> *)aliases
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError;
 
 /**
- * Subscribes a device to receive push notifications.
+ * Subscribes a device to receive push notifications
  *
  * @param handler handler that will send the notifications to this subscriber
  * @param handlerInstructions instructions on how to send the notification
  */
-- (Subscriber *)subscribeToNotifications:(NSString *)handler
-                     handlerInstructions:(NSMutableDictionary<NSString *, NSString *> *)handlerInstructions;
+- (void)subscribeToNotifications:(NSString *)handler
+             handlerInstructions:(NSMutableDictionary<NSString *, NSString *> *)handlerInstructions
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
+                         onError:(OnError)onError;
 
 /**
- * Get all subscribers.
+ * Get all subscribers 
  *
  */
-- (NSArray<Subscriber *> *)getSubscribers;
+- (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
+               onError:(OnError)onError;
 
 /**
- * Get a subscriber by Id.
+ * Get a subscriber by Id
  *
  * @param subscriberId id of subscriber to get
  */
-- (Subscriber *)getSubscriber:(NSString *)subscriberId;
-
+- (void)getSubscriber:(NSString *)subscriberId
+            onSuccess:(OnSuccessWithSubscriber)onSuccess
+              onError:(OnError)onError;
 
 /**
- * Get all notifications.
- 
+ * Get all notifications
+ *
  * @param offset offset to start at
  * @param limit max number of records to return
  */
-- (PagedArray<Notification *> *)getNotificationsOffset:(NSString *)offset
-                                                 limit:(int)limit;
+- (void)getNotificationsOffset:(NSString *)offset
+                         limit:(int)limit
+                     onSuccess:(OnSuccessWithNotifications)onSuccess
+               onError:(OnError)onError;
 
 /**
- * Get a notification by Id.
+ * Get a notification by Id
  *
  * @param notificationId id of notification to get
  */
-- (Notification *)getNotification:(NSString *)notificationId;
+- (void)getNotification:(NSString *)notificationId
+            onSuccess:(OnSuccessWithNotification)onSuccess
+              onError:(OnError)onError;
 
 
 /**
- * Unsubscribes a device from push notifications.
+ * Unsubscribes a device from push notifications
  *
- * @param subscriberId id of the subscriber to remove
+ * @param subscriberId if of subscriber to remove
  */
-- (void)unsubscribeFromNotifications:(NSString *)subscriberId;
-
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
+                           onSuccess:(OnSuccess)onSuccess
+                             onError:(OnError)onError;
 
 
 /**
  * Links a funding bank account to Token and returns it to the caller.
  *
  * @param bankAuthorization bank authorization, generated by the bank
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (NSArray<TKAccountSync *> *)linkAccounts:(BankAuthorization *)bankAuthorization;
+- (void)linkAccounts:(BankAuthorization *)bankAuthorization
+           onSuccess:(OnSuccessWithTKAccounts)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Unlinks bank accounts previously linked via linkAccounts call.
  *
  * @param accountIds account ids to unlink
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds;
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up funding bank accounts linked to Token.
  *
- * @return list of accounts
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (NSArray<TKAccountSync *> *)getAccounts;
+- (void)getAccounts:(OnSuccessWithTKAccounts)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Looks up a funding bank account linked to Token.
  *
  * @param accountId account id
- * @return list of accounts
  */
-- (TKAccountSync *)getAccount:(NSString *)accountId;
+- (void)getAccount:(NSString *)accountId
+         onSuccess:(OnSuccessWithTKAccount)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up account balance.
  *
  * @param accountId account id
- * @return account balance
  */
-- (Money *)getBalance:(NSString *)accountId;
+- (void)getBalance:(NSString *)accountId
+         onSuccess:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up an existing token transfer.
  *
  * @param transferId ID of the transfer record
- * @return transfer record
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (Transfer *)getTransfer:(NSString *)transferId;
+- (void)getTransfer:(NSString *)transferId
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Looks up existing token transfers.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                         limit:(int)limit;
+- (void)getTransfersOffset:(NSString *)offset
+                     limit:(int)limit
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Looks up existing token transfers.
@@ -232,105 +285,137 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param tokenId optional token id to restrict the search
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                         limit:(int)limit
-                                       tokenId:(NSString *)tokenId;
+- (void)getTransfersOffset:(NSString *)offset
+                     limit:(int)limit
+                   tokenId:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Creates a new member address.
  *
- * @param address the address
  * @param name the name of the address
- * @return the address record created
+ * @param address the address json
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (AddressRecord *)addAddress:(Address *)address
-                     withName:(NSString *)name;
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
+         onSuccess:(OnSuccessWithAddress)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Looks up an address by id.
  *
  * @param addressId the address id
- * @return an address record
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (AddressRecord *)getAddressWithId:(NSString *)addressId;
+- (void)getAddressWithId:(NSString *)addressId
+               onSuccess:(OnSuccessWithAddress)onSuccess
+                 onError:(OnError)onError;
 
 /**
  * Looks up member addresses.
  *
- * @return a list of addresses
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (NSArray<AddressRecord *> *)getAddresses;
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Deletes a member address by its id.
  *
  * @param addressId the id of the address
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (void)deleteAddressWithId:(NSString *)addressId;
+- (void)deleteAddressWithId:(NSString *)addressId
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError;
 
 /**
  * Creates a new transfer token builder.
  *
  * @param amount lifetime amount of the token
  * @param currency currency code, e.g. "USD"
- * @return transfer token builder, can be executed to create a token
+ * @return the transfer token builder
  */
 - (TransferTokenBuilder *)createTransferToken:(double)amount
                                      currency:(NSString *)currency;
 
-/** Creates a new access token for a list of resources.
+/**
+ * Creates a new access token for a list of resources.
  *
  * @param accessTokenConfig the access token configuration object
- * @return the created access token
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig;
+- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Cancels the existing access token and creates a replacement for it.
  *
  * @param tokenToCancel old token to cancel
  * @param accessTokenConfig access token configuration to create a new token from
- * @return result of the replacement operation
  */
-- (TokenOperationResult *)replaceAccessToken:(Token *)tokenToCancel
-                           accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
+- (void)replaceAccessToken:(Token *)tokenToCancel
+         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                 onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                   onError:(OnError)onError;
 
 /**
  * Cancels the existing access token, creates a replacement and endorses it.
  *
  * @param tokenToCancel old token to cancel
  * @param accessTokenConfig access token configuration to create a new token from
- * @return result of the replacement operation
  */
-- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
-
+- (void)replaceAndEndorseAccessToken:(Token *)tokenToCancel
+                   accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                             onError:(OnError)onError;
 /**
- * Looks up a existing token.
+ * Looks up a existing transfer token.
  *
  * @param tokenId token id
- * @return transfer token returned by the server
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (Token *)getToken:(NSString *)tokenId;
+- (void)getToken:(NSString *)tokenId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError;
 
 /**
  * Looks up transfer tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
- * @return transfer tokens owned by the member
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (PagedArray<Token *> *)getTransferTokensOffset:(NSString *)offset limit:(int)limit;
+- (void)getTransferTokensOffset:(NSString *)offset
+                          limit:(int)limit
+                      onSuccess:(OnSuccessWithTokens)onSuccess
+                        onError:(OnError)onError;
 
 /**
  * Looks up access tokens owned by the member.
  *
  * @param offset offset to start at
  * @param limit max number of records to return
- * @return access tokens owned by the member
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (PagedArray<Token *> *)getAccessTokensOffset:(NSString *)offset limit:(int)limit;
+- (void)getAccessTokensOffset:(NSString *)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTokens)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
@@ -338,40 +423,36 @@
  *
  * @param token token to endorse
  * @param keyLevel key to use
- * @return result of the endorse operation
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel;
+- (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+             onError:(OnError)onError;
 
 /**
- * Cancels the transfer token by signing it. The signature is persisted 
+ * Cancels the transfer token by signing it. The signature is persisted
  * along with the token.
  *
  * @param token token to cancel
- * @return result of the cancelled operation
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (TokenOperationResult *)cancelToken:(Token *)token;
+- (void)cancelToken:(Token *)token
+          onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Redeems a transfer token.
  *
  * @param token transfer token to redeem
- * @return transfer record
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (Transfer *)redeemToken:(Token *)token;
-
-/**
- * Redeems a transfer token.
- *
- * @param token transfer token to redeem
- * @param amount transfer amount
- * @param currency transfer currency code, e.g. "EUR"
- * @param description transfer description
- * @return transfer record
- */
-- (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
-                    currency:(NSString *)currency
-                 description:(NSString *)description;
+- (void)redeemToken:(Token *)token
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Redeems a transfer token.
@@ -381,22 +462,29 @@
  * @param currency transfer currency code, e.g. "EUR"
  * @param description transfer description
  * @param destination transfer destination
- * @return transfer record
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
-- (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
-                    currency:(NSString *)currency
-                 description:(NSString *)description
-                 destination:(TransferEndpoint *)destination;
+- (void)redeemToken:(Token *)token
+                amount:(NSNumber *)amount
+              currency:(NSString *)currency
+           description:(NSString *)description
+           destination:(TransferEndpoint *)destination
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
  *
  * @param transactionId ID of the transaction
- * @return a looked up transaction
+ * @param accountId account id
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId;
+- (void)getTransaction:(NSString *)transactionId
+            forAccount:(NSString *)accountId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError;
 
 /**
  * Looks up existing transactions. This is a full list of transactions with token transfers
@@ -405,11 +493,14 @@
  * @param offset offset to start at
  * @param limit max number of records to return
  * @param accountId account id
- * @return a list of looked up transactions
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                               limit:(int)limit
-                                          forAccount:(NSString *)accountId;
+- (void)getTransactionsOffset:(NSString *)offset
+                        limit:(int)limit
+                   forAccount:(NSString *)accountId
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Uploads a blob to the server.
@@ -418,74 +509,95 @@
  * @param type MIME type of the file
  * @param name name of the file
  * @param data binary data
- * @return attachment
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Attachment *)createBlob:(NSString *)ownerId
-                  withType:(NSString *)type
-                  withName:(NSString *)name
-                  withData:(NSData * )data;
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Gets a blob.
  *
- * @param blobId Id of the blob.
- * @return Blob
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Blob *)getBlob:(NSString *)blobId;
+- (void)getBlob:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Gets a blob attached to a token.
  *
  * @param tokenId id of the token
- * @param blobId Id of the blob
- * @return Blob
+ * @param blobId id of the blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Blob *)getTokenBlob:(NSString *)tokenId
-            withBlobId:(NSString *)blobId;
+- (void)getTokenBlob:(NSString *)tokenId
+     withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Returns a list of all token enabled banks.
  *
- * @return a list of banks
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (NSArray<Bank *> *)getBanks;
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError;
 
 /**
  * Returns linking information for the specified bank id.
  *
  * @param bankId the bank id
- * @return bank linking information
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (BankInfo *)getBankInfo:(NSString *)bankId;
-
+- (void)getBankInfo:(NSString *)bankId
+          onSuccess:(OnSuccessWithBankInfo)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Returns profile for the given member id.
  *
  * @param ownerId of the member to lookup the profile for
- * @return updated profile
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Profile *)getProfile:(NSString *)ownerId;
+- (void)getProfile:(NSString *) ownerId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
 
 
 /**
  * Updates caller profile.
  *
  * @param profile to set
- * @return updated profile
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Profile *)setProfile:(Profile *)profile;
-
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Returns profile picture of a given member id and size
  *
  * @param ownerId onwer member id
  * @param size image size
- * @return profile picture Blob
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
-- (Blob *)getProfilePicture:(NSString *)ownerId
-                     size:(ProfilePictureSize) size;
+- (void)getProfilePicture:(NSString *)ownerId
+                     size:(ProfilePictureSize) size
+                onSuccess:(OnSuccessWithBlob)onSuccess
+                  onError:(OnError)onError;
 /**
  * Set profile picture for the current user
  *
@@ -493,9 +605,13 @@
  * @param type MIME type of the file
  * @param name name of the file
  * @param data binary data
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
  */
 - (void)setProfilePicture:(NSString *)ownerId
                  withType:(NSString *)type
                  withName:(NSString *)name
-                 withData:(NSData *)data;
+                 withData:(NSData *)data
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
 @end

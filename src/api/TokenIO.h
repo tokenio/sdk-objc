@@ -14,7 +14,7 @@
 
 @class GatewayService;
 @class TokenIOBuilder;
-@class TKMember;
+@class TKMemberSync;
 @class TokenIOSync;
 @protocol TKCryptoEngineFactory;
 @class TokenPayload;
@@ -59,7 +59,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  * @param alias member alias to use, must be unique
  */
 - (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
+            onSucess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -97,7 +97,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  * @param memberId member id
  */
 - (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMemberAsync)onSuccess
+           onSucess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError;
 
 /**

@@ -4,7 +4,7 @@
 //
 
 #import "TKAccountSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKRpcSyncCall.h"
 #import "TKAccount.h"
 
@@ -35,7 +35,7 @@
     return self.async.bankId;
 }
 
-- (TKMember *)member {
+- (TKMemberSync *)member {
     return self.async.member;
 }
 

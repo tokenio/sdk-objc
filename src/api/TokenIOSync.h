@@ -9,7 +9,7 @@
 
 @class GatewayService;
 @class TokenIOBuilder;
-@class TKMember;
+@class TKMemberSync;
 @class TokenIO;
 @class DeviceInfo;
 @class TokenPayload;
@@ -63,7 +63,7 @@
  * @param alias member alias to use, must be unique
  * @return newly created member
  */
-- (TKMember *)createMember:(Alias *)alias;
+- (TKMemberSync *)createMember:(Alias *)alias;
 
 /**
  * Provisions a new device for an existing user. The call generates a set
@@ -81,7 +81,7 @@
  * @param memberId member id
  * @return logged in member
  */
-- (TKMember *)loginMember:(NSString *)memberId;
+- (TKMemberSync *)loginMember:(NSString *)memberId;
 
 /**
  * Sends a notification to request payment

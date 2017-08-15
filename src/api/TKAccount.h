@@ -9,7 +9,7 @@
 
 
 @class Account;
-@class TKMember;
+@class TKMemberSync;
 @class TKClient;
 @class Token;
 
@@ -22,13 +22,13 @@
  */
 @interface TKAccount : NSObject
 
-@property (atomic, readonly) TKMember *member;
+@property (atomic, readonly) TKMemberSync *member;
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSString *name;
 @property (atomic, readonly) NSString *bankId;
 
 + (TKAccount *)account:(Account *)account
-                         of:(TKMember *)member
+                         of:(TKMemberSync *)member
                   useClient:(TKClient *)client;
 
 /**

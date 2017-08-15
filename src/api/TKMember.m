@@ -3,566 +3,611 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+#import <Protobuf/GPBMessage.h>
+
+#import "gateway/Gateway.pbrpc.h"
+
+#import "Transferinstructions.pbobjc.h"
 #import "TKAccountSync.h"
+#import "TKHasher.h"
+#import "TKMemberSync.h"
 #import "TKMember.h"
-#import "TKMemberAsync.h"
-#import "TKRpcSyncCall.h"
-#import "TKAccount.h"
+#import "TKClient.h"
 
 
-@implementation TKMember
-
-+ (TKMember *)member:(TKMemberAsync *)delegate {
-    return [[TKMember alloc] initWithDelegate:delegate];
+@implementation TKMember {
+    TKClient *client;
+    Member *member;
+    NSMutableArray<Alias *> *aliases;
 }
 
-- (id)initWithDelegate:(TKMemberAsync *)delegate {
++ (TKMember *)member:(Member *)member
+                useClient:(TKClient *)client {
+    return [[TKMember alloc] initWithMember:member useClient:client];
+}
+
+- (id)initWithMember:(Member *)member_
+           useClient:(TKClient *)client_ {
     self = [super init];
+    
     if (self) {
-        _async = delegate;
+        member = member_;
+        client = client_;
+        aliases = [NSMutableArray array];
+        //TODO(PR-1006): Remove when alias sync is implemented
+        for (NSString *alias in member.aliasHashesArray) {
+            Alias *typedAlias = [Alias new];
+            typedAlias.type = Alias_Type_Email;
+            typedAlias.value = alias;
+            [aliases addObject:typedAlias];
+        }
     }
+    
     return self;
 }
 
 - (NSString *)id {
-    return self.async.id;
+    return member.id_p;
+}
+
+- (TKClient *)getClient {
+    NSLog(@"%@", client);
+    return client;
 }
 
 - (Alias *)firstAlias {
-    return self.async.firstAlias;
+    return aliases.count > 0 ? aliases[0] : nil;
 }
 
 - (NSArray<Key *> *)keys {
-    return self.async.keys;
+    NSMutableArray<Key *> *result = [NSMutableArray array];
+    for (Key *key in member.keysArray) {
+        [result addObject:key];
+    }
+    return result;
 }
 
 - (NSArray<Alias *> *)aliases {
-    return self.async.aliases;
+    return [NSArray arrayWithArray:aliases];
 }
 
 - (void)useAccessToken:(NSString *)accessTokenId {
-    [self.async useAccessToken:accessTokenId];
+    [client useAccessToken:accessTokenId];
 }
 
 - (void)clearAccessToken {
-    [self.async clearAccessToken];
+    [client clearAccessToken];
 }
 
-- (void)approveKey:(Key *)key {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async approveKey:key
-                     onSuccess:^{
-                         call.onSuccess(nil);
-                     }
-                       onError:call.onError];
-    }];
+- (void)approveKey:(Key *)key
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError {
+    [self approveKeys:@[key]
+            onSuccess:onSuccess
+            onError:onError];
 }
 
-- (void)approveKeys:(NSArray<Key *> *)keys {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async approveKeys:keys
-                      onSuccess:^{
-                          call.onSuccess(nil);
-                      }
-                        onError:call.onError];
-    }];
+- (void)approveKeys:(NSArray<Key *> *)keys
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+
+    NSMutableArray<MemberOperation *> *addKeys = [NSMutableArray array];
+    for (Key *key in keys) {
+        MemberOperation *addKey = [MemberOperation message];
+        addKey.addKey.key = key;
+        [addKeys addObject:addKey];
+    }
+    [client updateMember:retainedMember
+              operations:[addKeys copy]
+               onSuccess:
+                       ^(Member *m) {
+                           [retainedMember clear];
+                           [retainedMember mergeFrom:m];
+                           onSuccess();
+                       }
+                 onError:onError];
 }
 
-- (void)removeKey:(NSString *)keyId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async removeKey:keyId
-                    onSuccess:^{ call.onSuccess(nil); }
-                      onError:call.onError];
-    }];
+- (void)removeKey:(NSString *)keyId
+        onSuccess:(OnSuccess)onSuccess
+          onError:(OnError)onError {
+    [self removeKeys:@[keyId]
+           onSuccess:onSuccess
+             onError:onError];
 }
 
-- (void)removeKeys:(NSArray<NSString *> *)keyIds {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async removeKeys:keyIds
-                     onSuccess:^{ call.onSuccess(nil); }
-                       onError:call.onError];
-    }];
+- (void)removeKeys:(NSArray<NSString *> *)keyIds
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+
+    NSMutableArray<MemberOperation *> *removeKeys = [NSMutableArray array];
+    for (NSString *keyId in keyIds) {
+        MemberOperation *removeKey = [MemberOperation message];
+        removeKey.removeKey.keyId = keyId;
+        [removeKeys addObject:removeKey];
+    }
+    [client updateMember:retainedMember
+              operations:[removeKeys copy]
+               onSuccess:
+                       ^(Member *m) {
+                           [retainedMember clear];
+                           [retainedMember mergeFrom:m];
+                           onSuccess();
+                       }
+                 onError:onError];
 }
 
-- (void)addAlias:(Alias *)alias {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async addAlias:alias
-                   onSuccess:^{ call.onSuccess(nil); }
-                     onError:call.onError];
-    }];
+- (void)addAlias:(Alias *)alias
+       onSuccess:(OnSuccess)onSuccess
+         onError:(OnError)onError {
+    [self addAliases:@[alias]
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (void)addAliases:(NSArray<Alias *> *)aliases {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async addAliases:aliases
-                       onSuccess:^{ call.onSuccess(nil); }
-                         onError:call.onError];
-    }];
+- (void)addAliases:(NSArray<Alias *> *)toAddAliases
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+
+    NSMutableArray<MemberOperation *> *addAliasOps = [NSMutableArray array];
+    for (Alias *alias in toAddAliases) {
+        MemberOperation *addAlias = [MemberOperation message];
+        addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
+        [addAliasOps addObject:addAlias];
+    }
+    [client updateMember:retainedMember
+              operations:[addAliasOps copy]
+               onSuccess:
+                       ^(Member *m) {
+                           [aliases addObjectsFromArray:toAddAliases];
+                           [retainedMember clear];
+                           [retainedMember mergeFrom:m];
+                           onSuccess();
+                       }
+                 onError:onError];
 }
 
-- (void)removeAlias:(Alias *)alias {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async removeAlias:alias
-                      onSuccess:^{ call.onSuccess(nil); }
-                        onError:call.onError];
-    }];
+- (void)removeAlias:(Alias *)alias
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError {
+    [self removeAliases:@[alias]
+                onSuccess:onSuccess
+                  onError:onError];
 }
 
-- (void)removeAliases:(NSArray<Alias *> *)aliases {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async removeAliases:aliases
-                       onSuccess:^{ call.onSuccess(nil); }
-                         onError:call.onError];
-    }];
+- (void)removeAliases:(NSArray<Alias *> *)toRemoveAliases
+              onSuccess:(OnSuccess)onSuccess
+                onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+
+    NSMutableArray *removeAliasOps = [NSMutableArray array];
+    for (Alias *alias in toRemoveAliases) {
+        MemberOperation *removeAlias = [MemberOperation message];
+        removeAlias.removeAlias.aliasHash = [TKHasher hashAlias:alias];
+        [removeAliasOps addObject:removeAlias];
+    }
+    [client updateMember:retainedMember
+              operations:[removeAliasOps copy]
+               onSuccess:
+                       ^(Member *m) {
+                           [aliases removeObjectsInArray:toRemoveAliases];
+                           [retainedMember clear];
+                           [retainedMember mergeFrom:m];
+                           onSuccess();
+                       }
+                 onError:onError];
 }
 
-- (Subscriber *)subscribeToNotifications:(NSString *)handler
-                     handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async subscribeToNotifications:handler
-                         handlerInstructions:handlerInstructions
-                                   onSuccess:call.onSuccess
-                                     onError:call.onError];
-    }];
+- (void)subscribeToNotifications:(NSString *)handler
+             handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions
+                       onSuccess:(OnSuccessWithSubscriber)onSuccess
+                         onError:(OnError)onError {
+    [client subscribeToNotifications:handler
+                 handlerInstructions:handlerInstructions
+                           onSuccess:onSuccess
+                             onError:onError];
 }
 
-- (NSArray<Subscriber *> *)getSubscribers {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getSubscribers:call.onSuccess
-                           onError:call.onError];
-    }];
+- (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
+               onError:(OnError)onError {
+    [client getSubscribers:onSuccess
+                   onError:onError];
 }
 
-- (Subscriber *)getSubscriber:(NSString *)subscriberId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getSubscriber:subscriberId
-                        onSuccess:call.onSuccess
-                          onError:call.onError];
-    }];
+- (void)getSubscriber:(NSString *)subscriberId
+            onSuccess:(OnSuccessWithSubscriber)onSuccess
+              onError:(OnError)onError {
+    [client getSubscriber:subscriberId
+                onSuccess:onSuccess
+                  onError:onError];
 }
 
-- (PagedArray<Notification *> *)getNotificationsOffset:(NSString *)offset
-                                                 limit:(int)limit {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getNotificationsOffset:offset
-                                     limit:limit
-                                 onSuccess:call.onSuccess
-                                   onError:call.onError];
-    }];
+- (void)getNotificationsOffset:(NSString *)offset
+                         limit:(int)limit
+                     onSuccess:(OnSuccessWithNotifications)onSuccess
+               onError:(OnError)onError {
+    [client getNotifications:offset
+                       limit:limit
+                   onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (Notification *)getNotification:(NSString *)NotificationId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getNotification:NotificationId
-                        onSuccess:call.onSuccess
-                          onError:call.onError];
-    }];
+- (void)getNotification:(NSString *)notificationId
+            onSuccess:(OnSuccessWithNotification)onSuccess
+              onError:(OnError)onError {
+    [client getNotification:notificationId
+                onSuccess:onSuccess
+                  onError:onError];
+}
+
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
+                           onSuccess:(OnSuccess)onSuccess
+                             onError:(OnError)onError {
+    [client unsubscribeFromNotifications:subscriberId
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 
-- (void)unsubscribeFromNotifications:(NSString *)subscriberId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async unsubscribeFromNotifications:subscriberId
-                                       onSuccess:^{ call.onSuccess(nil); }
-                                         onError:call.onError];
-    }];
+- (void)linkAccounts:(BankAuthorization *)bankAuthorization
+           onSuccess:(OnSuccessWithTKAccounts)onSuccess
+             onError:(OnError)onError {
+    [client linkAccounts:bankAuthorization
+               onSuccess:
+     ^(NSArray<Account *> *accounts) {
+         onSuccess([self _mapAccounts:accounts]);
+     }
+                 onError:onError];
 }
 
-- (NSArray<TKAccountSync *> *)linkAccounts:(BankAuthorization *)bankAuthorization {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async linkAccounts:bankAuthorization
-                       onSuccess:
-         ^(NSArray<TKAccount *> *accounts) {
-             call.onSuccess([self _asyncToSync:accounts]);
-         }
-                         onError:call.onError];
-    }];
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
+             onSuccess:(OnSuccess)onSuccess
+               onError:(OnError)onError {
+    [client unlinkAccounts:accountIds
+                 onSuccess:onSuccess
+                    onError:onError];
 }
 
-- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async unlinkAccounts:accountIds
-                         onSuccess:^{ call.onSuccess(nil); }
-                           onError:call.onError];
-    }];
+- (void)getAccounts:(OnSuccessWithTKAccounts)onSuccess
+            onError:(OnError)onError {
+    [client getAccounts:
+     ^(NSArray<Account *> *accounts) {
+         onSuccess([self _mapAccounts:accounts]);
+     }
+                onError:onError];
 }
 
-- (NSArray<TKAccountSync *> *)getAccounts {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async
-         getAccounts:
-         ^(NSArray<TKAccount *> *accounts) {
-             call.onSuccess([self _asyncToSync:accounts]);
-         }
-         onError:call.onError];
-    }];
+- (void)getAccount:(NSString *)accountId
+         onSuccess:(OnSuccessWithTKAccount)onSuccess
+           onError:(OnError)onError {
+    [client getAccount:accountId
+             onSuccess:^(Account * account) {
+                 onSuccess([self _mapAccount:account]);
+             }
+               onError:onError];
 }
 
-- (TKAccountSync *)getAccount:(NSString *)accountId {
-    TKRpcSyncCall<TKAccountSync *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async
-         getAccount:accountId
-         onSuccess:
-         ^(TKAccount *account) {
-             TKAccountSync* syncAccount = [TKAccountSync account:account];
-             call.onSuccess(syncAccount);
-         }
-         onError:call.onError];
-    }];
+- (void)getTransfer:(NSString *)transferId
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError {
+    [client getTransfer:transferId
+              onSuccess:onSuccess
+                onError:onError];
 }
 
-- (Transfer *)getTransfer:(NSString *)transferId {
-    TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransfer:transferId
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
-    }];
+- (void)getTransfersOffset:(NSString *)offset
+                     limit:(int)limit
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError {
+    [self getTransfersOffset:offset
+                       limit:limit
+                     tokenId:nil
+                   onSuccess:onSuccess
+                     onError:onError];
 }
 
-- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                         limit:(int)limit {
-    return [self getTransfersOffset:offset
-                              limit:limit
-                            tokenId:nil];
+- (void)getTransfersOffset:(NSString *)offset
+                     limit:(int)limit
+                   tokenId:(NSString *)tokenId
+                 onSuccess:(OnSuccessWithTransfers)onSuccess
+                   onError:(OnError)onError {
+    [client getTransfersOffset:offset
+                         limit:limit
+                       tokenId:tokenId
+                     onSuccess:onSuccess
+                       onError:onError];
 }
 
-- (PagedArray<Transfer *> *)getTransfersOffset:(NSString *)offset
-                                         limit:(int)limit
-                                       tokenId:(NSString *)tokenId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransfersOffset:offset
-                                 limit:limit
-                               tokenId:tokenId
-                             onSuccess:call.onSuccess
-                               onError:call.onError];
-    }];
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
+         onSuccess:(OnSuccessWithAddress)onSuccess
+           onError:(OnError)onError {
+    [client addAddress:address
+              withName:name
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (AddressRecord *)addAddress:(Address *)address
-                     withName:(NSString *)name {
-    TKRpcSyncCall<AddressRecord *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async addAddress:address
-                      withName:name
-                     onSuccess:call.onSuccess
-                       onError:call.onError];
-    }];
+- (void)getAddressWithId:(NSString *)addressId
+               onSuccess:(OnSuccessWithAddress)onSuccess
+                 onError:(OnError)onError {
+    [client getAddressById:addressId
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (AddressRecord *)getAddressWithId:(NSString *)addressId {
-    TKRpcSyncCall<AddressRecord *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getAddressWithId:addressId
-                           onSuccess:call.onSuccess
-                             onError:call.onError];
-    }];
+- (void)getAddresses:(OnSuccessWithAddresses)onSuccess
+             onError:(OnError)onError {
+    [client getAddresses:onSuccess
+                 onError:onError];
 }
 
-- (NSArray<AddressRecord *> *)getAddresses {
-    TKRpcSyncCall<NSArray<AddressRecord *> *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getAddresses:call.onSuccess
-                         onError:call.onError];
-    }];
-}
-
-- (void)deleteAddressWithId:(NSString *)addressId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async deleteAddressWithId:addressId
-                              onSuccess:^{ call.onSuccess(nil); }
-                                onError:call.onError];
-    }];
+- (void)deleteAddressWithId:(NSString *)addressId
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
+    [client deleteAddressById:addressId
+                    onSuccess:onSuccess
+                      onError:onError];
 }
 
 - (TransferTokenBuilder *)createTransferToken:(double)amount
                                      currency:(NSString *)currency {
-    return [self.async createTransferToken:amount currency:currency];
+    TransferTokenBuilder * builder = [TransferTokenBuilder alloc];
+    return [builder init:self lifetimeAmount:amount currency:currency];
 }
 
-- (Token *)createAccessToken:(AccessTokenConfig *)accessTokenConfig {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createAccessToken:accessTokenConfig
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
-    }];
+- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError {
+    [accessTokenConfig from:self.id];
+    [client createAccessToken:[accessTokenConfig toTokenPayload]
+                    onSuccess:^(Token *token) { onSuccess(token); }
+                      onError:onError];
 }
 
-- (TokenOperationResult *)replaceAccessToken:(Token *)tokenToCancel
-                           accessTokenConfig:(AccessTokenConfig *)accessTokenConfig {
-    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async replaceAccessToken:tokenToCancel
-                     accessTokenConfig:accessTokenConfig
-                             onSuccess:call.onSuccess
-                               onError:call.onError];
-    }];
+- (void)replaceAccessToken:(Token *)tokenToCancel
+         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                 onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                   onError:(OnError)onError {
+    [accessTokenConfig from:self.id];
+    [client replaceToken:tokenToCancel
+           tokenToCreate:[accessTokenConfig toTokenPayload]
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
-- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig {
-    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async replaceAndEndorseAccessToken:tokenToCancel
-                               accessTokenConfig:accessTokenConfig
-                                       onSuccess:call.onSuccess
-                                         onError:call.onError];
-    }];
+- (void)replaceAndEndorseAccessToken:(Token *)tokenToCancel
+                   accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+                           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+                             onError:(OnError)onError {
+    [accessTokenConfig from:self.id];
+    [client replaceAndEndorseToken:tokenToCancel
+                     tokenToCreate:[accessTokenConfig toTokenPayload]
+                         onSuccess:onSuccess
+                           onError:onError];
 }
 
-- (Token *)getToken:(NSString *)tokenId {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getToken:tokenId
-                   onSuccess:call.onSuccess
-                     onError:call.onError];
-    }];
+- (void)getToken:(NSString *)tokenId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError {
+    [client getToken:tokenId
+           onSuccess:onSuccess
+             onError:onError];
 }
 
-- (PagedArray<Token *> *)getTransferTokensOffset:(NSString *)offset
-                                           limit:(int)limit {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransferTokensOffset:offset
-                                      limit:limit
-                                  onSuccess:call.onSuccess
-                                    onError:call.onError];
-    }];
+- (void)getTransferTokensOffset:(NSString *)offset
+                          limit:(int)limit
+                      onSuccess:(OnSuccessWithTokens)onSuccess
+                        onError:(OnError)onError {
+    [client getTokensOfType:GetTokensRequest_Type_Transfer
+                     offset:offset
+                      limit:limit
+                  onSuccess:onSuccess
+                    onError:onError];
 }
 
-- (PagedArray<Token *> *)getAccessTokensOffset:(NSString *)offset
-                                         limit:(int)limit {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getAccessTokensOffset:offset
-                                    limit:limit
-                                onSuccess:call.onSuccess
-                                  onError:call.onError];
-    }];
+- (void)getAccessTokensOffset:(NSString *)offset
+                        limit:(int)limit
+                    onSuccess:(OnSuccessWithTokens)onSuccess
+                      onError:(OnError)onError {
+    [client getTokensOfType:GetTokensRequest_Type_Access
+                     offset:offset
+                      limit:limit
+                  onSuccess:onSuccess
+                    onError:onError];
 }
 
-- (TokenOperationResult *)endorseToken:(Token *)token withKey:(Key_Level)keyLevel {
-    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async endorseToken:token
-                         withKey:keyLevel
-                       onSuccess:call.onSuccess
-                         onError:call.onError];
-    }];
+- (void)endorseToken:(Token *)token
+             withKey:(Key_Level)keyLevel
+           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+             onError:(OnError)onError {
+    [client endorseToken:token
+                 withKey:keyLevel
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
-- (TokenOperationResult *)cancelToken:(Token *)token {
-    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async cancelToken:token
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
-    }];
+- (void)cancelToken:(Token *)token
+          onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
+            onError:(OnError)onError {
+    [client cancelToken:token
+              onSuccess:onSuccess
+                onError:onError];
 }
 
-- (Transfer *)redeemToken:(Token *)token {
-    return [self redeemToken:token
-                         amount:nil
-                       currency:nil
-                    description:nil];
+- (void)redeemToken:(Token *)token
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError {
+    [self redeemToken:token
+                  amount:nil
+                currency:nil
+             description:nil
+             destination:nil
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
-- (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
-                    currency:(NSString *)currency
-                 description:(NSString *)description {
-    TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async redeemToken:token
-                            amount:amount
-                          currency:currency
-                       description:description
-                       destination:nil
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
-    }];
+- (void)redeemToken:(Token *)token
+                amount:(NSNumber *)amount
+              currency:(NSString *)currency
+           description:(NSString *)description
+           destination:(TransferEndpoint *)destination
+             onSuccess:(OnSuccessWithTransfer)onSuccess
+               onError:(OnError)onError {
+    TransferPayload *payload = [TransferPayload message];
+    payload.tokenId = token.id_p;
+    payload.refId = [TKUtil nonce];
+    
+    if (amount) {
+        payload.amount.value = [amount stringValue];
+    }
+    if (currency) {
+        payload.amount.currency = currency;
+    }
+    if (description) {
+        payload.description_p = description;
+    }
+    if (destination) {
+        [payload.destinationsArray addObject:destination];
+    }
+    
+    [client redeemToken:payload
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
-                    currency:(NSString *)currency
-                 description:(NSString *)description
-                 destination:(TransferEndpoint *)destination {
-    TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async redeemToken:token
-                            amount:amount
-                          currency:currency
-                       description:description
-                       destination:destination
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
-    }];
+- (void)getTransaction:(NSString *)transactionId
+            forAccount:(NSString *)accountId
+             onSuccess:(OnSuccessWithTransaction)onSuccess
+               onError:(OnError)onError {
+    [client getTransaction:transactionId
+                forAccount:accountId
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-
-- (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId {
-    TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransaction:transactionId
-                        forAccount:accountId
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
-    }];
+- (void)getTransactionsOffset:(NSString *)offset
+                        limit:(int)limit
+                   forAccount:(NSString *)accountId
+                    onSuccess:(OnSuccessWithTransactions)onSuccess
+                      onError:(OnError)onError {
+   [client getTransactionsOffset:offset
+                           limit:limit
+                      forAccount:accountId
+                       onSuccess:onSuccess
+                         onError:onError];
 }
 
-- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                               limit:(int)limit
-                                          forAccount:(NSString *)accountId {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTransactionsOffset:offset
-                                    limit:limit
-                               forAccount:accountId
-                                onSuccess:call.onSuccess
-                                  onError:call.onError];
-    }];
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData * )data
+         onSuccess:(OnSuccessWithAttachment)onSuccess
+           onError:(OnError)onError {
+    [client createBlob:ownerId
+              withType:type
+              withName:name
+              withData:data
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (Attachment *)createBlob:(NSString *)ownerId
-                  withType:(NSString *)type
-                  withName:(NSString *)name
-                  withData:(NSData * )data {
-    TKRpcSyncCall<Attachment *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async createBlob:ownerId
-                      withType:type
-                      withName:name
-                      withData:data
-                     onSuccess:call.onSuccess
-                       onError:call.onError];
-    }];
+- (void)getBlob:(NSString *)blobId
+         onSuccess:(OnSuccessWithBlob)onSuccess
+           onError:(OnError)onError {
+    [client getBlob:blobId
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (Blob *)getBlob:(NSString *)blobId {
-    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getBlob:blobId
-                  onSuccess:call.onSuccess
-                    onError:call.onError];
-    }];
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError {
+    [client getTokenBlob:tokenId
+              withBlobId:blobId
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
-- (Blob *)getTokenBlob:(NSString *)tokenId
-            withBlobId:(NSString *)blobId {
-    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getTokenBlob:tokenId
-                      withBlobId:blobId
-                       onSuccess:call.onSuccess
-                         onError:call.onError];
-    }];
+- (void)getBalance:(NSString *)accountId
+             onSuccess:(OnSuccessWithMoney)onSuccess
+               onError:(OnError)onError {
+    [client getBalance:accountId
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
-- (Money *)getBalance:(NSString *)accountId {
-    TKRpcSyncCall<Money *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getBalance:accountId
-                     onSuccess:call.onSuccess
-                       onError:call.onError];
-    }];
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
+    [client getBanks:onSuccess
+             onError:onError];
 }
 
-- (NSArray<Bank *> *)getBanks {
-    TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getBanks:call.onSuccess
-                     onError:call.onError];
-    }];
-
+- (void)getBankInfo:(NSString *)bankId
+          onSuccess:(OnSuccessWithBankInfo)onSuccess
+            onError:(OnError)onError {
+    [client getBankInfo:bankId
+              onSuccess:onSuccess
+                onError:onError];
 }
 
-- (BankInfo *)getBankInfo:(NSString *)bankId {
-    TKRpcSyncCall<BankInfo *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getBankInfo:bankId
-                      onSuccess:call.onSuccess
-                        onError:call.onError];
-    }];
-
+- (void)getProfile:(NSString *)ownerId
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    [client getProfile:ownerId
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (Profile *)getProfile:(NSString *)ownerId{
-    TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getProfile:ownerId
-                     onSuccess:call.onSuccess
-                       onError:call.onError];
-    }];
+- (void)setProfile:(Profile *)profile
+         onSuccess:(OnSuccessWithProfile)onSuccess
+           onError:(OnError)onError {
+    [client setProfile:profile
+             onSuccess:onSuccess
+               onError:onError];
 }
 
-- (Profile *)setProfile:(Profile *)profile{
-    TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async setProfile:profile
-                     onSuccess:call.onSuccess
-                       onError:call.onError];
-    }];
-}
-
-- (Blob *)getProfilePicture:(NSString *)ownerId
-                       size:(ProfilePictureSize) size {
-    TKRpcSyncCall<Blob *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getProfilePicture:ownerId
-                                 size:size
-                            onSuccess:call.onSuccess
-                              onError:call.onError];
-    }];
+- (void)getProfilePicture:(NSString *)ownerId
+                     size:(ProfilePictureSize)size
+                onSuccess:(OnSuccessWithBlob)onSuccess
+                  onError:(OnError)onError {
+    [client getProfilePicture:ownerId
+                         size:size
+                    onSuccess:onSuccess
+                      onError:onError];
 }
 
 - (void)setProfilePicture:(NSString *)ownerId
                  withType:(NSString *)type
                  withName:(NSString *)name
-                 withData:(NSData *)data {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async setProfilePicture:ownerId
-                             withType:type
-                             withName:name
-                             withData:data
-                            onSuccess:^{ call.onSuccess(nil); }
-                              onError:call.onError];
-         
-    }];
+                 withData:(NSData *)data
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    [client setProfilePicture:ownerId
+                     withType:type
+                     withName:name
+                     withData:data
+                    onSuccess:onSuccess
+                      onError:onError];
 }
-
 #pragma mark private
 
-- (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {
-    NSMutableArray<TKAccountSync *> *syncAccounts = [NSMutableArray array];
-    for (TKAccount *asyncAccount in asyncAccounts) {
-        TKAccountSync* syncAccount = [TKAccountSync account:asyncAccount];
-        [syncAccounts addObject:syncAccount];
+- (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {
+    NSMutableArray<TKAccount *> *result = [NSMutableArray array];
+    for (Account *a in accounts) {
+        TKAccount *tkAccount = [self _mapAccount:a];
+        [result addObject:tkAccount];
     }
-    return syncAccounts;
+    return result;
+}
+
+- (TKAccount *)_mapAccount:(Account *)account {
+    TKMemberSync *memberSync = [TKMemberSync member:self];
+    return [TKAccount account:account of:memberSync useClient:client];
 }
 
 @end

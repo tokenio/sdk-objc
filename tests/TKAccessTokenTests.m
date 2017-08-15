@@ -8,7 +8,7 @@
 
 #import "AccessTokenConfig.h"
 #import "TKAccountSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Address.pbobjc.h"
@@ -23,8 +23,8 @@
 @end
 
 @implementation TKAccessTokenTests {
-    TKMember *grantor;
-    TKMember *grantee;
+    TKMemberSync *grantor;
+    TKMemberSync *grantee;
     Token *token;
 }
 
@@ -97,7 +97,7 @@
 - (void)testReplaceTokenLarge {
     [self run: ^(TokenIOSync *tokenIO){
         TKAccountSync *account = [self createAccount:tokenIO];
-        TKMember *grantor2 = account.member;
+        TKMemberSync *grantor2 = account.member;
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         Address *payload1 = [Address message];
         Address *payload2 = [Address message];

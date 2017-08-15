@@ -2,7 +2,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Bankinfo.pbobjc.h"
@@ -11,7 +11,7 @@
 @end
 
 @implementation TKBankInfoTests {
-    TKMember *member;
+    TKMemberSync *member;
 }
 
 - (void)setUp {

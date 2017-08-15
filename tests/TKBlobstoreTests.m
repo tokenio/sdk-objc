@@ -4,7 +4,7 @@
 //
 
 #import "TKAccountSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Money.pbobjc.h"
@@ -18,9 +18,9 @@
 
 @implementation TKBlobstoreTests {
     TKAccountSync *payerAccount;
-    TKMember *payer;
+    TKMemberSync *payer;
     TKAccountSync *payeeAccount;
-    TKMember *payee;
+    TKMemberSync *payee;
 }
 
 -(NSData*)randomData:(int)capacity {

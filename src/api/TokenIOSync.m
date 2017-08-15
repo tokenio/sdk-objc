@@ -5,12 +5,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
 #import "TokenIO.h"
 #import "TKRpcSyncCall.h"
-#import "TKMemberAsync.h"
+#import "TKMember.h"
 #import "DeviceInfo.h"
 
 
@@ -28,11 +28,14 @@
     return self;
 }
 
-- (TKMember *)createMember:(Alias *)alias {
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+- (TKMemberSync *)createMember:(Alias *)alias {
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createMember:alias
-                        onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
+                        onSucess:^(TKMember *member) {
+                            TKMemberSync* memberSync = [TKMemberSync member:member];
+                            call.onSuccess(memberSync);
+                        }
                          onError:call.onError];
     }];
 }
@@ -69,12 +72,15 @@
 }
 
 
-- (TKMember *)loginMember:(NSString *)memberId {
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+- (TKMemberSync *)loginMember:(NSString *)memberId {
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async
                 loginMember:memberId
-                   onSucess:^(TKMemberAsync *member) { call.onSuccess(member.sync); }
+                   onSucess:^(TKMember *member) {
+                       TKMemberSync* memberSync = [TKMemberSync member:member];
+                       call.onSuccess(memberSync);
+                   }
                     onError:call.onError
         ];
     }];
@@ -82,7 +88,7 @@
 
 - (void)notifyPaymentRequest:(Alias *)alias
                        token:(TokenPayload *)token {
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyPaymentRequest:alias
                                    token:token
@@ -94,7 +100,7 @@
 
 - (void)notifyLinkAccounts:(Alias *)alias
              authorization:(BankAuthorization *)authorization{
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccounts:alias
                          authorization:authorization
@@ -107,7 +113,7 @@
 - (void)notifyAddKey:(Alias *)alias
              keyName:(NSString *)keyName
                  key:(Key *)key {
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyAddKey:alias
                          keyName:keyName
@@ -123,7 +129,7 @@
                       authorization:(BankAuthorization *)authorization
                             keyName:(NSString *)keyName
                                 key:(Key *)key {
-    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyLinkAccountsAndAddKey:alias
                                   authorization:authorization

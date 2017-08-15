@@ -11,14 +11,14 @@
 #import "TKTestBase.h"
 #import "TKUtil.h"
 #import "TokenIOSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 
 @interface TKProfileTests : TKTestBase
 
 @end
 
 @implementation TKProfileTests {
-    TKMember* member;
+    TKMemberSync *member;
 }
 
 - (void)setUp {

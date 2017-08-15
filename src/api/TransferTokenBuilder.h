@@ -13,7 +13,7 @@
 
 @interface TransferTokenBuilder : NSObject
 
-@property (readwrite) TKMemberAsync *member;
+@property (readwrite) TKMember *member;
 @property (readwrite) NSString *fromMemberId;
 @property (readwrite) NSString *currency;
 @property (readwrite) double lifetimeAmount;
@@ -41,7 +41,7 @@
  * @param currency the currency of the token
  * @return transfer token builder
  */
-- (id)init:(TKMemberAsync *)member
+- (id)init:(TKMember *)member
     lifetimeAmount:(double)lifetimeAmount
           currency:(NSString*)currency;
 

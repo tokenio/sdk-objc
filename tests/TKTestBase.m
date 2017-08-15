@@ -11,7 +11,7 @@
 #import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
 #import "TKBankClient.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKAccountSync.h"
 #import "TKTestKeyStore.h"
 
@@ -95,12 +95,12 @@
     return result;
 }
 
-- (TKMember *)createMember:(TokenIOSync *)token {
+- (TKMemberSync *)createMember:(TokenIOSync *)token {
     return [token createMember:[self generateAlias]];
 }
 
 - (TKAccountSync *)createAccount:(TokenIOSync *)token {
-    TKMember *member = [self createMember:token];
+    TKMemberSync *member = [self createMember:token];
 
     NSString *firstName = @"Test";
     NSString *lastName = @"Testoff";

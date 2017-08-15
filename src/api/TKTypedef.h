@@ -9,7 +9,7 @@
 @class TokenOperationResult;
 @class Transaction;
 @class Transfer;
-@class TKMemberAsync;
+@class TKMember;
 @class TKAccount;
 @class AddressRecord;
 @class BankAuthorization;
@@ -31,7 +31,7 @@ typedef void (^ _Nonnull OnSuccessWithBoolean)(BOOL);
 typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
-typedef void (^ _Nonnull OnSuccessWithTKMemberAsync)(TKMemberAsync * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKMember)(TKMember * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAccounts)(NSArray<Account *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKAccounts)(NSArray<TKAccount *> * _Nonnull);

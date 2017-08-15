@@ -7,7 +7,7 @@
 //
 
 #import "TKAccountSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Address.pbobjc.h"
@@ -22,8 +22,8 @@
 
 @implementation TKAccessRedemptionTests {
     TKAccountSync *grantorAccount;
-    TKMember *grantor;
-    TKMember *grantee;
+    TKMemberSync *grantor;
+    TKMemberSync *grantee;
 }
 
 - (void)setUp {
@@ -131,7 +131,7 @@
 - (void)testAnyAccountTransactionsToken {
     [self run: ^(TokenIOSync *tokenIO) {
         TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
-        TKMember *redeemer = redeemerAccount.member;
+        TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11
@@ -165,7 +165,7 @@
 - (void)testTransactionsToken {
     [self run: ^(TokenIOSync *tokenIO) {
         TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
-        TKMember *redeemer = redeemerAccount.member;
+        TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11

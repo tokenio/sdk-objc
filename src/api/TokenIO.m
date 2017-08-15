@@ -8,7 +8,7 @@
 #import <GRPCClient/GRPCCall+Tests.h>
 
 #import "gateway/Gateway.pbrpc.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
 #import "TKUnauthenticatedClient.h"
@@ -56,7 +56,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMemberAsync)onSuccess
+            onSucess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
@@ -120,7 +120,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMemberAsync)onSuccess
+           onSucess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
     TKUnauthenticatedClient *unauthenticatedClient = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
@@ -134,7 +134,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                                           timeoutMs:timeoutMs
                                                                            memberId:memberId
                                                                        errorHandler:errorHandler];
-                               onSuccess([TKMemberAsync member:member useClient:client]);
+                               onSuccess([TKMember member:member useClient:client]);
                            }
                              onError:onError];
 }
@@ -214,7 +214,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)_addKeysAndAlias:(TKUnauthenticatedClient *)client
                    memberId:(NSString *)memberId
                    alias:(Alias *)alias
-                  onSuccess:(void (^)(TKMemberAsync *))onSuccess
+                  onSuccess:(void (^)(TKMember *))onSuccess
                     onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
@@ -240,7 +240,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                  timeoutMs:timeoutMs
                                   memberId:memberId
                               errorHandler:errorHandler];
-                   onSuccess([TKMemberAsync
+                   onSuccess([TKMember
                            member:member
                         useClient:newClient]);
                }

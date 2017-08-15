@@ -16,7 +16,7 @@
 - (void)testCreateMember {
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [tokenIO createMember:alias];
+        TKMemberSync *member = [tokenIO createMember:alias];
         XCTAssert(member.id.length > 0);
         XCTAssertEqualObjects(member.firstAlias, alias);
         XCTAssertEqual(member.keys.count, 3);
@@ -25,7 +25,7 @@
 
 - (void)testProvisionNewDevice {
     // Create a member.
-    TKMember *member = [self runWithResult:^TKMember *(TokenIOSync *tokenIO) {
+    TKMemberSync *member = [self runWithResult:^TKMemberSync *(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         return [tokenIO createMember:alias];
     }];
@@ -36,7 +36,7 @@
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstAlias];
         [member approveKeys:newDevice.keys];
 
-        TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
+        TKMemberSync *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstAlias, memberNewDevice.firstAlias);
         XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
     }];
@@ -44,8 +44,8 @@
 
 - (void)testLoginMember {
     [self run: ^(TokenIOSync *tokenIO) {
-        TKMember *created = [self createMember:tokenIO];
-        TKMember *loggedIn = [tokenIO loginMember:created.id];
+        TKMemberSync *created = [self createMember:tokenIO];
+        TKMemberSync *loggedIn = [tokenIO loginMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
         XCTAssertEqual(loggedIn.keys.count, 3);
         XCTAssertEqualObjects(created.firstAlias, loggedIn.firstAlias);
@@ -55,7 +55,7 @@
 - (void)testAliasExists {
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         
         XCTAssertEqual([tokenIO aliasExists:alias], NO);
         [member addAlias:alias];
@@ -66,7 +66,7 @@
 - (void)testGetMemberID {
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         
         XCTAssertNil([tokenIO getMemberId:alias]);
         [member addAlias:alias];
@@ -79,7 +79,7 @@
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAlias:alias2];
         [member addAlias:alias3];
 
@@ -92,7 +92,7 @@
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
 
         XCTAssertEqual(member.aliases.count, 3);
@@ -103,7 +103,7 @@
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAlias:alias2];
         XCTAssertEqual(member.aliases.count, 2);
 
@@ -117,7 +117,7 @@
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
         XCTAssertEqual(member.aliases.count, 3);
 

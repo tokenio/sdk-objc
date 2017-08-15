@@ -4,7 +4,7 @@
 //
 
 #import "TKAccountSync.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "Account.pbobjc.h"
 #import "TokenIOSync.h"
@@ -18,11 +18,11 @@
 
 @implementation TKNotificationsTests {
     TKAccountSync *payerAccount;
-    TKMember *payer;
-    TKMember *payerAnotherDevice;
+    TKMemberSync *payer;
+    TKMemberSync *payerAnotherDevice;
 
     TKAccountSync *payeeAccount;
-    TKMember *payee;
+    TKMemberSync *payee;
     NSMutableDictionary * instructions;
 }
 
@@ -247,7 +247,7 @@ void check(NSString *message, BOOL condition) {
  * @param member user to check notifications for
  */
 - (void)waitForNotification:(NSString *)type
-                     member:(TKMember *)member {
+                     member:(TKMemberSync *)member {
     [self waitUntil:^{
         PagedArray<Notification *> *notifications = [member getNotificationsOffset:nil limit:100];
         check(@"Notification count", notifications.items.count == 1);

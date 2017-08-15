@@ -9,7 +9,7 @@
 #import "PagedArray.h"
 
 
-@class TKMember;
+@class TKMemberSync;
 @class TKAccount;
 @class Transaction;
 
@@ -24,7 +24,7 @@
 @interface TKAccountSync : NSObject
 
 @property (atomic, readonly) TKAccount *async;
-@property (atomic, readonly) TKMember *member;
+@property (atomic, readonly) TKMemberSync *member;
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSString *name;
 @property (atomic, readonly) NSString *bankId;

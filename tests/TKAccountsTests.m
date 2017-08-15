@@ -7,7 +7,7 @@
 
 #import "TKAccountSync.h"
 #import "TKJson.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "TKBankClient.h"
@@ -19,7 +19,7 @@
 @end
 
 @implementation TKAccountsTests {
-    TKMember *member;
+    TKMemberSync *member;
     FankClient *fankClient;
     NSArray<TKAccountSync *> *accounts;
     NSString *bankId;

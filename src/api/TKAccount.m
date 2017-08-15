@@ -6,7 +6,7 @@
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKClient.h"
 #import "TKAccount.h"
 #import "TKAccountSync.h"
@@ -17,11 +17,11 @@
     TKClient *client;
 }
 
-+ (TKAccount *)account:(Account *)account of:(TKMember *)member useClient:(TKClient *)client {
++ (TKAccount *)account:(Account *)account of:(TKMemberSync *)member useClient:(TKClient *)client {
     return [[TKAccount alloc] initWithAccount:account of:member useClient:client];
 }
 
-- (id)initWithAccount:(Account *)account_ of:(TKMember *)member useClient:(TKClient *)client_ {
+- (id)initWithAccount:(Account *)account_ of:(TKMemberSync *)member useClient:(TKClient *)client_ {
     self = [super init];
 
     if (self) {

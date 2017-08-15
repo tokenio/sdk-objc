@@ -1,6 +1,6 @@
 
 #import "TKJson.h"
-#import "TKMember.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Address.pbobjc.h"
@@ -11,7 +11,7 @@
 @end
 
 @implementation TKAddressTests {
-    TKMember *member;
+    TKMemberSync *member;
 }
 
 - (void)setUp {
