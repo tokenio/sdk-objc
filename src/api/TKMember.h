@@ -11,6 +11,9 @@
 #import "Banklink.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Blob.pbobjc.h"
+#import "Address.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "TransferTokenBuilder.h"
 
 
 
