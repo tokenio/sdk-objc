@@ -37,6 +37,7 @@ message TokenSignature {
 message TokenMember {
   string id = 1;
   string username = 2;
+  // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
   io.token.proto.common.alias.Alias alias = 3;
 }
 

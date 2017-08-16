@@ -152,13 +152,20 @@
     __strong typeof(member) retainedMember = member;
 
     NSMutableArray<MemberOperation *> *addAliasOps = [NSMutableArray array];
+    NSMutableArray<MemberOperationMetadata *> *metadataArray = [NSMutableArray array];
     for (Alias *alias in toAddAliases) {
         MemberOperation *addAlias = [MemberOperation message];
         addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
         [addAliasOps addObject:addAlias];
+        
+        MemberOperationMetadata *metadata = [MemberOperationMetadata message];
+        metadata.addAliasMetadata.alias = alias;
+        metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:alias];
+        [metadataArray addObject:metadata];
     }
     [client updateMember:retainedMember
               operations:[addAliasOps copy]
+           metadataArray:metadataArray
                onSuccess:^(Member *m) {
                    [aliases addObjectsFromArray:toAddAliases];
                    [retainedMember clear];

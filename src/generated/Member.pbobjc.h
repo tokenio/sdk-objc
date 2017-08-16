@@ -28,10 +28,12 @@
 CF_EXTERN_C_BEGIN
 
 @class Address;
+@class Alias;
 @class Key;
 @class MemberAddKeyOperation;
 @class MemberAliasOperation;
 @class MemberOperation;
+@class MemberOperationMetadata_AddAliasMetadata;
 @class MemberRemoveKeyOperation;
 @class MemberUsernameOperation;
 @class Signature;
@@ -202,6 +204,51 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MemberOperation*> *operationsArray;
 /** The number of items in @c operationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger operationsArray_Count;
+
+@end
+
+#pragma mark - MemberOperationMetadata
+
+typedef GPB_ENUM(MemberOperationMetadata_FieldNumber) {
+  MemberOperationMetadata_FieldNumber_AddAliasMetadata = 1,
+};
+
+typedef GPB_ENUM(MemberOperationMetadata_Type_OneOfCase) {
+  MemberOperationMetadata_Type_OneOfCase_GPBUnsetOneOfCase = 0,
+  MemberOperationMetadata_Type_OneOfCase_AddAliasMetadata = 1,
+};
+
+/**
+ * Metadata associated with MemberUpdate.
+ * It is outside of MemberUpdate because MemberUpdate is signed and passed to the Directory.
+ **/
+@interface MemberOperationMetadata : GPBMessage
+
+@property(nonatomic, readonly) MemberOperationMetadata_Type_OneOfCase typeOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberOperationMetadata_AddAliasMetadata *addAliasMetadata;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'type'.
+ **/
+void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message);
+
+#pragma mark - MemberOperationMetadata_AddAliasMetadata
+
+typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
+  MemberOperationMetadata_AddAliasMetadata_FieldNumber_AliasHash = 1,
+  MemberOperationMetadata_AddAliasMetadata_FieldNumber_Alias = 2,
+};
+
+@interface MemberOperationMetadata_AddAliasMetadata : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @end
 

@@ -4,6 +4,7 @@ package io.token.proto.common.member;
 option java_outer_classname = "MemberProtos";
 
 import "address.proto";
+import "alias.proto";
 import "security.proto";
 
 // Adds member key to the directory.
@@ -44,6 +45,19 @@ message MemberUpdate {
   string prev_hash = 1;
   string member_id = 2;
   repeated MemberOperation operations = 3;
+}
+
+// Metadata associated with MemberUpdate.
+// It is outside of MemberUpdate because MemberUpdate is signed and passed to the Directory.
+message MemberOperationMetadata {
+  oneof type {
+    AddAliasMetadata add_alias_metadata = 1;
+  }
+
+  message AddAliasMetadata {
+    string alias_hash = 1;
+    io.token.proto.common.alias.Alias alias = 2;
+  }
 }
 
 // A member record that is computed by replaying all the member updates.

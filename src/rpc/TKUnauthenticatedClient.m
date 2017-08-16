@@ -100,13 +100,28 @@
 }
 
 - (void)createMember:(NSString *)memberId
-                  crypto:(TKCrypto *)crypto
+              crypto:(TKCrypto *)crypto
           operations:(NSArray<MemberOperation *> *)operations
-               onSuccess:(OnSuccessWithMember)onSuccess
-                 onError:(OnError)onError {
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError {
+    [self createMember:memberId
+                crypto:crypto
+            operations:operations
+             metadataArray:[NSArray array]
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)createMember:(NSString *)memberId
+              crypto:(TKCrypto *)crypto
+          operations:(NSArray<MemberOperation *> *)operations
+           metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
+    request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
 
     TKSignature *signature = [crypto sign:request.update
                                  usingKey:Key_Level_Privileged

@@ -242,6 +242,7 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
+/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
