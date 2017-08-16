@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 
 #import "TransferTokenBuilder.h"
+#import "TokenIOSync.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
 #import "TKClient.h"
-#import "TKMemberAsync.h"
+#import "TKMember.h"
 #import "Transferinstructions.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "TKRpcSyncCall.h"
 
 @implementation TransferTokenBuilder
 
-- (id)init:(TKMemberAsync *)member
+- (id)init:(TKMember *)member
     lifetimeAmount:(double)lifetimeAmount
           currency:(NSString*)currency {
     

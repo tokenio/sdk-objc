@@ -10,13 +10,13 @@
 #define TokenSdk_h
 
 
+#import "TKAccountSync.h"
 #import "TKAccount.h"
-#import "TKAccountAsync.h"
+#import "TKMemberSync.h"
 #import "TKMember.h"
-#import "TKMemberAsync.h"
 #import "TKTypedef.h"
+#import "TokenIOSync.h"
 #import "TokenIO.h"
-#import "TokenIOAsync.h"
 #import "TokenIOBuilder.h"
 
 

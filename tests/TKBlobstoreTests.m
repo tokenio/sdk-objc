@@ -3,10 +3,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Money.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
@@ -17,10 +17,10 @@
 @end
 
 @implementation TKBlobstoreTests {
-    TKAccount *payerAccount;
-    TKMember *payer;
-    TKAccount *payeeAccount;
-    TKMember *payee;
+    TKAccountSync *payerAccount;
+    TKMemberSync *payer;
+    TKAccountSync *payeeAccount;
+    TKMemberSync *payee;
 }
 
 -(NSData*)randomData:(int)capacity {
@@ -36,7 +36,7 @@
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
@@ -45,7 +45,7 @@
 }
 
 - (void)testBlobs {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSData *data = [self randomData:100];
         Attachment *attachment = [payer createBlob:payer.id
                                           withType:@"application/json"
@@ -66,7 +66,7 @@
 }
 
 - (void)testTokenBlobs {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSData *data = [self randomData:200];
         Attachment *attachment = [payer createBlob:payer.id
                                           withType:@"application/json"

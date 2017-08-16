@@ -6,10 +6,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
@@ -21,15 +21,15 @@
 @end
 
 @implementation TKAccessRedemptionTests {
-    TKAccount *grantorAccount;
-    TKMember *grantor;
-    TKMember *grantee;
+    TKAccountSync *grantorAccount;
+    TKMemberSync *grantor;
+    TKMemberSync *grantee;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         grantorAccount = [self createAccount:tokenIO];
         grantor = [grantorAccount member];
         grantee = [self createMember:tokenIO];
@@ -37,7 +37,7 @@
 }
 
 - (void)testAnyAddressToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
@@ -55,7 +55,7 @@
 }
 
 - (void)testAddressToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Address *payload = [Address message];
         AddressRecord *address = [grantor addAddress:payload withName:@"name"];
         
@@ -73,7 +73,7 @@
 }
 
 - (void)testAnyBalanceToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllBalances];
         Token *token = [grantor createAccessToken:access];
@@ -87,7 +87,7 @@
 }
 
 - (void)testBalanceToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAccountBalances:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
@@ -101,7 +101,7 @@
 }
 
 - (void)testAnyAccountToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         [access forAllAccounts];
         Token *token = [grantor createAccessToken:access];
@@ -109,13 +109,13 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+        TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
     }];
 }
 
 - (void)testAccountToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAccount:grantorAccount.id];
         Token *token = [grantor createAccessToken:access];
@@ -123,15 +123,15 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        TKAccount *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+        TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
         XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
     }];
 }
 
 - (void)testAnyAccountTransactionsToken {
-    [self run: ^(TokenIO *tokenIO) {
-        TKAccount *redeemerAccount = [self createAccount:tokenIO];
-        TKMember *redeemer = redeemerAccount.member;
+    [self run: ^(TokenIOSync *tokenIO) {
+        TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
+        TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11
@@ -163,9 +163,9 @@
 }
 
 - (void)testTransactionsToken {
-    [self run: ^(TokenIO *tokenIO) {
-        TKAccount *redeemerAccount = [self createAccount:tokenIO];
-        TKMember *redeemer = redeemerAccount.member;
+    [self run: ^(TokenIOSync *tokenIO) {
+        TKAccountSync *redeemerAccount = [self createAccount:tokenIO];
+        TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
         TransferTokenBuilder *builder = [grantor createTransferToken:100.11

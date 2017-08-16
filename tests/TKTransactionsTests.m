@@ -4,10 +4,10 @@
 //
 
 #import "Transaction.pbobjc.h"
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Transfer.pbobjc.h"
@@ -19,16 +19,16 @@
 @end
 
 @implementation TKTransactionsTests {
-    TKAccount *payerAccount;
-    TKMember *payer;
-    TKAccount *payeeAccount;
-    TKMember *payee;
+    TKAccountSync *payerAccount;
+    TKMemberSync *payer;
+    TKAccountSync *payeeAccount;
+    TKMemberSync *payee;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
@@ -37,7 +37,7 @@
 }
 
 - (void)testLookupBalance {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Money *balance = [payerAccount getBalance];
         XCTAssert(balance.value > 0);
         XCTAssertEqualObjects(@"USD", balance.currency);
@@ -45,7 +45,7 @@
 }
 
 - (void)testLookupTransaction {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -73,7 +73,7 @@
 }
 
 - (void)testLookupTransactions {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:49.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;

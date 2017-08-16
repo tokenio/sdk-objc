@@ -7,15 +7,15 @@
 
 #import <XCTest/XCTest.h>
 
-@class TokenIO;
+@class TokenIOSync;
 @class BankAuthorization;
-@class TKMember;
-@class TKAccount;
+@class TKMemberSync;
+@class TKAccountSync;
 @class TKBankClient;
 @class HostAndPort;
 
-typedef void (^AsyncTestBlock)(TokenIO *);
-typedef id (^AsyncTestBlockWithResult)(TokenIO *);
+typedef void (^AsyncTestBlock)(TokenIOSync *);
+typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 
 /**
  * Base class for the integration tests. The derived classes invoke run method
@@ -52,7 +52,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @param tokenIO an entry point for Token API
  * @return a member
  */
-- (TKMember *)createMember:(TokenIO *)tokenIO;
+- (TKMemberSync *)createMember:(TokenIOSync *)tokenIO;
 
 /**
  * Creates a new member/account.
@@ -60,7 +60,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @param tokenIO an entry point for Token API
  * @return an account
  */
-- (TKAccount *)createAccount:(TokenIO *)tokenIO;
+- (TKAccountSync *)createAccount:(TokenIOSync *)tokenIO;
 
 /**
  * Creates a new bank authorization for a member
@@ -69,7 +69,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIO *);
  * @param memberId member ID
  * @return a bank authorization
  */
-- (BankAuthorization *)createBankAuthorization:(TokenIO *)tokenIO
+- (BankAuthorization *)createBankAuthorization:(TokenIOSync *)tokenIO
                                       memberId:(NSString *)memberId;
 
 /**

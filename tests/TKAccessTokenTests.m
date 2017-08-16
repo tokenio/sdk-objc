@@ -7,10 +7,10 @@
 //
 
 #import "AccessTokenConfig.h"
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
@@ -23,15 +23,15 @@
 @end
 
 @implementation TKAccessTokenTests {
-    TKMember *grantor;
-    TKMember *grantee;
+    TKMemberSync *grantor;
+    TKMemberSync *grantee;
     Token *token;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         grantor = [self createMember:tokenIO];
         grantee = [self createMember:tokenIO];
         Address *payload = [Address message];
@@ -44,20 +44,20 @@
 }
 
 - (void)testCreateToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
 }
 
 - (void)testLookupToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Token *lookedUp = [grantee getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
     }];
 }
 
 - (void)testLookupTokens {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         PagedArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
         XCTAssertEqual(lookedUp.items.count, 1);
         XCTAssertNotNil(lookedUp.offset);
@@ -65,7 +65,7 @@
 }
 
 - (void)testEndorseToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Token *endorsed = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
@@ -75,7 +75,7 @@
 }
 
 - (void)testCancelToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Token *cancelled = [[grantor cancelToken:token] token];
         
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
@@ -85,7 +85,7 @@
 }
 
 - (void)testReplaceToken {
-    [self run: ^(TokenIO *tokenIO){
+    [self run: ^(TokenIOSync *tokenIO){
         AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
         [access forAll];
         TokenOperationResult *replaced = [grantor replaceAccessToken:token accessTokenConfig:access];
@@ -95,9 +95,9 @@
 }
 
 - (void)testReplaceTokenLarge {
-    [self run: ^(TokenIO *tokenIO){
-        TKAccount *account = [self createAccount:tokenIO];
-        TKMember *grantor2 = account.member;
+    [self run: ^(TokenIOSync *tokenIO){
+        TKAccountSync *account = [self createAccount:tokenIO];
+        TKMemberSync *grantor2 = account.member;
         AccessTokenConfig *access = [AccessTokenConfig create:grantee.firstAlias];
         Address *payload1 = [Address message];
         Address *payload2 = [Address message];
@@ -151,7 +151,7 @@
 }
 
 - (void)testReplaceAndEndorseToken {
-    [self run: ^(TokenIO *tokenIO){
+    [self run: ^(TokenIOSync *tokenIO){
         AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
         [access forAll];
         TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:access];
@@ -162,7 +162,7 @@
 }
 
 - (void)testAddingPermissionsIdempotent {
-    [self run: ^(TokenIO *tokenIO){
+    [self run: ^(TokenIOSync *tokenIO){
         AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
         [access forAccount:grantee.id];
         [access forAccount:grantee.id];

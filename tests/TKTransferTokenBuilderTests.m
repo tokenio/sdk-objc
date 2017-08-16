@@ -3,10 +3,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Account.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "Pricing.pbobjc.h"
@@ -15,16 +15,16 @@
 @end
 
 @implementation TKTransferTokenBuilderTests {
-    TKMember *payer;
-    TKAccount *payerAccount;
-    TKMember *payee;
-    TKAccount *payeeAccount;
+    TKMemberSync *payer;
+    TKAccountSync *payerAccount;
+    TKMemberSync *payee;
+    TKAccountSync *payeeAccount;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
@@ -33,7 +33,7 @@
 }
 
 - (void)testCreate {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -44,7 +44,7 @@
 }
 
 - (void)testNoSource {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         
         destination.account.token.accountId = payeeAccount.id;
@@ -61,7 +61,7 @@
 }
 
 - (void)testNoRedeemer {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         
         destination.account.token.accountId = payeeAccount.id;
@@ -78,7 +78,7 @@
 }
 
 - (void)testFull {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         
         destination.account.token.accountId = payeeAccount.id;

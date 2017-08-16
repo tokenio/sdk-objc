@@ -3,10 +3,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Account.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -14,16 +14,16 @@
 @end
 
 @implementation TKTransferTokenTests {
-    TKMember *payer;
-    TKAccount *payerAccount;
-    TKMember *payee;
-    TKAccount *payeeAccount;
+    TKMemberSync *payer;
+    TKAccountSync *payerAccount;
+    TKMemberSync *payee;
+    TKAccountSync *payeeAccount;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
@@ -32,7 +32,7 @@
 }
 
 - (void)testCreateToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     
         destination.account.token.accountId = payeeAccount.id;
@@ -56,7 +56,7 @@
 }
 
 - (void)testCreateToken_invalidCurrency {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         
         destination.account.token.accountId = payeeAccount.id;
@@ -80,7 +80,7 @@
 }
 
 - (void)testLookupToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -92,7 +92,7 @@
 }
 
 - (void)testLookupTokens {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -118,7 +118,7 @@
 }
 
 - (void)testEndorseToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -139,7 +139,7 @@
 }
 
 - (void)testEndorseToken_Unicode {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         NSString *descr = @"e\u0301\U0001F30D\U0001F340🇧🇭👰🏿👩‍👩‍👧‍👧我"; // decomposed é, globe, leaf; real unicode symbols
 
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
@@ -162,7 +162,7 @@
 }
 
 - (void)testCancelToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;

@@ -4,13 +4,13 @@
 @class Blob;
 @class Attachment;
 @class Money;
-@class TKAccount;
+@class TKAccountSync;
 @class Token;
 @class TokenOperationResult;
 @class Transaction;
 @class Transfer;
-@class TKMemberAsync;
-@class TKAccountAsync;
+@class TKMember;
+@class TKAccount;
 @class AddressRecord;
 @class BankAuthorization;
 @class Subscriber;
@@ -31,13 +31,13 @@ typedef void (^ _Nonnull OnSuccessWithBoolean)(BOOL);
 typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
-typedef void (^ _Nonnull OnSuccessWithTKMemberAsync)(TKMemberAsync * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKMember)(TKMember * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAccounts)(NSArray<Account *> * _Nonnull);
-typedef void (^ _Nonnull OnSuccessWithTKAccountsAsync)(NSArray<TKAccountAsync *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKAccounts)(NSArray<TKAccount *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAccount)(Account * _Nonnull);
-typedef void (^ _Nonnull OnSuccessWithTKAccountAsync)(TKAccountAsync * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKAccount)(TKAccount * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithToken)(Token * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTokens)(PagedArray<Token *> * _Nonnull);

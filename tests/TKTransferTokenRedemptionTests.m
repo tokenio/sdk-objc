@@ -3,10 +3,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccount.h"
-#import "TKMember.h"
+#import "TKAccountSync.h"
+#import "TKMemberSync.h"
 #import "TKTestBase.h"
-#import "TokenIO.h"
+#import "TokenIOSync.h"
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Transaction.pbobjc.h"
@@ -18,16 +18,16 @@
 @end
 
 @implementation TKTransferTokenRedemptionTests {
-    TKAccount *payerAccount;
-    TKMember *payer;
-    TKAccount *payeeAccount;
-    TKMember *payee;
+    TKAccountSync *payerAccount;
+    TKMemberSync *payer;
+    TKAccountSync *payeeAccount;
+    TKMemberSync *payee;
 }
 
 - (void)setUp {
     [super setUp];
     
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         payerAccount = [self createAccount:tokenIO];
         payer = payerAccount.member;
         payeeAccount = [self createAccount:tokenIO];
@@ -36,7 +36,7 @@
 }
 
 - (void)testRedeemToken {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -64,7 +64,7 @@
 }
 
 - (void)testRedeemTokenBankAuthorization {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.bankAuthorization = [self createBankAuthorization:tokenIO memberId:payer.id];
@@ -95,7 +95,7 @@
 }
 
 - (void)testRedeemToken_withParams {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -126,7 +126,7 @@
 }
 
 - (void)testRedeemTokenDestination {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.accountId = payeeAccount.id;
         destination.account.token.memberId = payee.id;
@@ -157,7 +157,7 @@
 }
 
 - (void)testLookupTransfer {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.42
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
@@ -179,7 +179,7 @@
 }
 
 - (void)testLookupTransfers {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;

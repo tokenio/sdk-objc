@@ -14,9 +14,9 @@
 @implementation TKMemberRegistrationTests
 
 - (void)testCreateMember {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [tokenIO createMember:alias];
+        TKMemberSync *member = [tokenIO createMember:alias];
         XCTAssert(member.id.length > 0);
         XCTAssertEqualObjects(member.firstAlias, alias);
         XCTAssertEqual(member.keys.count, 3);
@@ -25,27 +25,27 @@
 
 - (void)testProvisionNewDevice {
     // Create a member.
-    TKMember *member = [self runWithResult:^TKMember *(TokenIO *tokenIO) {
+    TKMemberSync *member = [self runWithResult:^TKMemberSync *(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         return [tokenIO createMember:alias];
     }];
 
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstAlias];
         [member approveKeys:newDevice.keys];
 
-        TKMember *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
+        TKMemberSync *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstAlias, memberNewDevice.firstAlias);
         XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
     }];
 }
 
 - (void)testLoginMember {
-    [self run: ^(TokenIO *tokenIO) {
-        TKMember *created = [self createMember:tokenIO];
-        TKMember *loggedIn = [tokenIO loginMember:created.id];
+    [self run: ^(TokenIOSync *tokenIO) {
+        TKMemberSync *created = [self createMember:tokenIO];
+        TKMemberSync *loggedIn = [tokenIO loginMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
         XCTAssertEqual(loggedIn.keys.count, 3);
         XCTAssertEqualObjects(created.firstAlias, loggedIn.firstAlias);
@@ -53,9 +53,9 @@
 }
 
 - (void)testAliasExists {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         
         XCTAssertEqual([tokenIO aliasExists:alias], NO);
         [member addAlias:alias];
@@ -64,9 +64,9 @@
 }
 
 - (void)testGetMemberID {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         
         XCTAssertNil([tokenIO getMemberId:alias]);
         [member addAlias:alias];
@@ -75,11 +75,11 @@
 }
 
 - (void)testAddAlias {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAlias:alias2];
         [member addAlias:alias3];
 
@@ -88,11 +88,11 @@
 }
 
 - (void)testAddAliases {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
 
         XCTAssertEqual(member.aliases.count, 3);
@@ -100,10 +100,10 @@
 }
 
 - (void)testRemoveAlias {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAlias:alias2];
         XCTAssertEqual(member.aliases.count, 2);
 
@@ -113,11 +113,11 @@
 }
 
 - (void)testRemoveAliases {
-    [self run: ^(TokenIO *tokenIO) {
+    [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
         Alias *alias3 = [self generateAlias];
 
-        TKMember *member = [self createMember:tokenIO];
+        TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
         XCTAssertEqual(member.aliases.count, 3);
 
