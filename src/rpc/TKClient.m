@@ -52,12 +52,25 @@
 
 - (void)updateMember:(Member *)member
           operations:(NSArray<MemberOperation *> *)operations
-            onSuccess:(OnSuccessWithMember)onSuccess
-              onError:(OnError)onError {
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError{
+    [self updateMember:member
+            operations:operations
+             metadataArray:[NSArray array]
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)updateMember:(Member *)member
+          operations:(NSArray<MemberOperation *> *)operations
+           metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
     request.update.prevHash = member.lastHash;
+    request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
 
     TKSignature *signature = [crypto sign:request.update
                                  usingKey:Key_Level_Privileged

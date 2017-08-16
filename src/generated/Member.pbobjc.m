@@ -15,6 +15,7 @@
 
  #import "Member.pbobjc.h"
  #import "Address.pbobjc.h"
+ #import "Alias.pbobjc.h"
  #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -413,6 +414,116 @@ typedef struct MemberUpdate__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberUpdate__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MemberOperationMetadata
+
+@implementation MemberOperationMetadata
+
+@dynamic typeOneOfCase;
+@dynamic addAliasMetadata;
+
+typedef struct MemberOperationMetadata__storage_ {
+  uint32_t _has_storage_[2];
+  MemberOperationMetadata_AddAliasMetadata *addAliasMetadata;
+} MemberOperationMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "addAliasMetadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationMetadata_AddAliasMetadata),
+        .number = MemberOperationMetadata_FieldNumber_AddAliasMetadata,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperationMetadata__storage_, addAliasMetadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberOperationMetadata class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberOperationMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "type",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - MemberOperationMetadata_AddAliasMetadata
+
+@implementation MemberOperationMetadata_AddAliasMetadata
+
+@dynamic aliasHash;
+@dynamic hasAlias, alias;
+
+typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *aliasHash;
+  Alias *alias;
+} MemberOperationMetadata_AddAliasMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "aliasHash",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_AliasHash,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, aliasHash),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_Alias,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberOperationMetadata_AddAliasMetadata class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberOperationMetadata_AddAliasMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberOperationMetadata)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

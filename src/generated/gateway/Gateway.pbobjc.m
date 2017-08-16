@@ -213,11 +213,13 @@ typedef struct CreateMemberResponse__storage_ {
 
 @dynamic hasUpdate, update;
 @dynamic hasUpdateSignature, updateSignature;
+@dynamic metadataArray, metadataArray_Count;
 
 typedef struct UpdateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
   MemberUpdate *update;
   Signature *updateSignature;
+  NSMutableArray *metadataArray;
 } UpdateMemberRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -242,6 +244,15 @@ typedef struct UpdateMemberRequest__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateMemberRequest__storage_, updateSignature),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "metadataArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationMetadata),
+        .number = UpdateMemberRequest_FieldNumber_MetadataArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdateMemberRequest__storage_, metadataArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -467,6 +478,79 @@ typedef struct ResolveAliasResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResolveAliasResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetAliasesRequest
+
+@implementation GetAliasesRequest
+
+
+typedef struct GetAliasesRequest__storage_ {
+  uint32_t _has_storage_[1];
+} GetAliasesRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetAliasesRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(GetAliasesRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetAliasesResponse
+
+@implementation GetAliasesResponse
+
+@dynamic aliasesArray, aliasesArray_Count;
+
+typedef struct GetAliasesResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *aliasesArray;
+} GetAliasesResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "aliasesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = GetAliasesResponse_FieldNumber_AliasesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetAliasesResponse__storage_, aliasesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetAliasesResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetAliasesResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

@@ -220,6 +220,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     NSArray<Key *> *keys = [crypto generateKeys];
 
     NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
+    NSMutableArray<MemberOperationMetadata *> *metadataArray = [NSMutableArray array];
     for (Key *key in keys) {
         MemberOperation *addKey = [MemberOperation message];
         addKey.addKey.key = key;
@@ -229,10 +230,16 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     MemberOperation *addAlias = [MemberOperation message];
     addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
     [operations addObject:addAlias];
-
+    
+    MemberOperationMetadata *metadata = [MemberOperationMetadata message];
+    metadata.addAliasMetadata.alias = alias;
+    metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:alias];
+    [metadataArray addObject:metadata];
+    
     [client createMember:memberId
                   crypto:crypto
               operations:operations
+           metadataArray:metadataArray
                onSuccess:^(Member *member) {
                    TKClient *newClient = [[TKClient alloc]
                            initWithGateway:gateway

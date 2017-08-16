@@ -118,6 +118,18 @@
              responseClass:[ResolveAliasResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetAliases(GetAliasesRequest) returns (GetAliasesResponse)
+
+- (void)getAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAliasesWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAliases"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetAliasesResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**

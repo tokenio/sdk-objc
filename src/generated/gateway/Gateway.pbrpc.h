@@ -82,6 +82,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetAliases(GetAliasesRequest) returns (GetAliasesResponse)
+
+- (void)getAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**

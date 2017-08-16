@@ -69,6 +69,21 @@
              onError:(OnError)onError;
 
 /**
+ * Updates a Token member by adding/removing keys/aliases. The operations
+ * are batched together and sent to the server.
+ *
+ * @param member member to update
+ * @param operations set of operations that will mutate the member account
+ * @param metadataArray set of metadataArray; only use in addAlias operation now
+ * @param onSuccess invoked on success with member information
+ */
+- (void)updateMember:(Member *)member
+          operations:(NSArray<MemberOperation *> *)operations
+           metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Subscribes a device to receive push notifications
  *
  * @param handler handler that will send the notifications to this subscriber

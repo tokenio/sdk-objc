@@ -59,10 +59,26 @@
  * @param onSuccess invoked if successful; return member information
  */
 - (void)createMember:(NSString *)memberId
-                  crypto:(TKCrypto *)crypto
+              crypto:(TKCrypto *)crypto
           operations:(NSArray<MemberOperation *> *)operations
-               onSuccess:(OnSuccessWithMember)onSuccess
-                 onError:(OnError)onError;
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Creates a new Token member.
+ *
+ * @param memberId member id
+ * @param crypto crypto engine to use
+ * @param operations a set of operations that setup member keys and/or aliases
+ * @param metadataArray set of metadataArray; only use in addAlias operation now
+ * @param onSuccess invoked if successful; return member information
+ */
+- (void)createMember:(NSString *)memberId
+              crypto:(TKCrypto *)crypto
+          operations:(NSArray<MemberOperation *> *)operations
+           metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Looks up member information for the current user. The user is defined by

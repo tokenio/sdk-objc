@@ -37,6 +37,7 @@ CF_EXTERN_C_BEGIN
 @class Blob;
 @class Blob_Payload;
 @class Member;
+@class MemberOperationMetadata;
 @class MemberUpdate;
 @class Money;
 @class Notification;
@@ -147,6 +148,7 @@ typedef GPB_ENUM(CreateMemberResponse_FieldNumber) {
 typedef GPB_ENUM(UpdateMemberRequest_FieldNumber) {
   UpdateMemberRequest_FieldNumber_Update = 1,
   UpdateMemberRequest_FieldNumber_UpdateSignature = 2,
+  UpdateMemberRequest_FieldNumber_MetadataArray = 3,
 };
 
 @interface UpdateMemberRequest : GPBMessage
@@ -158,6 +160,10 @@ typedef GPB_ENUM(UpdateMemberRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Signature *updateSignature;
 /** Test to see if @c updateSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasUpdateSignature;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MemberOperationMetadata*> *metadataArray;
+/** The number of items in @c metadataArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadataArray_Count;
 
 @end
 
@@ -226,6 +232,26 @@ typedef GPB_ENUM(ResolveAliasResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
+
+@end
+
+#pragma mark - GetAliasesRequest
+
+@interface GetAliasesRequest : GPBMessage
+
+@end
+
+#pragma mark - GetAliasesResponse
+
+typedef GPB_ENUM(GetAliasesResponse_FieldNumber) {
+  GetAliasesResponse_FieldNumber_AliasesArray = 1,
+};
+
+@interface GetAliasesResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *aliasesArray;
+/** The number of items in @c aliasesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger aliasesArray_Count;
 
 @end
 
