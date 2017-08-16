@@ -195,7 +195,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
-              errorHandler:errorHandler];
+               errorHandler:errorHandler];
     [client notifyLinkAccountsAndAddKey:alias
                           authorization:authorization
                                 keyName:keyName
@@ -212,10 +212,10 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 
 // alias can be nil. In this case only add the key.
 - (void)_addKeysAndAlias:(TKUnauthenticatedClient *)client
-                   memberId:(NSString *)memberId
+                memberId:(NSString *)memberId
                    alias:(Alias *)alias
-                  onSuccess:(void (^)(TKMember *))onSuccess
-                    onError:(OnError)onError {
+               onSuccess:(void (^)(TKMember *))onSuccess
+                 onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
 

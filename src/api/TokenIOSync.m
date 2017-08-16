@@ -65,8 +65,8 @@
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     NSString *result = [call run:^{
         [self.async getMemberId:alias
-                         onSuccess:call.onSuccess
-                           onError:call.onError];
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
     }];
     return result;
 }
@@ -75,13 +75,12 @@
 - (TKMemberSync *)loginMember:(NSString *)memberId {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async
-                loginMember:memberId
-                   onSucess:^(TKMember *member) {
-                       TKMemberSync* memberSync = [TKMemberSync member:member];
-                       call.onSuccess(memberSync);
-                   }
-                    onError:call.onError
+        [self.async loginMember:memberId
+                       onSucess:^(TKMember *member) {
+                           TKMemberSync* memberSync = [TKMemberSync member:member];
+                           call.onSuccess(memberSync);
+                       }
+                        onError:call.onError
         ];
     }];
 }
@@ -92,8 +91,8 @@
     [call run:^{
         [self.async notifyPaymentRequest:alias
                                    token:token
-                             onSuccess:^(void) {call.onSuccess(nil);}
-                               onError:call.onError
+                               onSuccess:^(void) {call.onSuccess(nil);}
+                                 onError:call.onError
          ];
     }];
 }

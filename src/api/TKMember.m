@@ -22,7 +22,7 @@
 }
 
 + (TKMember *)member:(Member *)member
-                useClient:(TKClient *)client {
+           useClient:(TKClient *)client {
     return [[TKMember alloc] initWithMember:member useClient:client];
 }
 
@@ -130,12 +130,11 @@
     }
     [client updateMember:retainedMember
               operations:[removeKeys copy]
-               onSuccess:
-                       ^(Member *m) {
-                           [retainedMember clear];
-                           [retainedMember mergeFrom:m];
-                           onSuccess();
-                       }
+               onSuccess:^(Member *m) {
+                   [retainedMember clear];
+                   [retainedMember mergeFrom:m];
+                   onSuccess();
+               }
                  onError:onError];
 }
 
@@ -143,13 +142,13 @@
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError {
     [self addAliases:@[alias]
-             onSuccess:onSuccess
-               onError:onError];
+           onSuccess:onSuccess
+             onError:onError];
 }
 
 - (void)addAliases:(NSArray<Alias *> *)toAddAliases
-           onSuccess:(OnSuccess)onSuccess
-             onError:(OnError)onError {
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
     NSMutableArray<MemberOperation *> *addAliasOps = [NSMutableArray array];
@@ -160,13 +159,12 @@
     }
     [client updateMember:retainedMember
               operations:[addAliasOps copy]
-               onSuccess:
-                       ^(Member *m) {
-                           [aliases addObjectsFromArray:toAddAliases];
-                           [retainedMember clear];
-                           [retainedMember mergeFrom:m];
-                           onSuccess();
-                       }
+               onSuccess:^(Member *m) {
+                   [aliases addObjectsFromArray:toAddAliases];
+                   [retainedMember clear];
+                   [retainedMember mergeFrom:m];
+                   onSuccess();
+               }
                  onError:onError];
 }
 
@@ -179,8 +177,8 @@
 }
 
 - (void)removeAliases:(NSArray<Alias *> *)toRemoveAliases
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError {
+            onSuccess:(OnSuccess)onSuccess
+              onError:(OnError)onError {
     __strong typeof(member) retainedMember = member;
 
     NSMutableArray *removeAliasOps = [NSMutableArray array];
@@ -191,13 +189,12 @@
     }
     [client updateMember:retainedMember
               operations:[removeAliasOps copy]
-               onSuccess:
-                       ^(Member *m) {
-                           [aliases removeObjectsInArray:toRemoveAliases];
-                           [retainedMember clear];
-                           [retainedMember mergeFrom:m];
-                           onSuccess();
-                       }
+               onSuccess:^(Member *m) {
+                   [aliases removeObjectsInArray:toRemoveAliases];
+                   [retainedMember clear];
+                   [retainedMember mergeFrom:m];
+                   onSuccess();
+               }
                  onError:onError];
 }
 
@@ -228,19 +225,19 @@
 - (void)getNotificationsOffset:(NSString *)offset
                          limit:(int)limit
                      onSuccess:(OnSuccessWithNotifications)onSuccess
-               onError:(OnError)onError {
+                       onError:(OnError)onError {
     [client getNotifications:offset
                        limit:limit
                    onSuccess:onSuccess
-                   onError:onError];
+                     onError:onError];
 }
 
 - (void)getNotification:(NSString *)notificationId
-            onSuccess:(OnSuccessWithNotification)onSuccess
-              onError:(OnError)onError {
+              onSuccess:(OnSuccessWithNotification)onSuccess
+                onError:(OnError)onError {
     [client getNotification:notificationId
-                onSuccess:onSuccess
-                  onError:onError];
+                  onSuccess:onSuccess
+                    onError:onError];
 }
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
@@ -256,10 +253,9 @@
            onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError {
     [client linkAccounts:bankAuthorization
-               onSuccess:
-     ^(NSArray<Account *> *accounts) {
-         onSuccess([self _mapAccounts:accounts]);
-     }
+               onSuccess:^(NSArray<Account *> *accounts) {
+                   onSuccess([self _mapAccounts:accounts]);
+               }
                  onError:onError];
 }
 
@@ -268,15 +264,14 @@
                onError:(OnError)onError {
     [client unlinkAccounts:accountIds
                  onSuccess:onSuccess
-                    onError:onError];
+                   onError:onError];
 }
 
 - (void)getAccounts:(OnSuccessWithTKAccounts)onSuccess
             onError:(OnError)onError {
-    [client getAccounts:
-     ^(NSArray<Account *> *accounts) {
-         onSuccess([self _mapAccounts:accounts]);
-     }
+    [client getAccounts:^(NSArray<Account *> *accounts) {
+        onSuccess([self _mapAccounts:accounts]);
+    }
                 onError:onError];
 }
 
@@ -439,24 +434,24 @@
 }
 
 - (void)redeemToken:(Token *)token
-             onSuccess:(OnSuccessWithTransfer)onSuccess
-               onError:(OnError)onError {
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError {
     [self redeemToken:token
-                  amount:nil
-                currency:nil
-             description:nil
-             destination:nil
-               onSuccess:onSuccess
-                 onError:onError];
+               amount:nil
+             currency:nil
+          description:nil
+          destination:nil
+            onSuccess:onSuccess
+              onError:onError];
 }
 
 - (void)redeemToken:(Token *)token
-                amount:(NSNumber *)amount
-              currency:(NSString *)currency
-           description:(NSString *)description
-           destination:(TransferEndpoint *)destination
-             onSuccess:(OnSuccessWithTransfer)onSuccess
-               onError:(OnError)onError {
+             amount:(NSNumber *)amount
+           currency:(NSString *)currency
+        description:(NSString *)description
+        destination:(TransferEndpoint *)destination
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
     payload.tokenId = token.id_p;
     payload.refId = [TKUtil nonce];
@@ -475,8 +470,8 @@
     }
     
     [client redeemToken:payload
-                 onSuccess:onSuccess
-                   onError:onError];
+              onSuccess:onSuccess
+                onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
@@ -516,17 +511,17 @@
 }
 
 - (void)getBlob:(NSString *)blobId
-         onSuccess:(OnSuccessWithBlob)onSuccess
-           onError:(OnError)onError {
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError {
     [client getBlob:blobId
-             onSuccess:onSuccess
-               onError:onError];
+          onSuccess:onSuccess
+            onError:onError];
 }
 
 - (void)getTokenBlob:(NSString *)tokenId
           withBlobId:(NSString *)blobId
-      onSuccess:(OnSuccessWithBlob)onSuccess
-        onError:(OnError)onError {
+           onSuccess:(OnSuccessWithBlob)onSuccess
+             onError:(OnError)onError {
     [client getTokenBlob:tokenId
               withBlobId:blobId
                onSuccess:onSuccess
@@ -534,11 +529,11 @@
 }
 
 - (void)getBalance:(NSString *)accountId
-             onSuccess:(OnSuccessWithMoney)onSuccess
-               onError:(OnError)onError {
+         onSuccess:(OnSuccessWithMoney)onSuccess
+           onError:(OnError)onError {
     [client getBalance:accountId
-                 onSuccess:onSuccess
-                   onError:onError];
+             onSuccess:onSuccess
+               onError:onError];
 }
 
 - (void)getBanks:(OnSuccessWithBanks)onSuccess

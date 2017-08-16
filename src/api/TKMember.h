@@ -39,7 +39,7 @@
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
-                useClient:(TKClient *)client;
+           useClient:(TKClient *)client;
 
 
 - (TKClient *)getClient;
@@ -101,8 +101,8 @@
  * @param onError callback invoked on error
  */
 - (void)removeKeys:(NSArray<NSString *> *)keyIds
-        onSuccess:(OnSuccess)onSuccess
-          onError:(OnError)onError;
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Adds a new alias for the member.
@@ -123,8 +123,8 @@
  * @param onError callback invoked on error
  */
 - (void)addAliases:(NSArray<Alias *> *)aliases
-           onSuccess:(OnSuccess)onSuccess
-             onError:(OnError)onError;
+         onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError;
 
 /**
  * Removes an alias for the member.
@@ -145,8 +145,8 @@
  * @param onError callback invoked on error
  */
 - (void)removeAliases:(NSArray<Alias *> *)aliases
-              onSuccess:(OnSuccess)onSuccess
-                onError:(OnError)onError;
+            onSuccess:(OnSuccess)onSuccess
+              onError:(OnError)onError;
 
 /**
  * Subscribes a device to receive push notifications
@@ -184,7 +184,7 @@
 - (void)getNotificationsOffset:(NSString *)offset
                          limit:(int)limit
                      onSuccess:(OnSuccessWithNotifications)onSuccess
-               onError:(OnError)onError;
+                       onError:(OnError)onError;
 
 /**
  * Get a notification by Id
@@ -192,8 +192,8 @@
  * @param notificationId id of notification to get
  */
 - (void)getNotification:(NSString *)notificationId
-            onSuccess:(OnSuccessWithNotification)onSuccess
-              onError:(OnError)onError;
+              onSuccess:(OnSuccessWithNotification)onSuccess
+                onError:(OnError)onError;
 
 
 /**
@@ -451,8 +451,8 @@
  * @param onError callback invoked on error
  */
 - (void)redeemToken:(Token *)token
-             onSuccess:(OnSuccessWithTransfer)onSuccess
-               onError:(OnError)onError;
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Redeems a transfer token.
@@ -466,12 +466,12 @@
  * @param onError callback invoked on error
  */
 - (void)redeemToken:(Token *)token
-                amount:(NSNumber *)amount
-              currency:(NSString *)currency
-           description:(NSString *)description
-           destination:(TransferEndpoint *)destination
-             onSuccess:(OnSuccessWithTransfer)onSuccess
-               onError:(OnError)onError;
+             amount:(NSNumber *)amount
+           currency:(NSString *)currency
+        description:(NSString *)description
+        destination:(TransferEndpoint *)destination
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
@@ -539,9 +539,9 @@
  * @param onError invoked on error
  */
 - (void)getTokenBlob:(NSString *)tokenId
-     withBlobId:(NSString *)blobId
-      onSuccess:(OnSuccessWithBlob)onSuccess
-        onError:(OnError)onError;
+          withBlobId:(NSString *)blobId
+           onSuccess:(OnSuccessWithBlob)onSuccess
+             onError:(OnError)onError;
 
 /**
  * Returns a list of all token enabled banks.

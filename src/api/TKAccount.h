@@ -28,8 +28,8 @@
 @property (atomic, readonly) NSString *bankId;
 
 + (TKAccount *)account:(Account *)account
-                         of:(TKMemberSync *)member
-                  useClient:(TKClient *)client;
+                    of:(TKMemberSync *)member
+             useClient:(TKClient *)client;
 
 /**
  * Looks up account balance.
