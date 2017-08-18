@@ -10,11 +10,13 @@
 //#import "gateway/Gateway.pbrpc.h"
 
 @class Alias;
+@class GPBMessage;
 
 @interface TKHasher : NSObject
 
 + (NSData *)hashData:(NSData *)input;
-+ (NSData *)hashString:(NSString *)input;
++ (NSString *)hashString:(NSString *)input;
++ (NSString *)hashMessage:(GPBMessage *)message;
 
 + (NSString *)serializeReadable:(NSData *)data;
 + (NSString *)hashAlias:(Alias *)alias;
