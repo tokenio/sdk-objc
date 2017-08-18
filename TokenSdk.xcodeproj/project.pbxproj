@@ -49,6 +49,7 @@
 		4B240F8D1F28135000497B2D /* Base58.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B240F8B1F28135000497B2D /* Base58.h */; };
 		4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B3814061F394B0200557EEF /* Alias.pbobjc.h */; };
 		4B3814091F394B0200557EEF /* Alias.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3814071F394B0200557EEF /* Alias.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4B3AD17B1F47660A00CCDA2C /* TKHasherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3AD17A1F47660A00CCDA2C /* TKHasherTests.m */; };
 		4B3C9963B59F1345B3F7B6C2 /* libPods-TokenSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27932CCA173CAF159694397E /* libPods-TokenSdk.a */; };
 		62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */; };
 		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
@@ -252,12 +253,13 @@
 		37637B4B1D989A930043345F /* Transfer.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transfer.pbobjc.m; sourceTree = "<group>"; };
 		3777163D1D99BF6800287239 /* TokenSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSdk.h; sourceTree = "<group>"; };
 		37B5D33C7D4E7E674C4F0E64 /* Pods-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdk/Pods-sdk.debug.xcconfig"; sourceTree = "<group>"; };
-		4B240F821F28096300497B2D /* TKHasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKHasher.h; sourceTree = "<group>"; };
-		4B240F831F28096300497B2D /* TKHasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHasher.m; sourceTree = "<group>"; };
-		4B240F8A1F28135000497B2D /* Base58.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base58.c; sourceTree = "<group>"; };
-		4B240F8B1F28135000497B2D /* Base58.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base58.h; sourceTree = "<group>"; };
+		4B240F821F28096300497B2D /* TKHasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKHasher.h; path = ../security/TKHasher.h; sourceTree = "<group>"; };
+		4B240F831F28096300497B2D /* TKHasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKHasher.m; path = ../security/TKHasher.m; sourceTree = "<group>"; };
+		4B240F8A1F28135000497B2D /* Base58.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Base58.c; path = ../security/Base58.c; sourceTree = "<group>"; };
+		4B240F8B1F28135000497B2D /* Base58.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base58.h; path = ../security/Base58.h; sourceTree = "<group>"; };
 		4B3814061F394B0200557EEF /* Alias.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.pbobjc.h; sourceTree = "<group>"; };
 		4B3814071F394B0200557EEF /* Alias.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.pbobjc.m; sourceTree = "<group>"; };
+		4B3AD17A1F47660A00CCDA2C /* TKHasherTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHasherTests.m; sourceTree = "<group>"; };
 		62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKErrorHandlerTests.m; sourceTree = "<group>"; };
 		62DE98B689D2C43491570541 /* HostAndPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostAndPort.m; sourceTree = "<group>"; };
 		62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcErrorHandler.h; sourceTree = "<group>"; };
@@ -399,8 +401,8 @@
 		DDAA0D731E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSecureEnclaveCryptoEngine.h; sourceTree = "<group>"; };
 		DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveCryptoEngine.m; sourceTree = "<group>"; };
 		DDAA0D7A1E25CB8A00E9BB09 /* TKSecureEnclaveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSecureEnclaveTests.m; sourceTree = "<group>"; };
-		DDF54B011E31797900BE739B /* QHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QHex.h; sourceTree = "<group>"; };
-		DDF54B021E31797900BE739B /* QHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QHex.m; sourceTree = "<group>"; };
+		DDF54B011E31797900BE739B /* QHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QHex.h; path = ../security/QHex.h; sourceTree = "<group>"; };
+		DDF54B021E31797900BE739B /* QHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QHex.m; path = ../security/QHex.m; sourceTree = "<group>"; };
 		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
 		FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankinfo.pbobjc.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -580,6 +582,7 @@
 				8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
+				4B3AD17A1F47660A00CCDA2C /* TKHasherTests.m */,
 				ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */,
 				DD6AD2A81E007E9000358830 /* TKLogTests.m */,
 				ABA7BED5AD0B16162777EBA0 /* TKTestBase.m */,
@@ -686,12 +689,18 @@
 		ABA7B92556DD88305DE6EDC5 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				4B240F8B1F28135000497B2D /* Base58.h */,
+				4B240F8A1F28135000497B2D /* Base58.c */,
+				DDF54B011E31797900BE739B /* QHex.h */,
+				DDF54B021E31797900BE739B /* QHex.m */,
+				4B240F821F28096300497B2D /* TKHasher.h */,
+				4B240F831F28096300497B2D /* TKHasher.m */,
+				ABA7BEE87D6C30096F9CADA3 /* TKJson.h */,
+				ABA7B899E7F7DE3107CB62E1 /* TKJson.m */,
 				DD6AD2A41E00786800358830 /* TKLogManager.h */,
 				DD6AD2A51E00786800358830 /* TKLogManager.m */,
-				ABA7B899E7F7DE3107CB62E1 /* TKJson.m */,
-				ABA7B16EB35673E0ED34C018 /* TKUtil.m */,
-				ABA7BEE87D6C30096F9CADA3 /* TKJson.h */,
 				ABA7BA157D6E82BBEAF5AA3E /* TKUtil.h */,
+				ABA7B16EB35673E0ED34C018 /* TKUtil.m */,
 				DD0A77581E4226B40058FB8A /* TKLocalizer.h */,
 				DD0A77591E4226B40058FB8A /* TKLocalizer.m */,
 				DD0A77651E42AC040058FB8A /* TKError.h */,
@@ -735,7 +744,6 @@
 		ABA7BFE70DA2E2ABED08CD7B /* security */ = {
 			isa = PBXGroup;
 			children = (
-				DDF54B001E31796A00BE739B /* util */,
 				ABA7B7A013686B576B8A78D1 /* TKCrypto.h */,
 				ABA7BD2DB50F3EE8AD9C021B /* TKCryptoEngine.h */,
 				ABA7B851D0607130037BF768 /* TKCrypto.m */,
@@ -805,19 +813,6 @@
 				DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */,
 			);
 			path = secureenclave;
-			sourceTree = "<group>";
-		};
-		DDF54B001E31796A00BE739B /* util */ = {
-			isa = PBXGroup;
-			children = (
-				4B240F8B1F28135000497B2D /* Base58.h */,
-				4B240F8A1F28135000497B2D /* Base58.c */,
-				DDF54B011E31797900BE739B /* QHex.h */,
-				DDF54B021E31797900BE739B /* QHex.m */,
-				4B240F821F28096300497B2D /* TKHasher.h */,
-				4B240F831F28096300497B2D /* TKHasher.m */,
-			);
-			name = util;
 			sourceTree = "<group>";
 		};
 		FAE918C61F17E6FE001692CF /* fank */ = {
@@ -1317,6 +1312,7 @@
 				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
 				ABA7BCC4F2299658A6572FC6 /* TKTestMemberKeys.m in Sources */,
 				DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */,
+				4B3AD17B1F47660A00CCDA2C /* TKHasherTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
