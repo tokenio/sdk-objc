@@ -134,7 +134,14 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                                           timeoutMs:timeoutMs
                                                                            memberId:memberId
                                                                        errorHandler:errorHandler];
-                               onSuccess([TKMember member:member useClient:client]);
+                               
+                               // Request alias for the member
+                               [client getAliases:^(NSArray<Alias *> *aliases) {
+                                   onSuccess([TKMember member:member
+                                                    useClient:client
+                                                      aliases:[NSMutableArray arrayWithArray:aliases]]);
+                                   
+                               } onError:onError];
                            }
                              onError:onError];
 }
@@ -248,8 +255,9 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                   memberId:memberId
                               errorHandler:errorHandler];
                    onSuccess([TKMember
-                           member:member
-                        useClient:newClient]);
+                              member:member
+                           useClient:newClient
+                             aliases:[NSMutableArray arrayWithObject:alias]]);
                }
                  onError:onError];
 }

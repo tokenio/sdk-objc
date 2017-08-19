@@ -84,6 +84,14 @@
              onError:(OnError)onError;
 
 /**
+ * Get aliases array. It shall be called after create member and login
+ *
+ * @param onSuccess invoked on success with aliases array
+ */
+- (void)getAliases:(OnSuccessWithAlias)onSuccess
+         onError:(OnError)onError;
+
+/**
  * Subscribes a device to receive push notifications
  *
  * @param handler handler that will send the notifications to this subscriber

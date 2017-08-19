@@ -104,6 +104,26 @@
              onError:onError];
 }
 
+- (void)getAliases:(OnSuccessWithAlias)onSuccess
+         onError:(OnError)onError{
+    GetAliasesRequest *request = [GetAliasesRequest message];
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetAliasesWithRequest:request
+                           handler:^(GetAliasesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.aliasesArray);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)subscribeToNotifications:(NSString *)handler
              handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
