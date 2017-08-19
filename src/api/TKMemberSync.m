@@ -88,6 +88,14 @@
     }];
 }
 
+- (NSArray<Alias *> *)getAliases {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getAliases:call.onSuccess
+                     onError:call.onError];
+    }];
+}
+
 - (void)addAlias:(Alias *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     [call run:^{

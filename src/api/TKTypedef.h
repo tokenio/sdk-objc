@@ -23,6 +23,7 @@
 @class DeviceInfo;
 @class Pricing;
 @class Profile;
+@class Alias;
 
 typedef void (^ _Nonnull OnSuccess)();
 typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
@@ -32,6 +33,8 @@ typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKMember)(TKMember * _Nonnull);
+
+typedef void (^ _Nonnull OnSuccessWithAliases)(NSArray<Alias *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAccounts)(NSArray<Account *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKAccounts)(NSArray<TKAccount *> * _Nonnull);

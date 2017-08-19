@@ -42,7 +42,8 @@
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
-           useClient:(TKClient *)client;
+           useClient:(TKClient *)client
+             aliases:(NSMutableArray<Alias *> *) aliases_;
 
 
 - (TKClient *)getClient;
@@ -105,6 +106,15 @@
  */
 - (void)removeKeys:(NSArray<NSString *> *)keyIds
          onSuccess:(OnSuccess)onSuccess
+           onError:(OnError)onError;
+
+/**
+ * Gets aliases Array for the member.
+ *
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError;
 
 /**

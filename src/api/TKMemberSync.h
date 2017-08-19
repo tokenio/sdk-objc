@@ -95,6 +95,13 @@
  */
 - (void)removeKeys:(NSArray<NSString *> *)keyIds;
 
+
+/**
+ * Get all subscribers.
+ *
+ */
+- (NSArray<Alias *> *)getAliases;
+
 /**
  * Adds a new alias for the member.
  *

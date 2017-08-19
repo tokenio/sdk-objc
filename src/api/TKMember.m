@@ -22,25 +22,22 @@
 }
 
 + (TKMember *)member:(Member *)member
-           useClient:(TKClient *)client {
-    return [[TKMember alloc] initWithMember:member useClient:client];
+           useClient:(TKClient *)client
+             aliases:(NSMutableArray<Alias *> *) aliases_ {
+    return [[TKMember alloc] initWithMember:member
+                                  useClient:client
+                                    aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
-           useClient:(TKClient *)client_ {
+           useClient:(TKClient *)client_
+             aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     
     if (self) {
         member = member_;
         client = client_;
-        aliases = [NSMutableArray array];
-        //TODO(PR-1006): Remove when alias sync is implemented
-        for (NSString *alias in member.aliasHashesArray) {
-            Alias *typedAlias = [Alias new];
-            typedAlias.type = Alias_Type_Email;
-            typedAlias.value = alias;
-            [aliases addObject:typedAlias];
-        }
+        aliases = aliases_;
     }
     
     return self;
@@ -136,6 +133,15 @@
                    onSuccess();
                }
                  onError:onError];
+}
+
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
+           onError:(OnError)onError {
+    [client getAliases:^(NSArray<Alias *> *aliasArray) {
+        aliases = [NSMutableArray arrayWithArray: aliasArray];
+        onSuccess(aliasArray);
+    }
+               onError:onError];
 }
 
 - (void)addAlias:(Alias *)alias

@@ -87,6 +87,25 @@
     }];
 }
 
+- (void)testGetAliases {
+    [self run: ^(TokenIOSync *tokenIO) {
+        Alias *alias2 = [self generateAlias];
+        Alias *alias3 = [self generateAlias];
+        
+        TKMemberSync *member = [self createMember:tokenIO];
+        [member addAliases:@[alias2, alias3]];
+        
+        NSArray<Alias *> *aliases = [member getAliases];
+        
+        XCTAssertEqual(aliases.count, 3);
+        XCTAssertEqual(member.aliases.count, 3);
+        
+        // test aliases after login
+        TKMemberSync *loginMember = [tokenIO loginMember:member.id];
+        XCTAssertEqual(loginMember.aliases.count, 3);
+    }];
+}
+
 - (void)testAddAliases {
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias2 = [self generateAlias];
