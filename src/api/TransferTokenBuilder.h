@@ -24,6 +24,7 @@
 @property (readwrite) int64_t effectiveAtMs;
 @property (readwrite) Alias *redeemerAlias;
 @property (readwrite) NSString* redeemerMemberId;
+@property (readwrite) Alias *fromAlias;
 @property (readwrite) Alias *toAlias;
 @property (readwrite) NSString *toMemberId;
 @property (readwrite) NSString *descr;
