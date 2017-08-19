@@ -88,7 +88,7 @@
  *
  * @param onSuccess invoked on success with aliases array
  */
-- (void)getAliases:(OnSuccessWithAlias)onSuccess
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
          onError:(OnError)onError;
 
 /**

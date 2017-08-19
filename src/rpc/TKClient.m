@@ -104,7 +104,7 @@
              onError:onError];
 }
 
-- (void)getAliases:(OnSuccessWithAlias)onSuccess
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
          onError:(OnError)onError{
     GetAliasesRequest *request = [GetAliasesRequest message];
     

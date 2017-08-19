@@ -135,7 +135,7 @@
                  onError:onError];
 }
 
-- (void)getAliases:(OnSuccessWithAlias)onSuccess
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError {
     [client getAliases:^(NSArray<Alias *> *aliasArray) {
         aliases = [NSMutableArray arrayWithArray: aliasArray];

@@ -114,7 +114,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getAliases:(OnSuccessWithAlias)onSuccess
+- (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError;
 
 /**

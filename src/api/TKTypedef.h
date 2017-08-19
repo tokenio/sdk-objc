@@ -34,7 +34,7 @@ typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKMember)(TKMember * _Nonnull);
 
-typedef void (^ _Nonnull OnSuccessWithAlias)(NSArray<Alias *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithAliases)(NSArray<Alias *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAccounts)(NSArray<Account *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKAccounts)(NSArray<TKAccount *> * _Nonnull);
