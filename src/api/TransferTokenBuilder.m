@@ -60,6 +60,9 @@
     TokenMember *payer = [TokenMember message];
 
     payer.id_p = [self.member id];
+    if (self.fromAlias) {
+        payer.alias = self.fromAlias;
+    }
     
     TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
