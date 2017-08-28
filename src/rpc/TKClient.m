@@ -441,7 +441,7 @@
         return;
     }
 
-    NSString *reason = (tokenToCancel.payload.access != nil)
+    NSString *reason = (tokenToCancel.payload.access != nil && tokenToCancel.payload.access.resourcesArray_Count > 0)
             ? @"Signature_Reason_EndorseAccessToken"
             : @"Signature_Reason_EndorseTransferToken";
     TKSignature *signature = [crypto signPayload:tokenToCreate
@@ -533,7 +533,7 @@
              withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError {
-    NSString *reason = (token.payload.access != nil)
+    NSString *reason = (token.payload.access != nil && token.payload.access.resourcesArray_Count > 0)
             ? @"Signature_Reason_EndorseAccessToken"
             : @"Signature_Reason_EndorseTransferToken";
     TKSignature *signature = [crypto sign:token
