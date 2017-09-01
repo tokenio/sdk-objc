@@ -44,6 +44,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         builder.destinations = destinations;
         Token *token = [builder execute];
         
@@ -68,6 +69,7 @@
                                                           currency:@"XXX"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         builder.destinations = destinations;
         
         @try {
@@ -85,6 +87,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         Token *lookedUp = [payer getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
@@ -97,18 +100,21 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         [builder execute];
         
         TransferTokenBuilder *builder2 = [payer createTransferToken:100.22
                                                           currency:@"USD"];
         builder2.accountId = payerAccount.id;
         builder2.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         [builder2 execute];
         
         TransferTokenBuilder *builder3 = [payer createTransferToken:100.33
                                                           currency:@"USD"];
         builder3.accountId = payerAccount.id;
         builder3.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         [builder3 execute];
         
         PagedArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
@@ -123,6 +129,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -146,6 +153,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         builder.descr = descr;
         Token *token = [builder execute];
 
@@ -167,6 +175,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         
         TokenOperationResult *cancelledResult = [payer cancelToken:token];

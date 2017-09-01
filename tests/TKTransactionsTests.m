@@ -50,6 +50,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
@@ -78,6 +79,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
         
