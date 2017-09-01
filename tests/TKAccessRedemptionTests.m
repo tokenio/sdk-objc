@@ -138,6 +138,7 @@
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
         builder.redeemerAlias = redeemer.firstAlias;
+        builder.toAlias = redeemer.firstAlias;
         Token *transferToken = [builder execute];
         
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
@@ -172,6 +173,7 @@
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
         builder.redeemerAlias = redeemer.firstAlias;
+        builder.toAlias = redeemer.firstAlias;
         Token *transferToken = [builder execute];
         transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
         
