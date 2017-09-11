@@ -17,6 +17,21 @@ message PayeeTransferProcessed {
   string transfer_id = 1;
 }
 
+// A notification to the payer that a transfer failed.
+message PayerTransferFailed {
+  string transfer_id = 1;
+}
+
+// A generic notification that a transfer was successfully processed.
+message TransferProcessed {
+  string transfer_id = 1;
+}
+
+// A generic notification that a transfer failed.
+message TransferFailed {
+  string transfer_id = 1;
+}
+
 // A notification that a bank wants to be linked.
 message LinkAccounts {
     io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
@@ -54,6 +69,9 @@ message NotifyBody {
         io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
         io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
         io.token.proto.common.notification.PaymentRequest payment_request = 7;
+        io.token.proto.common.notification.PayerTransferFailed payer_transfer_failed = 8;
+        io.token.proto.common.notification.TransferProcessed transfer_processed = 9;
+        io.token.proto.common.notification.TransferFailed transfer_failed = 10;
     }
 }
 

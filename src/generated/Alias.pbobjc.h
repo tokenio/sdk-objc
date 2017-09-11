@@ -44,6 +44,7 @@ typedef GPB_ENUM(Alias_Type) {
   Alias_Type_Phone = 3,
   Alias_Type_Domain = 4,
   Alias_Type_Username = 5,
+  Alias_Type_Bank = 6,
 };
 
 GPBEnumDescriptor *Alias_Type_EnumDescriptor(void);

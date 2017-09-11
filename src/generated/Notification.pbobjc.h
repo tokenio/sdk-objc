@@ -34,10 +34,13 @@ CF_EXTERN_C_BEGIN
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
 @class PayeeTransferProcessed;
+@class PayerTransferFailed;
 @class PayerTransferProcessed;
 @class PaymentRequest;
 @class StepUp;
 @class TokenPayload;
+@class TransferFailed;
+@class TransferProcessed;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -129,6 +132,51 @@ typedef GPB_ENUM(PayeeTransferProcessed_FieldNumber) {
  * A notification to the payee that a transfer was successfully processed.
  **/
 @interface PayeeTransferProcessed : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
+
+@end
+
+#pragma mark - PayerTransferFailed
+
+typedef GPB_ENUM(PayerTransferFailed_FieldNumber) {
+  PayerTransferFailed_FieldNumber_TransferId = 1,
+};
+
+/**
+ * A notification to the payer that a transfer failed.
+ **/
+@interface PayerTransferFailed : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
+
+@end
+
+#pragma mark - TransferProcessed
+
+typedef GPB_ENUM(TransferProcessed_FieldNumber) {
+  TransferProcessed_FieldNumber_TransferId = 1,
+};
+
+/**
+ * A generic notification that a transfer was successfully processed.
+ **/
+@interface TransferProcessed : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
+
+@end
+
+#pragma mark - TransferFailed
+
+typedef GPB_ENUM(TransferFailed_FieldNumber) {
+  TransferFailed_FieldNumber_TransferId = 1,
+};
+
+/**
+ * A generic notification that a transfer failed.
+ **/
+@interface TransferFailed : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
@@ -235,6 +283,9 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_LinkAccountsAndAddKey = 5,
   NotifyBody_FieldNumber_PayeeTransferProcessed = 6,
   NotifyBody_FieldNumber_PaymentRequest = 7,
+  NotifyBody_FieldNumber_PayerTransferFailed = 8,
+  NotifyBody_FieldNumber_TransferProcessed = 9,
+  NotifyBody_FieldNumber_TransferFailed = 10,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -246,6 +297,9 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_LinkAccountsAndAddKey = 5,
   NotifyBody_Body_OneOfCase_PayeeTransferProcessed = 6,
   NotifyBody_Body_OneOfCase_PaymentRequest = 7,
+  NotifyBody_Body_OneOfCase_PayerTransferFailed = 8,
+  NotifyBody_Body_OneOfCase_TransferProcessed = 9,
+  NotifyBody_Body_OneOfCase_TransferFailed = 10,
 };
 
 /**
@@ -268,6 +322,12 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) PayeeTransferProcessed *payeeTransferProcessed;
 
 @property(nonatomic, readwrite, strong, null_resettable) PaymentRequest *paymentRequest;
+
+@property(nonatomic, readwrite, strong, null_resettable) PayerTransferFailed *payerTransferFailed;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferProcessed *transferProcessed;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferFailed *transferFailed;
 
 @end
 

@@ -146,8 +146,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                              onError:onError];
 }
 
-- (void)notifyPaymentRequest:(Alias *)alias
-                       token:(TokenPayload *)token
+- (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
@@ -157,8 +156,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     if ([token.refId length] == 0) {
         token.refId = [TKUtil nonce];
     }
-    [client notifyPaymentRequest:alias
-                           token:token
+    [client notifyPaymentRequest:token
                        onSuccess:onSuccess
                          onError:onError];
 }

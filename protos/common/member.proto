@@ -22,9 +22,24 @@ message MemberAliasOperation {
   string alias_hash = 1;
 }
 
-// TODO(PR-1161): Remove this when we no longer require backwards compatibility with usernames
-message MemberUsernameOperation {
-  string username = 1;
+// Sets recovery rules for member, indicating which signatures are required for a member reset
+// operation. Overrides all previously set rules.
+message MemberRecoveryRulesOperation {
+  string primary_agent = 1;             // the member id of the primary agent
+  repeated string secondary_agents = 2; // an optional list of member ids acting as secondary agents
+}
+
+// Provides an agent signature authorizing the recovery operation. Multiple authorizations
+// migth be required in order to initiate the recovery process.  The number of required signatures
+// is governed by Recovery Rules associated with the member.
+message MemberRecoveryOperation {
+  Authorization authorization = 1;
+  io.token.proto.common.security.Signature agent_signature = 2;
+
+  message Authorization {
+    string member_id = 1;
+    io.token.proto.common.security.Key member_key = 2;
+  }
 }
 
 message MemberOperation {
@@ -33,9 +48,9 @@ message MemberOperation {
      MemberRemoveKeyOperation remove_key = 2;
      MemberAliasOperation add_alias = 5;
      MemberAliasOperation remove_alias = 4;
-
-     // TODO(PR-1161): Remove this when we no longer require bakcwards compatibility with usernames
-     MemberUsernameOperation add_username = 3;
+     MemberAliasOperation verify_alias = 6;
+     MemberRecoveryRulesOperation recovery_rules = 7;
+     MemberRecoveryOperation recover = 8;
    }
 }
 
@@ -66,6 +81,7 @@ message Member {
   string last_hash = 2;
   repeated string alias_hashes = 3;
   repeated io.token.proto.common.security.Key keys = 4;
+  repeated string unverified_alias_hashes = 5;
 }
 
 // A member address record

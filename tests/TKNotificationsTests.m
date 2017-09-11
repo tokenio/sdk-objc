@@ -133,8 +133,7 @@ void check(NSString *message, BOOL condition) {
         token.transfer.amount = @"50";
         token.transfer.lifetimeAmount = @"100";
         token.transfer.currency = @"EUR";
-        [tokenIO notifyPaymentRequest:payer.firstAlias
-                                token:token];
+        [tokenIO notifyPaymentRequest:token];
 
         [self waitForNotification:@"PAYMENT_REQUEST"];
     }];

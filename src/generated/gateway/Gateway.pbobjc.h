@@ -899,6 +899,42 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 
 @end
 
+#pragma mark - GetDefaultBankRequest
+
+@interface GetDefaultBankRequest : GPBMessage
+
+@end
+
+#pragma mark - GetDefaultBankResponse
+
+typedef GPB_ENUM(GetDefaultBankResponse_FieldNumber) {
+  GetDefaultBankResponse_FieldNumber_BankId = 1,
+};
+
+@interface GetDefaultBankResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - SetDefaultBankRequest
+
+typedef GPB_ENUM(SetDefaultBankRequest_FieldNumber) {
+  SetDefaultBankRequest_FieldNumber_BankId = 1,
+};
+
+@interface SetDefaultBankRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - SetDefaultBankResponse
+
+@interface SetDefaultBankResponse : GPBMessage
+
+@end
+
 #pragma mark - CreateBlobRequest
 
 typedef GPB_ENUM(CreateBlobRequest_FieldNumber) {

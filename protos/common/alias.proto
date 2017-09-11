@@ -13,5 +13,6 @@ message Alias {
     PHONE = 3;
     DOMAIN = 4;
     USERNAME = 5;
+    BANK = 6;
   }
 }

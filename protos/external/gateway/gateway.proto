@@ -266,6 +266,20 @@ message GetTransactionsResponse {
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
+message GetDefaultBankRequest {
+}
+
+message GetDefaultBankResponse {
+  string bank_id = 1;
+}
+
+message SetDefaultBankRequest {
+  string bank_id = 1;
+}
+
+message SetDefaultBankResponse {
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Blobs
 //
@@ -644,6 +658,17 @@ service GatewayService {
     };
   }
 
+  rpc GetDefaultBank (GetDefaultBankRequest) returns (GetDefaultBankResponse) {
+    option (google.api.http) = {
+      get: "/defaultbank"
+    };
+  }
+
+  rpc SetDefaultBank (SetDefaultBankRequest) returns (SetDefaultBankResponse) {
+    option (google.api.http) = {
+      post: "/defaultbank?bank_id={bank_id}"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Testing.
