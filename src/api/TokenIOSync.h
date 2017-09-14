@@ -84,13 +84,11 @@
 - (TKMemberSync *)loginMember:(NSString *)memberId;
 
 /**
- * Sends a notification to request payment
+ * Sends a notification to request payment. The from alias in tokenpayload will be notified.
  *
- * @param alias alias to notify
  * @param token payload of a token to be sent
  */
-- (void)notifyPaymentRequest:(Alias *)alias
-                       token:(TokenPayload *)token;
+- (void)notifyPaymentRequest:(TokenPayload *)token;
 
 /**
  * Sends a notification to request linking of accounts

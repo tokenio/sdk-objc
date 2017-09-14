@@ -85,12 +85,10 @@
     }];
 }
 
-- (void)notifyPaymentRequest:(Alias *)alias
-                       token:(TokenPayload *)token {
+- (void)notifyPaymentRequest:(TokenPayload *)token {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async notifyPaymentRequest:alias
-                                   token:token
+        [self.async notifyPaymentRequest:token
                                onSuccess:^(void) {call.onSuccess(nil);}
                                  onError:call.onError
          ];

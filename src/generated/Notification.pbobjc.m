@@ -168,6 +168,135 @@ typedef struct PayeeTransferProcessed__storage_ {
 
 @end
 
+#pragma mark - PayerTransferFailed
+
+@implementation PayerTransferFailed
+
+@dynamic transferId;
+
+typedef struct PayerTransferFailed__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *transferId;
+} PayerTransferFailed__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transferId",
+        .dataTypeSpecific.className = NULL,
+        .number = PayerTransferFailed_FieldNumber_TransferId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PayerTransferFailed__storage_, transferId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PayerTransferFailed class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PayerTransferFailed__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - TransferProcessed
+
+@implementation TransferProcessed
+
+@dynamic transferId;
+
+typedef struct TransferProcessed__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *transferId;
+} TransferProcessed__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transferId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransferProcessed_FieldNumber_TransferId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferProcessed__storage_, transferId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransferProcessed class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransferProcessed__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - TransferFailed
+
+@implementation TransferFailed
+
+@dynamic transferId;
+
+typedef struct TransferFailed__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *transferId;
+} TransferFailed__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transferId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransferFailed_FieldNumber_TransferId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferFailed__storage_, transferId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransferFailed class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransferFailed__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - LinkAccounts
 
 @implementation LinkAccounts
@@ -422,6 +551,9 @@ typedef struct PaymentRequest__storage_ {
 @dynamic linkAccountsAndAddKey;
 @dynamic payeeTransferProcessed;
 @dynamic paymentRequest;
+@dynamic payerTransferFailed;
+@dynamic transferProcessed;
+@dynamic transferFailed;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -432,6 +564,9 @@ typedef struct NotifyBody__storage_ {
   LinkAccountsAndAddKey *linkAccountsAndAddKey;
   PayeeTransferProcessed *payeeTransferProcessed;
   PaymentRequest *paymentRequest;
+  PayerTransferFailed *payerTransferFailed;
+  TransferProcessed *transferProcessed;
+  TransferFailed *transferFailed;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -500,6 +635,33 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_PaymentRequest,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, paymentRequest),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "payerTransferFailed",
+        .dataTypeSpecific.className = GPBStringifySymbol(PayerTransferFailed),
+        .number = NotifyBody_FieldNumber_PayerTransferFailed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, payerTransferFailed),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transferProcessed",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferProcessed),
+        .number = NotifyBody_FieldNumber_TransferProcessed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, transferProcessed),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transferFailed",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferFailed),
+        .number = NotifyBody_FieldNumber_TransferFailed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, transferFailed),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

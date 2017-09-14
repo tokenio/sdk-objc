@@ -258,6 +258,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetDefaultBank(GetDefaultBankRequest) returns (GetDefaultBankResponse)
+
+- (void)getDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetDefaultBank(SetDefaultBankRequest) returns (SetDefaultBankResponse)
+
+- (void)setDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
 
 /**

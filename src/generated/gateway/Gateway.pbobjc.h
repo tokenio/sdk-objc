@@ -245,6 +245,7 @@ typedef GPB_ENUM(ResolveAliasResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetAliasesResponse_FieldNumber) {
   GetAliasesResponse_FieldNumber_AliasesArray = 1,
+  GetAliasesResponse_FieldNumber_UnverifiedAliasesArray = 2,
 };
 
 @interface GetAliasesResponse : GPBMessage
@@ -252,6 +253,10 @@ typedef GPB_ENUM(GetAliasesResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *aliasesArray;
 /** The number of items in @c aliasesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger aliasesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *unverifiedAliasesArray;
+/** The number of items in @c unverifiedAliasesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger unverifiedAliasesArray_Count;
 
 @end
 
@@ -669,15 +674,10 @@ typedef GPB_ENUM(GetNotificationResponse_FieldNumber) {
 #pragma mark - RequestTransferRequest
 
 typedef GPB_ENUM(RequestTransferRequest_FieldNumber) {
-  RequestTransferRequest_FieldNumber_Alias = 1,
   RequestTransferRequest_FieldNumber_TokenPayload = 2,
 };
 
 @interface RequestTransferRequest : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
-/** Test to see if @c alias has been set. */
-@property(nonatomic, readwrite) BOOL hasAlias;
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *tokenPayload;
 /** Test to see if @c tokenPayload has been set. */
@@ -896,6 +896,42 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 
 /** Optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@end
+
+#pragma mark - GetDefaultBankRequest
+
+@interface GetDefaultBankRequest : GPBMessage
+
+@end
+
+#pragma mark - GetDefaultBankResponse
+
+typedef GPB_ENUM(GetDefaultBankResponse_FieldNumber) {
+  GetDefaultBankResponse_FieldNumber_BankId = 1,
+};
+
+@interface GetDefaultBankResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - SetDefaultBankRequest
+
+typedef GPB_ENUM(SetDefaultBankRequest_FieldNumber) {
+  SetDefaultBankRequest_FieldNumber_BankId = 1,
+};
+
+@interface SetDefaultBankRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - SetDefaultBankResponse
+
+@interface SetDefaultBankResponse : GPBMessage
 
 @end
 

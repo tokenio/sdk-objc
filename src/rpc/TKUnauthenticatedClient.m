@@ -151,12 +151,10 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyPaymentRequest:(Alias *)alias
-                       token:(TokenPayload *)token
+- (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
     RequestTransferRequest *request = [RequestTransferRequest message];
-    request.alias = alias;
     request.tokenPayload = token;
     RpcLogStart(request);
 

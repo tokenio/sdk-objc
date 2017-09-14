@@ -34,8 +34,11 @@ CF_EXTERN_C_BEGIN
 @class MemberAliasOperation;
 @class MemberOperation;
 @class MemberOperationMetadata_AddAliasMetadata;
+@class MemberRecoveryOperation;
+@class MemberRecoveryOperation_Authorization;
+@class MemberRecoveryRulesOperation;
 @class MemberRemoveKeyOperation;
-@class MemberUsernameOperation;
+@class RecoveryRule;
 @class Signature;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -127,18 +130,64 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
 
 @end
 
-#pragma mark - MemberUsernameOperation
+#pragma mark - MemberRecoveryRulesOperation
 
-typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
-  MemberUsernameOperation_FieldNumber_Username = 1,
+typedef GPB_ENUM(MemberRecoveryRulesOperation_FieldNumber) {
+  MemberRecoveryRulesOperation_FieldNumber_RecoveryRule = 1,
 };
 
 /**
- * TODO(PR-1161): Remove this when we no longer require backwards compatibility with usernames
+ * Sets recovery rules for member. Overrides all previously set rules.
  **/
-@interface MemberUsernameOperation : GPBMessage
+@interface MemberRecoveryRulesOperation : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
+/** Test to see if @c recoveryRule has been set. */
+@property(nonatomic, readwrite) BOOL hasRecoveryRule;
+
+@end
+
+#pragma mark - MemberRecoveryOperation
+
+typedef GPB_ENUM(MemberRecoveryOperation_FieldNumber) {
+  MemberRecoveryOperation_FieldNumber_Authorization = 1,
+  MemberRecoveryOperation_FieldNumber_AgentSignature = 2,
+};
+
+/**
+ * Provides an agent signature authorizing the recovery operation. Multiple authorizations
+ * migth be required in order to initiate the recovery process.  The number of required signatures
+ * is governed by Recovery Rules associated with the member.
+ **/
+@interface MemberRecoveryOperation : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryOperation_Authorization *authorization;
+/** Test to see if @c authorization has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorization;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *agentSignature;
+/** Test to see if @c agentSignature has been set. */
+@property(nonatomic, readwrite) BOOL hasAgentSignature;
+
+@end
+
+#pragma mark - MemberRecoveryOperation_Authorization
+
+typedef GPB_ENUM(MemberRecoveryOperation_Authorization_FieldNumber) {
+  MemberRecoveryOperation_Authorization_FieldNumber_MemberId = 1,
+  MemberRecoveryOperation_Authorization_FieldNumber_PrevHash = 2,
+  MemberRecoveryOperation_Authorization_FieldNumber_MemberKey = 3,
+};
+
+@interface MemberRecoveryOperation_Authorization : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *prevHash;
+
+@property(nonatomic, readwrite, strong, null_resettable) Key *memberKey;
+/** Test to see if @c memberKey has been set. */
+@property(nonatomic, readwrite) BOOL hasMemberKey;
 
 @end
 
@@ -147,9 +196,11 @@ typedef GPB_ENUM(MemberUsernameOperation_FieldNumber) {
 typedef GPB_ENUM(MemberOperation_FieldNumber) {
   MemberOperation_FieldNumber_AddKey = 1,
   MemberOperation_FieldNumber_RemoveKey = 2,
-  MemberOperation_FieldNumber_AddUsername = 3,
   MemberOperation_FieldNumber_RemoveAlias = 4,
   MemberOperation_FieldNumber_AddAlias = 5,
+  MemberOperation_FieldNumber_VerifyAlias = 6,
+  MemberOperation_FieldNumber_RecoveryRules = 7,
+  MemberOperation_FieldNumber_Recover = 8,
 };
 
 typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
@@ -158,7 +209,9 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_RemoveKey = 2,
   MemberOperation_Operation_OneOfCase_AddAlias = 5,
   MemberOperation_Operation_OneOfCase_RemoveAlias = 4,
-  MemberOperation_Operation_OneOfCase_AddUsername = 3,
+  MemberOperation_Operation_OneOfCase_VerifyAlias = 6,
+  MemberOperation_Operation_OneOfCase_RecoveryRules = 7,
+  MemberOperation_Operation_OneOfCase_Recover = 8,
 };
 
 @interface MemberOperation : GPBMessage
@@ -173,8 +226,11 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *removeAlias;
 
-/** TODO(PR-1161): Remove this when we no longer require bakcwards compatibility with usernames */
-@property(nonatomic, readwrite, strong, null_resettable) MemberUsernameOperation *addUsername;
+@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *verifyAlias;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryRulesOperation *recoveryRules;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryOperation *recover;
 
 @end
 
@@ -252,6 +308,28 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 
 @end
 
+#pragma mark - RecoveryRule
+
+typedef GPB_ENUM(RecoveryRule_FieldNumber) {
+  RecoveryRule_FieldNumber_PrimaryAgent = 1,
+  RecoveryRule_FieldNumber_SecondaryAgentsArray = 2,
+};
+
+/**
+ * A recovery rule specifies which signatures are required for a member reset operation.
+ **/
+@interface RecoveryRule : GPBMessage
+
+/** the member id of the primary agent */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *primaryAgent;
+
+/** an optional list of member ids acting as secondary agents */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *secondaryAgentsArray;
+/** The number of items in @c secondaryAgentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger secondaryAgentsArray_Count;
+
+@end
+
 #pragma mark - Member
 
 typedef GPB_ENUM(Member_FieldNumber) {
@@ -259,6 +337,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_LastHash = 2,
   Member_FieldNumber_AliasHashesArray = 3,
   Member_FieldNumber_KeysArray = 4,
+  Member_FieldNumber_UnverifiedAliasHashesArray = 5,
+  Member_FieldNumber_RecoveryRule = 6,
 };
 
 /**
@@ -277,6 +357,14 @@ typedef GPB_ENUM(Member_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
 /** The number of items in @c keysArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger keysArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *unverifiedAliasHashesArray;
+/** The number of items in @c unverifiedAliasHashesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger unverifiedAliasHashesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
+/** Test to see if @c recoveryRule has been set. */
+@property(nonatomic, readwrite) BOOL hasRecoveryRule;
 
 @end
 

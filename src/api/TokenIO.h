@@ -101,15 +101,13 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
             onError:(OnError)onError;
 
 /**
- * Sends a notification to request payment
+ * Sends a notification to request payment. The from alias in tokenpayload will be notified.
  *
- * @param alias alias to notify
  * @param token payload of a token to be sent
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyPaymentRequest:(Alias *)alias
-                       token:(TokenPayload *)token
+- (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError;
 

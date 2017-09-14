@@ -68,6 +68,7 @@ message GetAliasesRequest {}
 
 message GetAliasesResponse {
   repeated io.token.proto.common.alias.Alias aliases = 1;
+  repeated io.token.proto.common.alias.Alias unverified_aliases = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +197,6 @@ message GetNotificationResponse {
 }
 
 message RequestTransferRequest {
-  io.token.proto.common.alias.Alias alias = 1;
   io.token.proto.common.token.TokenPayload token_payload = 2;
 }
 
@@ -264,6 +264,20 @@ message GetTransactionsRequest {
 message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
+}
+
+message GetDefaultBankRequest {
+}
+
+message GetDefaultBankResponse {
+  string bank_id = 1;
+}
+
+message SetDefaultBankRequest {
+  string bank_id = 1;
+}
+
+message SetDefaultBankResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -644,6 +658,17 @@ service GatewayService {
     };
   }
 
+  rpc GetDefaultBank (GetDefaultBankRequest) returns (GetDefaultBankResponse) {
+    option (google.api.http) = {
+      get: "/defaultbank"
+    };
+  }
+
+  rpc SetDefaultBank (SetDefaultBankRequest) returns (SetDefaultBankResponse) {
+    option (google.api.http) = {
+      post: "/defaultbank?bank_id={bank_id}"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Testing.
