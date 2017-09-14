@@ -22,11 +22,9 @@ message MemberAliasOperation {
   string alias_hash = 1;
 }
 
-// Sets recovery rules for member, indicating which signatures are required for a member reset
-// operation. Overrides all previously set rules.
+// Sets recovery rules for member. Overrides all previously set rules.
 message MemberRecoveryRulesOperation {
-  string primary_agent = 1;             // the member id of the primary agent
-  repeated string secondary_agents = 2; // an optional list of member ids acting as secondary agents
+  RecoveryRule recovery_rule = 1;
 }
 
 // Provides an agent signature authorizing the recovery operation. Multiple authorizations
@@ -38,7 +36,8 @@ message MemberRecoveryOperation {
 
   message Authorization {
     string member_id = 1;
-    io.token.proto.common.security.Key member_key = 2;
+    string prev_hash = 2;
+    io.token.proto.common.security.Key member_key = 3;
   }
 }
 
@@ -75,6 +74,12 @@ message MemberOperationMetadata {
   }
 }
 
+// A recovery rule specifies which signatures are required for a member reset operation.
+message RecoveryRule {
+  string primary_agent = 1;             // the member id of the primary agent
+  repeated string secondary_agents = 2; // an optional list of member ids acting as secondary agents
+}
+
 // A member record that is computed by replaying all the member updates.
 message Member {
   string id = 1;
@@ -82,6 +87,7 @@ message Member {
   repeated string alias_hashes = 3;
   repeated io.token.proto.common.security.Key keys = 4;
   repeated string unverified_alias_hashes = 5;
+  RecoveryRule recovery_rule = 6;
 }
 
 // A member address record

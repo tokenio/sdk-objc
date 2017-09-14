@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class MemberRecoveryOperation_Authorization;
 @class MemberRecoveryRulesOperation;
 @class MemberRemoveKeyOperation;
+@class RecoveryRule;
 @class Signature;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -132,23 +133,17 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
 #pragma mark - MemberRecoveryRulesOperation
 
 typedef GPB_ENUM(MemberRecoveryRulesOperation_FieldNumber) {
-  MemberRecoveryRulesOperation_FieldNumber_PrimaryAgent = 1,
-  MemberRecoveryRulesOperation_FieldNumber_SecondaryAgentsArray = 2,
+  MemberRecoveryRulesOperation_FieldNumber_RecoveryRule = 1,
 };
 
 /**
- * Sets recovery rules for member, indicating which signatures are required for a member reset
- * operation. Overrides all previously set rules.
+ * Sets recovery rules for member. Overrides all previously set rules.
  **/
 @interface MemberRecoveryRulesOperation : GPBMessage
 
-/** the member id of the primary agent */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *primaryAgent;
-
-/** an optional list of member ids acting as secondary agents */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *secondaryAgentsArray;
-/** The number of items in @c secondaryAgentsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger secondaryAgentsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
+/** Test to see if @c recoveryRule has been set. */
+@property(nonatomic, readwrite) BOOL hasRecoveryRule;
 
 @end
 
@@ -180,12 +175,15 @@ typedef GPB_ENUM(MemberRecoveryOperation_FieldNumber) {
 
 typedef GPB_ENUM(MemberRecoveryOperation_Authorization_FieldNumber) {
   MemberRecoveryOperation_Authorization_FieldNumber_MemberId = 1,
-  MemberRecoveryOperation_Authorization_FieldNumber_MemberKey = 2,
+  MemberRecoveryOperation_Authorization_FieldNumber_PrevHash = 2,
+  MemberRecoveryOperation_Authorization_FieldNumber_MemberKey = 3,
 };
 
 @interface MemberRecoveryOperation_Authorization : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *prevHash;
 
 @property(nonatomic, readwrite, strong, null_resettable) Key *memberKey;
 /** Test to see if @c memberKey has been set. */
@@ -310,6 +308,28 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 
 @end
 
+#pragma mark - RecoveryRule
+
+typedef GPB_ENUM(RecoveryRule_FieldNumber) {
+  RecoveryRule_FieldNumber_PrimaryAgent = 1,
+  RecoveryRule_FieldNumber_SecondaryAgentsArray = 2,
+};
+
+/**
+ * A recovery rule specifies which signatures are required for a member reset operation.
+ **/
+@interface RecoveryRule : GPBMessage
+
+/** the member id of the primary agent */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *primaryAgent;
+
+/** an optional list of member ids acting as secondary agents */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *secondaryAgentsArray;
+/** The number of items in @c secondaryAgentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger secondaryAgentsArray_Count;
+
+@end
+
 #pragma mark - Member
 
 typedef GPB_ENUM(Member_FieldNumber) {
@@ -318,6 +338,7 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_AliasHashesArray = 3,
   Member_FieldNumber_KeysArray = 4,
   Member_FieldNumber_UnverifiedAliasHashesArray = 5,
+  Member_FieldNumber_RecoveryRule = 6,
 };
 
 /**
@@ -340,6 +361,10 @@ typedef GPB_ENUM(Member_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *unverifiedAliasHashesArray;
 /** The number of items in @c unverifiedAliasHashesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unverifiedAliasHashesArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
+/** Test to see if @c recoveryRule has been set. */
+@property(nonatomic, readwrite) BOOL hasRecoveryRule;
 
 @end
 

@@ -219,13 +219,11 @@ typedef struct MemberAliasOperation__storage_ {
 
 @implementation MemberRecoveryRulesOperation
 
-@dynamic primaryAgent;
-@dynamic secondaryAgentsArray, secondaryAgentsArray_Count;
+@dynamic hasRecoveryRule, recoveryRule;
 
 typedef struct MemberRecoveryRulesOperation__storage_ {
   uint32_t _has_storage_[1];
-  NSString *primaryAgent;
-  NSMutableArray *secondaryAgentsArray;
+  RecoveryRule *recoveryRule;
 } MemberRecoveryRulesOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -235,22 +233,13 @@ typedef struct MemberRecoveryRulesOperation__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "primaryAgent",
-        .dataTypeSpecific.className = NULL,
-        .number = MemberRecoveryRulesOperation_FieldNumber_PrimaryAgent,
+        .name = "recoveryRule",
+        .dataTypeSpecific.className = GPBStringifySymbol(RecoveryRule),
+        .number = MemberRecoveryRulesOperation_FieldNumber_RecoveryRule,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MemberRecoveryRulesOperation__storage_, primaryAgent),
+        .offset = (uint32_t)offsetof(MemberRecoveryRulesOperation__storage_, recoveryRule),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "secondaryAgentsArray",
-        .dataTypeSpecific.className = NULL,
-        .number = MemberRecoveryRulesOperation_FieldNumber_SecondaryAgentsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MemberRecoveryRulesOperation__storage_, secondaryAgentsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -328,11 +317,13 @@ typedef struct MemberRecoveryOperation__storage_ {
 @implementation MemberRecoveryOperation_Authorization
 
 @dynamic memberId;
+@dynamic prevHash;
 @dynamic hasMemberKey, memberKey;
 
 typedef struct MemberRecoveryOperation_Authorization__storage_ {
   uint32_t _has_storage_[1];
   NSString *memberId;
+  NSString *prevHash;
   Key *memberKey;
 } MemberRecoveryOperation_Authorization__storage_;
 
@@ -352,10 +343,19 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
+        .name = "prevHash",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberRecoveryOperation_Authorization_FieldNumber_PrevHash,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MemberRecoveryOperation_Authorization__storage_, prevHash),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "memberKey",
         .dataTypeSpecific.className = GPBStringifySymbol(Key),
         .number = MemberRecoveryOperation_Authorization_FieldNumber_MemberKey,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation_Authorization__storage_, memberKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -674,6 +674,60 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
 
 @end
 
+#pragma mark - RecoveryRule
+
+@implementation RecoveryRule
+
+@dynamic primaryAgent;
+@dynamic secondaryAgentsArray, secondaryAgentsArray_Count;
+
+typedef struct RecoveryRule__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *primaryAgent;
+  NSMutableArray *secondaryAgentsArray;
+} RecoveryRule__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "primaryAgent",
+        .dataTypeSpecific.className = NULL,
+        .number = RecoveryRule_FieldNumber_PrimaryAgent,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RecoveryRule__storage_, primaryAgent),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "secondaryAgentsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = RecoveryRule_FieldNumber_SecondaryAgentsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RecoveryRule__storage_, secondaryAgentsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RecoveryRule class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RecoveryRule__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - Member
 
 @implementation Member
@@ -683,6 +737,7 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
 @dynamic aliasHashesArray, aliasHashesArray_Count;
 @dynamic keysArray, keysArray_Count;
 @dynamic unverifiedAliasHashesArray, unverifiedAliasHashesArray_Count;
+@dynamic hasRecoveryRule, recoveryRule;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
@@ -691,6 +746,7 @@ typedef struct Member__storage_ {
   NSMutableArray *aliasHashesArray;
   NSMutableArray *keysArray;
   NSMutableArray *unverifiedAliasHashesArray;
+  RecoveryRule *recoveryRule;
 } Member__storage_;
 
 // This method is threadsafe because it is initially called
@@ -743,6 +799,15 @@ typedef struct Member__storage_ {
         .offset = (uint32_t)offsetof(Member__storage_, unverifiedAliasHashesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "recoveryRule",
+        .dataTypeSpecific.className = GPBStringifySymbol(RecoveryRule),
+        .number = Member_FieldNumber_RecoveryRule,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Member__storage_, recoveryRule),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -522,10 +522,12 @@ typedef struct GetAliasesRequest__storage_ {
 @implementation GetAliasesResponse
 
 @dynamic aliasesArray, aliasesArray_Count;
+@dynamic unverifiedAliasesArray, unverifiedAliasesArray_Count;
 
 typedef struct GetAliasesResponse__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *aliasesArray;
+  NSMutableArray *unverifiedAliasesArray;
 } GetAliasesResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -540,6 +542,15 @@ typedef struct GetAliasesResponse__storage_ {
         .number = GetAliasesResponse_FieldNumber_AliasesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetAliasesResponse__storage_, aliasesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "unverifiedAliasesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = GetAliasesResponse_FieldNumber_UnverifiedAliasesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetAliasesResponse__storage_, unverifiedAliasesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -1879,12 +1890,10 @@ typedef struct GetNotificationResponse__storage_ {
 
 @implementation RequestTransferRequest
 
-@dynamic hasAlias, alias;
 @dynamic hasTokenPayload, tokenPayload;
 
 typedef struct RequestTransferRequest__storage_ {
   uint32_t _has_storage_[1];
-  Alias *alias;
   TokenPayload *tokenPayload;
 } RequestTransferRequest__storage_;
 
@@ -1895,19 +1904,10 @@ typedef struct RequestTransferRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "alias",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
-        .number = RequestTransferRequest_FieldNumber_Alias,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestTransferRequest__storage_, alias),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "tokenPayload",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
         .number = RequestTransferRequest_FieldNumber_TokenPayload,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestTransferRequest__storage_, tokenPayload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,

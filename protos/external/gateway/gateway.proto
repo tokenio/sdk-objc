@@ -68,6 +68,7 @@ message GetAliasesRequest {}
 
 message GetAliasesResponse {
   repeated io.token.proto.common.alias.Alias aliases = 1;
+  repeated io.token.proto.common.alias.Alias unverified_aliases = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +197,6 @@ message GetNotificationResponse {
 }
 
 message RequestTransferRequest {
-  io.token.proto.common.alias.Alias alias = 1;
   io.token.proto.common.token.TokenPayload token_payload = 2;
 }
 
