@@ -14,6 +14,7 @@
 #import "TKLocalizer.h"
 #import "TKRpcErrorHandler.h"
 #import "TKError.h"
+#import "TKUnauthenticatedClient.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -22,6 +23,7 @@
     NSString *memberId;
     NSString *onBehalfOfMemberId;
     TKRpcErrorHandler *errorHandler;
+    TKUnauthenticatedClient *unauthenticatedClient;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
@@ -37,6 +39,11 @@
         memberId = memberId_;
         rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
         errorHandler = errorHandler_;
+        
+        unauthenticatedClient = [[TKUnauthenticatedClient alloc]
+                                 initWithGateway:gateway
+                                       timeoutMs:timeoutMs_
+                                    errorHandler:errorHandler];
     }
     
     return self;
@@ -56,7 +63,7 @@
              onError:(OnError)onError{
     [self updateMember:member
             operations:operations
-             metadataArray:[NSArray array]
+         metadataArray:[NSArray array]
              onSuccess:onSuccess
                onError:onError];
 }
@@ -66,42 +73,50 @@
            metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
            onSuccess:(OnSuccessWithMember)onSuccess
              onError:(OnError)onError {
-    UpdateMemberRequest *request = [UpdateMemberRequest message];
-    request.update.memberId = memberId;
-    request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
-    request.update.prevHash = member.lastHash;
-    request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
-
-    TKSignature *signature = [crypto sign:request.update
-                                 usingKey:Key_Level_Privileged
-                                   reason:TKLocalizedString(
-                                           @"Signature_Reason_UpdateMember",
-                                           @"Approve updating user account")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-
-    request.updateSignature.memberId = memberId;
-    request.updateSignature.keyId = signature.key.id_p;
-    request.updateSignature.signature = signature.value;
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToUpdateMemberWithRequest:request
-                                 handler:^(UpdateMemberResponse *response, NSError *error) {
-                                     if (response) {
-                                         RpcLogCompleted(response);
-                                         onSuccess(response.member);
-                                     } else {
-                                         [errorHandler handle:onError withError:error];
-                                     }
-                                 }
-    ];
-
-    [self _startCall:call
-         withRequest:request
-             onError:onError];
+    
+    [unauthenticatedClient getMember:memberId
+                           onSuccess:^(Member *newMember) {
+                               UpdateMemberRequest *request = [UpdateMemberRequest message];
+                               request.update.memberId = memberId;
+                               request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
+                               //Update to the latest lastHash before update member
+                               request.update.prevHash = newMember.lastHash;
+                               request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
+                               
+                               TKSignature *signature = [crypto sign:request.update
+                                                            usingKey:Key_Level_Privileged
+                                                              reason:TKLocalizedString(
+                                                                                       @"Signature_Reason_UpdateMember",
+                                                                                       @"Approve updating user account")
+                                                             onError:onError];
+                               if (!signature) {
+                                   return;
+                               }
+                               
+                               request.updateSignature.memberId = memberId;
+                               request.updateSignature.keyId = signature.key.id_p;
+                               request.updateSignature.signature = signature.value;
+                               RpcLogStart(request);
+                               
+                               GRPCProtoCall *call = [gateway
+                                                      RPCToUpdateMemberWithRequest:request
+                                                      handler:^(UpdateMemberResponse *response, NSError *error) {
+                                                          if (response) {
+                                                              RpcLogCompleted(response);
+                                                              onSuccess(response.member);
+                                                          } else {
+                                                              [errorHandler handle:onError withError:error];
+                                                          }
+                                                      }
+                                                      ];
+                               
+                               [self _startCall:call
+                                    withRequest:request
+                                        onError:onError];
+                           }
+                             onError:onError];
+    
+    
 }
 
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
