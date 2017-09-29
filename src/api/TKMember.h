@@ -259,6 +259,25 @@
          onSuccess:(OnSuccessWithTKAccount)onSuccess
            onError:(OnError)onError;
 
+
+/**
+ * Looks up a member's default account
+ *
+ */
+- (void)getDefaultAccount:(OnSuccessWithTKAccount)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Updates member's default account
+ *
+ * @param accountId id of account to set to default
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)setDefaultAccount:(NSString *)accountId
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
+
 /**
  * Looks up account balance.
  *

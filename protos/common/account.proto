@@ -26,6 +26,7 @@ message Account {
   string name = 2;
   string bank_id = 3;
   repeated AccountTag tags = 4;
+  bool is_disabled = 5; // indicates whether account requires re-linking
 }
 
 // Account information as seen by the bank. This is what the end user links with

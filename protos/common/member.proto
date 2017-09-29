@@ -74,6 +74,18 @@ message MemberOperationMetadata {
   }
 }
 
+// Metadata associated with MemberUpdateResponse.
+message MemberOperationResponseMetadata {
+  oneof type {
+    AddAliasResponseMetadata add_alias_response_metadata = 1;
+  }
+
+  message AddAliasResponseMetadata {
+    string alias_hash = 1;
+    string verification_id = 2;
+  }
+}
+
 // A recovery rule specifies which signatures are required for a member reset operation.
 message RecoveryRule {
   string primary_agent = 1;             // the member id of the primary agent
@@ -88,6 +100,8 @@ message Member {
   repeated io.token.proto.common.security.Key keys = 4;
   repeated string unverified_alias_hashes = 5;
   RecoveryRule recovery_rule = 6;
+  int32 last_recovery_sequence = 7; // the sequence number for the member's last recovery entry
+  int32 last_operation_sequence = 8; // the sequence number for the member's last operation
 }
 
 // A member address record
