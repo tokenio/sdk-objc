@@ -77,6 +77,33 @@
     [rpc execute:call request:request];
 }
 
+- (void)getTokenMember:(Alias *)alias
+          onSuccess:(OnSuccessWithTokenMember)onSuccess
+            onError:(OnError)onError {
+    ResolveAliasRequest *request = [ResolveAliasRequest message];
+    request.alias = alias;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToResolveAliasWithRequest:request
+                           handler:^(ResolveAliasResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   if (response.hasMember) {
+                                       onSuccess(response.member);
+                                   }
+                                   else{
+                                       onSuccess(nil);
+                                   }
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+
+
 - (void)getMember:(NSString *)memberId
         onSuccess:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError {

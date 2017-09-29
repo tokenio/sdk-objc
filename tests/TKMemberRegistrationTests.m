@@ -6,7 +6,7 @@
 #import "TKCrypto.h"
 #import "TKTestBase.h"
 #import "DeviceInfo.h"
-
+#import "Token.pbobjc.h"
 
 @interface TKMemberRegistrationTests : TKTestBase
 @end
@@ -71,6 +71,23 @@
         XCTAssertNil([tokenIO getMemberId:alias]);
         [member addAlias:alias];
         XCTAssertTrue([[tokenIO getMemberId:alias] isEqualToString:member.id]);
+    }];
+}
+
+- (void)testGetTokenMember {
+    [self run: ^(TokenIOSync *tokenIO) {
+        //TODO: After the ResolveAliasRequest support other type (phone etc), we need to add tests here
+        TKMemberSync *emailMember = [tokenIO createMember:[self generateEmailAlias]];
+        
+        Alias *unknownAlias = [Alias new];
+        unknownAlias.value = emailMember.firstAlias.value;
+        unknownAlias.type = Alias_Type_Unknown;
+        
+        TokenMember* emailTokenMember = [tokenIO getTokenMember:unknownAlias];
+        XCTAssertEqual(emailTokenMember.alias.type, emailMember.firstAlias.type);
+        XCTAssertTrue([emailTokenMember.alias.value isEqualToString:emailMember.firstAlias.value]);
+        XCTAssertTrue([emailTokenMember.id_p isEqualToString:emailMember.id]);
+        
     }];
 }
 

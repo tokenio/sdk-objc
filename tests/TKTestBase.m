@@ -179,9 +179,20 @@
 }
 
 - (Alias *)generateAlias {
+    return [self generateEmailAlias];
+}
+
+- (Alias *)generateEmailAlias {
     Alias *alias = [Alias new];
     alias.value = [[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"@token.io"];
     alias.type = Alias_Type_Email;
+    return alias;
+}
+
+- (Alias *)generatePhoneAlias {
+    Alias *alias = [Alias new];
+    alias.value = [[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"@token.io"];
+    alias.type = Alias_Type_Phone;
     return alias;
 }
 

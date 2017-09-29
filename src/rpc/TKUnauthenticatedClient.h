@@ -51,6 +51,17 @@
             onError:(OnError)onError;
 
 /**
+ * Looks up token member for a given unknown alias.
+ * Set alias Alias_Type_Unknown if the alias type is unknown
+ *
+ * @param alias alias to check
+ * @param onSuccess invoked if successful; return token member if alias already exists, nil otherwise
+ */
+- (void)getTokenMember:(Alias *)alias
+             onSuccess:(OnSuccessWithTokenMember)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Creates a new Token member.
  *
  * @param memberId member id

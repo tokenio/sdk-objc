@@ -24,6 +24,7 @@
 @class Pricing;
 @class Profile;
 @class Alias;
+@class TokenMember;
 
 typedef void (^ _Nonnull OnSuccess)();
 typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
@@ -74,3 +75,5 @@ typedef void (^ _Nonnull OnSuccessWithBankInfo)(BankInfo * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithDeviceInfo)(DeviceInfo * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithProfile)(Profile * _Nonnull);
+
+typedef void (^ _Nonnull OnSuccessWithTokenMember)(TokenMember * _Nullable);

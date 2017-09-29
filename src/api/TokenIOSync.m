@@ -71,6 +71,15 @@
     return result;
 }
 
+- (TokenMember *)getTokenMember:(Alias *)alias {
+    TKRpcSyncCall<TokenMember *> *call = [TKRpcSyncCall create];
+    TokenMember *result = [call run:^{
+        [self.async getTokenMember:alias
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
+    }];
+    return result;
+}
 
 - (TKMemberSync *)loginMember:(NSString *)memberId {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
