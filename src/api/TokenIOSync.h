@@ -57,6 +57,15 @@
 - (NSString *)getMemberId:(Alias *)alias;
 
 /**
+ * Looks up token member for a given unknown alias.
+ * Set alias Alias_Type_Unknown if the alias type is unknown
+ *
+ * @param alias alias to check
+ * @return token member if alias already exists, nil otherwise
+ */
+- (TokenMember *)getTokenMember:(Alias *)alias;
+
+/**
  * Creates a new Token member with a set of auto generated keys and the
  * given alias.
  *

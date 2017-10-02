@@ -109,7 +109,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 
 - (void)getMemberId:(Alias *)alias
           onSuccess:(OnSuccessWithString)onSuccess
-            onError:(OnError)onError;{
+            onError:(OnError)onError {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
                                        initWithGateway:gateway
                                        timeoutMs:timeoutMs
@@ -117,6 +117,25 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     [client getMemberId:alias
               onSuccess:onSuccess
                 onError:onError];
+}
+
+/**
+ * Looks up token member for a given unknown alias.
+ * Set alias Alias_Type_Unknown if the alias type is unknown
+ *
+ * @param alias alias to check
+ * @param onSuccess invoked if successful; return token member if alias already exists, nil otherwise
+ */
+- (void)getTokenMember:(Alias *)alias
+             onSuccess:(OnSuccessWithTokenMember)onSuccess
+               onError:(OnError)onError {
+    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
+                                       initWithGateway:gateway
+                                       timeoutMs:timeoutMs
+                                       errorHandler:errorHandler];
+    [client getTokenMember:alias
+                 onSuccess:onSuccess
+                   onError:onError];
 }
 
 - (void)loginMember:(NSString *)memberId

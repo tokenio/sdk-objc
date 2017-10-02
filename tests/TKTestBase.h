@@ -82,9 +82,20 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 - (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port;
 
 /**
- * Creates a random alias with type email.
- * @return Alias with type email
+ * Creates a random alias with default type (email).
+ * @return Alias with default type (email)
  */
 - (Alias *)generateAlias;
 
+/**
+ * Creates a random alias with email type.
+ * @return Alias with email type
+ */
+- (Alias *)generateEmailAlias;
+
+/**
+ * Creates a random alias with phone type.
+ * @return Alias with phone type
+ */
+- (Alias *)generatePhoneAlias;
 @end
