@@ -130,6 +130,30 @@
              responseClass:[GetAliasesResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark CompleteVerification(CompleteVerificationRequest) returns (CompleteVerificationResponse)
+
+- (void)completeVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCompleteVerificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToCompleteVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CompleteVerification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CompleteVerificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark RetryVerification(RetryVerificationRequest) returns (RetryVerificationResponse)
+
+- (void)retryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToRetryVerificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"RetryVerification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[RetryVerificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**
@@ -394,28 +418,28 @@
              responseClass:[GetTransactionsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetDefaultBank(GetDefaultBankRequest) returns (GetDefaultBankResponse)
+#pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
 
-- (void)getDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetDefaultBankWithRequest:request handler:handler] start];
+- (void)getDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetDefaultAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetDefaultBank"
+- (GRPCProtoCall *)RPCToGetDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetDefaultAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetDefaultBankResponse class]
+             responseClass:[GetDefaultAccountResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark SetDefaultBank(SetDefaultBankRequest) returns (SetDefaultBankResponse)
+#pragma mark SetDefaultAccount(SetDefaultAccountRequest) returns (SetDefaultAccountResponse)
 
-- (void)setDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSetDefaultBankWithRequest:request handler:handler] start];
+- (void)setDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetDefaultAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SetDefaultBank"
+- (GRPCProtoCall *)RPCToSetDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetDefaultAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SetDefaultBankResponse class]
+             responseClass:[SetDefaultAccountResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)

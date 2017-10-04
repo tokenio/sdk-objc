@@ -260,6 +260,56 @@ typedef GPB_ENUM(GetAliasesResponse_FieldNumber) {
 
 @end
 
+#pragma mark - CompleteVerificationRequest
+
+typedef GPB_ENUM(CompleteVerificationRequest_FieldNumber) {
+  CompleteVerificationRequest_FieldNumber_VerificationId = 1,
+  CompleteVerificationRequest_FieldNumber_Code = 2,
+};
+
+@interface CompleteVerificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
+
+@end
+
+#pragma mark - CompleteVerificationResponse
+
+@interface CompleteVerificationResponse : GPBMessage
+
+@end
+
+#pragma mark - RetryVerificationRequest
+
+typedef GPB_ENUM(RetryVerificationRequest_FieldNumber) {
+  RetryVerificationRequest_FieldNumber_MemberId = 1,
+  RetryVerificationRequest_FieldNumber_Alias = 2,
+};
+
+@interface RetryVerificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - RetryVerificationResponse
+
+typedef GPB_ENUM(RetryVerificationResponse_FieldNumber) {
+  RetryVerificationResponse_FieldNumber_VerificationId = 1,
+};
+
+@interface RetryVerificationResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@end
+
 #pragma mark - AddAddressRequest
 
 typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
@@ -899,39 +949,50 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetDefaultBankRequest
+#pragma mark - GetDefaultAccountRequest
 
-@interface GetDefaultBankRequest : GPBMessage
-
-@end
-
-#pragma mark - GetDefaultBankResponse
-
-typedef GPB_ENUM(GetDefaultBankResponse_FieldNumber) {
-  GetDefaultBankResponse_FieldNumber_BankId = 1,
+typedef GPB_ENUM(GetDefaultAccountRequest_FieldNumber) {
+  GetDefaultAccountRequest_FieldNumber_MemberId = 1,
 };
 
-@interface GetDefaultBankResponse : GPBMessage
+@interface GetDefaultAccountRequest : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
 
-#pragma mark - SetDefaultBankRequest
+#pragma mark - GetDefaultAccountResponse
 
-typedef GPB_ENUM(SetDefaultBankRequest_FieldNumber) {
-  SetDefaultBankRequest_FieldNumber_BankId = 1,
+typedef GPB_ENUM(GetDefaultAccountResponse_FieldNumber) {
+  GetDefaultAccountResponse_FieldNumber_Account = 1,
 };
 
-@interface SetDefaultBankRequest : GPBMessage
+@interface GetDefaultAccountResponse : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+@property(nonatomic, readwrite, strong, null_resettable) Account *account;
+/** Test to see if @c account has been set. */
+@property(nonatomic, readwrite) BOOL hasAccount;
 
 @end
 
-#pragma mark - SetDefaultBankResponse
+#pragma mark - SetDefaultAccountRequest
 
-@interface SetDefaultBankResponse : GPBMessage
+typedef GPB_ENUM(SetDefaultAccountRequest_FieldNumber) {
+  SetDefaultAccountRequest_FieldNumber_MemberId = 1,
+  SetDefaultAccountRequest_FieldNumber_AccountId = 2,
+};
+
+@interface SetDefaultAccountRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - SetDefaultAccountResponse
+
+@interface SetDefaultAccountResponse : GPBMessage
 
 @end
 

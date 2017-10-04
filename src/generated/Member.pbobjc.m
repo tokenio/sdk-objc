@@ -674,6 +674,116 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
 
 @end
 
+#pragma mark - MemberOperationResponseMetadata
+
+@implementation MemberOperationResponseMetadata
+
+@dynamic typeOneOfCase;
+@dynamic addAliasResponseMetadata;
+
+typedef struct MemberOperationResponseMetadata__storage_ {
+  uint32_t _has_storage_[2];
+  MemberOperationResponseMetadata_AddAliasResponseMetadata *addAliasResponseMetadata;
+} MemberOperationResponseMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "addAliasResponseMetadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationResponseMetadata_AddAliasResponseMetadata),
+        .number = MemberOperationResponseMetadata_FieldNumber_AddAliasResponseMetadata,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperationResponseMetadata__storage_, addAliasResponseMetadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberOperationResponseMetadata class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberOperationResponseMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "type",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void MemberOperationResponseMetadata_ClearTypeOneOfCase(MemberOperationResponseMetadata *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - MemberOperationResponseMetadata_AddAliasResponseMetadata
+
+@implementation MemberOperationResponseMetadata_AddAliasResponseMetadata
+
+@dynamic aliasHash;
+@dynamic verificationId;
+
+typedef struct MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *aliasHash;
+  NSString *verificationId;
+} MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "aliasHash",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_AliasHash,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_, aliasHash),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "verificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_VerificationId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_, verificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberOperationResponseMetadata_AddAliasResponseMetadata class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberOperationResponseMetadata)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RecoveryRule
 
 @implementation RecoveryRule
@@ -738,9 +848,13 @@ typedef struct RecoveryRule__storage_ {
 @dynamic keysArray, keysArray_Count;
 @dynamic unverifiedAliasHashesArray, unverifiedAliasHashesArray_Count;
 @dynamic hasRecoveryRule, recoveryRule;
+@dynamic lastRecoverySequence;
+@dynamic lastOperationSequence;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
+  int32_t lastRecoverySequence;
+  int32_t lastOperationSequence;
   NSString *id_p;
   NSString *lastHash;
   NSMutableArray *aliasHashesArray;
@@ -808,6 +922,24 @@ typedef struct Member__storage_ {
         .offset = (uint32_t)offsetof(Member__storage_, recoveryRule),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "lastRecoverySequence",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_LastRecoverySequence,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Member__storage_, lastRecoverySequence),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "lastOperationSequence",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_LastOperationSequence,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Member__storage_, lastOperationSequence),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
       },
     };
     GPBDescriptor *localDescriptor =

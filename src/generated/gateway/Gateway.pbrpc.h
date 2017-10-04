@@ -89,6 +89,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark CompleteVerification(CompleteVerificationRequest) returns (CompleteVerificationResponse)
+
+- (void)completeVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCompleteVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RetryVerification(RetryVerificationRequest) returns (RetryVerificationResponse)
+
+- (void)retryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**
@@ -258,18 +272,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetDefaultBank(GetDefaultBankRequest) returns (GetDefaultBankResponse)
+#pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
 
-- (void)getDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetDefaultBankWithRequest:(GetDefaultBankRequest *)request handler:(void(^)(GetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SetDefaultBank(SetDefaultBankRequest) returns (SetDefaultBankResponse)
+#pragma mark SetDefaultAccount(SetDefaultAccountRequest) returns (SetDefaultAccountResponse)
 
-- (void)setDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)setDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToSetDefaultBankWithRequest:(SetDefaultBankRequest *)request handler:(void(^)(SetDefaultBankResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSetDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
