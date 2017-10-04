@@ -237,6 +237,28 @@
     }];
 }
 
+- (TKAccountSync *)getDefaultAccount {
+    TKRpcSyncCall<TKAccountSync *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async
+         getDefaultAccount:^(TKAccount *account) {
+             TKAccountSync* syncAccount = [TKAccountSync account:account];
+             call.onSuccess(syncAccount);
+         }
+         onError:call.onError];
+    }];
+}
+
+- (void)setDefaultAccount:(NSString *)accountId {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async setDefaultAccount:accountId
+                            onSuccess:^{ call.onSuccess(nil); }
+                              onError:call.onError];
+        
+    }];
+}
+
 - (Transfer *)getTransfer:(NSString *)transferId {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
     return [call run:^{

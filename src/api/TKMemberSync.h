@@ -209,6 +209,20 @@
 - (TKAccountSync *)getAccount:(NSString *)accountId;
 
 /**
+ * Looks up a member's default bank account.
+ *
+ * @return account default account
+ */
+- (TKAccountSync *)getDefaultAccount;
+
+/**
+ * Sets the member's default bank account.
+ *
+ * @param accountId account id to set as default
+ */
+- (void)setDefaultAccount:(NSString *)accountId;
+
+/**
  * Looks up account balance.
  *
  * @param accountId account id

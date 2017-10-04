@@ -298,6 +298,23 @@
                onError:onError];
 }
 
+- (void)getDefaultAccount:(OnSuccessWithTKAccount)onSuccess
+                  onError:(OnError)onError {
+    [client getDefaultAccount:member.id_p
+                    onSuccess:^(Account * account) {
+                        onSuccess([self _mapAccount:account]);
+                    }
+                      onError:onError];
+}
+
+- (void)setDefaultAccount:(NSString *)accountId
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    [client setDefaultAccount:accountId
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
 - (void)getTransfer:(NSString *)transferId
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError {

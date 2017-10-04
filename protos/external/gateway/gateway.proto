@@ -71,6 +71,22 @@ message GetAliasesResponse {
   repeated io.token.proto.common.alias.Alias unverified_aliases = 2;
 }
 
+message CompleteVerificationRequest {
+  string verification_id = 1;
+  string code = 2;
+}
+
+message CompleteVerificationResponse {}
+
+message RetryVerificationRequest {
+  string member_id = 1;
+  io.token.proto.common.alias.Alias alias = 2;
+}
+
+message RetryVerificationResponse {
+  string verification_id = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member PII/addresses/preferences management.
 //
@@ -266,18 +282,20 @@ message GetTransactionsResponse {
   string offset = 2; // Optional offset state for the client to roundtrip.
 }
 
-message GetDefaultBankRequest {
+message GetDefaultAccountRequest {
+  string member_id = 1;
 }
 
-message GetDefaultBankResponse {
-  string bank_id = 1;
+message GetDefaultAccountResponse {
+  io.token.proto.common.account.Account account = 1;
 }
 
-message SetDefaultBankRequest {
-  string bank_id = 1;
+message SetDefaultAccountRequest {
+  string member_id = 1;
+  string account_id = 2;
 }
 
-message SetDefaultBankResponse {
+message SetDefaultAccountResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,6 +549,18 @@ service GatewayService {
     };
   }
 
+  rpc CompleteVerification (CompleteVerificationRequest) returns (CompleteVerificationResponse) {
+    option (google.api.http) = {
+      get: "/verifications/{verification_id}/complete/{code}"
+    };
+  }
+
+  rpc RetryVerification (RetryVerificationRequest) returns (RetryVerificationResponse) {
+  option (google.api.http) = {
+      post: "/verifications"
+    };
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Member addresses and preferences
   //
@@ -658,15 +688,15 @@ service GatewayService {
     };
   }
 
-  rpc GetDefaultBank (GetDefaultBankRequest) returns (GetDefaultBankResponse) {
+  rpc GetDefaultAccount (GetDefaultAccountRequest) returns (GetDefaultAccountResponse) {
     option (google.api.http) = {
-      get: "/defaultbank"
+      get: "/members/{member_id}/default-account"
     };
   }
 
-  rpc SetDefaultBank (SetDefaultBankRequest) returns (SetDefaultBankResponse) {
+  rpc SetDefaultAccount (SetDefaultAccountRequest) returns (SetDefaultAccountResponse) {
     option (google.api.http) = {
-      post: "/defaultbank?bank_id={bank_id}"
+      put: "/members/{member_id}/default-account"
     };
   }
 

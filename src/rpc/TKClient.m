@@ -363,6 +363,53 @@
              onError:onError];
 }
 
+- (void)getDefaultAccount:(NSString *)accountId
+                onSuccess:(OnSuccessWithAccount)onSuccess
+                  onError:(OnError)onError {
+    GetDefaultAccountRequest *request = [GetDefaultAccountRequest message];
+    request.memberId = memberId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetDefaultAccountWithRequest:request
+                           handler:^(GetDefaultAccountResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.account);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)setDefaultAccount:(NSString *)accountId
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    SetDefaultAccountRequest *request = [SetDefaultAccountRequest message];
+    request.memberId = memberId;
+    request.accountId = accountId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToSetDefaultAccountWithRequest:request
+                           handler:^(SetDefaultAccountResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else { 
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)createTransferToken:(TokenPayload *)payload
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
