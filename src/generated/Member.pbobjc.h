@@ -34,6 +34,7 @@ CF_EXTERN_C_BEGIN
 @class MemberAliasOperation;
 @class MemberOperation;
 @class MemberOperationMetadata_AddAliasMetadata;
+@class MemberOperationResponseMetadata_AddAliasResponseMetadata;
 @class MemberRecoveryOperation;
 @class MemberRecoveryOperation_Authorization;
 @class MemberRecoveryRulesOperation;
@@ -308,6 +309,48 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 
 @end
 
+#pragma mark - MemberOperationResponseMetadata
+
+typedef GPB_ENUM(MemberOperationResponseMetadata_FieldNumber) {
+  MemberOperationResponseMetadata_FieldNumber_AddAliasResponseMetadata = 1,
+};
+
+typedef GPB_ENUM(MemberOperationResponseMetadata_Type_OneOfCase) {
+  MemberOperationResponseMetadata_Type_OneOfCase_GPBUnsetOneOfCase = 0,
+  MemberOperationResponseMetadata_Type_OneOfCase_AddAliasResponseMetadata = 1,
+};
+
+/**
+ * Metadata associated with MemberUpdateResponse.
+ **/
+@interface MemberOperationResponseMetadata : GPBMessage
+
+@property(nonatomic, readonly) MemberOperationResponseMetadata_Type_OneOfCase typeOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberOperationResponseMetadata_AddAliasResponseMetadata *addAliasResponseMetadata;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'type'.
+ **/
+void MemberOperationResponseMetadata_ClearTypeOneOfCase(MemberOperationResponseMetadata *message);
+
+#pragma mark - MemberOperationResponseMetadata_AddAliasResponseMetadata
+
+typedef GPB_ENUM(MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber) {
+  MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_AliasHash = 1,
+  MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_VerificationId = 2,
+};
+
+@interface MemberOperationResponseMetadata_AddAliasResponseMetadata : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@end
+
 #pragma mark - RecoveryRule
 
 typedef GPB_ENUM(RecoveryRule_FieldNumber) {
@@ -339,6 +382,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_KeysArray = 4,
   Member_FieldNumber_UnverifiedAliasHashesArray = 5,
   Member_FieldNumber_RecoveryRule = 6,
+  Member_FieldNumber_LastRecoverySequence = 7,
+  Member_FieldNumber_LastOperationSequence = 8,
 };
 
 /**
@@ -365,6 +410,12 @@ typedef GPB_ENUM(Member_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
 /** Test to see if @c recoveryRule has been set. */
 @property(nonatomic, readwrite) BOOL hasRecoveryRule;
+
+/** the sequence number for the member's last recovery entry */
+@property(nonatomic, readwrite) int32_t lastRecoverySequence;
+
+/** the sequence number for the member's last operation */
+@property(nonatomic, readwrite) int32_t lastOperationSequence;
 
 @end
 
