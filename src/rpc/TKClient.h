@@ -19,6 +19,7 @@
 @class TransferPayload;
 @class TKCrypto;
 @class TKRpcErrorHandler;
+@class Alias;
 
 
 /**
@@ -90,6 +91,18 @@
  */
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError;
+
+/**
+ * Resend verification email.
+ *
+ * @param memberId resend email for this memberId
+ * @param alias resend email for this alias
+ * @param onSuccess invoked on success with verification ID
+ */
+- (void)resendVerificationEmail:(NSString *)memberId
+                          alias:(Alias *) alias
+                      onSuccess:(OnSuccessWithString)onSuccess
+                        onError:(OnError)onError;
 
 /**
  * Subscribes a device to receive push notifications
