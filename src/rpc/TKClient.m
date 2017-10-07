@@ -139,7 +139,7 @@
              onError:onError];
 }
 
-- (void)resendVerificationEmail:(NSString *)memberId
+- (void)resendAliasVerification:(NSString *)memberId
                           alias:(Alias *) alias
                       onSuccess:(OnSuccessWithString)onSuccess
                         onError:(OnError)onError {

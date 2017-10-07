@@ -93,13 +93,13 @@
            onError:(OnError)onError;
 
 /**
- * Resend verification email.
+ * Resend alias verification message (email, text, etc.).
  *
- * @param memberId resend email for this memberId
- * @param alias resend email for this alias
+ * @param memberId resend verification message for this memberId
+ * @param alias resend verification message for this alias
  * @param onSuccess invoked on success with verification ID
  */
-- (void)resendVerificationEmail:(NSString *)memberId
+- (void)resendAliasVerification:(NSString *)memberId
                           alias:(Alias *) alias
                       onSuccess:(OnSuccessWithString)onSuccess
                         onError:(OnError)onError;

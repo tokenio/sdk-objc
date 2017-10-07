@@ -96,12 +96,12 @@
 - (void)removeKeys:(NSArray<NSString *> *)keyIds;
 
 /**
- * Resend verification email.
+ * Resend alias verification message (email, text, etc.).
  *
- * @param alias resend email for this alias
+ * @param alias resend verification message for this alias
  * @return verification ID
  */
-- (NSString *)resendVerificationEmail:(Alias *)alias;
+- (NSString *)resendAliasVerification:(Alias *)alias;
 
 /**
  * Get all subscribers.

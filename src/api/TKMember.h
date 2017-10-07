@@ -109,12 +109,12 @@
            onError:(OnError)onError;
 
 /**
- * Resend verification email.
+ * Resend alias verification message (email, text, etc.).
  *
- * @param alias resend email for this alias
+ * @param alias resend verification message for this alias
  * @param onSuccess invoked on success with verification ID
  */
-- (void)resendVerificationEmail:(Alias *)alias
+- (void)resendAliasVerification:(Alias *)alias
                       onSuccess:(OnSuccessWithString)onSuccess
                         onError:(OnError)onError;
 

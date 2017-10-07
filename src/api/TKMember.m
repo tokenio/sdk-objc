@@ -135,10 +135,10 @@
                  onError:onError];
 }
 
-- (void)resendVerificationEmail:(Alias *)alias
+- (void)resendAliasVerification:(Alias *)alias
                       onSuccess:(OnSuccessWithString)onSuccess
                         onError:(OnError)onError {
-    [client resendVerificationEmail:self.id
+    [client resendAliasVerification:self.id
                               alias:alias
                           onSuccess:onSuccess
                             onError:onError];

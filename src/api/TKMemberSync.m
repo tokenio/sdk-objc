@@ -88,10 +88,10 @@
     }];
 }
 
-- (NSString *)resendVerificationEmail:(Alias *)alias {
+- (NSString *)resendAliasVerification:(Alias *)alias {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async resendVerificationEmail:alias
+        [self.async resendAliasVerification:alias
                                   onSuccess:call.onSuccess
                                     onError:call.onError];
     }];
