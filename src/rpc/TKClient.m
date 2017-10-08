@@ -120,7 +120,7 @@
 }
 
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
-         onError:(OnError)onError{
+           onError:(OnError)onError {
     GetAliasesRequest *request = [GetAliasesRequest message];
     
     GRPCProtoCall *call = [gateway
@@ -129,6 +129,30 @@
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.aliasesArray);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)resendAliasVerification:(NSString *)memberId
+                          alias:(Alias *) alias
+                      onSuccess:(OnSuccessWithString)onSuccess
+                        onError:(OnError)onError {
+    RetryVerificationRequest *request = [RetryVerificationRequest message];
+    request.memberId = memberId;
+    request.alias = alias;
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToRetryVerificationWithRequest:request
+                           handler:^(RetryVerificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.verificationId);
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

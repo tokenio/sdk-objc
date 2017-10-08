@@ -109,6 +109,16 @@
            onError:(OnError)onError;
 
 /**
+ * Resend alias verification message (email, text, etc.).
+ *
+ * @param alias resend verification message for this alias
+ * @param onSuccess invoked on success with verification ID
+ */
+- (void)resendAliasVerification:(Alias *)alias
+                      onSuccess:(OnSuccessWithString)onSuccess
+                        onError:(OnError)onError;
+
+/**
  * Gets aliases Array for the member.
  *
  * @param onSuccess callback invoked on success

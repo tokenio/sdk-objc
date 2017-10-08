@@ -88,6 +88,15 @@
     }];
 }
 
+- (NSString *)resendAliasVerification:(Alias *)alias {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async resendAliasVerification:alias
+                                  onSuccess:call.onSuccess
+                                    onError:call.onError];
+    }];
+}
+
 - (NSArray<Alias *> *)getAliases {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{

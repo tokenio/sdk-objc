@@ -135,6 +135,15 @@
                  onError:onError];
 }
 
+- (void)resendAliasVerification:(Alias *)alias
+                      onSuccess:(OnSuccessWithString)onSuccess
+                        onError:(OnError)onError {
+    [client resendAliasVerification:self.id
+                              alias:alias
+                          onSuccess:onSuccess
+                            onError:onError];
+}
+
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError {
     [client getAliases:^(NSArray<Alias *> *aliasArray) {
