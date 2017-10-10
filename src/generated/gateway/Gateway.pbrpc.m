@@ -154,6 +154,54 @@
              responseClass:[RetryVerificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Member account recovery
+ * 
+ * 
+ */
+- (void)beginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToBeginRecoveryWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Member account recovery
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToBeginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"BeginRecovery"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[BeginRecoveryResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark CompleteRecovery(CompleteRecoveryRequest) returns (CompleteRecoveryResponse)
+
+- (void)completeRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCompleteRecoveryWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToCompleteRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CompleteRecovery"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CompleteRecoveryResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
+
+- (void)verifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToVerifyAliasWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"VerifyAlias"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[VerifyAliasResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
 
 /**

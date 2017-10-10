@@ -752,6 +752,284 @@ typedef struct RetryVerificationResponse__storage_ {
 
 @end
 
+#pragma mark - BeginRecoveryRequest
+
+@implementation BeginRecoveryRequest
+
+@dynamic hasAlias, alias;
+
+typedef struct BeginRecoveryRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Alias *alias;
+} BeginRecoveryRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = BeginRecoveryRequest_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BeginRecoveryRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BeginRecoveryRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BeginRecoveryRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - BeginRecoveryResponse
+
+@implementation BeginRecoveryResponse
+
+@dynamic verificationId;
+
+typedef struct BeginRecoveryResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *verificationId;
+} BeginRecoveryResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "verificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = BeginRecoveryResponse_FieldNumber_VerificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BeginRecoveryResponse__storage_, verificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BeginRecoveryResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BeginRecoveryResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CompleteRecoveryRequest
+
+@implementation CompleteRecoveryRequest
+
+@dynamic verificationId;
+@dynamic code;
+@dynamic hasKey, key;
+
+typedef struct CompleteRecoveryRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *verificationId;
+  NSString *code;
+  Key *key;
+} CompleteRecoveryRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "verificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = CompleteRecoveryRequest_FieldNumber_VerificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CompleteRecoveryRequest__storage_, verificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "code",
+        .dataTypeSpecific.className = NULL,
+        .number = CompleteRecoveryRequest_FieldNumber_Code,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(CompleteRecoveryRequest__storage_, code),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "key",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = CompleteRecoveryRequest_FieldNumber_Key,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(CompleteRecoveryRequest__storage_, key),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CompleteRecoveryRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CompleteRecoveryRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CompleteRecoveryResponse
+
+@implementation CompleteRecoveryResponse
+
+@dynamic hasRecoveryEntry, recoveryEntry;
+
+typedef struct CompleteRecoveryResponse__storage_ {
+  uint32_t _has_storage_[1];
+  MemberRecoveryOperation *recoveryEntry;
+} CompleteRecoveryResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "recoveryEntry",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberRecoveryOperation),
+        .number = CompleteRecoveryResponse_FieldNumber_RecoveryEntry,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CompleteRecoveryResponse__storage_, recoveryEntry),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CompleteRecoveryResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CompleteRecoveryResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyAliasRequest
+
+@implementation VerifyAliasRequest
+
+@dynamic verificationId;
+@dynamic code;
+
+typedef struct VerifyAliasRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *verificationId;
+  NSString *code;
+} VerifyAliasRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "verificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyAliasRequest_FieldNumber_VerificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VerifyAliasRequest__storage_, verificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "code",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyAliasRequest_FieldNumber_Code,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(VerifyAliasRequest__storage_, code),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyAliasRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VerifyAliasRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyAliasResponse
+
+@implementation VerifyAliasResponse
+
+
+typedef struct VerifyAliasResponse__storage_ {
+  uint32_t _has_storage_[1];
+} VerifyAliasResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyAliasResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(VerifyAliasResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AddAddressRequest
 
 @implementation AddAddressRequest

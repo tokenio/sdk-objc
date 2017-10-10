@@ -49,12 +49,14 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic id_p;
 @dynamic name;
 @dynamic logoUri;
+@dynamic fullLogoUri;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *name;
   NSString *logoUri;
+  NSString *fullLogoUri;
 } Bank__storage_;
 
 // This method is threadsafe because it is initially called
@@ -87,6 +89,15 @@ typedef struct Bank__storage_ {
         .number = Bank_FieldNumber_LogoUri,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Bank__storage_, logoUri),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "fullLogoUri",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_FullLogoUri,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Bank__storage_, fullLogoUri),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

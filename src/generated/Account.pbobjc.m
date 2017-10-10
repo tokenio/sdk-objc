@@ -182,7 +182,7 @@ typedef struct AccountTag__storage_ {
 @dynamic name;
 @dynamic bankId;
 @dynamic tagsArray, tagsArray_Count;
-@dynamic isDisabled;
+@dynamic isLocked;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
@@ -235,9 +235,9 @@ typedef struct Account__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "isDisabled",
+        .name = "isLocked",
         .dataTypeSpecific.className = NULL,
-        .number = Account_FieldNumber_IsDisabled,
+        .number = Account_FieldNumber_IsLocked,
         .hasIndex = 3,
         .offset = 4,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,

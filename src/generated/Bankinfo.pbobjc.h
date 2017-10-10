@@ -50,6 +50,7 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_Id_p = 1,
   Bank_FieldNumber_Name = 2,
   Bank_FieldNumber_LogoUri = 3,
+  Bank_FieldNumber_FullLogoUri = 4,
 };
 
 @interface Bank : GPBMessage
@@ -58,7 +59,11 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** Square bank avatar icon */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *logoUri;
+
+/** Full size bank icon */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fullLogoUri;
 
 @end
 

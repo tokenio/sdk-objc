@@ -6,7 +6,8 @@ option java_outer_classname = "BankProtos";
 message Bank {
   string id = 1;
   string name = 2;
-  string logo_uri = 3;
+  string logo_uri = 3;        // Square bank avatar icon
+  string full_logo_uri = 4;   // Full size bank icon
 }
 
 message BankInfo {

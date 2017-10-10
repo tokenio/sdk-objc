@@ -105,7 +105,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Name = 2,
   Account_FieldNumber_BankId = 3,
   Account_FieldNumber_TagsArray = 4,
-  Account_FieldNumber_IsDisabled = 5,
+  Account_FieldNumber_IsLocked = 5,
 };
 
 /**
@@ -124,7 +124,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
 /** indicates whether account requires re-linking */
-@property(nonatomic, readwrite) BOOL isDisabled;
+@property(nonatomic, readwrite) BOOL isLocked;
 
 @end
 

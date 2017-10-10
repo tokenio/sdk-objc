@@ -88,6 +88,35 @@ message RetryVerificationResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Member account recovery.
+//
+
+message BeginRecoveryRequest {
+  io.token.proto.common.alias.Alias alias = 1;
+}
+
+message BeginRecoveryResponse {
+  string verification_id = 1;
+}
+
+message CompleteRecoveryRequest {
+  string verification_id = 1;
+  string code = 2;
+  io.token.proto.common.security.Key key = 3;
+}
+
+message CompleteRecoveryResponse {
+  io.token.proto.common.member.MemberRecoveryOperation recovery_entry = 1;
+}
+
+message VerifyAliasRequest {
+  string verification_id = 1;
+  string code = 2;
+}
+
+message VerifyAliasResponse {}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member PII/addresses/preferences management.
 //
 
@@ -558,6 +587,28 @@ service GatewayService {
   rpc RetryVerification (RetryVerificationRequest) returns (RetryVerificationResponse) {
   option (google.api.http) = {
       post: "/verifications"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Member account recovery
+  //
+
+  rpc BeginRecovery (BeginRecoveryRequest) returns (BeginRecoveryResponse) {
+    option (google.api.http) = {
+      post: "/recovery/verifications"
+    };
+  }
+
+  rpc CompleteRecovery (CompleteRecoveryRequest) returns (CompleteRecoveryResponse) {
+    option (google.api.http) = {
+      post: "/recovery/verifications/{verification_id}/complete/{code}"
+    };
+  }
+
+  rpc VerifyAlias (VerifyAliasRequest) returns (VerifyAliasResponse) {
+    option (google.api.http) = {
+      put: "/verifications/{verification_id}/complete/{code}"
     };
   }
 

@@ -35,10 +35,10 @@
     RpcLogError(error);
     if (error.domain && [error.domain isEqualToString:@"io.grpc"]) {
         NSError *mappedError = error;
-        NSDictionary *headers = error.userInfo[@"io.grpc.HeadersKey"];
-        if (headers) {
-            NSString *tokenError = headers[@"token-error"];
-            NSString *tokenErrorDetails = headers[@"token-error-details"];
+        NSDictionary *trailers = error.userInfo[@"io.grpc.TrailersKey"];
+        if (trailers) {
+            NSString *tokenError = trailers[@"token-error"];
+            NSString *tokenErrorDetails = trailers[@"token-error-details"];
 
             if (tokenError) {
                 NSError *customError = customErrorLookup[tokenError];

@@ -36,8 +36,10 @@ CF_EXTERN_C_BEGIN
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
+@class Key;
 @class Member;
 @class MemberOperationMetadata;
+@class MemberRecoveryOperation;
 @class MemberUpdate;
 @class Money;
 @class Notification;
@@ -307,6 +309,87 @@ typedef GPB_ENUM(RetryVerificationResponse_FieldNumber) {
 @interface RetryVerificationResponse : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@end
+
+#pragma mark - BeginRecoveryRequest
+
+typedef GPB_ENUM(BeginRecoveryRequest_FieldNumber) {
+  BeginRecoveryRequest_FieldNumber_Alias = 1,
+};
+
+@interface BeginRecoveryRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - BeginRecoveryResponse
+
+typedef GPB_ENUM(BeginRecoveryResponse_FieldNumber) {
+  BeginRecoveryResponse_FieldNumber_VerificationId = 1,
+};
+
+@interface BeginRecoveryResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@end
+
+#pragma mark - CompleteRecoveryRequest
+
+typedef GPB_ENUM(CompleteRecoveryRequest_FieldNumber) {
+  CompleteRecoveryRequest_FieldNumber_VerificationId = 1,
+  CompleteRecoveryRequest_FieldNumber_Code = 2,
+  CompleteRecoveryRequest_FieldNumber_Key = 3,
+};
+
+@interface CompleteRecoveryRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
+
+@property(nonatomic, readwrite, strong, null_resettable) Key *key;
+/** Test to see if @c key has been set. */
+@property(nonatomic, readwrite) BOOL hasKey;
+
+@end
+
+#pragma mark - CompleteRecoveryResponse
+
+typedef GPB_ENUM(CompleteRecoveryResponse_FieldNumber) {
+  CompleteRecoveryResponse_FieldNumber_RecoveryEntry = 1,
+};
+
+@interface CompleteRecoveryResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryOperation *recoveryEntry;
+/** Test to see if @c recoveryEntry has been set. */
+@property(nonatomic, readwrite) BOOL hasRecoveryEntry;
+
+@end
+
+#pragma mark - VerifyAliasRequest
+
+typedef GPB_ENUM(VerifyAliasRequest_FieldNumber) {
+  VerifyAliasRequest_FieldNumber_VerificationId = 1,
+  VerifyAliasRequest_FieldNumber_Code = 2,
+};
+
+@interface VerifyAliasRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
+
+@end
+
+#pragma mark - VerifyAliasResponse
+
+@interface VerifyAliasResponse : GPBMessage
 
 @end
 
