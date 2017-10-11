@@ -98,4 +98,22 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @return Alias with phone type
  */
 - (Alias *)generatePhoneAlias;
+
+
+/**
+ * Checks the specified condition, throws NSException if condition is false.
+ *
+ * @param message error message
+ * @param condition condition to check
+ */
+- (void)check:(NSString *)message condition:(BOOL)condition;
+
+/**
+ * Retries the supplied block until it has been successful or a time limit has
+ * been reached.
+ *
+ * @param block block to try
+ */
+- (void)waitUntil:(void (^)(void))block;
+
 @end

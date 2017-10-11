@@ -97,23 +97,28 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
-        [builder execute];
+        Token *token = [builder execute];
+        [payer endorseToken:token withKey:Key_Level_Standard];
         
         TransferTokenBuilder *builder2 = [payer createTransferToken:100.22
                                                           currency:@"USD"];
         builder2.accountId = payerAccount.id;
         builder2.redeemerAlias = payee.firstAlias;
-        [builder2 execute];
+        Token *token2 = [builder2 execute];
+        [payer endorseToken:token2 withKey:Key_Level_Standard];
         
         TransferTokenBuilder *builder3 = [payer createTransferToken:100.33
                                                           currency:@"USD"];
         builder3.accountId = payerAccount.id;
         builder3.redeemerAlias = payee.firstAlias;
-        [builder3 execute];
+        Token *token3 = [builder3 execute];
+        [payer endorseToken:token3 withKey:Key_Level_Standard];
         
-        PagedArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
-        XCTAssertEqual(lookedUp.items.count, 3);
-        XCTAssertNotNil(lookedUp.offset);
+        [self waitUntil:^{
+            PagedArray<Token *> *lookedUp = [payer getTransferTokensOffset:NULL limit:100];
+            [self check:@"Transfer Token count" condition:lookedUp.items.count == 3];
+            [self check:@"Offset is present" condition:lookedUp.offset != nil];
+        }];
     }];
 }
 

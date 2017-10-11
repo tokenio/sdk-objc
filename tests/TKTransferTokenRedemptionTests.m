@@ -197,12 +197,14 @@
         [payee redeemToken:token amount:@11.11 currency:@"USD" description:nil destination:destination];
         [payee redeemToken:token amount:@11.11 currency:@"USD" description:nil destination:destination];
         
-        PagedArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
-                                                            limit:100
-                                                          tokenId:token.id_p];
-        
-        XCTAssertEqual(3, lookedUp.items.count);
-        XCTAssertNotNil(lookedUp.offset);
+
+        [self waitUntil:^{
+            PagedArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
+                                                                   limit:100
+                                                                 tokenId:token.id_p];
+            [self check:@"Transfer count" condition:lookedUp.items.count == 3];
+            [self check:@"Offset is present" condition:lookedUp.offset != nil];
+        }];
     }];
 }
 
