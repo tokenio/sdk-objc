@@ -184,6 +184,7 @@
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
+        builder.toAlias = payee.firstAlias;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
@@ -199,11 +200,18 @@
         
 
         [self waitUntil:^{
-            PagedArray<Transfer *> *lookedUp = [payer getTransfersOffset:NULL
-                                                                   limit:100
-                                                                 tokenId:token.id_p];
-            [self check:@"Transfer count" condition:lookedUp.items.count == 3];
-            [self check:@"Offset is present" condition:lookedUp.offset != nil];
+            PagedArray<Transfer *> *lookedUpPayer = [payer getTransfersOffset:NULL
+                                                                        limit:100
+                                                                      tokenId:token.id_p];
+            PagedArray<Transfer *> *lookedUpPayee = [payee getTransfersOffset:NULL
+                                                                        limit:100
+                                                                      tokenId:token.id_p];
+
+            [self check:@"Payer Transfer Token count" condition:lookedUpPayer.items.count == 3];
+            [self check:@"Payer Offset is present" condition:lookedUpPayer.offset != nil];
+
+            [self check:@"Payee Transfer Token count" condition:lookedUpPayee.items.count == 3];
+            [self check:@"Payee Offset is present" condition:lookedUpPayee.offset != nil];
         }];
     }];
 }
