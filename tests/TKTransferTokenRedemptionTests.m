@@ -207,10 +207,10 @@
                                                                         limit:100
                                                                       tokenId:token.id_p];
 
-            [self check:@"Payer Transfer Token count" condition:lookedUpPayer.items.count == 3];
+            [self check:@"Payer Transfer count" condition:lookedUpPayer.items.count == 3];
             [self check:@"Payer Offset is present" condition:lookedUpPayer.offset != nil];
 
-            [self check:@"Payee Transfer Token count" condition:lookedUpPayee.items.count == 3];
+            [self check:@"Payee Transfer count" condition:lookedUpPayee.items.count == 3];
             [self check:@"Payee Offset is present" condition:lookedUpPayee.offset != nil];
         }];
     }];

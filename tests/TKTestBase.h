@@ -99,7 +99,6 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  */
 - (Alias *)generatePhoneAlias;
 
-
 /**
  * Checks the specified condition, throws NSException if condition is false.
  *
