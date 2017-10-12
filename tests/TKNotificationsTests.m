@@ -267,29 +267,4 @@ void check(NSString *message, BOOL condition) {
     [self waitForNotification:type member:payer];
 }
 
-/**
- * Retries the supplied block until it has been successful or a time limit has
- * been reached.
- *
- * @param block block to try
- */
-- (void)waitUntil:(void (^)(void))block {
-    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
-    for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
-        typedef void (^AsyncTestBlock)(TokenIOSync *);
-        @try {
-            block();
-            return;
-        }
-        @catch (...) {
-            NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-            if (now - start < 5) {
-                usleep(waitTimeMs * 1000);
-            } else {
-                @throw;
-            }
-        }
-    }
-}
-
 @end

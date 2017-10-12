@@ -196,4 +196,29 @@
     return alias;
 }
 
+- (void)check:(NSString *)message condition:(BOOL)condition {
+    if (!condition) {
+        [NSException raise:message format:@"%@", message];
+    }
+}
+
+- (void)waitUntil:(void (^)(void))block {
+    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
+        typedef void (^AsyncTestBlock)(TokenIOSync *);
+        @try {
+            block();
+            return;
+        }
+        @catch (...) {
+            NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+            if (now - start < 20) {
+                usleep(waitTimeMs * 1000);
+            } else {
+                @throw;
+            }
+        }
+    }
+}
+
 @end
