@@ -42,6 +42,7 @@
  * @param host host to connect to
  * @param port gRPC port to connect to
  * @param timeout timeout value in ms
+ * @param developerKey developer ID
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
  * @param globalRpcErrorCallback global RPC error callback to invoke on error

@@ -52,16 +52,16 @@
  * Looks up member id for a given alias.
  *
  * @param alias alias to check
- * @return member id if alias already exists, nil otherwise
+ * @return member id if alias exists, nil otherwise
  */
 - (NSString *)getMemberId:(Alias *)alias;
 
 /**
- * Looks up token member for a given unknown alias.
+ * Looks up token member for a given alias.
  * Set alias Alias_Type_Unknown if the alias type is unknown
  *
  * @param alias alias to check
- * @return token member if alias already exists, nil otherwise
+ * @return token member if alias exists, nil otherwise
  */
 - (TokenMember *)getTokenMember:(Alias *)alias;
 

@@ -52,7 +52,7 @@
             onError:(OnError)onError;
 
 /**
- * Looks up token member for a given unknown alias.
+ * Looks up token member for a given alias.
  * Set alias Alias_Type_Unknown if the alias type is unknown
  *
  * @param alias alias to check

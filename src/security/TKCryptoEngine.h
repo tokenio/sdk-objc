@@ -13,9 +13,9 @@
 @protocol TKCryptoEngine
 
 /**
- * Generates a keys of the specified level. If the key with the specified level
- * already exists, it is replaced. Old key is still kept around because it
- * could be used for signature verification later.
+ * Generates a key-pair of the specified level. If the key with the specified level
+ * already exists, it is replaced. Old key is still kept around in the Token Cloud
+ * because it could be used for signature verification later.
  *
  * @param level key level
  * @return the newly created key pair information
