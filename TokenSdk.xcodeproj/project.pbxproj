@@ -55,6 +55,7 @@
 		62DE9511FC4092414C75372D /* HostAndPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */; };
 		62DE96D6F9FB39557C01B484 /* HostAndPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE98B689D2C43491570541 /* HostAndPort.m */; };
 		62DE99DE93002AC87D315E8A /* TKRpcErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */; };
+		6ACF46D31F94540F00D36A7B /* TokenIOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACF46D21F94540F00D36A7B /* TokenIOTests.m */; };
 		8A040B781EBE8F9E00425C3A /* Blob.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */; };
 		8A040B791EBE8F9E00425C3A /* Blob.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A0734561DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h */; };
@@ -265,6 +266,7 @@
 		62DE9A439AC5A2064E7FDF48 /* TKRpcErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcErrorHandler.h; sourceTree = "<group>"; };
 		62DE9C9F331FA0830D343999 /* TKRpcErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRpcErrorHandler.m; sourceTree = "<group>"; };
 		62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostAndPort.h; sourceTree = "<group>"; };
+		6ACF46D21F94540F00D36A7B /* TokenIOTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TokenIOTests.m; sourceTree = "<group>"; };
 		78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk.release.xcconfig"; sourceTree = "<group>"; };
 		8A040B761EBE8F9E00425C3A /* Blob.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.pbobjc.h; sourceTree = "<group>"; };
 		8A040B771EBE8F9E00425C3A /* Blob.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Blob.pbobjc.m; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 		8A99091C1D890E820096A7FA /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				6ACF46D21F94540F00D36A7B /* TokenIOTests.m */,
 				8A4A6D3D1DB06D30005DCB70 /* TKAddressTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
@@ -1295,6 +1298,7 @@
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				1B3A47D71EE5658200219ABE /* TKTransferTokenBuilderTests.m in Sources */,
 				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
+				6ACF46D31F94540F00D36A7B /* TokenIOTests.m in Sources */,
 				ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */,
 				8AC7AB841DB56EB800FD4176 /* TKAccessRedemptionTests.m in Sources */,
 				94DC2AD21E5E5E180088F55A /* TKErrorHandlerTests.m in Sources */,

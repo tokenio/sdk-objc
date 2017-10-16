@@ -22,6 +22,7 @@
     GatewayService *gateway;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
+    NSString *developerKey;
     TKRpcErrorHandler *errorHandler;
 }
 
@@ -32,9 +33,15 @@
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout
+      developerKey:(NSString *)developerKey_
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
             useSsl:(BOOL)useSsl
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
+    if (!developerKey_) {
+        @throw [NSException exceptionWithName:@"NoDeveloperKeyException"
+                                       reason:@"Please provide a developer key. Contact Token for more details."
+                                     userInfo:nil];
+    }
     self = [super init];
     
     if (self) {
@@ -50,6 +57,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback_];
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
+        developerKey = [developerKey_ copy];
     }
     
     return self;
@@ -61,6 +69,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client createMemberId:
                     ^(NSString *memberId) {
@@ -79,6 +88,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client getMemberId:alias
               onSuccess:^(NSString *memberId) {
@@ -101,6 +111,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client getMemberId:alias
               onSuccess:^(NSString *memberId) { onSuccess([memberId length] != 0); }
@@ -113,6 +124,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
                                        initWithGateway:gateway
                                        timeoutMs:timeoutMs
+                                       developerKey:developerKey
                                        errorHandler:errorHandler];
     [client getMemberId:alias
               onSuccess:onSuccess
@@ -132,6 +144,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
                                        initWithGateway:gateway
                                        timeoutMs:timeoutMs
+                                       developerKey:developerKey
                                        errorHandler:errorHandler];
     [client getTokenMember:alias
                  onSuccess:onSuccess
@@ -144,6 +157,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *unauthenticatedClient = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
@@ -151,6 +165,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                TKClient *client = [[TKClient alloc] initWithGateway:gateway
                                                                              crypto:crypto
                                                                           timeoutMs:timeoutMs
+                                                                       developerKey:developerKey
                                                                            memberId:memberId
                                                                        errorHandler:errorHandler];
                                
@@ -171,6 +186,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     if ([token.refId length] == 0) {
         token.refId = [TKUtil nonce];
@@ -187,6 +203,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client notifyLinkAccounts:alias
                  authorization:authorization
@@ -202,6 +219,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client notifyAddKey:alias
                  keyName:keyName
@@ -219,6 +237,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
             initWithGateway:gateway
                   timeoutMs:timeoutMs
+               developerKey:developerKey
                errorHandler:errorHandler];
     [client notifyLinkAccountsAndAddKey:alias
                           authorization:authorization
@@ -269,6 +288,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                            initWithGateway:gateway
                                     crypto:crypto
                                  timeoutMs:timeoutMs
+                              developerKey:developerKey
                                   memberId:memberId
                               errorHandler:errorHandler];
                    onSuccess([TKMember

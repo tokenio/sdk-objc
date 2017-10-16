@@ -18,6 +18,7 @@
 @class TokenIOSync;
 @protocol TKCryptoEngineFactory;
 @class TokenPayload;
+@class Key;
 
 /**
  * Use this class to create to create a new member using `createMember`
@@ -48,6 +49,7 @@
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout
+      developerKey:(NSString *)developerKey
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
             useSsl:(BOOL)useSsl
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback;

@@ -21,13 +21,15 @@
 
 - (id)initWithGateway:(GatewayService *)gateway_
             timeoutMs:(int)timeoutMs_
+         developerKey:(NSString *)developerKey_
          errorHandler:(TKRpcErrorHandler *) errorHandler_ {
     self = [super init];
 
     if (self) {
         gateway = gateway_;
         errorHandler = errorHandler_;
-        rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_];
+        rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_
+                                  developerKey:developerKey_];
     }
 
     return self;
