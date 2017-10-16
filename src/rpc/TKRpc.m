@@ -28,7 +28,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
     if (self) {
         timeoutMs = timeoutMs_;
-        developerKey = developerKey_;
+        developerKey = [developerKey_ copy];
     }
 
     return self;

@@ -10,7 +10,6 @@
 #import <objc/NSObject.h>
 
 #import "TKTypedef.h"
-#import "Security.pbobjc.h"
 
 
 @class GatewayService;
@@ -19,6 +18,7 @@
 @class TokenIOSync;
 @protocol TKCryptoEngineFactory;
 @class TokenPayload;
+@class Key;
 
 /**
  * Use this class to create to create a new member using `createMember`

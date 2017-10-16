@@ -57,7 +57,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback_];
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
-        developerKey = developerKey_;
+        developerKey = [developerKey_ copy];
     }
     
     return self;
