@@ -39,7 +39,7 @@
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     if (!developerKey_) {
         @throw [NSException exceptionWithName:@"NoDeveloperKeyException"
-                                       reason:@"No developer key provided"
+                                       reason:@"Please provide a developer key. Contact Token for more details."
                                      userInfo:nil];
     }
     self = [super init];
