@@ -15,7 +15,8 @@
  * @param timeoutMs gRPC timeout in ms
  * @return newly created client
  */
-- (id)initWithTimeoutMs:(int)timeoutMs;
+- (id)initWithTimeoutMs:(int)timeoutMs
+           developerKey:(NSString *)developerKey;
 
 - (void)execute:(GRPCProtoCall *)call
         request:(GPBMessage *)request;

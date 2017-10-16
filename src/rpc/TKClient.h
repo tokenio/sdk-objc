@@ -39,6 +39,7 @@
 - (id)initWithGateway:(GatewayService *)gateway
                crypto:(TKCrypto *)crypto
             timeoutMs:(int)timeoutMs
+         developerKey:(NSString *)developerKey
              memberId:(NSString *)memberId
          errorHandler:(TKRpcErrorHandler *)errorHandler;
 

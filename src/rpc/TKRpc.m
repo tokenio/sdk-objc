@@ -19,13 +19,16 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 
 @implementation TKRpc {
     int timeoutMs;
+    NSString *developerKey;
 }
 
-- (id)initWithTimeoutMs:(int)timeoutMs_ {
+- (id)initWithTimeoutMs:(int)timeoutMs_
+           developerKey:(NSString *)developerKey_{
     self = [super init];
 
     if (self) {
         timeoutMs = timeoutMs_;
+        developerKey = developerKey_;
     }
 
     return self;
@@ -92,6 +95,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                           objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     call.requestHeaders[@"token-sdk"] = @"objc";
     call.requestHeaders[@"token-sdk-version"] = version;
+    call.requestHeaders[@"token-dev-key"] = developerKey;
 }
 
 @end

@@ -48,6 +48,7 @@
             initWithHost:self.host
                     port:self.port
                timeoutMs:self.timeoutMs
+            developerKey:self.developerKey
                   crypto:cryptoEngineFactory
                   useSsl:self.useSsl
   globalRpcErrorCallback:self.globalRpcErrorCallback];

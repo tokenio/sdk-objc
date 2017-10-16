@@ -10,6 +10,7 @@
 #import <objc/NSObject.h>
 
 #import "TKTypedef.h"
+#import "Security.pbobjc.h"
 
 
 @class GatewayService;
@@ -48,6 +49,7 @@
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout
+      developerKey:(NSString *)developerKey
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
             useSsl:(BOOL)useSsl
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback;

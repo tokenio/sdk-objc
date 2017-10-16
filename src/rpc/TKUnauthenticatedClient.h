@@ -28,6 +28,7 @@
  */
 - (id)initWithGateway:(GatewayService *)gateway
             timeoutMs:(int)timeoutMs
+         developerKey:(NSString *)developerKey
          errorHandler:(TKRpcErrorHandler *)errorHandler;
 
 /**

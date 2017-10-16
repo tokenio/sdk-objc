@@ -56,6 +56,7 @@
             builder.port = gateway.port;
             builder.useSsl = useSsl;
             builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+            builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
             builder.keyStore = [[TKTestKeyStore alloc] init];
             tokenIO = [builder buildSync];
 
