@@ -55,7 +55,7 @@
  * Looks up existing transactions. This is a full list of transactions with token transfers
  * being a subset.
  *
- * @param offset offset to start at
+ * @param offset offset to start at (NULL for none)
  * @param limit max number of records to return
  * @param onSuccess invoked on success
  * @param onError invoked on error

@@ -21,6 +21,7 @@
 @property (readwrite, copy) NSString *host;
 @property (readwrite) int port;
 @property (readwrite) int timeoutMs;
+/* Ask Token for a developerKey you can use. */
 @property (readwrite, copy) NSString *developerKey;
 @property (readwrite) BOOL useSsl;
 @property (readwrite) id<TKKeyStore> keyStore;
