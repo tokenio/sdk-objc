@@ -4,5 +4,5 @@ xcodebuild \
     -workspace TokenSdk.xcworkspace \
     -scheme "All Tests" \
     -sdk iphonesimulator \
-    -destination "platform=iOS Simulator,name=iPhone 8,OS=11.0" \
+    -destination "platform=iOS Simulator,name=iPhone 8,OS=11.0.1" \
     test
