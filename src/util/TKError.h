@@ -39,6 +39,9 @@ typedef enum {
 
     /* Raised when an SDK version is no longer supported by the server */
     kTKErrorSdkVersionMismatch = 104,
+    
+    /* Raised when developer key is invalid */
+    kTKErrorInvalidDeveloperKey = 105,
 } TKErrorCode;
 
 

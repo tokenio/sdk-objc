@@ -24,7 +24,13 @@
                         errorFromErrorCode:kTKErrorSdkVersionMismatch
                                    details:TKLocalizedString(
                                            @"Sdk_Version_Mismatch",
-                                           @"Please upgrade your app to the latest version")]} mutableCopy];
+                                           @"Please upgrade your app to the latest version")],
+                @"invalid-dev-key":
+                [NSError
+                         errorFromErrorCode:kTKErrorInvalidDeveloperKey
+                                    details:TKLocalizedString(@"Invalid_Developer_Key",
+                                                              @"Please provide valid developer key")]
+                } mutableCopy];
     }
     return self;
 }
