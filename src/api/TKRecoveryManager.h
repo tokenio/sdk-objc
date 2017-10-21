@@ -12,12 +12,12 @@
 @class TKRpcErrorHandler;
 
 /**
- * Use this class to manage recovery process
+ * Use this class to manage recovery process.
  */
 @interface TKRecoveryManager : NSObject
 
 /**
- * Initializes the recovery manager
+ * Initializes the recovery manager.
  *
  * @param unauthenticatedClient unauthenticatedClient for recovery process
  * @param cryptoEngineFactory crypto module to use

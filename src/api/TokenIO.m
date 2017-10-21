@@ -239,8 +239,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                               onError:onError];
 }
 
-
-
 #pragma mark - private
 
 - (TKCrypto *)_createCrypto:(NSString *)memberId {
