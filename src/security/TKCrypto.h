@@ -37,6 +37,28 @@
 - (Key *)generateKey:(Key_Level)level;
 
 /**
+ * Gets a set of key-pair information to be used by a given member.
+ *
+ * @param reason the reason to get the key-pair
+ * @param onError callback to invoke on key-pair not found
+ * @return the key-pairs information
+ */
+- (NSArray<Key *> *)getKeyInfos:(NSString *)reason
+                        onError:(OnError)onError;
+
+/**
+ * Gets a key of the given level.
+ *
+ * @param level key level
+ * @param reason the reason to get the key-pair
+ * @param onError callback to invoke on key-pair not found
+ * @return the key-pair information
+ */
+- (Key *)getKeyInfo:(Key_Level)level
+             reason:(NSString *)reason
+            onError:(OnError)onError;
+
+/**
  * Signs a message with the secret key specified by the supplied type.
  *
  * @param message message to sign

@@ -23,6 +23,20 @@
 - (Key *)generateKey:(Key_Level)level;
 
 /**
+ * Gets a key-pair of the specified level. If the key with the specified level
+ * does not exists, return nil.
+ *
+ * @param level key level
+ * @param reason the reason to get the key-pair
+ * @param onError callback to invoke on key-pair not found
+ * @return the key-pair information
+ */
+- (Key *)getKeyInfo:(Key_Level)level
+             reason:(NSString *)reason
+            onError:(OnError)onError;
+
+
+/**
  * Signs the data with the identified by the supplied key id.
  *
  * @param data payload to sign

@@ -136,7 +136,7 @@
     [self createMember:memberId
                 crypto:crypto
             operations:operations
-             metadataArray:[NSArray array]
+         metadataArray:[NSArray array]
              onSuccess:onSuccess
                onError:onError];
 }
@@ -147,36 +147,53 @@
            metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
            onSuccess:(OnSuccessWithMember)onSuccess
              onError:(OnError)onError {
+    
+    [self updateMember:memberId
+                crypto:crypto
+            operations:operations
+         metadataArray:metadataArray
+                reason:TKLocalizedString(
+                         @"Signature_Reason_CreateMember",
+                         @"Approve create a new Token member account")
+             onSuccess:onSuccess
+               onError:onError];
+}
+
+- (void)updateMember:(NSString *)memberId
+              crypto:(TKCrypto *)crypto
+          operations:(NSArray<MemberOperation *> *)operations
+       metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+              reason:(NSString *)reason
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError {
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
     request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
-
+    
     TKSignature *signature = [crypto sign:request.update
                                  usingKey:Key_Level_Privileged
-                                   reason:TKLocalizedString(
-                                           @"Signature_Reason_CreateMember",
-                                           @"Approve create a new Token member account")
+                                   reason:reason
                                   onError:onError];
     if (!signature) {
         return;
     }
-
+    
     request.updateSignature.memberId = memberId;
     request.updateSignature.keyId = signature.key.id_p;
     request.updateSignature.signature = signature.value;
     RpcLogStart(request);
-
+    
     GRPCProtoCall *call = [gateway
-            RPCToUpdateMemberWithRequest:request
-                                 handler:^(UpdateMemberResponse *response, NSError *error) {
-                                     if (response) {
-                                         RpcLogCompleted(response);
-                                         onSuccess(response.member);
-                                     } else {
-                                         [errorHandler handle:onError withError:error];
-                                     }
-                                 }];
+                           RPCToUpdateMemberWithRequest:request
+                           handler:^(UpdateMemberResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.member);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
     [rpc execute:call request:request];
 }
 
@@ -272,4 +289,71 @@
     [rpc execute:call request:request];
 }
 
+#pragma mark - Recovery
+
+- (void)beginRecovery:(Alias *)alias
+            onSuccess:(OnSuccessWithString)onSuccess
+              onError:(OnError)onError {
+    BeginRecoveryRequest *request = [BeginRecoveryRequest message];
+    request.alias = alias;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToBeginRecoveryWithRequest: request
+                           handler:^(BeginRecoveryResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.verificationId);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+- (void)getRecoveryOperation:(NSString *)verificationId
+                        code:(NSString *)code
+               privilegedKey:(Key *)key
+                   onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                     onError:(OnError)onError {
+    CompleteRecoveryRequest *request = [CompleteRecoveryRequest message];
+    request.verificationId = verificationId;
+    request.code = code;
+    request.key = key;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToCompleteRecoveryWithRequest: request
+                           handler:^(CompleteRecoveryResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.recoveryEntry);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+- (void)recoverAlias:(NSString *)verificationId
+                code:(NSString *)code
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
+    VerifyAliasRequest *request = [VerifyAliasRequest message];
+    request.verificationId = verificationId;
+    request.code = code;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToVerifyAliasWithRequest: request
+                           handler:^(VerifyAliasResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
 @end

@@ -170,6 +170,39 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError;
 
+#pragma mark - Recovery
+
+/**
+ * Begins recovery process for an alias. The verification message will be sent if the alias is valid.
+ *
+ * @param aliasValue alias value to recover
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)beginRecovery:(NSString *)aliasValue
+            onSuccess:(OnSuccess)onSuccess
+              onError:(OnError)onError;
+
+/**
+ * Verifies recovery code after beginRecovery is successful.
+ *
+ * @param code code from verification message
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)verifyRecoveryCode:(NSString *)code
+                 onSuccess:(OnSuccessWithBoolean)onSuccess
+                   onError:(OnError)onError;
+
+/**
+ * Completes recovery process after verifyRecoveryCode is successful.
+ *
+ * @param onSuccess invoked if successful with TkMember
+ * @param onError invoked if failed
+ */
+- (void)completeRecovery:(OnSuccessWithTKMember)onSuccess
+                 onError:(OnError)onError;
+
 @end
 
 #endif

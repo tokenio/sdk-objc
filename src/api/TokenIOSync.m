@@ -148,4 +148,40 @@
     }];
 }
 
+#pragma mark - Recovery
+
+- (void)beginRecovery:(NSString *)aliasValue {
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async beginRecovery:aliasValue
+                        onSuccess:^() {
+                            call.onSuccess(nil);
+                        } onError:call.onError];
+    }];
+}
+
+
+- (BOOL)verifyRecoveryCode:(NSString *)code {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    NSNumber *result = [call run:^{
+        [self.async verifyRecoveryCode:code
+                             onSuccess:^(BOOL correct) {
+                                 call.onSuccess(@(correct));
+                             }
+                               onError:call.onError];
+    }];
+    return [result boolValue];
+}
+
+
+- (TKMemberSync *)completeRecovery {
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async completeRecovery:^(TKMember *member) {
+            TKMemberSync* memberSync = [TKMemberSync member:member];
+            call.onSuccess(memberSync);
+        }
+                             onError:call.onError];
+    }];
+}
 @end

@@ -132,4 +132,28 @@
                             keyName:(NSString *)keyName
                                 key:(Key *)key;
 
+#pragma mark - Recovery
+
+/**
+ * Begins recovery process for an alias. The verification message will be sent if the alias is valid.
+ *
+ * @param aliasValue alias value to recover
+ */
+- (void)beginRecovery:(NSString *)aliasValue;
+
+/**
+ * Verifies recovery code after beginRecovery is successful.
+ *
+ * @param code code from verification message
+ * @return Boolean if the code is correct
+ */
+- (BOOL)verifyRecoveryCode:(NSString *)code;
+
+/**
+ * Completes recovery process after verifyRecoveryCode is successful.
+ *
+ * @return recovered member
+ */
+- (TKMemberSync *)completeRecovery;
+
 @end
