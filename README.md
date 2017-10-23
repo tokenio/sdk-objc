@@ -9,23 +9,18 @@ https://developer.token.io/sdk/pbdoc/io_token_proto_gateway.html
 Client Usage
 ------------
 
-To use the SDK version compatible with Token's Sandbox testing
-environment (typical usage), use the published pod:
-
-```
-  pod 'TokenSdk', '~> 1.0.72'
-```
-
 The SDK can be added to a client directly from git.
+E.g., to use version 1.0.72:
 
 ```
-  pod 'TokenSdk',  :git => 'https://github.com/tokenio/sdk-objc',:submodules => true
+  pod 'TokenSdk',  :git => 'https://github.com/tokenio/sdk-objc', :submodules => true, :tag => 'v1.0.72'
 ```
 
-or referenced locally in a Podfile
+Or your Podfile can refer to a repo cloned on disk (but you must update the
+clone "by hand"):
 
 ```
-  pod 'TokenSdk', :path => '../..'
+  pod 'TokenSdk', :path => '../sdk-objc'
 ```
 
 Dependencies
@@ -38,11 +33,6 @@ git submodule init
 git submodule update
 pod --repo-update install
 ```
-
-Pick up new protos
-------------------
-
-For now the protos are just copied over from `../lib-proto`. The script fails if the directory is not found. To pick up new protos, run `./bin/update-protos`. After the script finished executing one needs to reload the updated workspace file (with XCode or IntelliJ AppCode).
 
 Run Tests
 ---------
