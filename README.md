@@ -1,17 +1,47 @@
 Overview
 ========
 
-Token SDK for iOS. The SDK is built on top of protobuf gRPC API definition.
+Token SDK for iOS. Docs https://developer.token.io/sdk/
 
-Pick up new protos
-------------------
+The SDK is built on top of protobuf gRPC API definition,
+https://developer.token.io/sdk/pbdoc/io_token_proto_gateway.html
 
-For now the protos are just copied over from `../lib-proto`. The script fails if the directory is not found. To pick up new protos run `./bin/update-protos`. After the script finished executing one needs to reload the updated workspace file (with XCode or IntelliJ AppCode).
+Client Usage
+------------
+
+The SDK can be added to a client directly from git.
+To use the version compatible with Token's
+"sandbox" testing environment:
+
+```
+  source 'https://github.com/tokenio/token-cocoa-pods.git'
+  pod 'TokenSdk'
+```
+
+To use a specific version, e.g., 1.0.72:
+
+```
+  source 'https://github.com/tokenio/token-cocoa-pods.git'
+  pod 'TokenSdk', '1.0.72'
+```
+
+or
+
+```
+  pod 'TokenSdk', :git => 'https://github.com/tokenio/sdk-objc', :submodules => true, :tag => 'v1.0.72'
+```
+
+Or your Podfile can refer to a repo cloned on disk (but you must update the
+clone "by hand"):
+
+```
+  pod 'TokenSdk', :path => '../sdk-objc'
+```
 
 Dependencies
 ------------
 
-Most of the dependcies are managed with CocoaPods. Some use git submodules. So to initialize everything properly run:
+Most of the dependencies are managed with CocoaPods. Some use git submodules. So to initialize everything properly run:
 
 ```
 git submodule init
@@ -21,12 +51,6 @@ pod --repo-update install
 
 Run Tests
 ---------
-
-Local environment:
-
-```
-./bin/run-tests
-```
 
 Development environment:
 
@@ -40,17 +64,11 @@ Staging environment:
 ./bin/run-tests-staging
 ```
 
-Client Usage
-------------
-
-The SDK can be added to a client directly from git.
+Local environment (Token-internal):
 
 ```
-  pod 'TokenSdk',  :git => 'https://github.com/tokenio/sdk-objc',:submodules => true
+./bin/run-tests
 ```
 
-or referenced locally in a Podfile
 
-```
-  pod 'TokenSdk', :path => '../..'
-```
+
