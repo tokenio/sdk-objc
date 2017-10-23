@@ -176,36 +176,38 @@
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError;
 
+#pragma mark - Member Recovery
+
 /**
- * Begins recovery process for an alias. The verification message will be sent if the alias is valid.
+ * Begins member account recovery process by contacting alias. The verification message will be sent if the alias is valid.
  *
  * @param alias alias to recover
  * @param onSuccess invoked if successful with verification Id
  * @param onError invoked if failed
  */
-- (void)beginRecovery:(Alias *)alias
-            onSuccess:(OnSuccessWithString)onSuccess
-              onError:(OnError)onError;
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
+                    onError:(OnError)onError;
 
 /**
- * Gets recovery Operation by the verification code. Update member with this operation to get the recovered member.
+ * Gets member recovery Operation by the verification code. Update member with this operation to get the recovered member.
  *
- * @param verificationId verificationId from begin recovery response
+ * @param verificationId verificationId from begin member recovery response
  * @param code code from verification message
  * @param key the new privileged key
- * @param onSuccess invoked if successful with recovery operation
+ * @param onSuccess invoked if successful with member recovery operation
  * @param onError invoked if failed
  */
-- (void)getRecoveryOperation:(NSString *)verificationId
-                        code:(NSString *)code
-               privilegedKey:(Key *)key
-                   onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
-                     onError:(OnError)onError;
+- (void)getMemberRecoveryOperation:(NSString *)verificationId
+                              code:(NSString *)code
+                     privilegedKey:(Key *)key
+                         onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                           onError:(OnError)onError;
 
 /**
  * Recovers the alias with the recovered member.
  *
- * @param verificationId verificationId from begin recovery response
+ * @param verificationId verificationId from begin member recovery response
  * @param code code from verification message
  * @param onSuccess invoked if successful
  * @param onError invoked if failed

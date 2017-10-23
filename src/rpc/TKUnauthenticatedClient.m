@@ -289,11 +289,11 @@
     [rpc execute:call request:request];
 }
 
-#pragma mark - Recovery
+#pragma mark - Member Recovery
 
-- (void)beginRecovery:(Alias *)alias
-            onSuccess:(OnSuccessWithString)onSuccess
-              onError:(OnError)onError {
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
+                    onError:(OnError)onError {
     BeginRecoveryRequest *request = [BeginRecoveryRequest message];
     request.alias = alias;
     RpcLogStart(request);
@@ -311,11 +311,11 @@
     [rpc execute:call request:request];
 }
 
-- (void)getRecoveryOperation:(NSString *)verificationId
-                        code:(NSString *)code
-               privilegedKey:(Key *)key
-                   onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
-                     onError:(OnError)onError {
+- (void)getMemberRecoveryOperation:(NSString *)verificationId
+                              code:(NSString *)code
+                     privilegedKey:(Key *)key
+                         onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                           onError:(OnError)onError {
     CompleteRecoveryRequest *request = [CompleteRecoveryRequest message];
     request.verificationId = verificationId;
     request.code = code;

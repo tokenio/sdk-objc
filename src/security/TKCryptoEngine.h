@@ -24,7 +24,7 @@
 
 /**
  * Gets a key-pair of the specified level. If the key with the specified level
- * does not exists, return nil.
+ * does not exist, return nil.
  *
  * @param level key level
  * @param reason the reason to get the key-pair

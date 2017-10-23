@@ -1,19 +1,19 @@
 //
-//  TKRecoveryManager.m
+//  TKMemberRecoveryManager.m
 //  sdk
 //
 //  Created by Sibin Lu on 10/20/17.
 //  Copyright © 2017 Token Inc. All rights reserved.
 //
 
-#import "TKRecoveryManager.h"
+#import "TKMemberRecoveryManager.h"
 #import "TKClient.h"
 #import "TKUnauthenticatedClient.h"
 #import "TKCrypto.h"
 #import "TKLocalizer.h"
 #import "TKError.h"
 
-@implementation TKRecoveryManager {
+@implementation TKMemberRecoveryManager {
     TKUnauthenticatedClient *unauthenticatedClient;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     GatewayService *gateway;
@@ -27,6 +27,7 @@
     TKCrypto *crypto;
     Alias *alias;
     MemberRecoveryOperation *recoveryOperation;
+    Member *member;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
@@ -53,18 +54,20 @@
         crypto = nil;
         alias = nil;
         recoveryOperation = nil;
+        member = nil;
     }
     return self;
 }
 
-- (void)beginRecovery:(NSString *)aliasValue
-            onSuccess:(OnSuccess)onSuccess
-              onError:(OnError)onError {
+- (void)beginMemberRecovery:(NSString *)aliasValue
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
     verificationId = nil;
     code = nil;
     memberId = nil;
     crypto = nil;
     recoveryOperation = nil;
+    member = nil;
     alias = [Alias message];
     alias.value = aliasValue;
     alias.type = Alias_Type_Unknown;
@@ -76,7 +79,7 @@
          memberId = tokenMember.id_p;
          
          [unauthenticatedClient
-          beginRecovery:alias
+          beginMemberRecovery:alias
           onSuccess:^(NSString *verificationId_) {
               verificationId = verificationId_;
               
@@ -91,9 +94,9 @@
      onError:onError];
 }
 
-- (void)verifyRecoveryCode:(NSString *)code
-                 onSuccess:(OnSuccessWithBoolean)onSuccess
-                   onError:(OnError)onError {
+- (void)verifyMemberRecoveryCode:(NSString *)code
+                       onSuccess:(OnSuccessWithBoolean)onSuccess
+                         onError:(OnError)onError {
     
     if (crypto == nil) {
         onError([NSError
@@ -111,7 +114,7 @@
         return;
     }
     [unauthenticatedClient
-     getRecoveryOperation:verificationId
+     getMemberRecoveryOperation:verificationId
      code:code
      privilegedKey:key
      onSuccess:^(MemberRecoveryOperation *op) {
@@ -121,8 +124,8 @@
      onError:onError];
 }
 
-- (void)completeRecovery:(OnSuccessWithTKMember)onSuccess
-                 onError:(OnError)onError {
+- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+                       onError:(OnError)onError {
     
     if (crypto == nil) {
         onError([NSError
@@ -157,33 +160,49 @@
         addKey.addKey.key = key;
         [operations addObject:addKey];
     }
+    
+    if (!member) {
+        [unauthenticatedClient
+         updateMember:memberId
+         crypto:crypto
+         operations:operations
+         metadataArray:[NSArray array]
+         reason:reason
+         onSuccess:^(Member *member_){
+             member = member_;
+             [self verifyAlias:onSuccess onError:onError];
+             
+         } onError:onError];
+    }
+    else {
+        // Retries without updating member again.
+        [self verifyAlias:onSuccess onError:onError];
+    }
 
+    
+
+}
+
+#pragma mark - Private
+
+- (void)verifyAlias:(OnSuccessWithTKMember)onSuccess
+            onError:(OnError)onError {
     [unauthenticatedClient
-     updateMember:memberId
-     crypto:crypto
-     operations:operations
-     metadataArray:[NSArray array]
-     reason:reason
-     onSuccess:^(Member *member){
-         [unauthenticatedClient
-          recoverAlias:verificationId
-          code:code
-          onSuccess:^{
-              TKClient *client = [[TKClient alloc]
-                                  initWithGateway:gateway
-                                  crypto:crypto
-                                  timeoutMs:timeoutMs
-                                  developerKey:developerKey
-                                  memberId:memberId
-                                  errorHandler:errorHandler];
-              onSuccess([TKMember
-                         member:member
-                         useClient:client
-                         aliases:[NSMutableArray arrayWithObject:alias]]);
-          } onError:onError];
-         
+     recoverAlias:verificationId
+     code:code
+     onSuccess:^{
+         TKClient *client = [[TKClient alloc]
+                             initWithGateway:gateway
+                             crypto:crypto
+                             timeoutMs:timeoutMs
+                             developerKey:developerKey
+                             memberId:memberId
+                             errorHandler:errorHandler];
+         onSuccess([TKMember
+                    member:member
+                    useClient:client
+                    aliases:[NSMutableArray arrayWithObject:alias]]);
      } onError:onError];
-
 }
 
 @end

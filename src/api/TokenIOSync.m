@@ -148,40 +148,40 @@
     }];
 }
 
-#pragma mark - Recovery
+#pragma mark - Member Recovery
 
-- (void)beginRecovery:(NSString *)aliasValue {
+- (void)beginMemberRecovery:(NSString *)aliasValue {
     TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
     [call run:^{
-        [self.async beginRecovery:aliasValue
-                        onSuccess:^() {
-                            call.onSuccess(nil);
-                        } onError:call.onError];
+        [self.async beginMemberRecovery:aliasValue
+                              onSuccess:^() {
+                                  call.onSuccess(nil);
+                              } onError:call.onError];
     }];
 }
 
 
-- (BOOL)verifyRecoveryCode:(NSString *)code {
+- (BOOL)verifyMemberRecoveryCode:(NSString *)code {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{
-        [self.async verifyRecoveryCode:code
-                             onSuccess:^(BOOL correct) {
-                                 call.onSuccess(@(correct));
-                             }
-                               onError:call.onError];
+        [self.async verifyMemberRecoveryCode:code
+                                   onSuccess:^(BOOL correct) {
+                                       call.onSuccess(@(correct));
+                                   }
+                                     onError:call.onError];
     }];
     return [result boolValue];
 }
 
 
-- (TKMemberSync *)completeRecovery {
+- (TKMemberSync *)completeMemberRecovery {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async completeRecovery:^(TKMember *member) {
+        [self.async completeMemberRecovery:^(TKMember *member) {
             TKMemberSync* memberSync = [TKMemberSync member:member];
             call.onSuccess(memberSync);
         }
-                             onError:call.onError];
+                                   onError:call.onError];
     }];
 }
 @end

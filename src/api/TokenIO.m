@@ -17,7 +17,7 @@
 #import "DeviceInfo.h"
 #import "TKRpcErrorHandler.h"
 #import "TKLocalizer.h"
-#import "TKRecoveryManager.h"
+#import "TKMemberRecoveryManager.h"
 
 
 @implementation TokenIO {
@@ -27,7 +27,7 @@
     NSString *developerKey;
     TKRpcErrorHandler *errorHandler;
     TKUnauthenticatedClient *unauthenticatedClient;
-    TKRecoveryManager *recoveryManager;
+    TKMemberRecoveryManager *memberRecoveryManager;
 }
 
 + (TokenIOBuilder *)builder {
@@ -68,12 +68,12 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
                                  errorHandler:errorHandler];
-        recoveryManager = [[TKRecoveryManager alloc]
-                           initWithGateway:gateway
-                           timeoutMs:timeoutMs
-                           developerKey:developerKey
-                           errorHandler:errorHandler
-                           crypto:cryptoEngineFactory];
+        memberRecoveryManager = [[TKMemberRecoveryManager alloc]
+                                 initWithGateway:gateway
+                                 timeoutMs:timeoutMs
+                                 developerKey:developerKey
+                                 errorHandler:errorHandler
+                                 crypto:cryptoEngineFactory];
         
     }
     
@@ -215,28 +215,28 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                onError:onError];
 }
 
-#pragma mark - Recovery
+#pragma mark - Member Recovery
 
-- (void)beginRecovery:(NSString *)aliasValue
-            onSuccess:(OnSuccess)onSuccess
-              onError:(OnError)onError {
-    [recoveryManager beginRecovery:aliasValue
-                         onSuccess:onSuccess
-                           onError:onError];
+- (void)beginMemberRecovery:(NSString *)aliasValue
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
+    [memberRecoveryManager beginMemberRecovery:aliasValue
+                                     onSuccess:onSuccess
+                                       onError:onError];
 }
 
-- (void)verifyRecoveryCode:(NSString *)code
-                 onSuccess:(OnSuccessWithBoolean)onSuccess
-                   onError:(OnError)onError {
-    [recoveryManager verifyRecoveryCode:code
-                              onSuccess:onSuccess
-                                onError:onError];
+- (void)verifyMemberRecoveryCode:(NSString *)code
+                       onSuccess:(OnSuccessWithBoolean)onSuccess
+                         onError:(OnError)onError {
+    [memberRecoveryManager verifyMemberRecoveryCode:code
+                                          onSuccess:onSuccess
+                                            onError:onError];
 }
 
-- (void)completeRecovery:(OnSuccessWithTKMember)onSuccess
-                 onError:(OnError)onError {
-    [recoveryManager completeRecovery:onSuccess
-                              onError:onError];
+- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+                       onError:(OnError)onError {
+    [memberRecoveryManager completeMemberRecovery:onSuccess
+                                          onError:onError];
 }
 
 #pragma mark - private

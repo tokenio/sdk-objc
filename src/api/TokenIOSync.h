@@ -132,28 +132,33 @@
                             keyName:(NSString *)keyName
                                 key:(Key *)key;
 
-#pragma mark - Recovery
+#pragma mark - Member Recovery
 
 /**
- * Begins recovery process for an alias. The verification message will be sent if the alias is valid.
+ * Begins member account recovery process by contacting alias. The verification message will
+ * be sent if the alias is valid. All the member recovery methods shall be called by the same
+ * TokenIOSync instance.
  *
  * @param aliasValue alias value to recover
  */
-- (void)beginRecovery:(NSString *)aliasValue;
+- (void)beginMemberRecovery:(NSString *)aliasValue;
 
 /**
- * Verifies recovery code after beginRecovery is successful.
+ * Verifies member recovery code after beginMemberRecovery is successful. All the member recovery
+ * methods shall be called by the same TokenIOSync instance.
  *
  * @param code code from verification message
  * @return Boolean if the code is correct
  */
-- (BOOL)verifyRecoveryCode:(NSString *)code;
+- (BOOL)verifyMemberRecoveryCode:(NSString *)code;
 
 /**
- * Completes recovery process after verifyRecoveryCode is successful.
+ * Completes member recovery process after verifyMemberRecoveryCode is successful. Uploads member's
+ * public keys from this device to Token directory. All the member recovery methods shall be called
+ * by the same TokenIO instance.
  *
  * @return recovered member
  */
-- (TKMemberSync *)completeRecovery;
+- (TKMemberSync *)completeMemberRecovery;
 
 @end

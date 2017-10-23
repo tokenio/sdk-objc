@@ -159,8 +159,8 @@
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
-		D0EAC06A1F9AC1A800C0E98A /* TKRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKRecoveryManager.m */; };
-		D0EAC06B1F9AC1A800C0E98A /* TKRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKRecoveryManager.h */; };
+		D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */; };
+		D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */; };
 		DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0A77581E4226B40058FB8A /* TKLocalizer.h */; };
 		DD0A775B1E4226B40058FB8A /* TKLocalizer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A77591E4226B40058FB8A /* TKLocalizer.m */; };
 		DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */; };
@@ -379,8 +379,8 @@
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D082409E1EFDC5050063D9E9 /* TKProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKProfileTests.m; sourceTree = "<group>"; };
-		D0EAC0681F9AC1A700C0E98A /* TKRecoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRecoveryManager.m; sourceTree = "<group>"; };
-		D0EAC0691F9AC1A700C0E98A /* TKRecoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRecoveryManager.h; sourceTree = "<group>"; };
+		D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberRecoveryManager.m; sourceTree = "<group>"; };
+		D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberRecoveryManager.h; sourceTree = "<group>"; };
 		DD0A77581E4226B40058FB8A /* TKLocalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLocalizer.h; sourceTree = "<group>"; };
 		DD0A77591E4226B40058FB8A /* TKLocalizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizer.m; sourceTree = "<group>"; };
 		DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizationTests.m; sourceTree = "<group>"; };
@@ -651,8 +651,8 @@
 				94FAE5341DF21A590023AAA8 /* PagedArray.m */,
 				ABA7B0F484A589EE5D7425CE /* DeviceInfo.m */,
 				ABA7B9B82698139BE92AFFDA /* DeviceInfo.h */,
-				D0EAC0691F9AC1A700C0E98A /* TKRecoveryManager.h */,
-				D0EAC0681F9AC1A700C0E98A /* TKRecoveryManager.m */,
+				D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */,
+				D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -852,7 +852,7 @@
 				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
 				DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */,
 				4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */,
-				D0EAC06B1F9AC1A800C0E98A /* TKRecoveryManager.h in Headers */,
+				D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
 				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
@@ -1229,7 +1229,7 @@
 				ABA7B3247F83509D9AB5E5B5 /* TKMemberSync.m in Sources */,
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
-				D0EAC06A1F9AC1A800C0E98A /* TKRecoveryManager.m in Sources */,
+				D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIOSync.m in Sources */,
 				4B240F8C1F28135000497B2D /* Base58.c in Sources */,
 				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
