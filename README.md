@@ -10,10 +10,25 @@ Client Usage
 ------------
 
 The SDK can be added to a client directly from git.
-E.g., to use version 1.0.72:
+To use the version compatible with Token's
+"sandbox" testing environment:
 
 ```
-  pod 'TokenSdk',  :git => 'https://github.com/tokenio/sdk-objc', :submodules => true, :tag => 'v1.0.72'
+  source 'https://github.com/tokenio/token-cocoa-pods.git'
+  pod 'TokenSdk'
+```
+
+To use a specific version, e.g., 1.0.72:
+
+```
+  source 'https://github.com/tokenio/token-cocoa-pods.git'
+  pod 'TokenSdk', '1.0.72'
+```
+
+or
+
+```
+  pod 'TokenSdk', :git => 'https://github.com/tokenio/sdk-objc', :submodules => true, :tag => 'v1.0.72'
 ```
 
 Or your Podfile can refer to a repo cloned on disk (but you must update the
