@@ -83,14 +83,30 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)createMember:(Alias *)alias
             onSucess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
-    [unauthenticatedClient createMemberId:
-                    ^(NSString *memberId) {
-                        [self _addKeysAndAlias:memberId
-                                         alias:alias
-                                     onSuccess:onSuccess
-                                       onError:onError];
-                    }
-                   onError:onError];
+    Alias *tokenAgent = [Alias message];
+    tokenAgent.value = @"token.io";
+    tokenAgent.type = Alias_Type_Domain;
+    [unauthenticatedClient
+     getTokenMember:tokenAgent
+     onSuccess:^(TokenMember* tokenMember) {
+         if (tokenMember && tokenMember.id_p && ![tokenMember.id_p isEqualToString:@""]) {
+             [unauthenticatedClient
+              createMemberId:^(NSString *memberId) {
+                  [self _addKeysAndAlias:memberId
+                                   alias:alias
+                   memberRecoveryAgentId:tokenMember.id_p
+                               onSuccess:onSuccess
+                                 onError:onError];
+              }
+              onError:onError];
+         }
+         else {
+             onError([NSError errorWithDomain:@"io.grpc"
+                                         code:GRPCErrorCodeNotFound
+                                     userInfo:nil]);
+         }
+     }
+     onError:onError];
 }
 
 - (void)provisionDevice:(Alias *)alias
@@ -248,6 +264,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 // alias can be nil. In this case only add the key.
 - (void)_addKeysAndAlias:(NSString *)memberId
                    alias:(Alias *)alias
+   memberRecoveryAgentId:(NSString *)agentId
                onSuccess:(void (^)(TKMember *))onSuccess
                  onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
@@ -266,7 +283,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     [operations addObject:addAlias];
 
     MemberOperation *recoverOp = [MemberOperation message];
-    recoverOp.recoveryRules.recoveryRule.primaryAgent = memberId;
+    recoverOp.recoveryRules.recoveryRule.primaryAgent = agentId;
     [operations addObject:recoverOp];
     
     MemberOperationMetadata *metadata = [MemberOperationMetadata message];
