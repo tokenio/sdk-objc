@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Generates api reference html pages.
+# Uses Jazzy, https://github.com/realm/jazzy
+
+jazzy \
+  --objc \
+  --clean \
+  --author Token \
+  --author_url https://developer.token.io \
+  --github_url https://github.com/tokenio/sdk-objc \
+  --umbrella-header 'src/api/TokenSdk.h' \
+  --output build/docs \
+  --head "$(cat bin/gen-doc-head.html)"
+
+tar -czvf build/api.doc.tar.gz build/docs
