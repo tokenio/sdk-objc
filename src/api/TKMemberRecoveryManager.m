@@ -94,7 +94,7 @@
      onError:onError];
 }
 
-- (void)verifyMemberRecoveryCode:(NSString *)code
+- (void)verifyMemberRecoveryCode:(NSString *)code_
                        onSuccess:(OnSuccessWithBoolean)onSuccess
                          onError:(OnError)onError {
     
@@ -115,10 +115,11 @@
     }
     [unauthenticatedClient
      getMemberRecoveryOperation:verificationId
-     code:code
+     code:code_
      privilegedKey:key
      onSuccess:^(MemberRecoveryOperation *op) {
          recoveryOperation = op;
+         code = code_;
          onSuccess(true);
      }
      onError:^(NSError* error) {
