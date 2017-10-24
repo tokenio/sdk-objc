@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Generate api reference html pages.
+# Generates api reference html pages.
 # Uses Jazzy, https://github.com/realm/jazzy
 
 jazzy \
