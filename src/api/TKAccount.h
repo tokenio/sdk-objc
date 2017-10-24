@@ -26,6 +26,7 @@
 @property (atomic, readonly) NSString *id;
 @property (atomic, readonly) NSString *name;
 @property (atomic, readonly) NSString *bankId;
+@property (atomic, readonly) BOOL isLocked;
 
 + (TKAccount *)account:(Account *)account
                     of:(TKMemberSync *)member

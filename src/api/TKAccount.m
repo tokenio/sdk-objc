@@ -49,6 +49,10 @@
     return account.bankId;
 }
 
+- (BOOL) isLocked {
+    return account.isLocked;
+}
+
 - (void)getBalance:(OnSuccessWithMoney)onSuccess
            onError:(OnError)onError {
     [client getBalance:account.id_p
