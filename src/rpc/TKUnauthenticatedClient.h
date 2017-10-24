@@ -97,6 +97,7 @@
  *
  * @param memberId member id
  * @param crypto crypto engine to use
+ * @param prevHash prevHash for update member request
  * @param operations a set of operations that setup member keys and/or aliases
  * @param metadataArray set of metadataArray; only use in addAlias operation now
  * @param reason the reason to update member
@@ -104,6 +105,7 @@
  */
 - (void)updateMember:(NSString *)memberId
               crypto:(TKCrypto *)crypto
+            prevHash:(NSString *)prevHash
           operations:(NSArray<MemberOperation *> *)operations
        metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
               reason:(NSString *)reason

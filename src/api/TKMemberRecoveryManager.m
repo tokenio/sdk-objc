@@ -173,6 +173,7 @@
         [unauthenticatedClient
          updateMember:memberId
          crypto:crypto
+         prevHash:recoveryOperation.authorization.prevHash
          operations:operations
          metadataArray:[NSArray array]
          reason:reason
@@ -186,9 +187,6 @@
         // Retries without updating member again.
         [self verifyAlias:onSuccess onError:onError];
     }
-
-    
-
 }
 
 #pragma mark - Private

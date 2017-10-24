@@ -150,6 +150,7 @@
     
     [self updateMember:memberId
                 crypto:crypto
+              prevHash:nil
             operations:operations
          metadataArray:metadataArray
                 reason:TKLocalizedString(
@@ -161,6 +162,7 @@
 
 - (void)updateMember:(NSString *)memberId
               crypto:(TKCrypto *)crypto
+            prevHash:(NSString *)prevHash
           operations:(NSArray<MemberOperation *> *)operations
        metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
               reason:(NSString *)reason
@@ -169,6 +171,9 @@
     UpdateMemberRequest *request = [UpdateMemberRequest message];
     request.update.memberId = memberId;
     request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
+    if (prevHash) {
+        request.update.prevHash = prevHash;
+    }
     request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
     
     TKSignature *signature = [crypto sign:request.update
