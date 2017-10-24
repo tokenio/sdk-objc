@@ -121,7 +121,7 @@
          recoveryOperation = op;
          onSuccess(true);
      }
-     onError:^(NSError* error){
+     onError:^(NSError* error) {
          if (error.domain == kGRPCErrorDomain && error.code == 5) {
              // The code is invalid. But the request shall be marked as success.
              onSuccess(false);
