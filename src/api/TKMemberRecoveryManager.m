@@ -121,7 +121,15 @@
          recoveryOperation = op;
          onSuccess(true);
      }
-     onError:onError];
+     onError:^(NSError* error){
+         if (error.domain == kGRPCErrorDomain && error.code == 5) {
+             // The code is invalid. But the request shall be marked as success.
+             onSuccess(false);
+         }
+         else {
+             onError(error);
+         }
+     }];
 }
 
 - (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
