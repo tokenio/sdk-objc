@@ -13,4 +13,4 @@ jazzy \
   --output build/docs \
   --head "$(cat bin/gen-doc-head.html)"
 
-tar -czvf build/api.doc.tar.gz build/docs
+tar -czvf build/api.doc.tar.gz -C build/docs .
