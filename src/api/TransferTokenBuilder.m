@@ -128,7 +128,7 @@
     }
     
     if (self.purposeOfPayment) {
-        payload.transfer.instructions.transferPurpose = self.purposeOfPayment;
+        payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
     }
 
     [[self.member getClient] createTransferToken:payload
