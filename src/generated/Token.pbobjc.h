@@ -72,7 +72,7 @@ typedef GPB_ENUM(TransferTokenStatus) {
   /** the request has failed due to insufficient funds */
   TransferTokenStatus_FailureInsufficientFunds = 3,
 
-  /** the request has failed, becuase currency is invalid/unsupported */
+  /** the request has failed, because currency is invalid/unsupported */
   TransferTokenStatus_FailureInvalidCurrency = 4,
 
   /** the request has failed, source account not found */
@@ -86,6 +86,9 @@ typedef GPB_ENUM(TransferTokenStatus) {
 
   /** the request has failed, because the pricing quote is invalid */
   TransferTokenStatus_FailureInvalidQuote = 11,
+
+  /** the request has failed, because additional authorization is needed */
+  TransferTokenStatus_FailureAuthorizationNeeded = 12,
 
   /** the request has failed due to other reasons */
   TransferTokenStatus_FailureGeneric = 9,

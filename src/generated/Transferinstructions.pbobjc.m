@@ -94,6 +94,50 @@ BOOL PurposeOfPayment_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - Enum PaymentContext
+
+GPBEnumDescriptor *PaymentContext_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidContext\000OtherContext\000BillPayment\000"
+        "EcommerceGoods\000EcommerceServices\000PersonT"
+        "oPerson\000";
+    static const int32_t values[] = {
+        PaymentContext_InvalidContext,
+        PaymentContext_OtherContext,
+        PaymentContext_BillPayment,
+        PaymentContext_EcommerceGoods,
+        PaymentContext_EcommerceServices,
+        PaymentContext_PersonToPerson,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PaymentContext)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:PaymentContext_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL PaymentContext_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case PaymentContext_InvalidContext:
+    case PaymentContext_OtherContext:
+    case PaymentContext_BillPayment:
+    case PaymentContext_EcommerceGoods:
+    case PaymentContext_EcommerceServices:
+    case PaymentContext_PersonToPerson:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - CustomerData
 
 @implementation CustomerData
@@ -208,13 +252,13 @@ typedef struct TransferEndpoint__storage_ {
 
 @dynamic hasSource, source;
 @dynamic destinationsArray, destinationsArray_Count;
-@dynamic transferPurpose;
+@dynamic hasMetadata, metadata;
 
 typedef struct TransferInstructions__storage_ {
   uint32_t _has_storage_[1];
-  PurposeOfPayment transferPurpose;
   TransferEndpoint *source;
   NSMutableArray *destinationsArray;
+  TransferInstructions_Metadata *metadata;
 } TransferInstructions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -242,13 +286,13 @@ typedef struct TransferInstructions__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "transferPurpose",
-        .dataTypeSpecific.enumDescFunc = PurposeOfPayment_EnumDescriptor,
-        .number = TransferInstructions_FieldNumber_TransferPurpose,
+        .name = "metadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions_Metadata),
+        .number = TransferInstructions_FieldNumber_Metadata,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(TransferInstructions__storage_, transferPurpose),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .offset = (uint32_t)offsetof(TransferInstructions__storage_, metadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -267,15 +311,104 @@ typedef struct TransferInstructions__storage_ {
 
 @end
 
-int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message) {
-  GPBDescriptor *descriptor = [TransferInstructions descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+#pragma mark - TransferInstructions_Metadata
+
+@implementation TransferInstructions_Metadata
+
+@dynamic transferPurpose;
+@dynamic paymentContext;
+@dynamic merchantCategoryCode;
+@dynamic merchantCustomerId;
+
+typedef struct TransferInstructions_Metadata__storage_ {
+  uint32_t _has_storage_[1];
+  PurposeOfPayment transferPurpose;
+  PaymentContext paymentContext;
+  NSString *merchantCategoryCode;
+  NSString *merchantCustomerId;
+} TransferInstructions_Metadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transferPurpose",
+        .dataTypeSpecific.enumDescFunc = PurposeOfPayment_EnumDescriptor,
+        .number = TransferInstructions_Metadata_FieldNumber_TransferPurpose,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, transferPurpose),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "paymentContext",
+        .dataTypeSpecific.enumDescFunc = PaymentContext_EnumDescriptor,
+        .number = TransferInstructions_Metadata_FieldNumber_PaymentContext,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, paymentContext),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "merchantCategoryCode",
+        .dataTypeSpecific.className = NULL,
+        .number = TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, merchantCategoryCode),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "merchantCustomerId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransferInstructions_Metadata_FieldNumber_MerchantCustomerId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, merchantCustomerId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransferInstructions_Metadata class]
+                                     rootClass:[TransferinstructionsRoot class]
+                                          file:TransferinstructionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransferInstructions_Metadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferInstructions)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t TransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message) {
+  GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_TransferPurpose];
   return GPBGetMessageInt32Field(message, field);
 }
 
-void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value) {
-  GPBDescriptor *descriptor = [TransferInstructions descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_FieldNumber_TransferPurpose];
+void SetTransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_TransferPurpose];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t TransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message) {
+  GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_PaymentContext];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message, int32_t value) {
+  GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_PaymentContext];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 

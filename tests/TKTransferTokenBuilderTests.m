@@ -109,7 +109,7 @@
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
         XCTAssertEqualObjects(payee.firstAlias, token.payload.to.alias);
         XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
-        XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.transferPurpose);
+        XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.metadata.transferPurpose);
         XCTAssertEqualObjects(pricing.sourceQuote, token.payload.transfer.pricing.sourceQuote);
         XCTAssertEqualObjects(payee.firstAlias, token.payload.transfer.redeemer.alias);
         XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
