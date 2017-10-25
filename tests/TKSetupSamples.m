@@ -27,7 +27,7 @@
         TokenIOSync *tokenIO = [builder buildSync];
 
         // Use the SDK client.
-        TKMemberSync *member = [tokenIO createMember:[TKUtil randomAlias]];
+        TKMemberSync *member = [tokenIO createMember:[self generateEmailAlias]];
         XCTAssertNotNil(member);
     }];
 }

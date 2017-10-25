@@ -128,11 +128,4 @@
     }
     return output;}
 
-+ (Alias *)randomAlias {
-    Alias *alias = [Alias new];
-    alias.value = [[[@"rnd-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@example.com"] lowercaseString];
-    alias.type = Alias_Type_Email;
-    return alias;
-}
-
 @end

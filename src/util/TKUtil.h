@@ -5,7 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Alias.pbobjc.h"
 
 /**
  * Set of utility methods.
@@ -129,10 +128,5 @@
  * @return converted string
  */
 + (NSString *)camelCaseToSnakeCase:(NSString *)string;
-
-/**
- * Generates a random alias; useful for creating test members.
- */
-+ (Alias *)randomAlias;
 
 @end
