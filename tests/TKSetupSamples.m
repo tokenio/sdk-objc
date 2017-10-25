@@ -22,8 +22,7 @@
 
 - (void)testCreateSDKClient {
     [self run: ^(TokenIOSync *tIO) {
-        TokenIOBuilder *builder = [TokenIOSync builder];
-        [builder forSandbox];
+        TokenIOBuilder *builder = [TokenIOSync sandboxBuilder];
         builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
         TokenIOSync *tokenIO = [builder buildSync];
 

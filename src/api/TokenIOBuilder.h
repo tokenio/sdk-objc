@@ -34,16 +34,6 @@
 - (id)init;
 
 /**
- * Set host, port, and useSsl for sandbox
- */
-- (void)forSandbox;
-
-/**
- * Set host, port, and useSsl for production
- */
-- (void)forProduction;
-
-/**
  * Creates a synchronous Token client object that is used as the 
  * entry point to the Token API.
  */
