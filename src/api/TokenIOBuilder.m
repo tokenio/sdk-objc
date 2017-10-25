@@ -31,6 +31,18 @@
     return self;
 }
 
+- (void)forSandbox {
+  self.host = @"api-grpc.sandbox.token.io";
+  self.port = 443;
+  self.useSsl = YES;
+}
+
+- (void)forProduction {
+  self.host = @"api-grpc.token.io";
+  self.port = 443;
+  self.useSsl = YES;
+}
+
 - (TokenIOSync *)buildSync {
     TokenIO* tokenIO = [self buildAsync];
     return [[TokenIOSync alloc] initWithDelegate:tokenIO];

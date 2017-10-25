@@ -12,6 +12,8 @@
 #import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
 
+#import "TKUtil.h"
+
 @interface TKSetupSamples : TKTestBase
 
 @end
@@ -19,11 +21,16 @@
 @implementation TKSetupSamples
 
 - (void)testCreateSDKClient {
-    TokenIOBuilder *builder = [TokenIOSync builder];
-    builder.host = @"api-grpc.sandbox.token.io"; // "sandbox." for test; omit for real
-    builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-    TokenIOSync *tokenIO = [builder buildSync];
-    XCTAssertNotNil(tokenIO);
+    [self run: ^(TokenIOSync *tIO) {
+        TokenIOBuilder *builder = [TokenIOSync builder];
+        [builder forSandbox];
+        builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+        TokenIOSync *tokenIO = [builder buildSync];
+
+        // Use the SDK client.
+        TKMemberSync *member = [tokenIO createMember:[TKUtil randomAlias]];
+        XCTAssertNotNil(member);
+    }];
 }
 
 @end
