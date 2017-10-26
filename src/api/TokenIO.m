@@ -16,6 +16,8 @@
 #import "TKClient.h"
 #import "DeviceInfo.h"
 #import "TKRpcErrorHandler.h"
+#import "TKLocalizer.h"
+#import "TKMemberRecoveryManager.h"
 
 
 @implementation TokenIO {
@@ -24,6 +26,8 @@
     int timeoutMs;
     NSString *developerKey;
     TKRpcErrorHandler *errorHandler;
+    TKUnauthenticatedClient *unauthenticatedClient;
+    TKMemberRecoveryManager *memberRecoveryManager;
 }
 
 + (TokenIOBuilder *)builder {
@@ -66,6 +70,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
         developerKey = [developerKey_ copy];
+        
+        unauthenticatedClient = [[TKUnauthenticatedClient alloc]
+                                 initWithGateway:gateway
+                                 timeoutMs:timeoutMs
+                                 developerKey:developerKey
+                                 errorHandler:errorHandler];
+        memberRecoveryManager = [[TKMemberRecoveryManager alloc]
+                                 initWithGateway:gateway
+                                 timeoutMs:timeoutMs
+                                 developerKey:developerKey
+                                 errorHandler:errorHandler
+                                 crypto:cryptoEngineFactory];
+        
     }
     
     return self;
@@ -74,31 +91,36 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)createMember:(Alias *)alias
             onSucess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client createMemberId:
-                    ^(NSString *memberId) {
-                        [self _addKeysAndAlias:client
-                                      memberId:memberId
-                                         alias:alias
-                                     onSuccess:onSuccess
-                                       onError:onError];
-                    }
-                   onError:onError];
+    Alias *tokenAgent = [Alias message];
+    tokenAgent.value = @"token.io";
+    tokenAgent.type = Alias_Type_Domain;
+    [unauthenticatedClient
+     getTokenMember:tokenAgent
+     onSuccess:^(TokenMember* tokenMember) {
+         if (tokenMember && tokenMember.id_p && ![tokenMember.id_p isEqualToString:@""]) {
+             [unauthenticatedClient
+              createMemberId:^(NSString *memberId) {
+                  [self _addKeysAndAlias:memberId
+                                   alias:alias
+                   memberRecoveryAgentId:tokenMember.id_p
+                               onSuccess:onSuccess
+                                 onError:onError];
+              }
+              onError:onError];
+         }
+         else {
+             onError([NSError errorWithDomain:@"io.grpc"
+                                         code:GRPCErrorCodeNotFound
+                                     userInfo:nil]);
+         }
+     }
+     onError:onError];
 }
 
 - (void)provisionDevice:(Alias *)alias
               onSuccess:(OnSuccessWithDeviceInfo)onSuccess
                 onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client getMemberId:alias
+    [unauthenticatedClient getMemberId:alias
               onSuccess:^(NSString *memberId) {
                   if (memberId) {
                       TKCrypto *crypto = [self _createCrypto:memberId];
@@ -116,27 +138,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)aliasExists:(Alias *)alias
           onSuccess:(OnSuccessWithBoolean)onSuccess
             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client getMemberId:alias
-              onSuccess:^(NSString *memberId) { onSuccess([memberId length] != 0); }
-                onError:onError];
+    [unauthenticatedClient getMemberId:alias
+                             onSuccess:^(NSString *memberId) {
+                                 onSuccess([memberId length] != 0);
+                             }
+                               onError:onError];
 }
 
 - (void)getMemberId:(Alias *)alias
           onSuccess:(OnSuccessWithString)onSuccess
             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-                                       initWithGateway:gateway
-                                       timeoutMs:timeoutMs
-                                       developerKey:developerKey
-                                       errorHandler:errorHandler];
-    [client getMemberId:alias
-              onSuccess:onSuccess
-                onError:onError];
+    [unauthenticatedClient getMemberId:alias
+                             onSuccess:onSuccess
+                               onError:onError];
 }
 
 /**
@@ -149,24 +163,14 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)getTokenMember:(Alias *)alias
              onSuccess:(OnSuccessWithTokenMember)onSuccess
                onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-                                       initWithGateway:gateway
-                                       timeoutMs:timeoutMs
-                                       developerKey:developerKey
-                                       errorHandler:errorHandler];
-    [client getTokenMember:alias
-                 onSuccess:onSuccess
-                   onError:onError];
+    [unauthenticatedClient getTokenMember:alias
+                                onSuccess:onSuccess
+                                  onError:onError];
 }
 
 - (void)loginMember:(NSString *)memberId
            onSucess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
-    TKUnauthenticatedClient *unauthenticatedClient = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
                                TKCrypto *crypto = [self _createCrypto:memberId];
@@ -191,32 +195,22 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 - (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
     if ([token.refId length] == 0) {
         token.refId = [TKUtil nonce];
     }
-    [client notifyPaymentRequest:token
-                       onSuccess:onSuccess
-                         onError:onError];
+    [unauthenticatedClient notifyPaymentRequest:token
+                                      onSuccess:onSuccess
+                                        onError:onError];
 }
 
 - (void)notifyLinkAccounts:(Alias *)alias
              authorization:(BankAuthorization *)authorization
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client notifyLinkAccounts:alias
-                 authorization:authorization
-                     onSuccess:onSuccess
-                       onError:onError];
+    [unauthenticatedClient notifyLinkAccounts:alias
+                                authorization:authorization
+                                    onSuccess:onSuccess
+                                      onError:onError];
 }
 
 - (void)notifyAddKey:(Alias *)alias
@@ -224,16 +218,11 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                  key:(Key *)key
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client notifyAddKey:alias
-                 keyName:keyName
-                     key:key
-               onSuccess:onSuccess
-                 onError:onError];
+    [unauthenticatedClient notifyAddKey:alias
+                                keyName:keyName
+                                    key:key
+                              onSuccess:onSuccess
+                                onError:onError];
 }
 
 - (void)notifyLinkAccountsAndAddKey:(Alias *)alias
@@ -242,29 +231,48 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                 key:(Key *)key
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError {
-    TKUnauthenticatedClient *client = [[TKUnauthenticatedClient alloc]
-            initWithGateway:gateway
-                  timeoutMs:timeoutMs
-               developerKey:developerKey
-               errorHandler:errorHandler];
-    [client notifyLinkAccountsAndAddKey:alias
-                          authorization:authorization
-                                keyName:keyName
-                                    key:key
-                              onSuccess:onSuccess
-                                onError:onError];
+    [unauthenticatedClient notifyLinkAccountsAndAddKey:alias
+                                         authorization:authorization
+                                               keyName:keyName
+                                                   key:key
+                                             onSuccess:onSuccess
+                                               onError:onError];
 }
 
-#pragma mark private
+#pragma mark - Member Recovery
+
+- (void)beginMemberRecovery:(NSString *)aliasValue
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
+    [memberRecoveryManager beginMemberRecovery:aliasValue
+                                     onSuccess:onSuccess
+                                       onError:onError];
+}
+
+- (void)verifyMemberRecoveryCode:(NSString *)code
+                       onSuccess:(OnSuccessWithBoolean)onSuccess
+                         onError:(OnError)onError {
+    [memberRecoveryManager verifyMemberRecoveryCode:code
+                                          onSuccess:onSuccess
+                                            onError:onError];
+}
+
+- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+                       onError:(OnError)onError {
+    [memberRecoveryManager completeMemberRecovery:onSuccess
+                                          onError:onError];
+}
+
+#pragma mark - private
 
 - (TKCrypto *)_createCrypto:(NSString *)memberId {
     return [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
 }
 
 // alias can be nil. In this case only add the key.
-- (void)_addKeysAndAlias:(TKUnauthenticatedClient *)client
-                memberId:(NSString *)memberId
+- (void)_addKeysAndAlias:(NSString *)memberId
                    alias:(Alias *)alias
+   memberRecoveryAgentId:(NSString *)agentId
                onSuccess:(void (^)(TKMember *))onSuccess
                  onError:(OnError)onError {
     TKCrypto *crypto = [self _createCrypto:memberId];
@@ -281,30 +289,34 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     MemberOperation *addAlias = [MemberOperation message];
     addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
     [operations addObject:addAlias];
+
+    MemberOperation *recoverOp = [MemberOperation message];
+    recoverOp.recoveryRules.recoveryRule.primaryAgent = agentId;
+    [operations addObject:recoverOp];
     
     MemberOperationMetadata *metadata = [MemberOperationMetadata message];
     metadata.addAliasMetadata.alias = alias;
     metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:alias];
     [metadataArray addObject:metadata];
     
-    [client createMember:memberId
-                  crypto:crypto
-              operations:operations
-           metadataArray:metadataArray
-               onSuccess:^(Member *member) {
-                   TKClient *newClient = [[TKClient alloc]
-                           initWithGateway:gateway
-                                    crypto:crypto
-                                 timeoutMs:timeoutMs
-                              developerKey:developerKey
-                                  memberId:memberId
-                              errorHandler:errorHandler];
-                   onSuccess([TKMember
-                              member:member
-                           useClient:newClient
-                             aliases:[NSMutableArray arrayWithObject:alias]]);
-               }
-                 onError:onError];
+    [unauthenticatedClient createMember:memberId
+                                 crypto:crypto
+                             operations:operations
+                          metadataArray:metadataArray
+                              onSuccess:^(Member *member) {
+                                  TKClient *client = [[TKClient alloc]
+                                                      initWithGateway:gateway
+                                                      crypto:crypto
+                                                      timeoutMs:timeoutMs
+                                                      developerKey:developerKey
+                                                      memberId:memberId
+                                                      errorHandler:errorHandler];
+                                  onSuccess([TKMember
+                                             member:member
+                                             useClient:client
+                                             aliases:[NSMutableArray arrayWithObject:alias]]);
+                              }
+                                onError:onError];
 }
 
 @end

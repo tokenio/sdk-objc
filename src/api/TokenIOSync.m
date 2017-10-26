@@ -156,4 +156,40 @@
     }];
 }
 
+#pragma mark - Member Recovery
+
+- (void)beginMemberRecovery:(NSString *)aliasValue {
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async beginMemberRecovery:aliasValue
+                              onSuccess:^() {
+                                  call.onSuccess(nil);
+                              } onError:call.onError];
+    }];
+}
+
+
+- (BOOL)verifyMemberRecoveryCode:(NSString *)code {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    NSNumber *result = [call run:^{
+        [self.async verifyMemberRecoveryCode:code
+                                   onSuccess:^(BOOL correct) {
+                                       call.onSuccess(@(correct));
+                                   }
+                                     onError:call.onError];
+    }];
+    return [result boolValue];
+}
+
+
+- (TKMemberSync *)completeMemberRecovery {
+    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async completeMemberRecovery:^(TKMember *member) {
+            TKMemberSync* memberSync = [TKMemberSync member:member];
+            call.onSuccess(memberSync);
+        }
+                                   onError:call.onError];
+    }];
+}
 @end

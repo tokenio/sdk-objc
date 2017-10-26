@@ -8,7 +8,8 @@
 #import "TKTokenCryptoEngine.h"
 #import "TKKeyStore.h"
 #import "TKSignature.h"
-
+#import "TKError.h"
+#import "TKLocalizer.h"
 
 @implementation TKTokenCryptoEngine {
     id<TKKeyStore> keyStore;
@@ -29,6 +30,17 @@
 - (Key *)generateKey:(Key_Level)level {
     TKTokenSecretKey *key = [self createNewKey_:level];
     [keyStore addKey:key forMember:memberId];
+    return key.keyInfo;
+}
+
+- (Key *)getKeyInfo:(Key_Level)level
+             reason:(NSString *)reason
+            onError:(OnError)onError {
+    TKTokenSecretKey *key = [keyStore lookupKeyByLevel:level forMember:memberId];
+    if (!key) {
+        onError([NSError errorFromErrorCode:kTKErrorKeyNotFound details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
+        return nil;
+    }
     return key.keyInfo;
 }
 

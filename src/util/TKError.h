@@ -42,6 +42,9 @@ typedef enum {
     
     /* Raised when developer key is invalid */
     kTKErrorInvalidDeveloperKey = 105,
+    
+    /* Raised when recovery process is invalid */
+    kTKErrorInvalidRecoveryProcess = 106,
 } TKErrorCode;
 
 

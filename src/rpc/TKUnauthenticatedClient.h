@@ -93,6 +93,26 @@
              onError:(OnError)onError;
 
 /**
+ * Updates a Token member.
+ *
+ * @param memberId member id
+ * @param crypto crypto engine to use
+ * @param prevHash prevHash for update member request
+ * @param operations a set of operations that setup member keys and/or aliases
+ * @param metadataArray set of metadataArray; only use in addAlias operation now
+ * @param reason the reason to update member
+ * @param onSuccess invoked if successful; return member information
+ */
+- (void)updateMember:(NSString *)memberId
+              crypto:(TKCrypto *)crypto
+            prevHash:(NSString *)prevHash
+          operations:(NSArray<MemberOperation *> *)operations
+       metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+              reason:(NSString *)reason
+           onSuccess:(OnSuccessWithMember)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Looks up member information for the current user. The user is defined by
  * the key used for authentication.
  *
@@ -158,4 +178,44 @@
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError;
 
+#pragma mark - Member Recovery
+
+/**
+ * Begins member account recovery process by contacting alias. The verification message will be sent if the alias is valid.
+ *
+ * @param alias alias to recover
+ * @param onSuccess invoked if successful with verification Id
+ * @param onError invoked if failed
+ */
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
+                    onError:(OnError)onError;
+
+/**
+ * Gets member recovery Operation by the verification code. Update member with this operation to get the recovered member.
+ *
+ * @param verificationId verificationId from begin member recovery response
+ * @param code code from verification message
+ * @param key the new privileged key
+ * @param onSuccess invoked if successful with member recovery operation
+ * @param onError invoked if failed
+ */
+- (void)getMemberRecoveryOperation:(NSString *)verificationId
+                              code:(NSString *)code
+                     privilegedKey:(Key *)key
+                         onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                           onError:(OnError)onError;
+
+/**
+ * Recovers the alias with the recovered member.
+ *
+ * @param verificationId verificationId from begin member recovery response
+ * @param code code from verification message
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)recoverAlias:(NSString *)verificationId
+                code:(NSString *)code
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError;
 @end

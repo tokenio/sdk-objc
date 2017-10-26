@@ -175,6 +175,44 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError;
 
+#pragma mark - Member Recovery
+
+/**
+ * Begins member account recovery process by contacting alias. The verification message will
+ * be sent if the alias is valid. All the member recovery methods shall be called by the same
+ * TokenIO instance.
+ *
+ * @param aliasValue alias value to recover
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)beginMemberRecovery:(NSString *)aliasValue
+                  onSuccess:(OnSuccess)onSuccess
+                    onError:(OnError)onError;
+
+/**
+ * Verifies member recovery code after beginMemberRecovery is successful. All the member recovery
+ * methods shall be called by the same TokenIO instance.
+ *
+ * @param code code from verification message
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)verifyMemberRecoveryCode:(NSString *)code
+                       onSuccess:(OnSuccessWithBoolean)onSuccess
+                         onError:(OnError)onError;
+
+/**
+ * Completes member recovery process after verifyMemberRecoveryCode is successful. Uploads member's
+ * public keys from this device to Token directory. All the member recovery methods shall be called
+ * by the same TokenIO instance.
+ *
+ * @param onSuccess invoked if successful with TkMember
+ * @param onError invoked if failed
+ */
+- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+                       onError:(OnError)onError;
+
 @end
 
 #endif

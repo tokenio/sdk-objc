@@ -26,14 +26,48 @@
 
 - (NSArray<Key *> *)generateKeys {
     return @[
-            [self generateKey:Key_Level_Privileged],
-            [self generateKey:Key_Level_Standard],
-            [self generateKey:Key_Level_Low]
-    ];
+             [self generateKey:Key_Level_Privileged],
+             [self generateKey:Key_Level_Standard],
+             [self generateKey:Key_Level_Low]
+             ];
 }
 
 - (Key *)generateKey:(Key_Level)level {
     return [engine generateKey:level];
+}
+
+
+- (NSArray<Key *> *)getKeyInfos:(NSString *)reason
+                        onError:(OnError)onError {
+    NSArray *levels = @[[NSNumber numberWithInt:Key_Level_Privileged],
+                        [NSNumber numberWithInt:Key_Level_Standard],
+                        [NSNumber numberWithInt:Key_Level_Low]];
+    NSMutableArray<Key *> *result = [NSMutableArray arrayWithCapacity:3];
+    
+    for (NSNumber* level in levels) {
+        Key_Level keylevel = level.intValue;
+        Key *key = [self getKeyInfo:keylevel
+                             reason:reason
+                            onError:onError];
+        if (!key) {
+            return nil;
+        }
+        [result addObject:key];
+    }
+    
+    return [NSArray arrayWithArray:result];
+}
+
+- (Key *)getKeyInfo:(Key_Level)level
+             reason:(NSString *)reason
+            onError:(OnError)onError {
+    Key *key = [engine getKeyInfo:level
+                           reason:reason
+                          onError:onError];
+    if (!key) {
+        return nil;
+    }
+    return key;
 }
 
 - (TKSignature *)sign:(GPBMessage *)message

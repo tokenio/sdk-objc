@@ -36,6 +36,17 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return [self generateKeyPairWithLevel:level];
 }
 
+- (Key *)getKeyInfo:(Key_Level)level
+             reason:(NSString *)reason
+            onError:(OnError)onError {
+    SecKeyRef privateKeyRef = [self privateKeyForLevel:level reason:reason];
+    if (!privateKeyRef) {
+        onError([NSError errorFromErrorCode:kTKErrorKeyNotFound details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
+        return nil;
+    }
+    return [self keyInfoForPrivateKey:privateKeyRef level:level];
+}
+
 - (TKSignature*)signData:(NSData *)data
            usingKeyLevel:(Key_Level)keyLevel
                   reason:(NSString *)reason
