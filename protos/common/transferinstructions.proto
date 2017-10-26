@@ -19,6 +19,15 @@ enum PurposeOfPayment {
   SAVINGS = 7;
 }
 
+enum PaymentContext {
+  INVALID_CONTEXT = 0;
+  OTHER_CONTEXT = 1;
+  BILL_PAYMENT = 2;
+  ECOMMERCE_GOODS = 3;
+  ECOMMERCE_SERVICES = 4;
+  PERSON_TO_PERSON = 5;
+}
+
 message CustomerData {
   repeated string legal_names = 1;              // Repeated in case of joint account holders.
   io.token.proto.common.address.Address address = 2;
@@ -32,7 +41,14 @@ message TransferEndpoint {
 
 // Money transfer instructions.
 message TransferInstructions {
-  TransferEndpoint source = 1;                         // Transfer source.
-  repeated TransferEndpoint destinations = 2;          // Transfer desitination.
-  PurposeOfPayment transfer_purpose = 3;               // Transfer purpose.
+  TransferEndpoint source = 1;                   // Transfer source.
+  repeated TransferEndpoint destinations = 2;    // Transfer desitination.
+  Metadata metadata = 3;
+
+  message Metadata {
+    PurposeOfPayment transfer_purpose = 1;       // Purpose of payment
+    PaymentContext payment_context = 2;          // Optional payment context
+    string merchant_category_code = 3;           // Optional ISO 18245 Merchant Category Code (MCC)
+    string merchant_customer_id = 4;             // Optional Unique merchant customer identifier
+  }
 }

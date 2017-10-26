@@ -34,6 +34,14 @@
     return [[TokenIOBuilder alloc] init];
 }
 
++ (TokenIOBuilder *)sandboxBuilder {
+    TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
+    builder.host = @"api-grpc.sandbox.token.io";
+    builder.port = 443;
+    builder.useSsl = YES;
+    return builder;
+}
+
 - (id)initWithHost:(NSString *)host
               port:(int)port
          timeoutMs:(int)timeout

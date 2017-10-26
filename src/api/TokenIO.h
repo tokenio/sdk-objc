@@ -37,6 +37,11 @@
 + (TokenIOBuilder *)builder;
 
 /**
+ * Creates a new builder object with host, port, and useSsl set for the sandbox testing environment.
+ */
++ (TokenIOBuilder *)sandboxBuilder;
+
+/**
  * Creates a new instance that connects to the specified Token host and port.
  *
  * @param host host to connect to

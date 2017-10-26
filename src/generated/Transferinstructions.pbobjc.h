@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class BankAccount;
 @class CustomerData;
 @class TransferEndpoint;
+@class TransferInstructions_Metadata;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,6 +61,31 @@ GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL PurposeOfPayment_IsValidValue(int32_t value);
+
+#pragma mark - Enum PaymentContext
+
+typedef GPB_ENUM(PaymentContext) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  PaymentContext_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  PaymentContext_InvalidContext = 0,
+  PaymentContext_OtherContext = 1,
+  PaymentContext_BillPayment = 2,
+  PaymentContext_EcommerceGoods = 3,
+  PaymentContext_EcommerceServices = 4,
+  PaymentContext_PersonToPerson = 5,
+};
+
+GPBEnumDescriptor *PaymentContext_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL PaymentContext_IsValidValue(int32_t value);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -123,7 +149,7 @@ typedef GPB_ENUM(TransferEndpoint_FieldNumber) {
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_Source = 1,
   TransferInstructions_FieldNumber_DestinationsArray = 2,
-  TransferInstructions_FieldNumber_TransferPurpose = 3,
+  TransferInstructions_FieldNumber_Metadata = 3,
 };
 
 /**
@@ -141,22 +167,60 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
 
-/** Transfer purpose. */
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions_Metadata *metadata;
+/** Test to see if @c metadata has been set. */
+@property(nonatomic, readwrite) BOOL hasMetadata;
+
+@end
+
+#pragma mark - TransferInstructions_Metadata
+
+typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
+  TransferInstructions_Metadata_FieldNumber_TransferPurpose = 1,
+  TransferInstructions_Metadata_FieldNumber_PaymentContext = 2,
+  TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode = 3,
+  TransferInstructions_Metadata_FieldNumber_MerchantCustomerId = 4,
+};
+
+@interface TransferInstructions_Metadata : GPBMessage
+
+/** Purpose of payment */
 @property(nonatomic, readwrite) PurposeOfPayment transferPurpose;
+
+/** Optional payment context */
+@property(nonatomic, readwrite) PaymentContext paymentContext;
+
+/** Optional ISO 18245 Merchant Category Code (MCC) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *merchantCategoryCode;
+
+/** Optional Unique merchant customer identifier */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *merchantCustomerId;
 
 @end
 
 /**
- * Fetches the raw value of a @c TransferInstructions's @c transferPurpose property, even
+ * Fetches the raw value of a @c TransferInstructions_Metadata's @c transferPurpose property, even
  * if the value was not defined by the enum at the time the code was generated.
  **/
-int32_t TransferInstructions_TransferPurpose_RawValue(TransferInstructions *message);
+int32_t TransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message);
 /**
- * Sets the raw value of an @c TransferInstructions's @c transferPurpose property, allowing
+ * Sets the raw value of an @c TransferInstructions_Metadata's @c transferPurpose property, allowing
  * it to be set to a value that was not defined by the enum at the time the code
  * was generated.
  **/
-void SetTransferInstructions_TransferPurpose_RawValue(TransferInstructions *message, int32_t value);
+void SetTransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c TransferInstructions_Metadata's @c paymentContext property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message);
+/**
+ * Sets the raw value of an @c TransferInstructions_Metadata's @c paymentContext property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 
