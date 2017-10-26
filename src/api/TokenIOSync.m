@@ -20,6 +20,14 @@
     return [[TokenIOBuilder alloc] init];
 }
 
++ (TokenIOBuilder *)sandboxBuilder {
+    TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
+    builder.host = @"api-grpc.sandbox.token.io";
+    builder.port = 443;
+    builder.useSsl = YES;
+    return builder;
+}
+
 - (id)initWithDelegate:(TokenIO *)delegate {
     self = [super init];
     if (self) {
