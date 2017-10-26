@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         print("tokenIOAsync is this \(tokenIOAsync)")
         
         tokenIOAsync?.createMember(nil,
-                  onSucess: { (member) -> Void in
+                  onSuccess: { (member) -> Void in
                     self.tkmember = member
                     self.memberId = member?.id
                     self.memberLabel.text = "Id: \(self.memberId)"
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     
     @IBAction func addUsername(_ sender : AnyObject) {
         tkmember?.addUsername(usernameTextfield.text,
-                          onSucess: { (member) -> Void in
+                          onSuccess: { (member) -> Void in
                             self.info(title:"Info",message:"Done")
            },
                           onError: { (error) -> Void in
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     
     @IBAction func removeUsername(_ sender : AnyObject) {
         tkmember?.removeUsername(usernameTextfield.text,
-                           onSucess: { () -> Void in
+                           onSuccess: { () -> Void in
                             self.info(title:"Info",message:"Done")
             },
                            onError: { (error) -> Void in

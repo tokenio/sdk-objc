@@ -89,7 +89,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
+            onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
     Alias *tokenAgent = [Alias message];
     tokenAgent.value = @"token.io";
@@ -115,6 +115,13 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
          }
      }
      onError:onError];
+}
+
+// workaround for old typo "onSucess"
+- (void)createMember:(Alias *)alias
+            onSucess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError {
+    [self createMember:alias onSuccess:onSuccess onError:onError];
 }
 
 - (void)provisionDevice:(Alias *)alias
@@ -169,7 +176,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMember)onSuccess
+           onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
@@ -190,6 +197,13 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                } onError:onError];
                            }
                              onError:onError];
+}
+
+// workaround for old typo "onSucess"
+- (void)loginMember:(NSString *)memberId
+           onSucess:(OnSuccessWithTKMember)onSuccess
+            onError:(OnError)onError {
+    [self loginMember:memberId onSuccess:onSuccess onError:onError];
 }
 
 - (void)notifyPaymentRequest:(TokenPayload *)token
