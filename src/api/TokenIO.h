@@ -70,11 +70,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
             onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError;
 
-// invokes createMember:onSuccess:onError
-- (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError;
-
 /**
  * Provisions a new device for an existing user. The call generates a set
  * of keys that are returned back. The keys need to be approved by an
@@ -122,11 +117,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  */
 - (void)loginMember:(NSString *)memberId
            onSuccess:(OnSuccessWithTKMember)onSuccess
-            onError:(OnError)onError;
-
-// calls loginMember:onSuccess:onError
-- (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError;
 
 /**

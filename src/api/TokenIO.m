@@ -117,13 +117,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
      onError:onError];
 }
 
-// workaround for old typo "onSucess"
-- (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError {
-    [self createMember:alias onSuccess:onSuccess onError:onError];
-}
-
 - (void)provisionDevice:(Alias *)alias
               onSuccess:(OnSuccessWithDeviceInfo)onSuccess
                 onError:(OnError)onError {
@@ -197,13 +190,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                } onError:onError];
                            }
                              onError:onError];
-}
-
-// workaround for old typo "onSucess"
-- (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMember)onSuccess
-            onError:(OnError)onError {
-    [self loginMember:memberId onSuccess:onSuccess onError:onError];
 }
 
 - (void)notifyPaymentRequest:(TokenPayload *)token
