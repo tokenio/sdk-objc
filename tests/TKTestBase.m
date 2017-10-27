@@ -42,6 +42,25 @@
    }];
 }
 
+
+// create an SDK client builder with settings appropriate for testing environment
+- (TokenIOBuilder *)sdkBuilder {
+  HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
+
+  TokenIOBuilder *builder = [TokenIOSync builder];
+  builder.host = gateway.host;
+  builder.port = gateway.port;
+  builder.useSsl = useSsl;
+  builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+  builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+  builder.keyStore = [[TKTestKeyStore alloc] init];
+  return builder;
+}
+
+- (TokenIO *)asyncSDK {
+    return [[self sdkBuilder] buildAsync];
+}
+
 - (id)runWithResult:(AsyncTestBlockWithResult)block {
     __block NSException *error;
     __block id result = nil;
@@ -49,15 +68,7 @@
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
     dispatch_async(queue, ^{
         @try {
-            HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
-
-            TokenIOBuilder *builder = [TokenIOSync builder];
-            builder.host = gateway.host;
-            builder.port = gateway.port;
-            builder.useSsl = useSsl;
-            builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
-            builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-            builder.keyStore = [[TKTestKeyStore alloc] init];
+            TokenIOBuilder *builder = [self sdkBuilder];
             tokenIO = [builder buildSync];
 
             result = block(tokenIO);
@@ -218,6 +229,25 @@
             } else {
                 @throw;
             }
+        }
+    }
+}
+
+- (void)runUntilTrue:(int (^)(void))condition {
+    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
+        typedef void (^AsyncTestBlock)(TokenIOSync *);
+        if (condition()) {
+            return;
+        }
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        if (now - start < 20) {
+            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
+                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:waitTimeMs * 1000]];
+        } else {
+            // time is up; try one last time...
+            XCTAssertTrue(condition());
+            return;
         }
     }
 }

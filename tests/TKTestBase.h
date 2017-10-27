@@ -8,6 +8,7 @@
 #import <XCTest/XCTest.h>
 
 @class TokenIOSync;
+@class TokenIO;
 @class BankAuthorization;
 @class TKMemberSync;
 @class TKAccountSync;
@@ -45,6 +46,11 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param block block of code to execute
  */
 - (id)runWithResult:(AsyncTestBlockWithResult)block;
+
+/**
+ * Creates a TokenIO SDK client with settings for testing environment.
+ */
+- (TokenIO *)asyncSDK;
 
 /**
  * Creates a new member with an auto generated alias and key.
@@ -115,4 +121,12 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  */
 - (void)waitUntil:(void (^)(void))block;
 
+/**
+ * Runs main loop, occasionally evaluating condition.
+ * If condition returns true, then this function returns.
+ * If we hit timeout, then XCTAsserts.
+ * Handy for testing async API.
+ * @param condition block that we hope eventually returns true
+ */
+- (void)runUntilTrue:(int (^)(void))condition;
 @end
