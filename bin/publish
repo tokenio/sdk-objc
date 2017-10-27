@@ -67,17 +67,24 @@ function get_part {
 
 function update_version {
     local plist="../src/Info.plist"
+    local util="../src/util/TKUtil.m"
+
     sed -i.bak -e "s/^def Pod::tokenSdkVer;.*/def Pod::tokenSdkVer; \"${2}\"; end/" ${spec}
     sed -i.bak -e "s/:tag =>.*/:tag => \"v${2}\",/" ${spec}
 
     sed -i.bak -e "s/<string>${1}<\/string>/<string>${2}<\/string>/" ${plist}
+
+    sed -i.bak -e "s/return @\"${1}\";/return @\"${2}\";/" ${util}
+
     rm -rf ${spec}.bak
     rm -rf ${plist}.bak
+    rm -rf ${util}.bak
 
     git add ${spec}
     git add ${plist}
+    git add ${util}
 
-    git commit -m "Updating sdk version from ${1} to ${2}" ${spec} ${plist}
+    git commit -m "Updating sdk version from ${1} to ${2}" ${spec} ${plist} ${util}
     git push origin master
 }
 

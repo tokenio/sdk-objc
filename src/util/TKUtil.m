@@ -10,6 +10,10 @@
 
 @implementation TKUtil
 
++ (NSString *)tokenSdkVersion {
+    return @"1.0.74";
+}
+
 + (NSString *)nonce {
     return [NSUUID UUID].UUIDString;
 }
