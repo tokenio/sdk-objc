@@ -12,6 +12,13 @@
 @interface TKUtil : NSObject
 
 /**
+ * Returns the current Token SDK version.
+ *
+ * @return Token SDK version
+ */
++ (NSString *)tokenSdkVersion;
+
+/**
  * Generates a nonce, used by many of the SDK methods to ensure idempotency.
  *
  * @return a string nonce
