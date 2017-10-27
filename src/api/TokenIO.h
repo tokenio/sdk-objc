@@ -67,7 +67,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  * @param alias member alias to use, must be unique
  */
 - (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
+            onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -116,7 +116,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  * @param memberId member id
  */
 - (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMember)onSuccess
+           onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError;
 
 /**

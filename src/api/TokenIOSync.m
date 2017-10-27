@@ -40,7 +40,7 @@
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createMember:alias
-                        onSucess:^(TKMember *member) {
+                        onSuccess:^(TKMember *member) {
                             TKMemberSync* memberSync = [TKMemberSync member:member];
                             call.onSuccess(memberSync);
                         }
@@ -93,7 +93,7 @@
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async loginMember:memberId
-                       onSucess:^(TKMember *member) {
+                       onSuccess:^(TKMember *member) {
                            TKMemberSync* memberSync = [TKMemberSync member:member];
                            call.onSuccess(memberSync);
                        }

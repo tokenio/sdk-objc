@@ -89,7 +89,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)createMember:(Alias *)alias
-            onSucess:(OnSuccessWithTKMember)onSuccess
+            onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
     Alias *tokenAgent = [Alias message];
     tokenAgent.value = @"token.io";
@@ -169,7 +169,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)loginMember:(NSString *)memberId
-           onSucess:(OnSuccessWithTKMember)onSuccess
+           onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
