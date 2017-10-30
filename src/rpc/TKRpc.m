@@ -91,8 +91,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
 }
 
 - (void)_setSdkHeaders:(GRPCProtoCall *)call {
-    NSString * version = [[NSBundle bundleForClass:self.class]
-                          objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString * version = [TKUtil tokenSdkVersion];
     call.requestHeaders[@"token-sdk"] = @"objc";
     call.requestHeaders[@"token-sdk-version"] = version;
     call.requestHeaders[@"token-dev-key"] = developerKey;
