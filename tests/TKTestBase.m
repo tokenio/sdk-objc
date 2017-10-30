@@ -84,7 +84,7 @@
         }
 
         // Are we done yet?
-        if (dispatch_semaphore_wait(done, DISPATCH_TIME_NOW) == 0) {
+        if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 100000000)) == 0) {
             break;
         }
     }
