@@ -14,6 +14,7 @@
 #import "TKMemberSync.h"
 #import "TKAccountSync.h"
 #import "TKTestKeyStore.h"
+#import "TKLogManager.h"
 
 
 @implementation TKTestBase {
@@ -82,7 +83,9 @@
     // Wait for the block above to finish executing while running the main
     // event loop. gRPC posts to the main dispatch queue, so we have to run it
     // for the callbacks to be completed.
+    int loopCount = 0;
     while (true) {
+        loopCount++;
         @try {
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
@@ -95,7 +98,7 @@
         }
 
         // Are we done yet?
-        if (dispatch_semaphore_wait(done, DISPATCH_TIME_NOW) == 0) {
+        if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 100000000)) == 0) {
             break;
         }
     }
@@ -103,8 +106,49 @@
     if (error) {
         @throw error;
     }
-
+    TKLogDebug(@"runWithResult loopCount: %d", loopCount);
     return result;
+}
+
+- (void)runUntilDone:(void (^)(dispatch_semaphore_t))snippet {
+    NSException __block *error;
+    dispatch_semaphore_t done = dispatch_semaphore_create(0);
+    dispatch_async(queue, ^{
+        // invoke code snippet. we expect it to make an async request
+        // and return before receiving a response...
+        @try {
+            snippet(done);
+        } @catch(NSException *e) {
+            NSLog(@"**ERROR: %@", e);
+            error = e;
+            dispatch_semaphore_signal(done);
+        }
+    });
+    // loop until "done" is released
+    int loopCount = 0;
+    while (true) {
+        loopCount++;
+        @try {
+            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
+                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        } @catch(NSException *e) {
+            NSLog(@"**ERROR: %@", e);
+            break;
+        } @catch(NSObject *o) {
+            NSLog(@"**UNKNOWN ERROR: %@", o);
+            break;
+        }
+        
+        // Are we done yet?
+        if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 100000000)) == 0) {
+            break;
+        }
+    }
+    TKLogDebug(@"runUntilDone loopCount=%d", loopCount)
+    
+    if (error) {
+        @throw error;
+    }
 }
 
 - (TKMemberSync *)createMember:(TokenIOSync *)token {
@@ -235,9 +279,11 @@
 
 - (void)runUntilTrue:(int (^)(void))condition {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    int loopCount = 0;
     for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
-        typedef void (^AsyncTestBlock)(TokenIOSync *);
+        loopCount++;
         if (condition()) {
+            TKLogDebug(@"runUntilTrue loopCount: %d", loopCount)
             return;
         }
         NSTimeInterval now = [[NSDate date] timeIntervalSince1970];

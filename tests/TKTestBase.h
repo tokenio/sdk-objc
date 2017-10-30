@@ -129,4 +129,10 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param condition block that we hope eventually returns true
  */
 - (void)runUntilTrue:(int (^)(void))condition;
+
+/**
+ * Invokes grpc-using block. Runs until `done` semaphore released, hits exception, or timeout.
+ * @param block block that takes a semaphore
+ */
+- (void)runUntilDone:(void (^)(dispatch_semaphore_t done))block;
 @end
