@@ -21,15 +21,13 @@
 @implementation TKSetupSamples
 
 - (void)testCreateSDKClient {
-    [self run: ^(TokenIOSync *tIO) {
-        TokenIOBuilder *builder = [TokenIOSync sandboxBuilder];
-        builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-        TokenIOSync *tokenIO = [builder buildSync];
-
-        // Use the SDK client.
-        TKMemberSync *member = [tokenIO createMember:[self generateEmailAlias]];
-        XCTAssertNotNil(member);
-    }];
+    TokenIOBuilder *builder = [TokenIOSync sandboxBuilder];
+    builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+    TokenIOSync *tokenIO = [builder buildSync];
+    
+    // Use the SDK client.
+    TKMemberSync *member = [tokenIO createMember:[self generateEmailAlias]];
+    XCTAssertNotNil(member);;
 }
 
 @end
