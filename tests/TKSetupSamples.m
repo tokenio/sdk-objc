@@ -59,8 +59,9 @@
     
     // createMember begin snippet to include in docs
     Alias *alias = [Alias new];
-    // For this test user, we generate a random alias to make sure nobody else has claimed it.
-    // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
+    // For this test user, we generate a random alias to make sure nobody else
+    // has claimed it. The "+noverify@" means Token automatically verifies this
+    // alias (only works in test environments).
     alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]]
                     stringByAppendingString:@"+noverify@token.io"]
                    lowercaseString];
@@ -70,7 +71,8 @@
     } onError:^(NSError *e){
         // Something went wrong.
         @throw [NSException exceptionWithName:@"CreateMemberFailedException"
-                                       reason:[e localizedFailureReason] userInfo:[e userInfo]];
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
     }];
     // createMember done snippet to include in docs
     
