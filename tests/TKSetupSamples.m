@@ -31,8 +31,8 @@
     
     // createSDK begin snippet to include in docs
     TokenIOBuilder *builder = [TokenIO sandboxBuilder];
-    // For tests, we use TKTestKeyStore, which "forgets" private keys.
-    // For real members, we would use a different keystore.
+    // For tests, here we use TKTestKeyStore, which "forgets" private keys.
+    // For real members, we would use a keystore type that persists keys.
     TKTestKeyStore *keyStore = [[TKTestKeyStore alloc] init];
     builder.keyStore = keyStore;
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
@@ -50,7 +50,6 @@
     [self runUntilTrue:^{
         return (member != nil);
     }];
-    
 }
 
 - (void)testCreateMember {
@@ -62,13 +61,16 @@
     Alias *alias = [Alias new];
     // For this test user, we generate a random alias to make sure nobody else has claimed it.
     // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
-    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
+    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]]
+                    stringByAppendingString:@"+noverify@token.io"]
+                   lowercaseString];
     alias.type = Alias_Type_Email;
     [tokenIO createMember:alias onSuccess:^(TKMember *m){
         newMember = m; // Use member.
     } onError:^(NSError *e){
         // Something went wrong.
-        @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
+        @throw [NSException exceptionWithName:@"CreateMemberFailedException"
+                                       reason:[e localizedFailureReason] userInfo:[e userInfo]];
     }];
     // createMember done snippet to include in docs
     
@@ -114,7 +116,9 @@
         loggedInMember = m; // Use member.
     } onError:^(NSError *e) {
         // Something went wrong.
-        @throw [NSException exceptionWithName:@"LoginMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
+        @throw [NSException exceptionWithName:@"LoginMemberFailedException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
     }];
     // loginMember done snippet to include in docs
     
