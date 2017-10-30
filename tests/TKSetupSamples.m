@@ -13,7 +13,6 @@
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
 #import "TKMemberSync.h"
-#import "TKLogManager.h"
 #import "TKTestKeyStore.h"
 
 #import "TKUtil.h"
@@ -41,13 +40,15 @@
     // createSDK done snippet to include in docs
     
     // make sure it worked:
-    [self runUntilDone:^(dispatch_semaphore_t done){
-        [tokenIO createMember:[self generateEmailAlias] onSuccess:^(TKMember *m){
-            XCTAssertNotNil(m);
-            dispatch_semaphore_signal(done);
-        } onError:^(NSError *e){
-            XCTAssertTrue(false);
-        }];
+    TKMember __block *member = nil;
+    [tokenIO createMember:[self generateEmailAlias] onSuccess:^(TKMember *m){
+        XCTAssertNotNil(m);
+        member = m;
+    } onError:^(NSError *e){
+        XCTAssertTrue(false);
+    }];
+    [self runUntilTrue:^{
+        return (member != nil);
     }];
     
 }
@@ -56,27 +57,28 @@
     TokenIO *tokenIO = [self asyncSDK];
     TKMember __block *newMember;
     
-    [self runUntilDone:^(dispatch_semaphore_t done) {
-        // createMember begin snippet to include in docs
-        Alias *alias = [Alias new];
-        // For this test user, we generate a random alias to make sure nobody else has claimed it.
-        // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
-        alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
-        alias.type = Alias_Type_Email;
-        [tokenIO createMember:alias onSuccess:^(TKMember *m){
-            newMember = m; // Use member.
-            dispatch_semaphore_signal(done); // SLATE_EXCERPT_OMIT don't show this line in web docs
-        } onError:^(NSError *e){
-            // Something went wrong.
-            @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
-        }];
-        // createMember done snippet to include in docs
-     }];
-    XCTAssertNotNil(newMember);
+    
+    // createMember begin snippet to include in docs
+    Alias *alias = [Alias new];
+    // For this test user, we generate a random alias to make sure nobody else has claimed it.
+    // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
+    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
+    alias.type = Alias_Type_Email;
+    [tokenIO createMember:alias onSuccess:^(TKMember *m){
+        newMember = m; // Use member.
+    } onError:^(NSError *e){
+        // Something went wrong.
+        @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
+    }];
+    // createMember done snippet to include in docs
+    
+    [self runUntilTrue:^{
+        return (newMember != nil);
+    }];
 }
 
 - (void)testLoginExistingMember {
-    TKMember __block *member;
+    TKMember __block *member = nil;
     // TKTestBase's usual SDK builder uses a new non-persisting keystore.
     // So if we use one SDK to create a member and another SDK to log in,
     // the second SDK wouldn't "see" the first SDK's private keys (and fail).
@@ -85,39 +87,40 @@
     beforeBuilder.keyStore = store;
     TokenIO *beforeTokenIO = [beforeBuilder buildAsync];
     
-    [self runUntilDone:^(dispatch_semaphore_t done) {
-        Alias *alias = [Alias new];
-        // For this test user, we generate a random alias to make sure nobody else has claimed it.
-        // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
-        alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
-        alias.type = Alias_Type_Email;
-        [beforeTokenIO createMember:alias onSuccess:^(TKMember *m){
-            member = m; // Use member.
-            dispatch_semaphore_signal(done);
-        } onError:^(NSError *e){
-            // Something went wrong.
-            @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
-        }];
+    Alias *alias = [Alias new];
+    // For this test user, we generate a random alias to make sure nobody else has claimed it.
+    // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
+    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
+    alias.type = Alias_Type_Email;
+    [beforeTokenIO createMember:alias onSuccess:^(TKMember *m){
+        member = m; // Use member.
+    } onError:^(NSError *e){
+        // Something went wrong.
+        @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
+    }];
+    [self runUntilTrue:^{
+        return (member != nil);
     }];
     NSString *memberId = member.id;
     
     TKMember __block *loggedInMember;
-    [self runUntilDone:^(dispatch_semaphore_t done) {
-        // loginMmeber begin snippet to include in docs
-        TokenIOBuilder *builder = [self sdkBuilder];
-        builder.keyStore = store;
-        TokenIO *tokenIO = [builder buildAsync];
     
-        [tokenIO loginMember:memberId onSuccess:^(TKMember* m) {
-            loggedInMember = m; // Use member.
-            dispatch_semaphore_signal(done); // SLATE_EXCERPT_OMIT don't show this line in web docs
-        } onError:^(NSError *e) {
-            // Something went wrong.
-            @throw [NSException exceptionWithName:@"LoginMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
-        }];
-        // loginMmeber done snippet to include in docs
+    // loginMember begin snippet to include in docs
+    TokenIOBuilder *builder = [self sdkBuilder];
+    builder.keyStore = store;
+    TokenIO *tokenIO = [builder buildAsync];
+    
+    [tokenIO loginMember:memberId onSuccess:^(TKMember* m) {
+        loggedInMember = m; // Use member.
+    } onError:^(NSError *e) {
+        // Something went wrong.
+        @throw [NSException exceptionWithName:@"LoginMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
     }];
-         
-    XCTAssertNotNil(loggedInMember);
+    // loginMember done snippet to include in docs
+    
+    // make sure it worked:
+    [self runUntilTrue:^{
+        return (loggedInMember != nil);
+    }];
 }
 @end

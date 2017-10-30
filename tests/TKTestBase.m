@@ -110,44 +110,22 @@
     return result;
 }
 
-- (void)runUntilDone:(void (^)(dispatch_semaphore_t))snippet {
-    NSException __block *error;
-    dispatch_semaphore_t done = dispatch_semaphore_create(0);
-    dispatch_async(queue, ^{
-        // invoke code snippet. we expect it to make an async request
-        // and return before receiving a response...
-        @try {
-            snippet(done);
-        } @catch(NSException *e) {
-            NSLog(@"**ERROR: %@", e);
-            error = e;
-            dispatch_semaphore_signal(done);
+- (void)runUntilTrue:(int (^)(void))condition {
+    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    while(true) {
+        typedef void (^AsyncTestBlock)(TokenIOSync *);
+        if (condition()) {
+            return;
         }
-    });
-    // loop until "done" is released
-    int loopCount = 0;
-    while (true) {
-        loopCount++;
-        @try {
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        if (now - start < 20) {
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        } @catch(NSException *e) {
-            NSLog(@"**ERROR: %@", e);
-            break;
-        } @catch(NSObject *o) {
-            NSLog(@"**UNKNOWN ERROR: %@", o);
-            break;
+        } else {
+            // time is up; try one last time...
+            XCTAssertTrue(condition());
+            return;
         }
-        
-        // Are we done yet?
-        if (dispatch_semaphore_wait(done, DISPATCH_TIME_NOW) == 0) {
-            break;
-        }
-    }
-    TKLogDebug(@"runUntilDone loopCount=%d", loopCount)
-    
-    if (error) {
-        @throw error;
     }
 }
 

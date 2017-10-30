@@ -128,8 +128,8 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 - (void)waitUntil:(void (^)(void))block;
 
 /**
- * Invokes grpc-using block. Runs until `done` semaphore released, hits exception, or timeout.
- * @param block block that takes a semaphore
+ * Invokes grpc-using block. Runs until `condition` block returns true, hits exception, or times out.
+ * @param condition block that returns a Boolean
  */
-- (void)runUntilDone:(void (^)(dispatch_semaphore_t done))block;
+- (void)runUntilTrue:(int (^)(void))condition;
 @end
