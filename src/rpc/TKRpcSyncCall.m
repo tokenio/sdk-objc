@@ -38,7 +38,9 @@
 
 - (id)run:(void(^)())block {
     block();
-    dispatch_semaphore_wait(isDone, DISPATCH_TIME_FOREVER);
+    while (dispatch_semaphore_wait(isDone, DISPATCH_TIME_NOW)) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+    }
 
     if (error) {
         @throw error;

@@ -28,7 +28,6 @@
 @implementation TKSetupSamples
 
 - (void)testCreateSDKClient {
-    
     // createSDK begin snippet to include in docs
     TokenIOBuilder *builder = [TokenIO sandboxBuilder];
     // For tests, here we use TKTestKeyStore, which "forgets" private keys.
