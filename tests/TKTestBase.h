@@ -9,6 +9,7 @@
 
 @class TokenIOSync;
 @class TokenIO;
+@class TokenIOBuilder;
 @class BankAuthorization;
 @class TKMemberSync;
 @class TKAccountSync;
@@ -51,6 +52,11 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * Creates a TokenIO SDK client with settings for testing environment.
  */
 - (TokenIO *)asyncSDK;
+
+/**
+ * Creates a Token SDK builder with settings for testing environment.
+ */
+- (TokenIOBuilder *)sdkBuilder;
 
 /**
  * Creates a new member with an auto generated alias and key.
@@ -120,15 +126,6 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param block block to try
  */
 - (void)waitUntil:(void (^)(void))block;
-
-/**
- * Runs main loop, occasionally evaluating condition.
- * If condition returns true, then this function returns.
- * If we hit timeout, then XCTAsserts.
- * Handy for testing async API.
- * @param condition block that we hope eventually returns true
- */
-- (void)runUntilTrue:(int (^)(void))condition;
 
 /**
  * Invokes grpc-using block. Runs until `done` semaphore released, hits exception, or timeout.

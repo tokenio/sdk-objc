@@ -98,7 +98,7 @@
         }
 
         // Are we done yet?
-        if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 100000000)) == 0) {
+        if (dispatch_semaphore_wait(done, DISPATCH_TIME_NOW) == 0) {
             break;
         }
     }
@@ -140,7 +140,7 @@
         }
         
         // Are we done yet?
-        if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 100000000)) == 0) {
+        if (dispatch_semaphore_wait(done, DISPATCH_TIME_NOW) == 0) {
             break;
         }
     }
@@ -273,27 +273,6 @@
             } else {
                 @throw;
             }
-        }
-    }
-}
-
-- (void)runUntilTrue:(int (^)(void))condition {
-    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
-    int loopCount = 0;
-    for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
-        loopCount++;
-        if (condition()) {
-            TKLogDebug(@"runUntilTrue loopCount: %d", loopCount)
-            return;
-        }
-        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        if (now - start < 20) {
-            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
-                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:waitTimeMs * 1000]];
-        } else {
-            // time is up; try one last time...
-            XCTAssertTrue(condition());
-            return;
         }
     }
 }
