@@ -548,6 +548,7 @@
 		8A9909041D890E820096A7FA = {
 			isa = PBXGroup;
 			children = (
+				E5E98F4C1FA8CFBA00685135 /* sample */,
 				946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */,
 				946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */,
 				8A9909101D890E820096A7FA /* src */,
@@ -622,7 +623,6 @@
 				62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */,
 				62DE98B689D2C43491570541 /* HostAndPort.m */,
 				62DE9E223FEF5ABFA5BE74EF /* HostAndPort.h */,
-				E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -825,6 +825,14 @@
 				DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */,
 			);
 			path = secureenclave;
+			sourceTree = "<group>";
+		};
+		E5E98F4C1FA8CFBA00685135 /* sample */ = {
+			isa = PBXGroup;
+			children = (
+				E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */,
+			);
+			path = sample;
 			sourceTree = "<group>";
 		};
 		FAE918C61F17E6FE001692CF /* fank */ = {
