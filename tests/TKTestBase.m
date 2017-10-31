@@ -113,7 +113,6 @@
 - (void)runUntilTrue:(int (^)(void))condition {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
     while(true) {
-        typedef void (^AsyncTestBlock)(TokenIOSync *);
         if (condition()) {
             return;
         }
