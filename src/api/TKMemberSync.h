@@ -487,14 +487,6 @@
  */
 - (BankInfo *)getBankInfo:(NSString *)bankId;
 
-/**
- * Creates a fake test bank account; returns BankAuthorization for linking.
- * Only works in test environments, not in production.
- *
- * @param balance starting balance
- * @return bank authorization
- */
-- (BankAuthorization *)createTestBankAccount:(Money *)balance;
 
 /**
  * Returns profile for the given member id.

@@ -1114,30 +1114,6 @@
              onError:onError];
 }
 
-- (void)createTestBankAccount:(Money *)balance
-                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
-                      onError:(OnError)onError {
-    CreateTestBankAccountRequest *request = [CreateTestBankAccountRequest message];
-    request.balance = balance;
-    RpcLogStart(request);
-    
-    GRPCProtoCall *call = [gateway
-                           RPCToCreateTestBankAccountWithRequest:request
-                           handler:
-                           ^(CreateTestBankAccountResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.bankAuthorization);
-                               } else {
-                                   [errorHandler handle:onError withError:error];
-                               }
-                           }];
-    
-    [self _startCall:call
-         withRequest:request
-             onError:onError];
-}
-
 - (void)getProfile:(NSString *)ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError {

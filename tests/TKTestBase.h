@@ -77,10 +77,12 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 /**
  * Creates a new bank authorization for a member
  *
- * @param member member
+ * @param tokenIO an entry point for Token API
+ * @param memberId member ID
  * @return a bank authorization
  */
-- (BankAuthorization *)createBankAuthorization:(TKMemberSync *)member;
+- (BankAuthorization *)createBankAuthorization:(TokenIOSync *)tokenIO
+                                      memberId:(NSString *)memberId;
 
 /**
  * Formats HostAndPort instance.
