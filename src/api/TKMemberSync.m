@@ -548,6 +548,15 @@
 
 }
 
+- (BankAuthorization *)createTestBankAccount:(Money *)balance {
+    TKRpcSyncCall<BankAuthorization *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async createTestBankAccount:balance
+                                onSuccess:call.onSuccess
+                                  onError:call.onError];
+    }];
+}
+
 - (Profile *)getProfile:(NSString *)ownerId{
     TKRpcSyncCall<Profile *> *call = [TKRpcSyncCall create];
     return [call run:^{
