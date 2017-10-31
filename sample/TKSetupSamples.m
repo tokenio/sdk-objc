@@ -55,7 +55,6 @@
     TokenIO *tokenIO = [self asyncSDK];
     __block TKMember *newMember;
     
-    
     // createMember begin snippet to include in docs
     Alias *alias = [Alias new];
     // For this test user, we generate a random alias to make sure nobody else
@@ -80,6 +79,49 @@
     }];
 }
 
+- (void)testLinkTestBankAccount {
+    __block TKMember *member = nil;
+    TokenIO *tokenIO = [self asyncSDK];
+    [tokenIO createMember:[self generateAlias] onSuccess:^(TKMember *m) {
+        member = m;
+    } onError:^(NSError *e) {
+        @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
+    }];
+    [self runUntilTrue: ^{
+        return (member != nil);
+    }];
+    __block TKAccount *account = nil;
+    
+    // linkTestBankAccount begin snippet to include in docs
+    Money *balance = [Money message]; // test account's starting balance
+    balance.currency = @"EUR";
+    balance.value = @"5678.00";
+    [member createTestBankAccount:balance
+                        onSuccess:^(BankAuthorization* auth) {
+        [member linkAccounts:auth
+                   onSuccess:^(NSArray<TKAccount*> * _Nonnull accounts) {
+            // use accounts
+            account = accounts[0];
+        } onError:^(NSError * _Nonnull e) {
+            // Something went wrong.
+            @throw [NSException exceptionWithName:@"LinkAccountException"
+                                           reason:[e localizedFailureReason]
+                                         userInfo:[e userInfo]];
+        }];
+    } onError:^(NSError * _Nonnull e) {
+        // Something went wrong.
+        @throw [NSException exceptionWithName:@"TestAccountException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
+    // linkTestBankAccount done snippet to include in docs
+    
+    // make sure it worked
+    [self runUntilTrue:^{
+        return (account != nil);
+    }];
+}
+
 - (void)testLoginExistingMember {
     __block TKMember *member = nil;
     // TKTestBase's usual SDK builder uses a new non-persisting keystore.
@@ -91,8 +133,6 @@
     TokenIO *beforeTokenIO = [beforeBuilder buildAsync];
     
     Alias *alias = [Alias new];
-    // For this test user, we generate a random alias to make sure nobody else has claimed it.
-    // The "+noverify@" means Token automatically verifies this alias (only works in test environments).
     alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
     alias.type = Alias_Type_Email;
     [beforeTokenIO createMember:alias onSuccess:^(TKMember *m) {

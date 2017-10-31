@@ -589,6 +589,14 @@
                 onError:onError];
 }
 
+- (void)createTestBankAccount:(Money *)balance
+                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                      onError:(OnError)onError {
+    [client createTestBankAccount:balance
+                        onSuccess:onSuccess
+                          onError:onError];
+}
+
 - (void)getProfile:(NSString *)ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError {
