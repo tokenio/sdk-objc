@@ -13,6 +13,7 @@
 #import "Blob.pbobjc.h"
 #import "Address.pbobjc.h"
 #import "Member.pbobjc.h"
+#import "Money.pbobjc.h"
 #import "TransferTokenBuilder.h"
 
 
@@ -604,6 +605,18 @@
 - (void)getBankInfo:(NSString *)bankId
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError;
+
+/**
+ * Creates a fake test bank account, returns BankAuthorization for linking.
+ * Only works in test environments, not in production.
+ *
+ * @param balance starting balance
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)createTestBankAccount:(Money *)balance
+                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                      onError:(OnError)onError;
 
 /**
  * Returns profile for the given member id.
