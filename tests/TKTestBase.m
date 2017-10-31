@@ -4,13 +4,11 @@
 //
 
 #import "Money.pbobjc.h"
-#import "fank/Fank.pbobjc.h"
 
 #import "HostAndPort.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
-#import "TKBankClient.h"
 #import "TKMemberSync.h"
 #import "TKAccountSync.h"
 #import "TKTestKeyStore.h"
@@ -27,11 +25,6 @@
     [super setUp];
     NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
     useSsl = sslOverride ? [sslOverride boolValue] : NO;
-
-    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:8100];
-    _bank = [TKBankClient bankClientWithHost:fank.host
-                                        port:fank.port
-                                      useSsl:useSsl];
 
     queue = dispatch_queue_create("io.token.Test", nil);
 }
@@ -134,57 +127,19 @@
 
 - (TKAccountSync *)createAccount:(TokenIOSync *)token {
     TKMemberSync *member = [self createMember:token];
-
-    NSString *firstName = @"Test";
-    NSString *lastName = @"Testoff";
-    NSString *bankId = @"iron";
-    NSString *accountName = @"Checking";
-    NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
     
-    FankClient *fankClient = [_bank addClientWithFirstName:firstName lastName:lastName];
-    [_bank addAccountWithName:accountName
-                    forClient:fankClient
-            withAccountNumber:bankAccountNumber
-                       amount:@"1000000.00"
-                     currency:@"USD"];
-    
-    NSString *clientId = fankClient.id_p;
-    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:member.id
-                                                                 clientId:clientId
-                                                           accountNumbers:@[bankAccountNumber]];
-    BankAuthorization * auth = [BankAuthorization message];
-    auth.bankId = bankId;
-    [auth.accountsArray addObjectsFromArray:encAccounts];
+    BankAuthorization * auth = [self createBankAuthorization:member];
 
     NSArray<TKAccountSync *> *accounts = [member linkAccounts:auth];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }
 
-- (BankAuthorization *)createBankAuthorization:(TokenIOSync *)token
-                              memberId:(NSString *)memberId {
-    NSString *firstName = @"Test";
-    NSString *lastName = @"Testoff";
-    NSString *bankId = @"iron";
-    NSString *accountName = @"Checking";
-    NSString *bankAccountNumber = [@"iban:" stringByAppendingString:[TKUtil nonce]];
-    
-    FankClient *fankClient = [_bank addClientWithFirstName:firstName lastName:lastName];
-    [_bank addAccountWithName:accountName
-                    forClient:fankClient
-            withAccountNumber:bankAccountNumber
-                       amount:@"1000000.00"
-                     currency:@"USD"];
-    
-    NSString *clientId = fankClient.id_p;
-    NSArray<SealedMessage*> *encAccounts = [_bank authorizeAccountLinkingFor:memberId
-                                                                 clientId:clientId
-                                                           accountNumbers:@[bankAccountNumber]];
-    BankAuthorization * auth = [BankAuthorization message];
-    auth.bankId = bankId;
-    [auth.accountsArray addObjectsFromArray:encAccounts];
-
-    return auth;
+- (BankAuthorization *)createBankAuthorization:(TKMemberSync *)member {
+    Money *balance = [Money message];
+    balance.value = @"1000000.00";
+    balance.currency = @"USD";
+    return [member createTestBankAccount:balance];
 }
 
 - (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port {

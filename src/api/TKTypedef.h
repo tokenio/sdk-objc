@@ -1,6 +1,7 @@
 @class Member;
 @class NSError;
 @class Account;
+@class BankAuthorization;
 @class Blob;
 @class Attachment;
 @class Money;
@@ -70,6 +71,7 @@ typedef void (^ _Nonnull OnSuccessWithNotifications)(PagedArray<Notification *> 
 
 typedef void (^ _Nonnull OnSuccessWithTokenOperationResult)(TokenOperationResult * _Nonnull);
 
+typedef void (^ _Nonnull OnSuccessWithBankAuthorization)(BankAuthorization * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithBanks)(NSArray<Bank *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithBankInfo)(BankInfo * _Nonnull);
 

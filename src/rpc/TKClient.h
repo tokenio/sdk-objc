@@ -460,6 +460,14 @@
             onError:(OnError)onError;
 
 /**
+ * Creates a test fake bank account and returns a BankAuthorization to link.
+ * Only works in test environments; doesn't work in production.
+ */
+- (void)createTestBankAccount:(Money *)balance
+                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                      onError:(OnError)onError;
+
+/**
  * Returns profile of a given member id
  *
  * @param ownerId member id

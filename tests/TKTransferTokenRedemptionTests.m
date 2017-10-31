@@ -67,7 +67,7 @@
     [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.11
                                                           currency:@"USD"];
-        builder.bankAuthorization = [self createBankAuthorization:tokenIO memberId:payer.id];
+        builder.bankAuthorization = [self createBankAuthorization:payer];
         builder.redeemerAlias = payer.firstAlias;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
