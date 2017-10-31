@@ -14,6 +14,7 @@
 #import "TKMemberSync.h"
 #import "TKAccountSync.h"
 #import "TKTestKeyStore.h"
+#import "TKLogManager.h"
 
 
 @implementation TKTestBase {
@@ -42,6 +43,25 @@
    }];
 }
 
+
+// create an SDK client builder with settings appropriate for testing environment
+- (TokenIOBuilder *)sdkBuilder {
+  HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
+
+  TokenIOBuilder *builder = [TokenIOSync builder];
+  builder.host = gateway.host;
+  builder.port = gateway.port;
+  builder.useSsl = useSsl;
+  builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+  builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+  builder.keyStore = [[TKTestKeyStore alloc] init];
+  return builder;
+}
+
+- (TokenIO *)asyncSDK {
+    return [[self sdkBuilder] buildAsync];
+}
+
 - (id)runWithResult:(AsyncTestBlockWithResult)block {
     __block NSException *error;
     __block id result = nil;
@@ -49,15 +69,7 @@
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
     dispatch_async(queue, ^{
         @try {
-            HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
-
-            TokenIOBuilder *builder = [TokenIOSync builder];
-            builder.host = gateway.host;
-            builder.port = gateway.port;
-            builder.useSsl = useSsl;
-            builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
-            builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-            builder.keyStore = [[TKTestKeyStore alloc] init];
+            TokenIOBuilder *builder = [self sdkBuilder];
             tokenIO = [builder buildSync];
 
             result = block(tokenIO);
@@ -71,7 +83,9 @@
     // Wait for the block above to finish executing while running the main
     // event loop. gRPC posts to the main dispatch queue, so we have to run it
     // for the callbacks to be completed.
+    int loopCount = 0;
     while (true) {
+        loopCount++;
         @try {
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
@@ -92,8 +106,26 @@
     if (error) {
         @throw error;
     }
-
+    TKLogDebug(@"runWithResult loopCount: %d", loopCount);
     return result;
+}
+
+- (void)runUntilTrue:(int (^)(void))condition {
+    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    while(true) {
+        if (condition()) {
+            return;
+        }
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        if (now - start < 20) {
+            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
+                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        } else {
+            // time is up; try one last time...
+            XCTAssertTrue(condition());
+            return;
+        }
+    }
 }
 
 - (TKMemberSync *)createMember:(TokenIOSync *)token {

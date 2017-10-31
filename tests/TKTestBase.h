@@ -8,6 +8,8 @@
 #import <XCTest/XCTest.h>
 
 @class TokenIOSync;
+@class TokenIO;
+@class TokenIOBuilder;
 @class BankAuthorization;
 @class TKMemberSync;
 @class TKAccountSync;
@@ -45,6 +47,16 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param block block of code to execute
  */
 - (id)runWithResult:(AsyncTestBlockWithResult)block;
+
+/**
+ * Creates a TokenIO SDK client with settings for testing environment.
+ */
+- (TokenIO *)asyncSDK;
+
+/**
+ * Creates a Token SDK builder with settings for testing environment.
+ */
+- (TokenIOBuilder *)sdkBuilder;
 
 /**
  * Creates a new member with an auto generated alias and key.
@@ -115,4 +127,9 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  */
 - (void)waitUntil:(void (^)(void))block;
 
+/**
+ * Invokes grpc-using block. Runs until `condition` block returns true, hits exception, or times out.
+ * @param condition block that returns a Boolean
+ */
+- (void)runUntilTrue:(int (^)(void))condition;
 @end
