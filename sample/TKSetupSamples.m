@@ -66,7 +66,7 @@
                    lowercaseString];
     alias.type = Alias_Type_Email;
     [tokenIO createMember:alias onSuccess:^(TKMember *m) {
-        // newMember = m; // Use member.
+        newMember = m; // Use member.
     } onError:^(NSError *e) {
         // Something went wrong.
         @throw [NSException exceptionWithName:@"CreateMemberFailedException"
