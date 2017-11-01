@@ -5,8 +5,9 @@
 
 #import "Money.pbobjc.h"
 
-#import "HostAndPort.h"
 #import "TKTestBase.h"
+#import "HostAndPort.h"
+#import "TKBankClient.h"
 #import "TokenIOSync.h"
 #import "TokenIOBuilder.h"
 #import "TKMemberSync.h"
@@ -25,6 +26,11 @@
     [super setUp];
     NSString *sslOverride = [[[NSProcessInfo processInfo] environment] objectForKey:@"TOKEN_USE_SSL"];
     useSsl = sslOverride ? [sslOverride boolValue] : NO;
+
+    HostAndPort *fank = [self hostAndPort:@"TOKEN_BANK" withDefaultPort:8100];
+    _bank = [TKBankClient bankClientWithHost:fank.host
+                                        port:fank.port
+                                      useSsl:useSsl];
 
     queue = dispatch_queue_create("io.token.Test", nil);
 }
