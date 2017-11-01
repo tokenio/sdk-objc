@@ -5,6 +5,7 @@
 
 #import "Account.pbobjc.h"
 
+#import "HostAndPort.h"
 #import "TKAccountSync.h"
 #import "TKJson.h"
 #import "TKMemberSync.h"
@@ -52,6 +53,9 @@
                                                                    accountNumbers: [NSArray arrayWithObjects: checking.accountNumber, saving.accountNumber, nil]];
         [auth.accountsArray addObjectsFromArray:encAccounts];
         accounts = [member linkAccounts:auth];
+    }];
+    [self runUntilTrue:^{
+        return accounts != nil;
     }];
 }
 
