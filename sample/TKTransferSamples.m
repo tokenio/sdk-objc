@@ -113,11 +113,33 @@
         return (payerAccount != nil);
     }];
     Alias *payeeAlias = [self generateAlias];
+    [self run:^(TokenIOSync *tokenIOSync) {
+        [tokenIOSync createMember:payeeAlias];
+    }];
+    NSString *refId = @"purchase:2017-06622528293336394";
+    __block Token *transferToken = nil;
     
     TransferTokenBuilder *builder = [payer createTransferToken:100.0
                                                       currency:@"EUR"];
-                    builder.redeemerAlias = payeeAlias;
+    builder.accountId = payerAccount.id;
+    builder.redeemerAlias = payeeAlias;
+    builder.descr = @"Book purchase";
+    builder.refId = refId;
     
+    [builder executeAsync:^(Token *t){
+        // Use token.
+        transferToken = t;
+    }   onError:^(NSError *e) {
+        // Something went wrong.
+        // (We don't just build a structure; we also upload it to Token cloud.)
+        @throw [NSException exceptionWithName:@"BuilderExecuteException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
+    
+    [self runUntilTrue:^{
+        return (transferToken != nil);
+    }];
 }
 
 @end
