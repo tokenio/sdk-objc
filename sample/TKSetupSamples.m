@@ -30,25 +30,9 @@
 - (void)testCreateSDKClient {
     // createSDK begin snippet to include in docs
     TokenIOBuilder *builder = [TokenIO sandboxBuilder];
-    // For tests, here we use TKTestKeyStore, which "forgets" private keys.
-    // For real members, we would use a keystore type that persists keys.
-    TKTestKeyStore *keyStore = [[TKTestKeyStore alloc] init];
-    builder.keyStore = keyStore;
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
     TokenIO *tokenIO = [builder buildAsync];
     // createSDK done snippet to include in docs
-    
-    // make sure it worked:
-    __block TKMember *member = nil;
-    [tokenIO createMember:[self generateEmailAlias] onSuccess:^(TKMember *m) {
-        XCTAssertNotNil(m);
-        member = m;
-    } onError:^(NSError *e) {
-        XCTAssertTrue(false);
-    }];
-    [self runUntilTrue: ^{
-        return (member != nil);
-    }];
 }
 
 - (void)testCreateMember {
@@ -124,9 +108,13 @@
 
 - (void)testLoginExistingMember {
     __block TKMember *member = nil;
-    // TKTestBase's usual SDK builder uses a new non-persisting keystore.
+    // TKTestBase's usual SDK builder uses a new non-persisting keystore;
+    // unlike the default keystore, these TKTestKeyStores don't share data.
     // So if we use one SDK to create a member and another SDK to log in,
-    // the second SDK wouldn't "see" the first SDK's private keys (and fail).
+    // the second SDK wouldn't "see" the first SDK's private keys (and fails).
+    // We'll create a member with one member and log in with another;
+    // we'll have them use the same keystore so that they can share keys
+    // (as would happen if they used the "regular" keystore).
     id<TKKeyStore> store = [[TKTestKeyStore alloc] init];
     TokenIOBuilder *beforeBuilder = [self sdkBuilder];
     beforeBuilder.keyStore = store;
@@ -145,14 +133,13 @@
         return (member != nil);
     }];
     NSString *memberId = member.id;
-    
-    __block TKMember *loggedInMember;
-    
-    // loginMember begin snippet to include in docs
     TokenIOBuilder *builder = [self sdkBuilder];
     builder.keyStore = store;
     TokenIO *tokenIO = [builder buildAsync];
     
+    __block TKMember *loggedInMember;
+
+    // loginMember begin snippet to include in docs
     [tokenIO loginMember:memberId onSuccess:^(TKMember *m) {
         loggedInMember = m; // Use member.
     } onError:^(NSError *e) {
