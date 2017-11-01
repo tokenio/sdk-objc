@@ -29,27 +29,15 @@
 
 - (void)testNotifyPaymentRequest {
     TokenIO *tokenIO = [self asyncSDK];
-    __block TKMember *payee = nil;
-    [tokenIO createMember:[self generateAlias]
-                onSuccess:^(TKMember *m) {
-                    payee = m;
-                } onError:^(NSError *e){
-                    @throw [NSException exceptionWithName:@"CreateMemberFailedException"
-                                                   reason:[e localizedFailureReason]
-                                                 userInfo:[e userInfo]];
-                }];
-    [self runUntilTrue:^{
-        return (payee != nil);
-    }];
+    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
+    TKMemberSync *payee = [self createMember:tokenIOSync];
     
     // payer: all we need is the alias. but the notification fails
-    // if the recipient doesn't exist or isn't subscribed to notifications,
-    // so create payer and subscribe:
+    // if the recipient doesn't exist, so create...
     Alias *payerAlias = [self generateAlias];
-    [self run:^(TokenIOSync *tokenIOSync){
-        [tokenIOSync createMember:payerAlias];
-    }];
-    __block int waiting = false;
+    [tokenIOSync createMember:payerAlias];
+    
+    __block int waitingForPayment = false;
     
     // notifyPaymentRequest begin snippet to include in docs
     TokenPayload *payload = [TokenPayload message]; // hoped-for payment
@@ -62,7 +50,7 @@
     [tokenIO notifyPaymentRequest:payload
                         onSuccess:^{
                             // Notification sent.
-                            waiting = true;
+                            waitingForPayment = true;
                         } onError:^(NSError *e){
                             // Something went wrong.
                             // Maybe we used wrong alias.
@@ -72,53 +60,22 @@
      // notifyPaymentRequest done snippet to include in docs
     
     [self runUntilTrue:^{
-        return waiting;
+        return waitingForPayment;
     }];
 }
 
 - (void)testCreateTransferToken {
-    TokenIO *tokenIO = [self asyncSDK];
-    __block TKMember *payer = nil;
-    __block TKAccount *payerAccount = nil;
-    [tokenIO createMember:[self generateAlias]
-                onSuccess:^(TKMember *m) {
-                    payer = m;
-                    Money *balance = [Money message]; // test account's starting balance
-                    balance.currency = @"EUR";
-                    balance.value = @"5678.00";
-                    [m createTestBankAccount:balance
-                                   onSuccess:^(BankAuthorization* auth) {
-                                       [m linkAccounts:auth
-                                             onSuccess:^(NSArray<TKAccount*> * _Nonnull accounts) {
-                                                   // use accounts
-                                                 payerAccount = accounts[0];
-                                             } onError:^(NSError * _Nonnull e) {
-                                                 // Something went wrong.
-                                                 @throw [NSException exceptionWithName:@"LinkAccountException"
-                                                                                reason:[e localizedFailureReason]
-                                                                              userInfo:[e userInfo]];
-                                                   }];
-                                   } onError:^(NSError *e) {
-                                       @throw [NSException exceptionWithName:@"TestAccountException"
-                                                                      reason:[e localizedFailureReason]
-                                                                    userInfo:[e userInfo]];
-                                   }];
-                }
-                                     onError:^(NSError *e){
-                    @throw [NSException exceptionWithName:@"CreateMemberFailedException"
-                                                   reason:[e localizedFailureReason]
-                                                 userInfo:[e userInfo]];
-                }];
-    [self runUntilTrue:^{
-        return (payerAccount != nil);
-    }];
+    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
+    TKMemberSync *payerSync = [self createMember:tokenIOSync];
+    TKMember* payer = payerSync.async;
+    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[self createBankAuthorization:payerSync]][0];
+    TKAccount *payerAccount = payerAccountSync.async;
     Alias *payeeAlias = [self generateAlias];
-    [self run:^(TokenIOSync *tokenIOSync) {
-        [tokenIOSync createMember:payeeAlias];
-    }];
-    NSString *refId = @"purchase:2017-06622528293336394";
+    [tokenIOSync createMember:payeeAlias];
+    NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
+    // createTransferToken begin snippet to include in docs
     TransferTokenBuilder *builder = [payer createTransferToken:100.0
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
@@ -136,7 +93,8 @@
                                        reason:[e localizedFailureReason]
                                      userInfo:[e userInfo]];
     }];
-    
+    // createTransferToken done snippet to include in docs
+
     [self runUntilTrue:^{
         return (transferToken != nil);
     }];
