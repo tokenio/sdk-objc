@@ -54,10 +54,12 @@
                         onSuccess:^ {
                             // Notification sent.
                             waitingForPayment = true;
-                        } onError:^(NSError *e){
+                        } onError:^(NSError *e) {
                             // Something went wrong.
-                            // Maybe we used wrong alias.
-                            // Check error.
+                            // Maybe we used wrong alias?
+                            @throw [NSException exceptionWithName:@"NotifyException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
                         }
      ];
      // notifyPaymentRequest done snippet to include in docs
@@ -87,7 +89,7 @@
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
-    [builder executeAsync:^(Token *t){
+    [builder executeAsync:^(Token *t) {
         // Use token.
         transferToken = t;
     }   onError:^(NSError *e) {
@@ -177,7 +179,7 @@
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
-    [builder executeAsync:^(Token *t){
+    [builder executeAsync:^(Token *t) {
             [payer endorseToken:t
                         withKey:Key_Level_Standard
                       onSuccess:^(TokenOperationResult *result) {
@@ -210,6 +212,10 @@
                  // Something went wrong
              }];
     // cancelToken done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (transferToken.payloadSignaturesArray_Count > 0);
+    }];
 }
 
 @end
