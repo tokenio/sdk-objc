@@ -41,7 +41,7 @@
     if ([NSThread isMainThread]) {
         // If this sync call is invoked in main thread, we need to excute the runloop to receive the onSuccess/onError callback. Otherwise the main thread will be hung by semaphore. The callbacks are always in main thread.
         while (dispatch_semaphore_wait(isDone, DISPATCH_TIME_NOW)) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
         }
     }
     else {
