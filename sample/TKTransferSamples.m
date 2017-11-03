@@ -19,6 +19,7 @@
 #import "TKUtil.h"
 
 #import "Account.pbobjc.h"
+#import "Blob.pbobjc.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
@@ -214,6 +215,92 @@
     
     [self runUntilTrue:^ {
         return (transferToken.payloadSignaturesArray_Count > 0);
+    }];
+}
+
+- (void)testTransferTokenWithBlob {
+    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
+    TKMemberSync *payerSync = [self createMember:tokenIOSync];
+    TKMember *payer = payerSync.async;
+    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[self createBankAuthorization:payerSync]][0];
+    TKAccount *payerAccount = payerAccountSync.async;
+    Alias *payeeAlias = [self generateAlias];
+    TKMemberSync *payeeSync = [tokenIOSync createMember:payeeAlias];
+    TKMember *payee = payeeSync.async;
+    __block Token *transferToken = nil;
+    __block BOOL gotBlob = false;
+    
+    NSData* (^loadImage)(NSString*) = ^(NSString* ignored) {
+        return [NSData data];
+    };
+    
+    void (^displayImage)(NSData*) = ^(NSData* ignored) {
+        // doesn't use data, but makes example easier to understand
+        gotBlob = true;
+    };
+    
+    // createBlob begin snippet to include in docs
+    [payer createBlob: payer.id
+             withType: @"image/jpeg"
+             withName: @"invoice.jpg"
+             withData: loadImage(@"invoice.jpg")
+            onSuccess: ^(Attachment *a) {
+                TransferTokenBuilder *builder = [payer createTransferToken:100.0
+                                                                  currency:@"EUR"];
+                builder.accountId = payerAccount.id;
+                builder.redeemerAlias = payeeAlias;
+                builder.attachments = @[a]; // associate attachment with token
+                
+                [builder executeAsync:^(Token *t) {
+                    // TransferToken exists and has been uploaded.
+                    // Payee cannot see blob until payer endorses token (not shown here).
+                    transferToken = t;
+                }   onError:^(NSError *e) {
+                    @throw [NSException exceptionWithName:@"BuilderExecuteException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
+            } onError: ^(NSError *e) {
+                // Something went wrong. (We don't create a blob; we also
+                // upload it to Token cloud. So things can go wrong.)
+                @throw [NSException exceptionWithName:@"CreateBlobException"
+                                               reason:[e localizedFailureReason]
+                                             userInfo:[e userInfo]];
+            }];
+    // createBlob done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (transferToken != nil);
+    }];
+    [payerSync endorseToken:transferToken withKey:Key_Level_Standard];
+    NSString *tokenId = transferToken.id_p;
+    
+    // getTokenBlob begin snippet to include in docs
+    [payee getToken:tokenId
+          onSuccess:^(Token *t) {
+              // Token comes with attachments: the metadata for a blob
+              // (MIME type, etc). To download the blob's "file" contents:
+              [payee getTokenBlob:t.id_p
+                       withBlobId:t.payload.transfer.attachmentsArray[0].blobId
+                        onSuccess:^(Blob *b) {
+                            // use data from blob:
+                            displayImage(b.payload.data);
+                        } onError:^(NSError *e) {
+                            // Something went wrong.
+                            @throw [NSException exceptionWithName:@"GetBlobException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
+                        }];
+          } onError:^(NSError *e) {
+              // Something went wrong.
+              @throw [NSException exceptionWithName:@"GetTokenException"
+                                             reason:[e localizedFailureReason]
+                                           userInfo:[e userInfo]];
+          }];
+    // getTokenBlob done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (gotBlob == true);
     }];
 }
 
