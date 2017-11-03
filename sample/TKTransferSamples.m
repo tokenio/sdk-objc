@@ -171,7 +171,6 @@
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
-    // createTransferToken begin snippet to include in docs
     TransferTokenBuilder *builder = [payer createTransferToken:100.0
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
