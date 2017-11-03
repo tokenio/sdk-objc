@@ -794,7 +794,7 @@
 }
 
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithMoney)onSuccess
+         onSuccess:(OnSuccessWithGetBalanceResponse)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
     request.accountId = accountId;
@@ -806,7 +806,7 @@
                            ^(GetBalanceResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.current);
+                                   onSuccess(response);
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

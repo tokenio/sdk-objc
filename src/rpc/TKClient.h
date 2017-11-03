@@ -334,7 +334,7 @@
  * @param onSuccess invoked on success with account balance
  */
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithMoney)onSuccess
+         onSuccess:(OnSuccessWithGetBalanceResponse)onSuccess
            onError:(OnError)onError;
 
 /**

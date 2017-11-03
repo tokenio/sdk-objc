@@ -12,7 +12,7 @@
 #import "Money.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
-
+#import "Gateway.pbobjc.h" // GetBalanceResponse
 
 
 @interface TKTransactionsTests : TKTestBase
@@ -36,11 +36,15 @@
     }];
 }
 
-- (void)testLookupBalance {
+- (void)testGetBalance {
     [self run: ^(TokenIOSync *tokenIO) {
-        Money *balance = [payerAccount getBalance];
-        XCTAssert(balance.value > 0);
-        XCTAssertEqualObjects(@"USD", balance.currency);
+        GetBalanceResponse *balances = [payerAccount getBalance];
+        Money *currentBalance = balances.current;
+        XCTAssert(currentBalance.value > 0);
+        XCTAssertEqualObjects(@"USD", currentBalance.currency);
+        Money *availableBalance = balances.available;
+        XCTAssert(availableBalance.value > 0);
+        XCTAssertEqualObjects(@"USD", availableBalance.currency);
     }];     
 }
 

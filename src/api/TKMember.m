@@ -568,7 +568,7 @@
 }
 
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithMoney)onSuccess
+         onSuccess:(OnSuccessWithGetBalanceResponse)onSuccess
            onError:(OnError)onError {
     [client getBalance:accountId
              onSuccess:onSuccess

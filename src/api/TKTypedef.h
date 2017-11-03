@@ -25,6 +25,7 @@
 @class Pricing;
 @class Profile;
 @class Alias;
+@class GetBalanceResponse;
 @class TokenMember;
 @class MemberRecoveryOperation;
 
@@ -56,6 +57,7 @@ typedef void (^ _Nonnull OnSuccessWithBlob)(Blob * _Nullable);
 typedef void (^ _Nonnull OnSuccessWithAttachment)(Attachment * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMoney)(Money * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithGetBalanceResponse)(GetBalanceResponse * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithTransaction)(Transaction * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransactions)(PagedArray<Transaction *> * _Nonnull);
