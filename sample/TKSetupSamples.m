@@ -101,7 +101,7 @@
     // linkTestBankAccount done snippet to include in docs
     
     // make sure it worked
-    [self runUntilTrue:^{
+    [self runUntilTrue: ^{
         return (account != nil);
     }];
 }
