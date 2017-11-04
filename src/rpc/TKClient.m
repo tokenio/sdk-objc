@@ -5,7 +5,7 @@
 
 #import "ProtoRPC/ProtoRPC.h"
 #import "Member.pbobjc.h"
-#import "gateway/Gateway.pbrpc.h"
+#import "TKBalance.h"
 
 #import "TKClient.h"
 #import "TKRpcLog.h"
@@ -794,7 +794,7 @@
 }
 
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithGetBalanceResponse)onSuccess
+         onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
     request.accountId = accountId;
@@ -806,7 +806,10 @@
                            ^(GetBalanceResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response);
+                                   TKBalance *balance = [TKBalance alloc];
+                                   balance.available = response.available;
+                                   balance.current = response.current;
+                                   onSuccess(balance);
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

@@ -38,7 +38,7 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getBalance:(OnSuccessWithGetBalanceResponse)onSuccess
+- (void)getBalance:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError;
 
 /**

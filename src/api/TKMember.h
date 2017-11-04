@@ -295,7 +295,7 @@
  * @param accountId account id
  */
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithGetBalanceResponse)onSuccess
+         onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError;
 
 /**

@@ -236,7 +236,7 @@
  * @param accountId account id
  * @return account balance
  */
-- (GetBalanceResponse *)getBalance:(NSString *)accountId;
+- (TKBalance *)getBalance:(NSString *)accountId;
 
 /**
  * Looks up an existing token transfer.

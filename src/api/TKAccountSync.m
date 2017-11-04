@@ -39,8 +39,8 @@
     return self.async.member;
 }
 
-- (GetBalanceResponse *)getBalance {
-    TKRpcSyncCall<GetBalanceResponse *> *call = [TKRpcSyncCall create];
+- (TKBalance *)getBalance {
+    TKRpcSyncCall<TKBalance *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getBalance:call.onSuccess onError:call.onError];
     }];
