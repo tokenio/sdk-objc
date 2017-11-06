@@ -36,7 +36,7 @@
  *
  * @return a balance amount
  */
-- (Money *)getBalance;
+- (TKBalance *)getBalance;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.

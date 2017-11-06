@@ -6,6 +6,7 @@
 @class Attachment;
 @class Money;
 @class TKAccountSync;
+@class TKBalance;
 @class Token;
 @class TokenOperationResult;
 @class Transaction;
@@ -56,6 +57,7 @@ typedef void (^ _Nonnull OnSuccessWithBlob)(Blob * _Nullable);
 typedef void (^ _Nonnull OnSuccessWithAttachment)(Attachment * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMoney)(Money * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKBalance)(TKBalance * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithTransaction)(Transaction * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransactions)(PagedArray<Transaction *> * _Nonnull);
