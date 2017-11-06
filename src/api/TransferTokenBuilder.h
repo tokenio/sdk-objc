@@ -48,7 +48,7 @@
 /**
  * Executes the request, creating the token. Throws error if external authorization is required.
  *
- * @return transfer token and external authorization details
+ * @return transfer token
  */
 - (Token *)execute;
 
