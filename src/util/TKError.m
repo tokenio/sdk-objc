@@ -30,6 +30,14 @@
                                            stringWithFormat:@"Failed to create token %d", status] }];
 }
 
++ (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details {
+    return [NSError errorWithDomain:kTokenTransferErrorDomain
+                               code:TransferTokenStatus_FailureExternalAuthorizationRequired
+                           userInfo:@{ NSLocalizedDescriptionKey: @"External authorization is required",
+                                       @"ExternalAuthorizationDetails_URL": details.URL,
+                                       @"ExternalAuthorizationDetails_CompletionPattern": details.completionPattern }];
+}
+
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
     return [NSError errorWithDomain:kTokenTransactionErrorDomain
                                code:status

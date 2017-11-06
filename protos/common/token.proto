@@ -70,15 +70,20 @@ message TokenPayload {
 enum TransferTokenStatus {
   INVALID = 0;
   SUCCESS = 1;
-  FAILURE_REJECTED = 2;                      // the request has been rejected
-  FAILURE_INSUFFICIENT_FUNDS = 3;            // the request has failed due to insufficient funds
-  FAILURE_INVALID_CURRENCY = 4;              // the request has failed, because currency is invalid/unsupported
-  FAILURE_SOURCE_ACCOUNT_NOT_FOUND = 5;      // the request has failed, source account not found
-  FAILURE_DESTINATION_ACCOUNT_NOT_FOUND = 6; // the request has failed, destination account not found
-  FAILURE_INVALID_AMOUNT = 10;               // the request has failed, because the amount is invalid
-  FAILURE_INVALID_QUOTE = 11;                // the request has failed, because the pricing quote is invalid
-  FAILURE_AUTHORIZATION_NEEDED = 12;         // the request has failed, because additional authorization is needed
-  FAILURE_GENERIC = 9;                       // the request has failed due to other reasons
+  FAILURE_REJECTED = 2;                          // the request has been rejected
+  FAILURE_INSUFFICIENT_FUNDS = 3;                // the request has failed due to insufficient funds
+  FAILURE_INVALID_CURRENCY = 4;                  // the request has failed, because currency is invalid/unsupported
+  FAILURE_SOURCE_ACCOUNT_NOT_FOUND = 5;          // the request has failed, source account not found
+  FAILURE_DESTINATION_ACCOUNT_NOT_FOUND = 6;     // the request has failed, destination account not found
+  FAILURE_INVALID_AMOUNT = 10;                   // the request has failed, because the amount is invalid
+  FAILURE_INVALID_QUOTE = 11;                    // the request has failed, because the pricing quote is invalid
+  FAILURE_EXTERNAL_AUTHORIZATION_REQUIRED = 12;  // the request has failed, because external authorization is needed
+  FAILURE_GENERIC = 9;                           // the request has failed due to other reasons
+}
+
+message ExternalAuthorizationDetails {
+  string url = 1;
+  string completion_pattern = 2;
 }
 
 message TransferBody {

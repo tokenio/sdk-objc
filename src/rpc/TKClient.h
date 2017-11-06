@@ -219,6 +219,7 @@
  */
 - (void)createTransferToken:(TokenPayload *)payload
                   onSuccess:(OnSuccessWithToken)onSuccess
+             OnAuthRequired:(OnAuthRequired)OnAuthRequired
                     onError:(OnError)onError;
 
 /**

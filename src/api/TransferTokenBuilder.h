@@ -4,7 +4,6 @@
 //
 
 #import <objc/NSObject.h>
-//#import "gateway/Gateway.pbrpc.h"
 #import "TKTypedef.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -47,19 +46,21 @@
           currency:(NSString*)currency;
 
 /**
- * Executes the request, creating the token
+ * Executes the request, creating the token. Throws error if external authorization is required.
  *
- * @return transfer token
+ * @return transfer token and external authorization details
  */
 - (Token *)execute;
 
 /**
- * Executes the request, creating the token, async
+ * Executes the request, creating the token, async.
  *
  * @param onSuccess invoked on success
+ * @param OnAuthRequired invoked on external authorization required
  * @param onError invoked on error
  */
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-                onError:(OnError)onError;
+      OnAuthRequired:(OnAuthRequired)OnAuthRequired
+             onError:(OnError)onError;
 
 @end

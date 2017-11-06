@@ -438,8 +438,9 @@
 }
 
 - (void)createTransferToken:(TokenPayload *)payload
-          onSuccess:(OnSuccessWithToken)onSuccess
-            onError:(OnError)onError {
+                  onSuccess:(OnSuccessWithToken)onSuccess
+             OnAuthRequired:(OnAuthRequired)OnAuthRequired
+                    onError:(OnError)onError {
     CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
     RpcLogStart(request);
@@ -451,6 +452,8 @@
                                    RpcLogCompleted(response);
                                    if (response.status == TransferTokenStatus_Success) {
                                        onSuccess(response.token);
+                                   } else if (response.status == TransferTokenStatus_FailureExternalAuthorizationRequired) {
+                                       OnAuthRequired(response.authorizationDetails);
                                    } else {
                                        onError([NSError
                                                 errorFromTransferTokenStatus:response.status]);

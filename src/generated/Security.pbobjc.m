@@ -217,6 +217,106 @@ BOOL Key_Level_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - PrivateKey
+
+@implementation PrivateKey
+
+@dynamic id_p;
+@dynamic privateKey;
+@dynamic level;
+@dynamic algorithm;
+
+typedef struct PrivateKey__storage_ {
+  uint32_t _has_storage_[1];
+  Key_Level level;
+  Key_Algorithm algorithm;
+  NSString *id_p;
+  NSString *privateKey;
+} PrivateKey__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = PrivateKey_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PrivateKey__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "privateKey",
+        .dataTypeSpecific.className = NULL,
+        .number = PrivateKey_FieldNumber_PrivateKey,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(PrivateKey__storage_, privateKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "level",
+        .dataTypeSpecific.enumDescFunc = Key_Level_EnumDescriptor,
+        .number = PrivateKey_FieldNumber_Level,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(PrivateKey__storage_, level),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "algorithm",
+        .dataTypeSpecific.enumDescFunc = Key_Algorithm_EnumDescriptor,
+        .number = PrivateKey_FieldNumber_Algorithm,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(PrivateKey__storage_, algorithm),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PrivateKey class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PrivateKey__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t PrivateKey_Level_RawValue(PrivateKey *message) {
+  GPBDescriptor *descriptor = [PrivateKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Level];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetPrivateKey_Level_RawValue(PrivateKey *message, int32_t value) {
+  GPBDescriptor *descriptor = [PrivateKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Level];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t PrivateKey_Algorithm_RawValue(PrivateKey *message) {
+  GPBDescriptor *descriptor = [PrivateKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Algorithm];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetPrivateKey_Algorithm_RawValue(PrivateKey *message, int32_t value) {
+  GPBDescriptor *descriptor = [PrivateKey descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Algorithm];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - Signature
 
 @implementation Signature
