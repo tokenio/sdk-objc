@@ -27,13 +27,13 @@
     [memberSync linkAccounts:[self createBankAuthorization:memberSync]];
     [memberSync linkAccounts:[self createBankAuthorization:memberSync]];
     TKMember *member = memberSync.async;
-    NSMutableDictionary *sums = [NSMutableDictionary dictionaryWithCapacity:10];
+    NSMutableDictionary<NSString*, NSNumber*> *sums = [NSMutableDictionary dictionaryWithCapacity:10];
     
     // account loop begin snippet to include in docs
     [member getAccounts:^(NSArray<TKAccount *> *accounts) {
         for (TKAccount *a in accounts) {
             [a getBalance:^(TKBalance *b) {
-                sums[b.available.currency] = @([(NSNumber*)sums[b.available.currency] floatValue] + [b.available.value floatValue]);
+                sums[b.available.currency] = @([sums[b.available.currency] floatValue] + [b.available.value floatValue]);
             } onError:^(NSError *e) {
                 // Something went wrong.
                 @throw [NSException exceptionWithName:@"GetBalanceException"
@@ -53,7 +53,7 @@
         // assumes createBankAuthorization gives a million dollars
         // NSNumber * dollars = sums[@"USD"];
         // return ([dollars floatValue] > 1000001.0);
-        return ([(NSNumber*)sums[@"USD"] floatValue] > 1000001.0);
+        return ([sums[@"USD"] floatValue] > 1000001.0);
     }];
 }
 
