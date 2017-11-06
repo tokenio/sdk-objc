@@ -14,7 +14,7 @@
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
-
+#import "TKBalance.h"
 
 @interface TKAccessRedemptionTests : TKTestBase
 
@@ -81,8 +81,8 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
-        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance);
+        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id].current;
+        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance.current);
     }];
 }
 
@@ -95,8 +95,8 @@
         token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
         
         [grantee useAccessToken:token.id_p];
-        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id];
-        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance);
+        Money *lookedUpBalance = [grantee getBalance:grantorAccount.id].current;
+        XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance.current);
     }];
 }
 
