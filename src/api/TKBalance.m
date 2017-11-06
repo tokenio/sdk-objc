@@ -11,7 +11,6 @@
 #import "TKBalance.h"
 
 
-@implementation TKBalance : NSObject {
-}
+@implementation TKBalance : NSObject
 
 @end
