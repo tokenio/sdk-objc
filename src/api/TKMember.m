@@ -568,7 +568,7 @@
 }
 
 - (void)getBalance:(NSString *)accountId
-         onSuccess:(OnSuccessWithMoney)onSuccess
+         onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     [client getBalance:accountId
              onSuccess:onSuccess

@@ -53,7 +53,7 @@
     return account.isLocked;
 }
 
-- (void)getBalance:(OnSuccessWithMoney)onSuccess
+- (void)getBalance:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     [client getBalance:account.id_p
              onSuccess:onSuccess
