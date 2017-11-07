@@ -92,7 +92,7 @@
     [builder executeAsync:^(Token *t) {
         // Use token.
         transferToken = t;
-    } OnAuthRequired:^(ExternalAuthorizationDetails *details) {
+    } onAuthRequired:^(ExternalAuthorizationDetails *details) {
         // External authorization is required. Get the bank authorization
         // from the url in details.
         @throw [NSException exceptionWithName:@"ExternalAuthorizationException"
@@ -195,7 +195,7 @@
                                                      reason:[e localizedFailureReason]
                                                    userInfo:[e userInfo]];
                   }];
-    } OnAuthRequired:^(ExternalAuthorizationDetails *details) {
+    } onAuthRequired:^(ExternalAuthorizationDetails *details) {
         // External authorization is required. Get the bank authorization
         // from the url in details.
         @throw [NSException exceptionWithName:@"ExternalAuthorizationException"

@@ -439,7 +439,7 @@
 
 - (void)createTransferToken:(TokenPayload *)payload
                   onSuccess:(OnSuccessWithToken)onSuccess
-             OnAuthRequired:(OnAuthRequired)OnAuthRequired
+             onAuthRequired:(OnAuthRequired)onAuthRequired
                     onError:(OnError)onError {
     CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
@@ -453,7 +453,7 @@
                                    if (response.status == TransferTokenStatus_Success) {
                                        onSuccess(response.token);
                                    } else if (response.status == TransferTokenStatus_FailureExternalAuthorizationRequired) {
-                                       OnAuthRequired(response.authorizationDetails);
+                                       onAuthRequired(response.authorizationDetails);
                                    } else {
                                        onError([NSError
                                                 errorFromTransferTokenStatus:response.status]);

@@ -38,7 +38,7 @@
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self executeAsync:call.onSuccess
-            OnAuthRequired:^(ExternalAuthorizationDetails *details) {
+            onAuthRequired:^(ExternalAuthorizationDetails *details) {
                 NSError *error = [NSError errorFromExternalAuthorizationDetails:details];
                 call.onError(error);
             }
@@ -47,7 +47,7 @@
 }
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-      OnAuthRequired:(OnAuthRequired)OnAuthRequired
+      onAuthRequired:(OnAuthRequired)onAuthRequired
              onError:(OnError)onError {
     if (!self.accountId && !self.bankAuthorization) {
         @throw [NSException
@@ -139,7 +139,7 @@
 
     [[self.member getClient] createTransferToken:payload
                                        onSuccess:onSuccess
-                                  OnAuthRequired:OnAuthRequired
+                                  onAuthRequired:onAuthRequired
                                          onError:onError];
 }
 
