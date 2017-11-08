@@ -126,7 +126,7 @@
                                     accessToken = result.token;
                                 } onError:^(NSError *e) {
                                     // something went wrong
-                                    @throw [NSException exceptionWithName:@"ReplaceAccessTokensException"
+                                    @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
                                                                    reason:[e localizedFailureReason]
                                                                  userInfo:[e userInfo]];
                                 }];
@@ -152,6 +152,21 @@
     [self runUntilTrue:^ {
         return (accessToken.payloadSignaturesArray_Count > 3);
     }];
+
+    foundToken = accessToken; // we replaced result of "find"; if try to replace it again, fail
+
+    // replaceNoEndorse begin snippet to include in docs
+    [grantor replaceAccessToken:foundToken
+              accessTokenConfig:newAccess
+                      onSuccess:^(TokenOperationResult *result) {
+                          accessToken = result.token;
+                      } onError:^(NSError *e) {
+                          @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                         reason:[e localizedFailureReason]
+                                                       userInfo:[e userInfo]];
+                      }
+     ];
+    // replaceNoEndorse done snippet to include in docs
 }
 
 @end
