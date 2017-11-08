@@ -39,9 +39,9 @@
     [access forAllAccounts];
     
     [grantor createAccessToken:access
-                     onSuccess:^(Token *t) {
+                     onSuccess:^(Token *at) {
                          // created (and uploaded) but not yet endorsed
-                         accessToken = t;
+                         accessToken = at;
                      } onError:^(NSError *e) {
                          // Something went wrong.
                          @throw [NSException exceptionWithName:@"GrantAccessException"
@@ -97,9 +97,9 @@
     [grantor getAccessTokensOffset:NULL
                              limit:100
                          onSuccess:^(PagedArray<Token *> *ary) {
-                             for (Token *t in ary.items) {
-                                 if ([t.payload.to.alias isEqual:granteeAlias]) {
-                                     foundToken = t;
+                             for (Token *at in ary.items) {
+                                 if ([at.payload.to.alias isEqual:granteeAlias]) {
+                                     foundToken = at;
                                      break;
                                  }
                              }
