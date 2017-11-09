@@ -19,6 +19,7 @@
 @implementation TKAccessSamples
 
 -(void)testAccessTokens {
+    /*
     TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
     TKMemberSync *grantorSync = [self createMember:tokenIOSync];
     // we test getAccounts, so create an account to get:
@@ -167,6 +168,7 @@
                       }
      ];
     // replaceNoEndorse done snippet to include in docs
+ */
 }
 
 @end
