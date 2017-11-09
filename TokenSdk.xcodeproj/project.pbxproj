@@ -187,6 +187,8 @@
 		DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */; };
 		E5A0D0791FA0E0B70032A843 /* TKSetupSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */; };
 		E5A3CD121FA924D1005B2169 /* TKTransferSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A3CD111FA924D1005B2169 /* TKTransferSamples.m */; };
+		E5C4B09E1FB145B500E63873 /* TKAccessSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */; };
+		E5F36FA81FAD29AA0087FB69 /* TKAccountSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */; };
 		E5F36FAA1FAD41E10087FB69 /* TKBalance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F36FA91FAD41E10087FB69 /* TKBalance.h */; };
 		E5F36FAC1FAD42E70087FB69 /* TKBalance.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F36FAB1FAD42E70087FB69 /* TKBalance.m */; };
 		FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */; };
@@ -415,6 +417,8 @@
 		DDF54B021E31797900BE739B /* QHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QHex.m; path = ../security/QHex.m; sourceTree = "<group>"; };
 		E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSetupSamples.m; sourceTree = "<group>"; };
 		E5A3CD111FA924D1005B2169 /* TKTransferSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTransferSamples.m; sourceTree = "<group>"; };
+		E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKAccessSamples.m; sourceTree = "<group>"; };
+		E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKAccountSamples.m; sourceTree = "<group>"; };
 		E5F36FA91FAD41E10087FB69 /* TKBalance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBalance.h; sourceTree = "<group>"; };
 		E5F36FAB1FAD42E70087FB69 /* TKBalance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKBalance.m; sourceTree = "<group>"; };
 		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
@@ -840,6 +844,8 @@
 			children = (
 				E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */,
 				E5A3CD111FA924D1005B2169 /* TKTransferSamples.m */,
+				E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */,
+				E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */,
 			);
 			path = sample;
 			sourceTree = "<group>";
@@ -1325,7 +1331,9 @@
 			files = (
 				DDAA0D7D1E25CBEA00E9BB09 /* TKSecureEnclaveTests.m in Sources */,
 				FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */,
+				E5C4B09E1FB145B500E63873 /* TKAccessSamples.m in Sources */,
 				E5A0D0791FA0E0B70032A843 /* TKSetupSamples.m in Sources */,
+				E5F36FA81FAD29AA0087FB69 /* TKAccountSamples.m in Sources */,
 				8A99091E1D890E820096A7FA /* TKMemberRegistrationTests.m in Sources */,
 				1B3A47D71EE5658200219ABE /* TKTransferTokenBuilderTests.m in Sources */,
 				8A4A6D451DB06D42005DCB70 /* TKAddressTests.m in Sources */,
