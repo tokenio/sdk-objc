@@ -19,14 +19,20 @@
 
 -(void)testNotificationPolling {
     TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
+    Money *money = [Money message];
+    money.currency = @"EUR";
+    money.value = @"5678.90";
     Alias *payerAlias = [self generateAlias];
     TKMemberSync *payerSync = [tokenIOSync createMember:payerAlias];
-    [payerSync linkAccounts:[self createBankAuthorization:payerSync]];
-    TKMember *payer = payerSync.async;
+    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[payerSync createTestBankAccount:money]][0];
+    Alias *payeeAlias = [self generateAlias];
+    TKMemberSync *payeeSync = [tokenIOSync createMember:payeeAlias];
+    [payeeSync linkAccounts:[payeeSync createTestBankAccount:money]];
+    TKMember *payee = payeeSync.async;
     
     __block Subscriber *subscriber = nil;
     
-    [payer subscribeToNotifications:@"iron"
+    [payee subscribeToNotifications:@"iron"
                 handlerInstructions:(NSMutableDictionary<NSString *, NSString *> *) [NSMutableDictionary dictionary]
                           onSuccess:^(Subscriber *s) {
                               subscriber = s;
@@ -41,22 +47,34 @@
         return (subscriber != nil);
     }];
     
-    // generate a notification so that our polling finds something...
-    TokenPayload *payload = [TokenPayload message];
-    payload.from.alias = payerAlias;
-    payload.to.id_p = [self createAccount:tokenIOSync].member.id;
-    payload.transfer.lifetimeAmount = @"100";
-    payload.transfer.currency = @"EUR";
-    [tokenIOSync notifyPaymentRequest:payload];
-    
+    // generate a notification so that our polling finds something.
+    // To do this, we create, endorse, and redeem a transfer.
+    // Payee receives a notification.
+    TransferTokenBuilder *builder = [payerSync createTransferToken:100.99
+                                                          currency:@"USD"];
+    builder.accountId = payerAccountSync.id;
+    builder.redeemerAlias = payerAlias;
+    builder.toAlias = payeeAlias;
+    Token *token = [builder execute];
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payee.id;
+    [payerSync endorseToken:token withKey:Key_Level_Standard];
+    [payerSync redeemToken:token amount:@(100.99) currency:@"USD" description:@"notify them" destination:destination];
+
+    // wait until we're sure notification has gone through...
+    [self runUntilTrue:^ {
+        PagedArray<Notification *> *notifications = [payeeSync getNotificationsOffset:NULL limit:10];
+        return (notifications.items.count > 0);
+    }];
+
     __block Notification *notification = nil;
-    
+
     // poll begin snippet to include in docs
-    [payer getNotificationsOffset:NULL
+    [payee getNotificationsOffset:NULL
                             limit:10
                         onSuccess:^(PagedArray<Notification *> *ary) {
                             for (Notification *n in ary.items) {
-                                if ([n.content.type isEqualToString:@"PAYMENT_REQUEST"]) {
+                                if ([n.content.type isEqualToString:@"PAYEE_TRANSFER_PROCESSED"]) {
                                     // use notification
                                     notification = n;
                                 }
