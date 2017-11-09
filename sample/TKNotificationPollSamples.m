@@ -41,7 +41,7 @@
         return (subscriber != nil);
     }];
     
-    // generate a notification to poll for...
+    // generate a notification so that our polling finds something...
     TokenPayload *payload = [TokenPayload message];
     payload.from.alias = payerAlias;
     payload.to.id_p = [self createAccount:tokenIOSync].member.id;
