@@ -10,7 +10,6 @@
 #import "TKTestBase.h"
 
 #import "TokenSdk.h"
-#import "TKLogManager.h"
 
 @interface TKAccessSamples : TKTestBase
 
