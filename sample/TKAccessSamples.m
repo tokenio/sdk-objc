@@ -111,7 +111,7 @@
     // find token done snippet to include in docs
     
     [self runUntilTrue:^ {
-        return (foundToken != nil) && [foundToken isEqual:accessToken];
+        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
     }];
     
     // replaceAndEndorseAccessToken begin snippet to include in docs
@@ -216,7 +216,7 @@
                          }];
 
     [self runUntilTrue:^ {
-        return (foundToken != nil) && [foundToken isEqual:accessToken];
+        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
     }];
 
     // replaceNoEndorse begin snippet to include in docs
@@ -237,7 +237,7 @@
     // replaceNoEndorse done snippet to include in docs
 
     [self runUntilTrue:^ {
-        return (![accessToken isEqual:foundToken]);
+        return (![accessToken.id_p isEqual:foundToken.id_p]);
     }];
 }
 
