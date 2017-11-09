@@ -151,10 +151,79 @@
     [self runUntilTrue:^ {
         return (accessToken.payloadSignaturesArray_Count > 3);
     }];
+}
 
-    foundToken = accessToken; // we replaced result of "find"; if try to replace it again, fail
+-(void)testReplaceNoEndorse {
+    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
+    TKMemberSync *grantorSync = [self createMember:tokenIOSync];
+    // we test getAccounts, so create an account to get:
+    Money *startingBalance = [Money message];
+    startingBalance.currency = @"EUR";
+    startingBalance.value = @"5678.00";
+    [grantorSync linkAccounts: [grantorSync createTestBankAccount:startingBalance]];
+    TKMember *grantor = grantorSync.async;
+
+    Alias *granteeAlias = [self generateAlias];
+    [tokenIOSync createMember:granteeAlias];
+
+    __block Token *accessToken = nil;
+
+    AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
+    [access forAllAccounts];
+
+    [grantor createAccessToken:access
+                     onSuccess:^(Token *at) {
+                         // created (and uploaded) but not yet endorsed
+                         accessToken = at;
+                     } onError:^(NSError *e) {
+                         // Something went wrong.
+                         @throw [NSException exceptionWithName:@"GrantAccessException"
+                                                        reason:[e localizedFailureReason]
+                                                      userInfo:[e userInfo]];
+                     }];
+
+    [self runUntilTrue:^ {
+        return (accessToken != nil);
+    }];
+
+    [grantor endorseToken:accessToken
+                  withKey:Key_Level_Standard
+                onSuccess:^(TokenOperationResult *result) {
+                    accessToken = result.token;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"EndorseAccessException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
+
+    __block Token *foundToken = nil;
+
+    [grantor getAccessTokensOffset:NULL
+                             limit:100
+                         onSuccess:^(PagedArray<Token *> *ary) {
+                             for (Token *at in ary.items) {
+                                 if ([at.payload.to.alias isEqual:granteeAlias]) {
+                                     foundToken = at;
+                                     break;
+                                 }
+                             }
+                         } onError:^(NSError* e) {
+                             // something went wrong
+                             @throw [NSException exceptionWithName:@"GetAccessTokensException"
+                                                            reason:[e localizedFailureReason]
+                                                          userInfo:[e userInfo]];
+                         }];
+
+    [self runUntilTrue:^ {
+        return (foundToken != nil) && [foundToken isEqual:accessToken];
+    }];
 
     // replaceNoEndorse begin snippet to include in docs
+    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    [newAccess forAllBalances];
+    [newAccess forAllTransactions];
+
     [grantor replaceAccessToken:foundToken
               accessTokenConfig:newAccess
                       onSuccess:^(TokenOperationResult *result) {
@@ -166,6 +235,10 @@
                       }
      ];
     // replaceNoEndorse done snippet to include in docs
+
+    [self runUntilTrue:^ {
+        return (![accessToken isEqual:foundToken]);
+    }];
 }
 
 @end
