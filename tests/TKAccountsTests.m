@@ -54,9 +54,6 @@
         [auth.accountsArray addObjectsFromArray:encAccounts];
         accounts = [member linkAccounts:auth];
     }];
-    [self runUntilTrue:^{
-        return accounts != nil;
-    }];
 }
 
 - (void)testDefaultAccount {

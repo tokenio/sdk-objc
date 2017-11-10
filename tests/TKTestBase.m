@@ -109,24 +109,6 @@
     return result;
 }
 
-- (void)runUntilTrue:(int (^)(void))condition {
-    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
-    while(true) {
-        if (condition()) {
-            return;
-        }
-        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        if (now - start < 20) {
-            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
-                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        } else {
-            // time is up; try one last time...
-            XCTAssertTrue(condition());
-            return;
-        }
-    }
-}
-
 - (TKMemberSync *)createMember:(TokenIOSync *)token {
     return [token createMember:[self generateAlias]];
 }

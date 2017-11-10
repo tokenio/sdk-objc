@@ -7,21 +7,16 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TKTestBase.h"
 
-#import "TokenIOSync.h"
-#import "TokenIO.h"
-#import "TokenIOBuilder.h"
-#import "TKMemberSync.h"
+#import "TokenSdk.h"
+#import "TKSampleBase.h"
 #import "TKTestKeyStore.h"
-
-#import "TKUtil.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
 // samples keep working).
 
-@interface TKSetupSamples : TKTestBase
+@interface TKSetupSamples : TKSampleBase
 
 @end
 

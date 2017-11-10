@@ -186,6 +186,7 @@
 		DDF54B051E3179A200BE739B /* TKSecureEnclaveCryptoEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D701E2582BE00E9BB09 /* TKSecureEnclaveCryptoEngineFactory.m */; };
 		DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = DDAA0D741E25835300E9BB09 /* TKSecureEnclaveCryptoEngine.m */; };
 		E50FA8EC1FB3CB5400018417 /* TKNotificationPollSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E50FA8EB1FB3CB5400018417 /* TKNotificationPollSamples.m */; };
+		E50FA8EE1FB5281200018417 /* TKSampleBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E50FA8ED1FB5281200018417 /* TKSampleBase.m */; };
 		E5A0D0791FA0E0B70032A843 /* TKSetupSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */; };
 		E5A3CD121FA924D1005B2169 /* TKTransferSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A3CD111FA924D1005B2169 /* TKTransferSamples.m */; };
 		E5C4B09E1FB145B500E63873 /* TKAccessSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */; };
@@ -417,6 +418,8 @@
 		DDF54B011E31797900BE739B /* QHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QHex.h; path = ../security/QHex.h; sourceTree = "<group>"; };
 		DDF54B021E31797900BE739B /* QHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QHex.m; path = ../security/QHex.m; sourceTree = "<group>"; };
 		E50FA8EB1FB3CB5400018417 /* TKNotificationPollSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKNotificationPollSamples.m; sourceTree = "<group>"; };
+		E50FA8ED1FB5281200018417 /* TKSampleBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSampleBase.m; sourceTree = "<group>"; };
+		E50FA8EF1FB528D700018417 /* TKSampleBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKSampleBase.h; sourceTree = "<group>"; };
 		E5A0D0781FA0E0B70032A843 /* TKSetupSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSetupSamples.m; sourceTree = "<group>"; };
 		E5A3CD111FA924D1005B2169 /* TKTransferSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTransferSamples.m; sourceTree = "<group>"; };
 		E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKAccessSamples.m; sourceTree = "<group>"; };
@@ -849,6 +852,8 @@
 				E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */,
 				E5C4B09D1FB145B500E63873 /* TKAccessSamples.m */,
 				E50FA8EB1FB3CB5400018417 /* TKNotificationPollSamples.m */,
+				E50FA8EF1FB528D700018417 /* TKSampleBase.h */,
+				E50FA8ED1FB5281200018417 /* TKSampleBase.m */,
 			);
 			path = sample;
 			sourceTree = "<group>";
@@ -1361,6 +1366,7 @@
 				ABA7BCC4F2299658A6572FC6 /* TKTestMemberKeys.m in Sources */,
 				DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */,
 				4B3AD17B1F47660A00CCDA2C /* TKHasherTests.m in Sources */,
+				E50FA8EE1FB5281200018417 /* TKSampleBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

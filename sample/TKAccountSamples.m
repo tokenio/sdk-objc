@@ -10,23 +10,21 @@
 #import "TKTestBase.h"
 
 #import "TokenSdk.h"
+#import "TKSampleBase.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
 // samples keep working).
 
-@interface TKAccountSamples : TKTestBase
+@interface TKAccountSamples : TKSampleBase
 
 @end
 
 @implementation TKAccountSamples
 
 - (void)testGetAccounts {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *memberSync = [self createMember:tokenIOSync];
-    [memberSync linkAccounts:[self createBankAuthorization:memberSync]];
-    [memberSync linkAccounts:[self createBankAuthorization:memberSync]];
-    TKMember *member = memberSync.async;
+    [self.payerSync linkAccounts:[self createBankAuthorization:self.payerSync]];
+    TKMember *member = self.payerSync.async;
     NSMutableDictionary<NSString*, NSNumber*> *sums = [NSMutableDictionary dictionaryWithCapacity:10];
     
     // account loop begin snippet to include in docs
@@ -50,35 +48,29 @@
     // account loop done snippet to include in docs
     
     [self runUntilTrue:^ {
-        // assumes createBankAuthorization gives a million dollars
-        // NSNumber * dollars = sums[@"USD"];
-        // return ([dollars floatValue] > 1000001.0);
-        return ([sums[@"USD"] floatValue] > 1000001.0);
+        return (sums.count > 0);
     }];
 }
 
 - (void)testGetTransactions {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKAccountSync *payerAccountSync = [self createAccount:tokenIOSync];
-    TKAccountSync *payeeAccountSync = [self createAccount:tokenIOSync];
-    TKMemberSync *payerSync = payerAccountSync.member;
-    TKMember *payer = payerSync.async;
-    TKAccount *payerAccount = payerAccountSync.async;
     TransferEndpoint *destination = [TransferEndpoint message];
-    destination.account.token.accountId = payeeAccountSync.id;
-    destination.account.token.memberId = payeeAccountSync.member.id;
+    destination.account.token.accountId = self.payeeAccountSync.id;
+    destination.account.token.memberId = self.payeeSync.id;
     NSString *transactionId = nil;
     
     // generate some activity: create+endorse+redeem some transfer tokens
     for (int count = 0; count < 5; count++) {
-        TransferTokenBuilder *builder = [payerSync createTransferToken:100.00 + count currency:@"EUR"];
-        builder.accountId = payerAccountSync.id;
-        builder.redeemerMemberId = payerSync.id;
+        TransferTokenBuilder *builder = [self.payerSync createTransferToken:100.00 + count currency:@"EUR"];
+        builder.accountId = self.payerAccountSync.id;
+        builder.redeemerMemberId = self.payerSync.id;
         builder.destinations = @[destination];
         Token *transferToken = [builder execute];
-        [payerSync endorseToken:transferToken withKey:Key_Level_Standard];
-        transactionId =[payerSync redeemToken:transferToken].transactionId;
+        [self.payerSync endorseToken:transferToken withKey:Key_Level_Standard];
+        transactionId =[self.payerSync redeemToken:transferToken].transactionId;
     }
+    
+    TKMember *payer = self.payerSync.async;
+    TKAccount *payerAccount = self.payerAccountSync.async;
     
     __block int displayed = 0;
     void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
