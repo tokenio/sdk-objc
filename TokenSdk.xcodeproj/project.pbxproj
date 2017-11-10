@@ -628,8 +628,6 @@
 				8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */,
 				8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */,
 				2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */,
-				ABA7BBE1D84A8595492ACD29 /* TKTestKeyStore.m */,
-				ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */,
 				ABA7B1B1F23CEC0666D7679A /* TKTestMemberKeys.m */,
 				ABA7B94B414BB097D0BDE68B /* TKTestMemberKeys.h */,
 				DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */,
@@ -773,6 +771,8 @@
 		ABA7BFE70DA2E2ABED08CD7B /* security */ = {
 			isa = PBXGroup;
 			children = (
+				ABA7BBE1D84A8595492ACD29 /* TKTestKeyStore.m */,
+				ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */,
 				ABA7B7A013686B576B8A78D1 /* TKCrypto.h */,
 				ABA7BD2DB50F3EE8AD9C021B /* TKCryptoEngine.h */,
 				ABA7B851D0607130037BF768 /* TKCrypto.m */,
