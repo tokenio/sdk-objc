@@ -7,25 +7,15 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TKTestBase.h"
+#import "TKSampleBase.h"
 
-#import "TokenIOSync.h"
-#import "TokenIO.h"
-#import "TokenIOBuilder.h"
-#import "TKMember.h"
-#import "TKMemberSync.h"
-#import "TKAccount.h"
-#import "TKAccountSync.h"
-#import "TKUtil.h"
-
-#import "Account.pbobjc.h"
-#import "Blob.pbobjc.h"
+#import "TokenSdk.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
 // samples keep working).
 
-@interface TKTransferSamples : TKTestBase
+@interface TKTransferSamples : TKSampleBase
 
 @end
 
@@ -33,13 +23,8 @@
 
 - (void)testNotifyPaymentRequest {
     TokenIO *tokenIO = [self asyncSDK];
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *payee = [self createMember:tokenIOSync];
-    
-    // payer: all we need is the alias. but the notification fails
-    // if the recipient doesn't exist, so create...
-    Alias *payerAlias = [self generateAlias];
-    [tokenIOSync createMember:payerAlias];
+    TKMember *payee = self.payeeSync.async;
+    Alias *payerAlias = self.payerAlias;
     
     __block int waitingForPayment = false;
     
@@ -71,14 +56,10 @@
 }
 
 - (void)testCreateEndorseTransferToken {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *payerSync = [self createMember:tokenIOSync];
-    TKMember *payer = payerSync.async;
-    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[self createBankAuthorization:payerSync]][0];
-    TKAccount *payerAccount = payerAccountSync.async;
-    Alias *payeeAlias = [self generateAlias];
-    TKMemberSync *payeeSync = [tokenIOSync createMember:payeeAlias];
-    TKMember *payee = payeeSync.async;
+    TKMember *payer = self.payerSync.async;
+    TKAccount *payerAccount = self.payerAccountSync.async;
+    Alias *payeeAlias = self.payeeAlias;
+    TKMember *payee = self.payeeSync.async;
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
@@ -128,8 +109,8 @@
     __block Transfer *transfer = nil;
     
     // redeemToken begin snippet to include in docs
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     // There are a few ways to specify destination; here we use (fake) IBAN
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.sepa.iban = @"123";
     [payee getToken:transferToken.id_p
           onSuccess:^(Token *token) {
@@ -162,13 +143,9 @@
 }
 
 - (void)testCancelTransferToken {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *payerSync = [self createMember:tokenIOSync];
-    TKMember *payer = payerSync.async;
-    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[self createBankAuthorization:payerSync]][0];
-    TKAccount *payerAccount = payerAccountSync.async;
-    Alias *payeeAlias = [self generateAlias];
-    [tokenIOSync createMember:payeeAlias];
+    TKMember *payer = self.payerSync.async;
+    TKAccount *payerAccount = self.payerAccountSync.async;
+    Alias *payeeAlias = self.payeeAlias;
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
@@ -219,14 +196,10 @@
 }
 
 - (void)testTransferTokenWithBlob {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *payerSync = [self createMember:tokenIOSync];
-    TKMember *payer = payerSync.async;
-    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[self createBankAuthorization:payerSync]][0];
-    TKAccount *payerAccount = payerAccountSync.async;
-    Alias *payeeAlias = [self generateAlias];
-    TKMemberSync *payeeSync = [tokenIOSync createMember:payeeAlias];
-    TKMember *payee = payeeSync.async;
+    TKMember *payer = self.payerSync.async;
+    TKAccount *payerAccount = self.payerAccountSync.async;
+    Alias *payeeAlias = self.payeeAlias;
+    TKMember *payee = self.payeeSync.async;
     __block Token *transferToken = nil;
     __block BOOL gotBlob = false;
     
@@ -272,7 +245,7 @@
     [self runUntilTrue:^ {
         return (transferToken != nil);
     }];
-    [payerSync endorseToken:transferToken withKey:Key_Level_Standard];
+    [self.payerSync endorseToken:transferToken withKey:Key_Level_Standard];
     NSString *tokenId = transferToken.id_p;
     
     // getTokenBlob begin snippet to include in docs

@@ -7,29 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TKTestBase.h"
+#import "TKSampleBase.h"
 
 #import "TokenSdk.h"
 
-@interface TKAccessSamples : TKTestBase
+@interface TKAccessSamples : TKSampleBase
 
 @end
 
 @implementation TKAccessSamples
 
 -(void)testAccessTokens {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *grantorSync = [self createMember:tokenIOSync];
-    // we test getAccounts, so create an account to get:
-    Money *startingBalance = [Money message];
-    startingBalance.currency = @"EUR";
-    startingBalance.value = @"5678.00";
-    [grantorSync linkAccounts: [grantorSync createTestBankAccount:startingBalance]];
-    TKMember *grantor = grantorSync.async;
-    
-    Alias *granteeAlias = [self generateAlias];
-    TKMemberSync *granteeSync = [tokenIOSync createMember:granteeAlias];
-    TKMember *grantee = granteeSync.async;
+    TKMember *grantor = self.payerSync.async;
+    Alias *granteeAlias = self.payeeAlias;
+    TKMember *grantee = self.payeeSync.async;
   
     __block Token *accessToken = nil;
     
@@ -154,71 +145,16 @@
 }
 
 -(void)testReplaceNoEndorse {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    TKMemberSync *grantorSync = [self createMember:tokenIOSync];
-    // we test getAccounts, so create an account to get:
-    Money *startingBalance = [Money message];
-    startingBalance.currency = @"EUR";
-    startingBalance.value = @"5678.00";
-    [grantorSync linkAccounts: [grantorSync createTestBankAccount:startingBalance]];
-    TKMember *grantor = grantorSync.async;
-
-    Alias *granteeAlias = [self generateAlias];
-    [tokenIOSync createMember:granteeAlias];
-
-    __block Token *accessToken = nil;
+    TKMember *grantor = self.payerSync.async;
+    Alias *granteeAlias = self.payeeAlias;
 
     AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
     [access forAllAccounts];
-
-    [grantor createAccessToken:access
-                     onSuccess:^(Token *at) {
-                         // created (and uploaded) but not yet endorsed
-                         accessToken = at;
-                     } onError:^(NSError *e) {
-                         // Something went wrong.
-                         @throw [NSException exceptionWithName:@"GrantAccessException"
-                                                        reason:[e localizedFailureReason]
-                                                      userInfo:[e userInfo]];
-                     }];
-
-    [self runUntilTrue:^ {
-        return (accessToken != nil);
-    }];
-
-    [grantor endorseToken:accessToken
-                  withKey:Key_Level_Standard
-                onSuccess:^(TokenOperationResult *result) {
-                    accessToken = result.token;
-                } onError:^(NSError *e) {
-                    // Something went wrong.
-                    @throw [NSException exceptionWithName:@"EndorseAccessException"
-                                                   reason:[e localizedFailureReason]
-                                                 userInfo:[e userInfo]];
-                }];
-
-    __block Token *foundToken = nil;
-
-    [grantor getAccessTokensOffset:NULL
-                             limit:100
-                         onSuccess:^(PagedArray<Token *> *ary) {
-                             for (Token *at in ary.items) {
-                                 if ([at.payload.to.alias isEqual:granteeAlias]) {
-                                     foundToken = at;
-                                     break;
-                                 }
-                             }
-                         } onError:^(NSError* e) {
-                             // something went wrong
-                             @throw [NSException exceptionWithName:@"GetAccessTokensException"
-                                                            reason:[e localizedFailureReason]
-                                                          userInfo:[e userInfo]];
-                         }];
-
-    [self runUntilTrue:^ {
-        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
-    }];
-
+    
+    __block Token *accessToken = [self.payerSync createAccessToken:access];
+    [self.payerSync endorseToken:accessToken withKey:Key_Level_Standard];
+    Token *foundToken = accessToken;
+   
     // replaceNoEndorse begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
     [newAccess forAllBalances];

@@ -125,9 +125,4 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  */
 - (void)waitUntil:(void (^)(void))block;
 
-/**
- * Invokes grpc-using block. Runs until `condition` block returns true, hits exception, or times out.
- * @param condition block that returns a Boolean
- */
-- (void)runUntilTrue:(int (^)(void))condition;
 @end

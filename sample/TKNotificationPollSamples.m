@@ -7,28 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TKTestBase.h"
+#import "TKSampleBase.h"
 
 #import "TokenSdk.h"
 
-@interface TKNotificationPollSamples : TKTestBase
+@interface TKNotificationPollSamples : TKSampleBase
 
 @end
 
 @implementation TKNotificationPollSamples
 
 -(void)testNotificationPolling {
-    TokenIOSync *tokenIOSync = [[self sdkBuilder] buildSync];
-    Money *money = [Money message];
-    money.currency = @"EUR";
-    money.value = @"5678.90";
-    Alias *payerAlias = [self generateAlias];
-    TKMemberSync *payerSync = [tokenIOSync createMember:payerAlias];
-    TKAccountSync *payerAccountSync = [payerSync linkAccounts:[payerSync createTestBankAccount:money]][0];
-    Alias *payeeAlias = [self generateAlias];
-    TKMemberSync *payeeSync = [tokenIOSync createMember:payeeAlias];
-    [payeeSync linkAccounts:[payeeSync createTestBankAccount:money]];
-    TKMember *payee = payeeSync.async;
+    Alias *payerAlias = self.payerAlias;
+    Alias *payeeAlias = self.payeeAlias;
+    TKMember *payee = self.payeeSync.async;
     
     __block Subscriber *subscriber = nil;
     
@@ -50,20 +42,20 @@
     // generate a notification so that our polling finds something.
     // To do this, we create, endorse, and redeem a transfer.
     // Payee receives a notification.
-    TransferTokenBuilder *builder = [payerSync createTransferToken:100.99
-                                                          currency:@"USD"];
-    builder.accountId = payerAccountSync.id;
+    TransferTokenBuilder *builder = [self.payerSync createTransferToken:100.99
+                                                               currency:@"USD"];
+    builder.accountId = self.payerAccountSync.id;
     builder.redeemerAlias = payerAlias;
     builder.toAlias = payeeAlias;
     Token *token = [builder execute];
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = payee.id;
-    [payerSync endorseToken:token withKey:Key_Level_Standard];
-    [payerSync redeemToken:token amount:@(100.99) currency:@"USD" description:@"notify them" destination:destination];
+    [self.payerSync endorseToken:token withKey:Key_Level_Standard];
+    [self.payerSync redeemToken:token amount:@(100.99) currency:@"USD" description:@"notify them" destination:destination];
 
     // wait until we're sure notification has gone through...
     [self runUntilTrue:^ {
-        PagedArray<Notification *> *notifications = [payeeSync getNotificationsOffset:NULL limit:10];
+        PagedArray<Notification *> *notifications = [self.payeeSync getNotificationsOffset:NULL limit:10];
         return (notifications.items.count > 0);
     }];
 
