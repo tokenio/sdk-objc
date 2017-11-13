@@ -137,7 +137,6 @@
 		ABA7BC52AA8DD15FF1FFB518 /* TKCryptoEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BD2DB50F3EE8AD9C021B /* TKCryptoEngine.h */; };
 		ABA7BC619294DC52A32A3B4C /* TKUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6A0C915116837349E69 /* TKUtilTests.m */; };
 		ABA7BCB13ACFF2F1651FCDCC /* TKTokenCryptoEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B0BF7AD53767529A6884 /* TKTokenCryptoEngine.h */; };
-		ABA7BCC4F2299658A6572FC6 /* TKTestMemberKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B1B1F23CEC0666D7679A /* TKTestMemberKeys.m */; };
 		ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B600FA6B997FDF5087F1 /* test.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BA46096C815D0B7DBD95 /* TKClient.h */; };
 		ABA7BCE18E38B97DB6EAF624 /* TKTransferTokenRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6D4261319EE62D05C22 /* TKTransferTokenRedemptionTests.m */; };
@@ -628,8 +627,6 @@
 				8AC7AB811DB56E9B00FD4176 /* TKAccessTokenTests.m */,
 				8AC7AB831DB56EB800FD4176 /* TKAccessRedemptionTests.m */,
 				2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */,
-				ABA7B1B1F23CEC0666D7679A /* TKTestMemberKeys.m */,
-				ABA7B94B414BB097D0BDE68B /* TKTestMemberKeys.h */,
 				DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */,
 				DD0A775E1E422FE40058FB8A /* Localizable.strings */,
 				DD0A77611E4232E50058FB8A /* CustomTable.strings */,
@@ -779,6 +776,8 @@
 				ABA7B3106E548372FD0D7550 /* TKSignature.h */,
 				ABA7BA2D0C9061C551FFADE8 /* TKSignature.m */,
 				ABA7B9C8E5BD14D8350871C5 /* TKCryptoEngineFactory.h */,
+				ABA7B1B1F23CEC0666D7679A /* TKTestMemberKeys.m */,
+				ABA7B94B414BB097D0BDE68B /* TKTestMemberKeys.h */,
 				DDAA0D6E1E2582AE00E9BB09 /* secureenclave */,
 				ABA7B3DF8D3E75F2F0FA6D24 /* token */,
 			);
@@ -1363,7 +1362,6 @@
 				ABA7BCE18E38B97DB6EAF624 /* TKTransferTokenRedemptionTests.m in Sources */,
 				8AC7AB821DB56E9B00FD4176 /* TKAccessTokenTests.m in Sources */,
 				ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */,
-				ABA7BCC4F2299658A6572FC6 /* TKTestMemberKeys.m in Sources */,
 				DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */,
 				4B3AD17B1F47660A00CCDA2C /* TKHasherTests.m in Sources */,
 				E50FA8EE1FB5281200018417 /* TKSampleBase.m in Sources */,
