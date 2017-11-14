@@ -11,10 +11,7 @@
 /**
  * Helps building an access token payload.
  */
-@interface AccessTokenConfig : NSObject {
-    TokenPayload * payload;
-    NSMutableSet<AccessBody_Resource *> * resources;
-}
+@interface AccessTokenConfig : NSObject 
 
 /**
  * Creates a new instance with a provided redeemer alias (the 'payload.to' field).
