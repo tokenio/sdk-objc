@@ -11,27 +11,107 @@
 @class TransferEndpoint;
 @class Alias;
 
+/**
+ * Helper class that builds Transfer Tokens.
+ */
 @interface TransferTokenBuilder : NSObject
 
+/**
+ * Member, set by `create`.
+ */
 @property (readwrite) TKMember *member;
+
+/**
+ * Specify member ID of payer account.
+ */
 @property (readwrite) NSString *fromMemberId;
+
+/**
+ * Currency string, normally set by `create`.
+ */
 @property (readwrite) NSString *currency;
+
+/**
+ * Transfer amount, normally set by `create`.
+ */
 @property (readwrite) double lifetimeAmount;
+
+/**
+ * Specify how much redeemer can redeem each time.
+ * For example, to enable 12x 10€ payments, set lifetimeAmount to 120,
+ * chargeAmount to 10.
+ */
 @property (readwrite) double chargeAmount;
+
+/**
+ * Account ID from which to pay.
+ */
 @property (readwrite) NSString *accountId;
 @property (readwrite) BankAuthorization *bankAuthorization;
+
+/**
+ * Expiration time in ms since 1970.
+ */
 @property (readwrite) int64_t expiresAtMs;
+/**
+ * Effective-at time in ms since 1970.
+ */
 @property (readwrite) int64_t effectiveAtMs;
+
+/**
+ * Specify redeemer by alias.
+ */
 @property (readwrite) Alias *redeemerAlias;
+
+/**
+ * Specify redeemer by Member ID.
+ */
 @property (readwrite) NSString* redeemerMemberId;
+
+/**
+ * Specify payer by Alias.
+ */
 @property (readwrite) Alias *fromAlias;
+
+/**
+ * Specify payee by Alias.
+ */
+
 @property (readwrite) Alias *toAlias;
+
+/**
+ * Specify payee by Member ID.
+ */
 @property (readwrite) NSString *toMemberId;
+
+/**
+ * Specify description
+ */
 @property (readwrite) NSString *descr;
+
+/**
+ * Fees, FX
+ */
 @property (readwrite) Pricing *pricing;
+
+/**
+ * Specify purpose of payment.
+ */
 @property (readwrite) PurposeOfPayment purposeOfPayment;
+
+/**
+ * Specify destination bank accounts.
+ */
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
+
+/**
+ * Attach "files"
+ */
 @property (readwrite) NSArray<Attachment*> *attachments;
+
+/**
+ * Specify reference ID. If not set, the Token system chooses a random one.
+ */
 @property (readwrite) NSString *refId;
 
 /**
