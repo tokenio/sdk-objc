@@ -16,24 +16,16 @@
  */
 @interface TransferTokenBuilder : NSObject
 
-/**
- * Member, set by `create`.
- */
+/// Member, normally set by `create`.
 @property (readwrite) TKMember *member;
 
-/**
- * Specify member ID of payer account.
- */
+/// Specify member ID of payer account.
 @property (readwrite) NSString *fromMemberId;
 
-/**
- * Currency string, normally set by `create`.
- */
+/// Currency string, normally set by `create`.
 @property (readwrite) NSString *currency;
 
-/**
- * Transfer amount, normally set by `create`.
- */
+/// Transfer amount, normally set by `create`.
 @property (readwrite) double lifetimeAmount;
 
 /**
@@ -43,75 +35,49 @@
  */
 @property (readwrite) double chargeAmount;
 
-/**
- * Account ID from which to pay.
- */
+/// Account ID from which to pay.
 @property (readwrite) NSString *accountId;
+
+/// Bank authorization for payment (useful if not paying from linked account)
 @property (readwrite) BankAuthorization *bankAuthorization;
 
-/**
- * Expiration time in ms since 1970.
- */
+/// Expiration time in ms since 1970.
 @property (readwrite) int64_t expiresAtMs;
-/**
- * Effective-at time in ms since 1970.
- */
+
+/// Effective-at time in ms since 1970.
 @property (readwrite) int64_t effectiveAtMs;
 
-/**
- * Specify redeemer by alias.
- */
+/// Specify redeemer by alias.
 @property (readwrite) Alias *redeemerAlias;
 
-/**
- * Specify redeemer by Member ID.
- */
+/// Specify redeemer by Member ID.
 @property (readwrite) NSString* redeemerMemberId;
 
-/**
- * Specify payer by Alias.
- */
+/// Specify payer by Alias.
 @property (readwrite) Alias *fromAlias;
 
-/**
- * Specify payee by Alias.
- */
-
+/// Specify payee by Alias.
 @property (readwrite) Alias *toAlias;
 
-/**
- * Specify payee by Member ID.
- */
+/// Specify payee by Member ID.
 @property (readwrite) NSString *toMemberId;
 
-/**
- * Specify description
- */
+/// Specify description
 @property (readwrite) NSString *descr;
 
-/**
- * Fees, FX
- */
+/// Fees, FX
 @property (readwrite) Pricing *pricing;
 
-/**
- * Specify purpose of payment.
- */
+/// Specify purpose of payment.
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 
-/**
- * Specify destination bank accounts.
- */
+/// Specify destination bank accounts.
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 
-/**
- * Attach "files"
- */
+/// Attach "files"
 @property (readwrite) NSArray<Attachment*> *attachments;
 
-/**
- * Specify reference ID. If not set, the Token system chooses a random one.
- */
+/// Specify reference ID. If not set, the Token system chooses a random one.
 @property (readwrite) NSString *refId;
 
 /**

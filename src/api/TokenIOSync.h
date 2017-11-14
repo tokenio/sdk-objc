@@ -25,6 +25,7 @@
  */
 @interface TokenIOSync : NSObject
 
+/// Asynchronous API.
 @property (readonly, retain) TokenIO *async;
 
 /**
