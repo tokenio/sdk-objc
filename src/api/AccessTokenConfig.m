@@ -7,7 +7,10 @@
 
 #import "AccessTokenConfig.h"
 
-@implementation AccessTokenConfig
+@implementation AccessTokenConfig {
+    TokenPayload * payload;
+    NSMutableSet<AccessBody_Resource *> * resources;
+}
 
 + (AccessTokenConfig *)create:(Alias *)redeemerAlias {
     return [[AccessTokenConfig alloc] initWithRedeemer:redeemerAlias];
