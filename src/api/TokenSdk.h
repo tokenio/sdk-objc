@@ -15,11 +15,11 @@
 #import "TKBalance.h"
 #import "TKMemberSync.h"
 #import "TKMember.h"
+#import "TKTestKeyStore.h"
 #import "TKTypedef.h"
 #import "TokenIOSync.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
-
 
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
