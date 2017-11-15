@@ -20,7 +20,6 @@
 /**
  * Initializes the member recovery manager.
  *
- * @param unauthenticatedClient unauthenticatedClient for recovery process
  * @param cryptoEngineFactory crypto module to use
  * @return the member recovery manager
  */
