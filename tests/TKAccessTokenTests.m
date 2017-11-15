@@ -58,9 +58,12 @@
 
 - (void)testLookupTokens {
     [self run: ^(TokenIOSync *tokenIO) {
-        PagedArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
-        XCTAssertEqual(lookedUp.items.count, 1);
-        XCTAssertNotNil(lookedUp.offset);
+        [grantor endorseToken:token withKey:Key_Level_Standard];
+        [self waitUntil:^{
+            PagedArray<Token *> *lookedUp = [grantor getAccessTokensOffset:NULL limit:100];
+            [self check:@"Access Token count" condition:lookedUp.items.count == 1];
+            [self check:@"Offset is present" condition:lookedUp.offset != nil];
+        }];
     }];
 }
 
