@@ -9,8 +9,10 @@
 #import <XCTest/XCTest.h>
 
 #import "TokenSdk.h"
+#import "DeviceInfo.h"
 #import "TKSampleBase.h"
 #import "TKTestKeyStore.h"
+#import "TKLogManager.h" // TODO clean up
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
@@ -53,7 +55,7 @@
     }];
     // createMember done snippet to include in docs
     
-    [self runUntilTrue: ^{
+    [self runUntilTrue:^ {
         return (newMember != nil);
     }];
 }
@@ -66,7 +68,7 @@
     } onError:^(NSError *e) {
         @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
     }];
-    [self runUntilTrue: ^{
+    [self runUntilTrue:^ {
         return (member != nil);
     }];
     __block TKAccount *account = nil;
@@ -96,7 +98,7 @@
     // linkTestBankAccount done snippet to include in docs
     
     // make sure it worked
-    [self runUntilTrue: ^{
+    [self runUntilTrue:^ {
         return (account != nil);
     }];
 }
@@ -124,7 +126,7 @@
         // Something went wrong.
         @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
     }];
-    [self runUntilTrue: ^{
+    [self runUntilTrue:^ {
         return (member != nil);
     }];
     NSString *memberId = member.id;
@@ -146,8 +148,73 @@
     // loginMember done snippet to include in docs
     
     // make sure it worked:
-    [self runUntilTrue: ^{
+    [self runUntilTrue:^ {
         return (loggedInMember != nil);
+    }];
+}
+
+-(void)testProvisionDevice {
+    // we have two sdks, one for our new device, one for our "main" device.
+    // each needs its own keystore. provisionDevice _replaces_ keys.
+    TokenIOBuilder *builder = [self sdkBuilder];
+    builder.keyStore = [[TKTestKeyStore alloc] init];
+    TokenIO *tokenIO = [builder buildAsync];
+    Alias *memberAlias = self.payerAlias;
+    __block Key *sentKey = nil;
+    
+    // provisionNotify begin snippet to include in docs
+    [tokenIO provisionDevice:memberAlias
+                   onSuccess:^(DeviceInfo *di) {
+                       for (Key* k in di.keys) {
+                           if (k.level == Key_Level_Low) {
+                               [tokenIO notifyAddKey:memberAlias
+                                             keyName:@"Sample"
+                                                 key:k
+                                           onSuccess:^() {
+                                               sentKey = k;
+                                           } onError:^(NSError *e) {
+                                               @throw [NSException exceptionWithName:@"NotifyFailedException"
+                                                                              reason:[e localizedFailureReason]
+                                                                            userInfo:[e userInfo]];
+                                           }];
+                               break;
+                           }
+                       }
+                   } onError:^(NSError *e) {
+                       @throw [NSException exceptionWithName:@"ProvisionDeviceFailedException"
+                                                      reason:[e localizedFailureReason]
+                                                    userInfo:[e userInfo]];
+                   }];
+    // provisionNotify done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (sentKey != nil);
+    }];
+    
+    [self.payerSync approveKey:sentKey];
+    
+    __block TKMember *member = nil;
+    
+    // provisionLogin begin snippet to include in docs
+    [tokenIO getMemberId:memberAlias
+               onSuccess:^(NSString *id) {
+                   [tokenIO loginMember:id
+                              onSuccess:^(TKMember *m) {
+                                  member = m;
+                              } onError:^(NSError *e) {
+                                  @throw [NSException exceptionWithName:@"LoginFailedException"
+                                                                 reason:[e localizedFailureReason]
+                                                               userInfo:[e userInfo]];
+                              }];
+               } onError:^(NSError *e) {
+                   @throw [NSException exceptionWithName:@"FindMemberFailedException"
+                                                  reason:[e localizedFailureReason]
+                                                userInfo:[e userInfo]];
+               }];
+    // provisionLogin done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (member != nil);
     }];
 }
 @end
