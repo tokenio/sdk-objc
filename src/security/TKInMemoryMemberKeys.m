@@ -3,12 +3,12 @@
 // Copyright (c) 2017 Token Inc. All rights reserved.
 //
 
-#import "TKTestMemberKeys.h"
+#import "TKInMemoryMemberKeys.h"
 #import "TKInMemoryKeyStore.h"
 #import "TKTokenSecretKey.h"
 
 
-@implementation TKTestMemberKeys {
+@implementation TKInMemoryMemberKeys {
     NSMutableDictionary<NSString*, TKTokenSecretKey*> *allKeys;
     NSMutableDictionary<NSNumber*, NSString*> *currentKeys;
 }

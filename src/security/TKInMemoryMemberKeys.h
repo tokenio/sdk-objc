@@ -8,7 +8,7 @@
 @class TKTokenSecretKey;
 
 
-@interface TKTestMemberKeys : NSObject
+@interface TKInMemoryMemberKeys : NSObject
 
 - (void)addKey:(TKTokenSecretKey *)key;
 
