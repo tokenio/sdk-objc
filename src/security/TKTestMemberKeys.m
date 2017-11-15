@@ -4,7 +4,7 @@
 //
 
 #import "TKTestMemberKeys.h"
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKTokenSecretKey.h"
 
 

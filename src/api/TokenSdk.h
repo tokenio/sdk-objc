@@ -15,7 +15,7 @@
 #import "TKBalance.h"
 #import "TKMemberSync.h"
 #import "TKMember.h"
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKTypedef.h"
 #import "TokenIOSync.h"
 #import "TokenIO.h"

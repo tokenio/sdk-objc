@@ -118,7 +118,7 @@
 		ABA7B841C5B557B7A8C108DE /* TKTestMemberKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B94B414BB097D0BDE68B /* TKTestMemberKeys.h */; };
 		ABA7B847267CDA906A218BBB /* ge.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B25C7C21BC82E0F913A8 /* ge.c */; };
 		ABA7B84C3E4141392B53FC47 /* TKAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BFD0B8AF4A53D14F385F /* TKAccount.h */; };
-		ABA7B87D04B88CBC531F9CD6 /* TKTestKeyStore.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BBE1D84A8595492ACD29 /* TKTestKeyStore.m */; };
+		ABA7B87D04B88CBC531F9CD6 /* TKInMemoryKeyStore.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BBE1D84A8595492ACD29 /* TKInMemoryKeyStore.m */; };
 		ABA7B89E47011348D075E22B /* TKTokenCryptoEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B420A006B6A5899509EA /* TKTokenCryptoEngineFactory.m */; };
 		ABA7B932650CECAE9F596A92 /* TokenIO.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7BADCF833317256FF6F8A /* TokenIO.h */; };
 		ABA7BA3D671A14C6A6411B2D /* TKJsonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BF9EEFA4C28ABFD5834B /* TKJsonTests.m */; };
@@ -142,7 +142,7 @@
 		ABA7BCE18E38B97DB6EAF624 /* TKTransferTokenRedemptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6D4261319EE62D05C22 /* TKTransferTokenRedemptionTests.m */; };
 		ABA7BCE41707C6293B177ABE /* TKTokenSecretKey.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B67AE682FE5BE73D1AF6 /* TKTokenSecretKey.m */; };
 		ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B75329B7D39384598938 /* verify.c */; };
-		ABA7BD2C2D2BD9EBB3EDA611 /* TKTestKeyStore.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */; };
+		ABA7BD2C2D2BD9EBB3EDA611 /* TKInMemoryKeyStore.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B61BA3F999180B8AE872 /* TKInMemoryKeyStore.h */; };
 		ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B3A49F325BBB3B506D1F /* TKCryptoTests.m */; };
 		ABA7BE6514B3C5CC562C8A32 /* TKTokenCryptoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BD4911C332C238D22C2D /* TKTokenCryptoEngine.m */; };
 		ABA7BE7B3FD5403FD18AD799 /* TKRpc.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA7B9AEBEC4864DE6D12D90 /* TKRpc.h */; };
@@ -324,7 +324,7 @@
 		ABA7B5B2892CFF8B1E4F0EE0 /* TKMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMember.m; sourceTree = "<group>"; };
 		ABA7B5B3D15AD634892D98D4 /* TokenIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenIO.m; sourceTree = "<group>"; };
 		ABA7B600FA6B997FDF5087F1 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestKeyStore.h; sourceTree = "<group>"; };
+		ABA7B61BA3F999180B8AE872 /* TKInMemoryKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKInMemoryKeyStore.h; sourceTree = "<group>"; };
 		ABA7B67AE682FE5BE73D1AF6 /* TKTokenSecretKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenSecretKey.m; sourceTree = "<group>"; };
 		ABA7B6A0C915116837349E69 /* TKUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKUtilTests.m; sourceTree = "<group>"; };
 		ABA7B6D4261319EE62D05C22 /* TKTransferTokenRedemptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTransferTokenRedemptionTests.m; sourceTree = "<group>"; };
@@ -357,7 +357,7 @@
 		ABA7BBBA445C30817501F927 /* TKMemberSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberSync.h; sourceTree = "<group>"; };
 		ABA7BBCBD8380F94FCC8B8A4 /* TKRpcLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRpcLog.h; sourceTree = "<group>"; };
 		ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTypedef.h; sourceTree = "<group>"; };
-		ABA7BBE1D84A8595492ACD29 /* TKTestKeyStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestKeyStore.m; sourceTree = "<group>"; };
+		ABA7BBE1D84A8595492ACD29 /* TKInMemoryKeyStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKInMemoryKeyStore.m; sourceTree = "<group>"; };
 		ABA7BC1286CBA07E69B30D14 /* fixedint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedint.h; sourceTree = "<group>"; };
 		ABA7BC1E54BAFDC11AA75D6D /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha512.c; sourceTree = "<group>"; };
 		ABA7BC2013ED8025D15A3E18 /* seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = seed.c; sourceTree = "<group>"; };
@@ -768,8 +768,8 @@
 		ABA7BFE70DA2E2ABED08CD7B /* security */ = {
 			isa = PBXGroup;
 			children = (
-				ABA7BBE1D84A8595492ACD29 /* TKTestKeyStore.m */,
-				ABA7B61BA3F999180B8AE872 /* TKTestKeyStore.h */,
+				ABA7BBE1D84A8595492ACD29 /* TKInMemoryKeyStore.m */,
+				ABA7B61BA3F999180B8AE872 /* TKInMemoryKeyStore.h */,
 				ABA7B7A013686B576B8A78D1 /* TKCrypto.h */,
 				ABA7BD2DB50F3EE8AD9C021B /* TKCryptoEngine.h */,
 				ABA7B851D0607130037BF768 /* TKCrypto.m */,
@@ -937,7 +937,7 @@
 				ABA7BC52AA8DD15FF1FFB518 /* TKCryptoEngine.h in Headers */,
 				ABA7B5F2312896189ADFC428 /* TKSignature.h in Headers */,
 				ABA7B4474AC3701F6EC8A294 /* TKCryptoEngineFactory.h in Headers */,
-				ABA7BD2C2D2BD9EBB3EDA611 /* TKTestKeyStore.h in Headers */,
+				ABA7BD2C2D2BD9EBB3EDA611 /* TKInMemoryKeyStore.h in Headers */,
 				ABA7BCB13ACFF2F1651FCDCC /* TKTokenCryptoEngine.h in Headers */,
 				FAE918CB1F17E70B001692CF /* Fank.pbobjc.h in Headers */,
 				ABA7BB283641B72F79A6D91F /* TKTokenSecretKey.h in Headers */,
@@ -1320,7 +1320,7 @@
 				ABA7BB461A7F37718AC111FC /* TKRpc.m in Sources */,
 				ABA7B72C231296BBE85D2752 /* TKCrypto.m in Sources */,
 				ABA7BAE5F33E9FD2D6D42E93 /* TKSignature.m in Sources */,
-				ABA7B87D04B88CBC531F9CD6 /* TKTestKeyStore.m in Sources */,
+				ABA7B87D04B88CBC531F9CD6 /* TKInMemoryKeyStore.m in Sources */,
 				FAE918CE1F17E70B001692CF /* Fank.pbrpc.m in Sources */,
 				ABA7BCE41707C6293B177ABE /* TKTokenSecretKey.m in Sources */,
 				ABA7BE6514B3C5CC562C8A32 /* TKTokenCryptoEngine.m in Sources */,

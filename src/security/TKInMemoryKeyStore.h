@@ -7,5 +7,5 @@
 #import "TKKeyStore.h"
 
 
-@interface TKTestKeyStore : NSObject<TKKeyStore>
+@interface TKInMemoryKeyStore : NSObject<TKKeyStore>
 @end

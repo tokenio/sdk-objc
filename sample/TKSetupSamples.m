@@ -10,7 +10,7 @@
 
 #import "TokenSdk.h"
 #import "TKSampleBase.h"
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
@@ -110,7 +110,7 @@
     // We'll create a member with one member and log in with another;
     // we'll have them use the same keystore so that they can share keys
     // (as would happen if they used the "regular" keystore).
-    id<TKKeyStore> store = [[TKTestKeyStore alloc] init];
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
     TokenIOBuilder *beforeBuilder = [self sdkBuilder];
     beforeBuilder.keyStore = store;
     TokenIO *beforeTokenIO = [beforeBuilder buildAsync];
