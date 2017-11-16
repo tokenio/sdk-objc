@@ -154,8 +154,8 @@
 }
 
 -(void)testProvisionDevice {
-    // we have two sdks, one for our new device, one for our "main" device.
-    // each needs its own keystore. provisionDevice _replaces_ keys.
+    // We have two sdks, one for our new device, one for our "main" device.
+    // Each needs its own keystore: provisionDevice _replaces_ keys.
     TokenIOBuilder *builder = [self sdkBuilder];
     builder.keyStore = [[TKTestKeyStore alloc] init];
     TokenIO *tokenIO = [builder buildAsync];
