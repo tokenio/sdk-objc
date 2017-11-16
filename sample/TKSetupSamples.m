@@ -12,7 +12,6 @@
 #import "DeviceInfo.h"
 #import "TKSampleBase.h"
 #import "TKTestKeyStore.h"
-#import "TKLogManager.h" // TODO clean up
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
