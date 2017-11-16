@@ -83,28 +83,20 @@
     
     __block Token *foundToken = nil;
     
-    // find token begin snippet to include in docs
-    [grantor getAccessTokensOffset:NULL
-                             limit:100
-                         onSuccess:^(PagedArray<Token *> *ary) {
-                             for (Token *at in ary.items) {
-                                 if ([at.payload.to.alias isEqual:granteeAlias]) {
-                                     foundToken = at;
-                                     break;
-                                 }
-                             }
-                         } onError:^(NSError* e) {
-                               // something went wrong
-                               @throw [NSException exceptionWithName:@"GetAccessTokensException"
-                                                              reason:[e localizedFailureReason]
-                                                            userInfo:[e userInfo]];
-                           }];
-    // find token done snippet to include in docs
-    
     [self runUntilTrue:^ {
-        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
-    }];
+        // find token begin snippet to include in docs
+        PagedArray<Token *> *ary = [self.payerSync getAccessTokensOffset:NULL limit:100];
+        for (Token *at in ary.items) {
+            if ([at.payload.to.alias isEqual:granteeAlias]) {
+                foundToken = at;
+                break;
+            }
+        }
+        // find token done snippet to include in docs
     
+        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
+    } backOffTimeMs:1000];
+
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
     [newAccess forAllBalances];
