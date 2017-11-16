@@ -156,7 +156,7 @@
     // We have two sdks, one for our new device, one for our "main" device.
     // Each needs its own keystore: provisionDevice _replaces_ keys.
     TokenIOBuilder *builder = [self sdkBuilder];
-    builder.keyStore = [[TKTestKeyStore alloc] init];
+    builder.keyStore = [[TKInMemoryKeyStore alloc] init];
     TokenIO *tokenIO = [builder buildAsync];
     Alias *memberAlias = self.payerAlias;
     __block Key *sentKey = nil;
