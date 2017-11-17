@@ -602,6 +602,14 @@
     }];
 }
 
+- (NSArray<Device *> *)getPairedDevices {
+    TKRpcSyncCall<NSArray<Device *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getPairedDevices:call.onSuccess
+                             onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {
