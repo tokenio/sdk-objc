@@ -240,7 +240,13 @@
                     // TransferToken exists and has been uploaded.
                     // Payee cannot see blob until payer endorses token (not shown here).
                     transferToken = t;
-                }   onError:^(NSError *e) {
+                } onAuthRequired:^(ExternalAuthorizationDetails *details) {
+                    // External authorization is required. Get the bank authorization
+                    // from the url in details.
+                    @throw [NSException exceptionWithName:@"ExternalAuthorizationException"
+                                                   reason:@"External authorization is required."
+                                                 userInfo:nil];
+                } onError:^(NSError *e) {
                     @throw [NSException exceptionWithName:@"BuilderExecuteException"
                                                    reason:[e localizedFailureReason]
                                                  userInfo:[e userInfo]];
