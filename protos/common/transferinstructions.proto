@@ -50,5 +50,6 @@ message TransferInstructions {
     PaymentContext payment_context = 2;          // Optional payment context
     string merchant_category_code = 3;           // Optional ISO 18245 Merchant Category Code (MCC)
     string merchant_customer_id = 4;             // Optional Unique merchant customer identifier
+    io.token.proto.common.address.Address delivery_address = 5; // Optional delivery address
   }
 }

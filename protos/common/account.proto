@@ -43,6 +43,11 @@ message BankAccount {
     io.token.proto.banklink.BankAuthorization authorization = 1;
   }
 
+  // Source account managed by a coop bank
+  message Bank {
+    string bank_id = 1;
+  }
+
   // SWIFT transfer
   message Swift {
     string bic = 1;
@@ -66,5 +71,6 @@ message BankAccount {
     Swift swift = 3;
     Sepa sepa = 4;
     Ach ach = 5;
+    Bank bank = 6;
   }
 }

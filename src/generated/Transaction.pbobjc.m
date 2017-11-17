@@ -151,6 +151,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
 @dynamic description_p;
 @dynamic tokenId;
 @dynamic tokenTransferId;
+@dynamic createdAtMs;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -161,6 +162,7 @@ typedef struct Transaction__storage_ {
   NSString *description_p;
   NSString *tokenId;
   NSString *tokenTransferId;
+  int64_t createdAtMs;
 } Transaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -231,6 +233,15 @@ typedef struct Transaction__storage_ {
         .offset = (uint32_t)offsetof(Transaction__storage_, tokenTransferId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Transaction_FieldNumber_CreatedAtMs,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(Transaction__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

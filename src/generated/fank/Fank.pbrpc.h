@@ -5,10 +5,29 @@
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
-#import "google/api/Annotations.pbobjc.h"
-#import "Money.pbobjc.h"
-#import "Banklink.pbobjc.h"
-#import "Notification.pbobjc.h"
+#if GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  @class BankAuthorization;
+  @class FankAddAccountRequest;
+  @class FankAddAccountResponse;
+  @class FankAddClientRequest;
+  @class FankAddClientResponse;
+  @class FankAuthorizeLinkAccountsRequest;
+  @class FankGetAccountRequest;
+  @class FankGetAccountResponse;
+  @class FankGetAccountsRequest;
+  @class FankGetAccountsResponse;
+  @class FankGetClientRequest;
+  @class FankGetClientResponse;
+  @class FankGetNotificationRequest;
+  @class FankGetNotificationResponse;
+  @class FankGetNotificationsRequest;
+  @class FankGetNotificationsResponse;
+#else
+  #import "google/api/Annotations.pbobjc.h"
+  #import "Money.pbobjc.h"
+  #import "Banklink.pbobjc.h"
+  #import "Notification.pbobjc.h"
+#endif
 
 
 NS_ASSUME_NONNULL_BEGIN

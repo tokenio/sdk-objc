@@ -36,6 +36,16 @@
  * after the sample code, runUntilTrue to assert side effect happens.
  *
  * @param condition block that returns a Boolean
+ * @param backOffTimeMs how long to wait between invocations of `condition`
+ */
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs;
+
+/**
+ * Invokes grpc-using block. Runs until `condition` block returns true,
+ * hits exception, or times out. Does not sleep between invocations of
+ * `condition`.
+ *
+ * @param condition block that returns a Boolean
  */
 - (void)runUntilTrue:(int (^)(void))condition;
 

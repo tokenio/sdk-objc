@@ -438,8 +438,9 @@
 }
 
 - (void)createTransferToken:(TokenPayload *)payload
-          onSuccess:(OnSuccessWithToken)onSuccess
-            onError:(OnError)onError {
+                  onSuccess:(OnSuccessWithToken)onSuccess
+             onAuthRequired:(OnAuthRequired)onAuthRequired
+                    onError:(OnError)onError {
     CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
     RpcLogStart(request);
@@ -451,6 +452,8 @@
                                    RpcLogCompleted(response);
                                    if (response.status == TransferTokenStatus_Success) {
                                        onSuccess(response.token);
+                                   } else if (response.status == TransferTokenStatus_FailureExternalAuthorizationRequired) {
+                                       onAuthRequired(response.authorizationDetails);
                                    } else {
                                        onError([NSError
                                                 errorFromTransferTokenStatus:response.status]);
@@ -1241,6 +1244,27 @@
                                }
                            }];
     
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)getPairedDevices:(OnSuccessWithPairedDevices)onSuccess
+                 onError:(OnError)onError {
+    GetPairedDevicesRequest *request = [GetPairedDevicesRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToGetPairedDevicesWithRequest:request
+                           handler:^(GetPairedDevicesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.devicesArray);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+
     [self _startCall:call
          withRequest:request
              onError:onError];

@@ -636,6 +636,13 @@
                     onSuccess:onSuccess
                       onError:onError];
 }
+
+- (void)getPairedDevices:(OnSuccessWithPairedDevices)onSuccess
+                 onError:(OnError)onError {
+    [client getPairedDevices:onSuccess
+                     onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

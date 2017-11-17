@@ -52,6 +52,7 @@ typedef enum {
 
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details;
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error;
++ (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details;
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
 

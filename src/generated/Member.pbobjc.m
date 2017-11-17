@@ -1132,6 +1132,60 @@ typedef struct Profile__storage_ {
 
 @end
 
+#pragma mark - Device
+
+@implementation Device
+
+@dynamic name;
+@dynamic hasKey, key;
+
+typedef struct Device__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *name;
+  Key *key;
+} Device__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "name",
+        .dataTypeSpecific.className = NULL,
+        .number = Device_FieldNumber_Name,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Device__storage_, name),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "key",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = Device_FieldNumber_Key,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Device__storage_, key),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Device class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Device__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

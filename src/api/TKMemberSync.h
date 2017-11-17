@@ -535,4 +535,11 @@
                  withType:(NSString *)type
                  withName:(NSString *)name
                  withData:(NSData *)data;
+
+/**
+ * Returns a list of paired devices for the current user
+ *
+ * @return list of paired devices
+ */
+- (NSArray<Device *> *)getPairedDevices;
 @end

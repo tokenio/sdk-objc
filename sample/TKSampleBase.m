@@ -33,6 +33,10 @@
 }
 
 - (void)runUntilTrue:(int (^)(void))condition {
+    [self runUntilTrue:condition backOffTimeMs:0];
+}
+
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
     while(true) {
         if (condition()) {
@@ -40,6 +44,7 @@
         }
         NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
         if (now - start < 20) {
+            usleep(1000 * backOffTimeMs);
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
         } else {
