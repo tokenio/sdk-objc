@@ -264,7 +264,7 @@ typedef GPB_ENUM(SealedMessage_RsaMethod_FieldNumber) {
 };
 
 /**
- * The message is encrypted using the public key of the receipient.
+ * The message is encrypted using the public key of the recipient.
  * The message can be decrypted only with the corresponding private key.
  **/
 @interface SealedMessage_RsaMethod : GPBMessage
@@ -296,7 +296,7 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
 
 /**
  * The message is encrypted with a self-generated symmetric key.
- * That key is encrypted using the public key of the receipient and
+ * That key is encrypted using the public key of the recipient and
  * can only be decrypted with the corresponding private key.
  **/
 @interface SealedMessage_RsaAesMethod : GPBMessage

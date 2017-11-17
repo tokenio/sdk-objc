@@ -752,6 +752,79 @@ typedef struct RetryVerificationResponse__storage_ {
 
 @end
 
+#pragma mark - GetPairedDevicesRequest
+
+@implementation GetPairedDevicesRequest
+
+
+typedef struct GetPairedDevicesRequest__storage_ {
+  uint32_t _has_storage_[1];
+} GetPairedDevicesRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetPairedDevicesRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(GetPairedDevicesRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetPairedDevicesResponse
+
+@implementation GetPairedDevicesResponse
+
+@dynamic devicesArray, devicesArray_Count;
+
+typedef struct GetPairedDevicesResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *devicesArray;
+} GetPairedDevicesResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "devicesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Device),
+        .number = GetPairedDevicesResponse_FieldNumber_DevicesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetPairedDevicesResponse__storage_, devicesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetPairedDevicesResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetPairedDevicesResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - BeginRecoveryRequest
 
 @implementation BeginRecoveryRequest
@@ -4091,11 +4164,12 @@ GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Any\000From\000To\000";
+        "Any\000From\000To\000Issuer\000";
     static const int32_t values[] = {
         GetTokensRequest_TokenFilter_Role_Any,
         GetTokensRequest_TokenFilter_Role_From,
         GetTokensRequest_TokenFilter_Role_To,
+        GetTokensRequest_TokenFilter_Role_Issuer,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GetTokensRequest_TokenFilter_Role)
@@ -4115,6 +4189,7 @@ BOOL GetTokensRequest_TokenFilter_Role_IsValidValue(int32_t value__) {
     case GetTokensRequest_TokenFilter_Role_Any:
     case GetTokensRequest_TokenFilter_Role_From:
     case GetTokensRequest_TokenFilter_Role_To:
+    case GetTokensRequest_TokenFilter_Role_Issuer:
       return YES;
     default:
       return NO;

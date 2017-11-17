@@ -130,3 +130,8 @@ enum ProfilePictureSize {
   MEDIUM = 3;
   LARGE = 4;
 }
+
+message Device {
+  string name = 1;
+  io.token.proto.common.security.Key key = 2;
+}

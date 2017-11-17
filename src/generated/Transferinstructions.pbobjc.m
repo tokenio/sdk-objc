@@ -319,6 +319,7 @@ typedef struct TransferInstructions__storage_ {
 @dynamic paymentContext;
 @dynamic merchantCategoryCode;
 @dynamic merchantCustomerId;
+@dynamic hasDeliveryAddress, deliveryAddress;
 
 typedef struct TransferInstructions_Metadata__storage_ {
   uint32_t _has_storage_[1];
@@ -326,6 +327,7 @@ typedef struct TransferInstructions_Metadata__storage_ {
   PaymentContext paymentContext;
   NSString *merchantCategoryCode;
   NSString *merchantCustomerId;
+  Address *deliveryAddress;
 } TransferInstructions_Metadata__storage_;
 
 // This method is threadsafe because it is initially called
@@ -369,6 +371,15 @@ typedef struct TransferInstructions_Metadata__storage_ {
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, merchantCustomerId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "deliveryAddress",
+        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .number = TransferInstructions_Metadata_FieldNumber_DeliveryAddress,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, deliveryAddress),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

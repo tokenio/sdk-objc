@@ -51,7 +51,7 @@ message SealedMessage {
   message NoopMethod {
   }
 
-  // The message is encrypted using the public key of the receipient.
+  // The message is encrypted using the public key of the recipient.
   // The message can be decrypted only with the corresponding private key.
   message RsaMethod {
     string key_id = 1;                // The id of the key used for encryption
@@ -61,7 +61,7 @@ message SealedMessage {
   }
 
   // The message is encrypted with a self-generated symmetric key.
-  // That key is encrypted using the public key of the receipient and
+  // That key is encrypted using the public key of the recipient and
   // can only be decrypted with the corresponding private key.
   message RsaAesMethod {
     string rsa_key_id = 1;            // The id of the key used for encryption
