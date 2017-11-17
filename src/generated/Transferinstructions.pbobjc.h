@@ -180,6 +180,7 @@ typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
   TransferInstructions_Metadata_FieldNumber_PaymentContext = 2,
   TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode = 3,
   TransferInstructions_Metadata_FieldNumber_MerchantCustomerId = 4,
+  TransferInstructions_Metadata_FieldNumber_DeliveryAddress = 5,
 };
 
 @interface TransferInstructions_Metadata : GPBMessage
@@ -195,6 +196,11 @@ typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
 
 /** Optional Unique merchant customer identifier */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *merchantCustomerId;
+
+/** Optional delivery address */
+@property(nonatomic, readwrite, strong, null_resettable) Address *deliveryAddress;
+/** Test to see if @c deliveryAddress has been set. */
+@property(nonatomic, readwrite) BOOL hasDeliveryAddress;
 
 @end
 

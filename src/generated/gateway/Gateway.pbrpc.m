@@ -169,6 +169,18 @@
              responseClass:[RetryVerificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetPairedDevices(GetPairedDevicesRequest) returns (GetPairedDevicesResponse)
+
+- (void)getPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPairedDevicesWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetPairedDevices"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetPairedDevicesResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 /**

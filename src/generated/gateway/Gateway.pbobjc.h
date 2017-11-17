@@ -36,6 +36,7 @@ CF_EXTERN_C_BEGIN
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
+@class Device;
 @class ExternalAuthorizationDetails;
 @class GetTokensRequest_TokenFilter;
 @class GetTransfersRequest_TransferFilter;
@@ -101,6 +102,7 @@ typedef GPB_ENUM(GetTokensRequest_TokenFilter_Role) {
   GetTokensRequest_TokenFilter_Role_Any = 0,
   GetTokensRequest_TokenFilter_Role_From = 1,
   GetTokensRequest_TokenFilter_Role_To = 2,
+  GetTokensRequest_TokenFilter_Role_Issuer = 3,
 };
 
 GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void);
@@ -357,6 +359,26 @@ typedef GPB_ENUM(RetryVerificationResponse_FieldNumber) {
 @interface RetryVerificationResponse : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
+
+@end
+
+#pragma mark - GetPairedDevicesRequest
+
+@interface GetPairedDevicesRequest : GPBMessage
+
+@end
+
+#pragma mark - GetPairedDevicesResponse
+
+typedef GPB_ENUM(GetPairedDevicesResponse_FieldNumber) {
+  GetPairedDevicesResponse_FieldNumber_DevicesArray = 1,
+};
+
+@interface GetPairedDevicesResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Device*> *devicesArray;
+/** The number of items in @c devicesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger devicesArray_Count;
 
 @end
 

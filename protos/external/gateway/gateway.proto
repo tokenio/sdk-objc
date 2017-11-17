@@ -87,6 +87,12 @@ message RetryVerificationResponse {
   string verification_id = 1;
 }
 
+message GetPairedDevicesRequest {}
+
+message GetPairedDevicesResponse {
+  repeated io.token.proto.common.member.Device devices = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member account recovery.
 //
@@ -413,6 +419,7 @@ message GetTokensRequest {
       ANY = 0;
       FROM = 1;
       TO = 2;
+      ISSUER = 3;
     }
   }
 }
@@ -624,6 +631,12 @@ service GatewayService {
   rpc RetryVerification (RetryVerificationRequest) returns (RetryVerificationResponse) {
   option (google.api.http) = {
       post: "/verifications"
+    };
+  }
+
+  rpc GetPairedDevices (GetPairedDevicesRequest) returns (GetPairedDevicesResponse) {
+    option (google.api.http) = {
+      get: "/members/devices"
     };
   }
 

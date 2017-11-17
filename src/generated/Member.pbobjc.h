@@ -485,6 +485,23 @@ typedef GPB_ENUM(Profile_FieldNumber) {
 
 @end
 
+#pragma mark - Device
+
+typedef GPB_ENUM(Device_FieldNumber) {
+  Device_FieldNumber_Name = 1,
+  Device_FieldNumber_Key = 2,
+};
+
+@interface Device : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, strong, null_resettable) Key *key;
+/** Test to see if @c key has been set. */
+@property(nonatomic, readwrite) BOOL hasKey;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

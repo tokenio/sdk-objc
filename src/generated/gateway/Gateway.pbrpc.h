@@ -60,6 +60,8 @@
   @class GetNotificationResponse;
   @class GetNotificationsRequest;
   @class GetNotificationsResponse;
+  @class GetPairedDevicesRequest;
+  @class GetPairedDevicesResponse;
   @class GetProfilePictureRequest;
   @class GetProfilePictureResponse;
   @class GetProfileRequest;
@@ -212,6 +214,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)retryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetPairedDevices(GetPairedDevicesRequest) returns (GetPairedDevicesResponse)
+
+- (void)getPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
