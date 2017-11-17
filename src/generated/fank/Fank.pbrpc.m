@@ -2,6 +2,10 @@
 
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
+#import "google/api/Annotations.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Notification.pbobjc.h"
 
 @implementation FankFankService
 

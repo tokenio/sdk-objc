@@ -87,8 +87,8 @@ typedef GPB_ENUM(TransferTokenStatus) {
   /** the request has failed, because the pricing quote is invalid */
   TransferTokenStatus_FailureInvalidQuote = 11,
 
-  /** the request has failed, because additional authorization is needed */
-  TransferTokenStatus_FailureAuthorizationNeeded = 12,
+  /** the request has failed, because external authorization is needed */
+  TransferTokenStatus_FailureExternalAuthorizationRequired = 12,
 
   /** the request has failed due to other reasons */
   TransferTokenStatus_FailureGeneric = 9,
@@ -317,6 +317,21 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
  * Clears whatever value was set for the oneof 'body'.
  **/
 void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
+
+#pragma mark - ExternalAuthorizationDetails
+
+typedef GPB_ENUM(ExternalAuthorizationDetails_FieldNumber) {
+  ExternalAuthorizationDetails_FieldNumber_URL = 1,
+  ExternalAuthorizationDetails_FieldNumber_CompletionPattern = 2,
+};
+
+@interface ExternalAuthorizationDetails : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *completionPattern;
+
+@end
 
 #pragma mark - TransferBody
 

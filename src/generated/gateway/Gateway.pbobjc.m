@@ -1030,6 +1030,79 @@ typedef struct VerifyAliasResponse__storage_ {
 
 @end
 
+#pragma mark - GetDefaultAgentRequest
+
+@implementation GetDefaultAgentRequest
+
+
+typedef struct GetDefaultAgentRequest__storage_ {
+  uint32_t _has_storage_[1];
+} GetDefaultAgentRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetDefaultAgentRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(GetDefaultAgentRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetDefaultAgentResponse
+
+@implementation GetDefaultAgentResponse
+
+@dynamic memberId;
+
+typedef struct GetDefaultAgentResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+} GetDefaultAgentResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetDefaultAgentResponse_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetDefaultAgentResponse__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetDefaultAgentResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetDefaultAgentResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AddAddressRequest
 
 @implementation AddAddressRequest
@@ -3556,11 +3629,13 @@ typedef struct CreateTransferTokenRequest__storage_ {
 
 @dynamic hasToken, token;
 @dynamic status;
+@dynamic hasAuthorizationDetails, authorizationDetails;
 
 typedef struct CreateTransferTokenResponse__storage_ {
   uint32_t _has_storage_[1];
   TransferTokenStatus status;
   Token *token;
+  ExternalAuthorizationDetails *authorizationDetails;
 } CreateTransferTokenResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3586,6 +3661,15 @@ typedef struct CreateTransferTokenResponse__storage_ {
         .offset = (uint32_t)offsetof(CreateTransferTokenResponse__storage_, status),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "authorizationDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(ExternalAuthorizationDetails),
+        .number = CreateTransferTokenResponse_FieldNumber_AuthorizationDetails,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(CreateTransferTokenResponse__storage_, authorizationDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3794,11 +3878,13 @@ typedef struct GetTokenResponse__storage_ {
 
 @dynamic type;
 @dynamic hasPage, page;
+@dynamic hasFilter, filter;
 
 typedef struct GetTokensRequest__storage_ {
   uint32_t _has_storage_[1];
   GetTokensRequest_Type type;
   Page *page;
+  GetTokensRequest_TokenFilter *filter;
 } GetTokensRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3822,6 +3908,15 @@ typedef struct GetTokensRequest__storage_ {
         .number = GetTokensRequest_FieldNumber_Page,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetTokensRequest__storage_, page),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "filter",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetTokensRequest_TokenFilter),
+        .number = GetTokensRequest_FieldNumber_Filter,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTokensRequest__storage_, filter),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -3884,6 +3979,142 @@ BOOL GetTokensRequest_Type_IsValidValue(int32_t value__) {
     case GetTokensRequest_Type_Invalid:
     case GetTokensRequest_Type_Access:
     case GetTokensRequest_Type_Transfer:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - GetTokensRequest_TokenFilter
+
+@implementation GetTokensRequest_TokenFilter
+
+@dynamic sourceAccountId;
+@dynamic destinationAccountId;
+@dynamic startTimeMs;
+@dynamic endTimeMs;
+@dynamic role;
+
+typedef struct GetTokensRequest_TokenFilter__storage_ {
+  uint32_t _has_storage_[1];
+  GetTokensRequest_TokenFilter_Role role;
+  NSString *sourceAccountId;
+  NSString *destinationAccountId;
+  int64_t startTimeMs;
+  int64_t endTimeMs;
+} GetTokensRequest_TokenFilter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "sourceAccountId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_SourceAccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, sourceAccountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destinationAccountId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_DestinationAccountId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, destinationAccountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_StartTimeMs,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, startTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "endTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_EndTimeMs,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, endTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "role",
+        .dataTypeSpecific.enumDescFunc = GetTokensRequest_TokenFilter_Role_EnumDescriptor,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_Role,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, role),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetTokensRequest_TokenFilter class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetTokensRequest_TokenFilter__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(GetTokensRequest)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetTokensRequest_TokenFilter_Role_RawValue(GetTokensRequest_TokenFilter *message) {
+  GPBDescriptor *descriptor = [GetTokensRequest_TokenFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTokensRequest_TokenFilter_FieldNumber_Role];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetTokensRequest_TokenFilter_Role_RawValue(GetTokensRequest_TokenFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetTokensRequest_TokenFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTokensRequest_TokenFilter_FieldNumber_Role];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum GetTokensRequest_TokenFilter_Role
+
+GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Any\000From\000To\000";
+    static const int32_t values[] = {
+        GetTokensRequest_TokenFilter_Role_Any,
+        GetTokensRequest_TokenFilter_Role_From,
+        GetTokensRequest_TokenFilter_Role_To,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GetTokensRequest_TokenFilter_Role)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:GetTokensRequest_TokenFilter_Role_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL GetTokensRequest_TokenFilter_Role_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case GetTokensRequest_TokenFilter_Role_Any:
+    case GetTokensRequest_TokenFilter_Role_From:
+    case GetTokensRequest_TokenFilter_Role_To:
       return YES;
     default:
       return NO;
@@ -4534,11 +4765,13 @@ typedef struct GetTransferResponse__storage_ {
 
 @dynamic tokenId;
 @dynamic hasPage, page;
+@dynamic hasFilter, filter;
 
 typedef struct GetTransfersRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
   Page *page;
+  GetTransfersRequest_TransferFilter *filter;
 } GetTransfersRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -4565,6 +4798,15 @@ typedef struct GetTransfersRequest__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "filter",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetTransfersRequest_TransferFilter),
+        .number = GetTransfersRequest_FieldNumber_Filter,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTransfersRequest__storage_, filter),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetTransfersRequest class]
@@ -4581,6 +4823,154 @@ typedef struct GetTransfersRequest__storage_ {
 }
 
 @end
+
+#pragma mark - GetTransfersRequest_TransferFilter
+
+@implementation GetTransfersRequest_TransferFilter
+
+@dynamic tokenId;
+@dynamic startTimeMs;
+@dynamic endTimeMs;
+@dynamic transactionStatus;
+@dynamic role;
+
+typedef struct GetTransfersRequest_TransferFilter__storage_ {
+  uint32_t _has_storage_[1];
+  TransactionStatus transactionStatus;
+  GetTransfersRequest_TransferFilter_Role role;
+  NSString *tokenId;
+  int64_t startTimeMs;
+  int64_t endTimeMs;
+} GetTransfersRequest_TransferFilter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_StartTimeMs,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, startTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "endTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_EndTimeMs,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, endTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "transactionStatus",
+        .dataTypeSpecific.enumDescFunc = TransactionStatus_EnumDescriptor,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_TransactionStatus,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, transactionStatus),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "role",
+        .dataTypeSpecific.enumDescFunc = GetTransfersRequest_TransferFilter_Role_EnumDescriptor,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_Role,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, role),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetTransfersRequest_TransferFilter class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetTransfersRequest_TransferFilter__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(GetTransfersRequest)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetTransfersRequest_TransferFilter_TransactionStatus_RawValue(GetTransfersRequest_TransferFilter *message) {
+  GPBDescriptor *descriptor = [GetTransfersRequest_TransferFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransfersRequest_TransferFilter_FieldNumber_TransactionStatus];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetTransfersRequest_TransferFilter_TransactionStatus_RawValue(GetTransfersRequest_TransferFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetTransfersRequest_TransferFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransfersRequest_TransferFilter_FieldNumber_TransactionStatus];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t GetTransfersRequest_TransferFilter_Role_RawValue(GetTransfersRequest_TransferFilter *message) {
+  GPBDescriptor *descriptor = [GetTransfersRequest_TransferFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransfersRequest_TransferFilter_FieldNumber_Role];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetTransfersRequest_TransferFilter_Role_RawValue(GetTransfersRequest_TransferFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetTransfersRequest_TransferFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransfersRequest_TransferFilter_FieldNumber_Role];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum GetTransfersRequest_TransferFilter_Role
+
+GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Any\000Payer\000Payee\000";
+    static const int32_t values[] = {
+        GetTransfersRequest_TransferFilter_Role_Any,
+        GetTransfersRequest_TransferFilter_Role_Payer,
+        GetTransfersRequest_TransferFilter_Role_Payee,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GetTransfersRequest_TransferFilter_Role)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:GetTransfersRequest_TransferFilter_Role_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL GetTransfersRequest_TransferFilter_Role_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case GetTransfersRequest_TransferFilter_Role_Any:
+    case GetTransfersRequest_TransferFilter_Role_Payer:
+    case GetTransfersRequest_TransferFilter_Role_Payee:
+      return YES;
+    default:
+      return NO;
+  }
+}
 
 #pragma mark - GetTransfersResponse
 

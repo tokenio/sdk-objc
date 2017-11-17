@@ -116,6 +116,12 @@ message VerifyAliasRequest {
 
 message VerifyAliasResponse {}
 
+message GetDefaultAgentRequest {}
+
+message GetDefaultAgentResponse {
+  string member_id = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member PII/addresses/preferences management.
 //
@@ -367,6 +373,7 @@ message CreateTransferTokenRequest {
 message CreateTransferTokenResponse {
   io.token.proto.common.token.Token token = 1;
   io.token.proto.common.token.TransferTokenStatus status = 2;
+  io.token.proto.common.token.ExternalAuthorizationDetails authorization_details = 3;          // Optional: used when status is FAILURE_EXTERNAL_AUTHORIZATION_REQUIRED
 }
 
 message CreateAccessTokenRequest {
@@ -393,6 +400,21 @@ message GetTokensRequest {
   }
   Type type = 1;
   Page page = 2; // Optional paging settings.
+  TokenFilter filter = 3;
+
+  message TokenFilter {
+    string source_account_id = 1;
+    string destination_account_id = 2;
+    int64 start_time_ms = 3;
+    int64 end_time_ms = 4;
+    Role role = 5;
+
+    enum Role {
+      ANY = 0;
+      FROM = 1;
+      TO = 2;
+    }
+  }
 }
 
 message GetTokensResponse {
@@ -459,8 +481,23 @@ message GetTransferResponse {
 }
 
 message GetTransfersRequest {
-  string token_id = 1;  // Optional token_id to filter transfers by.
+  string token_id = 1;
   Page page = 2;        // Optional paging settings.
+  TransferFilter filter = 3;
+
+  message TransferFilter {
+    string token_id = 1;
+    int64 start_time_ms = 2;
+    int64 end_time_ms = 3;
+    io.token.proto.common.transaction.TransactionStatus transaction_status = 4;
+    Role role = 5;
+
+    enum Role {
+      ANY = 0;
+      PAYER = 1;
+      PAYEE = 2;
+    }
+  }
 }
 
 message GetTransfersResponse {
@@ -609,6 +646,12 @@ service GatewayService {
   rpc VerifyAlias (VerifyAliasRequest) returns (VerifyAliasResponse) {
     option (google.api.http) = {
       put: "/verifications/{verification_id}/complete/{code}"
+    };
+  }
+
+  rpc GetDefaultAgent (GetDefaultAgentRequest) returns (GetDefaultAgentResponse) {
+    option (google.api.http) = {
+      get: "/recovery/defaults/agent"
     };
   }
 
@@ -859,7 +902,7 @@ service GatewayService {
 
   rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
-        get: "/transfers?token_id={token_id}&offset={page.offset}&limit={page.limit}"
+        get: "/transfers?tokenId={filter.token_id}&offset={page.offset}&limit={page.limit}"
     };
   }
 

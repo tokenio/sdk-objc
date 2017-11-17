@@ -2,6 +2,21 @@
 
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
+#import "google/api/Annotations.pbobjc.h"
+#import "Account.pbobjc.h"
+#import "Address.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Notification.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Subscriber.pbobjc.h"
+#import "Token.pbobjc.h"
+#import "Transaction.pbobjc.h"
+#import "Transfer.pbobjc.h"
+#import "Alias.pbobjc.h"
 
 @implementation GatewayService
 
@@ -200,6 +215,18 @@
   return [self RPCToMethod:@"VerifyAlias"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[VerifyAliasResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
+
+- (void)getDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetDefaultAgentWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetDefaultAgent"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetDefaultAgentResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

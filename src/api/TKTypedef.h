@@ -28,8 +28,10 @@
 @class Alias;
 @class TokenMember;
 @class MemberRecoveryOperation;
+@class ExternalAuthorizationDetails;
 
 typedef void (^ _Nonnull OnSuccess)();
+typedef void (^ _Nonnull OnAuthRequired)(ExternalAuthorizationDetails * _Nonnull);
 typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithBoolean)(BOOL);

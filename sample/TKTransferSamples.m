@@ -74,7 +74,13 @@
     [builder executeAsync:^(Token *t) {
         // Use token.
         transferToken = t;
-    }   onError:^(NSError *e) {
+    } onAuthRequired:^(ExternalAuthorizationDetails *details) {
+        // External authorization is required. Get the bank authorization
+        // from the url in details.
+        @throw [NSException exceptionWithName:@"ExternalAuthorizationException"
+                                       reason:@"External authorization is required."
+                                     userInfo:nil];
+    } onError:^(NSError *e) {
         // Something went wrong. (We don't just build a structure; we also
         // upload it to Token cloud. So things can go wrong.)
         @throw [NSException exceptionWithName:@"BuilderExecuteException"
@@ -157,23 +163,29 @@
     builder.refId = refId;
     
     [builder executeAsync:^(Token *t) {
-            [payer endorseToken:t
-                        withKey:Key_Level_Standard
-                      onSuccess:^(TokenOperationResult *result) {
-                          transferToken = result.token;
-                      } onError:^(NSError *e) {
-                          // something went wrong
-                          @throw [NSException exceptionWithName:@"EndorseException"
-                                                         reason:[e localizedFailureReason]
-                                                       userInfo:[e userInfo]];
-                      }];
-    }   onError:^(NSError *e) {
-        // Something went wrong. (We don't just build a structure; we also
-        // upload it to Token cloud. So things can go wrong.)
-        @throw [NSException exceptionWithName:@"BuilderExecuteException"
-                                       reason:[e localizedFailureReason]
-                                     userInfo:[e userInfo]];
-    }];
+        [payer endorseToken:t
+                    withKey:Key_Level_Standard
+                  onSuccess:^(TokenOperationResult *result) {
+                      transferToken = result.token;
+                  } onError:^(NSError *e) {
+                      // something went wrong
+                      @throw [NSException exceptionWithName:@"EndorseException"
+                                                     reason:[e localizedFailureReason]
+                                                   userInfo:[e userInfo]];
+                  }];
+    } onAuthRequired:^(ExternalAuthorizationDetails *details) {
+        // External authorization is required. Get the bank authorization
+        // from the url in details.
+        @throw [NSException exceptionWithName:@"ExternalAuthorizationException"
+                                       reason:@"External authorization is required."
+                                     userInfo:nil];
+    } onError:^(NSError *e) {
+                      // Something went wrong. (We don't just build a structure; we also
+                      // upload it to Token cloud. So things can go wrong.)
+                      @throw [NSException exceptionWithName:@"BuilderExecuteException"
+                                                     reason:[e localizedFailureReason]
+                                                   userInfo:[e userInfo]];
+                  }];
     
     [self runUntilTrue:^ {
         return (transferToken != nil);
