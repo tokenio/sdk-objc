@@ -1249,6 +1249,27 @@
              onError:onError];
 }
 
+- (void)getPairedDevices:(OnSuccessWithPairedDevices)onSuccess
+                 onError:(OnError)onError {
+    GetPairedDevicesRequest *request = [GetPairedDevicesRequest message];
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToGetPairedDevicesWithRequest:request
+                           handler:^(GetPairedDevicesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.devicesArray);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 
 #pragma mark private
 
