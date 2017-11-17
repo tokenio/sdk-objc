@@ -10,6 +10,8 @@ jazzy \
   --author_url https://developer.token.io \
   --github_url https://github.com/tokenio/sdk-objc \
   --umbrella-header 'src/api/TokenSdk.h' \
+  --framework-root 'src' \
+  --exclude 'src/generated/*' \
   --output build/docs \
   --head "$(cat bin/gen-doc-head.html)"
 
