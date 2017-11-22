@@ -247,7 +247,7 @@
         return (prompting != false);
     }];
 
-    NSString *userEnteredCode = @"1thru6"; // unverified test user, so any code works
+    NSString *userEnteredCode = @"1thru6"; // The test users can bypass the verification, so any code works.
     __block TKMember *member = nil;
 
     // completeRecovery begin snippet to include in docs
