@@ -57,6 +57,7 @@
                                     }];
         call.requestHeaders[@"token-sdk"] = @"objc";
         call.requestHeaders[@"token-sdk-version"] = @"0.0.1";
+        call.requestHeaders[@"token-dev-key"] = [self sdkBuilder].developerKey;
 
         @try {
             [syncCall run:^{
