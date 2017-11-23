@@ -6,7 +6,7 @@
 #import <XCTest/XCTest.h>
 
 #import "TKCrypto.h"
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKTokenCryptoEngineFactory.h"
 #import "TKSignature.h"
 #import "TKLogManager.h"
@@ -20,7 +20,7 @@
 
 - (void)setUp {
     [super setUp];
-    id<TKKeyStore> store = [[TKTestKeyStore alloc] init];
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
     id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store] createEngine:@"member_id_123"];
     crypto = [[TKCrypto alloc] initWithEngine:engine];
 }

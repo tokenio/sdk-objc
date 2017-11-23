@@ -4,6 +4,6 @@ xcodebuild \
     -workspace TokenSdk.xcworkspace \
     -scheme "All Tests - AWS Development" \
     -sdk iphonesimulator \
-    -destination "platform=iOS Simulator,name=iPhone 8,OS=11.0.1" \
+    -destination "platform=iOS Simulator,name=iPhone 8,OS=11.1" \
     test
 

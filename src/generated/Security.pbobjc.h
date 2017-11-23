@@ -139,6 +139,52 @@ int32_t Key_Algorithm_RawValue(Key *message);
  **/
 void SetKey_Algorithm_RawValue(Key *message, int32_t value);
 
+#pragma mark - PrivateKey
+
+typedef GPB_ENUM(PrivateKey_FieldNumber) {
+  PrivateKey_FieldNumber_Id_p = 1,
+  PrivateKey_FieldNumber_PrivateKey = 2,
+  PrivateKey_FieldNumber_Level = 3,
+  PrivateKey_FieldNumber_Algorithm = 4,
+};
+
+@interface PrivateKey : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/** Base64url encoded private key. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *privateKey;
+
+@property(nonatomic, readwrite) Key_Level level;
+
+@property(nonatomic, readwrite) Key_Algorithm algorithm;
+
+@end
+
+/**
+ * Fetches the raw value of a @c PrivateKey's @c level property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t PrivateKey_Level_RawValue(PrivateKey *message);
+/**
+ * Sets the raw value of an @c PrivateKey's @c level property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetPrivateKey_Level_RawValue(PrivateKey *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c PrivateKey's @c algorithm property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t PrivateKey_Algorithm_RawValue(PrivateKey *message);
+/**
+ * Sets the raw value of an @c PrivateKey's @c algorithm property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetPrivateKey_Algorithm_RawValue(PrivateKey *message, int32_t value);
+
 #pragma mark - Signature
 
 typedef GPB_ENUM(Signature_FieldNumber) {
@@ -218,7 +264,7 @@ typedef GPB_ENUM(SealedMessage_RsaMethod_FieldNumber) {
 };
 
 /**
- * The message is encrypted using the public key of the receipient.
+ * The message is encrypted using the public key of the recipient.
  * The message can be decrypted only with the corresponding private key.
  **/
 @interface SealedMessage_RsaMethod : GPBMessage
@@ -250,7 +296,7 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
 
 /**
  * The message is encrypted with a self-generated symmetric key.
- * That key is encrypted using the public key of the receipient and
+ * That key is encrypted using the public key of the recipient and
  * can only be decrypted with the corresponding private key.
  **/
 @interface SealedMessage_RsaAesMethod : GPBMessage

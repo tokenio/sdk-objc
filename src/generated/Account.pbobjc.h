@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class AccountTag;
 @class BankAccount;
 @class BankAccount_Ach;
+@class BankAccount_Bank;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
 @class BankAccount_Token;
@@ -136,6 +137,7 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_Swift = 3,
   BankAccount_FieldNumber_Sepa = 4,
   BankAccount_FieldNumber_Ach = 5,
+  BankAccount_FieldNumber_Bank = 6,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -145,6 +147,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_Swift = 3,
   BankAccount_Account_OneOfCase_Sepa = 4,
   BankAccount_Account_OneOfCase_Ach = 5,
+  BankAccount_Account_OneOfCase_Bank = 6,
 };
 
 /**
@@ -164,6 +167,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Sepa *sepa;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank;
 
 @end
 
@@ -204,6 +209,21 @@ typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;
 /** Test to see if @c authorization has been set. */
 @property(nonatomic, readwrite) BOOL hasAuthorization;
+
+@end
+
+#pragma mark - BankAccount_Bank
+
+typedef GPB_ENUM(BankAccount_Bank_FieldNumber) {
+  BankAccount_Bank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Source account managed by a coop bank
+ **/
+@interface BankAccount_Bank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
 

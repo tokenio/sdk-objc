@@ -3,13 +3,13 @@
 // Copyright (c) 2017 Token Inc. All rights reserved.
 //
 
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKTokenSecretKey.h"
-#import "TKTestMemberKeys.h"
+#import "TKInMemoryMemberKeys.h"
 
 
-@implementation TKTestKeyStore {
-    NSMutableDictionary<NSString *, TKTestMemberKeys *> *keys;
+@implementation TKInMemoryKeyStore {
+    NSMutableDictionary<NSString *, TKInMemoryMemberKeys *> *keys;
 }
 
 - (id)init {
@@ -21,16 +21,16 @@
 }
 
 - (void)addKey:(TKTokenSecretKey *)key forMember:(NSString *)memberId {
-    TKTestMemberKeys *memberKeys = [keys objectForKey:memberId];
+    TKInMemoryMemberKeys *memberKeys = [keys objectForKey:memberId];
     if (!memberKeys) {
-        memberKeys = [[TKTestMemberKeys alloc] init];
+        memberKeys = [[TKInMemoryMemberKeys alloc] init];
         [keys setObject:memberKeys forKey:memberId];
     }
     [memberKeys addKey:key];
 }
 
 - (TKTokenSecretKey *)lookupKeyById:(NSString *)id forMember:(NSString *)memberId {
-    TKTestMemberKeys *memberKeys = [keys objectForKey:memberId];
+    TKInMemoryMemberKeys *memberKeys = [keys objectForKey:memberId];
     if (!memberKeys) {
         [NSException
                 raise:NSInvalidArgumentException
@@ -40,7 +40,7 @@
 }
 
 - (TKTokenSecretKey *)lookupKeyByLevel:(Key_Level)keyLevel forMember:(NSString *)memberId {
-    TKTestMemberKeys *memberKeys = [keys objectForKey:memberId];
+    TKInMemoryMemberKeys *memberKeys = [keys objectForKey:memberId];
     if (!memberKeys) {
         [NSException
                 raise:NSInvalidArgumentException

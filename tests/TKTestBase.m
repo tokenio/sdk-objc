@@ -12,7 +12,7 @@
 #import "TokenIOBuilder.h"
 #import "TKMemberSync.h"
 #import "TKAccountSync.h"
-#import "TKTestKeyStore.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKLogManager.h"
 
 
@@ -53,7 +53,7 @@
   builder.useSsl = useSsl;
   builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
   builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-  builder.keyStore = [[TKTestKeyStore alloc] init];
+  builder.keyStore = [[TKInMemoryKeyStore alloc] init];
   return builder;
 }
 

@@ -60,8 +60,8 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
         "nsufficientFunds\000FailureInvalidCurrency\000"
         "FailureSourceAccountNotFound\000FailureDest"
         "inationAccountNotFound\000FailureInvalidAmo"
-        "unt\000FailureInvalidQuote\000FailureAuthoriza"
-        "tionNeeded\000FailureGeneric\000";
+        "unt\000FailureInvalidQuote\000FailureExternalA"
+        "uthorizationRequired\000FailureGeneric\000";
     static const int32_t values[] = {
         TransferTokenStatus_Invalid,
         TransferTokenStatus_Success,
@@ -72,7 +72,7 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
         TransferTokenStatus_FailureDestinationAccountNotFound,
         TransferTokenStatus_FailureInvalidAmount,
         TransferTokenStatus_FailureInvalidQuote,
-        TransferTokenStatus_FailureAuthorizationNeeded,
+        TransferTokenStatus_FailureExternalAuthorizationRequired,
         TransferTokenStatus_FailureGeneric,
     };
     GPBEnumDescriptor *worker =
@@ -99,7 +99,7 @@ BOOL TransferTokenStatus_IsValidValue(int32_t value__) {
     case TransferTokenStatus_FailureDestinationAccountNotFound:
     case TransferTokenStatus_FailureInvalidAmount:
     case TransferTokenStatus_FailureInvalidQuote:
-    case TransferTokenStatus_FailureAuthorizationNeeded:
+    case TransferTokenStatus_FailureExternalAuthorizationRequired:
     case TransferTokenStatus_FailureGeneric:
       return YES;
     default:
@@ -504,6 +504,65 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
+#pragma mark - ExternalAuthorizationDetails
+
+@implementation ExternalAuthorizationDetails
+
+@dynamic URL;
+@dynamic completionPattern;
+
+typedef struct ExternalAuthorizationDetails__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *URL;
+  NSString *completionPattern;
+} ExternalAuthorizationDetails__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "URL",
+        .dataTypeSpecific.className = NULL,
+        .number = ExternalAuthorizationDetails_FieldNumber_URL,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ExternalAuthorizationDetails__storage_, URL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "completionPattern",
+        .dataTypeSpecific.className = NULL,
+        .number = ExternalAuthorizationDetails_FieldNumber_CompletionPattern,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ExternalAuthorizationDetails__storage_, completionPattern),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ExternalAuthorizationDetails class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ExternalAuthorizationDetails__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001!!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - TransferBody
 
 @implementation TransferBody

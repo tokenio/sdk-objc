@@ -36,6 +36,10 @@ CF_EXTERN_C_BEGIN
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
+@class Device;
+@class ExternalAuthorizationDetails;
+@class GetTokensRequest_TokenFilter;
+@class GetTransfersRequest_TransferFilter;
 @class Key;
 @class Member;
 @class MemberOperationMetadata;
@@ -59,6 +63,7 @@ CF_EXTERN_C_BEGIN
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
+GPB_ENUM_FWD_DECLARE(TransactionStatus);
 GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -84,6 +89,51 @@ GPBEnumDescriptor *GetTokensRequest_Type_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL GetTokensRequest_Type_IsValidValue(int32_t value);
+
+#pragma mark - Enum GetTokensRequest_TokenFilter_Role
+
+typedef GPB_ENUM(GetTokensRequest_TokenFilter_Role) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  GetTokensRequest_TokenFilter_Role_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GetTokensRequest_TokenFilter_Role_Any = 0,
+  GetTokensRequest_TokenFilter_Role_From = 1,
+  GetTokensRequest_TokenFilter_Role_To = 2,
+  GetTokensRequest_TokenFilter_Role_Issuer = 3,
+};
+
+GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL GetTokensRequest_TokenFilter_Role_IsValidValue(int32_t value);
+
+#pragma mark - Enum GetTransfersRequest_TransferFilter_Role
+
+typedef GPB_ENUM(GetTransfersRequest_TransferFilter_Role) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  GetTransfersRequest_TransferFilter_Role_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GetTransfersRequest_TransferFilter_Role_Any = 0,
+  GetTransfersRequest_TransferFilter_Role_Payer = 1,
+  GetTransfersRequest_TransferFilter_Role_Payee = 2,
+};
+
+GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL GetTransfersRequest_TransferFilter_Role_IsValidValue(int32_t value);
 
 #pragma mark - GatewayRoot
 
@@ -312,6 +362,26 @@ typedef GPB_ENUM(RetryVerificationResponse_FieldNumber) {
 
 @end
 
+#pragma mark - GetPairedDevicesRequest
+
+@interface GetPairedDevicesRequest : GPBMessage
+
+@end
+
+#pragma mark - GetPairedDevicesResponse
+
+typedef GPB_ENUM(GetPairedDevicesResponse_FieldNumber) {
+  GetPairedDevicesResponse_FieldNumber_DevicesArray = 1,
+};
+
+@interface GetPairedDevicesResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Device*> *devicesArray;
+/** The number of items in @c devicesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger devicesArray_Count;
+
+@end
+
 #pragma mark - BeginRecoveryRequest
 
 typedef GPB_ENUM(BeginRecoveryRequest_FieldNumber) {
@@ -390,6 +460,24 @@ typedef GPB_ENUM(VerifyAliasRequest_FieldNumber) {
 #pragma mark - VerifyAliasResponse
 
 @interface VerifyAliasResponse : GPBMessage
+
+@end
+
+#pragma mark - GetDefaultAgentRequest
+
+@interface GetDefaultAgentRequest : GPBMessage
+
+@end
+
+#pragma mark - GetDefaultAgentResponse
+
+typedef GPB_ENUM(GetDefaultAgentResponse_FieldNumber) {
+  GetDefaultAgentResponse_FieldNumber_MemberId = 1,
+};
+
+@interface GetDefaultAgentResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
 
@@ -1179,6 +1267,7 @@ typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
 typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
   CreateTransferTokenResponse_FieldNumber_Token = 1,
   CreateTransferTokenResponse_FieldNumber_Status = 2,
+  CreateTransferTokenResponse_FieldNumber_AuthorizationDetails = 3,
 };
 
 @interface CreateTransferTokenResponse : GPBMessage
@@ -1188,6 +1277,11 @@ typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasToken;
 
 @property(nonatomic, readwrite) enum TransferTokenStatus status;
+
+/** Optional: used when status is FAILURE_EXTERNAL_AUTHORIZATION_REQUIRED */
+@property(nonatomic, readwrite, strong, null_resettable) ExternalAuthorizationDetails *authorizationDetails;
+/** Test to see if @c authorizationDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorizationDetails;
 
 @end
 
@@ -1262,6 +1356,7 @@ typedef GPB_ENUM(GetTokenResponse_FieldNumber) {
 typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
   GetTokensRequest_FieldNumber_Type = 1,
   GetTokensRequest_FieldNumber_Page = 2,
+  GetTokensRequest_FieldNumber_Filter = 3,
 };
 
 @interface GetTokensRequest : GPBMessage
@@ -1272,6 +1367,10 @@ typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Page *page;
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
+
+@property(nonatomic, readwrite, strong, null_resettable) GetTokensRequest_TokenFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
 
 @end
 
@@ -1286,6 +1385,42 @@ int32_t GetTokensRequest_Type_RawValue(GetTokensRequest *message);
  * was generated.
  **/
 void SetGetTokensRequest_Type_RawValue(GetTokensRequest *message, int32_t value);
+
+#pragma mark - GetTokensRequest_TokenFilter
+
+typedef GPB_ENUM(GetTokensRequest_TokenFilter_FieldNumber) {
+  GetTokensRequest_TokenFilter_FieldNumber_SourceAccountId = 1,
+  GetTokensRequest_TokenFilter_FieldNumber_DestinationAccountId = 2,
+  GetTokensRequest_TokenFilter_FieldNumber_StartTimeMs = 3,
+  GetTokensRequest_TokenFilter_FieldNumber_EndTimeMs = 4,
+  GetTokensRequest_TokenFilter_FieldNumber_Role = 5,
+};
+
+@interface GetTokensRequest_TokenFilter : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *destinationAccountId;
+
+@property(nonatomic, readwrite) int64_t startTimeMs;
+
+@property(nonatomic, readwrite) int64_t endTimeMs;
+
+@property(nonatomic, readwrite) GetTokensRequest_TokenFilter_Role role;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetTokensRequest_TokenFilter's @c role property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTokensRequest_TokenFilter_Role_RawValue(GetTokensRequest_TokenFilter *message);
+/**
+ * Sets the raw value of an @c GetTokensRequest_TokenFilter's @c role property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTokensRequest_TokenFilter_Role_RawValue(GetTokensRequest_TokenFilter *message, int32_t value);
 
 #pragma mark - GetTokensResponse
 
@@ -1501,11 +1636,11 @@ typedef GPB_ENUM(GetTransferResponse_FieldNumber) {
 typedef GPB_ENUM(GetTransfersRequest_FieldNumber) {
   GetTransfersRequest_FieldNumber_TokenId = 1,
   GetTransfersRequest_FieldNumber_Page = 2,
+  GetTransfersRequest_FieldNumber_Filter = 3,
 };
 
 @interface GetTransfersRequest : GPBMessage
 
-/** Optional token_id to filter transfers by. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 /** Optional paging settings. */
@@ -1513,7 +1648,59 @@ typedef GPB_ENUM(GetTransfersRequest_FieldNumber) {
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
 
+@property(nonatomic, readwrite, strong, null_resettable) GetTransfersRequest_TransferFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
+
 @end
+
+#pragma mark - GetTransfersRequest_TransferFilter
+
+typedef GPB_ENUM(GetTransfersRequest_TransferFilter_FieldNumber) {
+  GetTransfersRequest_TransferFilter_FieldNumber_TokenId = 1,
+  GetTransfersRequest_TransferFilter_FieldNumber_StartTimeMs = 2,
+  GetTransfersRequest_TransferFilter_FieldNumber_EndTimeMs = 3,
+  GetTransfersRequest_TransferFilter_FieldNumber_TransactionStatus = 4,
+  GetTransfersRequest_TransferFilter_FieldNumber_Role = 5,
+};
+
+@interface GetTransfersRequest_TransferFilter : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite) int64_t startTimeMs;
+
+@property(nonatomic, readwrite) int64_t endTimeMs;
+
+@property(nonatomic, readwrite) enum TransactionStatus transactionStatus;
+
+@property(nonatomic, readwrite) GetTransfersRequest_TransferFilter_Role role;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetTransfersRequest_TransferFilter's @c transactionStatus property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTransfersRequest_TransferFilter_TransactionStatus_RawValue(GetTransfersRequest_TransferFilter *message);
+/**
+ * Sets the raw value of an @c GetTransfersRequest_TransferFilter's @c transactionStatus property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTransfersRequest_TransferFilter_TransactionStatus_RawValue(GetTransfersRequest_TransferFilter *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c GetTransfersRequest_TransferFilter's @c role property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTransfersRequest_TransferFilter_Role_RawValue(GetTransfersRequest_TransferFilter *message);
+/**
+ * Sets the raw value of an @c GetTransfersRequest_TransferFilter's @c role property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTransfersRequest_TransferFilter_Role_RawValue(GetTransfersRequest_TransferFilter *message, int32_t value);
 
 #pragma mark - GetTransfersResponse
 

@@ -5,21 +5,134 @@
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
 
-#import "google/api/Annotations.pbobjc.h"
-#import "Account.pbobjc.h"
-#import "Address.pbobjc.h"
-#import "Bankinfo.pbobjc.h"
-#import "Banklink.pbobjc.h"
-#import "Blob.pbobjc.h"
-#import "Member.pbobjc.h"
-#import "Money.pbobjc.h"
-#import "Notification.pbobjc.h"
-#import "Security.pbobjc.h"
-#import "Subscriber.pbobjc.h"
-#import "Token.pbobjc.h"
-#import "Transaction.pbobjc.h"
-#import "Transfer.pbobjc.h"
-#import "Alias.pbobjc.h"
+#if GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  @class AddAddressRequest;
+  @class AddAddressResponse;
+  @class BeginRecoveryRequest;
+  @class BeginRecoveryResponse;
+  @class CancelTokenRequest;
+  @class CancelTokenResponse;
+  @class CompleteRecoveryRequest;
+  @class CompleteRecoveryResponse;
+  @class CompleteVerificationRequest;
+  @class CompleteVerificationResponse;
+  @class CreateAccessTokenRequest;
+  @class CreateAccessTokenResponse;
+  @class CreateBlobRequest;
+  @class CreateBlobResponse;
+  @class CreateMemberRequest;
+  @class CreateMemberResponse;
+  @class CreateTestBankAccountRequest;
+  @class CreateTestBankAccountResponse;
+  @class CreateTransferRequest;
+  @class CreateTransferResponse;
+  @class CreateTransferTokenRequest;
+  @class CreateTransferTokenResponse;
+  @class DeleteAddressRequest;
+  @class DeleteAddressResponse;
+  @class EndorseTokenRequest;
+  @class EndorseTokenResponse;
+  @class GetAccountRequest;
+  @class GetAccountResponse;
+  @class GetAccountsRequest;
+  @class GetAccountsResponse;
+  @class GetAddressRequest;
+  @class GetAddressResponse;
+  @class GetAddressesRequest;
+  @class GetAddressesResponse;
+  @class GetAliasesRequest;
+  @class GetAliasesResponse;
+  @class GetBalanceRequest;
+  @class GetBalanceResponse;
+  @class GetBankInfoRequest;
+  @class GetBankInfoResponse;
+  @class GetBanksRequest;
+  @class GetBanksResponse;
+  @class GetBlobRequest;
+  @class GetBlobResponse;
+  @class GetDefaultAccountRequest;
+  @class GetDefaultAccountResponse;
+  @class GetDefaultAgentRequest;
+  @class GetDefaultAgentResponse;
+  @class GetMemberRequest;
+  @class GetMemberResponse;
+  @class GetNotificationRequest;
+  @class GetNotificationResponse;
+  @class GetNotificationsRequest;
+  @class GetNotificationsResponse;
+  @class GetPairedDevicesRequest;
+  @class GetPairedDevicesResponse;
+  @class GetProfilePictureRequest;
+  @class GetProfilePictureResponse;
+  @class GetProfileRequest;
+  @class GetProfileResponse;
+  @class GetSubscriberRequest;
+  @class GetSubscriberResponse;
+  @class GetSubscribersRequest;
+  @class GetSubscribersResponse;
+  @class GetTestBankNotificationRequest;
+  @class GetTestBankNotificationResponse;
+  @class GetTestBankNotificationsRequest;
+  @class GetTestBankNotificationsResponse;
+  @class GetTokenBlobRequest;
+  @class GetTokenBlobResponse;
+  @class GetTokenRequest;
+  @class GetTokenResponse;
+  @class GetTokensRequest;
+  @class GetTokensResponse;
+  @class GetTransactionRequest;
+  @class GetTransactionResponse;
+  @class GetTransactionsRequest;
+  @class GetTransactionsResponse;
+  @class GetTransferRequest;
+  @class GetTransferResponse;
+  @class GetTransfersRequest;
+  @class GetTransfersResponse;
+  @class LinkAccountsRequest;
+  @class LinkAccountsResponse;
+  @class NotifyRequest;
+  @class NotifyResponse;
+  @class ReplaceTokenRequest;
+  @class ReplaceTokenResponse;
+  @class RequestTransferRequest;
+  @class RequestTransferResponse;
+  @class ResolveAliasRequest;
+  @class ResolveAliasResponse;
+  @class RetryVerificationRequest;
+  @class RetryVerificationResponse;
+  @class SetDefaultAccountRequest;
+  @class SetDefaultAccountResponse;
+  @class SetProfilePictureRequest;
+  @class SetProfilePictureResponse;
+  @class SetProfileRequest;
+  @class SetProfileResponse;
+  @class SubscribeToNotificationsRequest;
+  @class SubscribeToNotificationsResponse;
+  @class UnlinkAccountsRequest;
+  @class UnlinkAccountsResponse;
+  @class UnsubscribeFromNotificationsRequest;
+  @class UnsubscribeFromNotificationsResponse;
+  @class UpdateMemberRequest;
+  @class UpdateMemberResponse;
+  @class VerifyAliasRequest;
+  @class VerifyAliasResponse;
+#else
+  #import "google/api/Annotations.pbobjc.h"
+  #import "Account.pbobjc.h"
+  #import "Address.pbobjc.h"
+  #import "Bankinfo.pbobjc.h"
+  #import "Banklink.pbobjc.h"
+  #import "Blob.pbobjc.h"
+  #import "Member.pbobjc.h"
+  #import "Money.pbobjc.h"
+  #import "Notification.pbobjc.h"
+  #import "Security.pbobjc.h"
+  #import "Subscriber.pbobjc.h"
+  #import "Token.pbobjc.h"
+  #import "Transaction.pbobjc.h"
+  #import "Transfer.pbobjc.h"
+  #import "Alias.pbobjc.h"
+#endif
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -103,6 +216,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetPairedDevices(GetPairedDevicesRequest) returns (GetPairedDevicesResponse)
+
+- (void)getPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 /**
@@ -134,6 +254,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)verifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
+
+- (void)getDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)

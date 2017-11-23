@@ -15,6 +15,7 @@
 #import "TKMember.h"
 #import "Transferinstructions.pbobjc.h"
 #import "Account.pbobjc.h"
+#import "TKError.h"
 #import "TKRpcSyncCall.h"
 
 @implementation TransferTokenBuilder
@@ -37,12 +38,17 @@
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self executeAsync:call.onSuccess
+            onAuthRequired:^(ExternalAuthorizationDetails *details) {
+                NSError *error = [NSError errorFromExternalAuthorizationDetails:details];
+                call.onError(error);
+            }
                    onError:call.onError];
     }];
 }
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-                 onError:(OnError)onError {
+      onAuthRequired:(OnAuthRequired)onAuthRequired
+             onError:(OnError)onError {
     if (!self.accountId && !self.bankAuthorization) {
         @throw [NSException
          exceptionWithName:@"InvalidTokenException"
@@ -132,9 +138,8 @@
     }
 
     [[self.member getClient] createTransferToken:payload
-                                       onSuccess:^(Token *token) {
-                                           onSuccess(token);
-                                       }
+                                       onSuccess:onSuccess
+                                  onAuthRequired:onAuthRequired
                                          onError:onError];
 }
 

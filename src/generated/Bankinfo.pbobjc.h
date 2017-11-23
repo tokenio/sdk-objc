@@ -51,6 +51,8 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_Name = 2,
   Bank_FieldNumber_LogoUri = 3,
   Bank_FieldNumber_FullLogoUri = 4,
+  Bank_FieldNumber_SupportsAppless = 5,
+  Bank_FieldNumber_SupportsPayments = 6,
 };
 
 @interface Bank : GPBMessage
@@ -64,6 +66,12 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 /** Full size bank icon */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fullLogoUri;
+
+/** Works with appless payments */
+@property(nonatomic, readwrite) BOOL supportsAppless;
+
+/** Connection allows for payment initiation */
+@property(nonatomic, readwrite) BOOL supportsPayments;
 
 @end
 

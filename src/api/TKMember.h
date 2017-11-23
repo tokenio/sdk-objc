@@ -676,4 +676,12 @@
                  withData:(NSData *)data
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
+
+/**
+ * Returns a list of paired devices for the current user
+ *
+ * @param onSuccess invoked on success with a list of paired devices
+ */
+- (void)getPairedDevices:(OnSuccessWithPairedDevices)onSuccess
+                 onError:(OnError)onError;
 @end
