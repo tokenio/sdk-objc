@@ -42,16 +42,16 @@
 /// Asynchronous API to member.
 @property (readonly, retain) TKMember *async;
 
-/// Member ID
+/// Member ID.
 @property (readonly, retain) NSString *id;
 
-/// Convenience to aliases[0]
+/// Convenience access to aliases[0].
 @property (readonly, retain) Alias *firstAlias;
 
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
 @property (readonly, retain) NSArray<Alias *> *aliases;
 
-/// Crypto keys
+/// Crypto keys.
 @property (readonly, retain) NSArray<Key *> *keys;
 
 /**

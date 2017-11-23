@@ -16,10 +16,10 @@
  */
 @interface TKBalance : NSObject
 
-/// Current balance
+/// Current balance.
 @property Money *current;
 
-/// Available balance
+/// Available balance.
 @property Money *available;
 
 @end

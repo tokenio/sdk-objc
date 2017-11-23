@@ -37,7 +37,7 @@
 /// Account ID from which to pay.
 @property (readwrite) NSString *accountId;
 
-/// Bank authorization for payment (useful if not paying from linked account)
+/// Bank authorization for payment. This is useful if not paying from linked account.
 @property (readwrite) BankAuthorization *bankAuthorization;
 
 /// Expiration time in ms since 1970.
@@ -46,34 +46,34 @@
 /// Effective-at time in ms since 1970.
 @property (readwrite) int64_t effectiveAtMs;
 
-/// Specify redeemer by alias.
+/// Redeemer, specified by alias.
 @property (readwrite) Alias *redeemerAlias;
 
-/// Specify redeemer by Member ID.
+/// Redeemer, specified by Member ID.
 @property (readwrite) NSString* redeemerMemberId;
 
-/// Specify payer by Alias.
+/// Ppayer, specified by Alias.
 @property (readwrite) Alias *fromAlias;
 
-/// Specify payee by Alias.
+/// Payee, specified by Alias.
 @property (readwrite) Alias *toAlias;
 
-/// Specify payee by Member ID.
+/// Payee, specified by Member ID.
 @property (readwrite) NSString *toMemberId;
 
-/// Specify description
+/// Description.
 @property (readwrite) NSString *descr;
 
-/// Fees, FX
+/// Fees, FX.
 @property (readwrite) Pricing *pricing;
 
-/// Specify purpose of payment.
+/// Purpose of payment.
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 
-/// Specify destination bank accounts.
+/// Destination bank accounts.
 @property (readwrite) NSArray<TransferEndpoint*> *destinations;
 
-/// Attach "files"
+/// Attachment "files".
 @property (readwrite) NSArray<Attachment*> *attachments;
 
 /// Specify reference ID. If not set, the Token system chooses a random one.

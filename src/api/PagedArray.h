@@ -22,7 +22,7 @@
 - (id)initWith:(NSArray<T> *)items
         offset:(NSString *)offset;
 
-/// Returned list of items
+/// List of items in this "page".
 @property (readonly, retain) NSArray<T> *items;
 
 /// Offset string. Pass this as offset (instead of NULL) to fetch next "page" of items.

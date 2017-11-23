@@ -32,10 +32,10 @@
 /// Id by which Token system identifies this account.
 @property (atomic, readonly) NSString *id;
 
-/// Human readable name, such as "Checking account with number ending -2718"
+/// Human-readable name. For example, "Checking account with number ending -2718".
 @property (atomic, readonly) NSString *name;
 
-/// Id by which Token system identifies this account's bank
+/// Id by which Token system identifies this account's bank.
 @property (atomic, readonly) NSString *bankId;
 
 + (TKAccountSync *)account:(TKAccount *)delegate;
