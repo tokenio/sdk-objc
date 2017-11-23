@@ -18,12 +18,22 @@
  */
 @interface TokenIOBuilder : NSObject
 
+/// Host address. For example, "api-grpc.sandbox.token.io".
 @property (readwrite, copy) NSString *host;
+
+/// Host port.
 @property (readwrite) int port;
+
+/// Request timeout duration used with RPC requests.
 @property (readwrite) int timeoutMs;
-/* Ask Token for a developerKey you can use. */
+
+/// Key that "tags" requests with ID of developer organization. Ask Token for a developer key you can use.
 @property (readwrite, copy) NSString *developerKey;
+
+/// Use SSL to protect connection?
 @property (readwrite) BOOL useSsl;
+
+/// Crypto key storage. By default, uses Secure Enclave.
 @property (readwrite) id<TKKeyStore> keyStore;
 /**
  * Optional callback to invoke when a cross-cutting RPC error is raised (for example: kTKErrorSdkVersionMismatch).

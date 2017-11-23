@@ -22,10 +22,19 @@
  */
 @interface TKAccount : NSObject
 
+/// Owner member.
 @property (atomic, readonly) TKMemberSync *member;
+
+/// Id by which Token system identifies this account.
 @property (atomic, readonly) NSString *id;
+
+/// Human-readable name. For example, could be "Checking account with number ending -2718".
 @property (atomic, readonly) NSString *name;
+
+/// Id by which Token system identifies this account's bank.
 @property (atomic, readonly) NSString *bankId;
+
+/// Flag indicating whether account needs re-linking.
 @property (atomic, readonly) BOOL isLocked;
 
 + (TKAccount *)account:(Account *)account
