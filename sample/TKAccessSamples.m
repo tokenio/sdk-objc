@@ -155,6 +155,8 @@
    
     // replaceNoEndorse begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    [newAccess forAllAccounts];
+    [newAccess forAllBalances];
     [newAccess forAllAddresses];
 
     [grantor replaceAccessToken:foundToken
