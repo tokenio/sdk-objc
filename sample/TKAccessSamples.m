@@ -27,6 +27,7 @@
     // createAccessToken begin snippet to include in docs
     AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
     [access forAllAccounts];
+    [access forAllBalances];
     
     [grantor createAccessToken:access
                      onSuccess:^(Token *at) {
@@ -61,13 +62,19 @@
         return (accessToken.payloadSignaturesArray_Count > 0);
     }];
     NSString *accessTokenId = accessToken.id_p;
-    __block NSArray<TKAccount *> *grantorAccounts = nil;
+    __block Money *balance0 = nil;
     
     // useAccessToken begin snippet to include in docs
     [grantee useAccessToken:accessTokenId]; // future requests will behave as if we were grantor
     [grantee getAccounts:^(NSArray <TKAccount *> *ary) {
         // use accounts
-        grantorAccounts = ary;
+        [ary[0] getBalance:^(TKBalance * b) {
+            balance0 = b.current;
+        } onError:^(NSError *e) {
+            @throw [NSException exceptionWithName:@"AccessBalanceException"
+                                           reason:[e localizedFailureReason]
+                                         userInfo:[e userInfo]];
+        }];
         // if we're done using access token, clear it
         [grantee clearAccessToken]; // future requests will behave normally
     } onError:^(NSError *e) {
@@ -78,7 +85,7 @@
     // useAccessToken done snippet to include in docs
     
     [self runUntilTrue:^ {
-        return (grantorAccounts != nil);
+        return (balance0 != nil);
     }];
     
     __block Token *foundToken = nil;
@@ -99,8 +106,9 @@
 
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
-    [newAccess forAllBalances];
-    [newAccess forAllTransactions];
+    [access forAllAccounts];
+    [access forAllBalances];
+    [newAccess forAllAddresses];
     
     [grantor replaceAndEndorseAccessToken:foundToken
                         accessTokenConfig:newAccess
@@ -149,8 +157,9 @@
    
     // replaceNoEndorse begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    [newAccess forAllAccounts];
     [newAccess forAllBalances];
-    [newAccess forAllTransactions];
+    [newAccess forAllAddresses];
 
     [grantor replaceAccessToken:foundToken
               accessTokenConfig:newAccess
