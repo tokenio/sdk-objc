@@ -3,6 +3,8 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
+@import LocalAuthentication;
+
 #import "ed25519.h"
 #import "TKTokenSecretKey.h"
 #import "TKTokenCryptoEngine.h"
@@ -10,6 +12,7 @@
 #import "TKSignature.h"
 #import "TKError.h"
 #import "TKLocalizer.h"
+#import "TKLogManager.h"
 
 @implementation TKTokenCryptoEngine {
     id<TKKeyStore> keyStore;
@@ -48,15 +51,70 @@
             usingKeyLevel:(Key_Level)keyLevel
                    reason:(NSString *)reason
                   onError:(OnError)onError {
+    LAContext *context = [[LAContext alloc] init];
+    
+    if (keyLevel >= Key_Level_Low) {
+        // We don't check DeviceOwnerAuthentication for Key_Level_Low
+        return [self createSignature:data usingKeyLevel:keyLevel];
+    }
+    
+    if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil]) {
+        // If device don't support Device Owner Authentication, skip as success
+        return [self createSignature:data usingKeyLevel:keyLevel];
+    }
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    __block TKSignature *signature = nil;
+    __block NSError *laError = nil;
+    
+    [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
+            localizedReason:reason
+                      reply:^(BOOL success, NSError *error){
+                          // This is a backend thread
+                          if (success) {
+                              signature = [self createSignature:data usingKeyLevel:keyLevel];
+                          }
+                          else {
+                              laError = error;
+                          }
+                          dispatch_semaphore_signal(semaphore);
+                      }];
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    if (signature == nil) {
+        // Handles error
+        TKLogError(@"Error signing data: %@", laError);
+        if ([laError.domain isEqual:@kLAErrorDomain] &&
+            (laError.code == kLAErrorUserCancel || laError.code == kLAErrorSystemCancel )) {
+            onError([NSError errorFromErrorCode:kTKErrorUserCancelled
+                                        details:TKLocalizedString(@"User_Cancelled_Authentication",
+                                                                  @"User cancelled authentication")
+                              encapsulatedError:laError]);
+        }
+        else {
+            onError([NSError errorFromErrorCode:kTKErrorUserInvalid
+                                        details:TKLocalizedString(@"User_Invalid_Authentication",
+                                                                  @"Invalid user for authentication")
+                              encapsulatedError:laError]);
+        }
+        return nil;
+    }
+    
+    return signature;
+}
+
+- (TKSignature *)createSignature:(NSData *)data
+            usingKeyLevel:(Key_Level)keyLevel {
     TKTokenSecretKey *key = [keyStore lookupKeyByLevel:keyLevel forMember:memberId];
     unsigned char signature[64];
     unsigned const char *sk = key.privateKey.bytes;
     unsigned const char *pk = key.publicKey.bytes;
-
+    
     ed25519_sign(signature, data.bytes, data.length, pk, sk);
     return [TKSignature
             signature:[TKUtil base64UrlEncodeBytes:(const char *)signature length:sizeof(signature)]
-           signedWith:key.keyInfo];
+            signedWith:key.keyInfo];
 }
 
 - (bool)verifySignature:(NSString *)signature
