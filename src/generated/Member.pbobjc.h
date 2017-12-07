@@ -157,7 +157,7 @@ typedef GPB_ENUM(MemberRecoveryOperation_FieldNumber) {
 
 /**
  * Provides an agent signature authorizing the recovery operation. Multiple authorizations
- * migth be required in order to initiate the recovery process.  The number of required signatures
+ * might be required in order to initiate the recovery process.  The number of required signatures
  * is governed by Recovery Rules associated with the member.
  **/
 @interface MemberRecoveryOperation : GPBMessage

@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountFeatures;
 @class AccountTag;
 @class BankAccount;
 @class BankAccount_Ach;
@@ -99,6 +100,21 @@ typedef GPB_ENUM(AccountTag_FieldNumber) {
 
 @end
 
+#pragma mark - AccountFeatures
+
+typedef GPB_ENUM(AccountFeatures_FieldNumber) {
+  AccountFeatures_FieldNumber_SupportsPayment = 1,
+  AccountFeatures_FieldNumber_SupportsInformation = 2,
+};
+
+@interface AccountFeatures : GPBMessage
+
+@property(nonatomic, readwrite) BOOL supportsPayment;
+
+@property(nonatomic, readwrite) BOOL supportsInformation;
+
+@end
+
 #pragma mark - Account
 
 typedef GPB_ENUM(Account_FieldNumber) {
@@ -107,6 +123,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_BankId = 3,
   Account_FieldNumber_TagsArray = 4,
   Account_FieldNumber_IsLocked = 5,
+  Account_FieldNumber_AccountFeatures = 6,
 };
 
 /**
@@ -127,6 +144,10 @@ typedef GPB_ENUM(Account_FieldNumber) {
 /** indicates whether account requires re-linking */
 @property(nonatomic, readwrite) BOOL isLocked;
 
+@property(nonatomic, readwrite, strong, null_resettable) AccountFeatures *accountFeatures;
+/** Test to see if @c accountFeatures has been set. */
+@property(nonatomic, readwrite) BOOL hasAccountFeatures;
+
 @end
 
 #pragma mark - BankAccount
@@ -138,6 +159,8 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_Sepa = 4,
   BankAccount_FieldNumber_Ach = 5,
   BankAccount_FieldNumber_Bank = 6,
+  BankAccount_FieldNumber_Metadata = 7,
+  BankAccount_FieldNumber_AccountFeatures = 8,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -169,6 +192,14 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccountFeatures *accountFeatures;
+/** Test to see if @c accountFeatures has been set. */
+@property(nonatomic, readwrite) BOOL hasAccountFeatures;
 
 @end
 
@@ -249,14 +280,17 @@ typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
 
 typedef GPB_ENUM(BankAccount_Sepa_FieldNumber) {
   BankAccount_Sepa_FieldNumber_Iban = 1,
+  BankAccount_Sepa_FieldNumber_Bic = 2,
 };
 
 /**
- * SEPA transfer
+ * SEPA transfer. BIC is optional, except for non EEA countries
  **/
 @interface BankAccount_Sepa : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
 @end
 

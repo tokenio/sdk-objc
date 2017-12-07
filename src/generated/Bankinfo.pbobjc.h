@@ -52,7 +52,8 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_LogoUri = 3,
   Bank_FieldNumber_FullLogoUri = 4,
   Bank_FieldNumber_SupportsAppless = 5,
-  Bank_FieldNumber_SupportsPayments = 6,
+  Bank_FieldNumber_SupportsPayment = 6,
+  Bank_FieldNumber_SupportsInformation = 7,
 };
 
 @interface Bank : GPBMessage
@@ -71,7 +72,10 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 @property(nonatomic, readwrite) BOOL supportsAppless;
 
 /** Connection allows for payment initiation */
-@property(nonatomic, readwrite) BOOL supportsPayments;
+@property(nonatomic, readwrite) BOOL supportsPayment;
+
+/** Connection allows for retrieval of information */
+@property(nonatomic, readwrite) BOOL supportsInformation;
 
 @end
 

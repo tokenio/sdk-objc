@@ -9,7 +9,8 @@ message Bank {
   string logo_uri = 3;            // Square bank avatar icon
   string full_logo_uri = 4;       // Full size bank icon
   bool supports_appless = 5;      // Works with appless payments
-  bool supports_payments = 6;     // Connection allows for payment initiation
+  bool supports_payment = 6;      // Connection allows for payment initiation
+  bool supports_information = 7;  // Connection allows for retrieval of information
 }
 
 message BankInfo {

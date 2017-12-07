@@ -248,7 +248,7 @@ void SealedMessage_ClearMethodOneOfCase(SealedMessage *message);
 #pragma mark - SealedMessage_NoopMethod
 
 /**
- * Clear text is used instad of encryption
+ * Clear text is used instead of encryption
  **/
 @interface SealedMessage_NoopMethod : GPBMessage
 

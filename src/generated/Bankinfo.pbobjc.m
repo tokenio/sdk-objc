@@ -51,7 +51,8 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic logoUri;
 @dynamic fullLogoUri;
 @dynamic supportsAppless;
-@dynamic supportsPayments;
+@dynamic supportsPayment;
+@dynamic supportsInformation;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[1];
@@ -113,11 +114,20 @@ typedef struct Bank__storage_ {
         .dataType = GPBDataTypeBool,
       },
       {
-        .name = "supportsPayments",
+        .name = "supportsPayment",
         .dataTypeSpecific.className = NULL,
-        .number = Bank_FieldNumber_SupportsPayments,
+        .number = Bank_FieldNumber_SupportsPayment,
         .hasIndex = 6,
         .offset = 7,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsInformation",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsInformation,
+        .hasIndex = 8,
+        .offset = 9,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },

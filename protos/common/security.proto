@@ -47,7 +47,7 @@ message SealedMessage {
     RsaAesMethod rsa_aes = 7;         // RSA/AES Method specific metadata
   }
 
-  // Clear text is used instad of encryption
+  // Clear text is used instead of encryption
   message NoopMethod {
   }
 

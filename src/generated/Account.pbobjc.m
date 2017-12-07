@@ -174,6 +174,58 @@ typedef struct AccountTag__storage_ {
 
 @end
 
+#pragma mark - AccountFeatures
+
+@implementation AccountFeatures
+
+@dynamic supportsPayment;
+@dynamic supportsInformation;
+
+typedef struct AccountFeatures__storage_ {
+  uint32_t _has_storage_[1];
+} AccountFeatures__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "supportsPayment",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountFeatures_FieldNumber_SupportsPayment,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsInformation",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountFeatures_FieldNumber_SupportsInformation,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccountFeatures class]
+                                     rootClass:[AccountRoot class]
+                                          file:AccountRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AccountFeatures__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - Account
 
 @implementation Account
@@ -183,6 +235,7 @@ typedef struct AccountTag__storage_ {
 @dynamic bankId;
 @dynamic tagsArray, tagsArray_Count;
 @dynamic isLocked;
+@dynamic hasAccountFeatures, accountFeatures;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
@@ -190,6 +243,7 @@ typedef struct Account__storage_ {
   NSString *name;
   NSString *bankId;
   NSMutableArray *tagsArray;
+  AccountFeatures *accountFeatures;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -243,6 +297,15 @@ typedef struct Account__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
+      {
+        .name = "accountFeatures",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccountFeatures),
+        .number = Account_FieldNumber_AccountFeatures,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Account__storage_, accountFeatures),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Account class]
@@ -271,6 +334,8 @@ typedef struct Account__storage_ {
 @dynamic sepa;
 @dynamic ach;
 @dynamic bank;
+@dynamic metadata, metadata_Count;
+@dynamic hasAccountFeatures, accountFeatures;
 
 typedef struct BankAccount__storage_ {
   uint32_t _has_storage_[2];
@@ -280,6 +345,8 @@ typedef struct BankAccount__storage_ {
   BankAccount_Sepa *sepa;
   BankAccount_Ach *ach;
   BankAccount_Bank *bank;
+  NSMutableDictionary *metadata;
+  AccountFeatures *accountFeatures;
 } BankAccount__storage_;
 
 // This method is threadsafe because it is initially called
@@ -339,6 +406,24 @@ typedef struct BankAccount__storage_ {
         .number = BankAccount_FieldNumber_Bank,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(BankAccount__storage_, bank),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = NULL,
+        .number = BankAccount_FieldNumber_Metadata,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BankAccount__storage_, metadata),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accountFeatures",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccountFeatures),
+        .number = BankAccount_FieldNumber_AccountFeatures,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BankAccount__storage_, accountFeatures),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -573,10 +658,12 @@ typedef struct BankAccount_Swift__storage_ {
 @implementation BankAccount_Sepa
 
 @dynamic iban;
+@dynamic bic;
 
 typedef struct BankAccount_Sepa__storage_ {
   uint32_t _has_storage_[1];
   NSString *iban;
+  NSString *bic;
 } BankAccount_Sepa__storage_;
 
 // This method is threadsafe because it is initially called
@@ -591,6 +678,15 @@ typedef struct BankAccount_Sepa__storage_ {
         .number = BankAccount_Sepa_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BankAccount_Sepa__storage_, iban),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bic",
+        .dataTypeSpecific.className = NULL,
+        .number = BankAccount_Sepa_FieldNumber_Bic,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BankAccount_Sepa__storage_, bic),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
