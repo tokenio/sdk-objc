@@ -14,6 +14,6 @@
  */
 @interface TKTokenCryptoEngine : NSObject<TKCryptoEngine>
 
-- (id)initForMember:(NSString *)memberId useKeyStore:(id <TKKeyStore>)store_;
+- (id)initForMember:(NSString *)memberId useKeyStore:(id <TKKeyStore>)store_ useLocalAuthentication:(BOOL)useLocalAuthentication;
 
 @end

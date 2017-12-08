@@ -16,15 +16,17 @@
 
 @implementation TKTokenCryptoEngine {
     id<TKKeyStore> keyStore;
+    BOOL useLocalAuthentication;
     NSString *memberId;
 }
 
-- (id)initForMember:(NSString *)memberId_ useKeyStore:(id <TKKeyStore>)store_ {
+- (id)initForMember:(NSString *)memberId_ useKeyStore:(id <TKKeyStore>)store_ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     self = [super init];
 
     if (self) {
         keyStore = store_;
         memberId = memberId_;
+        useLocalAuthentication = useLocalAuthentication_;
     }
 
     return self;
@@ -53,6 +55,10 @@
                   onError:(OnError)onError {
     LAContext *context = [[LAContext alloc] init];
     
+    if (!useLocalAuthentication) {
+        return [self createSignature:data usingKeyLevel:keyLevel];
+    }
+    
     if (keyLevel >= Key_Level_Low) {
         // We don't check DeviceOwnerAuthentication for Key_Level_Low
         return [self createSignature:data usingKeyLevel:keyLevel];
@@ -69,7 +75,7 @@
     
     [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
             localizedReason:reason
-                      reply:^(BOOL success, NSError *error){
+                      reply:^(BOOL success, NSError *error) {
                           // This is a backend thread
                           if (success) {
                               signature = [self createSignature:data usingKeyLevel:keyLevel];
