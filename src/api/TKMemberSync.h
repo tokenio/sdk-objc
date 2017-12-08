@@ -372,7 +372,10 @@
 
 /**
  * Endorses the transfer token by signing it. The signature is persisted 
- * along with the token.
+ * along with the token. If the member doesn't have a sufficiently
+ * high-privilege key, this gets status TokenOperationResult_Status_MoreSignaturesNeeded
+ * and the system pushes a notification to the member prompting them to use a
+ * higher-privilege key.
  *
  * @param token token to endorse
  * @param keyLevel key to use
