@@ -53,8 +53,6 @@
             usingKeyLevel:(Key_Level)keyLevel
                    reason:(NSString *)reason
                   onError:(OnError)onError {
-    LAContext *context = [[LAContext alloc] init];
-    
     if (!useLocalAuthentication) {
         return [self createSignature:data usingKeyLevel:keyLevel];
     }
@@ -63,6 +61,8 @@
         // We don't check DeviceOwnerAuthentication for Key_Level_Low
         return [self createSignature:data usingKeyLevel:keyLevel];
     }
+    
+    LAContext *context = [[LAContext alloc] init];
     
     if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil]) {
         // If device don't support Device Owner Authentication, skip as success
