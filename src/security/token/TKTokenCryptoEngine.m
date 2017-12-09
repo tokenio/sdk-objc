@@ -65,7 +65,7 @@
     LAContext *context = [[LAContext alloc] init];
     
     if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil]) {
-        // If device don't support Device Owner Authentication, skip as success
+        // If device doesn't support Device Owner Authentication, skip as success
         return [self createSignature:data usingKeyLevel:keyLevel];
     }
     
@@ -73,10 +73,11 @@
     __block TKSignature *signature = nil;
     __block NSError *laError = nil;
     
+    // This method will pop up a modal for passcode or touch ID
     [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
             localizedReason:reason
                       reply:^(BOOL success, NSError *error) {
-                          // This is a backend thread
+                          // This is not the main thread
                           if (success) {
                               signature = [self createSignature:data usingKeyLevel:keyLevel];
                           }
