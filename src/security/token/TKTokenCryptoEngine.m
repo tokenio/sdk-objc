@@ -20,7 +20,9 @@
     NSString *memberId;
 }
 
-- (id)initForMember:(NSString *)memberId_ useKeyStore:(id <TKKeyStore>)store_ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
+- (id)initForMember:(NSString *)memberId_
+        useKeyStore:(id <TKKeyStore>)store_
+useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     self = [super init];
 
     if (self) {
@@ -33,7 +35,7 @@
 }
 
 - (Key *)generateKey:(Key_Level)level {
-    TKTokenSecretKey *key = [self createNewKey_:level];
+    TKTokenSecretKey *key = [self _createNewKey:level];
     [keyStore addKey:key forMember:memberId];
     return key.keyInfo;
 }
@@ -43,7 +45,9 @@
             onError:(OnError)onError {
     TKTokenSecretKey *key = [keyStore lookupKeyByLevel:level forMember:memberId];
     if (!key) {
-        onError([NSError errorFromErrorCode:kTKErrorKeyNotFound details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
+        onError([NSError errorFromErrorCode:kTKErrorKeyNotFound
+                                    details:TKLocalizedString(@"Private_Key_Not_Found",
+                                                              @"Private Key Not Found")]);
         return nil;
     }
     return key.keyInfo;
@@ -54,19 +58,22 @@
                    reason:(NSString *)reason
                   onError:(OnError)onError {
     if (!useLocalAuthentication) {
-        return [self createSignature:data usingKeyLevel:keyLevel];
+        return [self _createSignature:data
+                        usingKeyLevel:keyLevel];
     }
     
     if (keyLevel >= Key_Level_Low) {
         // We don't check DeviceOwnerAuthentication for Key_Level_Low
-        return [self createSignature:data usingKeyLevel:keyLevel];
+        return [self _createSignature:data
+                        usingKeyLevel:keyLevel];
     }
     
     LAContext *context = [[LAContext alloc] init];
     
     if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil]) {
         // If device doesn't support Device Owner Authentication, skip as success
-        return [self createSignature:data usingKeyLevel:keyLevel];
+        return [self _createSignature:data
+                        usingKeyLevel:keyLevel];
     }
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -79,7 +86,8 @@
                       reply:^(BOOL success, NSError *error) {
                           // This is not the main thread
                           if (success) {
-                              signature = [self createSignature:data usingKeyLevel:keyLevel];
+                              signature = [self _createSignature:data
+                                                   usingKeyLevel:keyLevel];
                           }
                           else {
                               laError = error;
@@ -111,19 +119,6 @@
     return signature;
 }
 
-- (TKSignature *)createSignature:(NSData *)data
-            usingKeyLevel:(Key_Level)keyLevel {
-    TKTokenSecretKey *key = [keyStore lookupKeyByLevel:keyLevel forMember:memberId];
-    unsigned char signature[64];
-    unsigned const char *sk = key.privateKey.bytes;
-    unsigned const char *pk = key.publicKey.bytes;
-    
-    ed25519_sign(signature, data.bytes, data.length, pk, sk);
-    return [TKSignature
-            signature:[TKUtil base64UrlEncodeBytes:(const char *)signature length:sizeof(signature)]
-            signedWith:key.keyInfo];
-}
-
 - (bool)verifySignature:(NSString *)signature
                 forData:(NSData *)data
              usingKeyId:(NSString *)keyId {
@@ -134,7 +129,7 @@
 
 #pragma mark private
 
-- (TKTokenSecretKey *)createNewKey_:(Key_Level)keyLevel {
+- (TKTokenSecretKey *)_createNewKey:(Key_Level)keyLevel {
     unsigned char seed[32];
     if (ed25519_create_seed(seed)) {
         [NSException
@@ -149,6 +144,19 @@
     NSData *privateKey = [NSData dataWithBytes:private_key length:sizeof(private_key)];
 
     return [TKTokenSecretKey keyWithLevel:keyLevel privateKey:privateKey publicKey:publicKey];
+}
+
+- (TKSignature *)_createSignature:(NSData *)data
+                    usingKeyLevel:(Key_Level)keyLevel {
+    TKTokenSecretKey *key = [keyStore lookupKeyByLevel:keyLevel forMember:memberId];
+    unsigned char signature[64];
+    unsigned const char *sk = key.privateKey.bytes;
+    unsigned const char *pk = key.publicKey.bytes;
+    
+    ed25519_sign(signature, data.bytes, data.length, pk, sk);
+    return [TKSignature
+            signature:[TKUtil base64UrlEncodeBytes:(const char *)signature length:sizeof(signature)]
+            signedWith:key.keyInfo];
 }
 
 @end

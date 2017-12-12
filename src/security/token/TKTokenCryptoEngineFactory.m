@@ -18,7 +18,8 @@
                                         useLocalAuthentication:useLocalAuthentication];
 }
 
-- (id)initWithStorage:(id<TKKeyStore>)storage_ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
+- (id)initWithStorage:(id<TKKeyStore>)storage_
+useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     self = [super init];
 
     if (self) {
