@@ -168,7 +168,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                   onError:onError];
 }
 
-- (void)loginMember:(NSString *)memberId
+- (void)getMember:(NSString *)memberId
            onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId

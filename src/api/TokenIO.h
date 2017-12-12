@@ -21,8 +21,8 @@
 @class Key;
 
 /**
- * Use this class to create to create a new member using `createMember`
- * method or login an existing member using `loginMember`.
+ * Use this class to create a new member with `createMember`
+ * method or use an existing member with `getMember`.
  *
  * <p>
  * The class provides async API 
@@ -111,11 +111,12 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
                onError:(OnError)onError;
 
 /**
- * Logs in an existing member to the system.
+ * Gets a TKMember using already-stored keys.
+ * ("Logs in" an existing member to the system.)
  *
  * @param memberId member id
  */
-- (void)loginMember:(NSString *)memberId
+- (void)getMember:(NSString *)memberId
            onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError;
 

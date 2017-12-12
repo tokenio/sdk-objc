@@ -36,7 +36,7 @@
         DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstAlias];
         [member approveKeys:newDevice.keys];
 
-        TKMemberSync *memberNewDevice = [tokenIO loginMember:newDevice.memberId];
+        TKMemberSync *memberNewDevice = [tokenIO getMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstAlias, memberNewDevice.firstAlias);
         XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
     }];
@@ -45,7 +45,7 @@
 - (void)testLoginMember {
     [self run: ^(TokenIOSync *tokenIO) {
         TKMemberSync *created = [self createMember:tokenIO];
-        TKMemberSync *loggedIn = [tokenIO loginMember:created.id];
+        TKMemberSync *loggedIn = [tokenIO getMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
         XCTAssertEqual(loggedIn.keys.count, 3);
         XCTAssertEqualObjects(created.firstAlias, loggedIn.firstAlias);
@@ -118,7 +118,7 @@
         XCTAssertEqual(member.aliases.count, 3);
         
         // test aliases after login
-        TKMemberSync *loginMember = [tokenIO loginMember:member.id];
+        TKMemberSync *loginMember = [tokenIO getMember:member.id];
         XCTAssertEqual(loginMember.aliases.count, 3);
     }];
 }
