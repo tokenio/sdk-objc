@@ -21,7 +21,7 @@
 - (void)setUp {
     [super setUp];
     id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
-    id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store] createEngine:@"member_id_123"];
+    id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store useLocalAuthentication:NO] createEngine:@"member_id_123"];
     crypto = [[TKCrypto alloc] initWithEngine:engine];
 }
 

@@ -45,16 +45,17 @@
 
 // create an SDK client builder with settings appropriate for testing environment
 - (TokenIOBuilder *)sdkBuilder {
-  HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
-
-  TokenIOBuilder *builder = [TokenIOSync builder];
-  builder.host = gateway.host;
-  builder.port = gateway.port;
-  builder.useSsl = useSsl;
-  builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
-  builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-  builder.keyStore = [[TKInMemoryKeyStore alloc] init];
-  return builder;
+    HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
+    
+    TokenIOBuilder *builder = [TokenIOSync builder];
+    builder.host = gateway.host;
+    builder.port = gateway.port;
+    builder.useSsl = useSsl;
+    builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
+    builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+    builder.keyStore = [[TKInMemoryKeyStore alloc] init];
+    builder.useLocalAuthentication = NO;
+    return builder;
 }
 
 - (TokenIO *)asyncSDK {

@@ -11,6 +11,7 @@
 
 @interface TKTokenCryptoEngineFactory : NSObject<TKCryptoEngineFactory>
 
-+ (id<TKCryptoEngineFactory>)factoryWithStore:(id<TKKeyStore>)storage;
++ (id<TKCryptoEngineFactory>)factoryWithStore:(id<TKKeyStore>)storage
+                       useLocalAuthentication:(BOOL)useLocalAuthentication;
 
 @end

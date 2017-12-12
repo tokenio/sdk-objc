@@ -9,24 +9,31 @@
 
 @implementation TKTokenCryptoEngineFactory {
     id<TKKeyStore> storage;
+    BOOL useLocalAuthentication;
 }
 
-+ (id<TKCryptoEngineFactory>)factoryWithStore:(id<TKKeyStore>)storage {
-    return [[TKTokenCryptoEngineFactory alloc] initWithStorage:storage];
++ (id<TKCryptoEngineFactory>)factoryWithStore:(id<TKKeyStore>)storage
+                       useLocalAuthentication:(BOOL)useLocalAuthentication {
+    return [[TKTokenCryptoEngineFactory alloc] initWithStorage:storage
+                                        useLocalAuthentication:useLocalAuthentication];
 }
 
-- (id)initWithStorage:(id<TKKeyStore>)storage_ {
+- (id)initWithStorage:(id<TKKeyStore>)storage_
+useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     self = [super init];
 
     if (self) {
         storage = storage_;
+        useLocalAuthentication = useLocalAuthentication_;
     }
 
     return self;
 }
 
 - (id<TKCryptoEngine>)createEngine:(NSString *)memberId {
-    return [[TKTokenCryptoEngine alloc] initForMember:memberId useKeyStore:storage];
+    return [[TKTokenCryptoEngine alloc] initForMember:memberId
+                                          useKeyStore:storage
+                               useLocalAuthentication:useLocalAuthentication];
 }
 
 @end
