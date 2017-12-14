@@ -89,10 +89,10 @@
     return result;
 }
 
-- (TKMemberSync *)loginMember:(NSString *)memberId {
+- (TKMemberSync *)getMember:(NSString *)memberId {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async loginMember:memberId
+        [self.async getMember:memberId
                        onSuccess:^(TKMember *member) {
                            TKMemberSync* memberSync = [TKMemberSync member:member];
                            call.onSuccess(memberSync);
