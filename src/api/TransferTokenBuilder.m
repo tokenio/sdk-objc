@@ -139,7 +139,7 @@
      onAuthRequired:^(ExternalAuthorizationDetails *details) {
          
          TKAuthorizationEngine* authEngine =
-         [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:nil];
+         [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:self.member.browserCreationBlock];
          
          [authEngine
           authorizedWithExternalAuthorizationDetails:details

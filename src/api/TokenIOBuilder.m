@@ -48,12 +48,13 @@
 
     return [[TokenIO alloc]
             initWithHost:self.host
-                    port:self.port
-               timeoutMs:self.timeoutMs
+            port:self.port
+            timeoutMs:self.timeoutMs
             developerKey:self.developerKey
-                  crypto:cryptoEngineFactory
-                  useSsl:self.useSsl
-  globalRpcErrorCallback:self.globalRpcErrorCallback];
+            crypto:cryptoEngineFactory
+            browserCreationBlock:self.browserCreationBlock
+            useSsl:self.useSsl
+            globalRpcErrorCallback:self.globalRpcErrorCallback];
 }
 
 @end

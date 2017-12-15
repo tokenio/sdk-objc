@@ -15,8 +15,7 @@
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "TransferTokenBuilder.h"
-
-
+#import "TKBrowser.h"
 
 @class Member;
 @class TKClient;
@@ -45,12 +44,16 @@
 /// Crypto keys.
 @property (readonly, retain) NSArray<Key *> *keys;
 
+/// Customized authorization browser creation block.
+@property (readonly, retain) TKBrowserCreationBlock browserCreationBlock;
+
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
+browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
              aliases:(NSMutableArray<Alias *> *) aliases_;
 
 

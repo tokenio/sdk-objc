@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TKTypedef.h"
+#import "TkBrowser.h"
 
 @class GatewayService;
 @class TKRpcErrorHandler;
@@ -27,7 +28,8 @@
             timeoutMs:(int)timeoutMs
          developerKey:(NSString *)developerKey
          errorHandler:(TKRpcErrorHandler *)errorHandler
-               crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory;
+               crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
+ browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock;
 
 /**
  * Begins member account recovery process by contacting alias. The verification message will

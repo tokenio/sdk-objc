@@ -23,14 +23,17 @@
 
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
+browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     return [[TKMember alloc] initWithMember:member
                                   useClient:client
+                       browserCreationBlock:browserCreationBlock
                                     aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
            useClient:(TKClient *)client_
+browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     
@@ -38,6 +41,7 @@
         member = member_;
         client = client_;
         aliases = aliases_;
+        _browserCreationBlock = browserCreationBlock_;
     }
     
     return self;

@@ -5,6 +5,7 @@
 
 #import <objc/NSObject.h>
 #import "TKTypedef.h"
+#import "TKBrowser.h"
 
 
 @class TokenIOSync;
@@ -38,6 +39,10 @@
 
 /// If you are using your own key storage, Token crypto engine will ask for local authentication when you sign data by default. Disables this will skip the local authentication.
 @property (readwrite) BOOL useLocalAuthentication;
+
+/// Set this property to create customized browser for external authorization. Token Sdk will use TKTokenBrowser by default.
+@property (readwrite) TKBrowserCreationBlock browserCreationBlock;
+
 /**
  * Optional callback to invoke when a cross-cutting RPC error is raised (for example: kTKErrorSdkVersionMismatch).
  * This is in addition to the rpc-specific onError handler, which is still invoked after the rpcErrorCallback.

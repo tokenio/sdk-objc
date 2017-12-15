@@ -8,8 +8,8 @@
 
 #import "Alias.pbobjc.h"
 #import <objc/NSObject.h>
-
 #import "TKTypedef.h"
+#import "TKBrowser.h"
 
 
 @class GatewayService;
@@ -50,6 +50,7 @@
  * @param developerKey developer ID
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
+ * @param browserCreationBlock use customized authorization browser if set
  * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
 - (id)initWithHost:(NSString *)host
@@ -57,6 +58,7 @@
          timeoutMs:(int)timeout
       developerKey:(NSString *)developerKey
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
+browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
             useSsl:(BOOL)useSsl
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
