@@ -151,7 +151,7 @@
                createTransferToken:payload
                onSuccess:onSuccess
                onAuthRequired:^(ExternalAuthorizationDetails *details) {
-                   // Fails to create transfer token with bank authorization
+                   // We tried using the authorization we received, but bank apparently wants other authorization, so fail.
                    onError([NSError
                             errorFromTransferTokenStatus:TransferTokenStatus_FailureExternalAuthorizationRequired]);
                }

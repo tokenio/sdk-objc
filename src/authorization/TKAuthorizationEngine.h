@@ -22,10 +22,11 @@
 - (id)initWithBrowserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock;
 
 /**
- * Authorizes the external authorization details.
+ * Authorizes, using the external authorization details.
+ * An regular expression error means the external authorization details object is invalid.
  * @param details the external authorization details to authorizes
  * @param onSuccess invoked on success with bank authorization
- * @param onError invoked on error
+ * @param onError invoked on error (Cancellation is a kind of error)
  */
 - (void)authorizedWithExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details
                                          onSuccess:(OnSuccessWithBankAuthorization)onSuccess

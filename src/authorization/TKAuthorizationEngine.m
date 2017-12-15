@@ -25,7 +25,7 @@
 }
 
 /**
- * The shared pool can prevent TKAuthorizationEngine being recycled by ARC
+ * The shared pool can prevent TKAuthorizationEngine being recycled unexpectedly by ARC
  */
 + (id)sharedPool {
     static NSMutableSet<TKAuthorizationEngine *> *sharedPool = nil;
@@ -119,7 +119,7 @@
     return NO;
 }
 
-- (void) authorizationWillCancel:(NSError *)error {
+- (void) authenticationWillCancel:(NSError *)error {
     onError([NSError errorFromErrorCode:kTKErrorUserCancelled
                                 details:TKLocalizedString(@"User_Cancelled_Authentication", @"User cancelled authentication")
                       encapsulatedError:error]);

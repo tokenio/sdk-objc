@@ -22,17 +22,17 @@
 /**
  * This method will be invoked when the authorization will cancel by browser.
  */
-- (void) authorizationWillCancel:(NSError *)error;
+- (void) authenticationWillCancel:(NSError *)error;
 @end
 
 typedef TKBrowser * (^ TKBrowserCreationBlock)(id<TKBrowserDelegate>);
 
 /**
  * The browser for external authorization. Whenever external authorization is required, the browser will be invoked by TKAuthorizationEngine.
- * To Use dedicated browsers:
+ * To Use customized browsers:
  *    1. Defines subclass from TKBrowser
  *    2. Implements override methods.
- *    3. Sets dedicated TKBrowserCreationBlock in TokenIO.
+ *    3. Sets customized TKBrowserCreationBlock in TokenIO.
  */
 @interface TKBrowser : NSObject
 @property (weak, nonatomic) id<TKBrowserDelegate> delegate;

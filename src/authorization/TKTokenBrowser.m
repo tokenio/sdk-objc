@@ -25,7 +25,7 @@
         UIViewController* rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         
         if (rootViewController == nil) {
-            [self.delegate authorizationWillCancel:nil];
+            [self.delegate authenticationWillCancel:nil];
         }
         
         [rootViewController presentViewController:browserViewController
@@ -45,14 +45,14 @@
 
 #pragma mark - UIWebViewDelegate
 - (void)browserViewControllerDidClickCancelButton:(TKTokenBrowserViewController *)browserViewController {
-    [self.delegate authorizationWillCancel:nil];
+    [self.delegate authenticationWillCancel:nil];
     [browserViewController dismissViewControllerAnimated:true completion:nil];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if (error.code >= 400) {
         // Error code 102 is the result of not passing redirect URL through so we can ignore that
-        [self.delegate authorizationWillCancel:error];
+        [self.delegate authenticationWillCancel:error];
         [browserViewController dismissViewControllerAnimated:true completion:nil];
     }
 }
