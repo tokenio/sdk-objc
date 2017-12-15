@@ -13,6 +13,7 @@
     id<TKTokenBrowserViewControllerDelegate> delegate;
     IBOutlet UIWebView *webview;
     IBOutlet UIActivityIndicatorView *spinner;
+    IBOutlet UILabel *urlLabel;
 }
 @end
 
@@ -46,6 +47,7 @@
 
 - (void)loadUrl:(NSString *)url {
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    urlLabel.text = request.URL.host;
     [webview loadRequest:request];
 }
 
