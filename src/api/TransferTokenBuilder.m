@@ -17,6 +17,7 @@
 #import "Account.pbobjc.h"
 #import "TKError.h"
 #import "TKRpcSyncCall.h"
+#import "TKAuthorizationEngine.h"
 
 @implementation TransferTokenBuilder
 
@@ -38,16 +39,11 @@
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self executeAsync:call.onSuccess
-            onAuthRequired:^(ExternalAuthorizationDetails *details) {
-                NSError *error = [NSError errorFromExternalAuthorizationDetails:details];
-                call.onError(error);
-            }
                    onError:call.onError];
     }];
 }
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-      onAuthRequired:(OnAuthRequired)onAuthRequired
              onError:(OnError)onError {
     if (!self.accountId && !self.bankAuthorization) {
         @throw [NSException
@@ -137,10 +133,40 @@
         payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
     }
 
-    [[self.member getClient] createTransferToken:payload
-                                       onSuccess:onSuccess
-                                  onAuthRequired:onAuthRequired
-                                         onError:onError];
+    [[self.member getClient]
+     createTransferToken:payload
+     onSuccess:onSuccess
+     onAuthRequired:^(ExternalAuthorizationDetails *details) {
+         
+         TKAuthorizationEngine* authEngine =
+         [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:nil];
+         
+         [authEngine
+          authorizedWithExternalAuthorizationDetails:details
+          onSuccess:^(BankAuthorization *auth) {
+              
+              payload.transfer.instructions.source.account.tokenAuthorization.authorization = auth;
+              
+              [[self.member getClient]
+               createTransferToken:payload
+               onSuccess:onSuccess
+               onAuthRequired:^(ExternalAuthorizationDetails *details) {
+                   // Fails to create transfer token with bank authorization
+                   onError([NSError
+                            errorFromTransferTokenStatus:TransferTokenStatus_FailureExternalAuthorizationRequired]);
+               }
+               onError:onError];
+              
+              [authEngine revoke];
+          } onError:^(NSError *error){
+              onError(error);
+              [authEngine revoke];
+          }];
+     }
+     onError:onError];
 }
 
+- (void)dealloc {
+    NSLog(@"AA");
+}
 @end

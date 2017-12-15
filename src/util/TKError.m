@@ -17,10 +17,17 @@
 }
 
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error {
-    return [NSError errorWithDomain:kTokenErrorDomain
-                               code:errorCode
-                           userInfo:@{ NSLocalizedDescriptionKey: details ,
-                                       TKEncapsulatedErrorKey: error }];
+    if (error != nil) {
+        return [NSError errorWithDomain:kTokenErrorDomain
+                                   code:errorCode
+                               userInfo:@{ NSLocalizedDescriptionKey: details ,
+                                           TKEncapsulatedErrorKey: error }];
+    }
+    else {
+        return [NSError errorWithDomain:kTokenErrorDomain
+                                   code:errorCode
+                               userInfo:@{ NSLocalizedDescriptionKey: details}];
+    }
 }
 
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {

@@ -102,11 +102,9 @@
  * Executes the request, creating the token, async.
  *
  * @param onSuccess invoked on success
- * @param onAuthRequired invoked on external authorization required
  * @param onError invoked on error
  */
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-      onAuthRequired:(OnAuthRequired)onAuthRequired
              onError:(OnError)onError;
 
 @end
