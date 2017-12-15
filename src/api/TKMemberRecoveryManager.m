@@ -181,7 +181,7 @@
          operations:operations
          metadataArray:[NSArray array]
          reason:reason
-         onSuccess:^(Member *member_){
+         onSuccess:^(Member *member_) {
              member = member_;
              [self verifyAlias:onSuccess onError:onError];
              

@@ -13,6 +13,7 @@
 #import "TKMemberSync.h"
 #import "TKMember.h"
 #import "TKClient.h"
+#import "TKAuthorizationEngine.h"
 
 
 @implementation TKMember {
@@ -274,6 +275,39 @@ browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_
                                  onError:onError];
 }
 
+- (void)linkBank:(NSString *)bankId
+       onSuccess:(OnSuccessWithTKAccounts)onSuccess
+         onError:(OnError)onError {
+    [client getBankInfo:bankId
+              onSuccess:^(BankInfo *info) {
+                  
+                  // TODO: Remove this convertion after getBankInfo return ExternalAuthorizationDetails.
+                  ExternalAuthorizationDetails *details = [ExternalAuthorizationDetails message];
+                  details.URL = info.linkingUri;
+                  details.completionPattern = info.redirectUriRegex;
+                  
+                  // The authorization engine will be revoked after the accounts are linked.
+                  TKAuthorizationEngine *authEngine =
+                  [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:self.browserCreationBlock];
+                  
+                  [authEngine
+                   authorizedWithExternalAuthorizationDetails:details
+                   onSuccess:^(BankAuthorization *bankAuth) {
+                       [client linkAccounts:bankAuth
+                                  onSuccess:^(NSArray<Account *> *accounts) {
+                                      onSuccess([self _mapAccounts:accounts]);
+                                      [authEngine revoke];
+                                  } onError:^(NSError *error) {
+                                      onError(error);
+                                      [authEngine revoke];
+                                  }];
+                   } onError:^(NSError *error) {
+                       onError(error);
+                       [authEngine revoke];
+                   }];
+              }
+                onError:onError];
+}
 
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithTKAccounts)onSuccess

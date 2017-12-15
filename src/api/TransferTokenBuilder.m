@@ -158,7 +158,7 @@
                onError:onError];
               
               [authEngine revoke];
-          } onError:^(NSError *error){
+          } onError:^(NSError *error) {
               onError(error);
               [authEngine revoke];
           }];
