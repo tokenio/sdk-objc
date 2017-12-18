@@ -29,6 +29,8 @@
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
     TokenIO *tokenIO = [builder buildAsync];
     // createSDK done snippet to include in docs
+    
+    XCTAssertNotNil(tokenIO);
 }
 
 - (void)testCreateMember {
