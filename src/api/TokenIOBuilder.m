@@ -13,7 +13,7 @@
 #import "TokenIO.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKTokenCryptoEngineFactory.h"
-
+#import "TKTokenBrowser.h"
 
 @implementation TokenIOBuilder
 
@@ -45,6 +45,13 @@
     } else {
         cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
     }
+    
+    if (!self.browserFactory) {
+        self.browserFactory = ^(id<TKBrowserDelegate> delegate) {
+            return [[TKTokenBrowser alloc] initWithBrowserDelegate:delegate];
+        };
+    }
+    
 
     return [[TokenIO alloc]
             initWithHost:self.host
@@ -52,7 +59,7 @@
             timeoutMs:self.timeoutMs
             developerKey:self.developerKey
             crypto:cryptoEngineFactory
-            browserCreationBlock:self.browserCreationBlock
+            browserFactory:self.browserFactory
             useSsl:self.useSsl
             globalRpcErrorCallback:self.globalRpcErrorCallback];
 }

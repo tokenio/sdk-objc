@@ -52,7 +52,7 @@
 }
 
 - (IBAction)dismiss {
-    [delegate browserViewControllerDidClickCancelButton: self];
+    [delegate browserViewControllerCancelCallback: self];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -63,17 +63,18 @@
 - (BOOL)webView:(UIWebView *)webView
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
-    return [delegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    return [delegate webView:webView
+  shouldStartLoadWithRequest:request
+              navigationType:navigationType];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    // TODO: Remove this js after the problem fix on bank-demo
-    NSString *jsRemoveYobleeTopRightCloseButton = @"var element = document.getElementsByClassName('yodlee-font-icon svg_close close-modal-window closeIcon right hide-for-mobile-only')[0];  element.style.display = 'none';";
+    // TODO: (sibinlu) Remove this js after the problem fix on bank-demo
+    NSString *jsRemoveYobleeTopRightCloseButton =
+    @"var element = document.getElementsByClassName('yodlee-font-icon svg_close close-modal-window closeIcon right hide-for-mobile-only')[0];  element.style.display = 'none';";
     [webView stringByEvaluatingJavaScriptFromString:jsRemoveYobleeTopRightCloseButton];
     
     [spinner stopAnimating];
     [spinner setHidden:YES];
-    
-    [delegate webViewDidFinishLoad:webView];
 }
 @end

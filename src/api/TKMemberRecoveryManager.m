@@ -16,7 +16,7 @@
 @implementation TKMemberRecoveryManager {
     TKUnauthenticatedClient *unauthenticatedClient;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
-    TKBrowserCreationBlock browserCreationBlock;
+    TKBrowserFactory browserFactory;
     GatewayService *gateway;
     int timeoutMs;
     NSString *developerKey;
@@ -36,7 +36,7 @@
          developerKey:(NSString *)developerKey_
          errorHandler:(TKRpcErrorHandler *)errorHandler_
                crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
- browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_ {
+ browserFactory:(TKBrowserFactory)browserFactory_ {
     self = [super init];
     if (self) {
         gateway = gateway_;
@@ -49,7 +49,7 @@
                                  developerKey:developerKey
                                  errorHandler:errorHandler];
         cryptoEngineFactory = cryptoEngineFactory_;
-        browserCreationBlock = browserCreationBlock_;
+        browserFactory = browserFactory_;
         
         verificationId = nil;
         code = nil;
@@ -211,7 +211,7 @@
          onSuccess([TKMember
                     member:member
                     useClient:client
-                    browserCreationBlock:browserCreationBlock
+                    browserFactory:browserFactory
                     aliases:[NSMutableArray arrayWithObject:alias]]);
      } onError:onError];
 }

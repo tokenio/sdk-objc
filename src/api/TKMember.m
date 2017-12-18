@@ -4,9 +4,7 @@
 //
 
 #import <Protobuf/GPBMessage.h>
-
 #import "gateway/Gateway.pbrpc.h"
-
 #import "Transferinstructions.pbobjc.h"
 #import "TKAccountSync.h"
 #import "TKHasher.h"
@@ -14,7 +12,6 @@
 #import "TKMember.h"
 #import "TKClient.h"
 #import "TKAuthorizationEngine.h"
-
 
 @implementation TKMember {
     TKClient *client;
@@ -24,17 +21,17 @@
 
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
-browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
+      browserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     return [[TKMember alloc] initWithMember:member
                                   useClient:client
-                       browserCreationBlock:browserCreationBlock
+                             browserFactory:browserFactory_
                                     aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
            useClient:(TKClient *)client_
-browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_
+      browserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     
@@ -42,7 +39,7 @@ browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_
         member = member_;
         client = client_;
         aliases = aliases_;
-        _browserCreationBlock = browserCreationBlock_;
+        _browserFactory = browserFactory_;
     }
     
     return self;
@@ -280,30 +277,29 @@ browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock_
          onError:(OnError)onError {
     [client getBankInfo:bankId
               onSuccess:^(BankInfo *info) {
-                  
-                  // TODO: Remove this convertion after getBankInfo return ExternalAuthorizationDetails.
+                  /* TODO: (sibinlu) Remove this convertion after getBankInfo
+                   return ExternalAuthorizationDetails.*/
                   ExternalAuthorizationDetails *details = [ExternalAuthorizationDetails message];
                   details.URL = info.linkingUri;
                   details.completionPattern = info.redirectUriRegex;
                   
                   // The authorization engine will be revoked after the accounts are linked.
                   TKAuthorizationEngine *authEngine =
-                  [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:self.browserCreationBlock];
-                  
+                  [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.browserFactory
+                                           ExternalAuthorizationDetails:details];
                   [authEngine
-                   authorizedWithExternalAuthorizationDetails:details
-                   onSuccess:^(BankAuthorization *bankAuth) {
+                   authorizeOnSuccess:^(BankAuthorization *bankAuth) {
                        [client linkAccounts:bankAuth
                                   onSuccess:^(NSArray<Account *> *accounts) {
                                       onSuccess([self _mapAccounts:accounts]);
-                                      [authEngine revoke];
+                                      [authEngine close];
                                   } onError:^(NSError *error) {
                                       onError(error);
-                                      [authEngine revoke];
+                                      [authEngine close];
                                   }];
                    } onError:^(NSError *error) {
                        onError(error);
-                       [authEngine revoke];
+                       [authEngine close];
                    }];
               }
                 onError:onError];

@@ -137,36 +137,32 @@
      createTransferToken:payload
      onSuccess:onSuccess
      onAuthRequired:^(ExternalAuthorizationDetails *details) {
-         
-         TKAuthorizationEngine* authEngine =
-         [[TKAuthorizationEngine alloc] initWithBrowserCreationBlock:self.member.browserCreationBlock];
+         TKAuthorizationEngine *authEngine =
+         [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.member.browserFactory
+                                  ExternalAuthorizationDetails:details];
          
          [authEngine
-          authorizedWithExternalAuthorizationDetails:details
-          onSuccess:^(BankAuthorization *auth) {
-              
+          authorizeOnSuccess:^(BankAuthorization *auth) {
               payload.transfer.instructions.source.account.tokenAuthorization.authorization = auth;
               
               [[self.member getClient]
                createTransferToken:payload
                onSuccess:onSuccess
                onAuthRequired:^(ExternalAuthorizationDetails *details) {
-                   // We tried using the authorization we received, but bank apparently wants other authorization, so fail.
+                   /* We tried using the authorization we received,
+                    but bank apparently wants other authorization, so fail. */
                    onError([NSError
-                            errorFromTransferTokenStatus:TransferTokenStatus_FailureExternalAuthorizationRequired]);
+                            errorFromTransferTokenStatus:
+                            TransferTokenStatus_FailureExternalAuthorizationRequired]);
                }
                onError:onError];
               
-              [authEngine revoke];
+              [authEngine close];
           } onError:^(NSError *error) {
               onError(error);
-              [authEngine revoke];
+              [authEngine close];
           }];
      }
      onError:onError];
-}
-
-- (void)dealloc {
-    NSLog(@"AA");
 }
 @end

@@ -196,7 +196,8 @@
 
 
 /**
- * Links a bank. The authorization browser will present and the accounts selected by user will be linked.
+ * Links a bank. The authorization browser will present and the accounts selected by user
+ * will be linked.
  *
  * @param bankId bank Id
  */

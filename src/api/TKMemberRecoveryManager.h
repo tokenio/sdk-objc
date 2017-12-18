@@ -29,7 +29,7 @@
          developerKey:(NSString *)developerKey
          errorHandler:(TKRpcErrorHandler *)errorHandler
                crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
- browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock;
+       browserFactory:(TKBrowserFactory)browserFactory;
 
 /**
  * Begins member account recovery process by contacting alias. The verification message will

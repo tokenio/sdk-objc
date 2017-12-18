@@ -22,10 +22,11 @@
 - (void) loadUrl:(NSString *)url {
     if (browserViewController == nil) {
         browserViewController = [[TKTokenBrowserViewController alloc] initWithDelegate:self];
-        UIViewController* rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController* rootViewController =
+        [UIApplication sharedApplication].keyWindow.rootViewController;
         
         if (rootViewController == nil) {
-            [self.delegate authenticationWillCancel:nil];
+            [self.delegate browserWillCancel:nil];
         }
         
         [rootViewController presentViewController:browserViewController
@@ -33,8 +34,7 @@
                                        completion:^{
                                            [browserViewController loadUrl:url];
                                        }];
-    }
-    else {
+    } else {
         [browserViewController loadUrl:url];
     }
 }
@@ -43,21 +43,23 @@
     [browserViewController dismissViewControllerAnimated:true completion:nil];
 }
 
-#pragma mark - UIWebViewDelegate
-- (void)browserViewControllerDidClickCancelButton:(TKTokenBrowserViewController *)browserViewController {
-    [self.delegate authenticationWillCancel:nil];
+#pragma mark - TKTokenBrowserViewControllerDelegate
+- (void)browserViewControllerCancelCallback:(TKTokenBrowserViewController *)browserViewController {
+    [self.delegate browserWillCancel:nil];
     [browserViewController dismissViewControllerAnimated:true completion:nil];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if (error.code >= 400) {
         // Error code 102 is the result of not passing redirect URL through so we can ignore that
-        [self.delegate authenticationWillCancel:error];
+        [self.delegate browserWillCancel:error];
         [browserViewController dismissViewControllerAnimated:true completion:nil];
     }
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+- (BOOL)webView:(UIWebView *)webView
+shouldStartLoadWithRequest:(NSURLRequest *)request
+ navigationType:(UIWebViewNavigationType)navigationType{
     return [self.delegate shouldStartLoadWithRequest:request];
 }
 @end

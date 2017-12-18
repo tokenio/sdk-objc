@@ -16,23 +16,25 @@
 @protocol TKBrowserDelegate
 @required
 /**
- * Return Yes if the browser shall load this request; Otherwise the browser will discard the request.
+ * Return Yes if the browser shall load this request; Otherwise the browser will
+ * not load the request.
  */
 - (BOOL) shouldStartLoadWithRequest:(NSURLRequest *)request;
 /**
- * This method will be invoked when the authorization will cancel by browser.
+ * This method will be invoked when the browser will cancel.
  */
-- (void) authenticationWillCancel:(NSError *)error;
+- (void) browserWillCancel:(NSError *)error;
 @end
 
-typedef TKBrowser * (^ TKBrowserCreationBlock)(id<TKBrowserDelegate>);
+typedef TKBrowser * (^TKBrowserFactory)(id<TKBrowserDelegate>);
 
 /**
- * The browser for external authorization. Whenever external authorization is required, the browser will be invoked by TKAuthorizationEngine.
+ * The browser for external authorization. Whenever external authorization is required,
+ * the browser will be invoked by TKAuthorizationEngine.
  * To Use customized browsers:
  *    1. Defines subclass from TKBrowser
  *    2. Implements override methods.
- *    3. Sets customized TKBrowserCreationBlock in TokenIO.
+ *    3. Sets customized TKBrowserFactory in TokenIO.
  */
 @interface TKBrowser : NSObject
 @property (weak, nonatomic) id<TKBrowserDelegate> delegate;

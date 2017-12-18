@@ -16,7 +16,7 @@
  */
 @protocol TKTokenBrowserViewControllerDelegate <UIWebViewDelegate>
 @required
-- (void)browserViewControllerDidClickCancelButton:(TKTokenBrowserViewController *)browserViewController;
+- (void)browserViewControllerCancelCallback:(TKTokenBrowserViewController *)browserViewController;
 @end
 
 /**

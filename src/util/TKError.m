@@ -22,8 +22,7 @@
                                    code:errorCode
                                userInfo:@{ NSLocalizedDescriptionKey: details ,
                                            TKEncapsulatedErrorKey: error }];
-    }
-    else {
+    } else {
         return [NSError errorWithDomain:kTokenErrorDomain
                                    code:errorCode
                                userInfo:@{ NSLocalizedDescriptionKey: details}];

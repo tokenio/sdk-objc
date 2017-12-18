@@ -45,7 +45,7 @@
 @property (readonly, retain) NSArray<Key *> *keys;
 
 /// Customized authorization browser creation block.
-@property (readonly, retain) TKBrowserCreationBlock browserCreationBlock;
+@property (readonly, retain) TKBrowserFactory browserFactory;
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
@@ -53,7 +53,7 @@
  */
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
-browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
+      browserFactory:(TKBrowserFactory)browserFactory
              aliases:(NSMutableArray<Alias *> *) aliases_;
 
 
@@ -240,7 +240,8 @@ browserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock
                              onError:(OnError)onError;
 
 /**
- * Links a bank. The authorization browser will present and the accounts selected by user will be linked.
+ * Links a bank. The authorization browser will present and the accounts selected by user
+ * will be linked.
  *
  * @param bankId bank Id
  * @param onSuccess callback invoked on success

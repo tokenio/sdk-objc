@@ -28,7 +28,10 @@
 /// Request timeout duration used with RPC requests.
 @property (readwrite) int timeoutMs;
 
-/// Key that "tags" requests with ID of developer organization. Ask Token for a developer key you can use.
+/**
+ * Key that "tags" requests with ID of developer organization.
+ * Ask Token for a developer key you can use.
+ */
 @property (readwrite, copy) NSString *developerKey;
 
 /// Use SSL to protect connection?
@@ -37,15 +40,22 @@
 /// Crypto key storage. By default, uses Secure Enclave.
 @property (readwrite) id<TKKeyStore> keyStore;
 
-/// If you are using your own key storage, Token crypto engine will ask for local authentication when you sign data by default. Disables this will skip the local authentication.
+/**
+ * If you are using your own key storage, Token crypto engine will ask for local
+ * authentication when you sign data by default. Disables this will skip the local authentication.
+ */
 @property (readwrite) BOOL useLocalAuthentication;
 
-/// Set this property to create customized browser for external authorization. Token Sdk will use TKTokenBrowser by default.
-@property (readwrite) TKBrowserCreationBlock browserCreationBlock;
+/**
+ * Set this property to create customized browser for external authorization.
+ * Token Sdk will use TKTokenBrowser by default.
+ */
+@property (readwrite) TKBrowserFactory browserFactory;
 
 /**
- * Optional callback to invoke when a cross-cutting RPC error is raised (for example: kTKErrorSdkVersionMismatch).
- * This is in addition to the rpc-specific onError handler, which is still invoked after the rpcErrorCallback.
+ * Optional callback to invoke when a cross-cutting RPC error is raised (for example:
+ * kTKErrorSdkVersionMismatch). This is in addition to the rpc-specific onError handler, which is
+ * still invoked after the rpcErrorCallback.
  */
 @property (readwrite) OnError globalRpcErrorCallback;
 

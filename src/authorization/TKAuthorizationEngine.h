@@ -16,26 +16,26 @@
  */
 @interface TKAuthorizationEngine : NSObject <TKBrowserDelegate>
 /**
- * Initialize with TKBrowserCreationBlock. If the block is nil or invalid, the engine will
- * use TKTokenBrowser instead.
+ * Initialize with TKBrowserFactory and ExternalAuthorizationDetails. Each external authorization
+ * shall have their own authorization engine instance.
  */
-- (id)initWithBrowserCreationBlock:(TKBrowserCreationBlock)browserCreationBlock;
+- (id)initWithBrowserFactory:(TKBrowserFactory)browserFactory
+ExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details;
 
 /**
- * Authorizes, using the external authorization details.
+ * Authorizes for the external authorization.
  * An regular expression error means the external authorization details object is invalid.
- * @param details the external authorization details to authorizes
- * @param onSuccess invoked on success with bank authorization
+ * @param authorizeOnSuccess invoked on success with bank authorization
  * @param onError invoked on error (Cancellation is a kind of error)
  */
-- (void)authorizedWithExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details
-                                         onSuccess:(OnSuccessWithBankAuthorization)onSuccess
-                                           onError:(OnError)onError;
+- (void)authorizeOnSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                   onError:(OnError)onError;
 
 /**
- * Revoking the authorization engine will dismiss the browser. Revoke is necessary after
- * authorizedWithExternalAuthorizationDetails. This method enhance the flexibility to control the browser.
+ * Closing the authorization engine will dismiss the browser. it is necessary to close the
+ * auth engine after authorizeOnSuccess:onError:. This method enhance the flexibility to control
+ * the browser.
  */
-- (void)revoke;
+- (void)close;
 
 @end

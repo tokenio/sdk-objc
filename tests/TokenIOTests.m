@@ -30,7 +30,7 @@
                                         timeoutMs:1000
                                      developerKey:@"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI"
                                            crypto:nil
-                             browserCreationBlock:nil
+                                   browserFactory:nil
                                            useSsl:NO
                            globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}]);
 }
@@ -41,7 +41,7 @@
                                                      timeoutMs:1000
                                                   developerKey:nil
                                                         crypto:nil
-                                          browserCreationBlock:nil
+                                                browserFactory:nil
                                                         useSsl:NO
                                         globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}],
                                  NSException,

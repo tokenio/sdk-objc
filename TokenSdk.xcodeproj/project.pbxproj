@@ -163,10 +163,10 @@
 		D03A56031FE07368008342E0 /* TKAuthorizationEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D03A56011FE07368008342E0 /* TKAuthorizationEngine.m */; };
 		D03A56061FE07380008342E0 /* TKTokenBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A56041FE07380008342E0 /* TKTokenBrowser.h */; };
 		D03A56071FE07380008342E0 /* TKTokenBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D03A56051FE07380008342E0 /* TKTokenBrowser.m */; };
-		D03A56101FE07431008342E0 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A560E1FE07431008342E0 /* TKTokenBrowserViewController.h */; };
-		D03A56111FE07431008342E0 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03A560F1FE07431008342E0 /* TKTokenBrowserViewController.m */; };
 		D03A56131FE08DE5008342E0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03A56121FE08DE4008342E0 /* UIKit.framework */; };
-		D03A56151FE2FEA9008342E0 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03A56141FE2FEA9008342E0 /* TKTokenBrowserViewController.xib */; };
+		D07E49AD1FE87917003B33A5 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07E49AC1FE87917003B33A5 /* TKTokenBrowserViewController.xib */; };
+		D07E49B01FE8792A003B33A5 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D07E49AE1FE8792A003B33A5 /* TKTokenBrowserViewController.m */; };
+		D07E49B11FE8792A003B33A5 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
 		D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */; };
 		D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */; };
@@ -401,12 +401,12 @@
 		D03A56011FE07368008342E0 /* TKAuthorizationEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKAuthorizationEngine.m; sourceTree = "<group>"; };
 		D03A56041FE07380008342E0 /* TKTokenBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowser.h; sourceTree = "<group>"; };
 		D03A56051FE07380008342E0 /* TKTokenBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowser.m; sourceTree = "<group>"; };
-		D03A560E1FE07431008342E0 /* TKTokenBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowserViewController.h; sourceTree = "<group>"; };
-		D03A560F1FE07431008342E0 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
 		D03A56121FE08DE4008342E0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D03A56141FE2FEA9008342E0 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
 		D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
+		D07E49AC1FE87917003B33A5 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
+		D07E49AE1FE8792A003B33A5 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
+		D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowserViewController.h; sourceTree = "<group>"; };
 		D082409E1EFDC5050063D9E9 /* TKProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKProfileTests.m; sourceTree = "<group>"; };
 		D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberRecoveryManager.m; sourceTree = "<group>"; };
 		D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberRecoveryManager.h; sourceTree = "<group>"; };
@@ -833,9 +833,8 @@
 				D03A56011FE07368008342E0 /* TKAuthorizationEngine.m */,
 				D03A56041FE07380008342E0 /* TKTokenBrowser.h */,
 				D03A56051FE07380008342E0 /* TKTokenBrowser.m */,
-				D03A56141FE2FEA9008342E0 /* TKTokenBrowserViewController.xib */,
-				D03A560E1FE07431008342E0 /* TKTokenBrowserViewController.h */,
-				D03A560F1FE07431008342E0 /* TKTokenBrowserViewController.m */,
+				D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */,
+				D07E49AE1FE8792A003B33A5 /* TKTokenBrowserViewController.m */,
 			);
 			path = authorization;
 			sourceTree = "<group>";
@@ -843,6 +842,7 @@
 		DD0A77551E42254E0058FB8A /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				D07E49AC1FE87917003B33A5 /* TKTokenBrowserViewController.xib */,
 				D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */,
 				D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */,
 				DD0A77631E42668C0058FB8A /* Localizable.strings */,
@@ -920,7 +920,7 @@
 			files = (
 				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
 				4B240F841F28096300497B2D /* TKHasher.h in Headers */,
-				D03A56101FE07431008342E0 /* TKTokenBrowserViewController.h in Headers */,
+				D07E49B11FE8792A003B33A5 /* TKTokenBrowserViewController.h in Headers */,
 				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				ABA7BC0BB1D940B3E988BEA2 /* TKMemberSync.h in Headers */,
@@ -1120,7 +1120,7 @@
 				DD0A77641E42668C0058FB8A /* Localizable.strings in Resources */,
 				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,
 				ABA7B103B5929B86EF4C8689 /* license.txt in Resources */,
-				D03A56151FE2FEA9008342E0 /* TKTokenBrowserViewController.xib in Resources */,
+				D07E49AD1FE87917003B33A5 /* TKTokenBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1328,7 +1328,7 @@
 				4B240F8C1F28135000497B2D /* Base58.c in Sources */,
 				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
 				ABA7B2B006484A1B045E42DB /* TokenIOBuilder.m in Sources */,
-				D03A56111FE07431008342E0 /* TKTokenBrowserViewController.m in Sources */,
+				D07E49B01FE8792A003B33A5 /* TKTokenBrowserViewController.m in Sources */,
 				37637B5D1D989A930043345F /* Annotations.pbobjc.m in Sources */,
 				ABA7B5835408D6DD145BFCD0 /* TKClient.m in Sources */,
 				37637B5B1D989A930043345F /* Gateway.pbrpc.m in Sources */,
