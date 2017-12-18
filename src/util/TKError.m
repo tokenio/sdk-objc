@@ -16,7 +16,9 @@
                            userInfo:@{ NSLocalizedDescriptionKey: details }];
 }
 
-+ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error {
++ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode
+                           details:(NSString *)details
+                 encapsulatedError:(NSError *)error {
     if (error != nil) {
         return [NSError errorWithDomain:kTokenErrorDomain
                                    code:errorCode
@@ -30,25 +32,31 @@
 }
 
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
-    return [NSError errorWithDomain:kTokenTransferErrorDomain
-                               code:status
-                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
-                                           stringWithFormat:@"Failed to create token %d", status] }];
+    return [NSError
+            errorWithDomain:kTokenTransferErrorDomain
+            code:status
+            userInfo:@{ NSLocalizedDescriptionKey:
+                            [NSString stringWithFormat:@"Failed to create token %d", status] }];
 }
 
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details {
-    return [NSError errorWithDomain:kTokenTransferErrorDomain
-                               code:TransferTokenStatus_FailureExternalAuthorizationRequired
-                           userInfo:@{ NSLocalizedDescriptionKey: @"External authorization is required",
-                                       @"ExternalAuthorizationDetails_URL": details.URL,
-                                       @"ExternalAuthorizationDetails_CompletionPattern": details.completionPattern }];
+    return [NSError
+            errorWithDomain:kTokenTransferErrorDomain
+            code:TransferTokenStatus_FailureExternalAuthorizationRequired
+            userInfo:@{ NSLocalizedDescriptionKey:
+                            @"External authorization is required",
+                        @"ExternalAuthorizationDetails_URL":
+                            details.URL,
+                        @"ExternalAuthorizationDetails_CompletionPattern":
+                            details.completionPattern }];
 }
 
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
-    return [NSError errorWithDomain:kTokenTransactionErrorDomain
-                               code:status
-                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
-                                                                  stringWithFormat:@"Failed to redeem token %d", status] }];
+    return [NSError
+            errorWithDomain:kTokenTransactionErrorDomain
+            code:status
+            userInfo:@{ NSLocalizedDescriptionKey:
+                            [NSString stringWithFormat:@"Failed to redeem token %d", status] }];
 }
 
 @end

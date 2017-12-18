@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
 
     # SDK & gRPC plugin on top of Messages. Needs arc
     s.subspec "Implementation" do |ss|
-        ss.source_files = "src/api/*.{h,c,m}","src/rpc/*.{h,c,m}","src/authorization/*.{h,m,xib}","src/security/*.{h,c,m}",
+        ss.source_files = "src/api/*.{h,c,m}","src/rpc/*.{h,c,m}","src/authorization/*.{h,c,m}","src/security/*.{h,c,m}",
                 "src/util/*.{h,c,m}","src/ed25519/src/*.{h,c,m}","src/security/**/*.{h,c,m}",
                 "#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
         ss.requires_arc = true

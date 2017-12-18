@@ -167,6 +167,8 @@
 		D07E49AD1FE87917003B33A5 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07E49AC1FE87917003B33A5 /* TKTokenBrowserViewController.xib */; };
 		D07E49B01FE8792A003B33A5 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D07E49AE1FE8792A003B33A5 /* TKTokenBrowserViewController.m */; };
 		D07E49B11FE8792A003B33A5 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */; };
+		D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */; };
+		D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
 		D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */; };
 		D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */; };
@@ -1116,6 +1118,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */,
+				D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */,
 				ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */,
 				DD0A77641E42668C0058FB8A /* Localizable.strings in Resources */,
 				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,

@@ -86,7 +86,8 @@
     }
     
     if (self.bankAuthorization) {
-        payload.transfer.instructions.source.account.tokenAuthorization.authorization = self.bankAuthorization;
+        payload.transfer.instructions.source.account.tokenAuthorization.authorization
+        = self.bankAuthorization;
     }
     
     if (self.redeemerAlias) {
