@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TKTypedef.h"
-#import "TkBrowser.h"
+#import "TKBrowser.h"
 
 @class GatewayService;
 @class TKRpcErrorHandler;

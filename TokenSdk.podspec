@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
 
     # SDK resources
     s.subspec "Resources" do |ss|
-        ss.source_files = "resources/*.*"
+        ss.resources = "resources/*.*"
     end
 
     currentdir = Dir.getwd
