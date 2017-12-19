@@ -53,7 +53,7 @@
  */
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
-      browserFactory:(TKBrowserFactory)browserFactory
+   useBrowserFactory:(TKBrowserFactory)browserFactory
              aliases:(NSMutableArray<Alias *> *) aliases_;
 
 

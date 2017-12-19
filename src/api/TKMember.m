@@ -21,17 +21,17 @@
 
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
-      browserFactory:(TKBrowserFactory)browserFactory_
+   useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     return [[TKMember alloc] initWithMember:member
                                   useClient:client
-                             browserFactory:browserFactory_
+                          useBrowserFactory:browserFactory_
                                     aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
            useClient:(TKClient *)client_
-      browserFactory:(TKBrowserFactory)browserFactory_
+   useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     

@@ -84,24 +84,26 @@ ExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details_ {
     [[NSURLSession sharedSession]
      dataTaskWithRequest:request
      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-         if (!error)
-         {
-             NSError *err = nil;
-             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-                                                                  options:0
-                                                                    error:&err];
-             if (err != nil) {
-                 onError(err);
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if (!error)
+             {
+                 NSError *err = nil;
+                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
+                                                                      options:0
+                                                                        error:&err];
+                 if (err != nil) {
+                     onError(err);
+                 } else {
+                     BankAuthorization *bankAuth =
+                     [TKJson deserializeMessageOfClass:[BankAuthorization class]
+                                        fromDictionary:dict];
+                     TKLogDebug(@"Received BankAuth %@",bankAuth)
+                     onSuccess(bankAuth);
+                 }
              } else {
-                 BankAuthorization *bankAuth =
-                 [TKJson deserializeMessageOfClass:[BankAuthorization class]
-                                    fromDictionary:dict];
-                 TKLogDebug(@"Received BankAuth %@",bankAuth)
-                 onSuccess(bankAuth);
+                 onError(error);
              }
-         } else {
-             onError(error);
-         }
+         });
      }];
     
     [task resume];

@@ -36,7 +36,7 @@
          developerKey:(NSString *)developerKey_
          errorHandler:(TKRpcErrorHandler *)errorHandler_
                crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
- browserFactory:(TKBrowserFactory)browserFactory_ {
+       browserFactory:(TKBrowserFactory)browserFactory_ {
     self = [super init];
     if (self) {
         gateway = gateway_;
@@ -211,7 +211,7 @@
          onSuccess([TKMember
                     member:member
                     useClient:client
-                    browserFactory:browserFactory
+                    useBrowserFactory:browserFactory
                     aliases:[NSMutableArray arrayWithObject:alias]]);
      } onError:onError];
 }

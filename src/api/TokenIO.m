@@ -189,7 +189,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                [client getAliases:^(NSArray<Alias *> *aliases) {
                                    onSuccess([TKMember member:member
                                                     useClient:client
-                                         browserFactory:browserFactory
+                                            useBrowserFactory:browserFactory
                                                       aliases:[NSMutableArray arrayWithArray:aliases]]);
                                    
                                } onError:onError];
@@ -319,7 +319,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                   onSuccess([TKMember
                                              member:member
                                              useClient:client
-                                             browserFactory:browserFactory
+                                             useBrowserFactory:browserFactory
                                              aliases:[NSMutableArray arrayWithObject:alias]]);
                               }
                                 onError:onError];
