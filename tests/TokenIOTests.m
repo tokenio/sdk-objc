@@ -31,6 +31,7 @@
                                      developerKey:@"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI"
                                            crypto:nil
                                            useSsl:NO
+                                        certsPath:nil
                            globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}]);
 }
 
@@ -41,6 +42,7 @@
                                                   developerKey:nil
                                                         crypto:nil
                                                         useSsl:NO
+                                                     certsPath:nil
                                         globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}],
                                  NSException,
                                  @"NoDeveloperKeyException");
