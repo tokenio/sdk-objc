@@ -50,7 +50,7 @@
  * @param developerKey developer ID
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
- * @param certsPath use custom certs if set
+ * @param certsPath use custom certs; otherwise, use the default root certs
  * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
 - (id)initWithHost:(NSString *)host

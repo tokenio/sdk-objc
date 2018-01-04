@@ -69,16 +69,12 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                         encoding:NSUTF8StringEncoding
                                                            error:&error];
             if (error) {
-                @throw [NSException exceptionWithName:@"InvalidCertificateException"
-                                               reason:@"The certificate data is invalid."
-                                             userInfo:nil];
+                @throw error;
             }
             
             [GRPCCall setTLSPEMRootCerts:certs forHost:address error:&error];
             if (error) {
-                @throw [NSException exceptionWithName:@"InvalidCertificateException"
-                                               reason:@"The certificate data is invalid."
-                                             userInfo:nil];
+                @throw error;
             }
         }
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
