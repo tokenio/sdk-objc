@@ -90,6 +90,8 @@
   @class GetTransfersResponse;
   @class LinkAccountsRequest;
   @class LinkAccountsResponse;
+  @class NotifyExpiredAccessTokenRequest;
+  @class NotifyExpiredAccessTokenResponse;
   @class NotifyRequest;
   @class NotifyResponse;
   @class ReplaceTokenRequest;
@@ -108,6 +110,8 @@
   @class SetProfileResponse;
   @class SubscribeToNotificationsRequest;
   @class SubscribeToNotificationsResponse;
+  @class TriggerStepUpNotificationRequest;
+  @class TriggerStepUpNotificationResponse;
   @class UnlinkAccountsRequest;
   @class UnlinkAccountsResponse;
   @class UnsubscribeFromNotificationsRequest;
@@ -369,6 +373,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)requestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToRequestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark TriggerStepUpNotification(TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse)
+
+- (void)triggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark NotifyExpiredAccessToken(NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse)
+
+- (void)notifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToNotifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)

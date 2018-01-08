@@ -76,14 +76,14 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
 
 @end
 
-#pragma mark - GRpcAuthPayload
+#pragma mark - GrpcAuthPayload
 
-typedef GPB_ENUM(GRpcAuthPayload_FieldNumber) {
-  GRpcAuthPayload_FieldNumber_Request = 1,
-  GRpcAuthPayload_FieldNumber_CreatedAtMs = 6,
+typedef GPB_ENUM(GrpcAuthPayload_FieldNumber) {
+  GrpcAuthPayload_FieldNumber_Request = 1,
+  GrpcAuthPayload_FieldNumber_CreatedAtMs = 6,
 };
 
-@interface GRpcAuthPayload : GPBMessage
+@interface GrpcAuthPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSData *request;
 

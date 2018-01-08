@@ -409,6 +409,30 @@
              responseClass:[RequestTransferResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark TriggerStepUpNotification(TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse)
+
+- (void)triggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToTriggerStepUpNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"TriggerStepUpNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[TriggerStepUpNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark NotifyExpiredAccessToken(NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse)
+
+- (void)notifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToNotifyExpiredAccessTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToNotifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"NotifyExpiredAccessToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[NotifyExpiredAccessTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**

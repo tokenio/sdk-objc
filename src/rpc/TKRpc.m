@@ -48,7 +48,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
         onError:(OnError)onError { 
     unsigned long long now = (unsigned long long)([[NSDate date] timeIntervalSince1970] * 1000);
 
-    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    GrpcAuthPayload *payload = [GrpcAuthPayload message];
     payload.request = [request data];
     payload.createdAtMs = now;
     TKSignature *signature = [crypto

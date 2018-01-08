@@ -243,9 +243,9 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
-/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
@@ -265,6 +265,7 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Description_p = 8,
   TokenPayload_FieldNumber_Transfer = 9,
   TokenPayload_FieldNumber_Access = 10,
+  TokenPayload_FieldNumber_EndorseUntilMs = 11,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -301,6 +302,9 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 /** Optional */
 @property(nonatomic, readwrite) int64_t expiresAtMs;
+
+/** Optional, can be endorsed until this time */
+@property(nonatomic, readwrite) int64_t endorseUntilMs;
 
 /** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;

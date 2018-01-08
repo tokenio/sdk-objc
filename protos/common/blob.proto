@@ -5,6 +5,7 @@ option java_outer_classname = "BlobProtos";
 // Representation of a blob of data.
 message Blob {
   string id = 1;             // Hash of the payload, route, shard
+  Payload payload = 2;
 
   enum AccessMode {
     DEFAULT = 0; // Owner or token-participants can read.
@@ -18,8 +19,6 @@ message Blob {
     bytes data = 4;             // Data
     AccessMode access_mode = 5; // Is it public?
   }
-
-  Payload payload = 2;
 }
 
 // Attachment of a blob to a token.

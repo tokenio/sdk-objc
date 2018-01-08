@@ -14,6 +14,7 @@ message Key {
     INVALID_ALGORITHM = 0;
     ED25519 = 1;
     ECDSA_SHA256 = 2;
+    RS256 = 3;
   }
 
   enum Level {

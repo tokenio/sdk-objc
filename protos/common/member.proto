@@ -45,8 +45,8 @@ message MemberOperation {
    oneof operation {
      MemberAddKeyOperation add_key = 1;
      MemberRemoveKeyOperation remove_key = 2;
-     MemberAliasOperation add_alias = 5;
      MemberAliasOperation remove_alias = 4;
+     MemberAliasOperation add_alias = 5;
      MemberAliasOperation verify_alias = 6;
      MemberRecoveryRulesOperation recovery_rules = 7;
      MemberRecoveryOperation recover = 8;
