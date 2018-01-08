@@ -42,7 +42,6 @@ def fetch_protos()
     system("rm -rf protos/external")
 
     file = download("io/token/proto", "tokenio-proto", "external", TOKEN_PROTOS_VER)
-    system("unzip -d protos/external -o #{file} 'bankapi/banklink.proto'")
     system("unzip -d protos/external -o #{file} 'gateway/*.proto'")
     system("rm -f #{file}");
 
