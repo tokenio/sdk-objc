@@ -38,7 +38,10 @@ CF_EXTERN_C_BEGIN
 @class Blob_Payload;
 @class Device;
 @class ExternalAuthorizationDetails;
+@class GetBalancePayload;
 @class GetTokensRequest_TokenFilter;
+@class GetTransactionPayload;
+@class GetTransactionsPayload;
 @class GetTransfersRequest_TransferFilter;
 @class Key;
 @class Member;
@@ -52,7 +55,9 @@ CF_EXTERN_C_BEGIN
 @class Profile;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
+@class RequestStepUp;
 @class Signature;
+@class StepUp;
 @class Subscriber;
 @class Token;
 @class TokenMember;
@@ -63,6 +68,7 @@ CF_EXTERN_C_BEGIN
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
+GPB_ENUM_FWD_DECLARE(RequestStatus);
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
 
@@ -930,6 +936,94 @@ int32_t RequestTransferResponse_Status_RawValue(RequestTransferResponse *message
  **/
 void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message, int32_t value);
 
+#pragma mark - TriggerStepUpNotificationRequest
+
+typedef GPB_ENUM(TriggerStepUpNotificationRequest_FieldNumber) {
+  TriggerStepUpNotificationRequest_FieldNumber_TokenStepUp = 1,
+  TriggerStepUpNotificationRequest_FieldNumber_RequestStepUp = 2,
+};
+
+typedef GPB_ENUM(TriggerStepUpNotificationRequest_StepUpType_OneOfCase) {
+  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_GPBUnsetOneOfCase = 0,
+  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_TokenStepUp = 1,
+  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_RequestStepUp = 2,
+};
+
+@interface TriggerStepUpNotificationRequest : GPBMessage
+
+@property(nonatomic, readonly) TriggerStepUpNotificationRequest_StepUpType_OneOfCase stepUpTypeOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) StepUp *tokenStepUp;
+
+@property(nonatomic, readwrite, strong, null_resettable) RequestStepUp *requestStepUp;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'stepUpType'.
+ **/
+void TriggerStepUpNotificationRequest_ClearStepUpTypeOneOfCase(TriggerStepUpNotificationRequest *message);
+
+#pragma mark - TriggerStepUpNotificationResponse
+
+typedef GPB_ENUM(TriggerStepUpNotificationResponse_FieldNumber) {
+  TriggerStepUpNotificationResponse_FieldNumber_Status = 1,
+};
+
+@interface TriggerStepUpNotificationResponse : GPBMessage
+
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c TriggerStepUpNotificationResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message);
+/**
+ * Sets the raw value of an @c TriggerStepUpNotificationResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value);
+
+#pragma mark - NotifyExpiredAccessTokenRequest
+
+typedef GPB_ENUM(NotifyExpiredAccessTokenRequest_FieldNumber) {
+  NotifyExpiredAccessTokenRequest_FieldNumber_TokenId = 1,
+};
+
+@interface NotifyExpiredAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@end
+
+#pragma mark - NotifyExpiredAccessTokenResponse
+
+typedef GPB_ENUM(NotifyExpiredAccessTokenResponse_FieldNumber) {
+  NotifyExpiredAccessTokenResponse_FieldNumber_Status = 1,
+};
+
+@interface NotifyExpiredAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c NotifyExpiredAccessTokenResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t NotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message);
+/**
+ * Sets the raw value of an @c NotifyExpiredAccessTokenResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetNotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message, int32_t value);
+
 #pragma mark - LinkAccountsRequest
 
 typedef GPB_ENUM(LinkAccountsRequest_FieldNumber) {
@@ -1028,11 +1122,21 @@ typedef GPB_ENUM(GetAccountsResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetBalanceRequest_FieldNumber) {
   GetBalanceRequest_FieldNumber_AccountId = 1,
+  GetBalanceRequest_FieldNumber_Payload = 2,
+  GetBalanceRequest_FieldNumber_Signature = 3,
 };
 
 @interface GetBalanceRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, strong, null_resettable) GetBalancePayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
 
 @end
 
@@ -1041,6 +1145,7 @@ typedef GPB_ENUM(GetBalanceRequest_FieldNumber) {
 typedef GPB_ENUM(GetBalanceResponse_FieldNumber) {
   GetBalanceResponse_FieldNumber_Current = 1,
   GetBalanceResponse_FieldNumber_Available = 2,
+  GetBalanceResponse_FieldNumber_Status = 3,
 };
 
 @interface GetBalanceResponse : GPBMessage
@@ -1053,13 +1158,29 @@ typedef GPB_ENUM(GetBalanceResponse_FieldNumber) {
 /** Test to see if @c available has been set. */
 @property(nonatomic, readwrite) BOOL hasAvailable;
 
+@property(nonatomic, readwrite) enum RequestStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c GetBalanceResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetBalanceResponse_Status_RawValue(GetBalanceResponse *message);
+/**
+ * Sets the raw value of an @c GetBalanceResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetBalanceResponse_Status_RawValue(GetBalanceResponse *message, int32_t value);
 
 #pragma mark - GetTransactionRequest
 
 typedef GPB_ENUM(GetTransactionRequest_FieldNumber) {
   GetTransactionRequest_FieldNumber_AccountId = 1,
   GetTransactionRequest_FieldNumber_TransactionId = 2,
+  GetTransactionRequest_FieldNumber_Payload = 3,
+  GetTransactionRequest_FieldNumber_Signature = 4,
 };
 
 @interface GetTransactionRequest : GPBMessage
@@ -1068,12 +1189,21 @@ typedef GPB_ENUM(GetTransactionRequest_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
+@property(nonatomic, readwrite, strong, null_resettable) GetTransactionPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
+
 @end
 
 #pragma mark - GetTransactionResponse
 
 typedef GPB_ENUM(GetTransactionResponse_FieldNumber) {
   GetTransactionResponse_FieldNumber_Transaction = 1,
+  GetTransactionResponse_FieldNumber_Status = 2,
 };
 
 @interface GetTransactionResponse : GPBMessage
@@ -1082,13 +1212,29 @@ typedef GPB_ENUM(GetTransactionResponse_FieldNumber) {
 /** Test to see if @c transaction has been set. */
 @property(nonatomic, readwrite) BOOL hasTransaction;
 
+@property(nonatomic, readwrite) enum RequestStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c GetTransactionResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTransactionResponse_Status_RawValue(GetTransactionResponse *message);
+/**
+ * Sets the raw value of an @c GetTransactionResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTransactionResponse_Status_RawValue(GetTransactionResponse *message, int32_t value);
 
 #pragma mark - GetTransactionsRequest
 
 typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
   GetTransactionsRequest_FieldNumber_AccountId = 1,
   GetTransactionsRequest_FieldNumber_Page = 2,
+  GetTransactionsRequest_FieldNumber_Payload = 3,
+  GetTransactionsRequest_FieldNumber_Signature = 4,
 };
 
 @interface GetTransactionsRequest : GPBMessage
@@ -1100,6 +1246,14 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
 
+@property(nonatomic, readwrite, strong, null_resettable) GetTransactionsPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
+
 @end
 
 #pragma mark - GetTransactionsResponse
@@ -1107,6 +1261,7 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
 typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
   GetTransactionsResponse_FieldNumber_TransactionsArray = 1,
   GetTransactionsResponse_FieldNumber_Offset = 2,
+  GetTransactionsResponse_FieldNumber_Status = 3,
 };
 
 @interface GetTransactionsResponse : GPBMessage
@@ -1118,7 +1273,21 @@ typedef GPB_ENUM(GetTransactionsResponse_FieldNumber) {
 /** Optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
+@property(nonatomic, readwrite) enum RequestStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c GetTransactionsResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message);
+/**
+ * Sets the raw value of an @c GetTransactionsResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message, int32_t value);
 
 #pragma mark - GetDefaultAccountRequest
 

@@ -149,11 +149,13 @@ GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "InvalidAlgorithm\000Ed25519\000EcdsaSha256\000";
+        "InvalidAlgorithm\000Ed25519\000EcdsaSha256\000Rs2"
+        "56\000";
     static const int32_t values[] = {
         Key_Algorithm_InvalidAlgorithm,
         Key_Algorithm_Ed25519,
         Key_Algorithm_EcdsaSha256,
+        Key_Algorithm_Rs256,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Key_Algorithm)
@@ -173,6 +175,7 @@ BOOL Key_Algorithm_IsValidValue(int32_t value__) {
     case Key_Algorithm_InvalidAlgorithm:
     case Key_Algorithm_Ed25519:
     case Key_Algorithm_EcdsaSha256:
+    case Key_Algorithm_Rs256:
       return YES;
     default:
       return NO;

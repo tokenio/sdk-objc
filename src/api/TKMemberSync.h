@@ -554,4 +554,14 @@
  * @return list of paired devices
  */
 - (NSArray<Device *> *)getPairedDevices;
+
+/**
+ * If more signatures is needed after endorsing a token, calls this method to notify
+ * the user to endorse the token. We expect this to happen if user tried to endorse with a
+ * low privilege key on another device.
+ *
+ * @return notify status
+ */
+- (NotifyStatus)triggerStepUpNotification:(NSString *)tokenId;
+
 @end

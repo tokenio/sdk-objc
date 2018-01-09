@@ -110,6 +110,28 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void);
  **/
 BOOL TransactionStatus_IsValidValue(int32_t value);
 
+#pragma mark - Enum RequestStatus
+
+typedef GPB_ENUM(RequestStatus) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  RequestStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  RequestStatus_InvalidRequest = 0,
+  RequestStatus_SuccessfulRequest = 1,
+  RequestStatus_MoreSignaturesNeeded = 2,
+};
+
+GPBEnumDescriptor *RequestStatus_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL RequestStatus_IsValidValue(int32_t value);
+
 #pragma mark - TransactionRoot
 
 /**
@@ -185,6 +207,63 @@ int32_t Transaction_Status_RawValue(Transaction *message);
  * was generated.
  **/
 void SetTransaction_Status_RawValue(Transaction *message, int32_t value);
+
+#pragma mark - GetBalancePayload
+
+typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
+  GetBalancePayload_FieldNumber_MemberId = 1,
+  GetBalancePayload_FieldNumber_AccountId = 2,
+  GetBalancePayload_FieldNumber_Nonce = 3,
+};
+
+@interface GetBalancePayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - GetTransactionPayload
+
+typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
+  GetTransactionPayload_FieldNumber_MemberId = 1,
+  GetTransactionPayload_FieldNumber_AccountId = 2,
+  GetTransactionPayload_FieldNumber_TransactionId = 3,
+  GetTransactionPayload_FieldNumber_Nonce = 4,
+};
+
+@interface GetTransactionPayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - GetTransactionsPayload
+
+typedef GPB_ENUM(GetTransactionsPayload_FieldNumber) {
+  GetTransactionsPayload_FieldNumber_MemberId = 1,
+  GetTransactionsPayload_FieldNumber_AccountId = 2,
+  GetTransactionsPayload_FieldNumber_Nonce = 3,
+};
+
+@interface GetTransactionsPayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

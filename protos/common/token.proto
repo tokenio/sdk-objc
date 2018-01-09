@@ -36,8 +36,8 @@ message TokenSignature {
 
 message TokenMember {
   string id = 1;
-  string username = 2;
   // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
+  string username = 2;
   io.token.proto.common.alias.Alias alias = 3;
 }
 
@@ -51,6 +51,7 @@ message TokenPayload {
 
   int64 effective_at_ms = 6;                            // Optional
   int64 expires_at_ms = 7;                              // Optional
+  int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
   string description = 8;                               // Optional
 
   oneof body {
@@ -106,10 +107,10 @@ message AccessBody {
 
   message Resource {
     oneof resource {
-      AllAddresses allAddresses = 1;
-      AllAccounts allAccounts = 2;
-      AllAccountTransactions allTransactions = 3;
-      AllAccountBalances allBalances = 4;
+      AllAddresses all_addresses = 1;
+      AllAccounts all_accounts = 2;
+      AllAccountTransactions all_transactions = 3;
+      AllAccountBalances all_balances = 4;
       Address address = 5;
       Account account = 6;
       AccountTransactions transactions = 7;
@@ -155,10 +156,11 @@ message AccessBody {
 //
 message TokenOperationResult {
   Token token = 1;
+  Status status = 2;
+
   enum Status {
     INVALID = 0;
     SUCCESS = 1;
     MORE_SIGNATURES_NEEDED = 2;
   }
-  Status status = 2;
 }

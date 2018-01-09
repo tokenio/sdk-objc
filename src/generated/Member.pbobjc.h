@@ -208,8 +208,8 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_GPBUnsetOneOfCase = 0,
   MemberOperation_Operation_OneOfCase_AddKey = 1,
   MemberOperation_Operation_OneOfCase_RemoveKey = 2,
-  MemberOperation_Operation_OneOfCase_AddAlias = 5,
   MemberOperation_Operation_OneOfCase_RemoveAlias = 4,
+  MemberOperation_Operation_OneOfCase_AddAlias = 5,
   MemberOperation_Operation_OneOfCase_VerifyAlias = 6,
   MemberOperation_Operation_OneOfCase_RecoveryRules = 7,
   MemberOperation_Operation_OneOfCase_Recover = 8,
@@ -223,9 +223,9 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberRemoveKeyOperation *removeKey;
 
-@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *addAlias;
-
 @property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *removeAlias;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *addAlias;
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberAliasOperation *verifyAlias;
 

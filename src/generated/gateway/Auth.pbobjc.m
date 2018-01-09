@@ -140,18 +140,18 @@ typedef struct HttpAuthPayload__storage_ {
 
 @end
 
-#pragma mark - GRpcAuthPayload
+#pragma mark - GrpcAuthPayload
 
-@implementation GRpcAuthPayload
+@implementation GrpcAuthPayload
 
 @dynamic request;
 @dynamic createdAtMs;
 
-typedef struct GRpcAuthPayload__storage_ {
+typedef struct GrpcAuthPayload__storage_ {
   uint32_t _has_storage_[1];
   NSData *request;
   int64_t createdAtMs;
-} GRpcAuthPayload__storage_;
+} GrpcAuthPayload__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -162,29 +162,29 @@ typedef struct GRpcAuthPayload__storage_ {
       {
         .name = "request",
         .dataTypeSpecific.className = NULL,
-        .number = GRpcAuthPayload_FieldNumber_Request,
+        .number = GrpcAuthPayload_FieldNumber_Request,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GRpcAuthPayload__storage_, request),
+        .offset = (uint32_t)offsetof(GrpcAuthPayload__storage_, request),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBytes,
       },
       {
         .name = "createdAtMs",
         .dataTypeSpecific.className = NULL,
-        .number = GRpcAuthPayload_FieldNumber_CreatedAtMs,
+        .number = GrpcAuthPayload_FieldNumber_CreatedAtMs,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GRpcAuthPayload__storage_, createdAtMs),
+        .offset = (uint32_t)offsetof(GrpcAuthPayload__storage_, createdAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GRpcAuthPayload class]
+        [GPBDescriptor allocDescriptorForClass:[GrpcAuthPayload class]
                                      rootClass:[AuthRoot class]
                                           file:AuthRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GRpcAuthPayload__storage_)
+                                   storageSize:sizeof(GrpcAuthPayload__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

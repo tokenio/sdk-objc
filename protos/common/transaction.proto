@@ -3,6 +3,7 @@ package io.token.proto.common.transaction;
 
 option java_outer_classname = "TransactionProtos";
 
+import "member.proto";
 import "money.proto";
 
 enum TransactionType {
@@ -37,4 +38,29 @@ message Transaction {
   string token_id = 6;                             // Points to the token, only set for Token transactions.
   string token_transfer_id = 7;                    // Points to the token transfer, only set for Token transactions.
   int64 created_at_ms = 8;
+}
+
+message GetBalancePayload {
+  string member_id = 1;
+  string account_id = 2;
+  string nonce = 3;
+}
+
+message GetTransactionPayload {
+  string member_id = 1;
+  string account_id = 2;
+  string transaction_id = 3;
+  string nonce = 4;
+}
+
+message GetTransactionsPayload {
+  string member_id = 1;
+  string account_id = 2;
+  string nonce = 3;
+}
+
+enum RequestStatus {
+  INVALID_REQUEST = 0;
+  SUCCESSFUL_REQUEST = 1;
+  MORE_SIGNATURES_NEEDED = 2;
 }

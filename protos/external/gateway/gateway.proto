@@ -261,6 +261,25 @@ message RequestTransferResponse {
   io.token.proto.common.notification.NotifyStatus status = 1;
 }
 
+message TriggerStepUpNotificationRequest {
+  oneof step_up_type {
+    io.token.proto.common.notification.StepUp token_step_up = 1;
+    io.token.proto.common.notification.RequestStepUp request_step_up = 2;
+  }
+}
+
+message TriggerStepUpNotificationResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1;
+}
+
+message NotifyExpiredAccessTokenRequest {
+  string token_id = 1;
+}
+
+message NotifyExpiredAccessTokenResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
 //
@@ -297,30 +316,45 @@ message GetAccountsResponse {
 
 message GetBalanceRequest {
   string account_id = 1;
+
+  io.token.proto.common.transaction.GetBalancePayload payload = 2;
+  io.token.proto.common.security.Signature signature = 3;
 }
 
 message GetBalanceResponse {
   io.token.proto.common.money.Money current = 1;
   io.token.proto.common.money.Money available = 2;
+
+  io.token.proto.common.transaction.RequestStatus status = 3;
 }
 
 message GetTransactionRequest {
   string account_id = 1;
   string transaction_id = 2;
+
+  io.token.proto.common.transaction.GetTransactionPayload payload = 3;
+  io.token.proto.common.security.Signature signature = 4;
 }
 
 message GetTransactionResponse {
   io.token.proto.common.transaction.Transaction transaction = 1;
+
+  io.token.proto.common.transaction.RequestStatus status = 2;
 }
 
 message GetTransactionsRequest {
   string account_id = 1;
   Page page = 2; // Optional paging settings.
+
+  io.token.proto.common.transaction.GetTransactionsPayload payload = 3;
+  io.token.proto.common.security.Signature signature = 4;
 }
 
 message GetTransactionsResponse {
   repeated io.token.proto.common.transaction.Transaction transactions = 1;
   string offset = 2; // Optional offset state for the client to roundtrip.
+
+  io.token.proto.common.transaction.RequestStatus status = 3;
 }
 
 message GetDefaultAccountRequest {
@@ -399,14 +433,15 @@ message GetTokenResponse {
 }
 
 message GetTokensRequest {
+  Type type = 1;
+  Page page = 2; // Optional paging settings.
+  TokenFilter filter = 3;
+
   enum Type {
     INVALID = 0;
     ACCESS = 1;
     TRANSFER = 2;
   }
-  Type type = 1;
-  Page page = 2; // Optional paging settings.
-  TokenFilter filter = 3;
 
   message TokenFilter {
     string source_account_id = 1;
@@ -540,7 +575,7 @@ message CreateTestBankAccountRequest {
 }
 
 message CreateTestBankAccountResponse {
-  io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
+  io.token.proto.banklink.BankAuthorization bank_authorization = 1;
 }
 
 message GetTestBankNotificationRequest {
@@ -746,6 +781,18 @@ service GatewayService {
   rpc RequestTransfer (RequestTransferRequest) returns (RequestTransferResponse) {
     option (google.api.http) = {
         post: "/request-transfer"
+    };
+  }
+
+  rpc TriggerStepUpNotification (TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse) {
+    option (google.api.http) = {
+        post: "/notify/stepup"
+    };
+  }
+
+  rpc NotifyExpiredAccessToken (NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse) {
+    option (google.api.http) = {
+        post: "/notify/expired-token"
     };
   }
 
