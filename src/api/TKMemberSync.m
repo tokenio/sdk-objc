@@ -610,6 +610,20 @@
     }];
 }
 
+- (NotifyStatus)triggerStepUpNotification:(NSString *)tokenId {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    
+    NSNumber *statusNumber = [call run:^{
+        [self.async triggerStepUpNotification:tokenId
+                                    onSuccess:^(NotifyStatus status){
+                                        call.onSuccess([NSNumber numberWithInt:status]);
+                                    }
+                                      onError:call.onError];
+    }];
+    
+    return [statusNumber intValue];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {

@@ -184,6 +184,9 @@ void check(NSString *message, BOOL condition) {
         TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
         XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
         
+        NotifyStatus status = [payer triggerStepUpNotification:token.id_p];
+        XCTAssertEqual(status, NotifyStatus_Accepted);
+        
         [self waitForNotification:@"STEP_UP"];
         
         result = [payer endorseToken:token withKey:Key_Level_Standard];

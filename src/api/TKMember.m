@@ -643,6 +643,14 @@
                      onError:onError];
 }
 
+- (void)triggerStepUpNotification:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                          onError:(OnError)onError {
+    [client triggerStepUpNotification:tokenId
+                            onSuccess:onSuccess
+                              onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

@@ -1271,6 +1271,29 @@
 }
 
 
+- (void)triggerStepUpNotification:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                          onError:(OnError)onError {
+    TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
+    request.tokenStepUp.tokenId = tokenId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerStepUpNotificationWithRequest:request
+                           handler:^(TriggerStepUpNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel

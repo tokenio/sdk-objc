@@ -521,4 +521,14 @@
  */
 - (void)getPairedDevices:(OnSuccessWithPairedDevices)onSuccess
                  onError:(OnError)onError;
+
+/**
+ * If more signatures is needed after endorsing a token, calls this method to notify
+ * the user to endorse the token.
+ *
+ * @param onSuccess invoked on success with notify status
+ */
+- (void)triggerStepUpNotification:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                          onError:(OnError)onError;
 @end
