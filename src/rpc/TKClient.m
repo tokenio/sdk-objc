@@ -773,7 +773,7 @@
     GetTransfersRequest *request = [GetTransfersRequest message];
     request.page.offset = offset;
     request.page.limit = limit;
-    request.tokenId = tokenId;
+    request.filter.tokenId = tokenId;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
