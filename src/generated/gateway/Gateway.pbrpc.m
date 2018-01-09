@@ -1,4 +1,5 @@
 #import "gateway/Gateway.pbrpc.h"
+#import "gateway/Gateway.pbobjc.h"
 
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>

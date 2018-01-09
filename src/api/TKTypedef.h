@@ -1,5 +1,5 @@
 
-#import "GPBBootstrap.h"
+#import <Protobuf/GPBBootstrap.h>
 
 @class Member;
 @class NSError;

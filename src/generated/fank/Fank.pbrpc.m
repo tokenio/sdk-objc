@@ -1,4 +1,5 @@
 #import "fank/Fank.pbrpc.h"
+#import "fank/Fank.pbobjc.h"
 
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>

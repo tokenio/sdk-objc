@@ -1,4 +1,6 @@
+#if !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
 #import "gateway/Gateway.pbobjc.h"
+#endif
 
 #import <ProtoRPC/ProtoService.h>
 #import <ProtoRPC/ProtoRPC.h>
