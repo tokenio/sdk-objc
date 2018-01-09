@@ -690,7 +690,8 @@
 
 /**
  * If more signatures is needed after endorsing a token, calls this method to notify
- * the user to endorse the token.
+ * the user to endorse the token. We expect this to happen if user tried to endorse with a
+ * low privilege key on another device.
  *
  * @param onSuccess invoked on success with notify status
  */
