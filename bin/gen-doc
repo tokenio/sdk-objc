@@ -6,6 +6,9 @@
 # install jazzy. we don't have sudo so --user-install
 gem install --user-install jazzy
 
+# jazzy doesn't know where to find "Protobuf/", so hide header that confuses it
+cp /dev/null src/api/TKTypedef.h
+
 # run jazzy. The $(ruby...) magic means "Use user-install path" 
 $(ruby -rubygems -e 'puts Gem.user_dir')/bin/jazzy \
   --objc \
@@ -18,5 +21,8 @@ $(ruby -rubygems -e 'puts Gem.user_dir')/bin/jazzy \
   --exclude 'src/generated/*' \
   --output build/docs \
   --head "$(cat bin/gen-doc-head.html)"
+
+# restore header that we hid earlier:
+git checkout -- src/api/TKTypedef.h
 
 tar -czvf build/api.doc.tar.gz -C build/docs .
