@@ -1,6 +1,3 @@
-
-#import <Protobuf/GPBBootstrap.h>
-
 @class Member;
 @class NSError;
 @class Account;
@@ -34,7 +31,7 @@
 @class ExternalAuthorizationDetails;
 @class Device;
 
-typedef GPB_ENUM(NotifyStatus);
+typedef NS_ENUM(int32_t, NotifyStatus);
 
 typedef void (^ _Nonnull OnSuccess)();
 typedef void (^ _Nonnull OnAuthRequired)(ExternalAuthorizationDetails * _Nonnull);
