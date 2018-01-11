@@ -8,6 +8,7 @@ gem install --user-install jazzy
 
 # run jazzy. The $(ruby...) magic means "Use user-install path" 
 $(ruby -rubygems -e 'puts Gem.user_dir')/bin/jazzy \
+  -x -workspace,TokenSdk.xcworkspace \
   --objc \
   --clean \
   --author Token \
