@@ -13,6 +13,7 @@
 #import "TKMemberSync.h"
 #import "TKMember.h"
 #import "TKClient.h"
+#import "TKError.h"
 
 
 @implementation TKMember {
@@ -568,11 +569,28 @@
 }
 
 - (void)getBalance:(NSString *)accountId
+           withKey:(Key_Level)keyLevel
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
-    [client getBalance:accountId
-             onSuccess:onSuccess
-               onError:onError];
+    [client
+     getBalance:accountId
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [client
+              getBalance:accountId
+              withKey:Key_Level_Standard
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
 }
 
 - (void)getBanks:(OnSuccessWithBanks)onSuccess

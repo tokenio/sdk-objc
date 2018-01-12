@@ -332,9 +332,11 @@
  * Looks up account balance.
  *
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @param onSuccess invoked on success with account balance
  */
 - (void)getBalance:(NSString *)accountId
+           withKey:(Key_Level)keyLevel
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError;
 

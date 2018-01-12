@@ -16,7 +16,9 @@
                            userInfo:@{ NSLocalizedDescriptionKey: details }];
 }
 
-+ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode details:(NSString *)details encapsulatedError:(NSError *)error {
++ (instancetype)errorFromErrorCode:(TKErrorCode)errorCode
+                           details:(NSString *)details
+                 encapsulatedError:(NSError *)error {
     return [NSError errorWithDomain:kTokenErrorDomain
                                code:errorCode
                            userInfo:@{ NSLocalizedDescriptionKey: details ,
@@ -24,25 +26,35 @@
 }
 
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
+    NSString *description = [NSString stringWithFormat:@"Failed to create token %d", status];
     return [NSError errorWithDomain:kTokenTransferErrorDomain
                                code:status
-                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
-                                           stringWithFormat:@"Failed to create token %d", status] }];
+                           userInfo:@{ NSLocalizedDescriptionKey: description }];
 }
 
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details {
+    NSString *description = @"External authorization is required";
+    NSString *eadUrlKey = @"ExternalAuthorizationDetails_URL";
+    NSString *eadCompletionKey = @"ExternalAuthorizationDetails_CompletionPattern";
     return [NSError errorWithDomain:kTokenTransferErrorDomain
                                code:TransferTokenStatus_FailureExternalAuthorizationRequired
-                           userInfo:@{ NSLocalizedDescriptionKey: @"External authorization is required",
-                                       @"ExternalAuthorizationDetails_URL": details.URL,
-                                       @"ExternalAuthorizationDetails_CompletionPattern": details.completionPattern }];
+                           userInfo:@{ NSLocalizedDescriptionKey: description,
+                                       eadUrlKey: details.URL,
+                                       eadCompletionKey: details.completionPattern }];
 }
 
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
+    NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
     return [NSError errorWithDomain:kTokenTransactionErrorDomain
                                code:status
-                           userInfo:@{ NSLocalizedDescriptionKey:[NSString
-                                                                  stringWithFormat:@"Failed to redeem token %d", status] }];
+                           userInfo:@{ NSLocalizedDescriptionKey: description }];
+}
+    
++ (instancetype)errorFromRequestStatus:(RequestStatus)status {
+    NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
+    return [NSError errorWithDomain:kTokenRequestErrorDomain
+                               code:status
+                           userInfo:@{ NSLocalizedDescriptionKey: description }];
 }
 
 @end

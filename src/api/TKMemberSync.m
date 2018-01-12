@@ -520,10 +520,12 @@
     }];
 }
 
-- (TKBalance *)getBalance:(NSString *)accountId {
+- (TKBalance *)getBalance:(NSString *)accountId
+                  withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<TKBalance *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getBalance:accountId
+                       withKey:keyLevel
                      onSuccess:call.onSuccess
                        onError:call.onError];
     }];

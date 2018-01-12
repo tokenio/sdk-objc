@@ -13,14 +13,21 @@
  * Generic token error.
  */
 static NSString *const kTokenErrorDomain = @"io.tokensdk";
+
 /*
  * Token error from TransferTokenStatus.
  */
 static NSString *const kTokenTransferErrorDomain = @"io.tokensdk.transfer";
+
 /*
  * Token error from TransactionStatus.
  */
 static NSString *const kTokenTransactionErrorDomain = @"io.tokensdk.transaction";
+
+/*
+ * Token error from TransactionStatus.
+ */
+static NSString *const kTokenRequestErrorDomain = @"io.tokensdk.request";
 
 /*
  * Errors detail encapsulated by
@@ -55,5 +62,6 @@ typedef enum {
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details;
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
++ (instancetype)errorFromRequestStatus:(RequestStatus)status;
 
 @end

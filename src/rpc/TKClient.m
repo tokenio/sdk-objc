@@ -797,10 +797,26 @@
 }
 
 - (void)getBalance:(NSString *)accountId
+           withKey:(Key_Level)keyLevel
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
-    request.accountId = accountId;
+    request.payload.accountId = accountId;
+    request.payload.nonce = [TKUtil nonce];
+    
+    TKSignature *signature = [crypto sign:request.payload
+                                 usingKey:keyLevel
+                                   reason:TKLocalizedString(@"Signature_Reason_GetBalance",
+                                                            @"Approve to get balance")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+    
+    request.signature.memberId = memberId;
+    request.signature.keyId = signature.key.id_p;
+    request.signature.signature = signature.value;
+    
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -809,10 +825,16 @@
                            ^(GetBalanceResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   TKBalance *balance = [TKBalance alloc];
-                                   balance.available = response.available;
-                                   balance.current = response.current;
-                                   onSuccess(balance);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       TKBalance *balance = [TKBalance alloc];
+                                       balance.available = response.available;
+                                       balance.current = response.current;
+                                       onSuccess(balance);
+                                   }
+                                   else {
+                                       onError([NSError errorFromRequestStatus:response.status]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

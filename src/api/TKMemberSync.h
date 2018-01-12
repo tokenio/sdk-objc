@@ -240,12 +240,14 @@
 - (void)setDefaultAccount:(NSString *)accountId;
 
 /**
- * Looks up account balance.
+ * Looks up account balance with a specific key level.
  *
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @return account balance
  */
-- (TKBalance *)getBalance:(NSString *)accountId;
+- (TKBalance *)getBalance:(NSString *)accountId
+                  withKey:(Key_Level)keyLevel;
 
 /**
  * Looks up an existing token transfer.
