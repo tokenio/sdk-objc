@@ -92,8 +92,6 @@
   @class GetTransfersResponse;
   @class LinkAccountsRequest;
   @class LinkAccountsResponse;
-  @class NotifyExpiredAccessTokenRequest;
-  @class NotifyExpiredAccessTokenResponse;
   @class NotifyRequest;
   @class NotifyResponse;
   @class ReplaceTokenRequest;
@@ -384,13 +382,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark NotifyExpiredAccessToken(NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse)
-
-- (void)notifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToNotifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**
@@ -572,22 +563,56 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
 
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CancelToken(CancelTokenRequest) returns (CancelTokenResponse)
 
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (void)cancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (GRPCProtoCall *)RPCToCancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ReplaceToken(ReplaceTokenRequest) returns (ReplaceTokenResponse)
 
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (void)replaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
@@ -598,6 +623,11 @@ NS_ASSUME_NONNULL_BEGIN
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (void)createTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -606,21 +636,42 @@ NS_ASSUME_NONNULL_BEGIN
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
@@ -631,6 +682,8 @@ NS_ASSUME_NONNULL_BEGIN
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -639,14 +692,24 @@ NS_ASSUME_NONNULL_BEGIN
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
 
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler;
 
 

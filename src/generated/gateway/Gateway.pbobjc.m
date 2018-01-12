@@ -2596,12 +2596,14 @@ void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message
 
 @dynamic stepUpTypeOneOfCase;
 @dynamic tokenStepUp;
-@dynamic requestStepUp;
+@dynamic balanceStepUp;
+@dynamic transactionStepUp;
 
 typedef struct TriggerStepUpNotificationRequest__storage_ {
   uint32_t _has_storage_[2];
   StepUp *tokenStepUp;
-  RequestStepUp *requestStepUp;
+  BalanceStepUp *balanceStepUp;
+  TransactionStepUp *transactionStepUp;
 } TriggerStepUpNotificationRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2620,11 +2622,20 @@ typedef struct TriggerStepUpNotificationRequest__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "requestStepUp",
-        .dataTypeSpecific.className = GPBStringifySymbol(RequestStepUp),
-        .number = TriggerStepUpNotificationRequest_FieldNumber_RequestStepUp,
+        .name = "balanceStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(BalanceStepUp),
+        .number = TriggerStepUpNotificationRequest_FieldNumber_BalanceStepUp,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, requestStepUp),
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, balanceStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transactionStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransactionStepUp),
+        .number = TriggerStepUpNotificationRequest_FieldNumber_TransactionStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, transactionStepUp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2708,104 +2719,6 @@ int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificat
 void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value) {
   GPBDescriptor *descriptor = [TriggerStepUpNotificationResponse descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:TriggerStepUpNotificationResponse_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
-
-#pragma mark - NotifyExpiredAccessTokenRequest
-
-@implementation NotifyExpiredAccessTokenRequest
-
-@dynamic tokenId;
-
-typedef struct NotifyExpiredAccessTokenRequest__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *tokenId;
-} NotifyExpiredAccessTokenRequest__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "tokenId",
-        .dataTypeSpecific.className = NULL,
-        .number = NotifyExpiredAccessTokenRequest_FieldNumber_TokenId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(NotifyExpiredAccessTokenRequest__storage_, tokenId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[NotifyExpiredAccessTokenRequest class]
-                                     rootClass:[GatewayRoot class]
-                                          file:GatewayRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(NotifyExpiredAccessTokenRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - NotifyExpiredAccessTokenResponse
-
-@implementation NotifyExpiredAccessTokenResponse
-
-@dynamic status;
-
-typedef struct NotifyExpiredAccessTokenResponse__storage_ {
-  uint32_t _has_storage_[1];
-  NotifyStatus status;
-} NotifyExpiredAccessTokenResponse__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "status",
-        .dataTypeSpecific.enumDescFunc = NotifyStatus_EnumDescriptor,
-        .number = NotifyExpiredAccessTokenResponse_FieldNumber_Status,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(NotifyExpiredAccessTokenResponse__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[NotifyExpiredAccessTokenResponse class]
-                                     rootClass:[GatewayRoot class]
-                                          file:GatewayRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(NotifyExpiredAccessTokenResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-int32_t NotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message) {
-  GPBDescriptor *descriptor = [NotifyExpiredAccessTokenResponse descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NotifyExpiredAccessTokenResponse_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
-}
-
-void SetNotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message, int32_t value) {
-  GPBDescriptor *descriptor = [NotifyExpiredAccessTokenResponse descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:NotifyExpiredAccessTokenResponse_FieldNumber_Status];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 

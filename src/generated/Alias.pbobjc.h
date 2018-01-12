@@ -39,10 +39,23 @@ typedef GPB_ENUM(Alias_Type) {
    **/
   Alias_Type_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Alias_Type_Invalid = 0,
+
+  /**
+   * Unknown type. Useful for UI: For example, if user wants to pay "sandy\@example.com",
+   * let server determine that's an EMAIL alias.
+   **/
   Alias_Type_Unknown = 1,
+
+  /** Email address. For example, "sandy\@example.com" */
   Alias_Type_Email = 2,
+
+  /** unused */
   Alias_Type_Phone = 3,
+
+  /** unused */
   Alias_Type_Domain = 4,
+
+  /** deprecated */
   Alias_Type_Username = 5,
   Alias_Type_Bank = 6,
 };
@@ -77,10 +90,18 @@ typedef GPB_ENUM(Alias_FieldNumber) {
   Alias_FieldNumber_Value = 2,
 };
 
+/**
+ * An Alias refers to a member in a "human readable" way.
+ * Normally, an alias must be verified before it's useful.
+ * E.g., payments to { EMAIL, "sandy\@example.com" } work only if
+ * some member has verified receiving an email at that address.
+ **/
 @interface Alias : GPBMessage
 
+/** For example, EMAIL. */
 @property(nonatomic, readwrite) Alias_Type type;
 
+/** For example, "sandy\@example.com" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 @end

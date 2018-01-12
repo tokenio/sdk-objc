@@ -14,10 +14,10 @@ message Transfer {
   string transaction_id = 2;                   // Bank transaction reference id.
   int64 created_at_ms = 3;
   TransferPayload payload = 4;
-  repeated io.token.proto.common.security.Signature payload_signatures = 5;
+  repeated io.token.proto.common.security.Signature payload_signatures = 5; // Signatures
   io.token.proto.common.transaction.TransactionStatus status = 6;
   string order_id = 7;                         // Currency Ledger order id.
-  Method method = 8;
+  Method method = 8;                           // Instant (currency ledger) or default
 
   enum Method {
     DEFAULT = 0;

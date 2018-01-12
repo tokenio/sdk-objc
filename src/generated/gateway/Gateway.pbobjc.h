@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class Address;
 @class AddressRecord;
 @class Alias;
+@class BalanceStepUp;
 @class Bank;
 @class BankAuthorization;
 @class BankInfo;
@@ -55,7 +56,6 @@ CF_EXTERN_C_BEGIN
 @class Profile;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
-@class RequestStepUp;
 @class Signature;
 @class StepUp;
 @class Subscriber;
@@ -64,6 +64,7 @@ CF_EXTERN_C_BEGIN
 @class TokenOperationResult;
 @class TokenPayload;
 @class Transaction;
+@class TransactionStepUp;
 @class Transfer;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
@@ -714,6 +715,7 @@ typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
 /** Who is sending the notification */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *handler;
 
+/** Available to handler when sending notifications */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *handlerInstructions;
 /** The number of items in @c handlerInstructions without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger handlerInstructions_Count;
@@ -728,6 +730,7 @@ typedef GPB_ENUM(SubscribeToNotificationsResponse_FieldNumber) {
 
 @interface SubscribeToNotificationsResponse : GPBMessage
 
+/** Represents one subscription */
 @property(nonatomic, readwrite, strong, null_resettable) Subscriber *subscriber;
 /** Test to see if @c subscriber has been set. */
 @property(nonatomic, readwrite) BOOL hasSubscriber;
@@ -940,13 +943,15 @@ void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message
 
 typedef GPB_ENUM(TriggerStepUpNotificationRequest_FieldNumber) {
   TriggerStepUpNotificationRequest_FieldNumber_TokenStepUp = 1,
-  TriggerStepUpNotificationRequest_FieldNumber_RequestStepUp = 2,
+  TriggerStepUpNotificationRequest_FieldNumber_BalanceStepUp = 2,
+  TriggerStepUpNotificationRequest_FieldNumber_TransactionStepUp = 3,
 };
 
 typedef GPB_ENUM(TriggerStepUpNotificationRequest_StepUpType_OneOfCase) {
   TriggerStepUpNotificationRequest_StepUpType_OneOfCase_GPBUnsetOneOfCase = 0,
   TriggerStepUpNotificationRequest_StepUpType_OneOfCase_TokenStepUp = 1,
-  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_RequestStepUp = 2,
+  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_BalanceStepUp = 2,
+  TriggerStepUpNotificationRequest_StepUpType_OneOfCase_TransactionStepUp = 3,
 };
 
 @interface TriggerStepUpNotificationRequest : GPBMessage
@@ -955,7 +960,9 @@ typedef GPB_ENUM(TriggerStepUpNotificationRequest_StepUpType_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) StepUp *tokenStepUp;
 
-@property(nonatomic, readwrite, strong, null_resettable) RequestStepUp *requestStepUp;
+@property(nonatomic, readwrite, strong, null_resettable) BalanceStepUp *balanceStepUp;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
 @end
 
@@ -987,42 +994,6 @@ int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificat
  * was generated.
  **/
 void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value);
-
-#pragma mark - NotifyExpiredAccessTokenRequest
-
-typedef GPB_ENUM(NotifyExpiredAccessTokenRequest_FieldNumber) {
-  NotifyExpiredAccessTokenRequest_FieldNumber_TokenId = 1,
-};
-
-@interface NotifyExpiredAccessTokenRequest : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
-
-@end
-
-#pragma mark - NotifyExpiredAccessTokenResponse
-
-typedef GPB_ENUM(NotifyExpiredAccessTokenResponse_FieldNumber) {
-  NotifyExpiredAccessTokenResponse_FieldNumber_Status = 1,
-};
-
-@interface NotifyExpiredAccessTokenResponse : GPBMessage
-
-@property(nonatomic, readwrite) enum NotifyStatus status;
-
-@end
-
-/**
- * Fetches the raw value of a @c NotifyExpiredAccessTokenResponse's @c status property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t NotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message);
-/**
- * Sets the raw value of an @c NotifyExpiredAccessTokenResponse's @c status property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetNotifyExpiredAccessTokenResponse_Status_RawValue(NotifyExpiredAccessTokenResponse *message, int32_t value);
 
 #pragma mark - LinkAccountsRequest
 
@@ -1618,8 +1589,10 @@ typedef GPB_ENUM(EndorseTokenRequest_FieldNumber) {
 
 @interface EndorseTokenRequest : GPBMessage
 
+/** The id of token to endorse */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
+/** Signature */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
 /** Test to see if @c signature has been set. */
 @property(nonatomic, readwrite) BOOL hasSignature;
@@ -1634,6 +1607,7 @@ typedef GPB_ENUM(EndorseTokenResponse_FieldNumber) {
 
 @interface EndorseTokenResponse : GPBMessage
 
+/** Success/fail and new token data */
 @property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
 /** Test to see if @c result has been set. */
 @property(nonatomic, readwrite) BOOL hasResult;
@@ -1649,8 +1623,10 @@ typedef GPB_ENUM(CancelTokenRequest_FieldNumber) {
 
 @interface CancelTokenRequest : GPBMessage
 
+/** The id of token to cancel */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
+/** Signature */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
 /** Test to see if @c signature has been set. */
 @property(nonatomic, readwrite) BOOL hasSignature;
@@ -1665,6 +1641,7 @@ typedef GPB_ENUM(CancelTokenResponse_FieldNumber) {
 
 @interface CancelTokenResponse : GPBMessage
 
+/** Success/fail and new token data */
 @property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
 /** Test to see if @c result has been set. */
 @property(nonatomic, readwrite) BOOL hasResult;
@@ -1699,8 +1676,10 @@ typedef GPB_ENUM(ReplaceTokenRequest_CancelToken_FieldNumber) {
 
 @interface ReplaceTokenRequest_CancelToken : GPBMessage
 
+/** The id of token to replace */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
+/** Signature canceling old token */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
 /** Test to see if @c signature has been set. */
 @property(nonatomic, readwrite) BOOL hasSignature;
@@ -1716,6 +1695,7 @@ typedef GPB_ENUM(ReplaceTokenRequest_CreateToken_FieldNumber) {
 
 @interface ReplaceTokenRequest_CreateToken : GPBMessage
 
+/** New token payload */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
@@ -1735,6 +1715,7 @@ typedef GPB_ENUM(ReplaceTokenResponse_FieldNumber) {
 
 @interface ReplaceTokenResponse : GPBMessage
 
+/** Success/fail and new token data */
 @property(nonatomic, readwrite, strong, null_resettable) TokenOperationResult *result;
 /** Test to see if @c result has been set. */
 @property(nonatomic, readwrite) BOOL hasResult;
@@ -1750,10 +1731,12 @@ typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
 
 @interface CreateTransferRequest : GPBMessage
 
+/** Desired transfer spec */
 @property(nonatomic, readwrite, strong, null_resettable) TransferPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
 
+/** Signature */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
 /** Test to see if @c payloadSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasPayloadSignature;
@@ -1768,6 +1751,7 @@ typedef GPB_ENUM(CreateTransferResponse_FieldNumber) {
 
 @interface CreateTransferResponse : GPBMessage
 
+/** Resulting transfer spec */
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /** Test to see if @c transfer has been set. */
 @property(nonatomic, readwrite) BOOL hasTransfer;
@@ -1782,6 +1766,7 @@ typedef GPB_ENUM(GetTransferRequest_FieldNumber) {
 
 @interface GetTransferRequest : GPBMessage
 
+/** transfer to get */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -1794,6 +1779,7 @@ typedef GPB_ENUM(GetTransferResponse_FieldNumber) {
 
 @interface GetTransferResponse : GPBMessage
 
+/** Transfer spec */
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /** Test to see if @c transfer has been set. */
 @property(nonatomic, readwrite) BOOL hasTransfer;
@@ -1810,13 +1796,15 @@ typedef GPB_ENUM(GetTransfersRequest_FieldNumber) {
 
 @interface GetTransfersRequest : GPBMessage
 
+/** Deprecated, use filter.token_id instead */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
-/** Optional paging settings. */
+/** Optional paging settings */
 @property(nonatomic, readwrite, strong, null_resettable) Page *page;
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
 
+/** Filter to restrict query */
 @property(nonatomic, readwrite, strong, null_resettable) GetTransfersRequest_TransferFilter *filter;
 /** Test to see if @c filter has been set. */
 @property(nonatomic, readwrite) BOOL hasFilter;
@@ -1835,14 +1823,19 @@ typedef GPB_ENUM(GetTransfersRequest_TransferFilter_FieldNumber) {
 
 @interface GetTransfersRequest_TransferFilter : GPBMessage
 
+/** Optional token ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
+/** Optional time range */
 @property(nonatomic, readwrite) int64_t startTimeMs;
 
+/** Optional time range */
 @property(nonatomic, readwrite) int64_t endTimeMs;
 
+/** Optional status */
 @property(nonatomic, readwrite) enum TransactionStatus transactionStatus;
 
+/** Role. Default: ANY */
 @property(nonatomic, readwrite) GetTransfersRequest_TransferFilter_Role role;
 
 @end
@@ -1904,6 +1897,7 @@ typedef GPB_ENUM(GetBanksResponse_FieldNumber) {
 
 @interface GetBanksResponse : GPBMessage
 
+/** List of "link-able" banks */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Bank*> *banksArray;
 /** The number of items in @c banksArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger banksArray_Count;
@@ -1918,6 +1912,7 @@ typedef GPB_ENUM(GetBankInfoRequest_FieldNumber) {
 
 @interface GetBankInfoRequest : GPBMessage
 
+/** Bank id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
@@ -1930,6 +1925,7 @@ typedef GPB_ENUM(GetBankInfoResponse_FieldNumber) {
 
 @interface GetBankInfoResponse : GPBMessage
 
+/** Linking info */
 @property(nonatomic, readwrite, strong, null_resettable) BankInfo *info;
 /** Test to see if @c info has been set. */
 @property(nonatomic, readwrite) BOOL hasInfo;

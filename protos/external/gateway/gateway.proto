@@ -199,12 +199,12 @@ message GetProfilePictureResponse {
 //
 
 message SubscribeToNotificationsRequest {
-  string handler = 1; // Who is sending the notification
-  map<string, string> handler_instructions = 2;
+  string handler = 1;                           // Who is sending the notification
+  map<string, string> handler_instructions = 2; // Available to handler when sending notifications
 }
 
 message SubscribeToNotificationsResponse {
-  io.token.proto.common.subscriber.Subscriber subscriber = 1;
+  io.token.proto.common.subscriber.Subscriber subscriber = 1; // Represents one subscription
 }
 
 message GetSubscribersRequest {}
@@ -264,19 +264,12 @@ message RequestTransferResponse {
 message TriggerStepUpNotificationRequest {
   oneof step_up_type {
     io.token.proto.common.notification.StepUp token_step_up = 1;
-    io.token.proto.common.notification.RequestStepUp request_step_up = 2;
+    io.token.proto.common.notification.BalanceStepUp balance_step_up = 2;
+    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 3;
   }
 }
 
 message TriggerStepUpNotificationResponse {
-  io.token.proto.common.notification.NotifyStatus status = 1;
-}
-
-message NotifyExpiredAccessTokenRequest {
-  string token_id = 1;
-}
-
-message NotifyExpiredAccessTokenResponse {
   io.token.proto.common.notification.NotifyStatus status = 1;
 }
 
@@ -465,31 +458,31 @@ message GetTokensResponse {
 }
 
 message EndorseTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
+  string token_id = 1;                                    // The id of token to endorse
+  io.token.proto.common.security.Signature signature = 2; // Signature
 }
 
 message EndorseTokenResponse {
-  io.token.proto.common.token.TokenOperationResult result = 1;
+  io.token.proto.common.token.TokenOperationResult result = 1; // Success/fail and new token data
 }
 
 message CancelTokenRequest {
-  string token_id = 1;
-  io.token.proto.common.security.Signature signature = 2;
+  string token_id = 1;                                    // The id of token to cancel
+  io.token.proto.common.security.Signature signature = 2; // Signature
 }
 
 message CancelTokenResponse {
-  io.token.proto.common.token.TokenOperationResult result = 1;
+  io.token.proto.common.token.TokenOperationResult result = 1; // Success/fail and new token data
 }
 
 message ReplaceTokenRequest {
   message CancelToken {
-    string token_id = 1;
-    io.token.proto.common.security.Signature signature = 2;
+    string token_id = 1;                                    // The id of token to replace
+    io.token.proto.common.security.Signature signature = 2; // Signature canceling old token
   }
 
   message CreateToken {
-    io.token.proto.common.token.TokenPayload payload = 1;
+    io.token.proto.common.token.TokenPayload payload = 1;           // New token payload
     io.token.proto.common.security.Signature payload_signature = 2; // Optional if endorsement requested.
   }
 
@@ -498,7 +491,7 @@ message ReplaceTokenRequest {
 }
 
 message ReplaceTokenResponse {
-  io.token.proto.common.token.TokenOperationResult result = 1;
+  io.token.proto.common.token.TokenOperationResult result = 1; // Success/fail and new token data
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -506,33 +499,33 @@ message ReplaceTokenResponse {
 //
 
 message CreateTransferRequest {
-  io.token.proto.common.transfer.TransferPayload payload = 1;
-  io.token.proto.common.security.Signature payload_signature = 2;
+  io.token.proto.common.transfer.TransferPayload payload = 1;     // Desired transfer spec
+  io.token.proto.common.security.Signature payload_signature = 2; // Signature
 }
 
 message CreateTransferResponse {
-  io.token.proto.common.transfer.Transfer transfer = 1;
+  io.token.proto.common.transfer.Transfer transfer = 1; // Resulting transfer spec
 }
 
 message GetTransferRequest {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer to get
 }
 
 message GetTransferResponse {
-  io.token.proto.common.transfer.Transfer transfer = 1;
+  io.token.proto.common.transfer.Transfer transfer = 1; // Transfer spec
 }
 
 message GetTransfersRequest {
-  string token_id = 1;
-  Page page = 2;        // Optional paging settings.
-  TransferFilter filter = 3;
+  string token_id = 1;       // Deprecated, use filter.token_id instead
+  Page page = 2;             // Optional paging settings
+  TransferFilter filter = 3; // Filter to restrict query
 
   message TransferFilter {
-    string token_id = 1;
-    int64 start_time_ms = 2;
-    int64 end_time_ms = 3;
-    io.token.proto.common.transaction.TransactionStatus transaction_status = 4;
-    Role role = 5;
+    string token_id = 1;                                                        // Optional token ID
+    int64 start_time_ms = 2;                                                    // Optional time range
+    int64 end_time_ms = 3;                                                      // Optional time range
+    io.token.proto.common.transaction.TransactionStatus transaction_status = 4; // Optional status
+    Role role = 5;                                                              // Role. Default: ANY
 
     enum Role {
       ANY = 0;
@@ -543,8 +536,8 @@ message GetTransfersRequest {
 }
 
 message GetTransfersResponse {
-  repeated io.token.proto.common.transfer.Transfer transfers = 1;    // List of transfers.
-  string offset = 2; // Optional offset state for the client to roundtrip.
+  repeated io.token.proto.common.transfer.Transfer transfers = 1; // List of transfers.
+  string offset = 2;                                              // Optional offset state for the client to roundtrip.
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -555,15 +548,15 @@ message GetBanksRequest {
 }
 
 message GetBanksResponse {
-  repeated io.token.proto.common.bank.Bank banks = 1;
+  repeated io.token.proto.common.bank.Bank banks = 1; // List of "link-able" banks
 }
 
 message GetBankInfoRequest {
-  string bank_id = 1;
+  string bank_id = 1; // Bank id
 }
 
 message GetBankInfoResponse {
-  io.token.proto.common.bank.BankInfo info = 1;
+  io.token.proto.common.bank.BankInfo info = 1; // Linking info
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -790,12 +783,6 @@ service GatewayService {
     };
   }
 
-  rpc NotifyExpiredAccessToken (NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse) {
-    option (google.api.http) = {
-        post: "/notify/expired-token"
-    };
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Bank accounts.
   //
@@ -826,19 +813,19 @@ service GatewayService {
 
   rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/balance"
+        post: "/account/balance"
     };
   }
 
   rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions/{transaction_id}"
+        post: "/account/transaction"
     };
   }
 
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}"
+        post: "/account/transactions"
     };
   }
 
@@ -926,18 +913,29 @@ service GatewayService {
     };
   }
 
+  // Endorse a token
+  // https://developer.token.io/sdk/#endorse-transfer-token
+  // https://developer.token.io/sdk/#endorse-access-token
   rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/endorse"
     };
   }
 
+  // Cancel a token
+  // https://developer.token.io/sdk/#cancel-transfer-token
+  // https://developer.token.io/sdk/#cancel-access-token
   rpc CancelToken (CancelTokenRequest) returns (CancelTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/cancel"
     };
   }
 
+  // Replace an access token
+  // https://developer.token.io/sdk/#replace-access-token
+  //
+  // See how replaceAndEndorseToken uses it:
+  //   https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
   rpc ReplaceToken (ReplaceTokenRequest) returns (ReplaceTokenResponse) {
     option (google.api.http) = {
         post: "/tokens/{cancel_token.token_id}/replace"
@@ -948,18 +946,27 @@ service GatewayService {
   // Token Transfers.
   //
 
+  // Redeem a transfer token, creating a transfer.
+  // https://developer.token.io/sdk/#redeem-transfer-token
+  //
+  // See how redeemToken calls it:
+  //   https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
   rpc CreateTransfer (CreateTransferRequest) returns (CreateTransferResponse) {
     option (google.api.http) = {
         post: "/transfers"
     };
   }
 
+  // Get information about one transfer.
+  // https://developer.token.io/sdk/#get-transfers
   rpc GetTransfer (GetTransferRequest) returns (GetTransferResponse) {
     option (google.api.http) = {
         get: "/transfers/{transfer_id}"
     };
   }
 
+  // Get a list of the auth'd member's transfers.
+  // https://developer.token.io/sdk/#get-transfers
   rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
         get: "/transfers?tokenId={filter.token_id}&offset={page.offset}&limit={page.limit}"
@@ -970,12 +977,16 @@ service GatewayService {
   // Bank Information Endpoints.
   //
 
+  // Get a list of "link-able" banks.
+  // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
         get: "/banks"
     };
   }
 
+  // Get information useful for linking one bank.
+  // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBankInfo (GetBankInfoRequest) returns (GetBankInfoResponse) {
     option (google.api.http) = {
         get: "/banks/{bank_id}/info"

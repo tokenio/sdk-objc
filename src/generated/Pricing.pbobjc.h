@@ -44,8 +44,14 @@ typedef GPB_ENUM(FeeResponsibility) {
    **/
   FeeResponsibility_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   FeeResponsibility_InvalidFee = 0,
+
+  /** fee at transfer source */
   FeeResponsibility_SourceFee = 1,
+
+  /** fee at transfer destination */
   FeeResponsibility_DestinationFee = 2,
+
+  /** shared fee */
   FeeResponsibility_SharedFee = 3,
 };
 
@@ -67,7 +73,11 @@ typedef GPB_ENUM(FxResponsibility) {
    **/
   FxResponsibility_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   FxResponsibility_InvalidFx = 0,
+
+  /** source handles FX */
   FxResponsibility_SourceFx = 1,
+
+  /** source and destination share FX */
   FxResponsibility_SharedFx = 2,
 };
 

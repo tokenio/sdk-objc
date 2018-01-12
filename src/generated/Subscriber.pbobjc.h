@@ -57,6 +57,7 @@ typedef GPB_ENUM(Subscriber_FieldNumber) {
  **/
 @interface Subscriber : GPBMessage
 
+/** Subscription ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** Determines who is handling/sending the notification (e.g. token) */

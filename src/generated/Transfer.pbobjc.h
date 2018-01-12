@@ -101,6 +101,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
 
+/** Signatures */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Signature*> *payloadSignaturesArray;
 /** The number of items in @c payloadSignaturesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger payloadSignaturesArray_Count;
@@ -110,6 +111,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 /** Currency Ledger order id. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *orderId;
 
+/** Instant (currency ledger) or default */
 @property(nonatomic, readwrite) Transfer_Method method;
 
 @end
