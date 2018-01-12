@@ -160,8 +160,9 @@
         
         [grantee useAccessToken:accessToken.id_p];
         PagedArray<Transaction *> *lookedUpTransactions = [grantee getTransactionsOffset:nil
-                                                                               limit:100
-                                                                          forAccount:grantorAccount.id];
+                                                                                   limit:100
+                                                                              forAccount:grantorAccount.id
+                                                                                 withKey:Key_Level_Low];
         XCTAssertEqual(1, lookedUpTransactions.items.count);
         XCTAssertNotNil(lookedUpTransactions.offset);
     }];
@@ -198,9 +199,10 @@
         
         [grantee useAccessToken:accessToken.id_p];
         PagedArray<Transaction *> *lookedUpTransactions = [grantee
-                                                       getTransactionsOffset:nil
-                                                       limit:100
-                                                       forAccount:grantorAccount.id];
+                                                           getTransactionsOffset:nil
+                                                           limit:100
+                                                           forAccount:grantorAccount.id
+                                                           withKey:Key_Level_Low];
         XCTAssertEqual(1, lookedUpTransactions.items.count);
         XCTAssertNotNil(lookedUpTransactions.offset);
     }];

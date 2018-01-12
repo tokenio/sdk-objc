@@ -533,11 +533,13 @@
  *
  * @param transactionId ID of the transaction
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
+               withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError;
 
@@ -548,12 +550,14 @@
  * @param offset offset to start at (NULL for none)
  * @param limit max number of records to return
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                    forAccount:(NSString *)accountId
+                      withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
 

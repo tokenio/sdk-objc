@@ -462,11 +462,13 @@
 
 
 - (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId {
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransaction:transactionId
                         forAccount:accountId
+                           withKey:keyLevel
                          onSuccess:call.onSuccess
                            onError:call.onError];
     }];
@@ -474,12 +476,14 @@
 
 - (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                                limit:(int)limit
-                                          forAccount:(NSString *)accountId {
+                                          forAccount:(NSString *)accountId
+                                             withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransactionsOffset:offset
                                     limit:limit
                                forAccount:accountId
+                                  withKey:keyLevel
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
     }];
