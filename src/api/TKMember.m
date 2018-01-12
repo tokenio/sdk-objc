@@ -651,6 +651,25 @@
                               onError:onError];
 }
 
+
+- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                 onError:(OnError)onError {
+    [client triggerBalanceStepUpNotification:accountId
+                                   onSuccess:onSuccess
+                                     onError:onError];
+}
+
+- (void)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                   accountID:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                     onError:(OnError)onError {
+    [client triggerTransactionStepUpNotification:transactionId
+                                       accountID:accountId
+                                       onSuccess:onSuccess
+                                         onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

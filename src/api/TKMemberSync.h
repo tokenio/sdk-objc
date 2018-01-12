@@ -560,8 +560,31 @@
  * the user to endorse the token. We expect this to happen if user tried to endorse with a
  * low privilege key on another device.
  *
+ * @param tokenId id of the token to endorse
  * @return notify status
  */
 - (NotifyStatus)triggerStepUpNotification:(NSString *)tokenId;
 
+/**
+ * If more signatures is needed after getting balance, calls this method to notify
+ * the user to renew the access. We expect this to happen if user tried to get balance with a
+ * low privilege key on another device.
+ *
+ * @param accountId id of the account to get balance
+ * @return notify status
+ */
+- (NotifyStatus)triggerBalanceStepUpNotification:(NSString *)accountId;
+    
+/**
+ * If more signatures is needed after getting transaction, calls this method to notify
+ * the user to renew the access. We expect this to happen if user tried to get transaction with a
+ * low privilege key on another device.
+ *
+ * @param transactionId id of the transaction to get transaction
+ * @param accountId the account id of transaction to get transaction
+ * @return notify status
+ */
+- (NotifyStatus)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                           accountID:(NSString *)accountId;
+    
 @end

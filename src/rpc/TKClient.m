@@ -1294,6 +1294,55 @@
              onError:onError];
 }
 
+- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+                               onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                 onError:(OnError)onError {
+    TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
+    request.balanceStepUp.accountId = accountId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerStepUpNotificationWithRequest:request
+                           handler:^(TriggerStepUpNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+    
+
+- (void)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                   accountID:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                     onError:(OnError)onError {
+    TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
+    request.transactionStepUp.accountId = accountId;
+    request.transactionStepUp.transactionId = transactionId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerStepUpNotificationWithRequest:request
+                           handler:^(TriggerStepUpNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+    
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel
