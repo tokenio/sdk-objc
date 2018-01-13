@@ -462,11 +462,13 @@
 
 
 - (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId {
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<Transaction *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransaction:transactionId
                         forAccount:accountId
+                           withKey:keyLevel
                          onSuccess:call.onSuccess
                            onError:call.onError];
     }];
@@ -474,12 +476,14 @@
 
 - (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                                limit:(int)limit
-                                          forAccount:(NSString *)accountId {
+                                          forAccount:(NSString *)accountId
+                                             withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getTransactionsOffset:offset
                                     limit:limit
                                forAccount:accountId
+                                  withKey:keyLevel
                                 onSuccess:call.onSuccess
                                   onError:call.onError];
     }];
@@ -520,10 +524,12 @@
     }];
 }
 
-- (TKBalance *)getBalance:(NSString *)accountId {
+- (TKBalance *)getBalance:(NSString *)accountId
+                  withKey:(Key_Level)keyLevel {
     TKRpcSyncCall<TKBalance *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getBalance:accountId
+                       withKey:keyLevel
                      onSuccess:call.onSuccess
                        onError:call.onError];
     }];
@@ -619,6 +625,36 @@
                                         call.onSuccess([NSNumber numberWithInt:status]);
                                     }
                                       onError:call.onError];
+    }];
+    
+    return [statusNumber intValue];
+}
+    
+- (NotifyStatus)triggerBalanceStepUpNotification:(NSString *)accountId {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    
+    NSNumber *statusNumber = [call run:^{
+        [self.async triggerBalanceStepUpNotification:accountId
+                                           onSuccess:^(NotifyStatus status){
+                                               call.onSuccess([NSNumber numberWithInt:status]);
+                                           }
+                                             onError:call.onError];
+    }];
+    
+    return [statusNumber intValue];
+}
+
+- (NotifyStatus)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                           accountID:(NSString *)accountId {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    
+    NSNumber *statusNumber = [call run:^{
+        [self.async triggerTransactionStepUpNotification:transactionId
+                                               accountID:accountId
+                                               onSuccess:^(NotifyStatus status){
+                                                   call.onSuccess([NSNumber numberWithInt:status]);
+                                               }
+                                                 onError:call.onError];
     }];
     
     return [statusNumber intValue];

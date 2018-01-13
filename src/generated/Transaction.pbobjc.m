@@ -326,13 +326,11 @@ void SetTransaction_Status_RawValue(Transaction *message, int32_t value) {
 
 @implementation GetBalancePayload
 
-@dynamic memberId;
 @dynamic accountId;
 @dynamic nonce;
 
 typedef struct GetBalancePayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *memberId;
   NSString *accountId;
   NSString *nonce;
 } GetBalancePayload__storage_;
@@ -344,19 +342,10 @@ typedef struct GetBalancePayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "memberId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetBalancePayload_FieldNumber_MemberId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetBalancePayload__storage_, memberId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
         .number = GetBalancePayload_FieldNumber_AccountId,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetBalancePayload__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -365,7 +354,7 @@ typedef struct GetBalancePayload__storage_ {
         .name = "nonce",
         .dataTypeSpecific.className = NULL,
         .number = GetBalancePayload_FieldNumber_Nonce,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetBalancePayload__storage_, nonce),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -391,14 +380,12 @@ typedef struct GetBalancePayload__storage_ {
 
 @implementation GetTransactionPayload
 
-@dynamic memberId;
 @dynamic accountId;
 @dynamic transactionId;
 @dynamic nonce;
 
 typedef struct GetTransactionPayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *memberId;
   NSString *accountId;
   NSString *transactionId;
   NSString *nonce;
@@ -411,19 +398,10 @@ typedef struct GetTransactionPayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "memberId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionPayload_FieldNumber_MemberId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, memberId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
         .number = GetTransactionPayload_FieldNumber_AccountId,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -432,7 +410,7 @@ typedef struct GetTransactionPayload__storage_ {
         .name = "transactionId",
         .dataTypeSpecific.className = NULL,
         .number = GetTransactionPayload_FieldNumber_TransactionId,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, transactionId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -441,7 +419,7 @@ typedef struct GetTransactionPayload__storage_ {
         .name = "nonce",
         .dataTypeSpecific.className = NULL,
         .number = GetTransactionPayload_FieldNumber_Nonce,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, nonce),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -467,13 +445,11 @@ typedef struct GetTransactionPayload__storage_ {
 
 @implementation GetTransactionsPayload
 
-@dynamic memberId;
 @dynamic accountId;
 @dynamic nonce;
 
 typedef struct GetTransactionsPayload__storage_ {
   uint32_t _has_storage_[1];
-  NSString *memberId;
   NSString *accountId;
   NSString *nonce;
 } GetTransactionsPayload__storage_;
@@ -485,19 +461,10 @@ typedef struct GetTransactionsPayload__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "memberId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionsPayload_FieldNumber_MemberId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetTransactionsPayload__storage_, memberId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
         .number = GetTransactionsPayload_FieldNumber_AccountId,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(GetTransactionsPayload__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -506,7 +473,7 @@ typedef struct GetTransactionsPayload__storage_ {
         .name = "nonce",
         .dataTypeSpecific.className = NULL,
         .number = GetTransactionsPayload_FieldNumber_Nonce,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetTransactionsPayload__storage_, nonce),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,

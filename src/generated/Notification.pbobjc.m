@@ -383,16 +383,16 @@ typedef struct StepUp__storage_ {
 
 @end
 
-#pragma mark - RequestStepUp
+#pragma mark - BalanceStepUp
 
-@implementation RequestStepUp
+@implementation BalanceStepUp
 
-@dynamic requestType;
+@dynamic accountId;
 
-typedef struct RequestStepUp__storage_ {
+typedef struct BalanceStepUp__storage_ {
   uint32_t _has_storage_[1];
-  RequestStepUp_RequestType requestType;
-} RequestStepUp__storage_;
+  NSString *accountId;
+} BalanceStepUp__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -401,22 +401,22 @@ typedef struct RequestStepUp__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "requestType",
-        .dataTypeSpecific.enumDescFunc = RequestStepUp_RequestType_EnumDescriptor,
-        .number = RequestStepUp_FieldNumber_RequestType,
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = BalanceStepUp_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestStepUp__storage_, requestType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .offset = (uint32_t)offsetof(BalanceStepUp__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestStepUp class]
+        [GPBDescriptor allocDescriptorForClass:[BalanceStepUp class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestStepUp__storage_)
+                                   storageSize:sizeof(BalanceStepUp__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -426,67 +426,18 @@ typedef struct RequestStepUp__storage_ {
 
 @end
 
-int32_t RequestStepUp_RequestType_RawValue(RequestStepUp *message) {
-  GPBDescriptor *descriptor = [RequestStepUp descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestStepUp_FieldNumber_RequestType];
-  return GPBGetMessageInt32Field(message, field);
-}
+#pragma mark - TransactionStepUp
 
-void SetRequestStepUp_RequestType_RawValue(RequestStepUp *message, int32_t value) {
-  GPBDescriptor *descriptor = [RequestStepUp descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestStepUp_FieldNumber_RequestType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
-}
+@implementation TransactionStepUp
 
-#pragma mark - Enum RequestStepUp_RequestType
+@dynamic accountId;
+@dynamic transactionId;
 
-GPBEnumDescriptor *RequestStepUp_RequestType_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
-  if (!descriptor) {
-    static const char *valueNames =
-        "InvalidRequest\000GetBalance\000GetTransaction"
-        "\000GetTransactions\000";
-    static const int32_t values[] = {
-        RequestStepUp_RequestType_InvalidRequest,
-        RequestStepUp_RequestType_GetBalance,
-        RequestStepUp_RequestType_GetTransaction,
-        RequestStepUp_RequestType_GetTransactions,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(RequestStepUp_RequestType)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:RequestStepUp_RequestType_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL RequestStepUp_RequestType_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case RequestStepUp_RequestType_InvalidRequest:
-    case RequestStepUp_RequestType_GetBalance:
-    case RequestStepUp_RequestType_GetTransaction:
-    case RequestStepUp_RequestType_GetTransactions:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
-#pragma mark - ExpiredAccessToken
-
-@implementation ExpiredAccessToken
-
-@dynamic tokenId;
-
-typedef struct ExpiredAccessToken__storage_ {
+typedef struct TransactionStepUp__storage_ {
   uint32_t _has_storage_[1];
-  NSString *tokenId;
-} ExpiredAccessToken__storage_;
+  NSString *accountId;
+  NSString *transactionId;
+} TransactionStepUp__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -495,22 +446,31 @@ typedef struct ExpiredAccessToken__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "tokenId",
+        .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = ExpiredAccessToken_FieldNumber_TokenId,
+        .number = TransactionStepUp_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ExpiredAccessToken__storage_, tokenId),
+        .offset = (uint32_t)offsetof(TransactionStepUp__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transactionId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransactionStepUp_FieldNumber_TransactionId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TransactionStepUp__storage_, transactionId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ExpiredAccessToken class]
+        [GPBDescriptor allocDescriptorForClass:[TransactionStepUp class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ExpiredAccessToken__storage_)
+                                   storageSize:sizeof(TransactionStepUp__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -741,8 +701,8 @@ typedef struct TokenCancelled__storage_ {
 @dynamic transferProcessed;
 @dynamic transferFailed;
 @dynamic tokenCancelled;
-@dynamic requestStepUp;
-@dynamic expiredAccessToken;
+@dynamic balanceStepUp;
+@dynamic transactionStepUp;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -757,8 +717,8 @@ typedef struct NotifyBody__storage_ {
   TransferProcessed *transferProcessed;
   TransferFailed *transferFailed;
   TokenCancelled *tokenCancelled;
-  RequestStepUp *requestStepUp;
-  ExpiredAccessToken *expiredAccessToken;
+  BalanceStepUp *balanceStepUp;
+  TransactionStepUp *transactionStepUp;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -867,20 +827,20 @@ typedef struct NotifyBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "requestStepUp",
-        .dataTypeSpecific.className = GPBStringifySymbol(RequestStepUp),
-        .number = NotifyBody_FieldNumber_RequestStepUp,
+        .name = "balanceStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(BalanceStepUp),
+        .number = NotifyBody_FieldNumber_BalanceStepUp,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(NotifyBody__storage_, requestStepUp),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, balanceStepUp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "expiredAccessToken",
-        .dataTypeSpecific.className = GPBStringifySymbol(ExpiredAccessToken),
-        .number = NotifyBody_FieldNumber_ExpiredAccessToken,
+        .name = "transactionStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransactionStepUp),
+        .number = NotifyBody_FieldNumber_TransactionStepUp,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(NotifyBody__storage_, expiredAccessToken),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, transactionStepUp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

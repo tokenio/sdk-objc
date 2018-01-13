@@ -28,8 +28,8 @@
 CF_EXTERN_C_BEGIN
 
 @class AddKey;
+@class BalanceStepUp;
 @class BankAuthorization;
-@class ExpiredAccessToken;
 @class Key;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
@@ -38,10 +38,10 @@ CF_EXTERN_C_BEGIN
 @class PayerTransferFailed;
 @class PayerTransferProcessed;
 @class PaymentRequest;
-@class RequestStepUp;
 @class StepUp;
 @class TokenCancelled;
 @class TokenPayload;
+@class TransactionStepUp;
 @class TransferFailed;
 @class TransferProcessed;
 
@@ -72,29 +72,6 @@ GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL NotifyStatus_IsValidValue(int32_t value);
-
-#pragma mark - Enum RequestStepUp_RequestType
-
-typedef GPB_ENUM(RequestStepUp_RequestType) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  RequestStepUp_RequestType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  RequestStepUp_RequestType_InvalidRequest = 0,
-  RequestStepUp_RequestType_GetBalance = 1,
-  RequestStepUp_RequestType_GetTransaction = 2,
-  RequestStepUp_RequestType_GetTransactions = 3,
-};
-
-GPBEnumDescriptor *RequestStepUp_RequestType_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL RequestStepUp_RequestType_IsValidValue(int32_t value);
 
 #pragma mark - Enum Notification_Status
 
@@ -240,45 +217,36 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
 
 @end
 
-#pragma mark - RequestStepUp
+#pragma mark - BalanceStepUp
 
-typedef GPB_ENUM(RequestStepUp_FieldNumber) {
-  RequestStepUp_FieldNumber_RequestType = 1,
+typedef GPB_ENUM(BalanceStepUp_FieldNumber) {
+  BalanceStepUp_FieldNumber_AccountId = 1,
 };
 
 /**
- * A notification to step up an information request
+ * A notification to step up a balance request
  **/
-@interface RequestStepUp : GPBMessage
+@interface BalanceStepUp : GPBMessage
 
-@property(nonatomic, readwrite) RequestStepUp_RequestType requestType;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
 
-/**
- * Fetches the raw value of a @c RequestStepUp's @c requestType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t RequestStepUp_RequestType_RawValue(RequestStepUp *message);
-/**
- * Sets the raw value of an @c RequestStepUp's @c requestType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetRequestStepUp_RequestType_RawValue(RequestStepUp *message, int32_t value);
+#pragma mark - TransactionStepUp
 
-#pragma mark - ExpiredAccessToken
-
-typedef GPB_ENUM(ExpiredAccessToken_FieldNumber) {
-  ExpiredAccessToken_FieldNumber_TokenId = 1,
+typedef GPB_ENUM(TransactionStepUp_FieldNumber) {
+  TransactionStepUp_FieldNumber_AccountId = 1,
+  TransactionStepUp_FieldNumber_TransactionId = 2,
 };
 
 /**
- * A notification to indicate the expiry of an access token
+ * A notification to step up a transaction request
  **/
-@interface ExpiredAccessToken : GPBMessage
+@interface TransactionStepUp : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
 @end
 
@@ -374,8 +342,8 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_TransferProcessed = 9,
   NotifyBody_FieldNumber_TransferFailed = 10,
   NotifyBody_FieldNumber_TokenCancelled = 11,
-  NotifyBody_FieldNumber_RequestStepUp = 12,
-  NotifyBody_FieldNumber_ExpiredAccessToken = 13,
+  NotifyBody_FieldNumber_BalanceStepUp = 12,
+  NotifyBody_FieldNumber_TransactionStepUp = 13,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -391,8 +359,8 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_TransferProcessed = 9,
   NotifyBody_Body_OneOfCase_TransferFailed = 10,
   NotifyBody_Body_OneOfCase_TokenCancelled = 11,
-  NotifyBody_Body_OneOfCase_RequestStepUp = 12,
-  NotifyBody_Body_OneOfCase_ExpiredAccessToken = 13,
+  NotifyBody_Body_OneOfCase_BalanceStepUp = 12,
+  NotifyBody_Body_OneOfCase_TransactionStepUp = 13,
 };
 
 /**
@@ -424,9 +392,9 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenCancelled *tokenCancelled;
 
-@property(nonatomic, readwrite, strong, null_resettable) RequestStepUp *requestStepUp;
+@property(nonatomic, readwrite, strong, null_resettable) BalanceStepUp *balanceStepUp;
 
-@property(nonatomic, readwrite, strong, null_resettable) ExpiredAccessToken *expiredAccessToken;
+@property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
 @end
 

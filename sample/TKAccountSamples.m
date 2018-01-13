@@ -82,6 +82,7 @@
     [payer getTransactionsOffset:NULL // NULL: get first "page" of results
                            limit:10
                       forAccount:payerAccount.id
+                         withKey:Key_Level_Low
                        onSuccess:^(PagedArray<Transaction *> *ary) {
                            for (Transaction *tr in ary.items) {
                                // use transactions
@@ -104,6 +105,7 @@
     // getTransaction begin snippet to include in docs
     [payer getTransaction:transactionId
                 forAccount:payerAccount.id
+                  withKey:Key_Level_Low
                 onSuccess:^(Transaction *tr) {
                     // use the transaction
                     displayMoney(tr.amount.currency, tr.amount.value);

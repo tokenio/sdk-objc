@@ -29,14 +29,14 @@ enum PaymentContext {
 }
 
 message CustomerData {
-  repeated string legal_names = 1;              // Repeated in case of joint account holders.
-  io.token.proto.common.address.Address address = 2;
+  repeated string legal_names = 1;                   // Repeated in case of joint account holders.
+  io.token.proto.common.address.Address address = 2; // Physical address
 }
 
 // Money transfer source or destination account.
 message TransferEndpoint {
-  io.token.proto.common.account.BankAccount account = 1;
-  CustomerData customer_data = 2;
+  io.token.proto.common.account.BankAccount account = 1; // Account identifier, e.g., SWIFT transfer info
+  CustomerData customer_data = 2;                        // Customer data: name and address
 }
 
 // Money transfer instructions.

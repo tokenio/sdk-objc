@@ -145,10 +145,13 @@ typedef GPB_ENUM(Attachment_FieldNumber) {
  **/
 @interface Attachment : GPBMessage
 
+/** Blob ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *blobId;
 
+/** Mime type */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *type;
 
+/** Name of file */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @end

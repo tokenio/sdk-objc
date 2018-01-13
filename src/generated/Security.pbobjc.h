@@ -103,13 +103,18 @@ typedef GPB_ENUM(Key_FieldNumber) {
   Key_FieldNumber_Algorithm = 4,
 };
 
+/**
+ * Public key
+ **/
 @interface Key : GPBMessage
 
+/** Key ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** Base64url encoded public key. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
+/** Privilege level */
 @property(nonatomic, readwrite) Key_Level level;
 
 @property(nonatomic, readwrite) Key_Algorithm algorithm;
@@ -151,13 +156,16 @@ typedef GPB_ENUM(PrivateKey_FieldNumber) {
 
 @interface PrivateKey : GPBMessage
 
+/** Key ID. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** Base64url encoded private key. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *privateKey;
 
+/** Key's privilege level. */
 @property(nonatomic, readwrite) Key_Level level;
 
+/** Algorithm to use with key. */
 @property(nonatomic, readwrite) Key_Algorithm algorithm;
 
 @end
@@ -196,10 +204,13 @@ typedef GPB_ENUM(Signature_FieldNumber) {
 
 @interface Signature : GPBMessage
 
+/** ID of signing member */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
+/** ID of public key to verify signature */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
 
+/** signature */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
 
 @end

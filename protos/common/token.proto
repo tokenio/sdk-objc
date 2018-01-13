@@ -34,11 +34,12 @@ message TokenSignature {
   io.token.proto.common.security.Signature signature = 2;
 }
 
+// Refers to a Token member by ID or by alias.
 message TokenMember {
-  string id = 1;
+  string id = 1;                               // member ID
   // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
   string username = 2;
-  io.token.proto.common.alias.Alias alias = 3;
+  io.token.proto.common.alias.Alias alias = 3; // alias, such as an email address
 }
 
 message TokenPayload {
@@ -83,8 +84,8 @@ enum TransferTokenStatus {
 }
 
 message ExternalAuthorizationDetails {
-  string url = 1;
-  string completion_pattern = 2;
+  string url = 1;                // Display content from this URL to user to prompt for permission
+  string completion_pattern = 2; // If user navigates to URL matching this pattern, interaction is complete
 }
 
 message TransferBody {
@@ -122,31 +123,33 @@ message AccessBody {
 
     // Provides access to a specific member address
     message Address {
-      string address_id = 1;
+      string address_id = 1; // ID of address
     }
 
-    // Provides access to all member accounts
+    // Provides access to all member accounts. Enables getAccounts()
     message AllAccounts {}
 
     // Provides access to a specific member account balance
     message Account {
-      string account_id = 1;
+      string account_id = 1; // ID of account
     }
 
     // Provides access to member transactions in all accounts
+    // Normally used with AllAccounts (to get list of accounts)
     message AllAccountTransactions {}
 
     // Provides access to a specific account transactions
     message AccountTransactions {
-      string account_id = 1;
+      string account_id = 1; // ID of account
     }
 
     // Provides access to member balance on all accounts
+    // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
 
     // Provides access to a specific account balance
     message AccountBalance {
-      string account_id = 1;
+      string account_id = 1; // ID of account
     }
   }
 }
@@ -155,12 +158,12 @@ message AccessBody {
 // Token operation status
 //
 message TokenOperationResult {
-  Token token = 1;
-  Status status = 2;
+  Token token = 1;   // Token, perhaps with new signatures
+  Status status = 2; // Success/failure status
 
   enum Status {
     INVALID = 0;
-    SUCCESS = 1;
-    MORE_SIGNATURES_NEEDED = 2;
+    SUCCESS = 1;                // Operation succeeded.
+    MORE_SIGNATURES_NEEDED = 2; // Token needs more sigs. If that's surprising: Perhaps used LOW key but needs PRIVILEGED
   }
 }

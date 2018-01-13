@@ -240,12 +240,14 @@
 - (void)setDefaultAccount:(NSString *)accountId;
 
 /**
- * Looks up account balance.
+ * Looks up account balance with a specific key level.
  *
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @return account balance
  */
-- (TKBalance *)getBalance:(NSString *)accountId;
+- (TKBalance *)getBalance:(NSString *)accountId
+                  withKey:(Key_Level)keyLevel;
 
 /**
  * Looks up an existing token transfer.
@@ -434,10 +436,12 @@
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
  *
  * @param transactionId ID of the transaction
+ * @param keyLevel specifies the key to use
  * @return a looked up transaction
  */
 - (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId;
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel;
 
 /**
  * Looks up existing transactions. This is a full list of transactions with token transfers
@@ -446,11 +450,13 @@
  * @param offset offset to start at (NULL for none)
  * @param limit max number of records to return
  * @param accountId account id
+ * @param keyLevel specifies the key to use
  * @return a list of looked up transactions
  */
 - (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
                                                limit:(int)limit
-                                          forAccount:(NSString *)accountId;
+                                          forAccount:(NSString *)accountId
+                                             withKey:(Key_Level)keyLevel;
 
 /**
  * Uploads a blob to the server.
@@ -560,8 +566,31 @@
  * the user to endorse the token. We expect this to happen if user tried to endorse with a
  * low privilege key on another device.
  *
+ * @param tokenId id of the token to endorse
  * @return notify status
  */
 - (NotifyStatus)triggerStepUpNotification:(NSString *)tokenId;
 
+/**
+ * If more signatures is needed after getting balance, calls this method to notify
+ * the user to renew the access. We expect this to happen if user tried to get balance with a
+ * low privilege key on another device.
+ *
+ * @param accountId id of the account to get balance
+ * @return notify status
+ */
+- (NotifyStatus)triggerBalanceStepUpNotification:(NSString *)accountId;
+    
+/**
+ * If more signatures is needed after getting transaction, calls this method to notify
+ * the user to renew the access. We expect this to happen if user tried to get transaction with a
+ * low privilege key on another device.
+ *
+ * @param transactionId id of the transaction to get transaction
+ * @param accountId the account id of transaction to get transaction
+ * @return notify status
+ */
+- (NotifyStatus)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                           accountID:(NSString *)accountId;
+    
 @end

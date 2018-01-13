@@ -42,21 +42,15 @@ message StepUp {
   string token_id = 1;
 }
 
-// A notification to step up an information request
-message RequestStepUp {
-  RequestType request_type = 1;
-
-  enum RequestType {
-    INVALID_REQUEST = 0;
-    GET_BALANCE = 1;
-    GET_TRANSACTION = 2;
-    GET_TRANSACTIONS = 3;
-  }
+// A notification to step up a balance request
+message BalanceStepUp {
+  string account_id = 1;
 }
 
-// A notification to indicate the expiry of an access token
-message ExpiredAccessToken {
-  string token_id = 1;
+// A notification to step up a transaction request
+message TransactionStepUp {
+  string account_id = 1;
+  string transaction_id = 2;
 }
 
 // A notification that a key wants to be added to a member. Clients should timeout the notification
@@ -98,8 +92,8 @@ message NotifyBody {
     io.token.proto.common.notification.TransferProcessed transfer_processed = 9;
     io.token.proto.common.notification.TransferFailed transfer_failed = 10;
     io.token.proto.common.notification.TokenCancelled token_cancelled = 11;
-    io.token.proto.common.notification.RequestStepUp request_step_up = 12;
-    io.token.proto.common.notification.ExpiredAccessToken expired_access_token = 13;
+    io.token.proto.common.notification.BalanceStepUp balance_step_up = 12;
+    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 13;
   }
 }
 

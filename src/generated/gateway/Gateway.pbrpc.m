@@ -422,18 +422,6 @@
              responseClass:[TriggerStepUpNotificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark NotifyExpiredAccessToken(NotifyExpiredAccessTokenRequest) returns (NotifyExpiredAccessTokenResponse)
-
-- (void)notifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToNotifyExpiredAccessTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyExpiredAccessTokenWithRequest:(NotifyExpiredAccessTokenRequest *)request handler:(void(^)(NotifyExpiredAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"NotifyExpiredAccessToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[NotifyExpiredAccessTokenResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**
@@ -710,10 +698,20 @@
 }
 #pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
 
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEndorseTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EndorseToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -722,10 +720,20 @@
 }
 #pragma mark CancelToken(CancelTokenRequest) returns (CancelTokenResponse)
 
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (void)cancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCancelTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (GRPCProtoCall *)RPCToCancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CancelToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -734,10 +742,24 @@
 }
 #pragma mark ReplaceToken(ReplaceTokenRequest) returns (ReplaceTokenResponse)
 
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (void)replaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToReplaceTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ReplaceToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -751,6 +773,11 @@
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (void)createTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTransferWithRequest:request handler:handler] start];
@@ -761,6 +788,11 @@
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTransfer"
@@ -770,10 +802,18 @@
 }
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransferWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfer"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -782,10 +822,18 @@
 }
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransfersWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfers"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -799,6 +847,8 @@
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBanksWithRequest:request handler:handler] start];
@@ -809,6 +859,8 @@
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBanks"
@@ -818,10 +870,18 @@
 }
 #pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
 
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBankInfoWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBankInfo"
             requestsWriter:[GRXWriter writerWithValue:request]

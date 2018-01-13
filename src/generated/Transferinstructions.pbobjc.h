@@ -116,6 +116,7 @@ typedef GPB_ENUM(CustomerData_FieldNumber) {
 /** The number of items in @c legalNamesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger legalNamesArray_Count;
 
+/** Physical address */
 @property(nonatomic, readwrite, strong, null_resettable) Address *address;
 /** Test to see if @c address has been set. */
 @property(nonatomic, readwrite) BOOL hasAddress;
@@ -134,10 +135,12 @@ typedef GPB_ENUM(TransferEndpoint_FieldNumber) {
  **/
 @interface TransferEndpoint : GPBMessage
 
+/** Account identifier, e.g., SWIFT transfer info */
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
 /** Test to see if @c account has been set. */
 @property(nonatomic, readwrite) BOOL hasAccount;
 
+/** Customer data: name and address */
 @property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
 /** Test to see if @c customerData has been set. */
 @property(nonatomic, readwrite) BOOL hasCustomerData;

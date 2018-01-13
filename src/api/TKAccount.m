@@ -55,29 +55,33 @@
 
 - (void)getBalance:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
-    [client getBalance:account.id_p
-             onSuccess:onSuccess
-               onError:onError];
+    
+    [self.member.async getBalance:account.id_p
+                          withKey:Key_Level_Low
+                        onSuccess:onSuccess
+                          onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
-    [client getTransaction:transactionId
-                forAccount:account.id_p
-                 onSuccess:onSuccess
-                   onError:onError];
+    [self.member.async getTransaction:transactionId
+                           forAccount:account.id_p
+                              withKey:Key_Level_Low
+                            onSuccess:onSuccess
+                              onError:onError];
 }
 
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
-    return [client getTransactionsOffset:offset
-                                   limit:limit
-                              forAccount:account.id_p
-                               onSuccess:onSuccess
-                                 onError:onError];
+    return [self.member.async getTransactionsOffset:offset
+                                              limit:limit
+                                         forAccount:account.id_p
+                                            withKey:Key_Level_Low
+                                          onSuccess:onSuccess
+                                            onError:onError];
 }
 
 @end

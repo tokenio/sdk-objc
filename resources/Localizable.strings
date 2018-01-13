@@ -8,6 +8,8 @@
 "Signature_Reason_CreateTransfer" = "Create transfer";
 "Signature_Reason_AddAddress" = "Add address";
 "Signature_Reason_RecoverMember" = "Authorize for recovery";
+"Signature_Reason_GetBalance" = "Authorize for Balances";
+"Signature_Reason_GetTransaction" = "Authorize for Transactions";
 
 "Private_Key_Not_Found" = "Private key not found";
 "User_Cancelled_Authentication" = "User cancelled authentication";

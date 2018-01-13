@@ -797,10 +797,26 @@
 }
 
 - (void)getBalance:(NSString *)accountId
+           withKey:(Key_Level)keyLevel
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
-    request.accountId = accountId;
+    request.payload.accountId = accountId;
+    request.payload.nonce = [TKUtil nonce];
+    
+    TKSignature *signature = [crypto sign:request.payload
+                                 usingKey:keyLevel
+                                   reason:TKLocalizedString(@"Signature_Reason_GetBalance",
+                                                            @"Approve to get balances")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+    
+    request.signature.memberId = memberId;
+    request.signature.keyId = signature.key.id_p;
+    request.signature.signature = signature.value;
+    
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -809,10 +825,16 @@
                            ^(GetBalanceResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   TKBalance *balance = [TKBalance alloc];
-                                   balance.available = response.available;
-                                   balance.current = response.current;
-                                   onSuccess(balance);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       TKBalance *balance = [TKBalance alloc];
+                                       balance.available = response.available;
+                                       balance.current = response.current;
+                                       onSuccess(balance);
+                                   }
+                                   else {
+                                       onError([NSError errorFromRequestStatus:response.status]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }
@@ -825,11 +847,27 @@
 
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
+               withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
     GetTransactionRequest *request = [GetTransactionRequest message];
-    request.accountId = accountId;
-    request.transactionId = transactionId;
+    request.payload.accountId = accountId;
+    request.payload.transactionId = transactionId;
+    request.payload.nonce = [TKUtil nonce];
+    
+    TKSignature *signature = [crypto sign:request.payload
+                                 usingKey:keyLevel
+                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
+                                                            @"Approve to get trasactions")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+    
+    request.signature.memberId = memberId;
+    request.signature.keyId = signature.key.id_p;
+    request.signature.signature = signature.value;
+    
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -852,12 +890,28 @@
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                    forAccount:(NSString *)accountId
+                      withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
-    request.accountId = accountId;
+    request.payload.accountId = accountId;
+    request.payload.nonce = [TKUtil nonce];
     request.page.offset = offset;
     request.page.limit = limit;
+    
+    TKSignature *signature = [crypto sign:request.payload
+                                 usingKey:keyLevel
+                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
+                                                            @"Approve to get trasactions")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+    
+    request.signature.memberId = memberId;
+    request.signature.keyId = signature.key.id_p;
+    request.signature.signature = signature.value;
+    
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -1294,6 +1348,55 @@
              onError:onError];
 }
 
+- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+                               onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                 onError:(OnError)onError {
+    TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
+    request.balanceStepUp.accountId = accountId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerStepUpNotificationWithRequest:request
+                           handler:^(TriggerStepUpNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+    
+
+- (void)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                   accountID:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                     onError:(OnError)onError {
+    TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
+    request.transactionStepUp.accountId = accountId;
+    request.transactionStepUp.transactionId = transactionId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerStepUpNotificationWithRequest:request
+                           handler:^(TriggerStepUpNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+    
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel

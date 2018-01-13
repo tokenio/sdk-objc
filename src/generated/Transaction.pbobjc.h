@@ -162,16 +162,21 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 
 @interface Transaction : GPBMessage
 
+/** Transaction ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** Debit or credit */
 @property(nonatomic, readwrite) TransactionType type;
 
+/** Status. For example, SUCCESS or FAILURE_CANCELED */
 @property(nonatomic, readwrite) TransactionStatus status;
 
+/** Transaction amount. */
 @property(nonatomic, readwrite, strong, null_resettable) Money *amount;
 /** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
+/** Optional description */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 /** Points to the token, only set for Token transactions. */
@@ -180,6 +185,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 /** Points to the token transfer, only set for Token transactions. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenTransferId;
 
+/** Creation time */
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
@@ -211,14 +217,11 @@ void SetTransaction_Status_RawValue(Transaction *message, int32_t value);
 #pragma mark - GetBalancePayload
 
 typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
-  GetBalancePayload_FieldNumber_MemberId = 1,
-  GetBalancePayload_FieldNumber_AccountId = 2,
-  GetBalancePayload_FieldNumber_Nonce = 3,
+  GetBalancePayload_FieldNumber_AccountId = 1,
+  GetBalancePayload_FieldNumber_Nonce = 2,
 };
 
 @interface GetBalancePayload : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
@@ -229,15 +232,12 @@ typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
 #pragma mark - GetTransactionPayload
 
 typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
-  GetTransactionPayload_FieldNumber_MemberId = 1,
-  GetTransactionPayload_FieldNumber_AccountId = 2,
-  GetTransactionPayload_FieldNumber_TransactionId = 3,
-  GetTransactionPayload_FieldNumber_Nonce = 4,
+  GetTransactionPayload_FieldNumber_AccountId = 1,
+  GetTransactionPayload_FieldNumber_TransactionId = 2,
+  GetTransactionPayload_FieldNumber_Nonce = 3,
 };
 
 @interface GetTransactionPayload : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
@@ -250,14 +250,11 @@ typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
 #pragma mark - GetTransactionsPayload
 
 typedef GPB_ENUM(GetTransactionsPayload_FieldNumber) {
-  GetTransactionsPayload_FieldNumber_MemberId = 1,
-  GetTransactionsPayload_FieldNumber_AccountId = 2,
-  GetTransactionsPayload_FieldNumber_Nonce = 3,
+  GetTransactionsPayload_FieldNumber_AccountId = 1,
+  GetTransactionsPayload_FieldNumber_Nonce = 2,
 };
 
 @interface GetTransactionsPayload : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
