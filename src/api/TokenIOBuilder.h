@@ -30,6 +30,9 @@
 /// Key that "tags" requests with ID of developer organization. Ask Token for a developer key you can use.
 @property (readwrite, copy) NSString *developerKey;
 
+/// The SDK language code.
+@property (readwrite, copy) NSString *languageCode;
+
 /// Use SSL to protect connection?
 @property (readwrite) BOOL useSsl;
 

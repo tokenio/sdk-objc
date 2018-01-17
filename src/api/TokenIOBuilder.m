@@ -51,6 +51,7 @@
             port:self.port
             timeoutMs:self.timeoutMs
             developerKey:self.developerKey
+            languageCode:self.languageCode
             crypto:cryptoEngineFactory
             useSsl:self.useSsl
             certsPath:self.certsPath

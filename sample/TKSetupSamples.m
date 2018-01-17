@@ -27,6 +27,7 @@
     // createSDK begin snippet to include in docs
     TokenIOBuilder *builder = [TokenIO sandboxBuilder];
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+    builder.languageCode = @"en";
     TokenIO *tokenIO = [builder buildAsync];
     // createSDK done snippet to include in docs
     
