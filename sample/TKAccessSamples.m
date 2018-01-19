@@ -103,9 +103,13 @@
     
         return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
     } backOffTimeMs:1000];
+    
+    NSLog(@"I see foundToken %@ ", foundToken);
 
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    [newAccess forAllAccounts];
+    [newAccess forAllBalances];
     [newAccess forAllAddresses];
     
     [grantor replaceAndEndorseAccessToken:foundToken
