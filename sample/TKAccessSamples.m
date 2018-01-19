@@ -106,8 +106,6 @@
 
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
-    [access forAllAccounts];
-    [access forAllBalances];
     [newAccess forAllAddresses];
     
     [grantor replaceAndEndorseAccessToken:foundToken
@@ -140,6 +138,9 @@
     // cancelToken done snippet to include in docs
     
     [self runUntilTrue:^ {
+        NSLog(@"REPLACE I see sig count %d", (int)accessToken.payloadSignaturesArray_Count);
+        NSLog(@"        I see sig %@", accessToken.payloadSignaturesArray[0]);
+        NSLog(@"        I see sig %@", accessToken.payloadSignaturesArray[1]);
         return (accessToken.payloadSignaturesArray_Count > 3);
     }];
 }
@@ -176,6 +177,125 @@
     [self runUntilTrue:^ {
         return (![accessToken.id_p isEqual:foundToken.id_p]);
     }];
+}
+
+-(Money*)carefullyUse:(TKMember*)grantee
+              tokenId:(NSString*)tokenId {
+    TKMemberSync *granteeSync = [TKMemberSync member:grantee];
+    Token *accessToken = [granteeSync getToken:tokenId];
+    while ([accessToken.replacedByTokenId length] > 0) {
+        accessToken = [granteeSync getToken:accessToken.replacedByTokenId];
+    }
+    NSMutableArray *accountIds = [NSMutableArray array];
+    Boolean haveAllAccountsAccess = false;
+    Boolean haveAllBalancesAccess = false;
+    for (int i = 0; i < accessToken.payload.access.resourcesArray_Count; i++) {
+        switch (accessToken.payload.access.resourcesArray[i].resourceOneOfCase) {
+            case AccessBody_Resource_Resource_OneOfCase_Balance:
+                [accountIds addObject: accessToken.payload.access.resourcesArray[i].balance.accountId];
+                break;
+            case AccessBody_Resource_Resource_OneOfCase_AllAccounts:
+                haveAllAccountsAccess = true;
+                break;
+            case AccessBody_Resource_Resource_OneOfCase_AllBalances:
+                haveAllBalancesAccess = true;
+                break;
+            default:
+                break;
+        }
+    }
+    [granteeSync useAccessToken:accessToken.id_p];
+    if (haveAllAccountsAccess && haveAllBalancesAccess) {
+        NSArray<TKAccountSync *> *accounts = [granteeSync getAccounts];
+        for (int i = 0 ; i < accounts.count; i++) {
+            [accountIds addObject:accounts[i].id];
+        }
+    }
+    if (accountIds.count < 1) {
+        return [Money new];
+    }
+    Money *balance0 = [granteeSync getBalance:accountIds[0]
+                                      withKey:Key_Level_Standard].available;
+    [granteeSync clearAccessToken];
+    return balance0;
+}
+
+/**
+ * Use an access token that might or might not grant allAccounts access
+ * (so maybe )
+ */
+-(void)testCarefullyUse {
+    TKMember *grantor = self.payerSync.async;
+    TKAccount *grantorAccount = self.payerAccountSync.async;
+    Alias *granteeAlias = self.payeeAlias;
+    TKMember *grantee = self.payeeSync.async;
+
+    __block Token *token1 = nil;
+
+    // createAccessToken begin snippet to include in docs
+    AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
+    [access forAllAccounts];
+    [access forAllBalances];
+
+    [grantor createAccessToken:access
+                     onSuccess:^(Token *at) {
+                         // created (and uploaded) but not yet endorsed
+                         token1 = at;
+                     } onError:^(NSError *e) {
+                         // Something went wrong.
+                         @throw [NSException exceptionWithName:@"GrantAccessException"
+                                                        reason:[e localizedFailureReason]
+                                                      userInfo:[e userInfo]];
+                     }];
+    // createAccessToken done snippet to include in docs
+
+    [self runUntilTrue:^ {
+        return (token1 != nil);
+    }];
+
+    [grantor endorseToken:token1
+                  withKey:Key_Level_Standard
+                onSuccess:^(TokenOperationResult *result) {
+                    token1 = result.token;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"EndorseAccessException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
+
+    [self runUntilTrue:^ {
+        return (token1.payloadSignaturesArray_Count > 0);
+    }];
+
+    Money * balance1 = [self carefullyUse:grantee
+                                  tokenId:token1.id_p];
+    NSAssert([balance1.value floatValue] > 10.0, @"I should see a legitimate balance");
+
+    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:token1.payload];
+    [newAccess forAccount:grantorAccount.id];
+    [newAccess forAccountBalances:grantorAccount.id];
+
+    __block Token *token2 = nil;
+
+    [grantor replaceAndEndorseAccessToken:token1
+                        accessTokenConfig:newAccess
+                                onSuccess:^(TokenOperationResult *result) {
+                                    token2 = result.token;
+                                } onError:^(NSError *e) {
+                                    // something went wrong
+                                    @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                                   reason:[e localizedFailureReason]
+                                                                 userInfo:[e userInfo]];
+                                }];
+
+    [self runUntilTrue:^ {
+        return (token2 != nil);
+    }];
+
+    Money * balance2 = [self carefullyUse:grantee
+                                  tokenId:token1.id_p];
+    NSAssert([balance2.value floatValue] > 10.0, @"I should see a legitimate balance");
 }
 
 @end
