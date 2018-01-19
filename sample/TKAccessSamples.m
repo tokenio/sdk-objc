@@ -104,8 +104,6 @@
         return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
     } backOffTimeMs:1000];
     
-    NSLog(@"I see foundToken %@ ", foundToken);
-
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
     [newAccess forAllAccounts];
@@ -142,9 +140,6 @@
     // cancelToken done snippet to include in docs
     
     [self runUntilTrue:^ {
-        NSLog(@"REPLACE I see sig count %d", (int)accessToken.payloadSignaturesArray_Count);
-        NSLog(@"        I see sig %@", accessToken.payloadSignaturesArray[0]);
-        NSLog(@"        I see sig %@", accessToken.payloadSignaturesArray[1]);
         return (accessToken.payloadSignaturesArray_Count > 3);
     }];
 }
