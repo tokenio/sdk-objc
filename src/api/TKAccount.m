@@ -53,6 +53,18 @@
     return account.isLocked;
 }
 
+- (BOOL) supportsPayment {
+    return account.accountFeatures.supportsPayment;
+}
+
+- (BOOL) supportsInformation {
+    return account.accountFeatures.supportsInformation;
+}
+
+- (BOOL) requiresExternalAuth {
+    return account.accountFeatures.requiresExternalAuth;
+}
+
 - (void)getBalance:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     

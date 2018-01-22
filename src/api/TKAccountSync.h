@@ -38,6 +38,18 @@
 /// Id by which Token system identifies this account's bank.
 @property (nonatomic, readonly) NSString *bankId;
 
+/// Flag indicating whether the account needs re-linking.
+@property (nonatomic, readonly) BOOL isLocked;
+
+/// Flag indicating whether the account allows for payment initiation.
+@property (nonatomic, readonly) BOOL supportsPayment;
+
+/// Flag indicating whether the account allows for retrieval of information.
+@property (nonatomic, readonly) BOOL supportsInformation;
+
+/// Flag indicating whether the account requires external authorization for creating transfers.
+@property (nonatomic, readonly) BOOL requiresExternalAuth;
+
 + (TKAccountSync *)account:(TKAccount *)delegate;
 
 /**
