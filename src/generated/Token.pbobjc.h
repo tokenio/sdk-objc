@@ -309,7 +309,11 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** Optional */
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
 
-/** Optional */
+/**
+ * Expiration time. Access tokens ignore this; all access tokens
+ * have a 90-day lifespan. For transfer tokens, this is an optional
+ * expiration time.
+ **/
 @property(nonatomic, readwrite) int64_t expiresAtMs;
 
 /** Optional, can be endorsed until this time */

@@ -106,6 +106,10 @@
         XCTAssert(accounts.count == 2);
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(@"iron", accounts[0].bankId);
+        XCTAssert(!accounts[0].isLocked);
+        XCTAssert(accounts[0].supportsPayment);
+        XCTAssert(accounts[0].supportsInformation);
+        XCTAssert(!accounts[0].requiresExternalAuth);
         
         TKAccountSync *account = [member getAccount:accounts[0].id];
         XCTAssertEqualObjects(@"Checking", account.name);

@@ -44,6 +44,7 @@ typedef GPB_ENUM(PurposeOfPayment) {
    * of the field.
    **/
   PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  /** A bank might require a Purpose of Payment for some transfers. */
   PurposeOfPayment_Invalid = 0,
   PurposeOfPayment_Other = 1,
   PurposeOfPayment_PersonalExpenses = 2,
@@ -71,6 +72,7 @@ typedef GPB_ENUM(PaymentContext) {
    * of the field.
    **/
   PaymentContext_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  /** A bank might require a context code for some transfers. */
   PaymentContext_InvalidContext = 0,
   PaymentContext_OtherContext = 1,
   PaymentContext_BillPayment = 2,

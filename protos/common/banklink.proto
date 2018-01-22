@@ -4,7 +4,11 @@ package io.token.proto.banklink;
 import "security.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// This message represents
+// This message represents a Token member's authority over a bank account.
+// Since they're sent over the network, normally the bank encrypts them.
+// How a member uses it: https://developer.token.io/sdk/#link-a-bank-account
+// How a bank creates it: https://developer.token.io/bank-integration/#bank-account-linking
+// Here, a SealedMessage "seals" a BankAccount message.
 //
 message BankAuthorization {
   string bank_id = 1;

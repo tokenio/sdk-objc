@@ -20,7 +20,7 @@
  */
 + (DeviceInfo *)deviceInfo:(NSString *)memberId keys:(NSArray<Key *> *)keys;
 
-@property (atomic, readonly) NSString *memberId;
-@property (atomic, readonly) NSArray<Key *> *keys;
+@property (nonatomic, readonly) NSString *memberId;
+@property (nonatomic, readonly) NSArray<Key *> *keys;
 
 @end

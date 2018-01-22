@@ -94,40 +94,40 @@ message RecoveryRule {
 
 // A member record that is computed by replaying all the member updates.
 message Member {
-  string id = 1;
-  string last_hash = 2;
-  repeated string alias_hashes = 3;
-  repeated io.token.proto.common.security.Key keys = 4;
-  repeated string unverified_alias_hashes = 5;
-  RecoveryRule recovery_rule = 6;
-  int32 last_recovery_sequence = 7; // the sequence number for the member's last recovery entry
-  int32 last_operation_sequence = 8; // the sequence number for the member's last operation
+  string id = 1;                                        // member ID
+  string last_hash = 2;                                 // last hash; used with UpdateMember
+  repeated string alias_hashes = 3;                     // hashes of verified aliases
+  repeated io.token.proto.common.security.Key keys = 4; // public keys
+  repeated string unverified_alias_hashes = 5;          // hashes of unverified aliases
+  RecoveryRule recovery_rule = 6;                       // recovery rule
+  int32 last_recovery_sequence = 7;                     // sequence number for member's last recovery entry
+  int32 last_operation_sequence = 8;                    // sequence number for member's last operation
 }
 
 // A member address record
 message AddressRecord {
   string id = 1; // Address id
-  string name = 2; // The display name of the address
+  string name = 2; // The display name of the address, e.g., "Office"
   io.token.proto.common.address.Address address = 3; // Country specific JSON address
   io.token.proto.common.security.Signature address_signature = 4; // member signature of the address
 }
 
 // Public profile
 message Profile {
-  string display_name_first = 1;
-  string display_name_last = 2;
-  string original_picture_id = 3;   // Ignored in set profile request
-  string small_picture_id = 4;      // Ignored in set profile request
-  string medium_picture_id = 5;     // Ignored in set profile request
-  string large_picture_id = 6;      // Ignored in set profile request
+  string display_name_first = 1;    // first name
+  string display_name_last = 2;     // last name
+  string original_picture_id = 3;   // blob ID. Ignored in set profile request
+  string small_picture_id = 4;      // blob ID. Ignored in set profile request
+  string medium_picture_id = 5;     // blob ID. Ignored in set profile request
+  string large_picture_id = 6;      // blob ID. Ignored in set profile request
 }
 
 // Profile picture sizes
 enum ProfilePictureSize {
   INVALID = 0;
-  ORIGINAL = 1;
-  SMALL = 2;
-  MEDIUM = 3;
+  ORIGINAL = 1; // same size as uploaded
+  SMALL = 2;    // 200x200
+  MEDIUM = 3;   // 600x600
   LARGE = 4;
 }
 

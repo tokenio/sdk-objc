@@ -35,6 +35,22 @@
     return self.async.bankId;
 }
 
+- (BOOL) isLocked {
+    return self.async.isLocked;
+}
+
+- (BOOL) supportsPayment {
+    return self.async.supportsPayment;
+}
+
+- (BOOL) supportsInformation {
+    return self.async.supportsInformation;
+}
+
+- (BOOL) requiresExternalAuth {
+    return self.async.requiresExternalAuth;
+}
+
 - (TKMemberSync *)member {
     return self.async.member;
 }

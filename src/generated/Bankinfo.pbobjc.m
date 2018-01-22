@@ -53,6 +53,7 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic supportsAppless;
 @dynamic supportsPayment;
 @dynamic supportsInformation;
+@dynamic requiresExternalAuth;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[1];
@@ -128,6 +129,15 @@ typedef struct Bank__storage_ {
         .number = Bank_FieldNumber_SupportsInformation,
         .hasIndex = 8,
         .offset = 9,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "requiresExternalAuth",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_RequiresExternalAuth,
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
