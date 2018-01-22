@@ -16,7 +16,7 @@
 + (TKSignature *)signature:(NSString *)signature
                 signedWith:(Key *)key;
 
-@property (atomic, readonly) NSString *value;
-@property (atomic, readonly) Key *key;
+@property (nonatomic, readonly) NSString *value;
+@property (nonatomic, readonly) Key *key;
 
 @end

@@ -24,19 +24,19 @@
 @interface TKAccountSync : NSObject
 
 /// Asynchronous version.
-@property (atomic, readonly) TKAccount *async;
+@property (nonatomic, readonly) TKAccount *async;
 
 /// Owner member.
-@property (atomic, readonly) TKMemberSync *member;
+@property (nonatomic, readonly) TKMemberSync *member;
 
 /// Id by which Token system identifies this account.
-@property (atomic, readonly) NSString *id;
+@property (nonatomic, readonly) NSString *id;
 
 /// Human-readable name. For example, "Checking account with number ending -2718".
-@property (atomic, readonly) NSString *name;
+@property (nonatomic, readonly) NSString *name;
 
 /// Id by which Token system identifies this account's bank.
-@property (atomic, readonly) NSString *bankId;
+@property (nonatomic, readonly) NSString *bankId;
 
 + (TKAccountSync *)account:(TKAccount *)delegate;
 

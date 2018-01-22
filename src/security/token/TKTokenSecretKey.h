@@ -16,10 +16,10 @@
 
 + (TKTokenSecretKey *)keyWithLevel:(Key_Level)level  privateKey:(NSData *)sk publicKey:(NSData *)pk;
 
-@property (atomic, readonly) NSString *id;
-@property (atomic, readonly) Key_Level level;
-@property (atomic, readonly) NSData *publicKey;
-@property (atomic, readonly) NSData *privateKey;
-@property (atomic, readonly) Key *keyInfo;
+@property (nonatomic, readonly) NSString *id;
+@property (nonatomic, readonly) Key_Level level;
+@property (nonatomic, readonly) NSData *publicKey;
+@property (nonatomic, readonly) NSData *privateKey;
+@property (nonatomic, readonly) Key *keyInfo;
 
 @end
