@@ -120,7 +120,11 @@ typedef GPB_ENUM(RequestStatus) {
    **/
   RequestStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   RequestStatus_InvalidRequest = 0,
+
+  /** success */
   RequestStatus_SuccessfulRequest = 1,
+
+  /** failed, needed to use a PRIVILEGED key */
   RequestStatus_MoreSignaturesNeeded = 2,
 };
 
@@ -223,8 +227,10 @@ typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
 
 @interface GetBalancePayload : GPBMessage
 
+/** account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/** random string to de-duplicate requests */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @end
@@ -239,10 +245,13 @@ typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
 
 @interface GetTransactionPayload : GPBMessage
 
+/** account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/** transaction ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
+/** random string to de-duplicate requests */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @end
@@ -256,8 +265,10 @@ typedef GPB_ENUM(GetTransactionsPayload_FieldNumber) {
 
 @interface GetTransactionsPayload : GPBMessage
 
+/** account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/** random string to de-duplicate requests */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @end

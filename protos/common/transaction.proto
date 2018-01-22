@@ -41,23 +41,23 @@ message Transaction {
 }
 
 message GetBalancePayload {
-  string account_id = 1;
-  string nonce = 2;
+  string account_id = 1; // account ID
+  string nonce = 2;      // random string to de-duplicate requests
 }
 
 message GetTransactionPayload {
-  string account_id = 1;
-  string transaction_id = 2;
-  string nonce = 3;
+  string account_id = 1;     // account ID
+  string transaction_id = 2; // transaction ID
+  string nonce = 3;          // random string to de-duplicate requests
 }
 
 message GetTransactionsPayload {
-  string account_id = 1;
-  string nonce = 2;
+  string account_id = 1; // account ID
+  string nonce = 2;      // random string to de-duplicate requests
 }
 
 enum RequestStatus {
   INVALID_REQUEST = 0;
-  SUCCESSFUL_REQUEST = 1;
-  MORE_SIGNATURES_NEEDED = 2;
+  SUCCESSFUL_REQUEST = 1;     // success
+  MORE_SIGNATURES_NEEDED = 2; // failed, needed to use a PRIVILEGED key
 }

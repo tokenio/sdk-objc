@@ -51,7 +51,11 @@ message TokenPayload {
   TokenMember to = 5;                                   // Payee member.
 
   int64 effective_at_ms = 6;                            // Optional
-  int64 expires_at_ms = 7;                              // Optional
+
+  // Expiration time. Access tokens ignore this; all access tokens
+  // have a 90-day lifespan. For transfer tokens, this is an optional
+  // expiration time.
+  int64 expires_at_ms = 7;
   int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
   string description = 8;                               // Optional
 

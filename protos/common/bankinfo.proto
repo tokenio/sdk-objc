@@ -11,6 +11,7 @@ message Bank {
   bool supports_appless = 5;      // Works with appless payments
   bool supports_payment = 6;      // Connection allows for payment initiation
   bool supports_information = 7;  // Connection allows for retrieval of information
+  bool requires_external_auth = 8; // Connection requires external authorization for creating transfers
 }
 
 message BankInfo {

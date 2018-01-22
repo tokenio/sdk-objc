@@ -9,6 +9,7 @@ import "banklink.proto";
 import "security.proto";
 
 enum PurposeOfPayment {
+  // A bank might require a Purpose of Payment for some transfers.
   INVALID = 0;
   OTHER = 1;
   PERSONAL_EXPENSES = 2;
@@ -20,6 +21,7 @@ enum PurposeOfPayment {
 }
 
 enum PaymentContext {
+  // A bank might require a context code for some transfers.
   INVALID_CONTEXT = 0;
   OTHER_CONTEXT = 1;
   BILL_PAYMENT = 2;

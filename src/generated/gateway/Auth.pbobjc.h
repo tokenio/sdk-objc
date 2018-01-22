@@ -56,22 +56,28 @@ typedef GPB_ENUM(HttpAuthPayload_FieldNumber) {
 };
 
 /**
- * The payload is signed by the client for every HTTP request. It consists
- * of some of the HTTP request fields. We convert the proto into canonical
- * JSON and sign it.
+ * For HTTP communication, the payload consists of some of the HTTP request fields.
+ * We convert the proto into canonical JSON and sign it.
+ * https://github.com/tokenio/sdk-js/blob/master/src/http/AuthHeader.js
  **/
 @interface HttpAuthPayload : GPBMessage
 
+/** HTTP method, e.g., "POST" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *method;
 
+/** host, e.g., "api.sandbox.token.io" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *uriHost;
 
+/** path part of URL, e.g., "/aliases" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *uriPath;
 
+/** query part of URL, e.g., "tokenId=tt:AMg...bXg5ny:5zKcENpV&offset=null&limit=100" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
 
+/** request body, e.g., "{\\"memberId\\":\\"m:Y9GkD...LdEn:5zKtXEAq\\"}" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *requestBody;
 
+/** creation time, e.g., "1515710877090" */
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
@@ -83,6 +89,10 @@ typedef GPB_ENUM(GrpcAuthPayload_FieldNumber) {
   GrpcAuthPayload_FieldNumber_CreatedAtMs = 6,
 };
 
+/**
+ * For gRPC communication, the payload is a serialized protbuf and creation time.
+ * https://github.com/tokenio/sdk-java/blob/master/lib/src/main/java/io/token/rpc/ClientAuthenticator.java
+ **/
 @interface GrpcAuthPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSData *request;

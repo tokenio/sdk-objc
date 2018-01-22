@@ -23,16 +23,17 @@ message AccountTag {
 message AccountFeatures {
   bool supports_payment = 1;
   bool supports_information = 2;
+  bool requires_external_auth = 3;
 }
 
 // Token linked account.
 message Account {
-  string id = 1;
-  string name = 2;
-  string bank_id = 3;
+  string id = 1;                        // account ID
+  string name = 2;                      // human-friendly name. E.g., "Checking account with number ...1234"
+  string bank_id = 3;                   // bank ID
   repeated AccountTag tags = 4;
-  bool is_locked = 5; // indicates whether account requires re-linking
-  AccountFeatures account_features = 6;
+  bool is_locked = 5;                   // indicates whether account requires re-linking (perhaps after member recovery)
+  AccountFeatures account_features = 6; // features account supports
 }
 
 // Account information as seen by the bank. This is what the end user links with
@@ -72,6 +73,12 @@ message BankAccount {
     string account = 2;
   }
 
+  // Faster Payments Service transfer (UK)
+  message FasterPayments {
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
   oneof account {
     Token token = 1;
     TokenAuthorization token_authorization = 2;
@@ -79,6 +86,7 @@ message BankAccount {
     Sepa sepa = 4;
     Ach ach = 5;
     Bank bank = 6;
+    FasterPayments faster_payments = 9;
   }
 
   map<string, string> metadata = 7;

@@ -55,8 +55,14 @@ typedef GPB_ENUM(ProfilePictureSize) {
    **/
   ProfilePictureSize_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   ProfilePictureSize_Invalid = 0,
+
+  /** same size as uploaded */
   ProfilePictureSize_Original = 1,
+
+  /** 200x200 */
   ProfilePictureSize_Small = 2,
+
+  /** 600x600 */
   ProfilePictureSize_Medium = 3,
   ProfilePictureSize_Large = 4,
 };
@@ -391,30 +397,36 @@ typedef GPB_ENUM(Member_FieldNumber) {
  **/
 @interface Member : GPBMessage
 
+/** member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** last hash; used with UpdateMember */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lastHash;
 
+/** hashes of verified aliases */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *aliasHashesArray;
 /** The number of items in @c aliasHashesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger aliasHashesArray_Count;
 
+/** public keys */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
 /** The number of items in @c keysArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger keysArray_Count;
 
+/** hashes of unverified aliases */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *unverifiedAliasHashesArray;
 /** The number of items in @c unverifiedAliasHashesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unverifiedAliasHashesArray_Count;
 
+/** recovery rule */
 @property(nonatomic, readwrite, strong, null_resettable) RecoveryRule *recoveryRule;
 /** Test to see if @c recoveryRule has been set. */
 @property(nonatomic, readwrite) BOOL hasRecoveryRule;
 
-/** the sequence number for the member's last recovery entry */
+/** sequence number for member's last recovery entry */
 @property(nonatomic, readwrite) int32_t lastRecoverySequence;
 
-/** the sequence number for the member's last operation */
+/** sequence number for member's last operation */
 @property(nonatomic, readwrite) int32_t lastOperationSequence;
 
 @end
@@ -436,7 +448,7 @@ typedef GPB_ENUM(AddressRecord_FieldNumber) {
 /** Address id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** The display name of the address */
+/** The display name of the address, e.g., "Office" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 /** Country specific JSON address */
@@ -467,20 +479,22 @@ typedef GPB_ENUM(Profile_FieldNumber) {
  **/
 @interface Profile : GPBMessage
 
+/** first name */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameFirst;
 
+/** last name */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *displayNameLast;
 
-/** Ignored in set profile request */
+/** blob ID. Ignored in set profile request */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *originalPictureId;
 
-/** Ignored in set profile request */
+/** blob ID. Ignored in set profile request */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *smallPictureId;
 
-/** Ignored in set profile request */
+/** blob ID. Ignored in set profile request */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *mediumPictureId;
 
-/** Ignored in set profile request */
+/** blob ID. Ignored in set profile request */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *largePictureId;
 
 @end

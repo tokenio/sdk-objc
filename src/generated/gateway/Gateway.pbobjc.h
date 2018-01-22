@@ -186,6 +186,7 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 
 @interface CreateMemberRequest : GPBMessage
 
+/** random string; used only to de-duplicate requests. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @end
@@ -198,6 +199,7 @@ typedef GPB_ENUM(CreateMemberResponse_FieldNumber) {
 
 @interface CreateMemberResponse : GPBMessage
 
+/** newly-created member ID. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
@@ -212,14 +214,17 @@ typedef GPB_ENUM(UpdateMemberRequest_FieldNumber) {
 
 @interface UpdateMemberRequest : GPBMessage
 
+/** changes */
 @property(nonatomic, readwrite, strong, null_resettable) MemberUpdate *update;
 /** Test to see if @c update has been set. */
 @property(nonatomic, readwrite) BOOL hasUpdate;
 
+/** signature of update field */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *updateSignature;
 /** Test to see if @c updateSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasUpdateSignature;
 
+/** extra (unsigned) data for aliases */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MemberOperationMetadata*> *metadataArray;
 /** The number of items in @c metadataArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadataArray_Count;
@@ -234,6 +239,7 @@ typedef GPB_ENUM(UpdateMemberResponse_FieldNumber) {
 
 @interface UpdateMemberResponse : GPBMessage
 
+/** updated member structure */
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
@@ -248,6 +254,7 @@ typedef GPB_ENUM(GetMemberRequest_FieldNumber) {
 
 @interface GetMemberRequest : GPBMessage
 
+/** ID of member to get */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
@@ -260,6 +267,7 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 @interface GetMemberResponse : GPBMessage
 
+/** member structure */
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
@@ -274,6 +282,7 @@ typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
 
 @interface ResolveAliasRequest : GPBMessage
 
+/** alias to resolve */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
@@ -288,6 +297,7 @@ typedef GPB_ENUM(ResolveAliasResponse_FieldNumber) {
 
 @interface ResolveAliasResponse : GPBMessage
 
+/** member that owns alias, if any */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
@@ -309,10 +319,12 @@ typedef GPB_ENUM(GetAliasesResponse_FieldNumber) {
 
 @interface GetAliasesResponse : GPBMessage
 
+/** verified aliases */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *aliasesArray;
 /** The number of items in @c aliasesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger aliasesArray_Count;
 
+/** unverified aliases */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *unverifiedAliasesArray;
 /** The number of items in @c unverifiedAliasesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unverifiedAliasesArray_Count;
@@ -328,8 +340,10 @@ typedef GPB_ENUM(CompleteVerificationRequest_FieldNumber) {
 
 @interface CompleteVerificationRequest : GPBMessage
 
+/** verification ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
 
+/** verification code */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
 @end
@@ -349,8 +363,10 @@ typedef GPB_ENUM(RetryVerificationRequest_FieldNumber) {
 
 @interface RetryVerificationRequest : GPBMessage
 
+/** member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
+/** alias */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
@@ -365,6 +381,7 @@ typedef GPB_ENUM(RetryVerificationResponse_FieldNumber) {
 
 @interface RetryVerificationResponse : GPBMessage
 
+/** verification ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *verificationId;
 
 @end
@@ -498,12 +515,15 @@ typedef GPB_ENUM(AddAddressRequest_FieldNumber) {
 
 @interface AddAddressRequest : GPBMessage
 
+/** display name, such as "Office" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** shipping address */
 @property(nonatomic, readwrite, strong, null_resettable) Address *address;
 /** Test to see if @c address has been set. */
 @property(nonatomic, readwrite) BOOL hasAddress;
 
+/** signature */
 @property(nonatomic, readwrite, strong, null_resettable) Signature *addressSignature;
 /** Test to see if @c addressSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasAddressSignature;
@@ -518,6 +538,7 @@ typedef GPB_ENUM(AddAddressResponse_FieldNumber) {
 
 @interface AddAddressResponse : GPBMessage
 
+/** new address */
 @property(nonatomic, readwrite, strong, null_resettable) AddressRecord *address;
 /** Test to see if @c address has been set. */
 @property(nonatomic, readwrite) BOOL hasAddress;
@@ -532,6 +553,7 @@ typedef GPB_ENUM(GetAddressRequest_FieldNumber) {
 
 @interface GetAddressRequest : GPBMessage
 
+/** address ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
@@ -544,6 +566,7 @@ typedef GPB_ENUM(GetAddressResponse_FieldNumber) {
 
 @interface GetAddressResponse : GPBMessage
 
+/** address */
 @property(nonatomic, readwrite, strong, null_resettable) AddressRecord *address;
 /** Test to see if @c address has been set. */
 @property(nonatomic, readwrite) BOOL hasAddress;
@@ -564,6 +587,7 @@ typedef GPB_ENUM(GetAddressesResponse_FieldNumber) {
 
 @interface GetAddressesResponse : GPBMessage
 
+/** list of addresses */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AddressRecord*> *addressesArray;
 /** The number of items in @c addressesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger addressesArray_Count;
@@ -578,6 +602,7 @@ typedef GPB_ENUM(DeleteAddressRequest_FieldNumber) {
 
 @interface DeleteAddressRequest : GPBMessage
 
+/** address ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
@@ -596,6 +621,7 @@ typedef GPB_ENUM(SetProfileRequest_FieldNumber) {
 
 @interface SetProfileRequest : GPBMessage
 
+/** new profile, picture fields ignored */
 @property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
 /** Test to see if @c profile has been set. */
 @property(nonatomic, readwrite) BOOL hasProfile;
@@ -610,6 +636,7 @@ typedef GPB_ENUM(SetProfileResponse_FieldNumber) {
 
 @interface SetProfileResponse : GPBMessage
 
+/** updated profile */
 @property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
 /** Test to see if @c profile has been set. */
 @property(nonatomic, readwrite) BOOL hasProfile;
@@ -624,6 +651,7 @@ typedef GPB_ENUM(GetProfileRequest_FieldNumber) {
 
 @interface GetProfileRequest : GPBMessage
 
+/** member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
@@ -636,6 +664,7 @@ typedef GPB_ENUM(GetProfileResponse_FieldNumber) {
 
 @interface GetProfileResponse : GPBMessage
 
+/** display information */
 @property(nonatomic, readwrite, strong, null_resettable) Profile *profile;
 /** Test to see if @c profile has been set. */
 @property(nonatomic, readwrite) BOOL hasProfile;
@@ -650,6 +679,7 @@ typedef GPB_ENUM(SetProfilePictureRequest_FieldNumber) {
 
 @interface SetProfilePictureRequest : GPBMessage
 
+/** image "file" */
 @property(nonatomic, readwrite, strong, null_resettable) Blob_Payload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
@@ -671,8 +701,10 @@ typedef GPB_ENUM(GetProfilePictureRequest_FieldNumber) {
 
 @interface GetProfilePictureRequest : GPBMessage
 
+/** member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
+/** ORIGINAL/SMALL/MEDIUM/LARGE */
 @property(nonatomic, readwrite) enum ProfilePictureSize size;
 
 @end
@@ -697,6 +729,7 @@ typedef GPB_ENUM(GetProfilePictureResponse_FieldNumber) {
 
 @interface GetProfilePictureResponse : GPBMessage
 
+/** blob with image "file" */
 @property(nonatomic, readwrite, strong, null_resettable) Blob *blob;
 /** Test to see if @c blob has been set. */
 @property(nonatomic, readwrite) BOOL hasBlob;
@@ -1268,6 +1301,7 @@ typedef GPB_ENUM(GetDefaultAccountRequest_FieldNumber) {
 
 @interface GetDefaultAccountRequest : GPBMessage
 
+/** ID of member; must be same as auth'd member */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @end
@@ -1280,6 +1314,7 @@ typedef GPB_ENUM(GetDefaultAccountResponse_FieldNumber) {
 
 @interface GetDefaultAccountResponse : GPBMessage
 
+/** default account, if any */
 @property(nonatomic, readwrite, strong, null_resettable) Account *account;
 /** Test to see if @c account has been set. */
 @property(nonatomic, readwrite) BOOL hasAccount;
@@ -1295,8 +1330,10 @@ typedef GPB_ENUM(SetDefaultAccountRequest_FieldNumber) {
 
 @interface SetDefaultAccountRequest : GPBMessage
 
+/** ID of member; must be same as auth'd member */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
+/** ID of account to set as default */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
@@ -1396,6 +1433,7 @@ typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
 
 @interface CreateTransferTokenRequest : GPBMessage
 
+/** TokenPayload, should have TransferBody */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
@@ -1412,10 +1450,12 @@ typedef GPB_ENUM(CreateTransferTokenResponse_FieldNumber) {
 
 @interface CreateTransferTokenResponse : GPBMessage
 
+/** new Token */
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
 
+/** success/failure */
 @property(nonatomic, readwrite) enum TransferTokenStatus status;
 
 /** Optional: used when status is FAILURE_EXTERNAL_AUTHORIZATION_REQUIRED */
@@ -1445,6 +1485,7 @@ typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
 
 @interface CreateAccessTokenRequest : GPBMessage
 
+/** TokenPayload, should have AccessBody */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
@@ -1459,6 +1500,7 @@ typedef GPB_ENUM(CreateAccessTokenResponse_FieldNumber) {
 
 @interface CreateAccessTokenResponse : GPBMessage
 
+/** new Token */
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
@@ -1473,6 +1515,7 @@ typedef GPB_ENUM(GetTokenRequest_FieldNumber) {
 
 @interface GetTokenRequest : GPBMessage
 
+/** ID of Token to fetch */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
@@ -1485,6 +1528,7 @@ typedef GPB_ENUM(GetTokenResponse_FieldNumber) {
 
 @interface GetTokenResponse : GPBMessage
 
+/** Token */
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
@@ -1501,6 +1545,7 @@ typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
 
 @interface GetTokensRequest : GPBMessage
 
+/** ACCESS or TRANSFER */
 @property(nonatomic, readwrite) GetTokensRequest_Type type;
 
 /** Optional paging settings. */
@@ -1508,6 +1553,7 @@ typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
 
+/** optional filter */
 @property(nonatomic, readwrite, strong, null_resettable) GetTokensRequest_TokenFilter *filter;
 /** Test to see if @c filter has been set. */
 @property(nonatomic, readwrite) BOOL hasFilter;
@@ -1538,14 +1584,19 @@ typedef GPB_ENUM(GetTokensRequest_TokenFilter_FieldNumber) {
 
 @interface GetTokensRequest_TokenFilter : GPBMessage
 
+/** Transfer Token source account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountId;
 
+/** Transfer Token destination account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *destinationAccountId;
 
+/** start time */
 @property(nonatomic, readwrite) int64_t startTimeMs;
 
+/** end time */
 @property(nonatomic, readwrite) int64_t endTimeMs;
 
+/** FROM/TO */
 @property(nonatomic, readwrite) GetTokensRequest_TokenFilter_Role role;
 
 @end
@@ -1571,11 +1622,12 @@ typedef GPB_ENUM(GetTokensResponse_FieldNumber) {
 
 @interface GetTokensResponse : GPBMessage
 
+/** list of Tokens */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Token*> *tokensArray;
 /** The number of items in @c tokensArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger tokensArray_Count;
 
-/** Optional offset state for the client to roundtrip. */
+/** optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @end
@@ -1940,6 +1992,7 @@ typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
 
 @interface CreateTestBankAccountRequest : GPBMessage
 
+/** starting balance */
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
 /** Test to see if @c balance has been set. */
 @property(nonatomic, readwrite) BOOL hasBalance;
@@ -1954,6 +2007,7 @@ typedef GPB_ENUM(CreateTestBankAccountResponse_FieldNumber) {
 
 @interface CreateTestBankAccountResponse : GPBMessage
 
+/** authorization usable with linkAccounts */
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
 /** Test to see if @c bankAuthorization has been set. */
 @property(nonatomic, readwrite) BOOL hasBankAuthorization;
@@ -1969,8 +2023,10 @@ typedef GPB_ENUM(GetTestBankNotificationRequest_FieldNumber) {
 
 @interface GetTestBankNotificationRequest : GPBMessage
 
+/** subscriber ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
 
+/** notification ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
 
 @end
@@ -1983,6 +2039,7 @@ typedef GPB_ENUM(GetTestBankNotificationResponse_FieldNumber) {
 
 @interface GetTestBankNotificationResponse : GPBMessage
 
+/** notification */
 @property(nonatomic, readwrite, strong, null_resettable) Notification *notification;
 /** Test to see if @c notification has been set. */
 @property(nonatomic, readwrite) BOOL hasNotification;
@@ -1997,6 +2054,7 @@ typedef GPB_ENUM(GetTestBankNotificationsRequest_FieldNumber) {
 
 @interface GetTestBankNotificationsRequest : GPBMessage
 
+/** subscriber ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *subscriberId;
 
 @end
@@ -2009,6 +2067,7 @@ typedef GPB_ENUM(GetTestBankNotificationsResponse_FieldNumber) {
 
 @interface GetTestBankNotificationsResponse : GPBMessage
 
+/** list of notifications */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
 /** The number of items in @c notificationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger notificationsArray_Count;
