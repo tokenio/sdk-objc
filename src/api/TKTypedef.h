@@ -33,7 +33,7 @@
 
 typedef NS_ENUM(int32_t, NotifyStatus);
 
-typedef void (^ _Nonnull OnSuccess)();
+typedef void (^ _Nonnull OnSuccess)(void);
 typedef void (^ _Nonnull OnAuthRequired)(ExternalAuthorizationDetails * _Nonnull);
 typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
 

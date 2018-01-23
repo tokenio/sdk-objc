@@ -36,7 +36,7 @@
     return self;
 }
 
-- (id)run:(void(^)())block {
+- (id)run:(void(^)(void))block {
     block();
     if ([NSThread isMainThread]) {
         // If this sync call is invoked in main thread, we need to excute the runloop to receive the onSuccess/onError callback. Otherwise the main thread will be hung by semaphore. The callbacks are always in main thread.

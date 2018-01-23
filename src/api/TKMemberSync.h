@@ -131,7 +131,7 @@
  *
  * @param aliases set of aliases
  */
-- (void)addAliases:(NSArray<NSString *> *)aliases;
+- (void)addAliases:(NSArray<Alias *> *)aliases;
 
 /**
  * Removes an alias from the member.
@@ -145,7 +145,7 @@
  *
  * @param aliases set of aliases
  */
-- (void)removeAliases:(NSArray<NSString *> *)aliases;
+- (void)removeAliases:(NSArray<Alias *> *)aliases;
 
 /**
  * Subscribes a device to receive push notifications.

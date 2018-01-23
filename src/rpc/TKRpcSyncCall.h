@@ -30,7 +30,7 @@
  * @param block RPC handling block
  * @return operation result
  */
-- (T)run:(void(^)())block;
+- (T)run:(void(^)(void))block;
 
 /**
  * @brief Invoked by the RPC block to signal that call completed successfully.
