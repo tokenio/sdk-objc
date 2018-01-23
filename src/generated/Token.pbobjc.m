@@ -362,6 +362,7 @@ typedef struct TokenMember__storage_ {
 @dynamic hasTo, to;
 @dynamic effectiveAtMs;
 @dynamic expiresAtMs;
+@dynamic endorseUntilMs;
 @dynamic description_p;
 @dynamic transfer;
 @dynamic access;
@@ -378,6 +379,7 @@ typedef struct TokenPayload__storage_ {
   AccessBody *access;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
+  int64_t endorseUntilMs;
 } TokenPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -453,7 +455,7 @@ typedef struct TokenPayload__storage_ {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_Description_p,
-        .hasIndex = 7,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -475,6 +477,15 @@ typedef struct TokenPayload__storage_ {
         .offset = (uint32_t)offsetof(TokenPayload__storage_, access),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "endorseUntilMs",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_FieldNumber_EndorseUntilMs,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, endorseUntilMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -753,7 +764,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllAddresses,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAddresses),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -762,7 +773,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllAccounts,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allAccounts),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -771,7 +782,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllTransactions,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allTransactions),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -780,7 +791,7 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllBalances,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allBalances),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -834,11 +845,6 @@ typedef struct AccessBody_Resource__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\004\001\014\000\002\013\000\003\017\000\004\013\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

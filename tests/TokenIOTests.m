@@ -32,6 +32,7 @@
                                            crypto:nil
                                    browserFactory:nil
                                            useSsl:NO
+                                        certsPath:nil
                            globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}]);
 }
 
@@ -43,6 +44,7 @@
                                                         crypto:nil
                                                 browserFactory:nil
                                                         useSsl:NO
+                                                     certsPath:nil
                                         globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}],
                                  NSException,
                                  @"NoDeveloperKeyException");

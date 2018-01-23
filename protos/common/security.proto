@@ -3,17 +3,18 @@ package io.token.proto.common.security;
 
 option java_outer_classname = "SecurityProtos";
 
-
+// Public key
 message Key {
-  string id = 1;
-  string public_key = 2;     // Base64url encoded public key.
-  Level level = 3;
+  string id = 1;           // Key ID
+  string public_key = 2;   // Base64url encoded public key.
+  Level level = 3;         // Privilege level
   Algorithm algorithm = 4;
 
   enum Algorithm {
     INVALID_ALGORITHM = 0;
     ED25519 = 1;
     ECDSA_SHA256 = 2;
+    RS256 = 3;
   }
 
   enum Level {
@@ -25,16 +26,16 @@ message Key {
 }
 
 message PrivateKey {
-  string id = 1;
-  string private_key = 2; // Base64url encoded private key.
-  Key.Level level = 3;
-  Key.Algorithm algorithm = 4;
+  string id = 1;               // Key ID.
+  string private_key = 2;      // Base64url encoded private key.
+  Key.Level level = 3;         // Key's privilege level.
+  Key.Algorithm algorithm = 4; // Algorithm to use with key.
 }
 
 message Signature {
-  string member_id = 1;
-  string key_id = 2;
-  string signature = 3;
+  string member_id = 1; // ID of signing member
+  string key_id = 2;    // ID of public key to verify signature
+  string signature = 3; // signature
 }
 
 // Represents an encrypted message payload

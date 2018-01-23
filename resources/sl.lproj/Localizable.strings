@@ -1,0 +1,18 @@
+// TODO: Fix the "UNDEFINED" messages below.
+"Signature_Reason_CreateMember" = "Potrdi novi račun Token";
+"Signature_Reason_UpdateMember" = "Potrdi spremembo svojega računa Token";
+"Signature_Reason_EndorseAccessToken" = "Potrdi dostop do informacij";
+"Signature_Reason_EndorseTransferToken" = "Potrdi prenos";
+"Signature_Reason_Authentication" = "Potrdi avtentikacijo";
+"Signature_Reason_CancelToken" = "Prekini avtentikacijo";
+"Signature_Reason_CreateTransfer" = "Ustvari prenos";
+"Signature_Reason_AddAddress" = "Dodaj naslov";
+"Signature_Reason_RecoverMember" = "Potrdi za obnovitev";
+"Signature_Reason_GetBalance" = "Potrdite za stanje";
+"Signature_Reason_GetTransaction" = "Potrdite za transakcije";
+
+"Private_Key_Not_Found" = "Zasebnega ključa ni mogoče najti";
+"User_Cancelled_Authentication" = "Uporabnik je preklical avtentikacijo";
+"User_Invalid_Authentication" = "Uporabnik za avtentikacijo je neveljaven";
+
+"Sdk_Version_Mismatch" = "Posodobite aplikacijo na najnovejšo različico";

@@ -9,7 +9,7 @@ option java_outer_classname = "NotificationProtos";
 
 // A notification to the payer that a transfer was successfully processed.
 message PayerTransferProcessed {
-    string transfer_id = 1;
+  string transfer_id = 1;
 }
 
 // A notification to the payee that a transfer was successfully processed.
@@ -34,24 +34,37 @@ message TransferFailed {
 
 // A notification that a bank wants to be linked.
 message LinkAccounts {
-    io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
+  io.token.proto.banklink.BankAuthorization bank_authorization = 1;
 }
 
 // A notification to step up / endorse a token.
 message StepUp {
-    string token_id = 1;
+  string token_id = 1;
 }
 
-// A notification that a key wants to be added to a member.
+// A notification to step up a balance request
+message BalanceStepUp {
+  string account_id = 1;
+}
+
+// A notification to step up a transaction request
+message TransactionStepUp {
+  string account_id = 1;
+  string transaction_id = 2;
+}
+
+// A notification that a key wants to be added to a member. Clients should timeout the notification
+// and screen, once the expires_ms has passed
 message AddKey {
-    string name = 1;
-    io.token.proto.common.security.Key key = 2;
+  string name = 1;
+  io.token.proto.common.security.Key key = 2;
+  int64 expires_ms = 3;
 }
 
 // A notification that a bank wants to be linked, and keys want to be added.
 message LinkAccountsAndAddKey {
-    LinkAccounts link_accounts = 1;
-    AddKey add_key = 2;
+  LinkAccounts link_accounts = 1;
+  AddKey add_key = 2;
 }
 
 // A notification to request a payment
@@ -59,28 +72,37 @@ message PaymentRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
 }
 
+// A notification that a token was cancelled
+message TokenCancelled {
+  string token_id = 1;
+}
+
+
 // A data that goes in a NotifyRequest
 message NotifyBody {
-    oneof body {
-        io.token.proto.common.notification.PayerTransferProcessed payer_transfer_processed = 1;
-        io.token.proto.common.notification.LinkAccounts link_accounts = 2;
-        io.token.proto.common.notification.StepUp step_up = 3;
-        io.token.proto.common.notification.AddKey add_key = 4;
-        io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
-        io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
-        io.token.proto.common.notification.PaymentRequest payment_request = 7;
-        io.token.proto.common.notification.PayerTransferFailed payer_transfer_failed = 8;
-        io.token.proto.common.notification.TransferProcessed transfer_processed = 9;
-        io.token.proto.common.notification.TransferFailed transfer_failed = 10;
-    }
+  oneof body {
+    io.token.proto.common.notification.PayerTransferProcessed payer_transfer_processed = 1;
+    io.token.proto.common.notification.LinkAccounts link_accounts = 2;
+    io.token.proto.common.notification.StepUp step_up = 3;
+    io.token.proto.common.notification.AddKey add_key = 4;
+    io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
+    io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
+    io.token.proto.common.notification.PaymentRequest payment_request = 7;
+    io.token.proto.common.notification.PayerTransferFailed payer_transfer_failed = 8;
+    io.token.proto.common.notification.TransferProcessed transfer_processed = 9;
+    io.token.proto.common.notification.TransferFailed transfer_failed = 10;
+    io.token.proto.common.notification.TokenCancelled token_cancelled = 11;
+    io.token.proto.common.notification.BalanceStepUp balance_step_up = 12;
+    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 13;
+  }
 }
 
 // The status returned when sending a notification. ACCEPTED means the notification was initiated, but
 // not necessarily successfully delivered
 enum NotifyStatus {
-    INVALID = 0;
-    ACCEPTED = 1;
-    NO_SUBSCRIBERS = 2;
+  INVALID = 0;
+  ACCEPTED = 1;
+  NO_SUBSCRIBERS = 2;
 }
 
 // The record of a notification. Retrieved from notification service
@@ -107,8 +129,8 @@ message NotificationContent {
   string type = 1;
   string title = 2;
   string body = 3;
-  string loc_key = 6;
-  repeated string loc_args = 7;
   string payload = 4;
   int64 created_at_ms = 5;
+  string loc_key = 6;
+  repeated string loc_args = 7;
 }

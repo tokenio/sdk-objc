@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class BankAccount;
 @class BankAccount_Ach;
 @class BankAccount_Bank;
+@class BankAccount_FasterPayments;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
 @class BankAccount_Token;
@@ -105,6 +106,7 @@ typedef GPB_ENUM(AccountTag_FieldNumber) {
 typedef GPB_ENUM(AccountFeatures_FieldNumber) {
   AccountFeatures_FieldNumber_SupportsPayment = 1,
   AccountFeatures_FieldNumber_SupportsInformation = 2,
+  AccountFeatures_FieldNumber_RequiresExternalAuth = 3,
 };
 
 @interface AccountFeatures : GPBMessage
@@ -112,6 +114,8 @@ typedef GPB_ENUM(AccountFeatures_FieldNumber) {
 @property(nonatomic, readwrite) BOOL supportsPayment;
 
 @property(nonatomic, readwrite) BOOL supportsInformation;
+
+@property(nonatomic, readwrite) BOOL requiresExternalAuth;
 
 @end
 
@@ -131,19 +135,23 @@ typedef GPB_ENUM(Account_FieldNumber) {
  **/
 @interface Account : GPBMessage
 
+/** account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** human-friendly name. E.g., "Checking account with number ...1234" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** bank ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
 /** The number of items in @c tagsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger tagsArray_Count;
 
-/** indicates whether account requires re-linking */
+/** indicates whether account requires re-linking (perhaps after member recovery) */
 @property(nonatomic, readwrite) BOOL isLocked;
 
+/** features account supports */
 @property(nonatomic, readwrite, strong, null_resettable) AccountFeatures *accountFeatures;
 /** Test to see if @c accountFeatures has been set. */
 @property(nonatomic, readwrite) BOOL hasAccountFeatures;
@@ -161,6 +169,7 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_Bank = 6,
   BankAccount_FieldNumber_Metadata = 7,
   BankAccount_FieldNumber_AccountFeatures = 8,
+  BankAccount_FieldNumber_FasterPayments = 9,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -171,6 +180,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_Sepa = 4,
   BankAccount_Account_OneOfCase_Ach = 5,
   BankAccount_Account_OneOfCase_Bank = 6,
+  BankAccount_Account_OneOfCase_FasterPayments = 9,
 };
 
 /**
@@ -192,6 +202,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_FasterPayments *fasterPayments;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
@@ -309,6 +321,24 @@ typedef GPB_ENUM(BankAccount_Ach_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+
+@end
+
+#pragma mark - BankAccount_FasterPayments
+
+typedef GPB_ENUM(BankAccount_FasterPayments_FieldNumber) {
+  BankAccount_FasterPayments_FieldNumber_SortCode = 1,
+  BankAccount_FasterPayments_FieldNumber_AccountNumber = 2,
+};
+
+/**
+ * Faster Payments Service transfer (UK)
+ **/
+@interface BankAccount_FasterPayments : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @end
 

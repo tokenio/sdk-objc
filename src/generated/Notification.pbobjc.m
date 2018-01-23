@@ -320,7 +320,7 @@ typedef struct LinkAccounts__storage_ {
         .number = LinkAccounts_FieldNumber_BankAuthorization,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(LinkAccounts__storage_, bankAuthorization),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -332,11 +332,6 @@ typedef struct LinkAccounts__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(LinkAccounts__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\021\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -388,17 +383,116 @@ typedef struct StepUp__storage_ {
 
 @end
 
+#pragma mark - BalanceStepUp
+
+@implementation BalanceStepUp
+
+@dynamic accountId;
+
+typedef struct BalanceStepUp__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+} BalanceStepUp__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = BalanceStepUp_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BalanceStepUp__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BalanceStepUp class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BalanceStepUp__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - TransactionStepUp
+
+@implementation TransactionStepUp
+
+@dynamic accountId;
+@dynamic transactionId;
+
+typedef struct TransactionStepUp__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+  NSString *transactionId;
+} TransactionStepUp__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransactionStepUp_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TransactionStepUp__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transactionId",
+        .dataTypeSpecific.className = NULL,
+        .number = TransactionStepUp_FieldNumber_TransactionId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TransactionStepUp__storage_, transactionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TransactionStepUp class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TransactionStepUp__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AddKey
 
 @implementation AddKey
 
 @dynamic name;
 @dynamic hasKey, key;
+@dynamic expiresMs;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
   NSString *name;
   Key *key;
+  int64_t expiresMs;
 } AddKey__storage_;
 
 // This method is threadsafe because it is initially called
@@ -424,6 +518,15 @@ typedef struct AddKey__storage_ {
         .offset = (uint32_t)offsetof(AddKey__storage_, key),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "expiresMs",
+        .dataTypeSpecific.className = NULL,
+        .number = AddKey_FieldNumber_ExpiresMs,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(AddKey__storage_, expiresMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -539,6 +642,49 @@ typedef struct PaymentRequest__storage_ {
 
 @end
 
+#pragma mark - TokenCancelled
+
+@implementation TokenCancelled
+
+@dynamic tokenId;
+
+typedef struct TokenCancelled__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
+} TokenCancelled__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenCancelled_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TokenCancelled__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TokenCancelled class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TokenCancelled__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - NotifyBody
 
 @implementation NotifyBody
@@ -554,6 +700,9 @@ typedef struct PaymentRequest__storage_ {
 @dynamic payerTransferFailed;
 @dynamic transferProcessed;
 @dynamic transferFailed;
+@dynamic tokenCancelled;
+@dynamic balanceStepUp;
+@dynamic transactionStepUp;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -567,6 +716,9 @@ typedef struct NotifyBody__storage_ {
   PayerTransferFailed *payerTransferFailed;
   TransferProcessed *transferProcessed;
   TransferFailed *transferFailed;
+  TokenCancelled *tokenCancelled;
+  BalanceStepUp *balanceStepUp;
+  TransactionStepUp *transactionStepUp;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -662,6 +814,33 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_TransferFailed,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, transferFailed),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "tokenCancelled",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenCancelled),
+        .number = NotifyBody_FieldNumber_TokenCancelled,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, tokenCancelled),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "balanceStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(BalanceStepUp),
+        .number = NotifyBody_FieldNumber_BalanceStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, balanceStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transactionStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransactionStepUp),
+        .number = NotifyBody_FieldNumber_TransactionStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, transactionStepUp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -824,10 +1003,10 @@ BOOL Notification_Status_IsValidValue(int32_t value__) {
 @dynamic type;
 @dynamic title;
 @dynamic body;
-@dynamic locKey;
-@dynamic locArgsArray, locArgsArray_Count;
 @dynamic payload;
 @dynamic createdAtMs;
+@dynamic locKey;
+@dynamic locArgsArray, locArgsArray_Count;
 
 typedef struct NotificationContent__storage_ {
   uint32_t _has_storage_[1];
@@ -877,7 +1056,7 @@ typedef struct NotificationContent__storage_ {
         .name = "payload",
         .dataTypeSpecific.className = NULL,
         .number = NotificationContent_FieldNumber_Payload,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(NotificationContent__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -886,7 +1065,7 @@ typedef struct NotificationContent__storage_ {
         .name = "createdAtMs",
         .dataTypeSpecific.className = NULL,
         .number = NotificationContent_FieldNumber_CreatedAtMs,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(NotificationContent__storage_, createdAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -895,7 +1074,7 @@ typedef struct NotificationContent__storage_ {
         .name = "locKey",
         .dataTypeSpecific.className = NULL,
         .number = NotificationContent_FieldNumber_LocKey,
-        .hasIndex = 3,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(NotificationContent__storage_, locKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,

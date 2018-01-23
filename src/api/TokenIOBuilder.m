@@ -61,6 +61,7 @@
             crypto:cryptoEngineFactory
             browserFactory:self.browserFactory
             useSsl:self.useSsl
+            certsPath:self.certsPath
             globalRpcErrorCallback:self.globalRpcErrorCallback];
 }
 

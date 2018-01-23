@@ -142,7 +142,11 @@ typedef GPB_ENUM(TokenOperationResult_Status) {
    **/
   TokenOperationResult_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   TokenOperationResult_Status_Invalid = 0,
+
+  /** Operation succeeded. */
   TokenOperationResult_Status_Success = 1,
+
+  /** Token needs more sigs. If that's surprising: Perhaps used LOW key but needs PRIVILEGED */
   TokenOperationResult_Status_MoreSignaturesNeeded = 2,
 };
 
@@ -239,13 +243,18 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
   TokenMember_FieldNumber_Alias = 3,
 };
 
+/**
+ * Refers to a Token member by ID or by alias.
+ **/
 @interface TokenMember : GPBMessage
 
+/** member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
-/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
+/** alias, such as an email address */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
@@ -265,6 +274,7 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Description_p = 8,
   TokenPayload_FieldNumber_Transfer = 9,
   TokenPayload_FieldNumber_Access = 10,
+  TokenPayload_FieldNumber_EndorseUntilMs = 11,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -299,8 +309,15 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** Optional */
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
 
-/** Optional */
+/**
+ * Expiration time. Access tokens ignore this; all access tokens
+ * have a 90-day lifespan. For transfer tokens, this is an optional
+ * expiration time.
+ **/
 @property(nonatomic, readwrite) int64_t expiresAtMs;
+
+/** Optional, can be endorsed until this time */
+@property(nonatomic, readwrite) int64_t endorseUntilMs;
 
 /** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
@@ -327,8 +344,10 @@ typedef GPB_ENUM(ExternalAuthorizationDetails_FieldNumber) {
 
 @interface ExternalAuthorizationDetails : GPBMessage
 
+/** Display content from this URL to user to prompt for permission */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
+/** If user navigates to URL matching this pattern, interaction is complete */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *completionPattern;
 
 @end
@@ -465,6 +484,7 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
  **/
 @interface AccessBody_Resource_Address : GPBMessage
 
+/** ID of address */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *addressId;
 
 @end
@@ -472,7 +492,7 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccounts
 
 /**
- * Provides access to all member accounts
+ * Provides access to all member accounts. Enables getAccounts()
  **/
 @interface AccessBody_Resource_AllAccounts : GPBMessage
 
@@ -489,6 +509,7 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
  **/
 @interface AccessBody_Resource_Account : GPBMessage
 
+/** ID of account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
@@ -497,6 +518,7 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 
 /**
  * Provides access to member transactions in all accounts
+ * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountTransactions : GPBMessage
 
@@ -513,6 +535,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
  **/
 @interface AccessBody_Resource_AccountTransactions : GPBMessage
 
+/** ID of account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
@@ -521,6 +544,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
 
 /**
  * Provides access to member balance on all accounts
+ * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountBalances : GPBMessage
 
@@ -537,6 +561,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
  **/
 @interface AccessBody_Resource_AccountBalance : GPBMessage
 
+/** ID of account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
@@ -554,10 +579,12 @@ typedef GPB_ENUM(TokenOperationResult_FieldNumber) {
  **/
 @interface TokenOperationResult : GPBMessage
 
+/** Token, perhaps with new signatures */
 @property(nonatomic, readwrite, strong, null_resettable) Token *token;
 /** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
 
+/** Success/failure status */
 @property(nonatomic, readwrite) TokenOperationResult_Status status;
 
 @end

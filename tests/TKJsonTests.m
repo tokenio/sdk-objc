@@ -106,7 +106,7 @@
  * Long long (64 bit) field.
  */
 - (void)testLongLong {
-    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    GrpcAuthPayload *payload = [GrpcAuthPayload message];
     payload.request = [@"Hello" dataUsingEncoding:NSASCIIStringEncoding];
     payload.createdAtMs = 1479441243495;
     
@@ -225,12 +225,12 @@
  * Long long (64 bit) field.
  */
 - (void)testDeserializeLongLong {
-    GRpcAuthPayload *payload = [GRpcAuthPayload message];
+    GrpcAuthPayload *payload = [GrpcAuthPayload message];
     payload.request = [@"Hello" dataUsingEncoding:NSASCIIStringEncoding];
     payload.createdAtMs = 1479441243495;
     
     NSString *json1 = [TKJson serialize:payload];
-    GRpcAuthPayload *payload2 = [TKJson deserializeMessageOfClass:[GRpcAuthPayload class]
+    GrpcAuthPayload *payload2 = [TKJson deserializeMessageOfClass:[GrpcAuthPayload class]
                                                          fromJSON:json1];
     NSString *json2 = [TKJson serialize:payload2];
     

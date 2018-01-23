@@ -385,8 +385,8 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
 @dynamic operationOneOfCase;
 @dynamic addKey;
 @dynamic removeKey;
-@dynamic addAlias;
 @dynamic removeAlias;
+@dynamic addAlias;
 @dynamic verifyAlias;
 @dynamic recoveryRules;
 @dynamic recover;

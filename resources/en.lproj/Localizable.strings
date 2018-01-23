@@ -1,13 +1,15 @@
 // TODO: Fix the "UNDEFINED" messages below.
-"Signature_Reason_CreateMember" = "Authorize your new Token account";
-"Signature_Reason_UpdateMember" = "Authorize your Token account change";
-"Signature_Reason_EndorseAccessToken" = "Authorize information access";
-"Signature_Reason_EndorseTransferToken" = "Authorize transfer";
+"Signature_Reason_CreateMember" = "Authorise your new Token account";
+"Signature_Reason_UpdateMember" = "Authorise your Token account change";
+"Signature_Reason_EndorseAccessToken" = "Authorise information access";
+"Signature_Reason_EndorseTransferToken" = "Authorise transfer";
 "Signature_Reason_Authentication" = "Approve this authentication";
 "Signature_Reason_CancelToken" = "Cancel this authentication";
 "Signature_Reason_CreateTransfer" = "Create transfer";
 "Signature_Reason_AddAddress" = "Add address";
-"Signature_Reason_RecoverMember" = "Authorize for recovery";
+"Signature_Reason_RecoverMember" = "Authorise for recovery";
+"Signature_Reason_GetBalance" = "Authorise to retrieve your account balances";
+"Signature_Reason_GetTransaction" = "Authorise to retrieve your account transactions";
 
 "Private_Key_Not_Found" = "Private key not found";
 "User_Cancelled_Authentication" = "User cancelled authentication";

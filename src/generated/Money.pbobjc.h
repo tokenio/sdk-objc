@@ -53,6 +53,7 @@ typedef GPB_ENUM(Money_FieldNumber) {
 
 @interface Money : GPBMessage
 
+/** ISO4217, 3 letter currency code such as "USD" or "EUR". */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
 
 /** double amount in the string format. */

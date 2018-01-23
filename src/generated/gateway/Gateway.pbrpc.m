@@ -1,4 +1,5 @@
 #import "gateway/Gateway.pbrpc.h"
+#import "gateway/Gateway.pbobjc.h"
 
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
@@ -39,10 +40,18 @@
 
 #pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
 
+/**
+ * Create a member. Mints a member ID; newly-created member does not yet
+ * have keys, alias, or anything other than an ID.
+ */
 - (void)createMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateMemberWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Create a member. Mints a member ID; newly-created member does not yet
+ * have keys, alias, or anything other than an ID.
+ */
 - (GRPCProtoCall *)RPCToCreateMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateMember"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -51,10 +60,16 @@
 }
 #pragma mark UpdateMember(UpdateMemberRequest) returns (UpdateMemberResponse)
 
+/**
+ * apply member updates
+ */
 - (void)updateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUpdateMemberWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * apply member updates
+ */
 - (GRPCProtoCall *)RPCToUpdateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UpdateMember"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -63,10 +78,16 @@
 }
 #pragma mark GetMember(GetMemberRequest) returns (GetMemberResponse)
 
+/**
+ * get information about a member
+ */
 - (void)getMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetMemberWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * get information about a member
+ */
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetMember"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -75,10 +96,18 @@
 }
 #pragma mark SetProfile(SetProfileRequest) returns (SetProfileResponse)
 
+/**
+ * set profile information (display name)
+ * Ignores picture fields; use SetProfilePicture for those.
+ */
 - (void)setProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetProfileWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * set profile information (display name)
+ * Ignores picture fields; use SetProfilePicture for those.
+ */
 - (GRPCProtoCall *)RPCToSetProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetProfile"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -87,10 +116,16 @@
 }
 #pragma mark GetProfile(GetProfileRequest) returns (GetProfileResponse)
 
+/**
+ * get a member's profile (display information)
+ */
 - (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetProfileWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * get a member's profile (display information)
+ */
 - (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetProfile"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -99,10 +134,18 @@
 }
 #pragma mark SetProfilePicture(SetProfilePictureRequest) returns (SetProfilePictureResponse)
 
+/**
+ * upload an image to use as auth'd member's profile picture
+ * Automatically creates smaller sizes; this works best with square images.
+ */
 - (void)setProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetProfilePictureWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * upload an image to use as auth'd member's profile picture
+ * Automatically creates smaller sizes; this works best with square images.
+ */
 - (GRPCProtoCall *)RPCToSetProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetProfilePicture"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -111,10 +154,16 @@
 }
 #pragma mark GetProfilePicture(GetProfilePictureRequest) returns (GetProfilePictureResponse)
 
+/**
+ * Get member's profile picture (can also use GetBlob with a blob ID from profile)
+ */
 - (void)getProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetProfilePictureWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get member's profile picture (can also use GetBlob with a blob ID from profile)
+ */
 - (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetProfilePicture"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -123,10 +172,16 @@
 }
 #pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
 
+/**
+ * Get ID of member that owns an alias, if any.
+ */
 - (void)resolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToResolveAliasWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get ID of member that owns an alias, if any.
+ */
 - (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ResolveAlias"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -135,10 +190,16 @@
 }
 #pragma mark GetAliases(GetAliasesRequest) returns (GetAliasesResponse)
 
+/**
+ * Get the auth'd member's aliases.
+ */
 - (void)getAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAliasesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get the auth'd member's aliases.
+ */
 - (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAliases"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -159,10 +220,18 @@
 }
 #pragma mark RetryVerification(RetryVerificationRequest) returns (RetryVerificationResponse)
 
+/**
+ * Retries verification. For example, if verifying an email alias,
+ * re-sends verification-code email to the email address.
+ */
 - (void)retryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRetryVerificationWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Retries verification. For example, if verifying an email alias,
+ * re-sends verification-code email to the email address.
+ */
 - (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RetryVerification"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -171,10 +240,16 @@
 }
 #pragma mark GetPairedDevices(GetPairedDevicesRequest) returns (GetPairedDevicesResponse)
 
+/**
+ * Get auth'd members paired devices (as created by provisionDevice)
+ */
 - (void)getPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetPairedDevicesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get auth'd members paired devices (as created by provisionDevice)
+ */
 - (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetPairedDevices"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -188,6 +263,8 @@
  * Member account recovery
  * 
  * 
+ * Begin member recovery. If the member has a "normal consumer" recovery rule,
+ * this sends a recovery message to their email address.
  */
 - (void)beginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToBeginRecoveryWithRequest:request handler:handler] start];
@@ -198,6 +275,8 @@
  * Member account recovery
  * 
  * 
+ * Begin member recovery. If the member has a "normal consumer" recovery rule,
+ * this sends a recovery message to their email address.
  */
 - (GRPCProtoCall *)RPCToBeginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"BeginRecovery"
@@ -207,10 +286,16 @@
 }
 #pragma mark CompleteRecovery(CompleteRecoveryRequest) returns (CompleteRecoveryResponse)
 
+/**
+ * Complete member recovery.
+ */
 - (void)completeRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCompleteRecoveryWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Complete member recovery.
+ */
 - (GRPCProtoCall *)RPCToCompleteRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CompleteRecovery"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -219,10 +304,16 @@
 }
 #pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
 
+/**
+ * Verify an alias
+ */
 - (void)verifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToVerifyAliasWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Verify an alias
+ */
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"VerifyAlias"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -231,10 +322,16 @@
 }
 #pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
 
+/**
+ * Get member ID of "normal consumer" recovery agent.
+ */
 - (void)getDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetDefaultAgentWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get member ID of "normal consumer" recovery agent.
+ */
 - (GRPCProtoCall *)RPCToGetDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetDefaultAgent"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -248,6 +345,7 @@
  * Member addresses and preferences
  * 
  * 
+ * Add a shipping address
  */
 - (void)addAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddAddressWithRequest:request handler:handler] start];
@@ -258,6 +356,7 @@
  * Member addresses and preferences
  * 
  * 
+ * Add a shipping address
  */
 - (GRPCProtoCall *)RPCToAddAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddAddress"
@@ -267,10 +366,16 @@
 }
 #pragma mark GetAddress(GetAddressRequest) returns (GetAddressResponse)
 
+/**
+ * Get one of the auth'd member's shipping addresses
+ */
 - (void)getAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAddressWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get one of the auth'd member's shipping addresses
+ */
 - (GRPCProtoCall *)RPCToGetAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAddress"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -279,10 +384,16 @@
 }
 #pragma mark GetAddresses(GetAddressesRequest) returns (GetAddressesResponse)
 
+/**
+ * Get all of the auth'd member's shipping addresses
+ */
 - (void)getAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAddressesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get all of the auth'd member's shipping addresses
+ */
 - (GRPCProtoCall *)RPCToGetAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAddresses"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -291,10 +402,16 @@
 }
 #pragma mark DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse)
 
+/**
+ * Remove one of the auth'd member's shipping addresses
+ */
 - (void)deleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDeleteAddressWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Remove one of the auth'd member's shipping addresses
+ */
 - (GRPCProtoCall *)RPCToDeleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DeleteAddress"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -409,6 +526,18 @@
              responseClass:[RequestTransferResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark TriggerStepUpNotification(TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse)
+
+- (void)triggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToTriggerStepUpNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"TriggerStepUpNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[TriggerStepUpNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
 /**
@@ -507,10 +636,16 @@
 }
 #pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
 
+/**
+ * Get information about the auth'd member's default account.
+ */
 - (void)getDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetDefaultAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information about the auth'd member's default account.
+ */
 - (GRPCProtoCall *)RPCToGetDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetDefaultAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -519,10 +654,16 @@
 }
 #pragma mark SetDefaultAccount(SetDefaultAccountRequest) returns (SetDefaultAccountResponse)
 
+/**
+ * Set one auth'd member's accounts as its default account.
+ */
 - (void)setDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetDefaultAccountWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Set one auth'd member's accounts as its default account.
+ */
 - (GRPCProtoCall *)RPCToSetDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetDefaultAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -535,6 +676,8 @@
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Testing.
  * 
+ * 
+ * Create a test account at "iron" test bank.
  */
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTestBankAccountWithRequest:request handler:handler] start];
@@ -544,6 +687,8 @@
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Testing.
  * 
+ * 
+ * Create a test account at "iron" test bank.
  */
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTestBankAccount"
@@ -553,10 +698,18 @@
 }
 #pragma mark GetTestBankNotification(GetTestBankNotificationRequest) returns (GetTestBankNotificationResponse)
 
+/**
+ * Get notification from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get a notification is GetNotification.
+ */
 - (void)getTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTestBankNotificationWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get notification from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get a notification is GetNotification.
+ */
 - (GRPCProtoCall *)RPCToGetTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTestBankNotification"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -565,10 +718,18 @@
 }
 #pragma mark GetTestBankNotifications(GetTestBankNotificationsRequest) returns (GetTestBankNotificationsResponse)
 
+/**
+ * Get notifications from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get notifications is GetNotifications.
+ */
 - (void)getTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTestBankNotificationsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get notifications from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get notifications is GetNotifications.
+ */
 - (GRPCProtoCall *)RPCToGetTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTestBankNotifications"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -582,6 +743,7 @@
  * Blobs.
  * 
  * 
+ * Create a blob.
  */
 - (void)createBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateBlobWithRequest:request handler:handler] start];
@@ -592,6 +754,7 @@
  * Blobs.
  * 
  * 
+ * Create a blob.
  */
 - (GRPCProtoCall *)RPCToCreateBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateBlob"
@@ -601,10 +764,18 @@
 }
 #pragma mark GetBlob(GetBlobRequest) returns (GetBlobResponse)
 
+/**
+ * Fetch a blob. Works if the authenticated member is the blob's
+ * owner or if the blob is public-access.
+ */
 - (void)getBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBlobWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Fetch a blob. Works if the authenticated member is the blob's
+ * owner or if the blob is public-access.
+ */
 - (GRPCProtoCall *)RPCToGetBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBlob"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -613,10 +784,18 @@
 }
 #pragma mark GetTokenBlob(GetTokenBlobRequest) returns (GetTokenBlobResponse)
 
+/**
+ * Fetch a blob using a Token's authority. Works if Blob is attached to token
+ * and authenticated member is the Token's "from" or "to".
+ */
 - (void)getTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokenBlobWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Fetch a blob using a Token's authority. Works if Blob is attached to token
+ * and authenticated member is the Token's "from" or "to".
+ */
 - (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTokenBlob"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -630,6 +809,7 @@
  * Tokens.
  * 
  * 
+ * Create a Transfer Token.
  */
 - (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTransferTokenWithRequest:request handler:handler] start];
@@ -640,6 +820,7 @@
  * Tokens.
  * 
  * 
+ * Create a Transfer Token.
  */
 - (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTransferToken"
@@ -649,10 +830,16 @@
 }
 #pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
 
+/**
+ * Create an Access Token.
+ */
 - (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateAccessTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Create an Access Token.
+ */
 - (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateAccessToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -661,10 +848,16 @@
 }
 #pragma mark GetToken(GetTokenRequest) returns (GetTokenResponse)
 
+/**
+ * Get information about one token.
+ */
 - (void)getTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information about one token.
+ */
 - (GRPCProtoCall *)RPCToGetTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -673,10 +866,18 @@
 }
 #pragma mark GetTokens(GetTokensRequest) returns (GetTokensResponse)
 
+/**
+ * Gets list of tokens the member has given/received.
+ * Used by getTransferTokens, getAccessTokens.
+ */
 - (void)getTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokensWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Gets list of tokens the member has given/received.
+ * Used by getTransferTokens, getAccessTokens.
+ */
 - (GRPCProtoCall *)RPCToGetTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTokens"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -685,10 +886,20 @@
 }
 #pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
 
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEndorseTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
 - (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EndorseToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -697,10 +908,20 @@
 }
 #pragma mark CancelToken(CancelTokenRequest) returns (CancelTokenResponse)
 
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (void)cancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCancelTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
 - (GRPCProtoCall *)RPCToCancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CancelToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -709,10 +930,24 @@
 }
 #pragma mark ReplaceToken(ReplaceTokenRequest) returns (ReplaceTokenResponse)
 
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (void)replaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToReplaceTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ReplaceToken"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -726,6 +961,11 @@
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (void)createTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTransferWithRequest:request handler:handler] start];
@@ -736,6 +976,11 @@
  * Token Transfers.
  * 
  * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
  */
 - (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTransfer"
@@ -745,10 +990,18 @@
 }
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransferWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfer"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -757,10 +1010,18 @@
 }
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransfersWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfers"
             requestsWriter:[GRXWriter writerWithValue:request]
@@ -774,6 +1035,8 @@
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBanksWithRequest:request handler:handler] start];
@@ -784,6 +1047,8 @@
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBanks"
@@ -793,10 +1058,18 @@
 }
 #pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
 
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBankInfoWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBankInfo"
             requestsWriter:[GRXWriter writerWithValue:request]

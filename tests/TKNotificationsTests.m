@@ -10,7 +10,7 @@
 #import "TokenIOSync.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
-
+#import "TKJson.h"
 
 
 @interface TKNotificationsTests : TKTestBase
@@ -184,6 +184,9 @@ void check(NSString *message, BOOL condition) {
         TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
         XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
         
+        NotifyStatus status = [payer triggerStepUpNotification:token.id_p];
+        XCTAssertEqual(status, NotifyStatus_Accepted);
+        
         [self waitForNotification:@"STEP_UP"];
         
         result = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -270,6 +273,79 @@ void check(NSString *message, BOOL condition) {
         [tokenIO notifyAddKey:payer.firstAlias keyName:@"Chrome 53.0" key:key];
 
         [self waitForNotification:@"ADD_KEY"];
+    }];
+}
+    
+- (void)testBalanceStepUpNotification {
+    [self run: ^(TokenIOSync *tokenIO) {
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        
+        NotifyStatus status = [payer triggerBalanceStepUpNotification:payerAccount.id];
+        XCTAssertEqual(status, NotifyStatus_Accepted);
+        
+        [self waitUntil:^{
+            PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil
+                                                                                limit:100];
+            check(@"Notification count", notifications.items.count == 1);
+            
+            Notification* notification = [notifications.items objectAtIndex:0];
+            check(@"Delivery Status", notification.status == Notification_Status_Delivered);
+            check(@"Notification Type", [notification.content.type
+                                         isEqualToString:@"BALANCE_STEP_UP"]);
+            
+            BalanceStepUp *balanceStepUp = [TKJson
+                                            deserializeMessageOfClass:[BalanceStepUp class]
+                                            fromJSON:notification.content.payload];
+            check(@"BalanceStepUp AccountID",
+                  [balanceStepUp.accountId isEqualToString: payerAccount.id]);
+        }];
+        
+    }];
+}
+    
+- (void)testTransationStepUpNotification {
+    [self run: ^(TokenIOSync *tokenIO) {
+        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+        
+        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.redeemerAlias = payee.firstAlias;
+        Token *token = [builder execute];
+        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+        
+        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+        destination.account.token.memberId = payeeAccount.member.id;
+        destination.account.token.accountId = payeeAccount.id;
+        Transfer *transfer = [payee redeemToken:token
+                                         amount:@100.99
+                                       currency:@"USD"
+                                    description:@"full amount"
+                                    destination:destination];
+        
+        NotifyStatus status = [payer triggerTransactionStepUpNotification:transfer.transactionId
+                                                                accountID:payerAccount.id];
+        XCTAssertEqual(status, NotifyStatus_Accepted);
+        
+        [self waitUntil:^{
+            PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil
+                                                                                limit:100];
+            check(@"Notification count", notifications.items.count == 2);
+            
+            Notification* notification = [notifications.items objectAtIndex:0];
+            check(@"Delivery Status", notification.status == Notification_Status_Delivered);
+            check(@"Notification Type", [notification.content.type
+                                         isEqualToString:@"TRANSACTION_STEP_UP"]);
+            
+            TransactionStepUp *transactionStepup = [TKJson
+                                            deserializeMessageOfClass:[TransactionStepUp class]
+                                            fromJSON:notification.content.payload];
+            check(@"TransactionStepUp TransactionID",
+                  [transactionStepup.transactionId isEqualToString: transfer.transactionId]);
+            check(@"TransactionStepUp AccountID",
+                  [transactionStepup.accountId isEqualToString: payerAccount.id]);
+        }];
+        
     }];
 }
 

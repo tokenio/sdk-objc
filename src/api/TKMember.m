@@ -12,6 +12,7 @@
 #import "TKMember.h"
 #import "TKClient.h"
 #import "TKAuthorizationEngine.h"
+#import "TKError.h"
 
 @implementation TKMember {
     TKClient *client;
@@ -549,24 +550,61 @@
 
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
+               withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
-    [client getTransaction:transactionId
-                forAccount:accountId
-                 onSuccess:onSuccess
-                   onError:onError];
+    [client
+     getTransaction:transactionId
+     forAccount:accountId
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [client
+              getTransaction:transactionId
+              forAccount:accountId
+              withKey:keyLevel
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
 }
 
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
                    forAccount:(NSString *)accountId
+                      withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
-   [client getTransactionsOffset:offset
-                           limit:limit
-                      forAccount:accountId
-                       onSuccess:onSuccess
-                         onError:onError];
+   [client
+    getTransactionsOffset:offset
+    limit:limit
+    forAccount:accountId
+    withKey:keyLevel
+    onSuccess:onSuccess
+    onError:^(NSError *error){
+        if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+            && error.code == RequestStatus_MoreSignaturesNeeded
+            && keyLevel == Key_Level_Low) {
+            // Request again with Key_Level_Standard if more signatures are needed
+            [client
+             getTransactionsOffset:offset
+             limit:limit
+             forAccount:accountId
+             withKey:keyLevel
+             onSuccess:onSuccess
+             onError:onError];
+        }
+        else {
+            onError(error);
+        }
+    }];
 }
 
 - (void)createBlob:(NSString *)ownerId
@@ -602,11 +640,28 @@
 }
 
 - (void)getBalance:(NSString *)accountId
+           withKey:(Key_Level)keyLevel
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
-    [client getBalance:accountId
-             onSuccess:onSuccess
-               onError:onError];
+    [client
+     getBalance:accountId
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [client
+              getBalance:accountId
+              withKey:Key_Level_Standard
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
 }
 
 - (void)getBanks:(OnSuccessWithBanks)onSuccess
@@ -675,6 +730,33 @@
                  onError:(OnError)onError {
     [client getPairedDevices:onSuccess
                      onError:onError];
+}
+
+- (void)triggerStepUpNotification:(NSString *)tokenId
+                        onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                          onError:(OnError)onError {
+    [client triggerStepUpNotification:tokenId
+                            onSuccess:onSuccess
+                              onError:onError];
+}
+
+
+- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                 onError:(OnError)onError {
+    [client triggerBalanceStepUpNotification:accountId
+                                   onSuccess:onSuccess
+                                     onError:onError];
+}
+
+- (void)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                   accountID:(NSString *)accountId
+                                   onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                                     onError:(OnError)onError {
+    [client triggerTransactionStepUpNotification:transactionId
+                                       accountID:accountId
+                                       onSuccess:onSuccess
+                                         onError:onError];
 }
 
 #pragma mark private

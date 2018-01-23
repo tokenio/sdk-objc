@@ -23,19 +23,28 @@
 @interface TKAccount : NSObject
 
 /// Owner member.
-@property (atomic, readonly) TKMemberSync *member;
+@property (nonatomic, readonly) TKMemberSync *member;
 
 /// Id by which Token system identifies this account.
-@property (atomic, readonly) NSString *id;
+@property (nonatomic, readonly) NSString *id;
 
 /// Human-readable name. For example, could be "Checking account with number ending -2718".
-@property (atomic, readonly) NSString *name;
+@property (nonatomic, readonly) NSString *name;
 
 /// Id by which Token system identifies this account's bank.
-@property (atomic, readonly) NSString *bankId;
+@property (nonatomic, readonly) NSString *bankId;
 
-/// Flag indicating whether account needs re-linking.
-@property (atomic, readonly) BOOL isLocked;
+/// Flag indicating whether the account needs re-linking.
+@property (nonatomic, readonly) BOOL isLocked;
+
+/// Flag indicating whether the account allows for payment initiation.
+@property (nonatomic, readonly) BOOL supportsPayment;
+
+/// Flag indicating whether the account allows for retrieval of information.
+@property (nonatomic, readonly) BOOL supportsInformation;
+
+/// Flag indicating whether the account requires external authorization for creating transfers.
+@property (nonatomic, readonly) BOOL requiresExternalAuth;
 
 + (TKAccount *)account:(Account *)account
                     of:(TKMemberSync *)member

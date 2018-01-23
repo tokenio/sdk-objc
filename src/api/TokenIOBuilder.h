@@ -46,6 +46,8 @@
  */
 @property (readwrite) BOOL useLocalAuthentication;
 
+/// Uses custom grpc certs.
+@property (readwrite, copy) NSString *certsPath;
 /**
  * Set this property to create customized browser for external authorization.
  * Token Sdk will use TKTokenBrowser by default.

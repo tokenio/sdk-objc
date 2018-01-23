@@ -55,7 +55,11 @@ typedef GPB_ENUM(BankAuthorization_FieldNumber) {
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
- * This message represents
+ * This message represents a Token member's authority over a bank account.
+ * Since they're sent over the network, normally the bank encrypts them.
+ * How a member uses it: https://developer.token.io/sdk/#link-a-bank-account
+ * How a bank creates it: https://developer.token.io/bank-integration/#bank-account-linking
+ * Here, a SealedMessage "seals" a BankAccount message.
  **/
 @interface BankAuthorization : GPBMessage
 

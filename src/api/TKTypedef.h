@@ -31,7 +31,9 @@
 @class ExternalAuthorizationDetails;
 @class Device;
 
-typedef void (^ _Nonnull OnSuccess)();
+typedef NS_ENUM(int32_t, NotifyStatus);
+
+typedef void (^ _Nonnull OnSuccess)(void);
 typedef void (^ _Nonnull OnAuthRequired)(ExternalAuthorizationDetails * _Nonnull);
 typedef void (^ _Nonnull OnError)(NSError * _Nonnull);
 
@@ -89,3 +91,5 @@ typedef void (^ _Nonnull OnSuccessWithTokenMember)(TokenMember * _Nullable);
 typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOperation * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithPairedDevices)(NSArray<Device *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithNotifyStatus)(NotifyStatus);
+

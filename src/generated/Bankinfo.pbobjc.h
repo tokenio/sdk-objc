@@ -54,6 +54,7 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_SupportsAppless = 5,
   Bank_FieldNumber_SupportsPayment = 6,
   Bank_FieldNumber_SupportsInformation = 7,
+  Bank_FieldNumber_RequiresExternalAuth = 8,
 };
 
 @interface Bank : GPBMessage
@@ -76,6 +77,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 /** Connection allows for retrieval of information */
 @property(nonatomic, readwrite) BOOL supportsInformation;
+
+/** Connection requires external authorization for creating transfers */
+@property(nonatomic, readwrite) BOOL requiresExternalAuth;
 
 @end
 

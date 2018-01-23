@@ -3,7 +3,11 @@
 # Generates api reference html pages.
 # Uses Jazzy, https://github.com/realm/jazzy
 
-jazzy \
+# install jazzy. we don't have sudo so --user-install
+gem install --user-install jazzy
+
+# run jazzy. The $(ruby...) magic means "Use user-install path" 
+$(ruby -rubygems -e 'puts Gem.user_dir')/bin/jazzy \
   --objc \
   --clean \
   --author Token \

@@ -29,6 +29,8 @@
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
     TokenIO *tokenIO = [builder buildAsync];
     // createSDK done snippet to include in docs
+    
+    XCTAssertNotNil(tokenIO);
 }
 
 - (void)testCreateMember {
@@ -136,7 +138,7 @@
     __block TKMember *loggedInMember;
 
     // loginMember begin snippet to include in docs
-    [tokenIO loginMember:memberId onSuccess:^(TKMember *m) {
+    [tokenIO getMember:memberId onSuccess:^(TKMember *m) {
         loggedInMember = m; // Use member.
     } onError:^(NSError *e) {
         // Something went wrong.
@@ -197,7 +199,7 @@
     // provisionLogin begin snippet to include in docs
     [tokenIO getMemberId:memberAlias
                onSuccess:^(NSString *id) {
-                   [tokenIO loginMember:id
+                   [tokenIO getMember:id
                               onSuccess:^(TKMember *m) {
                                   member = m;
                               } onError:^(NSError *e) {

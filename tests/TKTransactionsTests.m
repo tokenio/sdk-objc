@@ -39,10 +39,10 @@
     [self run: ^(TokenIOSync *tokenIO) {
         TKBalance *balance = [payerAccount getBalance];
         Money *currentBalance = balance.current;
-        XCTAssert(currentBalance.value > 0);
+        XCTAssert([currentBalance.value intValue] > 0);
         XCTAssertEqualObjects(@"USD", currentBalance.currency);
         Money *availableBalance = balance.available;
-        XCTAssert(availableBalance.value > 0);
+        XCTAssert([availableBalance.value intValue] > 0);
         XCTAssertEqualObjects(@"USD", availableBalance.currency);
     }];     
 }

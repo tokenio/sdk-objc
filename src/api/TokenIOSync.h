@@ -15,8 +15,8 @@
 @class TokenPayload;
 
 /**
- * Use this class to create to create a new member using `createMember`
- * method or login an existing member using `loginMember`.
+ * Use this class to create a new member with `createMember`
+ * method or use an existing member with `getMember`.
  *
  * <p>
  * The class provides async API with `TokenIOSync` providing a synchronous version.
@@ -96,7 +96,7 @@
  * @param memberId member id
  * @return logged in member
  */
-- (TKMemberSync *)loginMember:(NSString *)memberId;
+- (TKMemberSync *)getMember:(NSString *)memberId;
 
 /**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.

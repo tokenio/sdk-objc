@@ -33,6 +33,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 
 #pragma mark - GatewayRoot
 
@@ -2589,6 +2590,138 @@ void SetRequestTransferResponse_Status_RawValue(RequestTransferResponse *message
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
+#pragma mark - TriggerStepUpNotificationRequest
+
+@implementation TriggerStepUpNotificationRequest
+
+@dynamic stepUpTypeOneOfCase;
+@dynamic tokenStepUp;
+@dynamic balanceStepUp;
+@dynamic transactionStepUp;
+
+typedef struct TriggerStepUpNotificationRequest__storage_ {
+  uint32_t _has_storage_[2];
+  StepUp *tokenStepUp;
+  BalanceStepUp *balanceStepUp;
+  TransactionStepUp *transactionStepUp;
+} TriggerStepUpNotificationRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(StepUp),
+        .number = TriggerStepUpNotificationRequest_FieldNumber_TokenStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, tokenStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "balanceStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(BalanceStepUp),
+        .number = TriggerStepUpNotificationRequest_FieldNumber_BalanceStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, balanceStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transactionStepUp",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransactionStepUp),
+        .number = TriggerStepUpNotificationRequest_FieldNumber_TransactionStepUp,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationRequest__storage_, transactionStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TriggerStepUpNotificationRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TriggerStepUpNotificationRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "stepUpType",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void TriggerStepUpNotificationRequest_ClearStepUpTypeOneOfCase(TriggerStepUpNotificationRequest *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - TriggerStepUpNotificationResponse
+
+@implementation TriggerStepUpNotificationResponse
+
+@dynamic status;
+
+typedef struct TriggerStepUpNotificationResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NotifyStatus status;
+} TriggerStepUpNotificationResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = NotifyStatus_EnumDescriptor,
+        .number = TriggerStepUpNotificationResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TriggerStepUpNotificationResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TriggerStepUpNotificationResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TriggerStepUpNotificationResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message) {
+  GPBDescriptor *descriptor = [TriggerStepUpNotificationResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TriggerStepUpNotificationResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [TriggerStepUpNotificationResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:TriggerStepUpNotificationResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - LinkAccountsRequest
 
 @implementation LinkAccountsRequest
@@ -2917,10 +3050,14 @@ typedef struct GetAccountsResponse__storage_ {
 @implementation GetBalanceRequest
 
 @dynamic accountId;
+@dynamic hasPayload, payload;
+@dynamic hasSignature, signature;
 
 typedef struct GetBalanceRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
+  GetBalancePayload *payload;
+  Signature *signature;
 } GetBalanceRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2937,6 +3074,24 @@ typedef struct GetBalanceRequest__storage_ {
         .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetBalancePayload),
+        .number = GetBalanceRequest_FieldNumber_Payload,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = GetBalanceRequest_FieldNumber_Signature,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2961,9 +3116,11 @@ typedef struct GetBalanceRequest__storage_ {
 
 @dynamic hasCurrent, current;
 @dynamic hasAvailable, available;
+@dynamic status;
 
 typedef struct GetBalanceResponse__storage_ {
   uint32_t _has_storage_[1];
+  RequestStatus status;
   Money *current;
   Money *available;
 } GetBalanceResponse__storage_;
@@ -2992,6 +3149,15 @@ typedef struct GetBalanceResponse__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
+        .number = GetBalanceResponse_FieldNumber_Status,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetBalanceResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetBalanceResponse class]
@@ -3009,17 +3175,33 @@ typedef struct GetBalanceResponse__storage_ {
 
 @end
 
+int32_t GetBalanceResponse_Status_RawValue(GetBalanceResponse *message) {
+  GPBDescriptor *descriptor = [GetBalanceResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetBalanceResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetBalanceResponse_Status_RawValue(GetBalanceResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetBalanceResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetBalanceResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - GetTransactionRequest
 
 @implementation GetTransactionRequest
 
 @dynamic accountId;
 @dynamic transactionId;
+@dynamic hasPayload, payload;
+@dynamic hasSignature, signature;
 
 typedef struct GetTransactionRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
   NSString *transactionId;
+  GetTransactionPayload *payload;
+  Signature *signature;
 } GetTransactionRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3046,6 +3228,24 @@ typedef struct GetTransactionRequest__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetTransactionPayload),
+        .number = GetTransactionRequest_FieldNumber_Payload,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTransactionRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = GetTransactionRequest_FieldNumber_Signature,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GetTransactionRequest__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetTransactionRequest class]
@@ -3068,9 +3268,11 @@ typedef struct GetTransactionRequest__storage_ {
 @implementation GetTransactionResponse
 
 @dynamic hasTransaction, transaction;
+@dynamic status;
 
 typedef struct GetTransactionResponse__storage_ {
   uint32_t _has_storage_[1];
+  RequestStatus status;
   Transaction *transaction;
 } GetTransactionResponse__storage_;
 
@@ -3089,6 +3291,15 @@ typedef struct GetTransactionResponse__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
+        .number = GetTransactionResponse_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetTransactionResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetTransactionResponse class]
@@ -3106,17 +3317,33 @@ typedef struct GetTransactionResponse__storage_ {
 
 @end
 
+int32_t GetTransactionResponse_Status_RawValue(GetTransactionResponse *message) {
+  GPBDescriptor *descriptor = [GetTransactionResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransactionResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetTransactionResponse_Status_RawValue(GetTransactionResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetTransactionResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransactionResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - GetTransactionsRequest
 
 @implementation GetTransactionsRequest
 
 @dynamic accountId;
 @dynamic hasPage, page;
+@dynamic hasPayload, payload;
+@dynamic hasSignature, signature;
 
 typedef struct GetTransactionsRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
   Page *page;
+  GetTransactionsPayload *payload;
+  Signature *signature;
 } GetTransactionsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3143,6 +3370,24 @@ typedef struct GetTransactionsRequest__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetTransactionsPayload),
+        .number = GetTransactionsRequest_FieldNumber_Payload,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = GetTransactionsRequest_FieldNumber_Signature,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetTransactionsRequest class]
@@ -3166,9 +3411,11 @@ typedef struct GetTransactionsRequest__storage_ {
 
 @dynamic transactionsArray, transactionsArray_Count;
 @dynamic offset;
+@dynamic status;
 
 typedef struct GetTransactionsResponse__storage_ {
   uint32_t _has_storage_[1];
+  RequestStatus status;
   NSMutableArray *transactionsArray;
   NSString *offset;
 } GetTransactionsResponse__storage_;
@@ -3197,6 +3444,15 @@ typedef struct GetTransactionsResponse__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
+        .number = GetTransactionsResponse_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetTransactionsResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GetTransactionsResponse class]
@@ -3213,6 +3469,18 @@ typedef struct GetTransactionsResponse__storage_ {
 }
 
 @end
+
+int32_t GetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message) {
+  GPBDescriptor *descriptor = [GetTransactionsResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransactionsResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetTransactionsResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetTransactionsResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - GetDefaultAccountRequest
 
@@ -5326,7 +5594,7 @@ typedef struct CreateTestBankAccountResponse__storage_ {
         .number = CreateTestBankAccountResponse_FieldNumber_BankAuthorization,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreateTestBankAccountResponse__storage_, bankAuthorization),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -5338,11 +5606,6 @@ typedef struct CreateTestBankAccountResponse__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CreateTestBankAccountResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\021\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

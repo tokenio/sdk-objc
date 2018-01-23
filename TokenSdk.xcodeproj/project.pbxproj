@@ -169,6 +169,7 @@
 		D07E49B11FE8792A003B33A5 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */; };
 		D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */; };
 		D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */; };
+		D04A98E9200D5C6E002F4F57 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04A98EB200D5C6E002F4F57 /* Localizable.strings */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
 		D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */; };
 		D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */; };
@@ -177,7 +178,6 @@
 		DD0A775D1E422B0D0058FB8A /* TKLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */; };
 		DD0A77601E4230A70058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A775E1E422FE40058FB8A /* Localizable.strings */; };
 		DD0A77621E4232E50058FB8A /* CustomTable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77611E4232E50058FB8A /* CustomTable.strings */; };
-		DD0A77641E42668C0058FB8A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0A77631E42668C0058FB8A /* Localizable.strings */; };
 		DD0A77671E42AC040058FB8A /* TKError.h in Headers */ = {isa = PBXBuildFile; fileRef = DD0A77651E42AC040058FB8A /* TKError.h */; };
 		DD0A77681E42AC040058FB8A /* TKError.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0A77661E42AC040058FB8A /* TKError.m */; };
 		DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DD6AD2A41E00786800358830 /* TKLogManager.h */; };
@@ -409,6 +409,8 @@
 		D07E49AC1FE87917003B33A5 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
 		D07E49AE1FE8792A003B33A5 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
 		D07E49AF1FE8792A003B33A5 /* TKTokenBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowserViewController.h; sourceTree = "<group>"; };
+		D04A98EA200D5C6E002F4F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D04A98EC200D5C84002F4F57 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D082409E1EFDC5050063D9E9 /* TKProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKProfileTests.m; sourceTree = "<group>"; };
 		D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberRecoveryManager.m; sourceTree = "<group>"; };
 		D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberRecoveryManager.h; sourceTree = "<group>"; };
@@ -417,7 +419,6 @@
 		DD0A775C1E422B0D0058FB8A /* TKLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKLocalizationTests.m; sourceTree = "<group>"; };
 		DD0A775E1E422FE40058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		DD0A77611E4232E50058FB8A /* CustomTable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CustomTable.strings; sourceTree = "<group>"; };
-		DD0A77631E42668C0058FB8A /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		DD0A77651E42AC040058FB8A /* TKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKError.h; sourceTree = "<group>"; };
 		DD0A77661E42AC040058FB8A /* TKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKError.m; sourceTree = "<group>"; };
 		DD6AD2A41E00786800358830 /* TKLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKLogManager.h; sourceTree = "<group>"; };
@@ -848,6 +849,7 @@
 				D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */,
 				D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */,
 				DD0A77631E42668C0058FB8A /* Localizable.strings */,
+				D04A98EB200D5C6E002F4F57 /* Localizable.strings */,
 			);
 			name = resources;
 			path = ../resources;
@@ -1073,7 +1075,7 @@
 		8A9909051D890E820096A7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Token Inc";
 				TargetAttributes = {
 					8A99090D1D890E820096A7FA = {
@@ -1100,6 +1102,7 @@
 			knownRegions = (
 				en,
 				Base,
+				sl,
 			);
 			mainGroup = 8A9909041D890E820096A7FA;
 			productRefGroup = 8A99090F1D890E820096A7FA /* Products */;
@@ -1121,7 +1124,7 @@
 				D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */,
 				D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */,
 				ABA7B75A2DEAAF27617C3E4F /* ed25519_32.dll in Resources */,
-				DD0A77641E42668C0058FB8A /* Localizable.strings in Resources */,
+				D04A98E9200D5C6E002F4F57 /* Localizable.strings in Resources */,
 				ABA7B6C2664CFC0CB8A21F1A /* ed25519_64.dll in Resources */,
 				ABA7B103B5929B86EF4C8689 /* license.txt in Resources */,
 				D07E49AD1FE87917003B33A5 /* TKTokenBrowserViewController.xib in Resources */,
@@ -1462,6 +1465,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D04A98EB200D5C6E002F4F57 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D04A98EA200D5C6E002F4F57 /* en */,
+				D04A98EC200D5C84002F4F57 /* sl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		DDAA0D3B1E257C6000E9BB09 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1485,19 +1497,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1535,19 +1554,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

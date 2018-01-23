@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import <GRPCClient/GRPCCall+ChannelArg.h>
+#import <GRPCClient/GRPCCall+ChannelCredentials.h>
 #import <GRPCClient/GRPCCall+Tests.h>
 
 #import "gateway/Gateway.pbrpc.h"
@@ -18,7 +19,6 @@
 #import "TKRpcErrorHandler.h"
 #import "TKLocalizer.h"
 #import "TKMemberRecoveryManager.h"
-
 
 @implementation TokenIO {
     GatewayService *gateway;
@@ -50,6 +50,7 @@
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
     browserFactory:(TKBrowserFactory)browserFactory_
             useSsl:(BOOL)useSsl
+         certsPath:(NSString *)certsPath
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     if (!developerKey_) {
         @throw [NSException exceptionWithName:@"NoDeveloperKeyException"
@@ -64,7 +65,20 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         if (!useSsl) {
             [GRPCCall useInsecureConnectionsForHost:address];
         }
-        [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
+        if (certsPath) {
+            NSError *error = nil;
+            NSString *certs = [NSString stringWithContentsOfFile:certsPath
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:&error];
+            if (error) {
+                @throw error;
+            }
+            
+            [GRPCCall setTLSPEMRootCerts:certs forHost:address error:&error];
+            if (error) {
+                @throw error;
+            }
+        }
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
@@ -172,7 +186,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                   onError:onError];
 }
 
-- (void)loginMember:(NSString *)memberId
+- (void)getMember:(NSString *)memberId
            onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId

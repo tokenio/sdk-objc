@@ -21,8 +21,8 @@
 @class Key;
 
 /**
- * Use this class to create to create a new member using `createMember`
- * method or login an existing member using `loginMember`.
+ * Use this class to create a new member with `createMember`
+ * method or use an existing member with `getMember`.
  *
  * <p>
  * The class provides async API 
@@ -51,6 +51,7 @@
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
  * @param browserFactory use customized authorization browser if set
+ * @param certsPath use custom certs; otherwise, use the default root certs
  * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
 - (id)initWithHost:(NSString *)host
@@ -60,6 +61,7 @@
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
     browserFactory:(TKBrowserFactory)browserFactory
             useSsl:(BOOL)useSsl
+         certsPath:(NSString *)certsPath
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
 /**
@@ -113,11 +115,12 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
                onError:(OnError)onError;
 
 /**
- * Logs in an existing member to the system.
+ * Gets a TKMember using already-stored keys.
+ * ("Logs in" an existing member to the system.)
  *
  * @param memberId member id
  */
-- (void)loginMember:(NSString *)memberId
+- (void)getMember:(NSString *)memberId
            onSuccess:(OnSuccessWithTKMember)onSuccess
             onError:(OnError)onError;
 

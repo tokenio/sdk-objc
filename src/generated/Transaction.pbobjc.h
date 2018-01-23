@@ -110,6 +110,32 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void);
  **/
 BOOL TransactionStatus_IsValidValue(int32_t value);
 
+#pragma mark - Enum RequestStatus
+
+typedef GPB_ENUM(RequestStatus) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  RequestStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  RequestStatus_InvalidRequest = 0,
+
+  /** success */
+  RequestStatus_SuccessfulRequest = 1,
+
+  /** failed, needed to use a PRIVILEGED key */
+  RequestStatus_MoreSignaturesNeeded = 2,
+};
+
+GPBEnumDescriptor *RequestStatus_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL RequestStatus_IsValidValue(int32_t value);
+
 #pragma mark - TransactionRoot
 
 /**
@@ -140,16 +166,21 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 
 @interface Transaction : GPBMessage
 
+/** Transaction ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** Debit or credit */
 @property(nonatomic, readwrite) TransactionType type;
 
+/** Status. For example, SUCCESS or FAILURE_CANCELED */
 @property(nonatomic, readwrite) TransactionStatus status;
 
+/** Transaction amount. */
 @property(nonatomic, readwrite, strong, null_resettable) Money *amount;
 /** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
+/** Optional description */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 /** Points to the token, only set for Token transactions. */
@@ -158,6 +189,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 /** Points to the token transfer, only set for Token transactions. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenTransferId;
 
+/** Creation time */
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
@@ -185,6 +217,61 @@ int32_t Transaction_Status_RawValue(Transaction *message);
  * was generated.
  **/
 void SetTransaction_Status_RawValue(Transaction *message, int32_t value);
+
+#pragma mark - GetBalancePayload
+
+typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
+  GetBalancePayload_FieldNumber_AccountId = 1,
+  GetBalancePayload_FieldNumber_Nonce = 2,
+};
+
+@interface GetBalancePayload : GPBMessage
+
+/** account ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+/** random string to de-duplicate requests */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - GetTransactionPayload
+
+typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
+  GetTransactionPayload_FieldNumber_AccountId = 1,
+  GetTransactionPayload_FieldNumber_TransactionId = 2,
+  GetTransactionPayload_FieldNumber_Nonce = 3,
+};
+
+@interface GetTransactionPayload : GPBMessage
+
+/** account ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+/** transaction ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
+
+/** random string to de-duplicate requests */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - GetTransactionsPayload
+
+typedef GPB_ENUM(GetTransactionsPayload_FieldNumber) {
+  GetTransactionsPayload_FieldNumber_AccountId = 1,
+  GetTransactionsPayload_FieldNumber_Nonce = 2,
+};
+
+@interface GetTransactionsPayload : GPBMessage
+
+/** account ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+/** random string to de-duplicate requests */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

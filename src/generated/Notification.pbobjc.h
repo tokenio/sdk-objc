@@ -28,6 +28,7 @@
 CF_EXTERN_C_BEGIN
 
 @class AddKey;
+@class BalanceStepUp;
 @class BankAuthorization;
 @class Key;
 @class LinkAccounts;
@@ -38,7 +39,9 @@ CF_EXTERN_C_BEGIN
 @class PayerTransferProcessed;
 @class PaymentRequest;
 @class StepUp;
+@class TokenCancelled;
 @class TokenPayload;
+@class TransactionStepUp;
 @class TransferFailed;
 @class TransferProcessed;
 
@@ -214,15 +217,50 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
 
 @end
 
+#pragma mark - BalanceStepUp
+
+typedef GPB_ENUM(BalanceStepUp_FieldNumber) {
+  BalanceStepUp_FieldNumber_AccountId = 1,
+};
+
+/**
+ * A notification to step up a balance request
+ **/
+@interface BalanceStepUp : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - TransactionStepUp
+
+typedef GPB_ENUM(TransactionStepUp_FieldNumber) {
+  TransactionStepUp_FieldNumber_AccountId = 1,
+  TransactionStepUp_FieldNumber_TransactionId = 2,
+};
+
+/**
+ * A notification to step up a transaction request
+ **/
+@interface TransactionStepUp : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
+
+@end
+
 #pragma mark - AddKey
 
 typedef GPB_ENUM(AddKey_FieldNumber) {
   AddKey_FieldNumber_Name = 1,
   AddKey_FieldNumber_Key = 2,
+  AddKey_FieldNumber_ExpiresMs = 3,
 };
 
 /**
- * A notification that a key wants to be added to a member.
+ * A notification that a key wants to be added to a member. Clients should timeout the notification
+ * and screen, once the expires_ms has passed
  **/
 @interface AddKey : GPBMessage
 
@@ -231,6 +269,8 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
 /** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
+
+@property(nonatomic, readwrite) int64_t expiresMs;
 
 @end
 
@@ -273,6 +313,21 @@ typedef GPB_ENUM(PaymentRequest_FieldNumber) {
 
 @end
 
+#pragma mark - TokenCancelled
+
+typedef GPB_ENUM(TokenCancelled_FieldNumber) {
+  TokenCancelled_FieldNumber_TokenId = 1,
+};
+
+/**
+ * A notification that a token was cancelled
+ **/
+@interface TokenCancelled : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@end
+
 #pragma mark - NotifyBody
 
 typedef GPB_ENUM(NotifyBody_FieldNumber) {
@@ -286,6 +341,9 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_PayerTransferFailed = 8,
   NotifyBody_FieldNumber_TransferProcessed = 9,
   NotifyBody_FieldNumber_TransferFailed = 10,
+  NotifyBody_FieldNumber_TokenCancelled = 11,
+  NotifyBody_FieldNumber_BalanceStepUp = 12,
+  NotifyBody_FieldNumber_TransactionStepUp = 13,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -300,6 +358,9 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_PayerTransferFailed = 8,
   NotifyBody_Body_OneOfCase_TransferProcessed = 9,
   NotifyBody_Body_OneOfCase_TransferFailed = 10,
+  NotifyBody_Body_OneOfCase_TokenCancelled = 11,
+  NotifyBody_Body_OneOfCase_BalanceStepUp = 12,
+  NotifyBody_Body_OneOfCase_TransactionStepUp = 13,
 };
 
 /**
@@ -328,6 +389,12 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferProcessed *transferProcessed;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferFailed *transferFailed;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenCancelled *tokenCancelled;
+
+@property(nonatomic, readwrite, strong, null_resettable) BalanceStepUp *balanceStepUp;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
 @end
 
@@ -400,15 +467,15 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *body;
 
+@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *locKey;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *locArgsArray;
 /** The number of items in @c locArgsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger locArgsArray_Count;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
-
-@property(nonatomic, readwrite) int64_t createdAtMs;
 
 @end
 

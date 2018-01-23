@@ -3,6 +3,7 @@ package io.token.proto.common.transaction;
 
 option java_outer_classname = "TransactionProtos";
 
+import "member.proto";
 import "money.proto";
 
 enum TransactionType {
@@ -28,13 +29,35 @@ enum TransactionStatus {
 }
 
 message Transaction {
-  string id = 1;
-  TransactionType type = 2;
-  TransactionStatus status = 3;
-  io.token.proto.common.money.Money amount = 4;
-  string description = 5;
+  string id = 1;                                // Transaction ID
+  TransactionType type = 2;                     // Debit or credit
+  TransactionStatus status = 3;                 // Status. For example, SUCCESS or FAILURE_CANCELED
+  io.token.proto.common.money.Money amount = 4; // Transaction amount.
+  string description = 5;                       // Optional description
 
-  string token_id = 6;                             // Points to the token, only set for Token transactions.
-  string token_transfer_id = 7;                    // Points to the token transfer, only set for Token transactions.
-  int64 created_at_ms = 8;
+  string token_id = 6;                          // Points to the token, only set for Token transactions.
+  string token_transfer_id = 7;                 // Points to the token transfer, only set for Token transactions.
+  int64 created_at_ms = 8;                      // Creation time
+}
+
+message GetBalancePayload {
+  string account_id = 1; // account ID
+  string nonce = 2;      // random string to de-duplicate requests
+}
+
+message GetTransactionPayload {
+  string account_id = 1;     // account ID
+  string transaction_id = 2; // transaction ID
+  string nonce = 3;          // random string to de-duplicate requests
+}
+
+message GetTransactionsPayload {
+  string account_id = 1; // account ID
+  string nonce = 2;      // random string to de-duplicate requests
+}
+
+enum RequestStatus {
+  INVALID_REQUEST = 0;
+  SUCCESSFUL_REQUEST = 1;     // success
+  MORE_SIGNATURES_NEEDED = 2; // failed, needed to use a PRIVILEGED key
 }

@@ -40,23 +40,28 @@
 }
 
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details {
-    return [NSError
-            errorWithDomain:kTokenTransferErrorDomain
-            code:TransferTokenStatus_FailureExternalAuthorizationRequired
-            userInfo:@{ NSLocalizedDescriptionKey:
-                            @"External authorization is required",
-                        @"ExternalAuthorizationDetails_URL":
-                            details.URL,
-                        @"ExternalAuthorizationDetails_CompletionPattern":
-                            details.completionPattern }];
+    NSString *description = @"External authorization is required";
+    NSString *eadUrlKey = @"ExternalAuthorizationDetails_URL";
+    NSString *eadCompletionKey = @"ExternalAuthorizationDetails_CompletionPattern";
+    return [NSError errorWithDomain:kTokenTransferErrorDomain
+                               code:TransferTokenStatus_FailureExternalAuthorizationRequired
+                           userInfo:@{ NSLocalizedDescriptionKey: description,
+                                       eadUrlKey: details.URL,
+                                       eadCompletionKey: details.completionPattern }];
 }
 
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status {
-    return [NSError
-            errorWithDomain:kTokenTransactionErrorDomain
-            code:status
-            userInfo:@{ NSLocalizedDescriptionKey:
-                            [NSString stringWithFormat:@"Failed to redeem token %d", status] }];
+    NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
+    return [NSError errorWithDomain:kTokenTransactionErrorDomain
+                               code:status
+                           userInfo:@{ NSLocalizedDescriptionKey: description }];
+}
+    
++ (instancetype)errorFromRequestStatus:(RequestStatus)status {
+    NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
+    return [NSError errorWithDomain:kTokenRequestErrorDomain
+                               code:status
+                           userInfo:@{ NSLocalizedDescriptionKey: description }];
 }
 
 @end
