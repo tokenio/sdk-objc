@@ -8,7 +8,6 @@
 
 #import "TKAuthorizationEngine.h"
 #import "TKBrowser.h"
-#import "TKTokenBrowser.h"
 #import "TKError.h"
 #import "TKLocalizer.h"
 #import "TKLogManager.h"

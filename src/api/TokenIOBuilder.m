@@ -13,7 +13,9 @@
 #import "TokenIO.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKTokenCryptoEngineFactory.h"
+#if TARGET_OS_IPHONE
 #import "TKTokenBrowser.h"
+#endif
 
 @implementation TokenIOBuilder
 
@@ -46,12 +48,13 @@
         cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
     }
     
+#if TARGET_OS_IPHONE
     if (!self.browserFactory) {
         self.browserFactory = ^(id<TKBrowserDelegate> delegate) {
             return [[TKTokenBrowser alloc] initWithBrowserDelegate:delegate];
         };
     }
-    
+#endif
 
     return [[TokenIO alloc]
             initWithHost:self.host

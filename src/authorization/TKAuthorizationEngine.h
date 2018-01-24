@@ -25,7 +25,7 @@ ExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details;
 /**
  * Authorizes for the external authorization.
  * An regular expression error means the external authorization details object is invalid.
- * @param authorizeOnSuccess invoked on success with bank authorization
+ * @param onSuccess invoked on success with bank authorization
  * @param onError invoked on error (Cancellation is a kind of error)
  */
 - (void)authorizeOnSuccess:(OnSuccessWithBankAuthorization)onSuccess
