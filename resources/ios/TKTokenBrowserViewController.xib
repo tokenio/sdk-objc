@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -19,7 +19,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TKTokenBrowserViewController" customModule="TokenSdk" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="yrp-HV-nZY" id="uxo-uY-7ru"/>
                 <outlet property="spinner" destination="MQ7-4W-mdo" id="H8n-Fn-xaG"/>
+                <outlet property="titleLabel" destination="P5p-Ai-wh3" id="rgo-dU-u8K"/>
                 <outlet property="urlLabel" destination="tRM-2U-tk2" id="dKv-zV-idV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Ug8-av-drw"/>
                 <outlet property="webview" destination="5WK-5R-sp2" id="Nnx-wi-Otj"/>

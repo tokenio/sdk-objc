@@ -8,12 +8,15 @@
 
 #import "TKTokenBrowserViewController.h"
 #import "TKTokenBrowser.h"
+#import "TKLocalizer.h"
 
 @interface TKTokenBrowserViewController () <UIWebViewDelegate>{
     id<TKTokenBrowserViewControllerDelegate> delegate;
     IBOutlet UIWebView *webview;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UILabel *urlLabel;
+    IBOutlet UILabel *titleLabel;
+    IBOutlet UIButton *backButton;
 }
 @end
 
@@ -40,6 +43,10 @@
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
         }
     }
+    
+    titleLabel.text = TKLocalizedString( @"Authorization", nil);
+    [backButton setTitle:TKLocalizedString( @"Back", nil)
+                forState:UIControlStateNormal];
     
     webview.delegate = self;
     [spinner startAnimating];
