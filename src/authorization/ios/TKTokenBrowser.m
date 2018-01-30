@@ -18,22 +18,25 @@
 @implementation TKTokenBrowser
 
 #pragma mark - override methods
-
 - (void) loadUrl:(NSString *)url {
     if (browserViewController == nil) {
         browserViewController = [[TKTokenBrowserViewController alloc] initWithDelegate:self];
-        UIViewController* rootViewController =
-        [UIApplication sharedApplication].keyWindow.rootViewController;
         
-        if (rootViewController == nil) {
+        UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        
+        while (topController.presentedViewController) {
+            topController = topController.presentedViewController;
+        }
+        
+        if (topController == nil) {
             [self.delegate browserWillCancel:nil];
         }
         
-        [rootViewController presentViewController:browserViewController
-                                         animated:true
-                                       completion:^{
-                                           [browserViewController loadUrl:url];
-                                       }];
+        [topController presentViewController:browserViewController
+                                    animated:true
+                                  completion:^{
+                                      [browserViewController loadUrl:url];
+                                  }];
     } else {
         [browserViewController loadUrl:url];
     }
