@@ -27,6 +27,7 @@
 - (id)initWithGateway:(GatewayService *)gateway
             timeoutMs:(int)timeoutMs
          developerKey:(NSString *)developerKey
+         languageCode:(NSString *)languageCode
          errorHandler:(TKRpcErrorHandler *)errorHandler
                crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
        browserFactory:(TKBrowserFactory)browserFactory;

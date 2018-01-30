@@ -34,6 +34,9 @@
  */
 @property (readwrite, copy) NSString *developerKey;
 
+/// The SDK language code.
+@property (readwrite, copy) NSString *languageCode;
+
 /// Use SSL to protect connection?
 @property (readwrite) BOOL useSsl;
 

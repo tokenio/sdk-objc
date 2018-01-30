@@ -29,6 +29,7 @@
                                              port:9001
                                         timeoutMs:1000
                                      developerKey:@"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI"
+                                     languageCode:@"en"
                                            crypto:nil
                                    browserFactory:nil
                                            useSsl:NO
@@ -41,6 +42,7 @@
                                                           port:9001
                                                      timeoutMs:1000
                                                   developerKey:nil
+                                                  languageCode:@"en"
                                                         crypto:nil
                                                 browserFactory:nil
                                                         useSsl:NO

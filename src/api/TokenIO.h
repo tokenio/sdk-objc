@@ -48,6 +48,7 @@
  * @param port gRPC port to connect to
  * @param timeout timeout value in ms
  * @param developerKey developer ID
+ * @param languageCode the SDK language code
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
  * @param browserFactory use customized authorization browser if set
@@ -58,6 +59,7 @@
               port:(int)port
          timeoutMs:(int)timeout
       developerKey:(NSString *)developerKey
+      languageCode:(NSString *)languageCode
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
     browserFactory:(TKBrowserFactory)browserFactory
             useSsl:(BOOL)useSsl

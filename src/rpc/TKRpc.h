@@ -16,7 +16,8 @@
  * @return newly created client
  */
 - (id)initWithTimeoutMs:(int)timeoutMs
-           developerKey:(NSString *)developerKey;
+           developerKey:(NSString *)developerKey
+           languageCode:(NSString *)languageCode;
 
 - (void)execute:(GRPCProtoCall *)call
         request:(GPBMessage *)request;
