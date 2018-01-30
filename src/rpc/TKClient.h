@@ -33,6 +33,8 @@
  * @param gateway gateway gRPC client
  * @param crypto crypto module to use
  * @param timeoutMs gRPC timeout in ms
+ * @param developerKey Token developer key
+ * @param languageCode the SDK language code
  * @param errorHandler error handler to handle RPC errors
  * @return newly created client
  */
@@ -40,6 +42,7 @@
                crypto:(TKCrypto *)crypto
             timeoutMs:(int)timeoutMs
          developerKey:(NSString *)developerKey
+         languageCode:(NSString *)languageCode
              memberId:(NSString *)memberId
          errorHandler:(TKRpcErrorHandler *)errorHandler;
 

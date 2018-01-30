@@ -19,6 +19,7 @@
     GatewayService *gateway;
     int timeoutMs;
     NSString *developerKey;
+    NSString *languageCode;
     TKRpcErrorHandler *errorHandler;
     
     NSString *verificationId;
@@ -33,18 +34,21 @@
 - (id)initWithGateway:(GatewayService *)gateway_
             timeoutMs:(int)timeoutMs_
          developerKey:(NSString *)developerKey_
+         languageCode:(NSString *)languageCode_
          errorHandler:(TKRpcErrorHandler *)errorHandler_
                crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_ {
     self = [super init];
     if (self) {
         gateway = gateway_;
         timeoutMs = timeoutMs_;
-        developerKey = developerKey_;
+        developerKey = [developerKey_ copy];
+        languageCode = [languageCode_ copy];
         errorHandler = errorHandler_;
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
                                  initWithGateway:gateway
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
+                                 languageCode:languageCode
                                  errorHandler:errorHandler];
         cryptoEngineFactory = cryptoEngineFactory_;
         
@@ -203,6 +207,7 @@
                              crypto:crypto
                              timeoutMs:timeoutMs
                              developerKey:developerKey
+                             languageCode:languageCode
                              memberId:memberId
                              errorHandler:errorHandler];
          onSuccess([TKMember

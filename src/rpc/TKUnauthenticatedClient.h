@@ -23,12 +23,15 @@
 /**
  * @param gateway gRPC client
  * @param timeoutMs gRPC timeout in ms
+ * @param developerKey Token developer key
+ * @param languageCode the SDK language code
  * @param errorHandler error handler to handle RPC errors
  * @return new unauthenticated client
  */
 - (id)initWithGateway:(GatewayService *)gateway
             timeoutMs:(int)timeoutMs
          developerKey:(NSString *)developerKey
+         languageCode:(NSString *)languageCode
          errorHandler:(TKRpcErrorHandler *)errorHandler;
 
 /**

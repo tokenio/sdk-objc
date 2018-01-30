@@ -30,6 +30,7 @@
                crypto:(TKCrypto *)crypto_
             timeoutMs:(int)timeoutMs_
          developerKey:(NSString *)developerKey_
+         languageCode:(NSString *)languageCode_
              memberId:(NSString *)memberId_
          errorHandler:(TKRpcErrorHandler *)errorHandler_ {
     self = [super init];
@@ -39,14 +40,16 @@
         crypto = crypto_;
         memberId = memberId_;
         rpc = [[TKRpc alloc] initWithTimeoutMs:timeoutMs_
-                                  developerKey:developerKey_];
+                                  developerKey:developerKey_
+                                  languageCode:languageCode_];
         errorHandler = errorHandler_;
         
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
                                  initWithGateway:gateway
-                                       timeoutMs:timeoutMs_
-                                    developerKey:developerKey_
-                                    errorHandler:errorHandler];
+                                 timeoutMs:timeoutMs_
+                                 developerKey:developerKey_
+                                 languageCode:languageCode_
+                                 errorHandler:errorHandler];
     }
     
     return self;

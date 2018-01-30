@@ -25,6 +25,7 @@
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
     NSString *developerKey;
+    NSString *languageCode;
     TKRpcErrorHandler *errorHandler;
     TKUnauthenticatedClient *unauthenticatedClient;
     TKMemberRecoveryManager *memberRecoveryManager;
@@ -46,6 +47,7 @@
               port:(int)port
          timeoutMs:(int)timeout
       developerKey:(NSString *)developerKey_
+      languageCode:(NSString *)languageCode_
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
             useSsl:(BOOL)useSsl
          certsPath:(NSString *)certsPath
@@ -84,16 +86,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
         developerKey = [developerKey_ copy];
+        languageCode = [languageCode_ copy];
         
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
                                  initWithGateway:gateway
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
+                                 languageCode:languageCode
                                  errorHandler:errorHandler];
         memberRecoveryManager = [[TKMemberRecoveryManager alloc]
                                  initWithGateway:gateway
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
+                                 languageCode:languageCode
                                  errorHandler:errorHandler
                                  crypto:cryptoEngineFactory];
         
@@ -192,6 +197,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                                              crypto:crypto
                                                                           timeoutMs:timeoutMs
                                                                        developerKey:developerKey
+                                                                       languageCode:languageCode
                                                                            memberId:memberId
                                                                        errorHandler:errorHandler];
                                
@@ -323,6 +329,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                       crypto:crypto
                                                       timeoutMs:timeoutMs
                                                       developerKey:developerKey
+                                                      languageCode:languageCode
                                                       memberId:memberId
                                                       errorHandler:errorHandler];
                                   onSuccess([TKMember
