@@ -31,6 +31,7 @@
                                      developerKey:@"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI"
                                      languageCode:@"en"
                                            crypto:nil
+                                   browserFactory:nil
                                            useSsl:NO
                                         certsPath:nil
                            globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}]);
@@ -43,6 +44,7 @@
                                                   developerKey:nil
                                                   languageCode:@"en"
                                                         crypto:nil
+                                                browserFactory:nil
                                                         useSsl:NO
                                                      certsPath:nil
                                         globalRpcErrorCallback:^(NSError *error) {/* noop default callback */}],

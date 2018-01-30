@@ -15,8 +15,7 @@
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "TransferTokenBuilder.h"
-
-
+#import "TKBrowser.h"
 
 @class Member;
 @class TKClient;
@@ -45,12 +44,16 @@
 /// Crypto keys.
 @property (readonly, retain) NSArray<Key *> *keys;
 
+/// Customized authorization browser creation block.
+@property (readonly, retain) TKBrowserFactory browserFactory;
+
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
+   useBrowserFactory:(TKBrowserFactory)browserFactory
              aliases:(NSMutableArray<Alias *> *) aliases_;
 
 
@@ -236,6 +239,17 @@
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError;
 
+/**
+ * Links a bank. The authorization browser will present and the accounts selected by user
+ * will be linked.
+ *
+ * @param bankId bank Id
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)linkBank:(NSString *)bankId
+       onSuccess:(OnSuccessWithTKAccounts)onSuccess
+         onError:(OnError)onError;
 
 /**
  * Links a set of funding bank accounts to Token and returns it to the caller.

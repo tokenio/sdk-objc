@@ -16,3 +16,6 @@
 "User_Invalid_Authentication" = "Uporabnik za avtentikacijo je neveljaven";
 
 "Sdk_Version_Mismatch" = "Posodobite aplikacijo na najnovejšo različico";
+
+"Back" = "Nazaj";
+"Authorization" = "Potrjevanje";

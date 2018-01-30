@@ -8,8 +8,8 @@
 
 #import "Alias.pbobjc.h"
 #import <objc/NSObject.h>
-
 #import "TKTypedef.h"
+#import "TKBrowser.h"
 
 
 @class GatewayService;
@@ -51,6 +51,7 @@
  * @param languageCode the SDK language code
  * @param cryptoEngineFactory crypto module to use
  * @param useSsl use SSL if true
+ * @param browserFactory use customized authorization browser if set
  * @param certsPath use custom certs; otherwise, use the default root certs
  * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
@@ -60,6 +61,7 @@
       developerKey:(NSString *)developerKey
       languageCode:(NSString *)languageCode
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
+    browserFactory:(TKBrowserFactory)browserFactory
             useSsl:(BOOL)useSsl
          certsPath:(NSString *)certsPath
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback;

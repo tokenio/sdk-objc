@@ -4,17 +4,15 @@
 //
 
 #import <Protobuf/GPBMessage.h>
-
 #import "gateway/Gateway.pbrpc.h"
-
 #import "Transferinstructions.pbobjc.h"
 #import "TKAccountSync.h"
 #import "TKHasher.h"
 #import "TKMemberSync.h"
 #import "TKMember.h"
 #import "TKClient.h"
+#import "TKAuthorizationEngine.h"
 #import "TKError.h"
-
 
 @implementation TKMember {
     TKClient *client;
@@ -24,14 +22,17 @@
 
 + (TKMember *)member:(Member *)member
            useClient:(TKClient *)client
+   useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     return [[TKMember alloc] initWithMember:member
                                   useClient:client
+                          useBrowserFactory:browserFactory_
                                     aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
            useClient:(TKClient *)client_
+   useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     
@@ -39,6 +40,7 @@
         member = member_;
         client = client_;
         aliases = aliases_;
+        _browserFactory = browserFactory_;
     }
     
     return self;
@@ -271,6 +273,38 @@
                                  onError:onError];
 }
 
+- (void)linkBank:(NSString *)bankId
+       onSuccess:(OnSuccessWithTKAccounts)onSuccess
+         onError:(OnError)onError {
+    [client getBankInfo:bankId
+              onSuccess:^(BankInfo *info) {
+                  /* TODO: (sibinlu) Remove this convertion after getBankInfo
+                   return ExternalAuthorizationDetails.*/
+                  ExternalAuthorizationDetails *details = [ExternalAuthorizationDetails message];
+                  details.URL = info.linkingUri;
+                  details.completionPattern = info.redirectUriRegex;
+                  
+                  // The authorization engine will be revoked after the accounts are linked.
+                  TKAuthorizationEngine *authEngine =
+                  [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.browserFactory
+                                           ExternalAuthorizationDetails:details];
+                  [authEngine
+                   authorizeOnSuccess:^(BankAuthorization *bankAuth) {
+                       [client linkAccounts:bankAuth
+                                  onSuccess:^(NSArray<Account *> *accounts) {
+                                      onSuccess([self _mapAccounts:accounts]);
+                                      [authEngine close];
+                                  } onError:^(NSError *error) {
+                                      onError(error);
+                                      [authEngine close];
+                                  }];
+                   } onError:^(NSError *error) {
+                       onError(error);
+                       [authEngine close];
+                   }];
+              }
+                onError:onError];
+}
 
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithTKAccounts)onSuccess

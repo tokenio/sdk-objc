@@ -17,6 +17,7 @@
 #import "Account.pbobjc.h"
 #import "TKError.h"
 #import "TKRpcSyncCall.h"
+#import "TKAuthorizationEngine.h"
 
 @implementation TransferTokenBuilder
 
@@ -38,16 +39,11 @@
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self executeAsync:call.onSuccess
-            onAuthRequired:^(ExternalAuthorizationDetails *details) {
-                NSError *error = [NSError errorFromExternalAuthorizationDetails:details];
-                call.onError(error);
-            }
                    onError:call.onError];
     }];
 }
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
-      onAuthRequired:(OnAuthRequired)onAuthRequired
              onError:(OnError)onError {
     if (!self.accountId && !self.bankAuthorization) {
         @throw [NSException
@@ -90,7 +86,8 @@
     }
     
     if (self.bankAuthorization) {
-        payload.transfer.instructions.source.account.tokenAuthorization.authorization = self.bankAuthorization;
+        payload.transfer.instructions.source.account.tokenAuthorization.authorization
+        = self.bankAuthorization;
     }
     
     if (self.redeemerAlias) {
@@ -137,10 +134,36 @@
         payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
     }
 
-    [[self.member getClient] createTransferToken:payload
-                                       onSuccess:onSuccess
-                                  onAuthRequired:onAuthRequired
-                                         onError:onError];
+    [[self.member getClient]
+     createTransferToken:payload
+     onSuccess:onSuccess
+     onAuthRequired:^(ExternalAuthorizationDetails *details) {
+         TKAuthorizationEngine *authEngine =
+         [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.member.browserFactory
+                                  ExternalAuthorizationDetails:details];
+         
+         [authEngine
+          authorizeOnSuccess:^(BankAuthorization *auth) {
+              payload.transfer.instructions.source.account.tokenAuthorization.authorization = auth;
+              
+              [[self.member getClient]
+               createTransferToken:payload
+               onSuccess:onSuccess
+               onAuthRequired:^(ExternalAuthorizationDetails *details) {
+                   /* We tried using the authorization we received,
+                    but bank apparently wants other authorization, so fail. */
+                   onError([NSError
+                            errorFromTransferTokenStatus:
+                            TransferTokenStatus_FailureExternalAuthorizationRequired]);
+               }
+               onError:onError];
+              
+              [authEngine close];
+          } onError:^(NSError *error) {
+              onError(error);
+              [authEngine close];
+          }];
+     }
+     onError:onError];
 }
-
 @end

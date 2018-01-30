@@ -19,17 +19,24 @@
 + (instancetype)errorFromErrorCode:(TKErrorCode)errorCode
                            details:(NSString *)details
                  encapsulatedError:(NSError *)error {
-    return [NSError errorWithDomain:kTokenErrorDomain
-                               code:errorCode
-                           userInfo:@{ NSLocalizedDescriptionKey: details ,
-                                       TKEncapsulatedErrorKey: error }];
+    if (error != nil) {
+        return [NSError errorWithDomain:kTokenErrorDomain
+                                   code:errorCode
+                               userInfo:@{ NSLocalizedDescriptionKey: details ,
+                                           TKEncapsulatedErrorKey: error }];
+    } else {
+        return [NSError errorWithDomain:kTokenErrorDomain
+                                   code:errorCode
+                               userInfo:@{ NSLocalizedDescriptionKey: details}];
+    }
 }
 
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status {
-    NSString *description = [NSString stringWithFormat:@"Failed to create token %d", status];
-    return [NSError errorWithDomain:kTokenTransferErrorDomain
-                               code:status
-                           userInfo:@{ NSLocalizedDescriptionKey: description }];
+    return [NSError
+            errorWithDomain:kTokenTransferErrorDomain
+            code:status
+            userInfo:@{ NSLocalizedDescriptionKey:
+                            [NSString stringWithFormat:@"Failed to create token %d", status] }];
 }
 
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details {

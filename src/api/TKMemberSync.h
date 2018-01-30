@@ -195,6 +195,13 @@
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId;
 
 
+/**
+ * Links a bank. The authorization browser will present and the accounts selected by user
+ * will be linked.
+ *
+ * @param bankId bank Id
+ */
+- (NSArray<TKAccountSync *> *)linkBank:(NSString *)bankId;
 
 /**
  * Links a set of funding bank accounts to Token and returns it to the caller.

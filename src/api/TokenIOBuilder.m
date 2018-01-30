@@ -13,7 +13,9 @@
 #import "TokenIO.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKTokenCryptoEngineFactory.h"
-
+#if TARGET_OS_IPHONE
+#import "TKTokenBrowser.h"
+#endif
 
 @implementation TokenIOBuilder
 
@@ -45,6 +47,14 @@
     } else {
         cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
     }
+    
+#if TARGET_OS_IPHONE
+    if (!self.browserFactory) {
+        self.browserFactory = ^(id<TKBrowserDelegate> delegate) {
+            return [[TKTokenBrowser alloc] initWithBrowserDelegate:delegate];
+        };
+    }
+#endif
 
     return [[TokenIO alloc]
             initWithHost:self.host
@@ -53,6 +63,7 @@
             developerKey:self.developerKey
             languageCode:self.languageCode
             crypto:cryptoEngineFactory
+            browserFactory:self.browserFactory
             useSsl:self.useSsl
             certsPath:self.certsPath
             globalRpcErrorCallback:self.globalRpcErrorCallback];

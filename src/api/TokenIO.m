@@ -29,6 +29,7 @@
     TKRpcErrorHandler *errorHandler;
     TKUnauthenticatedClient *unauthenticatedClient;
     TKMemberRecoveryManager *memberRecoveryManager;
+    TKBrowserFactory browserFactory;
 }
 
 + (TokenIOBuilder *)builder {
@@ -49,6 +50,7 @@
       developerKey:(NSString *)developerKey_
       languageCode:(NSString *)languageCode_
             crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
+    browserFactory:(TKBrowserFactory)browserFactory_
             useSsl:(BOOL)useSsl
          certsPath:(NSString *)certsPath
 globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
@@ -86,6 +88,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
         developerKey = [developerKey_ copy];
+        browserFactory = browserFactory_;
         languageCode = [languageCode_ copy];
         
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
@@ -100,7 +103,8 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                  developerKey:developerKey
                                  languageCode:languageCode
                                  errorHandler:errorHandler
-                                 crypto:cryptoEngineFactory];
+                                 crypto:cryptoEngineFactory
+                                 browserFactory:browserFactory];
         
     }
     
@@ -205,6 +209,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                [client getAliases:^(NSArray<Alias *> *aliases) {
                                    onSuccess([TKMember member:member
                                                     useClient:client
+                                            useBrowserFactory:browserFactory
                                                       aliases:[NSMutableArray arrayWithArray:aliases]]);
                                    
                                } onError:onError];
@@ -335,6 +340,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                   onSuccess([TKMember
                                              member:member
                                              useClient:client
+                                             useBrowserFactory:browserFactory
                                              aliases:[NSMutableArray arrayWithObject:alias]]);
                               }
                                 onError:onError];

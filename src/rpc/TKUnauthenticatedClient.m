@@ -71,7 +71,7 @@
                                            if (response.hasMember) {
                                                onSuccess(response.member.id_p);
                                            }
-                                           else{
+                                           else {
                                                onSuccess(nil);
                                            }
                                        } else {
@@ -96,7 +96,7 @@
                                    if (response.hasMember) {
                                        onSuccess(response.member);
                                    }
-                                   else{
+                                   else {
                                        onSuccess(nil);
                                    }
                                } else {

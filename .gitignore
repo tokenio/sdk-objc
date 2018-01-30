@@ -24,3 +24,4 @@ xcuserdata
 *.DS_Store
 /sdk.xcworkspace/xcuserdata/
 *.xcscmblueprint
+*.orig
