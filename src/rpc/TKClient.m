@@ -821,7 +821,9 @@
                                        onSuccess(balance);
                                    }
                                    else {
-                                       onError([NSError errorFromRequestStatus:response.status]);
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": response.balance.accountId}]);
                                    }
                                    
                                } else {
@@ -861,7 +863,9 @@
                                            [result addObject:balance];
                                        }
                                        else {
-                                           onError([NSError errorFromRequestStatus:balanceResponse.status]);
+                                           onError([NSError
+                                                    errorFromRequestStatus:balanceResponse.status
+                                                    userInfo:@{@"AccountId": balanceResponse.balance.accountId}]);
                                            return;
                                        }
                                    }
@@ -898,7 +902,10 @@
                                        onSuccess(response.transaction);
                                    }
                                    else {
-                                       onError([NSError errorFromRequestStatus:response.status]);
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": accountId,
+                                                           @"TransactionId": response.transaction.id_p}]);
                                    }
                                    
                                } else {
@@ -938,7 +945,9 @@
                                        onSuccess(paged);
                                    }
                                    else {
-                                       onError([NSError errorFromRequestStatus:response.status]);
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": accountId}]);
                                    }
                                    
                                } else {
