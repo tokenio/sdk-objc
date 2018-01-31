@@ -108,7 +108,7 @@ message TransferBody {
 //
 
 message AccessBody {
-  repeated Resource resources = 5;                      // Each entry defines an resources level
+  repeated Resource resources = 5; // List of resources
 
   message Resource {
     oneof resource {
@@ -131,9 +131,11 @@ message AccessBody {
     }
 
     // Provides access to all member accounts. Enables getAccounts()
+    // to get list of accounts (and also getAccount() on any account).
     message AllAccounts {}
 
-    // Provides access to a specific member account balance
+    // Provides access to basic info about a specific member account
+    // (can call getAccount() on this account).
     message Account {
       string account_id = 1; // ID of account
     }
@@ -151,7 +153,7 @@ message AccessBody {
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
 
-    // Provides access to a specific account balance
+    // Provides access to a specific account's balance
     message AccountBalance {
       string account_id = 1; // ID of account
     }
@@ -168,6 +170,8 @@ message TokenOperationResult {
   enum Status {
     INVALID = 0;
     SUCCESS = 1;                // Operation succeeded.
-    MORE_SIGNATURES_NEEDED = 2; // Token needs more sigs. If that's surprising: Perhaps used LOW key but needs PRIVILEGED
+    // Token needs more signatures.
+    // If that's surprising: Perhaps used LOW or STANDARD key but needs PRIVILEGED?
+    MORE_SIGNATURES_NEEDED = 2;
   }
 }

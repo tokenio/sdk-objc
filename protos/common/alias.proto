@@ -19,6 +19,6 @@ message Alias {
     PHONE = 3;    // unused
     DOMAIN = 4;   // unused
     USERNAME = 5; // deprecated
-    BANK = 6;
+    BANK = 6;     // for banks only
   }
 }

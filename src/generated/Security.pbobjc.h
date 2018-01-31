@@ -114,9 +114,10 @@ typedef GPB_ENUM(Key_FieldNumber) {
 /** Base64url encoded public key. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *publicKey;
 
-/** Privilege level */
+/** Privilege level: LOW, STANDARD, PRIVILEGED */
 @property(nonatomic, readwrite) Key_Level level;
 
+/** ED25519, ECDSA_SHA256, RS256 */
 @property(nonatomic, readwrite) Key_Algorithm algorithm;
 
 @end

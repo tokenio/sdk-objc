@@ -804,21 +804,7 @@
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
-    request.payload.accountId = accountId;
-    request.payload.nonce = [TKUtil nonce];
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetBalance",
-                                                            @"Approve to get balances")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
+    request.accountId = accountId;
     
     RpcLogStart(request);
     
@@ -830,8 +816,8 @@
                                    RpcLogCompleted(response);
                                    if (response.status == RequestStatus_SuccessfulRequest) {
                                        TKBalance *balance = [TKBalance alloc];
-                                       balance.available = response.available;
-                                       balance.current = response.current;
+                                       balance.available = response.balance.available;
+                                       balance.current = response.balance.current;
                                        onSuccess(balance);
                                    }
                                    else {
@@ -845,6 +831,7 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
@@ -854,22 +841,8 @@
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
     GetTransactionRequest *request = [GetTransactionRequest message];
-    request.payload.accountId = accountId;
-    request.payload.transactionId = transactionId;
-    request.payload.nonce = [TKUtil nonce];
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
-                                                            @"Approve to get trasactions")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
+    request.accountId = accountId;
+    request.transactionId = transactionId;
     
     RpcLogStart(request);
     
@@ -887,6 +860,7 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
@@ -897,23 +871,9 @@
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
-    request.payload.accountId = accountId;
-    request.payload.nonce = [TKUtil nonce];
+    request.accountId = accountId;
     request.page.offset = offset;
     request.page.limit = limit;
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
-                                                            @"Approve to get trasactions")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
     
     RpcLogStart(request);
     
@@ -934,6 +894,7 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
@@ -1428,12 +1389,23 @@
 - (void)_startCall:(GRPCProtoCall *)call
        withRequest:(GPBMessage *)request
            onError:(OnError)onError {
+    [self _startCall:call
+         withRequest:request
+            usingKey:Key_Level_Low
+             onError:onError];
+}
+
+- (void)_startCall:(GRPCProtoCall *)call
+       withRequest:(GPBMessage *)request
+          usingKey:(Key_Level)keyLevel
+           onError:(OnError)onError {
     [rpc execute:call
          request:request
         memberId:memberId
           crypto:crypto
+        usingKey:keyLevel
       onBehalfOf:onBehalfOfMemberId
-     onError:onError];
+         onError:onError];
 }
 
 @end

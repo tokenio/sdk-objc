@@ -9,27 +9,27 @@ option java_outer_classname = "NotificationProtos";
 
 // A notification to the payer that a transfer was successfully processed.
 message PayerTransferProcessed {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer ID
 }
 
 // A notification to the payee that a transfer was successfully processed.
 message PayeeTransferProcessed {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer ID
 }
 
 // A notification to the payer that a transfer failed.
 message PayerTransferFailed {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer ID
 }
 
 // A generic notification that a transfer was successfully processed.
 message TransferProcessed {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer ID
 }
 
 // A generic notification that a transfer failed.
 message TransferFailed {
-  string transfer_id = 1;
+  string transfer_id = 1; // transfer ID
 }
 
 // A notification that a bank wants to be linked.
@@ -38,27 +38,29 @@ message LinkAccounts {
 }
 
 // A notification to step up / endorse a token.
+// E.g., perhaps user tried to endorse in browser with only LOW-privilege
+// key available but needs a HIGH-privilege key signature.
 message StepUp {
-  string token_id = 1;
+  string token_id = 1; // ID of Token to endorse
 }
 
 // A notification to step up a balance request
 message BalanceStepUp {
-  string account_id = 1;
+  string account_id = 1; // Account ID
 }
 
 // A notification to step up a transaction request
 message TransactionStepUp {
-  string account_id = 1;
-  string transaction_id = 2;
+  string account_id = 1;     // Account ID
+  string transaction_id = 2; // Transaction ID
 }
 
 // A notification that a key wants to be added to a member. Clients should timeout the notification
 // and screen, once the expires_ms has passed
 message AddKey {
-  string name = 1;
-  io.token.proto.common.security.Key key = 2;
-  int64 expires_ms = 3;
+  string name = 1;                            // Human-readable name, e.g., "Chrome Browser" or "My App"
+  io.token.proto.common.security.Key key = 2; // Key
+  int64 expires_ms = 3;                       // Expiration time
 }
 
 // A notification that a bank wants to be linked, and keys want to be added.
@@ -69,12 +71,12 @@ message LinkAccountsAndAddKey {
 
 // A notification to request a payment
 message PaymentRequest {
-  io.token.proto.common.token.TokenPayload payload = 1;
+  io.token.proto.common.token.TokenPayload payload = 1; // requested payment
 }
 
 // A notification that a token was cancelled
 message TokenCancelled {
-  string token_id = 1;
+  string token_id = 1; // Token ID
 }
 
 

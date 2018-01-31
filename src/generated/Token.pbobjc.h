@@ -146,7 +146,10 @@ typedef GPB_ENUM(TokenOperationResult_Status) {
   /** Operation succeeded. */
   TokenOperationResult_Status_Success = 1,
 
-  /** Token needs more sigs. If that's surprising: Perhaps used LOW key but needs PRIVILEGED */
+  /**
+   * Token needs more signatures.
+   * If that's surprising: Perhaps used LOW or STANDARD key but needs PRIVILEGED?
+   **/
   TokenOperationResult_Status_MoreSignaturesNeeded = 2,
 };
 
@@ -405,7 +408,7 @@ typedef GPB_ENUM(AccessBody_FieldNumber) {
 
 @interface AccessBody : GPBMessage
 
-/** Each entry defines an resources level */
+/** List of resources */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccessBody_Resource*> *resourcesArray;
 /** The number of items in @c resourcesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger resourcesArray_Count;
@@ -493,6 +496,7 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 
 /**
  * Provides access to all member accounts. Enables getAccounts()
+ * to get list of accounts (and also getAccount() on any account).
  **/
 @interface AccessBody_Resource_AllAccounts : GPBMessage
 
@@ -505,7 +509,8 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 };
 
 /**
- * Provides access to a specific member account balance
+ * Provides access to basic info about a specific member account
+ * (can call getAccount() on this account).
  **/
 @interface AccessBody_Resource_Account : GPBMessage
 
@@ -557,7 +562,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
 };
 
 /**
- * Provides access to a specific account balance
+ * Provides access to a specific account's balance
  **/
 @interface AccessBody_Resource_AccountBalance : GPBMessage
 

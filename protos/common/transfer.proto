@@ -21,7 +21,7 @@ message Transfer {
 
   enum Method {
     DEFAULT = 0;
-    INSTANT = 1;
+    INSTANT = 1; // Use Token's Currency Ledger
   }
 }
 

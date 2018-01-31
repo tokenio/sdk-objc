@@ -59,12 +59,14 @@ typedef GPB_ENUM(BankAuthorization_FieldNumber) {
  * Since they're sent over the network, normally the bank encrypts them.
  * How a member uses it: https://developer.token.io/sdk/#link-a-bank-account
  * How a bank creates it: https://developer.token.io/bank-integration/#bank-account-linking
- * Here, a SealedMessage "seals" a BankAccount message.
+ * Here, a SealedMessage "seals" a PlaintextBankAuthorization message.
  **/
 @interface BankAuthorization : GPBMessage
 
+/** Bank ID, e.g., "iron" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
+/** Encrypted link info */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SealedMessage*> *accountsArray;
 /** The number of items in @c accountsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;

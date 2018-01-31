@@ -3050,14 +3050,10 @@ typedef struct GetAccountsResponse__storage_ {
 @implementation GetBalanceRequest
 
 @dynamic accountId;
-@dynamic hasPayload, payload;
-@dynamic hasSignature, signature;
 
 typedef struct GetBalanceRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-  GetBalancePayload *payload;
-  Signature *signature;
 } GetBalanceRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3074,24 +3070,6 @@ typedef struct GetBalanceRequest__storage_ {
         .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(GetBalancePayload),
-        .number = GetBalanceRequest_FieldNumber_Payload,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, payload),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "signature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = GetBalanceRequest_FieldNumber_Signature,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetBalanceRequest__storage_, signature),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3114,15 +3092,13 @@ typedef struct GetBalanceRequest__storage_ {
 
 @implementation GetBalanceResponse
 
-@dynamic hasCurrent, current;
-@dynamic hasAvailable, available;
+@dynamic hasBalance, balance;
 @dynamic status;
 
 typedef struct GetBalanceResponse__storage_ {
   uint32_t _has_storage_[1];
   RequestStatus status;
-  Money *current;
-  Money *available;
+  Balance *balance;
 } GetBalanceResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3132,20 +3108,11 @@ typedef struct GetBalanceResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "current",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
-        .number = GetBalanceResponse_FieldNumber_Current,
+        .name = "balance",
+        .dataTypeSpecific.className = GPBStringifySymbol(Balance),
+        .number = GetBalanceResponse_FieldNumber_Balance,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetBalanceResponse__storage_, current),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "available",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
-        .number = GetBalanceResponse_FieldNumber_Available,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetBalanceResponse__storage_, available),
+        .offset = (uint32_t)offsetof(GetBalanceResponse__storage_, balance),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -3153,7 +3120,7 @@ typedef struct GetBalanceResponse__storage_ {
         .name = "status",
         .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
         .number = GetBalanceResponse_FieldNumber_Status,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetBalanceResponse__storage_, status),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -3187,21 +3154,103 @@ void SetGetBalanceResponse_Status_RawValue(GetBalanceResponse *message, int32_t 
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
+#pragma mark - GetBalancesRequest
+
+@implementation GetBalancesRequest
+
+@dynamic accountIdArray, accountIdArray_Count;
+
+typedef struct GetBalancesRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *accountIdArray;
+} GetBalancesRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountIdArray",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBalancesRequest_FieldNumber_AccountIdArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetBalancesRequest__storage_, accountIdArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBalancesRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBalancesRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBalancesResponse
+
+@implementation GetBalancesResponse
+
+@dynamic responseArray, responseArray_Count;
+
+typedef struct GetBalancesResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *responseArray;
+} GetBalancesResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "responseArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetBalanceResponse),
+        .number = GetBalancesResponse_FieldNumber_ResponseArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetBalancesResponse__storage_, responseArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBalancesResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBalancesResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - GetTransactionRequest
 
 @implementation GetTransactionRequest
 
 @dynamic accountId;
 @dynamic transactionId;
-@dynamic hasPayload, payload;
-@dynamic hasSignature, signature;
 
 typedef struct GetTransactionRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
   NSString *transactionId;
-  GetTransactionPayload *payload;
-  Signature *signature;
 } GetTransactionRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3227,24 +3276,6 @@ typedef struct GetTransactionRequest__storage_ {
         .offset = (uint32_t)offsetof(GetTransactionRequest__storage_, transactionId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(GetTransactionPayload),
-        .number = GetTransactionRequest_FieldNumber_Payload,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetTransactionRequest__storage_, payload),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "signature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = GetTransactionRequest_FieldNumber_Signature,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(GetTransactionRequest__storage_, signature),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3335,15 +3366,11 @@ void SetGetTransactionResponse_Status_RawValue(GetTransactionResponse *message, 
 
 @dynamic accountId;
 @dynamic hasPage, page;
-@dynamic hasPayload, payload;
-@dynamic hasSignature, signature;
 
 typedef struct GetTransactionsRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
   Page *page;
-  GetTransactionsPayload *payload;
-  Signature *signature;
 } GetTransactionsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3367,24 +3394,6 @@ typedef struct GetTransactionsRequest__storage_ {
         .number = GetTransactionsRequest_FieldNumber_Page,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, page),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(GetTransactionsPayload),
-        .number = GetTransactionsRequest_FieldNumber_Payload,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, payload),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "signature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = GetTransactionsRequest_FieldNumber_Signature,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, signature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

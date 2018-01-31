@@ -46,6 +46,8 @@
   @class GetAliasesResponse;
   @class GetBalanceRequest;
   @class GetBalanceResponse;
+  @class GetBalancesRequest;
+  @class GetBalancesResponse;
   @class GetBankInfoRequest;
   @class GetBankInfoResponse;
   @class GetBanksRequest;
@@ -148,12 +150,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Create a member. Mints a member ID; newly-created member does not yet
  * have keys, alias, or anything other than an ID.
+ * Used by createMember, https://developer.token.io/sdk/#create-a-member
+ * (SDK's createMember also uses UpdateMember rpc).
  */
 - (void)createMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Create a member. Mints a member ID; newly-created member does not yet
  * have keys, alias, or anything other than an ID.
+ * Used by createMember, https://developer.token.io/sdk/#create-a-member
+ * (SDK's createMember also uses UpdateMember rpc).
  */
 - (GRPCProtoCall *)RPCToCreateMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -161,12 +167,22 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark UpdateMember(UpdateMemberRequest) returns (UpdateMemberResponse)
 
 /**
- * apply member updates
+ * Apply member updates. Used when adding/removing keys, aliases to/from member.
+ * These updates require a signature.
+ * See how Java SDK's Client.updateMember uses it:
+ * https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
+ * See how JS SDK's AuthHttpClient._memberUpdate uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
  */
 - (void)updateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * apply member updates
+ * Apply member updates. Used when adding/removing keys, aliases to/from member.
+ * These updates require a signature.
+ * See how Java SDK's Client.updateMember uses it:
+ * https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
+ * See how JS SDK's AuthHttpClient._memberUpdate uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
  */
 - (GRPCProtoCall *)RPCToUpdateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -174,12 +190,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetMember(GetMemberRequest) returns (GetMemberResponse)
 
 /**
- * get information about a member
+ * Get information about a member
  */
 - (void)getMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * get information about a member
+ * Get information about a member
  */
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -189,12 +205,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * set profile information (display name)
  * Ignores picture fields; use SetProfilePicture for those.
+ * https://developer.token.io/sdk/#profile
  */
 - (void)setProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * set profile information (display name)
  * Ignores picture fields; use SetProfilePicture for those.
+ * https://developer.token.io/sdk/#profile
  */
 - (GRPCProtoCall *)RPCToSetProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -203,11 +221,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * get a member's profile (display information)
+ * https://developer.token.io/sdk/#profile
  */
 - (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * get a member's profile (display information)
+ * https://developer.token.io/sdk/#profile
  */
 - (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -217,12 +237,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * upload an image to use as auth'd member's profile picture
  * Automatically creates smaller sizes; this works best with square images.
+ * https://developer.token.io/sdk/#profile
  */
 - (void)setProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * upload an image to use as auth'd member's profile picture
  * Automatically creates smaller sizes; this works best with square images.
+ * https://developer.token.io/sdk/#profile
  */
 - (GRPCProtoCall *)RPCToSetProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -231,11 +253,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get member's profile picture (can also use GetBlob with a blob ID from profile)
+ * https://developer.token.io/sdk/#profile
  */
 - (void)getProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get member's profile picture (can also use GetBlob with a blob ID from profile)
+ * https://developer.token.io/sdk/#profile
  */
 - (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -244,11 +268,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get ID of member that owns an alias, if any.
+ * https://developer.token.io/sdk/#aliases
  */
 - (void)resolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get ID of member that owns an alias, if any.
+ * https://developer.token.io/sdk/#aliases
  */
 - (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -257,19 +283,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get the auth'd member's aliases.
+ * https://developer.token.io/sdk/#aliases
  */
 - (void)getAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get the auth'd member's aliases.
+ * https://developer.token.io/sdk/#aliases
  */
 - (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CompleteVerification(CompleteVerificationRequest) returns (CompleteVerificationResponse)
 
+/**
+ * Use a verification code
+ */
 - (void)completeVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * Use a verification code
+ */
 - (GRPCProtoCall *)RPCToCompleteVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
@@ -310,6 +344,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * Begin member recovery. If the member has a "normal consumer" recovery rule,
  * this sends a recovery message to their email address.
+ * https://developer.token.io/sdk/#recovery
  */
 - (void)beginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -320,6 +355,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * Begin member recovery. If the member has a "normal consumer" recovery rule,
  * this sends a recovery message to their email address.
+ * https://developer.token.io/sdk/#recovery
  */
 - (GRPCProtoCall *)RPCToBeginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -328,11 +364,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Complete member recovery.
+ * https://developer.token.io/sdk/#recovery
  */
 - (void)completeRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Complete member recovery.
+ * https://developer.token.io/sdk/#recovery
  */
 - (GRPCProtoCall *)RPCToCompleteRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -354,11 +392,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get member ID of "normal consumer" recovery agent.
+ * https://developer.token.io/sdk/#recovery
  */
 - (void)getDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get member ID of "normal consumer" recovery agent.
+ * https://developer.token.io/sdk/#recovery
  */
 - (GRPCProtoCall *)RPCToGetDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -371,6 +411,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Add a shipping address
+ * https://developer.token.io/sdk/#address
  */
 - (void)addAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -380,6 +421,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Add a shipping address
+ * https://developer.token.io/sdk/#address
  */
 - (GRPCProtoCall *)RPCToAddAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -388,11 +430,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (void)getAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (GRPCProtoCall *)RPCToGetAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -401,11 +445,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get all of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (void)getAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get all of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (GRPCProtoCall *)RPCToGetAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -414,11 +460,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Remove one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (void)deleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Remove one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
  */
 - (GRPCProtoCall *)RPCToDeleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -430,6 +478,8 @@ NS_ASSUME_NONNULL_BEGIN
  * Devices for notification service
  * 
  * 
+ * subscribe member to notifications
+ * https://developer.token.io/sdk/#notifications
  */
 - (void)subscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -438,63 +488,127 @@ NS_ASSUME_NONNULL_BEGIN
  * Devices for notification service
  * 
  * 
+ * subscribe member to notifications
+ * https://developer.token.io/sdk/#notifications
  */
 - (GRPCProtoCall *)RPCToSubscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetSubscribers(GetSubscribersRequest) returns (GetSubscribersResponse)
 
+/**
+ * get member's notification subscriber[s]
+ * https://developer.token.io/sdk/#notifications
+ */
 - (void)getSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get member's notification subscriber[s]
+ * https://developer.token.io/sdk/#notifications
+ */
 - (GRPCProtoCall *)RPCToGetSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetSubscriber(GetSubscriberRequest) returns (GetSubscriberResponse)
 
+/**
+ * get one of a member's notification subscribers
+ * https://developer.token.io/sdk/#notifications
+ */
 - (void)getSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get one of a member's notification subscribers
+ * https://developer.token.io/sdk/#notifications
+ */
 - (GRPCProtoCall *)RPCToGetSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnsubscribeFromNotifications(UnsubscribeFromNotificationsRequest) returns (UnsubscribeFromNotificationsResponse)
 
+/**
+ * unsubscribe one of a member's subscribers from notifications
+ * https://developer.token.io/sdk/#notifications
+ */
 - (void)unsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * unsubscribe one of a member's subscribers from notifications
+ * https://developer.token.io/sdk/#notifications
+ */
 - (GRPCProtoCall *)RPCToUnsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark Notify(NotifyRequest) returns (NotifyResponse)
 
+/**
+ * send a notification
+ * https://developer.token.io/sdk/#notifications
+ */
 - (void)notifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * send a notification
+ * https://developer.token.io/sdk/#notifications
+ */
 - (GRPCProtoCall *)RPCToNotifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse)
 
+/**
+ * get notifications
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
 - (void)getNotificationsWithRequest:(GetNotificationsRequest *)request handler:(void(^)(GetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get notifications
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
 - (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(GetNotificationsRequest *)request handler:(void(^)(GetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
 
+/**
+ * get one particular notification
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
 - (void)getNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get one particular notification
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
 - (GRPCProtoCall *)RPCToGetNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark RequestTransfer(RequestTransferRequest) returns (RequestTransferResponse)
 
+/**
+ * send transfer-request notification
+ * https://developer.token.io/sdk/#request-payment
+ */
 - (void)requestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * send transfer-request notification
+ * https://developer.token.io/sdk/#request-payment
+ */
 - (GRPCProtoCall *)RPCToRequestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark TriggerStepUpNotification(TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse)
 
+/**
+ * send step-up (approve with higher-privilege key) request notification
+ */
 - (void)triggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * send step-up (approve with higher-privilege key) request notification
+ */
 - (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
@@ -505,6 +619,8 @@ NS_ASSUME_NONNULL_BEGIN
  * Bank accounts.
  * 
  * 
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)linkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -513,49 +629,106 @@ NS_ASSUME_NONNULL_BEGIN
  * Bank accounts.
  * 
  * 
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToLinkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnlinkAccounts(UnlinkAccountsRequest) returns (UnlinkAccountsResponse)
 
+/**
+ * un-associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (void)unlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * un-associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
 - (GRPCProtoCall *)RPCToUnlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetAccount(GetAccountRequest) returns (GetAccountResponse)
 
+/**
+ * get info about one linked account
+ * https://developer.token.io/sdk/#get-accounts
+ */
 - (void)getAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get info about one linked account
+ * https://developer.token.io/sdk/#get-accounts
+ */
 - (GRPCProtoCall *)RPCToGetAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetAccounts(GetAccountsRequest) returns (GetAccountsResponse)
 
+/**
+ * get info about linked accounts
+ * https://developer.token.io/sdk/#get-accounts
+ */
 - (void)getAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get info about linked accounts
+ * https://developer.token.io/sdk/#get-accounts
+ */
 - (GRPCProtoCall *)RPCToGetAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetBalance(GetBalanceRequest) returns (GetBalanceResponse)
 
+/**
+ * get current and available balance for a linked account
+ * https://developer.token.io/sdk/#get-account-balance
+ */
 - (void)getBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get current and available balance for a linked account
+ * https://developer.token.io/sdk/#get-account-balance
+ */
 - (GRPCProtoCall *)RPCToGetBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBalances(GetBalancesRequest) returns (GetBalancesResponse)
+
+- (void)getBalancesWithRequest:(GetBalancesRequest *)request handler:(void(^)(GetBalancesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetBalancesWithRequest:(GetBalancesRequest *)request handler:(void(^)(GetBalancesResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTransaction(GetTransactionRequest) returns (GetTransactionResponse)
 
+/**
+ * get information about a particular transaction
+ * https://developer.token.io/sdk/#get-transactions
+ */
 - (void)getTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get information about a particular transaction
+ * https://developer.token.io/sdk/#get-transactions
+ */
 - (GRPCProtoCall *)RPCToGetTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse)
 
+/**
+ * get information about several transactions
+ * https://developer.token.io/sdk/#get-transactions
+ */
 - (void)getTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * get information about several transactions
+ * https://developer.token.io/sdk/#get-transactions
+ */
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
@@ -563,11 +736,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get information about the auth'd member's default account.
+ * https://developer.token.io/sdk/#default-bank-account
  */
 - (void)getDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get information about the auth'd member's default account.
+ * https://developer.token.io/sdk/#default-bank-account
  */
 - (GRPCProtoCall *)RPCToGetDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -576,11 +751,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Set one auth'd member's accounts as its default account.
+ * https://developer.token.io/sdk/#default-bank-account
  */
 - (void)setDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Set one auth'd member's accounts as its default account.
+ * https://developer.token.io/sdk/#default-bank-account
  */
 - (GRPCProtoCall *)RPCToSetDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -593,6 +770,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a test account at "iron" test bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -602,6 +780,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a test account at "iron" test bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -644,6 +823,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a blob.
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (void)createBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -653,6 +833,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a blob.
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (GRPCProtoCall *)RPCToCreateBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -662,12 +843,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Fetch a blob. Works if the authenticated member is the blob's
  * owner or if the blob is public-access.
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (void)getBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Fetch a blob. Works if the authenticated member is the blob's
  * owner or if the blob is public-access.
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (GRPCProtoCall *)RPCToGetBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -677,12 +860,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Fetch a blob using a Token's authority. Works if Blob is attached to token
  * and authenticated member is the Token's "from" or "to".
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (void)getTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Fetch a blob using a Token's authority. Works if Blob is attached to token
  * and authenticated member is the Token's "from" or "to".
+ * https://developer.token.io/sdk/#transfer-token-options
  */
 - (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -695,6 +880,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a Transfer Token.
+ * https://developer.token.io/sdk/#create-transfer-token
  */
 - (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -704,6 +890,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * 
  * Create a Transfer Token.
+ * https://developer.token.io/sdk/#create-transfer-token
  */
 - (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -712,11 +899,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Create an Access Token.
+ * https://developer.token.io/sdk/#create-access-token
  */
 - (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Create an Access Token.
+ * https://developer.token.io/sdk/#create-access-token
  */
 - (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -725,11 +914,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get information about one token.
+ * https://developer.token.io/sdk/#redeem-transfer-token
  */
 - (void)getTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Get information about one token.
+ * https://developer.token.io/sdk/#redeem-transfer-token
  */
 - (GRPCProtoCall *)RPCToGetTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -739,12 +930,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Gets list of tokens the member has given/received.
  * Used by getTransferTokens, getAccessTokens.
+ * https://developer.token.io/sdk/#get-tokens
+ * https://developer.token.io/sdk/#replace-access-token
  */
 - (void)getTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Gets list of tokens the member has given/received.
  * Used by getTransferTokens, getAccessTokens.
+ * https://developer.token.io/sdk/#get-tokens
+ * https://developer.token.io/sdk/#replace-access-token
  */
 - (GRPCProtoCall *)RPCToGetTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler;
 
