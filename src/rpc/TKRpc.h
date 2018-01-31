@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TKTypedef.h"
+#import "TKCrypto.h"
 @class GPBMessage;
 @class TKCrypto;
 
@@ -26,6 +27,7 @@
         request:(GPBMessage *)request
        memberId:(NSString *)memberId
         crypto:(TKCrypto *)crypto
+       usingKey:(Key_Level)keyLevel
      onBehalfOf:(NSString *)onBehalfOfMemberId
         onError:(OnError)onError;
 

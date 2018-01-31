@@ -101,6 +101,7 @@ typedef GPB_ENUM(MemberAddKeyOperation_FieldNumber) {
  **/
 @interface MemberAddKeyOperation : GPBMessage
 
+/** Key to add */
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
 /** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
@@ -118,6 +119,7 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
  **/
 @interface MemberRemoveKeyOperation : GPBMessage
 
+/** ID of key to remove */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *keyId;
 
 @end
@@ -133,6 +135,10 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
  **/
 @interface MemberAliasOperation : GPBMessage
 
+/**
+ * Hash of alias to add/remove
+ * https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
 
 @end
@@ -145,6 +151,7 @@ typedef GPB_ENUM(MemberRecoveryRulesOperation_FieldNumber) {
 
 /**
  * Sets recovery rules for member. Overrides all previously set rules.
+ * https://developer.token.io/sdk/?java#recovery-rules
  **/
 @interface MemberRecoveryRulesOperation : GPBMessage
 
@@ -172,6 +179,10 @@ typedef GPB_ENUM(MemberRecoveryOperation_FieldNumber) {
 /** Test to see if @c authorization has been set. */
 @property(nonatomic, readwrite) BOOL hasAuthorization;
 
+/**
+ * Java SDK Member.authorizeRecovery can generate signature
+ * https://developer.token.io/sdk/javadoc/io/token/Member.html#authorizeRecovery-io.token.proto.common.member.MemberProtos.MemberRecoveryOperation.Authorization-
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) Signature *agentSignature;
 /** Test to see if @c agentSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasAgentSignature;

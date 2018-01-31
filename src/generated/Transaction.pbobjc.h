@@ -218,58 +218,25 @@ int32_t Transaction_Status_RawValue(Transaction *message);
  **/
 void SetTransaction_Status_RawValue(Transaction *message, int32_t value);
 
-#pragma mark - GetBalancePayload
+#pragma mark - Balance
 
-typedef GPB_ENUM(GetBalancePayload_FieldNumber) {
-  GetBalancePayload_FieldNumber_AccountId = 1,
-  GetBalancePayload_FieldNumber_Nonce = 2,
+typedef GPB_ENUM(Balance_FieldNumber) {
+  Balance_FieldNumber_AccountId = 1,
+  Balance_FieldNumber_Current = 2,
+  Balance_FieldNumber_Available = 3,
 };
 
-@interface GetBalancePayload : GPBMessage
+@interface Balance : GPBMessage
 
-/** account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
-/** random string to de-duplicate requests */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+@property(nonatomic, readwrite, strong, null_resettable) Money *current;
+/** Test to see if @c current has been set. */
+@property(nonatomic, readwrite) BOOL hasCurrent;
 
-@end
-
-#pragma mark - GetTransactionPayload
-
-typedef GPB_ENUM(GetTransactionPayload_FieldNumber) {
-  GetTransactionPayload_FieldNumber_AccountId = 1,
-  GetTransactionPayload_FieldNumber_TransactionId = 2,
-  GetTransactionPayload_FieldNumber_Nonce = 3,
-};
-
-@interface GetTransactionPayload : GPBMessage
-
-/** account ID */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-/** transaction ID */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
-
-/** random string to de-duplicate requests */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
-
-@end
-
-#pragma mark - GetTransactionsPayload
-
-typedef GPB_ENUM(GetTransactionsPayload_FieldNumber) {
-  GetTransactionsPayload_FieldNumber_AccountId = 1,
-  GetTransactionsPayload_FieldNumber_Nonce = 2,
-};
-
-@interface GetTransactionsPayload : GPBMessage
-
-/** account ID */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
-
-/** random string to de-duplicate requests */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+@property(nonatomic, readwrite, strong, null_resettable) Money *available;
+/** Test to see if @c available has been set. */
+@property(nonatomic, readwrite) BOOL hasAvailable;
 
 @end
 

@@ -5,13 +5,15 @@ option java_outer_classname = "AccountProtos";
 
 import "banklink.proto";
 
-// The payload of the bank authorization request. Used for serialization only.
-// The value of the payload is encrypted as a serialized JSON object.
+// The payload of the bank authorization request.
+// The value of the payload is encrypted as a serialized JSON object
+// in a BankAuthorization.
+// as described at https://developer.token.io/bank-integration/
 message PlaintextBankAuthorization {
-  string member_id = 1;
-  string account_name = 2;
-  BankAccount account = 3;
-  int64 expiration_ms = 4;
+  string member_id = 1;    // Token member id
+  string account_name = 2; // e.g., "Checking account with # ending 5678"
+  BankAccount account = 3; // Account info by some method, e.g., SEPA
+  int64 expiration_ms = 4; // Expiration time
 }
 
 // Optional account tag data.
@@ -20,9 +22,10 @@ message AccountTag {
   string value = 2;
 }
 
+// Not all accounts support all Token features.
 message AccountFeatures {
-  bool supports_payment = 1;
-  bool supports_information = 2;
+  bool supports_payment = 1;       // can pay from account
+  bool supports_information = 2;   // can get info, e.g., get balance
   bool requires_external_auth = 3;
 }
 
@@ -36,10 +39,12 @@ message Account {
   AccountFeatures account_features = 6; // features account supports
 }
 
-// Account information as seen by the bank. This is what the end user links with
+// Account information. This is what the end user links with
 // the bank and what Token uses when it talks to the bank.
+// It's also part of the source or destination for a transfer.
 message BankAccount {
-  // Token account Destination
+  // Token account Destination. Useful as source or destination
+  // for a transfer; doesn't make sense for a bank to "link" this.
   message Token {
     string member_id = 1;
     string account_id = 2;
@@ -57,19 +62,19 @@ message BankAccount {
 
   // SWIFT transfer
   message Swift {
-    string bic = 1;
+    string bic = 1;     // BIC code AAAABBCCDD
     string account = 2;
   }
 
-  // SEPA transfer. BIC is optional, except for non EEA countries
+  // SEPA transfer.
   message Sepa {
-    string iban = 1;
-    string bic = 2;
+    string iban = 1;    // International Bank Account Number
+    string bic = 2;     // Bic code. Optional, except for non EEA countries
   }
 
   // ACH transfer
   message Ach {
-    string routing = 1;
+    string routing = 1; // Routing number
     string account = 2;
   }
 

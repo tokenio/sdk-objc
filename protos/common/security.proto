@@ -7,8 +7,8 @@ option java_outer_classname = "SecurityProtos";
 message Key {
   string id = 1;           // Key ID
   string public_key = 2;   // Base64url encoded public key.
-  Level level = 3;         // Privilege level
-  Algorithm algorithm = 4;
+  Level level = 3;         // Privilege level: LOW, STANDARD, PRIVILEGED
+  Algorithm algorithm = 4; // ED25519, ECDSA_SHA256, RS256
 
   enum Algorithm {
     INVALID_ALGORITHM = 0;

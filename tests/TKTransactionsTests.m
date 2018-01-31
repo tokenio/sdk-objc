@@ -47,6 +47,27 @@
     }];     
 }
 
+- (void)testGetBalances {
+    [self run: ^(TokenIOSync *tokenIO) {
+        BankAuthorization *auth = [self createBankAuthorization:payer];
+        NSArray<TKAccountSync *> *accounts = [payer linkAccounts:auth];
+        XCTAssert(accounts.count == 1);
+        TKAccountSync *secondAccount = accounts[0];
+        NSArray<NSString *> *accountIds = @[payerAccount.id, secondAccount.id];
+        NSArray<TKBalance *> *balances = [payer getBalances:accountIds withKey:Key_Level_Low];
+        XCTAssert(balances.count == 2);
+        
+        TKBalance *balance = balances[0];
+        Money *currentBalance = balance.current;
+        XCTAssert([currentBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", currentBalance.currency);
+        Money *availableBalance = balance.available;
+        XCTAssert([availableBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", availableBalance.currency);
+        
+    }];
+}
+
 - (void)testLookupTransaction {
     [self run: ^(TokenIOSync *tokenIO) {
         TransferTokenBuilder *builder = [payer createTransferToken:100.99

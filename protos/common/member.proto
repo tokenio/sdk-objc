@@ -9,20 +9,23 @@ import "security.proto";
 
 // Adds member key to the directory.
 message MemberAddKeyOperation {
-  io.token.proto.common.security.Key key = 1;
+  io.token.proto.common.security.Key key = 1; // Key to add
 }
 
 // Removes member key from the directory.
 message MemberRemoveKeyOperation {
-  string key_id = 1;
+  string key_id = 1; // ID of key to remove
 }
 
 // Adds/removes member alias to/from the directory.
 message MemberAliasOperation {
+  // Hash of alias to add/remove
+  // https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
   string alias_hash = 1;
 }
 
 // Sets recovery rules for member. Overrides all previously set rules.
+// https://developer.token.io/sdk/?java#recovery-rules
 message MemberRecoveryRulesOperation {
   RecoveryRule recovery_rule = 1;
 }
@@ -32,6 +35,8 @@ message MemberRecoveryRulesOperation {
 // is governed by Recovery Rules associated with the member.
 message MemberRecoveryOperation {
   Authorization authorization = 1;
+  // Java SDK Member.authorizeRecovery can generate signature
+  // https://developer.token.io/sdk/javadoc/io/token/Member.html#authorizeRecovery-io.token.proto.common.member.MemberProtos.MemberRecoveryOperation.Authorization-
   io.token.proto.common.security.Signature agent_signature = 2;
 
   message Authorization {

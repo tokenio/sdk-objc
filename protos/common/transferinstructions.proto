@@ -8,8 +8,8 @@ import "address.proto";
 import "banklink.proto";
 import "security.proto";
 
+// A bank might require a Purpose of Payment for some transfers.
 enum PurposeOfPayment {
-  // A bank might require a Purpose of Payment for some transfers.
   INVALID = 0;
   OTHER = 1;
   PERSONAL_EXPENSES = 2;
@@ -20,8 +20,8 @@ enum PurposeOfPayment {
   SAVINGS = 7;
 }
 
+// A bank might require a context code for some transfers.
 enum PaymentContext {
-  // A bank might require a context code for some transfers.
   INVALID_CONTEXT = 0;
   OTHER_CONTEXT = 1;
   BILL_PAYMENT = 2;
@@ -44,7 +44,7 @@ message TransferEndpoint {
 // Money transfer instructions.
 message TransferInstructions {
   TransferEndpoint source = 1;                   // Transfer source.
-  repeated TransferEndpoint destinations = 2;    // Transfer desitination.
+  repeated TransferEndpoint destinations = 2;    // Transfer destination.
   Metadata metadata = 3;
 
   message Metadata {

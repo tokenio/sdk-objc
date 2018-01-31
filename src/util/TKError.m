@@ -57,11 +57,15 @@
                            userInfo:@{ NSLocalizedDescriptionKey: description }];
 }
     
-+ (instancetype)errorFromRequestStatus:(RequestStatus)status {
++ (instancetype)errorFromRequestStatus:(RequestStatus)status
+                              userInfo:(NSDictionary * _Nonnull)info {
     NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
+    NSMutableDictionary *userinfo = [NSMutableDictionary dictionaryWithDictionary:info];
+    [userinfo setObject:description forKey:NSLocalizedDescriptionKey];
+    
     return [NSError errorWithDomain:kTokenRequestErrorDomain
                                code:status
-                           userInfo:@{ NSLocalizedDescriptionKey: description }];
+                           userInfo:userinfo];
 }
 
 @end

@@ -90,7 +90,7 @@ message RetryVerificationResponse {
 message GetPairedDevicesRequest {}
 
 message GetPairedDevicesResponse {
-  repeated io.token.proto.common.member.Device devices = 1;
+  repeated io.token.proto.common.member.Device devices = 1; // linked device info
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,17 +98,17 @@ message GetPairedDevicesResponse {
 //
 
 message BeginRecoveryRequest {
-  io.token.proto.common.alias.Alias alias = 1;
+  io.token.proto.common.alias.Alias alias = 1; // alias of member to recover
 }
 
 message BeginRecoveryResponse {
-  string verification_id = 1;
+  string verification_id = 1; // id to use in later recovery steps
 }
 
 message CompleteRecoveryRequest {
-  string verification_id = 1;
-  string code = 2;
-  io.token.proto.common.security.Key key = 3;
+  string verification_id = 1;                 // verification id
+  string code = 2;                            // verification code (perhaps sent to alias email)
+  io.token.proto.common.security.Key key = 3; // new privileged key to use
 }
 
 message CompleteRecoveryResponse {
@@ -116,8 +116,8 @@ message CompleteRecoveryResponse {
 }
 
 message VerifyAliasRequest {
-  string verification_id = 1;
-  string code = 2;
+  string verification_id = 1; // verification id
+  string code = 2;            // verification code (perhaps sent to alias email)
 }
 
 message VerifyAliasResponse {}
@@ -125,7 +125,7 @@ message VerifyAliasResponse {}
 message GetDefaultAgentRequest {}
 
 message GetDefaultAgentResponse {
-  string member_id = 1;
+  string member_id = 1; // ID of the "normal consumer mode" recovery agent
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,67 +210,67 @@ message SubscribeToNotificationsResponse {
 message GetSubscribersRequest {}
 
 message GetSubscribersResponse {
-  repeated io.token.proto.common.subscriber.Subscriber subscribers = 1;
+  repeated io.token.proto.common.subscriber.Subscriber subscribers = 1; // notification subscriber info
 }
 
 message GetSubscriberRequest {
-  string subscriber_id = 1;
+  string subscriber_id = 1; // ID of notification subscriber to get
 }
 
 message GetSubscriberResponse {
-  io.token.proto.common.subscriber.Subscriber subscriber = 1;
+  io.token.proto.common.subscriber.Subscriber subscriber = 1; // notification subscriber info
 }
 
 message UnsubscribeFromNotificationsRequest {
-  string subscriber_id = 1;
+  string subscriber_id = 1; // ID of notification subscriber to unsubscribe
 }
 
 message UnsubscribeFromNotificationsResponse {}
 
 message NotifyRequest {
-  io.token.proto.common.alias.Alias alias = 1;
-  io.token.proto.common.notification.NotifyBody body = 2;
+  io.token.proto.common.alias.Alias alias = 1; // alias of member to notify
+  io.token.proto.common.notification.NotifyBody body = 2; // notification details
 }
 
 message NotifyResponse {
-  io.token.proto.common.notification.NotifyStatus status = 1;
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
 
 message GetNotificationsRequest {
-  Page page = 1;
+  Page page = 1; // offset and limit
 }
 
 message GetNotificationsResponse {
-  repeated io.token.proto.common.notification.Notification notifications = 1;
-  string offset = 2;
+  repeated io.token.proto.common.notification.Notification notifications = 1; // notification details
+  string offset = 2; // offset string to get "next page"
 }
 
 message GetNotificationRequest {
-  string notification_id = 1;
+  string notification_id = 1; // ID of notification to get
 }
 
 message GetNotificationResponse {
-  io.token.proto.common.notification.Notification notification = 1;
+  io.token.proto.common.notification.Notification notification = 1; // notification details
 }
 
 message RequestTransferRequest {
-  io.token.proto.common.token.TokenPayload token_payload = 2;
+  io.token.proto.common.token.TokenPayload token_payload = 2; // transfer token payload with some values filled in
 }
 
 message RequestTransferResponse {
-  io.token.proto.common.notification.NotifyStatus status = 1;
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
 
 message TriggerStepUpNotificationRequest {
   oneof step_up_type {
-    io.token.proto.common.notification.StepUp token_step_up = 1;
-    io.token.proto.common.notification.BalanceStepUp balance_step_up = 2;
-    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 3;
+    io.token.proto.common.notification.StepUp token_step_up = 1;                  // ask user to endorse token
+    io.token.proto.common.notification.BalanceStepUp balance_step_up = 2;         // ask user to approve get-balance
+    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 3; // ask user to approve get-transactions
   }
 }
 
 message TriggerStepUpNotificationResponse {
-  io.token.proto.common.notification.NotifyStatus status = 1;
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,75 +278,72 @@ message TriggerStepUpNotificationResponse {
 //
 
 message LinkAccountsRequest {
+  // authorization, normally from bank web site
   io.token.proto.banklink.BankAuthorization bankAuthorization = 1;
 }
 
 message LinkAccountsResponse {
+  // basic info about newly-linked accounts
   repeated io.token.proto.common.account.Account accounts = 1;
 }
 
 message UnlinkAccountsRequest {
-  repeated string account_ids = 1;
+  repeated string account_ids = 1; // IDs of accounts to unlink
 }
 
 message UnlinkAccountsResponse {
 }
 
 message GetAccountRequest {
-  string account_id = 1;
+  string account_id = 1; // ID of account to get information about
 }
 
 message GetAccountResponse {
-  io.token.proto.common.account.Account account = 1;
+  io.token.proto.common.account.Account account = 1; // basic account information
 }
 
 message GetAccountsRequest {
 }
 
 message GetAccountsResponse {
-  repeated io.token.proto.common.account.Account accounts = 1;
+  repeated io.token.proto.common.account.Account accounts = 1; // basic account information
 }
 
 message GetBalanceRequest {
   string account_id = 1;
-
-  io.token.proto.common.transaction.GetBalancePayload payload = 2;
-  io.token.proto.common.security.Signature signature = 3;
 }
 
 message GetBalanceResponse {
-  io.token.proto.common.money.Money current = 1;
-  io.token.proto.common.money.Money available = 2;
+  io.token.proto.common.transaction.Balance balance = 1;
+  io.token.proto.common.transaction.RequestStatus status = 2;
+}
 
-  io.token.proto.common.transaction.RequestStatus status = 3;
+message GetBalancesRequest {
+  repeated string account_id = 1;
+}
+
+message GetBalancesResponse {
+  repeated GetBalanceResponse response = 1;
 }
 
 message GetTransactionRequest {
   string account_id = 1;
   string transaction_id = 2;
-
-  io.token.proto.common.transaction.GetTransactionPayload payload = 3;
-  io.token.proto.common.security.Signature signature = 4;
 }
 
 message GetTransactionResponse {
   io.token.proto.common.transaction.Transaction transaction = 1;
-
   io.token.proto.common.transaction.RequestStatus status = 2;
 }
 
 message GetTransactionsRequest {
   string account_id = 1;
   Page page = 2; // Optional paging settings.
-
-  io.token.proto.common.transaction.GetTransactionsPayload payload = 3;
-  io.token.proto.common.security.Signature signature = 4;
 }
 
 message GetTransactionsResponse {
-  repeated io.token.proto.common.transaction.Transaction transactions = 1;
+  repeated io.token.proto.common.transaction.Transaction transactions = 1; // transaction details
   string offset = 2; // Optional offset state for the client to roundtrip.
-
   io.token.proto.common.transaction.RequestStatus status = 3;
 }
 
@@ -371,28 +368,28 @@ message SetDefaultAccountResponse {
 //
 
 message CreateBlobRequest {
-  io.token.proto.common.blob.Blob.Payload payload = 1;
+  io.token.proto.common.blob.Blob.Payload payload = 1; // "file" information
 }
 
 message CreateBlobResponse {
-  string blob_id = 1;
+  string blob_id = 1; // ID of new blob
 }
 
 message GetBlobRequest {
-  string blob_id = 1;
+  string blob_id = 1; // ID of blob to fetch
 }
 
 message GetBlobResponse {
-  io.token.proto.common.blob.Blob blob = 1;
+  io.token.proto.common.blob.Blob blob = 1; // "file" information
 }
 
 message GetTokenBlobRequest {
-  string token_id = 1;
-  string blob_id = 2;
+  string token_id = 1; // ID of token to use for "permission"
+  string blob_id = 2;  // ID of blob to fetch
 }
 
 message GetTokenBlobResponse {
-  io.token.proto.common.blob.Blob blob = 1;
+  io.token.proto.common.blob.Blob blob = 1; // "file" information
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,20 +595,27 @@ service GatewayService {
 
   // Create a member. Mints a member ID; newly-created member does not yet
   // have keys, alias, or anything other than an ID.
+  // Used by createMember, https://developer.token.io/sdk/#create-a-member
+  // (SDK's createMember also uses UpdateMember rpc).
   rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
     option (google.api.http) = {
         post: "/members"
     };
   }
 
-  // apply member updates
+  // Apply member updates. Used when adding/removing keys, aliases to/from member.
+  // These updates require a signature.
+  // See how Java SDK's Client.updateMember uses it:
+  //   https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
+  // See how JS SDK's AuthHttpClient._memberUpdate uses it:
+  //   https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
   rpc UpdateMember (UpdateMemberRequest) returns (UpdateMemberResponse) {
     option (google.api.http) = {
         post: "/members/{update.member_id}/updates"
     };
   }
 
-  // get information about a member
+  // Get information about a member
   rpc GetMember (GetMemberRequest) returns (GetMemberResponse) {
     option (google.api.http) = {
         get: "/members/{member_id}"
@@ -620,6 +624,7 @@ service GatewayService {
 
   // set profile information (display name)
   // Ignores picture fields; use SetProfilePicture for those.
+  // https://developer.token.io/sdk/#profile
   rpc SetProfile (SetProfileRequest) returns (SetProfileResponse) {
     option (google.api.http) = {
         put: "/profile"
@@ -627,6 +632,7 @@ service GatewayService {
   }
 
   // get a member's profile (display information)
+  // https://developer.token.io/sdk/#profile
   rpc GetProfile (GetProfileRequest) returns (GetProfileResponse) {
     option (google.api.http) = {
         get: "/members/{member_id}/profile"
@@ -635,6 +641,7 @@ service GatewayService {
 
   // upload an image to use as auth'd member's profile picture
   // Automatically creates smaller sizes; this works best with square images.
+  // https://developer.token.io/sdk/#profile
   rpc SetProfilePicture (SetProfilePictureRequest) returns (SetProfilePictureResponse) {
     option (google.api.http) = {
         put: "/profilepicture"
@@ -642,6 +649,7 @@ service GatewayService {
   }
 
   // Get member's profile picture (can also use GetBlob with a blob ID from profile)
+  // https://developer.token.io/sdk/#profile
   rpc GetProfilePicture (GetProfilePictureRequest) returns (GetProfilePictureResponse) {
     option (google.api.http) = {
         get: "/members/{member_id}/profilepicture/{size}"
@@ -649,6 +657,7 @@ service GatewayService {
   }
 
   // Get ID of member that owns an alias, if any.
+  // https://developer.token.io/sdk/#aliases
   rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
       get: "/resolve-alias?value={alias.value}&type={alias.type}"
@@ -656,12 +665,14 @@ service GatewayService {
   }
 
   // Get the auth'd member's aliases.
+  // https://developer.token.io/sdk/#aliases
   rpc GetAliases (GetAliasesRequest) returns (GetAliasesResponse) {
     option (google.api.http) = {
       get: "/aliases"
     };
   }
 
+  // Use a verification code
   rpc CompleteVerification (CompleteVerificationRequest) returns (CompleteVerificationResponse) {
     option (google.api.http) = {
       get: "/verifications/{verification_id}/complete/{code}"
@@ -689,6 +700,7 @@ service GatewayService {
 
   // Begin member recovery. If the member has a "normal consumer" recovery rule,
   // this sends a recovery message to their email address.
+  // https://developer.token.io/sdk/#recovery
   rpc BeginRecovery (BeginRecoveryRequest) returns (BeginRecoveryResponse) {
     option (google.api.http) = {
       post: "/recovery/verifications"
@@ -696,6 +708,7 @@ service GatewayService {
   }
 
   // Complete member recovery.
+  // https://developer.token.io/sdk/#recovery
   rpc CompleteRecovery (CompleteRecoveryRequest) returns (CompleteRecoveryResponse) {
     option (google.api.http) = {
       post: "/recovery/verifications/{verification_id}/complete/{code}"
@@ -710,6 +723,7 @@ service GatewayService {
   }
 
   // Get member ID of "normal consumer" recovery agent.
+  // https://developer.token.io/sdk/#recovery
   rpc GetDefaultAgent (GetDefaultAgentRequest) returns (GetDefaultAgentResponse) {
     option (google.api.http) = {
       get: "/recovery/defaults/agent"
@@ -721,6 +735,7 @@ service GatewayService {
   //
 
   // Add a shipping address
+  // https://developer.token.io/sdk/#address
   rpc AddAddress (AddAddressRequest) returns (AddAddressResponse) {
     option (google.api.http) = {
         post: "/addresses"
@@ -728,6 +743,7 @@ service GatewayService {
   }
 
   // Get one of the auth'd member's shipping addresses
+  // https://developer.token.io/sdk/#address
   rpc GetAddress (GetAddressRequest) returns (GetAddressResponse) {
     option (google.api.http) = {
         get: "/addresses/{address_id}"
@@ -735,6 +751,7 @@ service GatewayService {
   }
 
   // Get all of the auth'd member's shipping addresses
+  // https://developer.token.io/sdk/#address
   rpc GetAddresses (GetAddressesRequest) returns (GetAddressesResponse) {
     option (google.api.http) = {
         get: "/addresses"
@@ -742,6 +759,7 @@ service GatewayService {
   }
 
   // Remove one of the auth'd member's shipping addresses
+  // https://developer.token.io/sdk/#address
   rpc DeleteAddress (DeleteAddressRequest) returns (DeleteAddressResponse) {
     option (google.api.http) = {
         delete: "/addresses/{address_id}"
@@ -753,54 +771,71 @@ service GatewayService {
   // Devices for notification service
   //
 
+  // subscribe member to notifications
+  // https://developer.token.io/sdk/#notifications
   rpc SubscribeToNotifications (SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse) {
     option (google.api.http) = {
         post: "/subscribers"
     };
   }
 
+  // get member's notification subscriber[s]
+  // https://developer.token.io/sdk/#notifications
   rpc GetSubscribers (GetSubscribersRequest) returns (GetSubscribersResponse) {
     option (google.api.http) = {
         get: "/subscribers"
     };
   }
 
+  // get one of a member's notification subscribers
+  // https://developer.token.io/sdk/#notifications
   rpc GetSubscriber (GetSubscriberRequest) returns (GetSubscriberResponse) {
     option (google.api.http) = {
         get: "/subscribers/{subscriber_id}"
     };
   }
 
+  // unsubscribe one of a member's subscribers from notifications
+  // https://developer.token.io/sdk/#notifications
   rpc UnsubscribeFromNotifications (UnsubscribeFromNotificationsRequest) returns (UnsubscribeFromNotificationsResponse) {
     option (google.api.http) = {
         delete: "/subscribers/{subscriber_id}"
     };
   }
 
+  // send a notification
+  // https://developer.token.io/sdk/#notifications
   rpc Notify (NotifyRequest) returns (NotifyResponse) {
     option (google.api.http) = {
         post: "/notify"
     };
   }
 
+  // get notifications
+  // https://developer.token.io/sdk/#polling-for-notifications
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
         get: "/notifications?offset={page.offset}&limit={page.limit}"
     };
   }
 
+  // get one particular notification
+  // https://developer.token.io/sdk/#polling-for-notifications
   rpc GetNotification (GetNotificationRequest) returns (GetNotificationResponse) {
     option (google.api.http) = {
         get: "/notifications/{notification_id}"
     };
   }
 
+  // send transfer-request notification
+  // https://developer.token.io/sdk/#request-payment
   rpc RequestTransfer (RequestTransferRequest) returns (RequestTransferResponse) {
     option (google.api.http) = {
         post: "/request-transfer"
     };
   }
 
+  // send step-up (approve with higher-privilege key) request notification
   rpc TriggerStepUpNotification (TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/stepup"
@@ -811,49 +846,70 @@ service GatewayService {
   // Bank accounts.
   //
 
+  // associate bank accounts with member
+  // https://developer.token.io/sdk/#link-a-bank-account
   rpc LinkAccounts (LinkAccountsRequest) returns (LinkAccountsResponse) {
     option (google.api.http) = {
         post: "/accounts"
     };
   }
 
+  // un-associate bank accounts with member
+  // https://developer.token.io/sdk/#link-a-bank-account
   rpc UnlinkAccounts (UnlinkAccountsRequest) returns (UnlinkAccountsResponse) {
     option (google.api.http) = {
         delete: "/accounts"
     };
   }
 
+  // get info about one linked account
+  // https://developer.token.io/sdk/#get-accounts
   rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}"
     };
   }
 
+  // get info about linked accounts
+  // https://developer.token.io/sdk/#get-accounts
   rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {
     option (google.api.http) = {
         get: "/accounts"
     };
   }
 
+  // get current and available balance for a linked account
+  // https://developer.token.io/sdk/#get-account-balance
   rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse) {
     option (google.api.http) = {
-        post: "/account/balance"
+        get: "/accounts/{account_id}/balance?nonce={nonce}"
     };
   }
 
+  rpc GetBalances (GetBalancesRequest) returns (GetBalancesResponse) {
+    option (google.api.http) = {
+        get: "/accounts/balance?account_id={account_id}&nonce={nonce}"
+    };
+  }
+
+  // get information about a particular transaction
+  // https://developer.token.io/sdk/#get-transactions
   rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse) {
     option (google.api.http) = {
-        post: "/account/transaction"
+        get: "/accounts/{account_id}/transaction/{transaction_id}?nonce={nonce}"
     };
   }
 
+  // get information about several transactions
+  // https://developer.token.io/sdk/#get-transactions
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
-        post: "/account/transactions"
+        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}&nonce={nonce}"
     };
   }
 
   // Get information about the auth'd member's default account.
+  // https://developer.token.io/sdk/#default-bank-account
   rpc GetDefaultAccount (GetDefaultAccountRequest) returns (GetDefaultAccountResponse) {
     option (google.api.http) = {
       get: "/members/{member_id}/default-account"
@@ -861,6 +917,7 @@ service GatewayService {
   }
 
   // Set one auth'd member's accounts as its default account.
+  // https://developer.token.io/sdk/#default-bank-account
   rpc SetDefaultAccount (SetDefaultAccountRequest) returns (SetDefaultAccountResponse) {
     option (google.api.http) = {
       put: "/members/{member_id}/default-account"
@@ -872,6 +929,7 @@ service GatewayService {
   //
 
   // Create a test account at "iron" test bank.
+  // https://developer.token.io/sdk/#link-a-bank-account
   rpc CreateTestBankAccount (CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse) {
     option (google.api.http) = {
         post: "/test/create-account"
@@ -894,12 +952,12 @@ service GatewayService {
     };
   }
 
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Blobs.
   //
 
   // Create a blob.
+  // https://developer.token.io/sdk/#transfer-token-options
   rpc CreateBlob (CreateBlobRequest) returns (CreateBlobResponse) {
     option (google.api.http) = {
         post: "/blobs"
@@ -908,6 +966,7 @@ service GatewayService {
 
   // Fetch a blob. Works if the authenticated member is the blob's
   // owner or if the blob is public-access.
+  // https://developer.token.io/sdk/#transfer-token-options
   rpc GetBlob (GetBlobRequest) returns (GetBlobResponse) {
     option (google.api.http) = {
         get: "/blobs/{blob_id}"
@@ -916,6 +975,7 @@ service GatewayService {
 
   // Fetch a blob using a Token's authority. Works if Blob is attached to token
   // and authenticated member is the Token's "from" or "to".
+  // https://developer.token.io/sdk/#transfer-token-options
   rpc GetTokenBlob (GetTokenBlobRequest) returns (GetTokenBlobResponse) {
     option (google.api.http) = {
         get: "/tokens/{token_id}/blobs/{blob_id}"
@@ -927,6 +987,7 @@ service GatewayService {
   //
 
   // Create a Transfer Token.
+  // https://developer.token.io/sdk/#create-transfer-token
   rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
     option (google.api.http) = {
         post: "/tokens?type=transfer"
@@ -934,6 +995,7 @@ service GatewayService {
   }
 
   // Create an Access Token.
+  // https://developer.token.io/sdk/#create-access-token
   rpc CreateAccessToken (CreateAccessTokenRequest) returns (CreateAccessTokenResponse) {
     option (google.api.http) = {
         post: "/tokens?type=access"
@@ -941,6 +1003,7 @@ service GatewayService {
   }
 
   // Get information about one token.
+  // https://developer.token.io/sdk/#redeem-transfer-token
   rpc GetToken (GetTokenRequest) returns (GetTokenResponse) {
     option (google.api.http) = {
         get: "/tokens/{token_id}"
@@ -949,6 +1012,8 @@ service GatewayService {
 
   // Gets list of tokens the member has given/received.
   // Used by getTransferTokens, getAccessTokens.
+  // https://developer.token.io/sdk/#get-tokens
+  // https://developer.token.io/sdk/#replace-access-token
   rpc GetTokens (GetTokensRequest) returns (GetTokensResponse) {
     option (google.api.http) = {
         get: "/tokens?type={type}&offset={page.offset}&limit={page.limit}"

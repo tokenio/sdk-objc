@@ -66,19 +66,25 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
 };
 
 /**
- * The payload of the bank authorization request. Used for serialization only.
- * The value of the payload is encrypted as a serialized JSON object.
+ * The payload of the bank authorization request.
+ * The value of the payload is encrypted as a serialized JSON object
+ * in a BankAuthorization.
+ * as described at https://developer.token.io/bank-integration/
  **/
 @interface PlaintextBankAuthorization : GPBMessage
 
+/** Token member id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
+/** e.g., "Checking account with # ending 5678" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountName;
 
+/** Account info by some method, e.g., SEPA */
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
 /** Test to see if @c account has been set. */
 @property(nonatomic, readwrite) BOOL hasAccount;
 
+/** Expiration time */
 @property(nonatomic, readwrite) int64_t expirationMs;
 
 @end
@@ -109,10 +115,15 @@ typedef GPB_ENUM(AccountFeatures_FieldNumber) {
   AccountFeatures_FieldNumber_RequiresExternalAuth = 3,
 };
 
+/**
+ * Not all accounts support all Token features.
+ **/
 @interface AccountFeatures : GPBMessage
 
+/** can pay from account */
 @property(nonatomic, readwrite) BOOL supportsPayment;
 
+/** can get info, e.g., get balance */
 @property(nonatomic, readwrite) BOOL supportsInformation;
 
 @property(nonatomic, readwrite) BOOL requiresExternalAuth;
@@ -184,8 +195,9 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 };
 
 /**
- * Account information as seen by the bank. This is what the end user links with
+ * Account information. This is what the end user links with
  * the bank and what Token uses when it talks to the bank.
+ * It's also part of the source or destination for a transfer.
  **/
 @interface BankAccount : GPBMessage
 
@@ -228,7 +240,8 @@ typedef GPB_ENUM(BankAccount_Token_FieldNumber) {
 };
 
 /**
- * Token account Destination
+ * Token account Destination. Useful as source or destination
+ * for a transfer; doesn't make sense for a bank to "link" this.
  **/
 @interface BankAccount_Token : GPBMessage
 
@@ -282,6 +295,7 @@ typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
  **/
 @interface BankAccount_Swift : GPBMessage
 
+/** BIC code AAAABBCCDD */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
@@ -296,12 +310,14 @@ typedef GPB_ENUM(BankAccount_Sepa_FieldNumber) {
 };
 
 /**
- * SEPA transfer. BIC is optional, except for non EEA countries
+ * SEPA transfer.
  **/
 @interface BankAccount_Sepa : GPBMessage
 
+/** International Bank Account Number */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
 
+/** Bic code. Optional, except for non EEA countries */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
 @end
@@ -318,6 +334,7 @@ typedef GPB_ENUM(BankAccount_Ach_FieldNumber) {
  **/
 @interface BankAccount_Ach : GPBMessage
 
+/** Routing number */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *account;
