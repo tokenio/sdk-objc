@@ -210,13 +210,33 @@
             [accountIds addObject:accounts[i].id];
         }
     }
+
     if (accountIds.count < 1) {
+        // We have access to no accounts; return zero balance
         return [Money new];
     }
-    Money *balance0 = [granteeSync getBalance:accountIds[0]
-                                      withKey:Key_Level_Standard].available;
-    [granteeSync clearAccessToken];
-    return balance0;
+    
+    for (int i = 0; i < accountIds.count; i++) {
+        @try {
+            Money *balance = [granteeSync getBalance:accountIds[i]
+                                             withKey:Key_Level_Standard].available;
+            [granteeSync clearAccessToken];
+            return balance;
+        }
+        @catch (NSError *error) {
+            // If access grantor un-linked an account,
+            // getting that account's balance fails.
+            if (error.code == 9) {
+                // skip this account
+                continue;
+            }
+            // ...but if we hit some other type of error, it's really an error
+            @throw error;
+        }
+    }
+    
+    // We have access to no accounts; return zero balance
+    return [Money new];
 }
 
 /**
@@ -295,6 +315,25 @@
     Money * balance2 = [self carefullyUse:grantee
                                   tokenId:token1.id_p];
     NSAssert([balance2.value floatValue] > 10.0, @"I should see a legitimate balance");
+    
+    __block int finishedUnlink = 0;
+    [grantor unlinkAccounts:@[grantorAccount.id]
+                  onSuccess:^() {
+                      finishedUnlink = 1;
+                  } onError:^(NSError *e) {
+                      // something went wrong
+                      @throw [NSException exceptionWithName:@"UnlinkAccountException"
+                                                     reason:[e localizedFailureReason]
+                                                   userInfo:[e userInfo]];
+                  }];
+    
+    [self runUntilTrue:^ {
+        return finishedUnlink;
+    }];
+    
+    Money * balance3 = [self carefullyUse:grantee
+                                  tokenId:token1.id_p];
+    NSAssert([balance3.value floatValue] == 0.0, @"I should see 0 balance (no accessed accounts)");
 }
 
 @end
