@@ -852,7 +852,7 @@
                            ^(GetBalancesResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   NSDictionary<NSString *,TKBalance *> *result = [NSDictionary dictionary];
+                                   NSMutableDictionary<NSString *,TKBalance *> *result = [NSMutableDictionary dictionary];
                                    
                                    for (GetBalanceResponse *balanceResponse in response.responseArray) {
                                        if (balanceResponse.status == RequestStatus_SuccessfulRequest) {

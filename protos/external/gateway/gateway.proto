@@ -882,13 +882,13 @@ service GatewayService {
   // https://developer.token.io/sdk/#get-account-balance
   rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/balance?nonce={nonce}"
+        get: "/accounts/{account_id}/balance"
     };
   }
 
   rpc GetBalances (GetBalancesRequest) returns (GetBalancesResponse) {
     option (google.api.http) = {
-        get: "/accounts/balance?account_id={account_id}&nonce={nonce}"
+        get: "/accounts/balance?account_id={account_id}"
     };
   }
 
@@ -896,7 +896,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#get-transactions
   rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transaction/{transaction_id}?nonce={nonce}"
+        get: "/accounts/{account_id}/transaction/{transaction_id}"
     };
   }
 
@@ -904,7 +904,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#get-transactions
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}&nonce={nonce}"
+        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}"
     };
   }
 
