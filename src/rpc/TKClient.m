@@ -852,15 +852,14 @@
                            ^(GetBalancesResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   NSMutableArray<TKBalance *> * result =
-                                   [NSMutableArray arrayWithCapacity:response.responseArray.count];
+                                   NSDictionary<NSString *,TKBalance *> *result = [NSDictionary dictionary];
                                    
                                    for (GetBalanceResponse *balanceResponse in response.responseArray) {
                                        if (balanceResponse.status == RequestStatus_SuccessfulRequest) {
                                            TKBalance *balance = [TKBalance alloc];
                                            balance.available = balanceResponse.balance.available;
                                            balance.current = balanceResponse.balance.current;
-                                           [result addObject:balance];
+                                           [result setValue:balance forKey:balanceResponse.balance.accountId];
                                        }
                                        else {
                                            onError([NSError

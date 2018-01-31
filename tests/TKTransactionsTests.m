@@ -54,10 +54,10 @@
         XCTAssert(accounts.count == 1);
         TKAccountSync *secondAccount = accounts[0];
         NSArray<NSString *> *accountIds = @[payerAccount.id, secondAccount.id];
-        NSArray<TKBalance *> *balances = [payer getBalances:accountIds withKey:Key_Level_Low];
-        XCTAssert(balances.count == 2);
+        NSDictionary<NSString *,TKBalance *> *balances = [payer getBalances:accountIds withKey:Key_Level_Low];
+        XCTAssert(balances.allKeys.count == 2);
         
-        TKBalance *balance = balances[0];
+        TKBalance *balance = balances[payerAccount.id];
         Money *currentBalance = balance.current;
         XCTAssert([currentBalance.value intValue] > 0);
         XCTAssertEqualObjects(@"USD", currentBalance.currency);

@@ -58,14 +58,17 @@
 }
     
 + (instancetype)errorFromRequestStatus:(RequestStatus)status
-                              userInfo:(NSDictionary * _Nonnull)info {
+                              userInfo:(NSDictionary *)info {
     NSString *description = [NSString stringWithFormat:@"Failed with request status %d", status];
-    NSMutableDictionary *userinfo = [NSMutableDictionary dictionaryWithDictionary:info];
-    [userinfo setObject:description forKey:NSLocalizedDescriptionKey];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (info != nil) {
+        [userInfo setDictionary:info];
+    }
+    [userInfo setObject:description forKey:NSLocalizedDescriptionKey];
     
     return [NSError errorWithDomain:kTokenRequestErrorDomain
                                code:status
-                           userInfo:userinfo];
+                           userInfo:userInfo];
 }
 
 @end

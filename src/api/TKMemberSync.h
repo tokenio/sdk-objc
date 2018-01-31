@@ -263,8 +263,8 @@
  * @param keyLevel specifies the key to use
  * @return account balances
  */
-- (NSArray<TKBalance *> *)getBalances:(NSArray<NSString *> *)accountIds
-                              withKey:(Key_Level)keyLevel;
+- (NSDictionary<NSString *,TKBalance *> *)getBalances:(NSArray<NSString *> *)accountIds
+                                              withKey:(Key_Level)keyLevel;
 
 /**
  * Looks up an existing token transfer.

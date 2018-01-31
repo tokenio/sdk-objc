@@ -63,7 +63,7 @@ typedef void (^ _Nonnull OnSuccessWithAttachment)(Attachment * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMoney)(Money * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKBalance)(TKBalance * _Nonnull);
-typedef void (^ _Nonnull OnSuccessWithTKBalances)(NSArray<TKBalance *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTKBalances)(NSDictionary<NSString *,TKBalance *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithTransaction)(Transaction * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransactions)(PagedArray<Transaction *> * _Nonnull);
