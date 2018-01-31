@@ -894,7 +894,13 @@
                            ^(GetTransactionResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.transaction);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       onSuccess(response.transaction);
+                                   }
+                                   else {
+                                       onError([NSError errorFromRequestStatus:response.status]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }
@@ -925,10 +931,16 @@
                            ^(GetTransactionsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   PagedArray<Transaction *> *paged = [[PagedArray<Transaction *> alloc]
-                                                                 initWith: response.transactionsArray
-                                                                   offset: response.offset];
-                                   onSuccess(paged);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       PagedArray<Transaction *> *paged = [[PagedArray<Transaction *> alloc]
+                                                                           initWith: response.transactionsArray
+                                                                           offset: response.offset];
+                                       onSuccess(paged);
+                                   }
+                                   else {
+                                       onError([NSError errorFromRequestStatus:response.status]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }

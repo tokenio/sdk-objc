@@ -566,7 +566,7 @@
              [client
               getTransaction:transactionId
               forAccount:accountId
-              withKey:keyLevel
+              withKey:Key_Level_Standard
               onSuccess:onSuccess
               onError:onError];
          }
@@ -597,7 +597,7 @@
              getTransactionsOffset:offset
              limit:limit
              forAccount:accountId
-             withKey:keyLevel
+             withKey:Key_Level_Standard
              onSuccess:onSuccess
              onError:onError];
         }
