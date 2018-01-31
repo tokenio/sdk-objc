@@ -45,6 +45,8 @@ typedef GPB_ENUM(Transfer_Method) {
    **/
   Transfer_Method_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Transfer_Method_Default = 0,
+
+  /** Use Token's Currency Ledger */
   Transfer_Method_Instant = 1,
 };
 

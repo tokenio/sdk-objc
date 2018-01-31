@@ -257,6 +257,16 @@
                   withKey:(Key_Level)keyLevel;
 
 /**
+ * Looks up account balances with a specific key level.
+ *
+ * @param accountIds account ids to get balance
+ * @param keyLevel specifies the key to use
+ * @return account balances
+ */
+- (NSArray<TKBalance *> *)getBalances:(NSArray<NSString *> *)accountIds
+                              withKey:(Key_Level)keyLevel;
+
+/**
  * Looks up an existing token transfer.
  *
  * @param transferId ID of the transfer record

@@ -121,6 +121,7 @@ typedef GPB_ENUM(PayerTransferProcessed_FieldNumber) {
  **/
 @interface PayerTransferProcessed : GPBMessage
 
+/** transfer ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -136,6 +137,7 @@ typedef GPB_ENUM(PayeeTransferProcessed_FieldNumber) {
  **/
 @interface PayeeTransferProcessed : GPBMessage
 
+/** transfer ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -151,6 +153,7 @@ typedef GPB_ENUM(PayerTransferFailed_FieldNumber) {
  **/
 @interface PayerTransferFailed : GPBMessage
 
+/** transfer ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -166,6 +169,7 @@ typedef GPB_ENUM(TransferProcessed_FieldNumber) {
  **/
 @interface TransferProcessed : GPBMessage
 
+/** transfer ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -181,6 +185,7 @@ typedef GPB_ENUM(TransferFailed_FieldNumber) {
  **/
 @interface TransferFailed : GPBMessage
 
+/** transfer ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transferId;
 
 @end
@@ -210,9 +215,12 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
 
 /**
  * A notification to step up / endorse a token.
+ * E.g., perhaps user tried to endorse in browser with only LOW-privilege
+ * key available but needs a HIGH-privilege key signature.
  **/
 @interface StepUp : GPBMessage
 
+/** ID of Token to endorse */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
@@ -228,6 +236,7 @@ typedef GPB_ENUM(BalanceStepUp_FieldNumber) {
  **/
 @interface BalanceStepUp : GPBMessage
 
+/** Account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
 @end
@@ -244,8 +253,10 @@ typedef GPB_ENUM(TransactionStepUp_FieldNumber) {
  **/
 @interface TransactionStepUp : GPBMessage
 
+/** Account ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
 
+/** Transaction ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
 @end
@@ -264,12 +275,15 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
  **/
 @interface AddKey : GPBMessage
 
+/** Human-readable name, e.g., "Chrome Browser" or "My App" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** Key */
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
 /** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
 
+/** Expiration time */
 @property(nonatomic, readwrite) int64_t expiresMs;
 
 @end
@@ -307,6 +321,7 @@ typedef GPB_ENUM(PaymentRequest_FieldNumber) {
  **/
 @interface PaymentRequest : GPBMessage
 
+/** requested payment */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
@@ -324,6 +339,7 @@ typedef GPB_ENUM(TokenCancelled_FieldNumber) {
  **/
 @interface TokenCancelled : GPBMessage
 
+/** Token ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end

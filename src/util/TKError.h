@@ -62,6 +62,6 @@ typedef enum {
 + (instancetype)errorFromExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details;
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
-+ (instancetype)errorFromRequestStatus:(RequestStatus)status;
++ (instancetype)errorFromRequestStatus:(RequestStatus)status userInfo:(NSDictionary * _Nonnull)info;
 
 @end

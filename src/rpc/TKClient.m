@@ -804,21 +804,7 @@
          onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     GetBalanceRequest *request = [GetBalanceRequest message];
-    request.payload.accountId = accountId;
-    request.payload.nonce = [TKUtil nonce];
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetBalance",
-                                                            @"Approve to get balances")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
+    request.accountId = accountId;
     
     RpcLogStart(request);
     
@@ -830,12 +816,14 @@
                                    RpcLogCompleted(response);
                                    if (response.status == RequestStatus_SuccessfulRequest) {
                                        TKBalance *balance = [TKBalance alloc];
-                                       balance.available = response.available;
-                                       balance.current = response.current;
+                                       balance.available = response.balance.available;
+                                       balance.current = response.balance.current;
                                        onSuccess(balance);
                                    }
                                    else {
-                                       onError([NSError errorFromRequestStatus:response.status]);
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": response.balance.accountId}]);
                                    }
                                    
                                } else {
@@ -845,31 +833,62 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
+- (void)getBalances:(NSArray<NSString *> *)accountIds
+            withKey:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithTKBalances)onSuccess
+            onError:(OnError)onError {
+    GetBalancesRequest *request = [GetBalancesRequest message];
+    request.accountIdArray = [NSMutableArray arrayWithArray:accountIds];
+    
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBalancesWithRequest:request
+                           handler:
+                           ^(GetBalancesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   NSMutableArray<TKBalance *> * result =
+                                   [NSMutableArray arrayWithCapacity:response.responseArray.count];
+                                   
+                                   for (GetBalanceResponse *balanceResponse in response.responseArray) {
+                                       if (balanceResponse.status == RequestStatus_SuccessfulRequest) {
+                                           TKBalance *balance = [TKBalance alloc];
+                                           balance.available = balanceResponse.balance.available;
+                                           balance.current = balanceResponse.balance.current;
+                                           [result addObject:balance];
+                                       }
+                                       else {
+                                           onError([NSError
+                                                    errorFromRequestStatus:balanceResponse.status
+                                                    userInfo:@{@"AccountId": balanceResponse.balance.accountId}]);
+                                           return;
+                                       }
+                                   }
+                                   
+                                   onSuccess(result);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+            usingKey:keyLevel
+             onError:onError];
+}
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
                withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
     GetTransactionRequest *request = [GetTransactionRequest message];
-    request.payload.accountId = accountId;
-    request.payload.transactionId = transactionId;
-    request.payload.nonce = [TKUtil nonce];
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
-                                                            @"Approve to get trasactions")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
+    request.accountId = accountId;
+    request.transactionId = transactionId;
     
     RpcLogStart(request);
     
@@ -879,7 +898,16 @@
                            ^(GetTransactionResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.transaction);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       onSuccess(response.transaction);
+                                   }
+                                   else {
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": accountId,
+                                                           @"TransactionId": response.transaction.id_p}]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }
@@ -887,6 +915,7 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
@@ -897,23 +926,9 @@
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     GetTransactionsRequest *request = [GetTransactionsRequest message];
-    request.payload.accountId = accountId;
-    request.payload.nonce = [TKUtil nonce];
+    request.accountId = accountId;
     request.page.offset = offset;
     request.page.limit = limit;
-    
-    TKSignature *signature = [crypto sign:request.payload
-                                 usingKey:keyLevel
-                                   reason:TKLocalizedString(@"Signature_Reason_GetTransaction",
-                                                            @"Approve to get trasactions")
-                                  onError:onError];
-    if (!signature) {
-        return;
-    }
-    
-    request.signature.memberId = memberId;
-    request.signature.keyId = signature.key.id_p;
-    request.signature.signature = signature.value;
     
     RpcLogStart(request);
     
@@ -923,10 +938,18 @@
                            ^(GetTransactionsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   PagedArray<Transaction *> *paged = [[PagedArray<Transaction *> alloc]
-                                                                 initWith: response.transactionsArray
-                                                                   offset: response.offset];
-                                   onSuccess(paged);
+                                   if (response.status == RequestStatus_SuccessfulRequest) {
+                                       PagedArray<Transaction *> *paged = [[PagedArray<Transaction *> alloc]
+                                                                           initWith: response.transactionsArray
+                                                                           offset: response.offset];
+                                       onSuccess(paged);
+                                   }
+                                   else {
+                                       onError([NSError
+                                                errorFromRequestStatus:response.status
+                                                userInfo:@{@"AccountId": accountId}]);
+                                   }
+                                   
                                } else {
                                    [errorHandler handle:onError withError:error];
                                }
@@ -934,6 +957,7 @@
     
     [self _startCall:call
          withRequest:request
+            usingKey:keyLevel
              onError:onError];
 }
 
@@ -1428,12 +1452,23 @@
 - (void)_startCall:(GRPCProtoCall *)call
        withRequest:(GPBMessage *)request
            onError:(OnError)onError {
+    [self _startCall:call
+         withRequest:request
+            usingKey:Key_Level_Low
+             onError:onError];
+}
+
+- (void)_startCall:(GRPCProtoCall *)call
+       withRequest:(GPBMessage *)request
+          usingKey:(Key_Level)keyLevel
+           onError:(OnError)onError {
     [rpc execute:call
          request:request
         memberId:memberId
           crypto:crypto
+        usingKey:keyLevel
       onBehalfOf:onBehalfOfMemberId
-     onError:onError];
+         onError:onError];
 }
 
 @end

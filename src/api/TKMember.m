@@ -566,7 +566,7 @@
              [client
               getTransaction:transactionId
               forAccount:accountId
-              withKey:keyLevel
+              withKey:Key_Level_Standard
               onSuccess:onSuccess
               onError:onError];
          }
@@ -597,7 +597,7 @@
              getTransactionsOffset:offset
              limit:limit
              forAccount:accountId
-             withKey:keyLevel
+             withKey:Key_Level_Standard
              onSuccess:onSuccess
              onError:onError];
         }
@@ -654,6 +654,31 @@
              // Request again with Key_Level_Standard if more signatures are needed
              [client
               getBalance:accountId
+              withKey:Key_Level_Standard
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
+}
+
+- (void)getBalances:(NSArray<NSString *> *)accountIds
+            withKey:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithTKBalances)onSuccess
+            onError:(OnError)onError {
+    [client
+     getBalances:accountIds
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [client
+              getBalances:accountIds
               withKey:Key_Level_Standard
               onSuccess:onSuccess
               onError:onError];

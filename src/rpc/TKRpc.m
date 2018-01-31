@@ -47,6 +47,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
         request:(GPBMessage *)request
        memberId:(NSString *)memberId
          crypto:(TKCrypto *)crypto
+       usingKey:(Key_Level)keyLevel
      onBehalfOf:(NSString *)onBehalfOfMemberId
         onError:(OnError)onError { 
     unsigned long long now = (unsigned long long)([[NSDate date] timeIntervalSince1970] * 1000);
@@ -56,7 +57,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     payload.createdAtMs = now;
     TKSignature *signature = [crypto
             sign:payload
-        usingKey:Key_Level_Low
+        usingKey:keyLevel
           reason:TKLocalizedString(
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")

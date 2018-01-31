@@ -16,6 +16,7 @@
  #import "Transaction.pbobjc.h"
  #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
+ #import "Security.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -322,18 +323,20 @@ void SetTransaction_Status_RawValue(Transaction *message, int32_t value) {
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
-#pragma mark - GetBalancePayload
+#pragma mark - Balance
 
-@implementation GetBalancePayload
+@implementation Balance
 
 @dynamic accountId;
-@dynamic nonce;
+@dynamic hasCurrent, current;
+@dynamic hasAvailable, available;
 
-typedef struct GetBalancePayload__storage_ {
+typedef struct Balance__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
-  NSString *nonce;
-} GetBalancePayload__storage_;
+  Money *current;
+  Money *available;
+} Balance__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -344,148 +347,38 @@ typedef struct GetBalancePayload__storage_ {
       {
         .name = "accountId",
         .dataTypeSpecific.className = NULL,
-        .number = GetBalancePayload_FieldNumber_AccountId,
+        .number = Balance_FieldNumber_AccountId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetBalancePayload__storage_, accountId),
+        .offset = (uint32_t)offsetof(Balance__storage_, accountId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "nonce",
-        .dataTypeSpecific.className = NULL,
-        .number = GetBalancePayload_FieldNumber_Nonce,
+        .name = "current",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = Balance_FieldNumber_Current,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetBalancePayload__storage_, nonce),
+        .offset = (uint32_t)offsetof(Balance__storage_, current),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetBalancePayload class]
-                                     rootClass:[TransactionRoot class]
-                                          file:TransactionRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetBalancePayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - GetTransactionPayload
-
-@implementation GetTransactionPayload
-
-@dynamic accountId;
-@dynamic transactionId;
-@dynamic nonce;
-
-typedef struct GetTransactionPayload__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *accountId;
-  NSString *transactionId;
-  NSString *nonce;
-} GetTransactionPayload__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "accountId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionPayload_FieldNumber_AccountId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, accountId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "transactionId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionPayload_FieldNumber_TransactionId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, transactionId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "nonce",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionPayload_FieldNumber_Nonce,
+        .name = "available",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = Balance_FieldNumber_Available,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(GetTransactionPayload__storage_, nonce),
+        .offset = (uint32_t)offsetof(Balance__storage_, available),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetTransactionPayload class]
+        [GPBDescriptor allocDescriptorForClass:[Balance class]
                                      rootClass:[TransactionRoot class]
                                           file:TransactionRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetTransactionPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - GetTransactionsPayload
-
-@implementation GetTransactionsPayload
-
-@dynamic accountId;
-@dynamic nonce;
-
-typedef struct GetTransactionsPayload__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *accountId;
-  NSString *nonce;
-} GetTransactionsPayload__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "accountId",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionsPayload_FieldNumber_AccountId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetTransactionsPayload__storage_, accountId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "nonce",
-        .dataTypeSpecific.className = NULL,
-        .number = GetTransactionsPayload_FieldNumber_Nonce,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetTransactionsPayload__storage_, nonce),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetTransactionsPayload class]
-                                     rootClass:[TransactionRoot class]
-                                          file:TransactionRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetTransactionsPayload__storage_)
+                                   storageSize:sizeof(Balance__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

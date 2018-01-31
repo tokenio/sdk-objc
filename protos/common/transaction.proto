@@ -5,6 +5,7 @@ option java_outer_classname = "TransactionProtos";
 
 import "member.proto";
 import "money.proto";
+import "security.proto";
 
 enum TransactionType {
   INVALID_TYPE = 0;
@@ -40,20 +41,10 @@ message Transaction {
   int64 created_at_ms = 8;                      // Creation time
 }
 
-message GetBalancePayload {
-  string account_id = 1; // account ID
-  string nonce = 2;      // random string to de-duplicate requests
-}
-
-message GetTransactionPayload {
-  string account_id = 1;     // account ID
-  string transaction_id = 2; // transaction ID
-  string nonce = 3;          // random string to de-duplicate requests
-}
-
-message GetTransactionsPayload {
-  string account_id = 1; // account ID
-  string nonce = 2;      // random string to de-duplicate requests
+message Balance {
+  string account_id = 1;
+  io.token.proto.common.money.Money current = 2;
+  io.token.proto.common.money.Money available = 3;
 }
 
 enum RequestStatus {

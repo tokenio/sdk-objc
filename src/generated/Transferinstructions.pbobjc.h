@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum PurposeOfPayment
 
+/** A bank might require a Purpose of Payment for some transfers. */
 typedef GPB_ENUM(PurposeOfPayment) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -44,7 +45,6 @@ typedef GPB_ENUM(PurposeOfPayment) {
    * of the field.
    **/
   PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  /** A bank might require a Purpose of Payment for some transfers. */
   PurposeOfPayment_Invalid = 0,
   PurposeOfPayment_Other = 1,
   PurposeOfPayment_PersonalExpenses = 2,
@@ -65,6 +65,7 @@ BOOL PurposeOfPayment_IsValidValue(int32_t value);
 
 #pragma mark - Enum PaymentContext
 
+/** A bank might require a context code for some transfers. */
 typedef GPB_ENUM(PaymentContext) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -72,7 +73,6 @@ typedef GPB_ENUM(PaymentContext) {
    * of the field.
    **/
   PaymentContext_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  /** A bank might require a context code for some transfers. */
   PaymentContext_InvalidContext = 0,
   PaymentContext_OtherContext = 1,
   PaymentContext_BillPayment = 2,
@@ -167,7 +167,7 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 
-/** Transfer desitination. */
+/** Transfer destination. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;

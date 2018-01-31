@@ -57,6 +57,8 @@ typedef GPB_ENUM(Alias_Type) {
 
   /** deprecated */
   Alias_Type_Username = 5,
+
+  /** for banks only */
   Alias_Type_Bank = 6,
 };
 

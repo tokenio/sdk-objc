@@ -322,6 +322,18 @@
            onError:(OnError)onError;
 
 /**
+ * Looks up account balances with a specific key level.
+ *
+ * @param accountIds account ids to get balance
+ * @param keyLevel specifies the key to use
+ * @param onSuccess invoked on success with account balances
+ */
+- (void)getBalances:(NSArray<NSString *> *)accountIds
+            withKey:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithTKBalances)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Looks up an existing token transfer.
  *
  * @param transferId ID of the transfer record
