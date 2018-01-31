@@ -835,6 +835,48 @@
              onError:onError];
 }
 
+- (void)getBalances:(NSArray<NSString *> *)accountIds
+            withKey:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithTKBalances)onSuccess
+            onError:(OnError)onError {
+    GetBalancesRequest *request = [GetBalancesRequest message];
+    request.accountIdArray = [NSMutableArray arrayWithArray:accountIds];
+    
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBalancesWithRequest:request
+                           handler:
+                           ^(GetBalancesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   NSMutableArray<TKBalance *> * result =
+                                   [NSMutableArray arrayWithCapacity:response.responseArray.count];
+                                   
+                                   for (GetBalanceResponse *balanceResponse in response.responseArray) {
+                                       if (balanceResponse.status == RequestStatus_SuccessfulRequest) {
+                                           TKBalance *balance = [TKBalance alloc];
+                                           balance.available = balanceResponse.balance.available;
+                                           balance.current = balanceResponse.balance.current;
+                                           [result addObject:balance];
+                                       }
+                                       else {
+                                           onError([NSError errorFromRequestStatus:balanceResponse.status]);
+                                           return;
+                                       }
+                                   }
+                                   
+                                   onSuccess(result);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+            usingKey:keyLevel
+             onError:onError];
+}
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
                withKey:(Key_Level)keyLevel

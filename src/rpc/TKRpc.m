@@ -57,7 +57,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     payload.createdAtMs = now;
     TKSignature *signature = [crypto
             sign:payload
-        usingKey:Key_Level_Low
+        usingKey:keyLevel
           reason:TKLocalizedString(
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")

@@ -546,6 +546,17 @@
     }];
 }
 
+- (NSArray<TKBalance *> *)getBalances:(NSArray<NSString *> *)accountIds
+                              withKey:(Key_Level)keyLevel {
+    TKRpcSyncCall<NSArray<TKBalance *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBalances:accountIds
+                        withKey:keyLevel
+                      onSuccess:call.onSuccess
+                        onError:call.onError];
+    }];
+}
+
 - (NSArray<Bank *> *)getBanks {
     TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
