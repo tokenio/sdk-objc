@@ -228,16 +228,18 @@ typedef GPB_ENUM(StepUp_FieldNumber) {
 #pragma mark - BalanceStepUp
 
 typedef GPB_ENUM(BalanceStepUp_FieldNumber) {
-  BalanceStepUp_FieldNumber_AccountId = 1,
+  BalanceStepUp_FieldNumber_AccountIdArray = 1,
 };
 
 /**
- * A notification to step up a balance request
+ * A notification to step up a get balance(s) request
  **/
 @interface BalanceStepUp : GPBMessage
 
-/** Account ID */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+/** Account IDs */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountIdArray;
+/** The number of items in @c accountIdArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountIdArray_Count;
 
 @end
 

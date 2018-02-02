@@ -1374,11 +1374,11 @@
              onError:onError];
 }
 
-- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+- (void)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds
                                onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                                  onError:(OnError)onError {
     TriggerStepUpNotificationRequest *request = [TriggerStepUpNotificationRequest message];
-    request.balanceStepUp.accountId = accountId;
+    request.balanceStepUp.accountIdArray = [NSMutableArray arrayWithArray:accountIds];
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

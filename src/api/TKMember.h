@@ -737,10 +737,10 @@
  * the user to renew the access. We expect this to happen if user tried to get balance with a
  * low privilege key on another device.
  *
- * @param accountId id of the account to get balance
+ * @param accountIds ids of the accounts to get balances
  * @param onSuccess invoked on success with notify status
  */
-- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+- (void)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds
                                onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                                  onError:(OnError)onError;
     

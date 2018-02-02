@@ -44,9 +44,9 @@ message StepUp {
   string token_id = 1; // ID of Token to endorse
 }
 
-// A notification to step up a balance request
+// A notification to step up a get balance(s) request
 message BalanceStepUp {
-  string account_id = 1; // Account ID
+  repeated string account_id = 1; // Account IDs
 }
 
 // A notification to step up a transaction request
