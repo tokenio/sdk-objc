@@ -593,10 +593,10 @@
  * the user to renew the access. We expect this to happen if user tried to get balance with a
  * low privilege key on another device.
  *
- * @param accountId id of the account to get balance
+ * @param accountIds ids of the accounts to get balances
  * @return notify status
  */
-- (NotifyStatus)triggerBalanceStepUpNotification:(NSString *)accountId;
+- (NotifyStatus)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds;
     
 /**
  * If more signatures is needed after getting transaction, calls this method to notify

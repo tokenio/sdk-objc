@@ -766,10 +766,10 @@
 }
 
 
-- (void)triggerBalanceStepUpNotification:(NSString *)accountId
+- (void)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds
                                    onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                                  onError:(OnError)onError {
-    [client triggerBalanceStepUpNotification:accountId
+    [client triggerBalanceStepUpNotification:accountIds
                                    onSuccess:onSuccess
                                      onError:onError];
 }

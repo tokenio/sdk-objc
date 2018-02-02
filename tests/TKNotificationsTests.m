@@ -280,7 +280,7 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         
-        NotifyStatus status = [payer triggerBalanceStepUpNotification:payerAccount.id];
+        NotifyStatus status = [payer triggerBalanceStepUpNotification:@[payerAccount.id]];
         XCTAssertEqual(status, NotifyStatus_Accepted);
         
         [self waitUntil:^{
@@ -297,7 +297,7 @@ void check(NSString *message, BOOL condition) {
                                             deserializeMessageOfClass:[BalanceStepUp class]
                                             fromJSON:notification.content.payload];
             check(@"BalanceStepUp AccountID",
-                  [balanceStepUp.accountId isEqualToString: payerAccount.id]);
+                  [balanceStepUp.accountIdArray[0] isEqualToString: payerAccount.id]);
         }];
         
     }];

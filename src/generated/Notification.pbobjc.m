@@ -387,11 +387,11 @@ typedef struct StepUp__storage_ {
 
 @implementation BalanceStepUp
 
-@dynamic accountId;
+@dynamic accountIdArray, accountIdArray_Count;
 
 typedef struct BalanceStepUp__storage_ {
   uint32_t _has_storage_[1];
-  NSString *accountId;
+  NSMutableArray *accountIdArray;
 } BalanceStepUp__storage_;
 
 // This method is threadsafe because it is initially called
@@ -401,12 +401,12 @@ typedef struct BalanceStepUp__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "accountId",
+        .name = "accountIdArray",
         .dataTypeSpecific.className = NULL,
-        .number = BalanceStepUp_FieldNumber_AccountId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(BalanceStepUp__storage_, accountId),
-        .flags = GPBFieldOptional,
+        .number = BalanceStepUp_FieldNumber_AccountIdArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BalanceStepUp__storage_, accountIdArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },
     };

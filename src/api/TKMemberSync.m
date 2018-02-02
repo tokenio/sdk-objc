@@ -652,11 +652,11 @@
     return [statusNumber intValue];
 }
     
-- (NotifyStatus)triggerBalanceStepUpNotification:(NSString *)accountId {
+- (NotifyStatus)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     
     NSNumber *statusNumber = [call run:^{
-        [self.async triggerBalanceStepUpNotification:accountId
+        [self.async triggerBalanceStepUpNotification:accountIds
                                            onSuccess:^(NotifyStatus status){
                                                call.onSuccess([NSNumber numberWithInt:status]);
                                            }
