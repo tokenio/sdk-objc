@@ -1,0 +1,418 @@
+syntax = "proto3";
+package io.token.proto.cma9;
+
+import "google/api/annotations.proto";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Common data structures (used in both Account Requests and Payments)
+//
+message DeliveryAddress {
+  repeated string AddressLine = 1;
+  string BuildingNumber = 2;
+  string Country = 3;
+  repeated string CountrySubDivision = 4;
+  string PostCode = 5;
+  string StreetName = 6;
+  string TownName = 7;
+}
+
+enum PaymentContextCode {
+  InvalidCode = 0;
+  BillPayment = 1;
+  EcommerceGoods = 2;
+  EcommerceServices = 3;
+  Other = 4;
+  PersonToPerson = 5;
+}
+
+enum AccountSchemeName {
+  InvalidAccountSchemeName = 0;
+  IBAN = 1;
+  SortCodeAccountNumber = 2;
+}
+
+message Risk {
+  DeliveryAddress DeliveryAddress = 1;
+  string MerchantCategoryCode = 2;
+  string MerchantCustomerIdentification = 3;
+  PaymentContextCode PaymentContextCode = 4;
+}
+
+message Links {
+  string First = 1;
+  string Last = 2;
+  string Next = 3;
+  string Prev = 4;
+  string Self = 5;
+}
+
+message Meta {
+  int32 TotalPages = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Account Information payloads.
+//
+enum AccountPermission {
+  InvalidPermission = 0;
+  ReadAccountsBasic = 1;
+  ReadAccountsDetail = 2;
+  ReadBalances = 3;
+  ReadBeneficiariesBasic = 4;
+  ReadBeneficiariesDetail = 5;
+  ReadDirectDebits = 6;
+  ReadProducts = 7;
+  ReadStandingOrdersBasic = 8;
+  ReadStandingOrdersDetail = 9;
+  ReadTransactionsBasic = 10;
+  ReadTransactionsCredits = 11;
+  ReadTransactionsDebits = 12;
+  ReadTransactionsDetail = 13;
+}
+
+message AccountRequestSetup {
+  string ExpirationDateTime = 1;
+  repeated AccountPermission Permissions = 2;
+  string TransactionFromDateTime = 3;
+  string TransactionToDateTime = 4;
+}
+
+message AccountRequestData {
+  enum AccountRequestStatus {
+    Invalid = 0;
+    Authorised = 1;
+    AwaitingAuthorisation = 2;
+    Rejected = 3;
+    Revoked = 4;
+  }
+  string AccountRequestId = 1;
+  string CreationDateTime = 2;
+  string ExpirationDateTime = 3;
+  repeated AccountPermission Permissions = 4;
+  AccountRequestStatus Status = 5;
+  string TransactionFromDateTime = 6;
+  string TransactionToDateTime = 7;
+}
+
+message MetaData {
+  string FirstAvailableDateTime = 1;
+  string LastAvailableDateTime = 2;
+  int32 TotalPages = 3;
+}
+
+message Servicer {
+  enum ServicerSchemeName {
+    Invalid = 0;
+    BICFI = 1;
+  }
+  string Identification = 1;
+  ServicerSchemeName SchemeName = 2;
+}
+
+message AccountDetails {
+  string Identification = 1;
+  string Name = 2;
+  AccountSchemeName SchemeName = 3;
+  string SecondaryIdentification = 4;
+}
+
+message Account {
+  AccountDetails Account = 1;
+  string AccountId = 2;
+  string Currency = 3;
+  string Nickname = 4;
+  Servicer Servicer = 5;
+}
+
+message AccountData {
+  repeated Account Account = 1;
+}
+
+enum CreditDebit {
+  InvalidIndicator = 0;
+  Credit = 1;
+  Debit = 2;
+}
+
+message Balance {
+  enum BalanceType {
+    Invalid = 0;
+    ClosingAvailable = 1;
+    ClosingBooked = 2;
+    Expected = 3;
+    ForwardAvailable = 4;
+    Information = 5;
+    InterimAvailable = 6;
+    InterimBooked = 7;
+    OpeningAvailable = 8;
+    OpeningBooked = 9;
+    PreviouslyClosedBooked = 10;
+  }
+  string AccountId = 1;
+  InstructedAmount Amount = 2;
+  CreditDebit CreditDebitIndicator = 3;
+  string DateTime = 4;
+  BalanceType Type = 5;
+}
+
+message BalanceData {
+  repeated Balance Balance = 1;
+}
+
+message Transaction {
+  enum TransactionStatus {
+    Invalid = 0;
+    Booked = 1;
+    Pending = 2;
+  }
+  string AccountId = 1;
+  InstructedAmount Amount = 2;
+  Balance Balance = 3;
+  string BookingDateTime = 4;
+  CreditDebit CreditDebitIndicator = 5;
+  TransactionStatus Status = 6;
+  string TransactionId = 7;
+  string TransactionInformation = 8;
+}
+
+message TransactionData {
+  repeated Transaction Transaction = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Account Information requests/responses.
+//
+message AccountRequestsRequest {
+  AccountRequestSetup Data = 1;
+  Risk Risk = 2;
+}
+
+message AccountRequestsResponse {
+  AccountRequestData Data = 1;
+  Links Links = 2;
+  Meta Meta = 3;
+  Risk Risk = 4;
+}
+
+message AccountsRequest {
+}
+
+message AccountsResponse {
+  AccountData Data = 1;
+  Links Links = 2;
+  MetaData Meta = 3;
+}
+
+message AccountRequest {
+  string AccountId = 1;
+}
+
+message AccountResponse {
+  AccountData Data = 1;
+  Links Links = 2;
+  MetaData Meta = 3;
+}
+
+message DeleteAccountRequestsRequest {
+  string AccountRequestId = 1;
+}
+
+message DeleteAccountRequestsResponse {
+}
+
+message AccountBalancesRequest {
+  string AccountId = 1;
+}
+
+message AccountBalancesResponse {
+  BalanceData Data = 1;
+  Links Links = 2;
+  Meta Meta = 3;
+}
+
+message AccountTransactionsRequest {
+  string AccountId = 1;
+}
+
+message AccountTransactionsResponse {
+  TransactionData Data = 1;
+  Links Links = 2;
+  Meta Meta = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Payment payloads.
+//
+enum PaymentAgentSchemeName {
+  InvalidAgentSchemeName = 0;
+  BICFI = 1;
+}
+
+message CreditorAccount {
+  string Identification = 1;
+  string Name = 2;
+  AccountSchemeName SchemeName = 3;
+  string SecondaryIdentification = 4;
+}
+
+message CreditorAgent {
+  string Identification = 1;
+  PaymentAgentSchemeName SchemeName = 2;
+}
+
+message DebtorAccount {
+  string Identification = 1;
+  string Name = 2;
+  AccountSchemeName SchemeName = 3;
+  string SecondaryIdentification = 4;
+}
+
+message DebtorAgent {
+  string Identification = 1;
+  PaymentAgentSchemeName SchemeName = 2;
+}
+
+message InstructedAmount {
+  string Amount = 1;
+  string Currency = 2;
+}
+
+message RemittanceInformation {
+  string Reference = 1;
+  string Unstructured = 2;
+}
+
+message Initiation {
+  CreditorAccount CreditorAccount = 1;
+  CreditorAgent CreditorAgent = 2;
+  DebtorAccount DebtorAccount = 3;
+  DebtorAgent DebtorAgent = 4;
+  string EndToEndIdentification = 5;
+  InstructedAmount InstructedAmount = 6;
+  string InstructionIdentification = 7;
+  RemittanceInformation RemittanceInformation = 8;
+}
+
+message PaymentSetup {
+  Initiation Initiation = 1;
+}
+
+message PaymentData {
+  enum PaymentSetupStatus {
+    Invalid = 0;
+    AcceptedCustomerProfile = 1;
+    AcceptedTechnicalValidation = 2;
+    Pending = 3;
+    Rejected = 4;
+  }
+  string CreationDateTime = 1;
+  Initiation Initiation = 2;
+  string PaymentId = 3;
+  PaymentSetupStatus Status = 4;
+}
+
+message PaymentSubmission {
+  Initiation Initiation = 1;
+  string PaymentId = 2;
+}
+
+message PaymentSubmissionData {
+  enum PaymentSubmissionStatus {
+    Invalid = 0;
+    AcceptedSettlementCompleted = 1;
+    AcceptedSettlementInProgress = 2;
+    Pending = 3;
+    Rejected = 4;
+  }
+  string PaymentId = 1;
+  string PaymentSubmissionId = 2;
+  string CreationDateTime = 3;
+  PaymentSubmissionStatus Status = 4;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Payment requests/responses.
+//
+message PaymentsRequest {
+  PaymentSetup Data = 1;
+  Risk Risk = 2;
+}
+
+message PaymentsResponse {
+  PaymentData Data = 1;
+  Links Links = 2;
+  Meta Meta = 3;
+  Risk Risk = 4;
+}
+
+message PaymentSubmissionsRequest {
+  PaymentSubmission Data = 1;
+  Risk Risk = 2;
+}
+
+message PaymentSubmissionsResponse {
+  PaymentSubmissionData Data = 1;
+  Links Links = 2;
+  Meta Meta = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// CMA-9 Service REST API.
+//
+service Cma9Service {
+  // Used to request information about accounts and transactions.
+  rpc CreateAccountRequest (AccountRequestsRequest) returns (AccountRequestsResponse) {
+    option (google.api.http) = {
+      post: "/cma9/account-requests"
+    };
+  }
+
+  // Used to delete a request for account/transaction information.
+  rpc RemoveAccountRequest (DeleteAccountRequestsRequest) returns (DeleteAccountRequestsResponse) {
+    option (google.api.http) = {
+      delete: "/cma9/account-requests/{AccountRequestId}"
+    };
+  }
+
+  // Used to retrieve a list of accounts the AISP is authorized to access
+  rpc GetAccounts (AccountsRequest) returns (AccountsResponse) {
+    option (google.api.http) = {
+      get: "/cma9/accounts"
+    };
+  }
+
+  // Used to query information about a particular account.
+  rpc GetAccount (AccountRequest) returns (AccountResponse) {
+    option (google.api.http) = {
+      get: "/cma9/accounts/{AccountId}"
+    };
+  }
+
+  // Used to query account balances.
+  rpc GetAccountBalances (AccountBalancesRequest) returns (AccountBalancesResponse) {
+    option (google.api.http) = {
+      get: "/cma9/accounts/{AccountId}/balances"
+    };
+  }
+
+  // Used to query information about an account's transactions.
+  rpc GetAccountTransactions (AccountTransactionsRequest) returns (AccountTransactionsResponse) {
+    option (google.api.http) = {
+      get: "/cma9/accounts/{AccountId}/transactions"
+    };
+  }
+
+  // Used to create a payment object, later to be redeemed.
+  rpc CreatePayment (PaymentsRequest) returns (PaymentsResponse) {
+    option (google.api.http) = {
+      post: "/cma9/payments"
+    };
+  }
+
+  // Used to submit/redeem an existing payment object.
+  rpc CreatePaymentSubmission (PaymentSubmissionsRequest) returns (PaymentSubmissionsResponse) {
+    option (google.api.http) = {
+      post: "/cma9/payment-submissions"
+    };
+  }
+}
