@@ -39,8 +39,12 @@
     return self.async.isLocked;
 }
 
-- (BOOL) supportsPayment {
-    return self.async.supportsPayment;
+- (BOOL) supportsSendPayment {
+    return self.async.supportsSendPayment;
+}
+
+- (BOOL) supportsReceivePayment {
+    return self.async.supportsReceivePayment;
 }
 
 - (BOOL) supportsInformation {

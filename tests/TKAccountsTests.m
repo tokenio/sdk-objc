@@ -107,7 +107,8 @@
         XCTAssertEqualObjects(@"Checking", accounts[0].name);
         XCTAssertEqualObjects(@"iron", accounts[0].bankId);
         XCTAssert(!accounts[0].isLocked);
-        XCTAssert(accounts[0].supportsPayment);
+        XCTAssert(accounts[0].supportsReceivePayment);
+        XCTAssert(accounts[0].supportsSendPayment);
         XCTAssert(accounts[0].supportsInformation);
         XCTAssert(!accounts[0].requiresExternalAuth);
         
