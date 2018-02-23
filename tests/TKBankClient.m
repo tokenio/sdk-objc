@@ -47,10 +47,10 @@ static NSString *const TEST_BIC = @"IRONUSCA000";
 
 
 - (FankAccount *)addAccountWithName:(NSString *)name
-                      forClient:(FankClient *)client
-             withAccountNumber:(NSString *)accountNumber
-                        amount:(NSString *)amount
-                      currency:(NSString *)currency {
+                          forClient:(FankClient *)client
+                  withAccountNumber:(NSString *)accountNumber
+                             amount:(NSString *)amount
+                           currency:(NSString *)currency {
     FankAddAccountRequest *request = [FankAddAccountRequest message];
     request.clientId = client.id_p;
     request.name = name;

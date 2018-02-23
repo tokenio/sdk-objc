@@ -164,6 +164,7 @@ typedef GPB_ENUM(FankAddAccountRequest_FieldNumber) {
   FankAddAccountRequest_FieldNumber_Name = 3,
   FankAddAccountRequest_FieldNumber_AccountNumber = 4,
   FankAddAccountRequest_FieldNumber_Balance = 5,
+  FankAddAccountRequest_FieldNumber_Profile = 6,
 };
 
 @interface FankAddAccountRequest : GPBMessage
@@ -179,6 +180,8 @@ typedef GPB_ENUM(FankAddAccountRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Money *balance;
 /** Test to see if @c balance has been set. */
 @property(nonatomic, readwrite) BOOL hasBalance;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *profile;
 
 @end
 
@@ -332,6 +335,44 @@ typedef GPB_ENUM(FankGetNotificationsResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
 /** The number of items in @c notificationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger notificationsArray_Count;
+
+@end
+
+#pragma mark - FankGetOauthAccessTokenRequest
+
+typedef GPB_ENUM(FankGetOauthAccessTokenRequest_FieldNumber) {
+  FankGetOauthAccessTokenRequest_FieldNumber_Bic = 1,
+  FankGetOauthAccessTokenRequest_FieldNumber_Username = 2,
+  FankGetOauthAccessTokenRequest_FieldNumber_MemberId = 3,
+  FankGetOauthAccessTokenRequest_FieldNumber_AccountsArray = 4,
+};
+
+@interface FankGetOauthAccessTokenRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankAccount*> *accountsArray;
+/** The number of items in @c accountsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountsArray_Count;
+
+@end
+
+#pragma mark - FankGetOauthAccessTokenResponse
+
+typedef GPB_ENUM(FankGetOauthAccessTokenResponse_FieldNumber) {
+  FankGetOauthAccessTokenResponse_FieldNumber_AccessToken = 1,
+  FankGetOauthAccessTokenResponse_FieldNumber_ExpiresInMs = 2,
+};
+
+@interface FankGetOauthAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accessToken;
+
+@property(nonatomic, readwrite) int64_t expiresInMs;
 
 @end
 

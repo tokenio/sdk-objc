@@ -366,6 +366,7 @@ typedef struct TokenMember__storage_ {
 @dynamic description_p;
 @dynamic transfer;
 @dynamic access;
+@dynamic hasActingAs, actingAs;
 
 typedef struct TokenPayload__storage_ {
   uint32_t _has_storage_[2];
@@ -377,6 +378,7 @@ typedef struct TokenPayload__storage_ {
   NSString *description_p;
   TransferBody *transfer;
   AccessBody *access;
+  TokenPayload_ActingAs *actingAs;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
   int64_t endorseUntilMs;
@@ -487,6 +489,15 @@ typedef struct TokenPayload__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
       },
+      {
+        .name = "actingAs",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload_ActingAs),
+        .number = TokenPayload_FieldNumber_ActingAs,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, actingAs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TokenPayload class]
@@ -515,6 +526,77 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);
 }
+#pragma mark - TokenPayload_ActingAs
+
+@implementation TokenPayload_ActingAs
+
+@dynamic displayName;
+@dynamic refId;
+@dynamic logoURL;
+
+typedef struct TokenPayload_ActingAs__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *displayName;
+  NSString *refId;
+  NSString *logoURL;
+} TokenPayload_ActingAs__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "displayName",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_ActingAs_FieldNumber_DisplayName,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TokenPayload_ActingAs__storage_, displayName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "refId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_ActingAs_FieldNumber_RefId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TokenPayload_ActingAs__storage_, refId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "logoURL",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_ActingAs_FieldNumber_LogoURL,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(TokenPayload_ActingAs__storage_, logoURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TokenPayload_ActingAs class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TokenPayload_ActingAs__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\003\004\241!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TokenPayload)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - ExternalAuthorizationDetails
 
 @implementation ExternalAuthorizationDetails

@@ -178,9 +178,10 @@ typedef struct AccountTag__storage_ {
 
 @implementation AccountFeatures
 
-@dynamic supportsPayment;
 @dynamic supportsInformation;
 @dynamic requiresExternalAuth;
+@dynamic supportsSendPayment;
+@dynamic supportsReceivePayment;
 
 typedef struct AccountFeatures__storage_ {
   uint32_t _has_storage_[1];
@@ -193,20 +194,11 @@ typedef struct AccountFeatures__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "supportsPayment",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountFeatures_FieldNumber_SupportsPayment,
-        .hasIndex = 0,
-        .offset = 1,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
-      },
-      {
         .name = "supportsInformation",
         .dataTypeSpecific.className = NULL,
         .number = AccountFeatures_FieldNumber_SupportsInformation,
-        .hasIndex = 2,
-        .offset = 3,  // Stored in _has_storage_ to save space.
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -214,8 +206,26 @@ typedef struct AccountFeatures__storage_ {
         .name = "requiresExternalAuth",
         .dataTypeSpecific.className = NULL,
         .number = AccountFeatures_FieldNumber_RequiresExternalAuth,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsSendPayment",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountFeatures_FieldNumber_SupportsSendPayment,
         .hasIndex = 4,
         .offset = 5,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsReceivePayment",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountFeatures_FieldNumber_SupportsReceivePayment,
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },

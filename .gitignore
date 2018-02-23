@@ -25,3 +25,4 @@ xcuserdata
 /sdk.xcworkspace/xcuserdata/
 *.xcscmblueprint
 *.orig
+*.swp

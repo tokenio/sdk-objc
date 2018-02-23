@@ -73,6 +73,23 @@ typedef GPB_ENUM(BankAuthorization_FieldNumber) {
 
 @end
 
+#pragma mark - OauthBankAuthorization
+
+typedef GPB_ENUM(OauthBankAuthorization_FieldNumber) {
+  OauthBankAuthorization_FieldNumber_BankId = 1,
+  OauthBankAuthorization_FieldNumber_AccessToken = 2,
+};
+
+@interface OauthBankAuthorization : GPBMessage
+
+/** Bank ID, e.g., "iron" */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/** OAuth access token obtained from a bank */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accessToken;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

@@ -52,9 +52,10 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_LogoUri = 3,
   Bank_FieldNumber_FullLogoUri = 4,
   Bank_FieldNumber_SupportsAppless = 5,
-  Bank_FieldNumber_SupportsPayment = 6,
   Bank_FieldNumber_SupportsInformation = 7,
   Bank_FieldNumber_RequiresExternalAuth = 8,
+  Bank_FieldNumber_SupportsSendPayment = 9,
+  Bank_FieldNumber_SupportsReceivePayment = 10,
 };
 
 @interface Bank : GPBMessage
@@ -72,14 +73,17 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Works with appless payments */
 @property(nonatomic, readwrite) BOOL supportsAppless;
 
-/** Connection allows for payment initiation */
-@property(nonatomic, readwrite) BOOL supportsPayment;
-
 /** Connection allows for retrieval of information */
 @property(nonatomic, readwrite) BOOL supportsInformation;
 
 /** Connection requires external authorization for creating transfers */
 @property(nonatomic, readwrite) BOOL requiresExternalAuth;
+
+/** Connection allows for payment initiation */
+@property(nonatomic, readwrite) BOOL supportsSendPayment;
+
+/** Connection allows for receiving payments */
+@property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
 @end
 
@@ -88,13 +92,25 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 typedef GPB_ENUM(BankInfo_FieldNumber) {
   BankInfo_FieldNumber_LinkingUri = 1,
   BankInfo_FieldNumber_RedirectUriRegex = 2,
+  BankInfo_FieldNumber_BankLinkingUri = 3,
 };
 
+/**
+ * Depending on how user can interact with bank,
+ * different fields will have values.
+ *   BankAuthorization JSON: User interacts with web site, goes to JSON uri
+ *   OAuth: User interacts with web site, gets OAuth access token
+ **/
 @interface BankInfo : GPBMessage
 
+/** BankAuthorization JSON starting URI */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *linkingUri;
 
+/** BankAuthorization JSON success URI pattern */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *redirectUriRegex;
+
+/** OAuth starting URI */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankLinkingUri;
 
 @end
 

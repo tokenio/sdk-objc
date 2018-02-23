@@ -53,8 +53,12 @@
     return account.isLocked;
 }
 
-- (BOOL) supportsPayment {
-    return account.accountFeatures.supportsPayment;
+- (BOOL) supportsSendPayment {
+    return account.accountFeatures.supportsSendPayment;
+}
+
+- (BOOL) supportsReceivePayment {
+    return account.accountFeatures.supportsReceivePayment;
 }
 
 - (BOOL) supportsInformation {

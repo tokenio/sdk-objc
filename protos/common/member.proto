@@ -107,6 +107,7 @@ message Member {
   RecoveryRule recovery_rule = 6;                       // recovery rule
   int32 last_recovery_sequence = 7;                     // sequence number for member's last recovery entry
   int32 last_operation_sequence = 8;                    // sequence number for member's last operation
+  MemberType type = 9;                                  // type of member
 }
 
 // A member address record
@@ -139,4 +140,10 @@ enum ProfilePictureSize {
 message Device {
   string name = 1;
   io.token.proto.common.security.Key key = 2;
+}
+
+enum MemberType {
+  INVALID_MEMBER_TYPE = 0;
+  PERSONAL = 1;
+  BUSINESS = 2;
 }
