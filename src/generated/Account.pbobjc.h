@@ -110,9 +110,10 @@ typedef GPB_ENUM(AccountTag_FieldNumber) {
 #pragma mark - AccountFeatures
 
 typedef GPB_ENUM(AccountFeatures_FieldNumber) {
-  AccountFeatures_FieldNumber_SupportsPayment = 1,
   AccountFeatures_FieldNumber_SupportsInformation = 2,
   AccountFeatures_FieldNumber_RequiresExternalAuth = 3,
+  AccountFeatures_FieldNumber_SupportsSendPayment = 4,
+  AccountFeatures_FieldNumber_SupportsReceivePayment = 5,
 };
 
 /**
@@ -120,13 +121,16 @@ typedef GPB_ENUM(AccountFeatures_FieldNumber) {
  **/
 @interface AccountFeatures : GPBMessage
 
-/** can pay from account */
-@property(nonatomic, readwrite) BOOL supportsPayment;
-
 /** can get info, e.g., get balance */
 @property(nonatomic, readwrite) BOOL supportsInformation;
 
 @property(nonatomic, readwrite) BOOL requiresExternalAuth;
+
+/** can send payments from account */
+@property(nonatomic, readwrite) BOOL supportsSendPayment;
+
+/** can receive payments to account */
+@property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
 @end
 

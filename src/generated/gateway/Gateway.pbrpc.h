@@ -92,6 +92,8 @@
   @class GetTransferResponse;
   @class GetTransfersRequest;
   @class GetTransfersResponse;
+  @class LinkAccountsOauthRequest;
+  @class LinkAccountsOauthResponse;
   @class LinkAccountsRequest;
   @class LinkAccountsResponse;
   @class NotifyRequest;
@@ -633,6 +635,21 @@ NS_ASSUME_NONNULL_BEGIN
  * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (GRPCProtoCall *)RPCToLinkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LinkAccountsOauth(LinkAccountsOauthRequest) returns (LinkAccountsOauthResponse)
+
+/**
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (void)linkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCProtoCall *)RPCToLinkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnlinkAccounts(UnlinkAccountsRequest) returns (UnlinkAccountsResponse)

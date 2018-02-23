@@ -82,6 +82,93 @@ BOOL NotifyStatus_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - DeviceMetadata
+
+@implementation DeviceMetadata
+
+@dynamic application;
+@dynamic applicationVersion;
+@dynamic device;
+@dynamic longitude;
+@dynamic latitude;
+
+typedef struct DeviceMetadata__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *application;
+  NSString *applicationVersion;
+  NSString *device;
+  double longitude;
+  double latitude;
+} DeviceMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "application",
+        .dataTypeSpecific.className = NULL,
+        .number = DeviceMetadata_FieldNumber_Application,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(DeviceMetadata__storage_, application),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "applicationVersion",
+        .dataTypeSpecific.className = NULL,
+        .number = DeviceMetadata_FieldNumber_ApplicationVersion,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(DeviceMetadata__storage_, applicationVersion),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "device",
+        .dataTypeSpecific.className = NULL,
+        .number = DeviceMetadata_FieldNumber_Device,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(DeviceMetadata__storage_, device),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "longitude",
+        .dataTypeSpecific.className = NULL,
+        .number = DeviceMetadata_FieldNumber_Longitude,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(DeviceMetadata__storage_, longitude),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "latitude",
+        .dataTypeSpecific.className = NULL,
+        .number = DeviceMetadata_FieldNumber_Latitude,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(DeviceMetadata__storage_, latitude),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DeviceMetadata class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(DeviceMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - PayerTransferProcessed
 
 @implementation PayerTransferProcessed
@@ -487,11 +574,15 @@ typedef struct TransactionStepUp__storage_ {
 @dynamic name;
 @dynamic hasKey, key;
 @dynamic expiresMs;
+@dynamic keysArray, keysArray_Count;
+@dynamic hasDeviceMetadata, deviceMetadata;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
   NSString *name;
   Key *key;
+  NSMutableArray *keysArray;
+  DeviceMetadata *deviceMetadata;
   int64_t expiresMs;
 } AddKey__storage_;
 
@@ -527,6 +618,24 @@ typedef struct AddKey__storage_ {
         .offset = (uint32_t)offsetof(AddKey__storage_, expiresMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "keysArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = AddKey_FieldNumber_KeysArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(AddKey__storage_, keysArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "deviceMetadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(DeviceMetadata),
+        .number = AddKey_FieldNumber_DeviceMetadata,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(AddKey__storage_, deviceMetadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

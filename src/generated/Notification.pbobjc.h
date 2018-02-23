@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class AddKey;
 @class BalanceStepUp;
 @class BankAuthorization;
+@class DeviceMetadata;
 @class Key;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
@@ -108,6 +109,38 @@ BOOL Notification_Status_IsValidValue(int32_t value);
  * this file and all files that it depends on.
  **/
 @interface NotificationRoot : GPBRootObject
+@end
+
+#pragma mark - DeviceMetadata
+
+typedef GPB_ENUM(DeviceMetadata_FieldNumber) {
+  DeviceMetadata_FieldNumber_Application = 1,
+  DeviceMetadata_FieldNumber_ApplicationVersion = 2,
+  DeviceMetadata_FieldNumber_Device = 3,
+  DeviceMetadata_FieldNumber_Longitude = 4,
+  DeviceMetadata_FieldNumber_Latitude = 5,
+};
+
+/**
+ * Metadata for a notification
+ **/
+@interface DeviceMetadata : GPBMessage
+
+/** Name of the application to add keys to (e.g. Token, Chrome) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *application;
+
+/** Application version (e.g. 2.0) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *applicationVersion;
+
+/** Device the application resides on (e.g. Mac, iPhone X), to support multiple devices */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *device;
+
+/** Longitude of the user's location to signal where the request is coming from */
+@property(nonatomic, readwrite) double longitude;
+
+/** Latitude of the user's location */
+@property(nonatomic, readwrite) double latitude;
+
 @end
 
 #pragma mark - PayerTransferProcessed
@@ -269,6 +302,8 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
   AddKey_FieldNumber_Name = 1,
   AddKey_FieldNumber_Key = 2,
   AddKey_FieldNumber_ExpiresMs = 3,
+  AddKey_FieldNumber_KeysArray = 4,
+  AddKey_FieldNumber_DeviceMetadata = 5,
 };
 
 /**
@@ -277,16 +312,25 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
  **/
 @interface AddKey : GPBMessage
 
-/** Human-readable name, e.g., "Chrome Browser" or "My App" */
+/** **DEPRECATED** Human-readable name, e.g., "Chrome Browser" or "My App" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-/** Key */
+/** **DEPRECATED** Key */
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
 /** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
 
 /** Expiration time */
 @property(nonatomic, readwrite) int64_t expiresMs;
+
+/** List of new keys to add */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
+/** The number of items in @c keysArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger keysArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) DeviceMetadata *deviceMetadata;
+/** Test to see if @c deviceMetadata has been set. */
+@property(nonatomic, readwrite) BOOL hasDeviceMetadata;
 
 @end
 

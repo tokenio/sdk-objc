@@ -32,6 +32,7 @@ message Page {
 
 message CreateMemberRequest {
   string nonce = 1; // random string; used only to de-duplicate requests.
+  io.token.proto.common.member.MemberType member_type = 2;
 }
 
 message CreateMemberResponse {
@@ -283,6 +284,16 @@ message LinkAccountsRequest {
 }
 
 message LinkAccountsResponse {
+  // basic info about newly-linked accounts
+  repeated io.token.proto.common.account.Account accounts = 1;
+}
+
+message LinkAccountsOauthRequest {
+  // OAuth access token, normally from a bank website
+  io.token.proto.banklink.OauthBankAuthorization authorization = 1;
+}
+
+message LinkAccountsOauthResponse {
   // basic info about newly-linked accounts
   repeated io.token.proto.common.account.Account accounts = 1;
 }
@@ -851,6 +862,14 @@ service GatewayService {
   rpc LinkAccounts (LinkAccountsRequest) returns (LinkAccountsResponse) {
     option (google.api.http) = {
         post: "/accounts"
+    };
+  }
+
+  // associate bank accounts with member
+  // https://developer.token.io/sdk/#link-a-bank-account
+  rpc LinkAccountsOauth (LinkAccountsOauthRequest) returns (LinkAccountsOauthResponse) {
+    option (google.api.http) = {
+        post: "/bank-accounts"
     };
   }
 

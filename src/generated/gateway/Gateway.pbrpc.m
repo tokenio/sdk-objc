@@ -678,6 +678,26 @@
              responseClass:[LinkAccountsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark LinkAccountsOauth(LinkAccountsOauthRequest) returns (LinkAccountsOauthResponse)
+
+/**
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (void)linkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLinkAccountsOauthWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCProtoCall *)RPCToLinkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LinkAccountsOauth"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[LinkAccountsOauthResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark UnlinkAccounts(UnlinkAccountsRequest) returns (UnlinkAccountsResponse)
 
 /**

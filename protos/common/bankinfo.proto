@@ -6,15 +6,21 @@ option java_outer_classname = "BankProtos";
 message Bank {
   string id = 1;
   string name = 2;
-  string logo_uri = 3;            // Square bank avatar icon
-  string full_logo_uri = 4;       // Full size bank icon
-  bool supports_appless = 5;      // Works with appless payments
-  bool supports_payment = 6;      // Connection allows for payment initiation
-  bool supports_information = 7;  // Connection allows for retrieval of information
-  bool requires_external_auth = 8; // Connection requires external authorization for creating transfers
+  string logo_uri = 3;                 // Square bank avatar icon
+  string full_logo_uri = 4;            // Full size bank icon
+  bool supports_appless = 5;           // Works with appless payments
+  bool supports_information = 7;       // Connection allows for retrieval of information
+  bool requires_external_auth = 8;     // Connection requires external authorization for creating transfers
+  bool supports_send_payment = 9;      // Connection allows for payment initiation
+  bool supports_receive_payment = 10;   // Connection allows for receiving payments
 }
 
+// Depending on how user can interact with bank,
+// different fields will have values.
+//   BankAuthorization JSON: User interacts with web site, goes to JSON uri
+//   OAuth: User interacts with web site, gets OAuth access token
 message BankInfo {
-  string linking_uri = 1;
-  string redirect_uri_regex = 2;
+  string linking_uri = 1;        // BankAuthorization JSON starting URI
+  string redirect_uri_regex = 2; // BankAuthorization JSON success URI pattern
+  string bank_linking_uri = 3;   // OAuth starting URI
 }

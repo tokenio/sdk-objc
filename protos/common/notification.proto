@@ -7,6 +7,15 @@ import "token.proto";
 
 option java_outer_classname = "NotificationProtos";
 
+// Metadata for a notification
+message DeviceMetadata {
+  string application = 1;   // Name of the application to add keys to (e.g. Token, Chrome)
+  string application_version = 2; // Application version (e.g. 2.0)
+  string device = 3;  // Device the application resides on (e.g. Mac, iPhone X), to support multiple devices
+  double longitude = 4; // Longitude of the user's location to signal where the request is coming from
+  double latitude = 5;  // Latitude of the user's location
+}
+
 // A notification to the payer that a transfer was successfully processed.
 message PayerTransferProcessed {
   string transfer_id = 1; // transfer ID
@@ -58,9 +67,11 @@ message TransactionStepUp {
 // A notification that a key wants to be added to a member. Clients should timeout the notification
 // and screen, once the expires_ms has passed
 message AddKey {
-  string name = 1;                            // Human-readable name, e.g., "Chrome Browser" or "My App"
-  io.token.proto.common.security.Key key = 2; // Key
+  string name = 1;                            // **DEPRECATED** Human-readable name, e.g., "Chrome Browser" or "My App"
+  io.token.proto.common.security.Key key = 2; // **DEPRECATED** Key
   int64 expires_ms = 3;                       // Expiration time
+  repeated io.token.proto.common.security.Key keys = 4; // List of new keys to add
+  DeviceMetadata device_metadata = 5;
 }
 
 // A notification that a bank wants to be linked, and keys want to be added.

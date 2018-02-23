@@ -51,6 +51,7 @@ CF_EXTERN_C_BEGIN
 @class Money;
 @class Notification;
 @class NotifyBody;
+@class OauthBankAuthorization;
 @class Page;
 @class Profile;
 @class ReplaceTokenRequest_CancelToken;
@@ -66,6 +67,7 @@ CF_EXTERN_C_BEGIN
 @class TransactionStepUp;
 @class Transfer;
 @class TransferPayload;
+GPB_ENUM_FWD_DECLARE(MemberType);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(RequestStatus);
@@ -181,6 +183,7 @@ typedef GPB_ENUM(Page_FieldNumber) {
 
 typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
   CreateMemberRequest_FieldNumber_Nonce = 1,
+  CreateMemberRequest_FieldNumber_MemberType = 2,
 };
 
 @interface CreateMemberRequest : GPBMessage
@@ -188,7 +191,21 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 /** random string; used only to de-duplicate requests. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
+@property(nonatomic, readwrite) enum MemberType memberType;
+
 @end
+
+/**
+ * Fetches the raw value of a @c CreateMemberRequest's @c memberType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t CreateMemberRequest_MemberType_RawValue(CreateMemberRequest *message);
+/**
+ * Sets the raw value of an @c CreateMemberRequest's @c memberType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCreateMemberRequest_MemberType_RawValue(CreateMemberRequest *message, int32_t value);
 
 #pragma mark - CreateMemberResponse
 
@@ -1076,6 +1093,36 @@ typedef GPB_ENUM(LinkAccountsResponse_FieldNumber) {
 };
 
 @interface LinkAccountsResponse : GPBMessage
+
+/** basic info about newly-linked accounts */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Account*> *accountsArray;
+/** The number of items in @c accountsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountsArray_Count;
+
+@end
+
+#pragma mark - LinkAccountsOauthRequest
+
+typedef GPB_ENUM(LinkAccountsOauthRequest_FieldNumber) {
+  LinkAccountsOauthRequest_FieldNumber_Authorization = 1,
+};
+
+@interface LinkAccountsOauthRequest : GPBMessage
+
+/** OAuth access token, normally from a bank website */
+@property(nonatomic, readwrite, strong, null_resettable) OauthBankAuthorization *authorization;
+/** Test to see if @c authorization has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorization;
+
+@end
+
+#pragma mark - LinkAccountsOauthResponse
+
+typedef GPB_ENUM(LinkAccountsOauthResponse_FieldNumber) {
+  LinkAccountsOauthResponse_FieldNumber_AccountsArray = 1,
+};
+
+@interface LinkAccountsOauthResponse : GPBMessage
 
 /** basic info about newly-linked accounts */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Account*> *accountsArray;

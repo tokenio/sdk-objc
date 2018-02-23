@@ -63,6 +63,16 @@ message TokenPayload {
     TransferBody transfer = 9;
     AccessBody access = 10;
   }
+
+  ActingAs acting_as = 12;
+
+  // If a token is being created on behalf of another party, this
+  // field contains a description of that entity.
+  message ActingAs {
+    string display_name = 1;                            // Name of recipient, to be shown to user
+    string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
+    string logo_url = 3;                                // URL pointing to recipient's logo
+  }
 }
 
 

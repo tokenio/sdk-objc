@@ -127,9 +127,11 @@ typedef struct Page__storage_ {
 @implementation CreateMemberRequest
 
 @dynamic nonce;
+@dynamic memberType;
 
 typedef struct CreateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
+  MemberType memberType;
   NSString *nonce;
 } CreateMemberRequest__storage_;
 
@@ -148,6 +150,15 @@ typedef struct CreateMemberRequest__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "memberType",
+        .dataTypeSpecific.enumDescFunc = MemberType_EnumDescriptor,
+        .number = CreateMemberRequest_FieldNumber_MemberType,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, memberType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[CreateMemberRequest class]
@@ -164,6 +175,18 @@ typedef struct CreateMemberRequest__storage_ {
 }
 
 @end
+
+int32_t CreateMemberRequest_MemberType_RawValue(CreateMemberRequest *message) {
+  GPBDescriptor *descriptor = [CreateMemberRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreateMemberRequest_FieldNumber_MemberType];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetCreateMemberRequest_MemberType_RawValue(CreateMemberRequest *message, int32_t value) {
+  GPBDescriptor *descriptor = [CreateMemberRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreateMemberRequest_FieldNumber_MemberType];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - CreateMemberResponse
 
@@ -2804,6 +2827,92 @@ typedef struct LinkAccountsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(LinkAccountsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - LinkAccountsOauthRequest
+
+@implementation LinkAccountsOauthRequest
+
+@dynamic hasAuthorization, authorization;
+
+typedef struct LinkAccountsOauthRequest__storage_ {
+  uint32_t _has_storage_[1];
+  OauthBankAuthorization *authorization;
+} LinkAccountsOauthRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "authorization",
+        .dataTypeSpecific.className = GPBStringifySymbol(OauthBankAuthorization),
+        .number = LinkAccountsOauthRequest_FieldNumber_Authorization,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(LinkAccountsOauthRequest__storage_, authorization),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[LinkAccountsOauthRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(LinkAccountsOauthRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - LinkAccountsOauthResponse
+
+@implementation LinkAccountsOauthResponse
+
+@dynamic accountsArray, accountsArray_Count;
+
+typedef struct LinkAccountsOauthResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *accountsArray;
+} LinkAccountsOauthResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Account),
+        .number = LinkAccountsOauthResponse_FieldNumber_AccountsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(LinkAccountsOauthResponse__storage_, accountsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[LinkAccountsOauthResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(LinkAccountsOauthResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

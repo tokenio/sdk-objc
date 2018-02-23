@@ -51,9 +51,10 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic logoUri;
 @dynamic fullLogoUri;
 @dynamic supportsAppless;
-@dynamic supportsPayment;
 @dynamic supportsInformation;
 @dynamic requiresExternalAuth;
+@dynamic supportsSendPayment;
+@dynamic supportsReceivePayment;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[1];
@@ -115,20 +116,11 @@ typedef struct Bank__storage_ {
         .dataType = GPBDataTypeBool,
       },
       {
-        .name = "supportsPayment",
-        .dataTypeSpecific.className = NULL,
-        .number = Bank_FieldNumber_SupportsPayment,
-        .hasIndex = 6,
-        .offset = 7,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
-      },
-      {
         .name = "supportsInformation",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_SupportsInformation,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -136,8 +128,26 @@ typedef struct Bank__storage_ {
         .name = "requiresExternalAuth",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_RequiresExternalAuth,
+        .hasIndex = 8,
+        .offset = 9,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsSendPayment",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsSendPayment,
         .hasIndex = 10,
         .offset = 11,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsReceivePayment",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsReceivePayment,
+        .hasIndex = 12,
+        .offset = 13,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -164,11 +174,13 @@ typedef struct Bank__storage_ {
 
 @dynamic linkingUri;
 @dynamic redirectUriRegex;
+@dynamic bankLinkingUri;
 
 typedef struct BankInfo__storage_ {
   uint32_t _has_storage_[1];
   NSString *linkingUri;
   NSString *redirectUriRegex;
+  NSString *bankLinkingUri;
 } BankInfo__storage_;
 
 // This method is threadsafe because it is initially called
@@ -192,6 +204,15 @@ typedef struct BankInfo__storage_ {
         .number = BankInfo_FieldNumber_RedirectUriRegex,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BankInfo__storage_, redirectUriRegex),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankLinkingUri",
+        .dataTypeSpecific.className = NULL,
+        .number = BankInfo_FieldNumber_BankLinkingUri,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(BankInfo__storage_, bankLinkingUri),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

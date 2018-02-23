@@ -86,6 +86,42 @@ BOOL ProfilePictureSize_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - Enum MemberType
+
+GPBEnumDescriptor *MemberType_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidMemberType\000Personal\000Business\000";
+    static const int32_t values[] = {
+        MemberType_InvalidMemberType,
+        MemberType_Personal,
+        MemberType_Business,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MemberType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:MemberType_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL MemberType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case MemberType_InvalidMemberType:
+    case MemberType_Personal:
+    case MemberType_Business:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - MemberAddKeyOperation
 
 @implementation MemberAddKeyOperation
@@ -850,11 +886,13 @@ typedef struct RecoveryRule__storage_ {
 @dynamic hasRecoveryRule, recoveryRule;
 @dynamic lastRecoverySequence;
 @dynamic lastOperationSequence;
+@dynamic type;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
   int32_t lastRecoverySequence;
   int32_t lastOperationSequence;
+  MemberType type;
   NSString *id_p;
   NSString *lastHash;
   NSMutableArray *aliasHashesArray;
@@ -941,6 +979,15 @@ typedef struct Member__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt32,
       },
+      {
+        .name = "type",
+        .dataTypeSpecific.enumDescFunc = MemberType_EnumDescriptor,
+        .number = Member_FieldNumber_Type,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Member__storage_, type),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Member class]
@@ -957,6 +1004,18 @@ typedef struct Member__storage_ {
 }
 
 @end
+
+int32_t Member_Type_RawValue(Member *message) {
+  GPBDescriptor *descriptor = [Member descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Member_FieldNumber_Type];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetMember_Type_RawValue(Member *message, int32_t value) {
+  GPBDescriptor *descriptor = [Member descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Member_FieldNumber_Type];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - AddressRecord
 

@@ -75,6 +75,28 @@ GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void);
  **/
 BOOL ProfilePictureSize_IsValidValue(int32_t value);
 
+#pragma mark - Enum MemberType
+
+typedef GPB_ENUM(MemberType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  MemberType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  MemberType_InvalidMemberType = 0,
+  MemberType_Personal = 1,
+  MemberType_Business = 2,
+};
+
+GPBEnumDescriptor *MemberType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL MemberType_IsValidValue(int32_t value);
+
 #pragma mark - MemberRoot
 
 /**
@@ -401,6 +423,7 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_RecoveryRule = 6,
   Member_FieldNumber_LastRecoverySequence = 7,
   Member_FieldNumber_LastOperationSequence = 8,
+  Member_FieldNumber_Type = 9,
 };
 
 /**
@@ -440,7 +463,22 @@ typedef GPB_ENUM(Member_FieldNumber) {
 /** sequence number for member's last operation */
 @property(nonatomic, readwrite) int32_t lastOperationSequence;
 
+/** type of member */
+@property(nonatomic, readwrite) MemberType type;
+
 @end
+
+/**
+ * Fetches the raw value of a @c Member's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Member_Type_RawValue(Member *message);
+/**
+ * Sets the raw value of an @c Member's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetMember_Type_RawValue(Member *message, int32_t value);
 
 #pragma mark - AddressRecord
 

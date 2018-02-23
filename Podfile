@@ -1,4 +1,4 @@
-TOKEN_PROTOS_VER = "1.0.436"
+TOKEN_PROTOS_VER = "1.0.445"
 FANK_PROTOS_VER = "1.0.9"
 platform :ios, '8.0'
 inhibit_all_warnings!

@@ -44,6 +44,7 @@ CF_EXTERN_C_BEGIN
 @class Token;
 @class TokenMember;
 @class TokenPayload;
+@class TokenPayload_ActingAs;
 @class TokenSignature;
 @class TransferBody;
 @class TransferInstructions;
@@ -278,6 +279,7 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Transfer = 9,
   TokenPayload_FieldNumber_Access = 10,
   TokenPayload_FieldNumber_EndorseUntilMs = 11,
+  TokenPayload_FieldNumber_ActingAs = 12,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -331,12 +333,41 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
 
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload_ActingAs *actingAs;
+/** Test to see if @c actingAs has been set. */
+@property(nonatomic, readwrite) BOOL hasActingAs;
+
 @end
 
 /**
  * Clears whatever value was set for the oneof 'body'.
  **/
 void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
+
+#pragma mark - TokenPayload_ActingAs
+
+typedef GPB_ENUM(TokenPayload_ActingAs_FieldNumber) {
+  TokenPayload_ActingAs_FieldNumber_DisplayName = 1,
+  TokenPayload_ActingAs_FieldNumber_RefId = 2,
+  TokenPayload_ActingAs_FieldNumber_LogoURL = 3,
+};
+
+/**
+ * If a token is being created on behalf of another party, this
+ * field contains a description of that entity.
+ **/
+@interface TokenPayload_ActingAs : GPBMessage
+
+/** Name of recipient, to be shown to user */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *displayName;
+
+/** Optional reference ID of the recipient. Opaque to Token. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
+
+/** URL pointing to recipient's logo */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *logoURL;
+
+@end
 
 #pragma mark - ExternalAuthorizationDetails
 
