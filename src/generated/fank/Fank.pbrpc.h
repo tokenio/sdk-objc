@@ -24,6 +24,8 @@
   @class FankGetNotificationResponse;
   @class FankGetNotificationsRequest;
   @class FankGetNotificationsResponse;
+  @class FankGetOauthAccessTokenRequest;
+  @class FankGetOauthAccessTokenResponse;
 #else
   #import "google/api/Annotations.pbobjc.h"
   #import "Money.pbobjc.h"
@@ -83,6 +85,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(BankAuthorization *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToAuthorizeLinkAccountsGetWithRequest:(FankAuthorizeLinkAccountsRequest *)request handler:(void(^)(BankAuthorization *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetOauthAccessToken(GetOauthAccessTokenRequest) returns (GetOauthAccessTokenResponse)
+
+/**
+ * 
+ * Used by bank-demo to obtain access token.
+ * 
+ */
+- (void)getOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * 
+ * Used by bank-demo to obtain access token.
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)

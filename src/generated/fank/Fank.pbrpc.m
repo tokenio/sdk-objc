@@ -111,6 +111,28 @@
              responseClass:[BankAuthorization class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetOauthAccessToken(GetOauthAccessTokenRequest) returns (GetOauthAccessTokenResponse)
+
+/**
+ * 
+ * Used by bank-demo to obtain access token.
+ * 
+ */
+- (void)getOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetOauthAccessTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Used by bank-demo to obtain access token.
+ * 
+ */
+- (GRPCProtoCall *)RPCToGetOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetOauthAccessToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetOauthAccessTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
 
 /**

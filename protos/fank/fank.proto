@@ -54,6 +54,7 @@ message AddAccountRequest {
   string name = 3;
   string account_number = 4;
   io.token.proto.common.money.Money balance = 5;
+  string profile = 6;
 }
 
 message AddAccountResponse {
@@ -103,6 +104,18 @@ message GetNotificationsResponse {
   repeated io.token.proto.common.notification.Notification notifications = 1;
 }
 
+message GetOauthAccessTokenRequest {
+  string bic = 1;
+  string username = 2;
+  string memberId = 3;
+  repeated Account accounts = 4;
+}
+
+message GetOauthAccessTokenResponse {
+  string access_token = 1;
+  int64 expires_in_ms = 2;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fank testing API, used to create accounts on the fly. Used for testing.
 //
@@ -148,6 +161,15 @@ service FankService {
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
         get: "/banks/{bic}/clients/{client_id}/link-accounts?member-id={memberId}&accounts={accounts}"
+    };
+  }
+
+  //
+  // Used by bank-demo to obtain access token.
+  //
+  rpc GetOauthAccessToken (GetOauthAccessTokenRequest) returns (GetOauthAccessTokenResponse) {
+    option (google.api.http) = {
+        put: "/banks/{bic}/token"
     };
   }
 

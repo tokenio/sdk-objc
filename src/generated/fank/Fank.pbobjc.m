@@ -401,6 +401,7 @@ typedef struct FankGetClientResponse__storage_ {
 @dynamic name;
 @dynamic accountNumber;
 @dynamic hasBalance, balance;
+@dynamic profile;
 
 typedef struct FankAddAccountRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -409,6 +410,7 @@ typedef struct FankAddAccountRequest__storage_ {
   NSString *name;
   NSString *accountNumber;
   Money *balance;
+  NSString *profile;
 } FankAddAccountRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -461,6 +463,15 @@ typedef struct FankAddAccountRequest__storage_ {
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, balance),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "profile",
+        .dataTypeSpecific.className = NULL,
+        .number = FankAddAccountRequest_FieldNumber_Profile,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, profile),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -982,6 +993,141 @@ typedef struct FankGetNotificationsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetOauthAccessTokenRequest
+
+@implementation FankGetOauthAccessTokenRequest
+
+@dynamic bic;
+@dynamic username;
+@dynamic memberId;
+@dynamic accountsArray, accountsArray_Count;
+
+typedef struct FankGetOauthAccessTokenRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bic;
+  NSString *username;
+  NSString *memberId;
+  NSMutableArray *accountsArray;
+} FankGetOauthAccessTokenRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bic",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_Bic,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, bic),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "username",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_Username,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, username),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_MemberId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, memberId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accountsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(FankAccount),
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_AccountsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, accountsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetOauthAccessTokenRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetOauthAccessTokenRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\003\010\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankGetOauthAccessTokenResponse
+
+@implementation FankGetOauthAccessTokenResponse
+
+@dynamic accessToken;
+@dynamic expiresInMs;
+
+typedef struct FankGetOauthAccessTokenResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accessToken;
+  int64_t expiresInMs;
+} FankGetOauthAccessTokenResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accessToken",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenResponse_FieldNumber_AccessToken,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenResponse__storage_, accessToken),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "expiresInMs",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenResponse_FieldNumber_ExpiresInMs,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenResponse__storage_, expiresInMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankGetOauthAccessTokenResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankGetOauthAccessTokenResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

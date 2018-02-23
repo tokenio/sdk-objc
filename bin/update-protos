@@ -1,14 +1,27 @@
 #!/bin/bash
 dir=$(dirname $0)'/..'
 pushd $dir > /dev/null
-currentVersion=$(cat podfile | grep '^TOKEN_PROTOS_VER' | cut -d '"' -f 2)
+
+# Schema used in podfile
+tokenSchema='TOKEN_PROTOS_VER'
+fankSchema='FANK_PROTOS_VER'
+
+currentVersion=$(cat podfile | grep '^'${tokenSchema} | cut -d '"' -f 2)
 lastestVersion=$(jfrog rt search "libs-release/io/token/proto/tokenio-proto-common/*.pom" | grep "path" | tail -n 1 | cut  -d '/' -f 6)
+
+currentFankVersion=$(cat podfile | grep '^'${fankSchema} | cut -d '"' -f 2)
+lastestFankVersion=$(jfrog rt search "libs-release/io/token/fank/tokenio-fank-proto/*/*.pom" | grep "path" | tail -n 1 | cut  -d '/' -f 6)
+
 echo 'The current proto version is '$currentVersion
 echo 'The latest proto version is '$lastestVersion
+echo ''
+echo 'The current fank proto version is '$currentFankVersion
+echo 'The latest fank proto version is '$lastestFankVersion
 
-if [ "$currentVersion" != "$lastestVersion" ]; then
+if [ "$currentVersion" != "$lastestVersion" ] || [ "$currentFankVersion" != "$lastestFankVersion" ]  ; then
     echo 'Updating the proto...'
-    sed -i.bak -E 's/^TOKEN_PROTOS_VER = \"[0-9\.]+\"/TOKEN_PROTOS_VER = \"'$lastestVersion'\"/' Podfile
+    sed -i.bak -E 's/^'${tokenSchema}' = \"[0-9\.]+\"/'${tokenSchema}' = \"'${lastestVersion}'\"/' Podfile
+    sed -i.bak -E 's/^'${fankSchema}' = \"[0-9\.]+\"/'${fankSchema}' = \"'${lastestFankVersion}'\"/' Podfile
     rm Podfile.bak
     pod update
     echo 'Updated to lastest version'
