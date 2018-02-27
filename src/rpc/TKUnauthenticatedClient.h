@@ -126,7 +126,7 @@
           onError:(OnError)onError;
 
 /**
- * Returns a list of all token enabled banks.
+ * Returns a list of token enabled banks.
  *
  * @param onSuccess invoked on success with a list of banks
  */

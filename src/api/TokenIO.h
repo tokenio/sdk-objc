@@ -127,7 +127,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
             onError:(OnError)onError;
 
 /**
- * Returns a list of all token enabled banks.
+ * Returns a list of token enabled banks.
  *
  * @param onSuccess invoked on success
  * @param onError invoked on error
