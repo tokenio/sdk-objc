@@ -296,6 +296,7 @@ message LinkAccountsOauthRequest {
 message LinkAccountsOauthResponse {
   // basic info about newly-linked accounts
   repeated io.token.proto.common.account.Account accounts = 1;
+  io.token.proto.banklink.AccountLinkingStatus status = 2;
 }
 
 message UnlinkAccountsRequest {
@@ -450,6 +451,7 @@ message GetTokensRequest {
     int64 start_time_ms = 3;           // start time
     int64 end_time_ms = 4;             // end time
     Role role = 5;                     // FROM/TO
+    string acting_as_ref_id = 6;       // Optional ref_id of TokenPayload.acting_as
 
     enum Role {
       ANY = 0;
@@ -534,6 +536,7 @@ message GetTransfersRequest {
     int64 end_time_ms = 3;                                                      // Optional time range
     io.token.proto.common.transaction.TransactionStatus transaction_status = 4; // Optional status
     Role role = 5;                                                              // Role. Default: ANY
+    string acting_as_ref_id = 6;                                                // Optional ref_id of TokenPayload.acting_as
 
     enum Role {
       ANY = 0;

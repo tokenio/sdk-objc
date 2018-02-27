@@ -24,6 +24,7 @@ message AccountTag {
 
 // Not all accounts support all Token features.
 message AccountFeatures {
+  bool supports_payment = 1;            // **DEPRECATED** can both send and receive payments
   bool supports_information = 2;        // can get info, e.g., get balance
   bool requires_external_auth = 3;
   bool supports_send_payment = 4;       // can send payments from account

@@ -19,3 +19,10 @@ message OauthBankAuthorization {
   string bank_id = 1;         // Bank ID, e.g., "iron"
   string access_token = 2;    // OAuth access token obtained from a bank
 }
+
+enum AccountLinkingStatus {
+  INVALID = 0;
+  SUCCESS = 1;
+  FAILURE_BANK_AUTHORIZATION_REQUIRED = 2;  // indicates that a bank authorization payload
+                                            // is required in order to complete linking
+}
