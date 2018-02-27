@@ -24,7 +24,7 @@
 
 - (void)testGetBanks {
     [self run: ^(TokenIOSync *tokenIO) {
-        NSArray *banks = [member getBanks];
+        NSArray *banks = [tokenIO getBanks];
         XCTAssertTrue(banks.count > 0);
     }];
 }

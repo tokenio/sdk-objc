@@ -1154,28 +1154,6 @@
              onError:onError];
 }
 
-- (void)getBanks:(OnSuccessWithBanks)onSuccess
-         onError:(OnError)onError {
-    GetBanksRequest *request = [GetBanksRequest message];
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-                           RPCToGetBanksWithRequest:request
-                           handler:
-                           ^(GetBanksResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.banksArray);
-                               } else {
-                                   [errorHandler handle:onError withError:error];
-                               }
-                           }];
-
-    [self _startCall:call
-         withRequest:request
-             onError:onError];
-}
-
 - (void)getBankInfo:(NSString *) bankId
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError {

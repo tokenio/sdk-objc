@@ -99,6 +99,13 @@
 - (TKMemberSync *)getMember:(NSString *)memberId;
 
 /**
+ * Returns a list of token-enabled banks the member can link.
+ *
+ * @return a list of banks
+ */
+- (NSArray<Bank *> *)getBanks;
+
+/**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.
  *
  * @param token payload of a token to be sent

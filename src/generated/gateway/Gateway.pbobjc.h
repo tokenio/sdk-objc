@@ -67,6 +67,7 @@ CF_EXTERN_C_BEGIN
 @class TransactionStepUp;
 @class Transfer;
 @class TransferPayload;
+GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
 GPB_ENUM_FWD_DECLARE(MemberType);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
@@ -1120,6 +1121,7 @@ typedef GPB_ENUM(LinkAccountsOauthRequest_FieldNumber) {
 
 typedef GPB_ENUM(LinkAccountsOauthResponse_FieldNumber) {
   LinkAccountsOauthResponse_FieldNumber_AccountsArray = 1,
+  LinkAccountsOauthResponse_FieldNumber_Status = 2,
 };
 
 @interface LinkAccountsOauthResponse : GPBMessage
@@ -1129,7 +1131,21 @@ typedef GPB_ENUM(LinkAccountsOauthResponse_FieldNumber) {
 /** The number of items in @c accountsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
 
+@property(nonatomic, readwrite) enum AccountLinkingStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c LinkAccountsOauthResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t LinkAccountsOauthResponse_Status_RawValue(LinkAccountsOauthResponse *message);
+/**
+ * Sets the raw value of an @c LinkAccountsOauthResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetLinkAccountsOauthResponse_Status_RawValue(LinkAccountsOauthResponse *message, int32_t value);
 
 #pragma mark - UnlinkAccountsRequest
 
@@ -1660,6 +1676,7 @@ typedef GPB_ENUM(GetTokensRequest_TokenFilter_FieldNumber) {
   GetTokensRequest_TokenFilter_FieldNumber_StartTimeMs = 3,
   GetTokensRequest_TokenFilter_FieldNumber_EndTimeMs = 4,
   GetTokensRequest_TokenFilter_FieldNumber_Role = 5,
+  GetTokensRequest_TokenFilter_FieldNumber_ActingAsRefId = 6,
 };
 
 @interface GetTokensRequest_TokenFilter : GPBMessage
@@ -1678,6 +1695,9 @@ typedef GPB_ENUM(GetTokensRequest_TokenFilter_FieldNumber) {
 
 /** FROM/TO */
 @property(nonatomic, readwrite) GetTokensRequest_TokenFilter_Role role;
+
+/** Optional ref_id of TokenPayload.acting_as */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *actingAsRefId;
 
 @end
 
@@ -1951,6 +1971,7 @@ typedef GPB_ENUM(GetTransfersRequest_TransferFilter_FieldNumber) {
   GetTransfersRequest_TransferFilter_FieldNumber_EndTimeMs = 3,
   GetTransfersRequest_TransferFilter_FieldNumber_TransactionStatus = 4,
   GetTransfersRequest_TransferFilter_FieldNumber_Role = 5,
+  GetTransfersRequest_TransferFilter_FieldNumber_ActingAsRefId = 6,
 };
 
 @interface GetTransfersRequest_TransferFilter : GPBMessage
@@ -1969,6 +1990,9 @@ typedef GPB_ENUM(GetTransfersRequest_TransferFilter_FieldNumber) {
 
 /** Role. Default: ANY */
 @property(nonatomic, readwrite) GetTransfersRequest_TransferFilter_Role role;
+
+/** Optional ref_id of TokenPayload.acting_as */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *actingAsRefId;
 
 @end
 

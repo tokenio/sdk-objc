@@ -2884,9 +2884,11 @@ typedef struct LinkAccountsOauthRequest__storage_ {
 @implementation LinkAccountsOauthResponse
 
 @dynamic accountsArray, accountsArray_Count;
+@dynamic status;
 
 typedef struct LinkAccountsOauthResponse__storage_ {
   uint32_t _has_storage_[1];
+  AccountLinkingStatus status;
   NSMutableArray *accountsArray;
 } LinkAccountsOauthResponse__storage_;
 
@@ -2905,6 +2907,15 @@ typedef struct LinkAccountsOauthResponse__storage_ {
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = AccountLinkingStatus_EnumDescriptor,
+        .number = LinkAccountsOauthResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(LinkAccountsOauthResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[LinkAccountsOauthResponse class]
@@ -2921,6 +2932,18 @@ typedef struct LinkAccountsOauthResponse__storage_ {
 }
 
 @end
+
+int32_t LinkAccountsOauthResponse_Status_RawValue(LinkAccountsOauthResponse *message) {
+  GPBDescriptor *descriptor = [LinkAccountsOauthResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:LinkAccountsOauthResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetLinkAccountsOauthResponse_Status_RawValue(LinkAccountsOauthResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [LinkAccountsOauthResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:LinkAccountsOauthResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - UnlinkAccountsRequest
 
@@ -4453,12 +4476,14 @@ BOOL GetTokensRequest_Type_IsValidValue(int32_t value__) {
 @dynamic startTimeMs;
 @dynamic endTimeMs;
 @dynamic role;
+@dynamic actingAsRefId;
 
 typedef struct GetTokensRequest_TokenFilter__storage_ {
   uint32_t _has_storage_[1];
   GetTokensRequest_TokenFilter_Role role;
   NSString *sourceAccountId;
   NSString *destinationAccountId;
+  NSString *actingAsRefId;
   int64_t startTimeMs;
   int64_t endTimeMs;
 } GetTokensRequest_TokenFilter__storage_;
@@ -4513,6 +4538,15 @@ typedef struct GetTokensRequest_TokenFilter__storage_ {
         .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, role),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "actingAsRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTokensRequest_TokenFilter_FieldNumber_ActingAsRefId,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(GetTokensRequest_TokenFilter__storage_, actingAsRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -5294,12 +5328,14 @@ typedef struct GetTransfersRequest__storage_ {
 @dynamic endTimeMs;
 @dynamic transactionStatus;
 @dynamic role;
+@dynamic actingAsRefId;
 
 typedef struct GetTransfersRequest_TransferFilter__storage_ {
   uint32_t _has_storage_[1];
   TransactionStatus transactionStatus;
   GetTransfersRequest_TransferFilter_Role role;
   NSString *tokenId;
+  NSString *actingAsRefId;
   int64_t startTimeMs;
   int64_t endTimeMs;
 } GetTransfersRequest_TransferFilter__storage_;
@@ -5354,6 +5390,15 @@ typedef struct GetTransfersRequest_TransferFilter__storage_ {
         .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, role),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "actingAsRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransfersRequest_TransferFilter_FieldNumber_ActingAsRefId,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(GetTransfersRequest_TransferFilter__storage_, actingAsRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

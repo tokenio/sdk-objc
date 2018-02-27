@@ -127,6 +127,15 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
             onError:(OnError)onError;
 
 /**
+ * Returns a list of token enabled banks.
+ *
+ * @param onSuccess invoked on success
+ * @param onError invoked on error
+ */
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError;
+
+/**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.
  *
  * @param token payload of a token to be sent

@@ -464,14 +464,6 @@
                   onError:(OnError)onError;
 
 /**
- * Returns a list of all token enabled banks.
- *
- * @param onSuccess invoked on success with a list of banks
- */
-- (void)getBanks:(OnSuccessWithBanks)onSuccess
-         onError:(OnError)onError;
-
-/**
  * Returns linking information for the specified bank id.
  *
  * @param bankId the bank id

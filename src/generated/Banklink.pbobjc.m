@@ -43,6 +43,43 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum AccountLinkingStatus
+
+GPBEnumDescriptor *AccountLinkingStatus_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Success\000FailureBankAuthorization"
+        "Required\000";
+    static const int32_t values[] = {
+        AccountLinkingStatus_Invalid,
+        AccountLinkingStatus_Success,
+        AccountLinkingStatus_FailureBankAuthorizationRequired,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(AccountLinkingStatus)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:AccountLinkingStatus_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL AccountLinkingStatus_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case AccountLinkingStatus_Invalid:
+    case AccountLinkingStatus_Success:
+    case AccountLinkingStatus_FailureBankAuthorizationRequired:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - BankAuthorization
 
 @implementation BankAuthorization
