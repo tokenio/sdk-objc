@@ -102,6 +102,15 @@
     }];
 }
 
+- (NSArray<Bank *> *)getBanks {
+    TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBanks:call.onSuccess
+                     onError:call.onError];
+    }];
+    
+}
+
 - (void)notifyPaymentRequest:(TokenPayload *)token {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{

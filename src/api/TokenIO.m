@@ -217,6 +217,12 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                              onError:onError];
 }
 
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
+    [unauthenticatedClient getBanks:onSuccess
+                            onError:onError];
+}
+
 - (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {

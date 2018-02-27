@@ -508,13 +508,6 @@
             withBlobId:(NSString *)blobId;
 
 /**
- * Returns a list of token-enabled banks the member can link.
- *
- * @return a list of banks
- */
-- (NSArray<Bank *> *)getBanks;
-
-/**
  * Returns linking information for the specified bank id.
  *
  * @param bankId the bank id

@@ -126,6 +126,14 @@
           onError:(OnError)onError;
 
 /**
+ * Returns a list of all token enabled banks.
+ *
+ * @param onSuccess invoked on success with a list of banks
+ */
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError;
+
+/**
  * Sends a notification to request payment.  The from alias in tokenpayload will be notified.
  *
  * @param token payload of a token to be sent

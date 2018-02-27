@@ -106,8 +106,6 @@
     [rpc execute:call request:request];
 }
 
-
-
 - (void)getMember:(NSString *)memberId
         onSuccess:(OnSuccessWithMember)onSuccess
           onError:(OnError)onError {
@@ -201,6 +199,26 @@
                                    [errorHandler handle:onError withError:error];
                                }
                            }];
+    [rpc execute:call request:request];
+}
+
+- (void)getBanks:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
+    GetBanksRequest *request = [GetBanksRequest message];
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBanksWithRequest:request
+                           handler:
+                           ^(GetBanksResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.banksArray);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
     [rpc execute:call request:request];
 }
 
