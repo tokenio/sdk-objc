@@ -30,6 +30,7 @@ Pod::Spec.new do |s|
         ss.public_header_files = gendir
         ss.header_mappings_dir = gendir
         ss.source_files = "#{gendir}/*.pbobjc.m", "#{gendir}/**/*.pbobjc.m", "#{gendir}/**/*.h"
+        ss.exclude_files = "#{gendir}/fank/*"
         ss.requires_arc = false
         ss.dependency "Protobuf"
     end
@@ -43,7 +44,7 @@ Pod::Spec.new do |s|
         ss.requires_arc = true
         ss.public_header_files = "src/api", "src/security", "src/security/se", "src/authorization/", "src/security/token", "src/util"
         ss.ios.public_header_files =  "src/authorization/ios"
-        ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*"
+        ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*", "#{gendir}/fank/*"
         ss.dependency "gRPC-ProtoRPC"
         ss.dependency "#{s.name}/Messages"
         ss.dependency "OrderedDictionary"
