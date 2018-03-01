@@ -11,4 +11,10 @@
 
 @interface TKSecureEnclaveCryptoEngineFactory : NSObject<TKCryptoEngineFactory>
 
+/**
+ * Create TKSecureEnclaveCryptoEngineFactory with customized authentication option.
+ * @param useDevicePasscodeOnly use device passcode to authenticate only.
+ */
++ (id<TKCryptoEngineFactory>)factoryWithAuthenticationOption:(BOOL)useDevicePasscodeOnly;
+
 @end

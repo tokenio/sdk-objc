@@ -11,6 +11,7 @@
 
 @interface TKSecureEnclaveCryptoEngine : NSObject<TKCryptoEngine>
 
-- (id)initWithMemberId:(NSString*)memberId;
+- (id)initWithMemberId:(NSString *)memberId
+  authenticationOption:(BOOL)useDevicePasscodeOnly;
 
 @end

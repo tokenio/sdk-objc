@@ -14,6 +14,7 @@
 #import "TKAccountSync.h"
 #import "TKInMemoryKeyStore.h"
 #import "TKLogManager.h"
+#import "TKTokenCryptoEngineFactory.h"
 
 
 @implementation TKTestBase {
@@ -54,8 +55,9 @@
     builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
     builder.languageCode = @"en";
-    builder.keyStore = [[TKInMemoryKeyStore alloc] init];
-    builder.useLocalAuthentication = NO;
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+    builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
+                                                        useLocalAuthentication:NO];
     return builder;
 }
 

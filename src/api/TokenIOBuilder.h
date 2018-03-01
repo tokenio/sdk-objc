@@ -40,14 +40,12 @@
 /// Use SSL to protect connection?
 @property (readwrite) BOOL useSsl;
 
-/// Crypto key storage. By default, uses Secure Enclave.
-@property (readwrite) id<TKKeyStore> keyStore;
-
 /**
- * If you are using your own key storage, Token crypto engine will ask for local
- * authentication when you sign data by default. Disables this will skip the local authentication.
+ * Set this property if you prefer a customized crypto engine factory.
+ * You can use TKTokenCryptoEngineFactory for a customized keyStore.
+ * Token Sdk will use TKSecureEnclaveCryptoEngineFactory by default.
  */
-@property (readwrite) BOOL useLocalAuthentication;
+@property (readwrite) id<TKCryptoEngineFactory> cryptoEngineFactory;
 
 /// Uses custom grpc certs.
 @property (readwrite, copy) NSString *certsPath;

@@ -27,7 +27,6 @@
         self.port = 9000;
         self.timeoutMs = 60 * 1000; // 60 seconds.
         self.useSsl = YES;
-        self.useLocalAuthentication = YES;
         self.globalRpcErrorCallback = ^(NSError *error) {/* noop default callback */};
     }
 
@@ -40,12 +39,9 @@
 }
 
 - (TokenIO *)buildAsync {
-    id<TKCryptoEngineFactory> cryptoEngineFactory;
-    if (self.keyStore) {
-        cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:self.keyStore
-                                                    useLocalAuthentication:self.useLocalAuthentication];
-    } else {
-        cryptoEngineFactory = [[TKSecureEnclaveCryptoEngineFactory alloc] init];
+    if (!self.cryptoEngineFactory) {
+        self.cryptoEngineFactory =
+        [TKSecureEnclaveCryptoEngineFactory factoryWithAuthenticationOption:false];
     }
     
 #if TARGET_OS_IPHONE
@@ -62,7 +58,7 @@
             timeoutMs:self.timeoutMs
             developerKey:self.developerKey
             languageCode:self.languageCode
-            crypto:cryptoEngineFactory
+            crypto:self.cryptoEngineFactory
             browserFactory:self.browserFactory
             useSsl:self.useSsl
             certsPath:self.certsPath
