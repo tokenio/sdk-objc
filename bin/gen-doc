@@ -12,6 +12,7 @@ $(ruby -rubygems -e 'puts Gem.user_dir')/bin/jazzy \
   --clean \
   --author Token \
   --author_url https://developer.token.io \
+  --docset-path "/tmp/jazzy" \
   --github_url https://github.com/tokenio/sdk-objc \
   --umbrella-header 'src/api/TokenSdk.h' \
   --framework-root 'src' \
