@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
                 "#{gendir}/*.pbrpc.m", "#{gendir}/**/*.pbrpc.m"
         ss.ios.source_files = "src/authorization/ios/*.{h,c,m}"
         ss.requires_arc = true
-        ss.public_header_files = "src/api", "src/security", "src/security/se", "src/authorization/", "src/security/token", "src/util"
+        ss.public_header_files = "src/api", "src/security", "src/security/secureenclave", "src/authorization/", "src/security/token", "src/util"
         ss.ios.public_header_files =  "src/authorization/ios"
         ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*", "#{gendir}/fank/*"
         ss.dependency "gRPC-ProtoRPC"
