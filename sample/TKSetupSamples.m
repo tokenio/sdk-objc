@@ -238,7 +238,7 @@
     __block int prompting = NO;
 
     void (^showPrompt)(NSString *s) = ^(NSString *s) {
-        prompting = true;
+        prompting = YES;
     };
 
     // beginRecovery begin snippet to include in docs
