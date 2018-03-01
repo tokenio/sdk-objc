@@ -272,25 +272,39 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 
 #pragma mark - Member Recovery
 
-- (void)beginMemberRecovery:(NSString *)aliasValue
-                  onSuccess:(OnSuccess)onSuccess
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
                     onError:(OnError)onError {
-    [memberRecoveryManager beginMemberRecovery:aliasValue
+    [memberRecoveryManager beginMemberRecovery:alias
                                      onSuccess:onSuccess
                                        onError:onError];
 }
 
-- (void)verifyMemberRecoveryCode:(NSString *)code
-                       onSuccess:(OnSuccessWithBoolean)onSuccess
-                         onError:(OnError)onError {
-    [memberRecoveryManager verifyMemberRecoveryCode:code
-                                          onSuccess:onSuccess
-                                            onError:onError];
+- (void)verifyMemberRecovery:(Alias *)alias
+                    memberId:(NSString *)memberId
+              verificationId:(NSString *)verificationId
+                        code:(NSString *)code
+                   onSuccess:(OnSuccessWithBoolean)onSuccess
+                     onError:(OnError)onError {
+    [memberRecoveryManager verifyMemberRecovery:alias
+                                       memberId:memberId
+                                 verificationId:verificationId
+                                           code:code
+                                      onSuccess:onSuccess
+                                        onError:onError];
 }
 
-- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+- (void)completeMemberRecovery:(Alias *)alias
+                      memberId:(NSString *)memberId
+                verificationId:(NSString *)verificationId
+                          code:(NSString *)code
+                     onSuccess:(OnSuccessWithTKMember)onSuccess
                        onError:(OnError)onError {
-    [memberRecoveryManager completeMemberRecovery:onSuccess
+    [memberRecoveryManager completeMemberRecovery:alias
+                                         memberId:memberId
+                                   verificationId:verificationId
+                                             code:code
+                                        onSuccess:onSuccess
                                           onError:onError];
 }
 

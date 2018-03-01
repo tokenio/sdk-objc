@@ -152,26 +152,39 @@
  * be sent if the alias is valid. All the member recovery methods shall be called by the same
  * TokenIOSync instance.
  *
- * @param aliasValue alias value to recover
+ * @param alias alias to recover
+ * @return verificationId for the recovery process
  */
-- (void)beginMemberRecovery:(NSString *)aliasValue;
+- (NSString* )beginMemberRecovery:(Alias *)alias;
 
 /**
  * Verifies member recovery code after beginMemberRecovery is successful. All the member recovery
  * methods shall be called by the same TokenIOSync instance.
  *
+ * @param alias alias to recover
+ * @param memberId memberId to recover
+ * @param verificationId verification Id from beginMemberRecovery call
  * @param code code from verification message
  * @return Boolean if the code is correct
  */
-- (BOOL)verifyMemberRecoveryCode:(NSString *)code;
+- (BOOL)verifyMemberRecovery:(Alias *)alias
+                    memberId:(NSString *)memberId
+              verificationId:(NSString *)verificationId
+                        code:(NSString *)code;
 
 /**
  * Completes member recovery process after verifyMemberRecoveryCode is successful. Uploads member's
  * public keys from this device to Token directory. All the member recovery methods shall be called
  * by the same TokenIO instance.
  *
- * @return recovered member
+ * @param alias alias to recover
+ * @param memberId memberId to recover
+ * @param verificationId verification Id from beginMemberRecovery call
+ * @param code code from verification message
  */
-- (TKMemberSync *)completeMemberRecovery;
+- (TKMemberSync *)completeMemberRecovery:(Alias *)alias
+                                memberId:(NSString *)memberId
+                          verificationId:(NSString *)verificationId
+                                    code:(NSString *)code;
 
 @end

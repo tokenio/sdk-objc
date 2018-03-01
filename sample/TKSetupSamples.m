@@ -240,11 +240,13 @@
     void (^showPrompt)(NSString *s) = ^(NSString *s) {
         prompting = YES;
     };
-
+    
+    __block NSString* verificationId = nil;
     // beginRecovery begin snippet to include in docs
-    [tokenIO beginMemberRecovery:memberAliasString
-                       onSuccess:^() {
+    [tokenIO beginMemberRecovery:self.payerAlias
+                       onSuccess:^(NSString *verificationId_) {
                            // prompt user to enter code:
+                           verificationId = verificationId_;
                            showPrompt(@"Enter code emailed to you:");
                        } onError:^(NSError *e) {
                            @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
@@ -261,24 +263,31 @@
     __block TKMember *member = nil;
 
     // completeRecovery begin snippet to include in docs
-    [tokenIO verifyMemberRecoveryCode:userEnteredCode
-                            onSuccess:^(BOOL reallySuccessful) {
-                                if (reallySuccessful) {
-                                    [tokenIO completeMemberRecovery:^(TKMember *newMember) {
-                                        member = newMember;
-                                    } onError:^(NSError *e) {
-                                        @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
-                                                                       reason:[e localizedFailureReason]
-                                                                     userInfo:[e userInfo]];
-                                    }];
-                                } else {
-                                    showPrompt(@"Please try again. Enter code emailed to you:");
-                                }
-                            } onError:^(NSError *e) {
-                                @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
-                                                               reason:[e localizedFailureReason]
-                                                             userInfo:[e userInfo]];
-                            }];
+    [tokenIO verifyMemberRecovery:self.payerAlias
+                         memberId:self.payerSync.id
+                   verificationId:verificationId
+                             code:userEnteredCode
+                        onSuccess:^(BOOL reallySuccessful) {
+                            if (reallySuccessful) {
+                                [tokenIO completeMemberRecovery:self.payerAlias
+                                                       memberId:self.payerSync.id
+                                                 verificationId:verificationId
+                                                           code:userEnteredCode
+                                                      onSuccess:^(TKMember *newMember) {
+                                                          member = newMember;
+                                                      } onError:^(NSError *e) {
+                                                          @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
+                                                                                         reason:[e localizedFailureReason]
+                                                                                       userInfo:[e userInfo]];
+                                                      }];
+                            } else {
+                                showPrompt(@"Please try again. Enter code emailed to you:");
+                            }
+                        } onError:^(NSError *e) {
+                            @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
+                        }];
     // completeRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {

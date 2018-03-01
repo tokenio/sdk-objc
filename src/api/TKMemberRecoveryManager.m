@@ -22,12 +22,7 @@
     NSString *developerKey;
     NSString *languageCode;
     TKRpcErrorHandler *errorHandler;
-    
-    NSString *verificationId;
-    NSString *code;
-    NSString *memberId;
     TKCrypto *crypto;
-    Alias *alias;
     MemberRecoveryOperation *recoveryOperation;
     Member *member;
 }
@@ -55,78 +50,51 @@
         cryptoEngineFactory = cryptoEngineFactory_;
         browserFactory = browserFactory_;
         
-        verificationId = nil;
-        code = nil;
-        memberId = nil;
         crypto = nil;
-        alias = nil;
         recoveryOperation = nil;
         member = nil;
     }
     return self;
 }
 
-- (void)beginMemberRecovery:(NSString *)aliasValue
-                  onSuccess:(OnSuccess)onSuccess
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
                     onError:(OnError)onError {
-    verificationId = nil;
-    code = nil;
-    memberId = nil;
     crypto = nil;
     recoveryOperation = nil;
     member = nil;
-    alias = [Alias message];
-    alias.value = aliasValue;
-    alias.type = Alias_Type_Unknown;
     
     [unauthenticatedClient
-     getTokenMember:alias
-     onSuccess:^(TokenMember *tokenMember) {
-         alias = tokenMember.alias;
-         memberId = tokenMember.id_p;
-         
-         [unauthenticatedClient
-          beginMemberRecovery:alias
-          onSuccess:^(NSString *verificationId_) {
-              verificationId = verificationId_;
-              
-              //Generate keys for later recovery process
-              crypto = [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
-              [crypto generateKeys];
-              
-              onSuccess();
-          }
-          onError:onError];
-     }
+     beginMemberRecovery:alias
+     onSuccess:onSuccess
      onError:onError];
 }
 
-- (void)verifyMemberRecoveryCode:(NSString *)code_
-                       onSuccess:(OnSuccessWithBoolean)onSuccess
-                         onError:(OnError)onError {
-    
+- (void)verifyMemberRecovery:(Alias *)alias
+                    memberId:(NSString *)memberId
+              verificationId:(NSString *)verificationId
+                        code:(NSString *)code
+                   onSuccess:(OnSuccessWithBoolean)onSuccess
+                     onError:(OnError)onError {
     if (crypto == nil) {
-        onError([NSError
-                 errorFromErrorCode:kTKErrorInvalidRecoveryProcess
-                 details:@"Please call beginRecovery before verifyRecoveryCode"]
-                );
+        crypto = [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
+        [crypto generateKeys];
     }
     
     Key *key = [crypto getKeyInfo:Key_Level_Privileged
                            reason:TKLocalizedString(
-                                    @"Signature_Reason_RecoverMember",
-                                    @"Approve to recover a Token member account")
+                                                    @"Signature_Reason_RecoverMember",
+                                                    @"Approve to recover a Token member account")
                           onError:onError];
     if (!key) {
         return;
     }
     [unauthenticatedClient
      getMemberRecoveryOperation:verificationId
-     code:code_
+     code:code
      privilegedKey:key
      onSuccess:^(MemberRecoveryOperation *op) {
          recoveryOperation = op;
-         code = code_;
          onSuccess(true);
      }
      onError:^(NSError* error) {
@@ -140,14 +108,19 @@
      }];
 }
 
-- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+- (void)completeMemberRecovery:(Alias *)alias
+                      memberId:(NSString *)memberId
+                verificationId:(NSString *)verificationId
+                          code:(NSString *)code
+                     onSuccess:(OnSuccessWithTKMember)onSuccess
                        onError:(OnError)onError {
     
     if (crypto == nil) {
         onError([NSError
                  errorFromErrorCode:kTKErrorInvalidRecoveryProcess
-                 details:@"Please call beginRecovery before completeRecovery"]
+                 details:@"Please call verifyRecoveryCode before completeRecovery"]
                 );
+        return;
     }
     
     if (recoveryOperation == nil) {
@@ -155,6 +128,7 @@
                  errorFromErrorCode:kTKErrorInvalidRecoveryProcess
                  details:@"Please call verifyRecoveryCode before completeRecovery"]
                 );
+        return;
     }
     
     NSString *reason = TKLocalizedString(
@@ -187,20 +161,34 @@
          reason:reason
          onSuccess:^(Member *member_) {
              member = member_;
-             [self verifyAlias:onSuccess onError:onError];
+             [self _recoverAlias:alias
+                        memberId:memberId
+                  verificationId:verificationId
+                            code:code
+                       onSuccess:onSuccess
+                         onError:onError];
              
          } onError:onError];
     }
     else {
         // Retries without updating member again.
-        [self verifyAlias:onSuccess onError:onError];
+        [self _recoverAlias:alias
+                   memberId:memberId
+             verificationId:verificationId
+                       code:code
+                  onSuccess:onSuccess
+                    onError:onError];
     }
 }
 
 #pragma mark - Private
 
-- (void)verifyAlias:(OnSuccessWithTKMember)onSuccess
-            onError:(OnError)onError {
+- (void)_recoverAlias:(Alias *)alias
+             memberId:(NSString *)memberId
+       verificationId:(NSString *)verificationId
+                 code:(NSString *)code
+            onSuccess:(OnSuccessWithTKMember)onSuccess
+              onError:(OnError)onError {
     [unauthenticatedClient
      recoverAlias:verificationId
      code:code
