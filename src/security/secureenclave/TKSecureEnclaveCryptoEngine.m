@@ -22,12 +22,15 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
 
 @implementation TKSecureEnclaveCryptoEngine {
     NSString* _memberId;
+    BOOL _useDevicePasscodeOnly;
 }
 
-- (id)initWithMemberId:(NSString *)memberId {
+- (id)initWithMemberId:(NSString *)memberId
+  authenticationOption:(BOOL)useDevicePasscodeOnly {
     self = [super init];
     if (self) {
         _memberId = memberId;
+        _useDevicePasscodeOnly = useDevicePasscodeOnly;
     }
     return self;
 }
@@ -125,7 +128,12 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFErrorRef error = NULL;
     SecAccessControlCreateFlags accessFlags = kSecAccessControlPrivateKeyUsage;
     if (level < Key_Level_Low) {
-        accessFlags |= kSecAccessControlUserPresence; // Will require Touch ID/Passcode
+        if (_useDevicePasscodeOnly) {
+            accessFlags |= kSecAccessControlDevicePasscode; // Will require Passcode
+        }
+        else {
+            accessFlags |= kSecAccessControlUserPresence; // Will require FaceID/Touch ID/Passcode
+        }
     }
     SecAccessControlRef sacObject = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,

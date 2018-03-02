@@ -12,6 +12,7 @@
 #import "DeviceInfo.h"
 #import "TKSampleBase.h"
 #import "TKInMemoryKeyStore.h"
+#import "TKTokenCryptoEngineFactory.h"
 
 // These "tests" are snippets of sample code that get included in
 // our web documentation (plus some test code to make sure the
@@ -116,7 +117,8 @@
     // (as would happen if they used the "regular" keystore).
     id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
     TokenIOBuilder *beforeBuilder = [self sdkBuilder];
-    beforeBuilder.keyStore = store;
+    beforeBuilder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
+                                                              useLocalAuthentication:NO];
     TokenIO *beforeTokenIO = [beforeBuilder buildAsync];
     
     Alias *alias = [Alias new];
@@ -133,7 +135,8 @@
     }];
     NSString *memberId = member.id;
     TokenIOBuilder *builder = [self sdkBuilder];
-    builder.keyStore = store;
+    builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
+                                                        useLocalAuthentication:NO];
     TokenIO *tokenIO = [builder buildAsync];
     
     __block TKMember *loggedInMember;
@@ -159,7 +162,9 @@
     // We have two sdks, one for our new device, one for our "main" device.
     // Each needs its own keystore: provisionDevice _replaces_ keys.
     TokenIOBuilder *builder = [self sdkBuilder];
-    builder.keyStore = [[TKInMemoryKeyStore alloc] init];
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+    builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
+                                                        useLocalAuthentication:NO];
     TokenIO *tokenIO = [builder buildAsync];
     Alias *memberAlias = self.payerAlias;
     __block Key *sentKey = nil;
@@ -226,18 +231,22 @@
     // Create a new SDK client with its own keystore to make sure
     // we don't interfere with/use keys used to create the member
     TokenIOBuilder *builder = [self sdkBuilder];
-    builder.keyStore = [[TKInMemoryKeyStore alloc] init];
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+    builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
+                                                        useLocalAuthentication:NO];
     TokenIO *tokenIO = [builder buildAsync];
-    __block int prompting = false;
+    __block int prompting = NO;
 
     void (^showPrompt)(NSString *s) = ^(NSString *s) {
-        prompting = true;
+        prompting = YES;
     };
-
+    
+    __block NSString* verificationId = nil;
     // beginRecovery begin snippet to include in docs
-    [tokenIO beginMemberRecovery:memberAliasString
-                       onSuccess:^() {
+    [tokenIO beginMemberRecovery:self.payerAlias
+                       onSuccess:^(NSString *verificationId_) {
                            // prompt user to enter code:
+                           verificationId = verificationId_;
                            showPrompt(@"Enter code emailed to you:");
                        } onError:^(NSError *e) {
                            @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
@@ -247,31 +256,38 @@
     // beginRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {
-        return (prompting != false);
+        return (prompting != NO);
     }];
 
     NSString *userEnteredCode = @"1thru6"; // The test users can bypass the verification, so any code works.
     __block TKMember *member = nil;
 
     // completeRecovery begin snippet to include in docs
-    [tokenIO verifyMemberRecoveryCode:userEnteredCode
-                            onSuccess:^(BOOL reallySuccessful) {
-                                if (reallySuccessful) {
-                                    [tokenIO completeMemberRecovery:^(TKMember *newMember) {
-                                        member = newMember;
-                                    } onError:^(NSError *e) {
-                                        @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
-                                                                       reason:[e localizedFailureReason]
-                                                                     userInfo:[e userInfo]];
-                                    }];
-                                } else {
-                                    showPrompt(@"Please try again. Enter code emailed to you:");
-                                }
-                            } onError:^(NSError *e) {
-                                @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
-                                                               reason:[e localizedFailureReason]
-                                                             userInfo:[e userInfo]];
-                            }];
+    [tokenIO verifyMemberRecovery:self.payerAlias
+                         memberId:self.payerSync.id
+                   verificationId:verificationId
+                             code:userEnteredCode
+                        onSuccess:^(BOOL reallySuccessful) {
+                            if (reallySuccessful) {
+                                [tokenIO completeMemberRecovery:self.payerAlias
+                                                       memberId:self.payerSync.id
+                                                 verificationId:verificationId
+                                                           code:userEnteredCode
+                                                      onSuccess:^(TKMember *newMember) {
+                                                          member = newMember;
+                                                      } onError:^(NSError *e) {
+                                                          @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
+                                                                                         reason:[e localizedFailureReason]
+                                                                                       userInfo:[e userInfo]];
+                                                      }];
+                            } else {
+                                showPrompt(@"Please try again. Enter code emailed to you:");
+                            }
+                        } onError:^(NSError *e) {
+                            @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
+                        }];
     // completeRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {

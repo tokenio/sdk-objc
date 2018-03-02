@@ -167,37 +167,50 @@
 
 #pragma mark - Member Recovery
 
-- (void)beginMemberRecovery:(NSString *)aliasValue {
-    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async beginMemberRecovery:aliasValue
-                              onSuccess:^() {
-                                  call.onSuccess(nil);
+- (NSString* )beginMemberRecovery:(Alias *)alias {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async beginMemberRecovery:alias
+                              onSuccess:^(NSString *verificationId) {
+                                  call.onSuccess(verificationId);
                               } onError:call.onError];
     }];
 }
 
 
-- (BOOL)verifyMemberRecoveryCode:(NSString *)code {
+- (BOOL)verifyMemberRecovery:(Alias *)alias
+                    memberId:(NSString *)memberId
+              verificationId:(NSString *)verificationId
+                        code:(NSString *)code {
     TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
     NSNumber *result = [call run:^{
-        [self.async verifyMemberRecoveryCode:code
-                                   onSuccess:^(BOOL correct) {
-                                       call.onSuccess(@(correct));
-                                   }
-                                     onError:call.onError];
+        [self.async verifyMemberRecovery:alias
+                                memberId:memberId
+                          verificationId:verificationId
+                                    code:code
+                               onSuccess:^(BOOL correct) {
+                                   call.onSuccess(@(correct));
+                               }
+                                 onError:call.onError];
     }];
     return [result boolValue];
 }
 
 
-- (TKMemberSync *)completeMemberRecovery {
+- (TKMemberSync *)completeMemberRecovery:(Alias *)alias
+                                memberId:(NSString *)memberId
+                          verificationId:(NSString *)verificationId
+                                    code:(NSString *)code; {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async completeMemberRecovery:^(TKMember *member) {
-            TKMemberSync* memberSync = [TKMemberSync member:member];
-            call.onSuccess(memberSync);
-        }
+        [self.async completeMemberRecovery:alias
+                                  memberId:memberId
+                            verificationId:verificationId
+                                      code:code
+                                 onSuccess:^(TKMember *member) {
+                                     TKMemberSync* memberSync = [TKMemberSync member:member];
+                                     call.onSuccess(memberSync);
+                                 }
                                    onError:call.onError];
     }];
 }

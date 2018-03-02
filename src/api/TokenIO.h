@@ -198,35 +198,50 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
  * be sent if the alias is valid. All the member recovery methods shall be called by the same
  * TokenIO instance.
  *
- * @param aliasValue alias value to recover
- * @param onSuccess invoked if successful
+ * @param alias alias to recover
+ * @param onSuccess invoked if successful with verification Id
  * @param onError invoked if failed
  */
-- (void)beginMemberRecovery:(NSString *)aliasValue
-                  onSuccess:(OnSuccess)onSuccess
+
+- (void)beginMemberRecovery:(Alias *)alias
+                  onSuccess:(OnSuccessWithString)onSuccess
                     onError:(OnError)onError;
 
 /**
  * Verifies member recovery code after beginMemberRecovery is successful. All the member recovery
  * methods shall be called by the same TokenIO instance.
  *
+ * @param alias alias to recover
+ * @param memberId memberId to recover
+ * @param verificationId verification Id from beginMemberRecovery call
  * @param code code from verification message
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)verifyMemberRecoveryCode:(NSString *)code
-                       onSuccess:(OnSuccessWithBoolean)onSuccess
-                         onError:(OnError)onError;
+- (void)verifyMemberRecovery:(Alias *)alias
+                    memberId:(NSString *)memberId
+              verificationId:(NSString *)verificationId
+                        code:(NSString *)code
+                   onSuccess:(OnSuccessWithBoolean)onSuccess
+                     onError:(OnError)onError;
 
 /**
  * Completes member recovery process after verifyMemberRecoveryCode is successful. Uploads member's
  * public keys from this device to Token directory. All the member recovery methods shall be called
  * by the same TokenIO instance.
  *
+ * @param alias alias to recover
+ * @param memberId memberId to recover
+ * @param verificationId verification Id from beginMemberRecovery call
+ * @param code code from verification message
  * @param onSuccess invoked if successful with TkMember
  * @param onError invoked if failed
  */
-- (void)completeMemberRecovery:(OnSuccessWithTKMember)onSuccess
+- (void)completeMemberRecovery:(Alias *)alias
+                      memberId:(NSString *)memberId
+                verificationId:(NSString *)verificationId
+                          code:(NSString *)code
+                     onSuccess:(OnSuccessWithTKMember)onSuccess
                        onError:(OnError)onError;
 
 @end
