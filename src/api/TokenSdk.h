@@ -13,7 +13,7 @@
 #import "TKAccountSync.h"
 #import "TKAccount.h"
 #import "TKBalance.h"
-#import "TKCryptoEngineFactory.h"
+#import "TKTokenCryptoEngineFactory.h"
 #import "TKMemberSync.h"
 #import "TKMember.h"
 #import "TKInMemoryKeyStore.h"
