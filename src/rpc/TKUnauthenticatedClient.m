@@ -12,6 +12,7 @@
 #import "TKLocalizer.h"
 #import "TKRpcErrorHandler.h"
 #import "TKHasher.h"
+#import "TKUtil.h"
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;

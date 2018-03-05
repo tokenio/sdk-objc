@@ -4,9 +4,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Security.pbobjc.h"
 #import "Token.pbobjc.h"
-#import "TokenSdk.h"
-
+#import "TKTypedef.h"
 
 @class TKSignature;
 @protocol TKCryptoEngine;
