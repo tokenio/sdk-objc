@@ -4,7 +4,6 @@
 //
 
 #import "TKCrypto.h"
-#import "TokenSdk.h"
 
 /**
  * Defines a set of methods that deal with crypto, key generation, method

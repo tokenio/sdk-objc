@@ -6,6 +6,7 @@
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 
+#import "TKMember.h"
 #import "TKMemberSync.h"
 #import "TKClient.h"
 #import "TKAccount.h"

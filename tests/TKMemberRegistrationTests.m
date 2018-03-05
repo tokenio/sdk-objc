@@ -3,6 +3,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
+#import "TokenSdk.h"
 #import "TKCrypto.h"
 #import "TKTestBase.h"
 #import "DeviceInfo.h"
