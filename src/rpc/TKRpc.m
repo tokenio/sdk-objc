@@ -12,6 +12,7 @@
 #import "TKLocalizer.h"
 #import "TKLogManager.h"
 #import "TKJson.h"
+#import "TKUtil.h"
 
 NSString *const kTokenRealm = @"Token";
 NSString *const kTokenScheme = @"Token-Ed25519-SHA512";

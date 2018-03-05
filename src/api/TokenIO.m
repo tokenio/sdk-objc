@@ -9,6 +9,7 @@
 #import <GRPCClient/GRPCCall+Tests.h>
 
 #import "gateway/Gateway.pbrpc.h"
+#import "TKMember.h"
 #import "TKMemberSync.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
