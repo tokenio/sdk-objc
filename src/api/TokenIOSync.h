@@ -13,6 +13,7 @@
 @class TokenIO;
 @class DeviceInfo;
 @class TokenPayload;
+@class DeviceMetadata;
 
 /**
  * Use this class to create a new member with `createMember`
@@ -122,15 +123,15 @@
              authorization:(BankAuthorization *)authorization;
 
 /**
- * Sends a notification to request adding of a key
+ * Sends a notification to request adding keys
  *
  * @param alias alias to notify
- * @param key key in string form
- * @param keyName optional name of key
+ * @param keys list of new keys to add
+ * @param deviceMetadata device metadata of the keys
  */
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key;
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata;
 
 /**
  * Sends a notification to request linking of accounts and adding of a key

@@ -114,10 +114,13 @@ void check(NSString *message, BOOL condition) {
 - (void)testNotifyAddKey {
     [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        Key *key = [[payerAnotherDevice keys] firstObject];
+        DeviceMetadata *metadata = [DeviceMetadata message];
+        metadata.application = @"Chrome";
+        metadata.applicationVersion = @"53.0";
+        metadata.device = @"Mac";
         [tokenIO notifyAddKey:payer.firstAlias
-                      keyName:@"Chrome 53.0"
-                          key:key];
+                         keys:[payerAnotherDevice keys]
+               deviceMetadata:metadata];
 
         [self waitForNotification:@"ADD_KEY"];
     }];
@@ -127,9 +130,13 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
+        DeviceMetadata *metadata = [DeviceMetadata message];
+        metadata.application = @"Chrome";
+        metadata.applicationVersion = @"53.0";
+        metadata.device = @"Mac";
         [tokenIO notifyAddKey:payer.firstAlias
-                      keyName:@"Chrome 53.0"
-                          key:key];
+                         keys:@[key]
+               deviceMetadata:metadata];
 
         [self waitForNotification:@"ADD_KEY"];
         [payer approveKey:key];
@@ -145,9 +152,13 @@ void check(NSString *message, BOOL condition) {
     [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         Key *key = [[payerAnotherDevice keys] firstObject];
+        DeviceMetadata *metadata = [DeviceMetadata message];
+        metadata.application = @"Chrome";
+        metadata.applicationVersion = @"53.0";
+        metadata.device = @"Mac";
         [tokenIO notifyAddKey:payer.firstAlias
-                      keyName:@"Chrome 53.0"
-                          key:key];
+                         keys:@[key]
+               deviceMetadata:metadata];
 
         [self waitForNotification:@"ADD_KEY"];
 
@@ -270,7 +281,13 @@ void check(NSString *message, BOOL condition) {
 
         
         Key *key = [[payerAnotherDevice keys] firstObject];
-        [tokenIO notifyAddKey:payer.firstAlias keyName:@"Chrome 53.0" key:key];
+        DeviceMetadata *metadata = [DeviceMetadata message];
+        metadata.application = @"Chrome";
+        metadata.applicationVersion = @"53.0";
+        metadata.device = @"Mac";
+        [tokenIO notifyAddKey:payer.firstAlias
+                         keys:@[key]
+               deviceMetadata:metadata];
 
         [self waitForNotification:@"ADD_KEY"];
     }];

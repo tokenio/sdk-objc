@@ -245,13 +245,13 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
 }
 
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     [unauthenticatedClient notifyAddKey:alias
-                                keyName:keyName
-                                    key:key
+                                   keys:keys
+                         deviceMetadata:deviceMetadata
                               onSuccess:onSuccess
                                 onError:onError];
 }
