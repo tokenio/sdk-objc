@@ -169,14 +169,17 @@
     Alias *memberAlias = self.payerAlias;
     __block Key *sentKey = nil;
     
+    DeviceMetadata *metadata = [DeviceMetadata message];
+    metadata.application = @"Token Test";
+    metadata.device = @"iPhone";
     // provisionNotify begin snippet to include in docs
     [tokenIO provisionDevice:memberAlias
                    onSuccess:^(DeviceInfo *di) {
                        for (Key* k in di.keys) {
                            if (k.level == Key_Level_Low) {
                                [tokenIO notifyAddKey:memberAlias
-                                             keyName:@"Sample"
-                                                 key:k
+                                             keys:@[k]
+                                      deviceMetadata:metadata
                                            onSuccess:^() {
                                                sentKey = k;
                                            } onError:^(NSError *e) {

@@ -134,13 +134,13 @@
 }
 
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key {
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata {
     TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
     [call run:^{
         [self.async notifyAddKey:alias
-                         keyName:keyName
-                             key:key
+                            keys:keys
+                  deviceMetadata:deviceMetadata
                        onSuccess:^(void) {
                            call.onSuccess(nil);
                        }

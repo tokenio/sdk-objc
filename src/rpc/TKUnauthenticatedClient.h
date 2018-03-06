@@ -158,17 +158,17 @@
                    onError:(OnError)onError;
 
 /**
- * Sends a notification to request adding of a key
+ * Sends a notification to request adding keys
  *
  * @param alias alias to notify
- * @param keyName optional key name
- * @param key key in string form
+ * @param keys list of new keys to add
+ * @param deviceMetadata device metadata of the keys. It will be shown in the pop up.
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError;
 

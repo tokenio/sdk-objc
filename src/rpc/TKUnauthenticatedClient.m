@@ -266,14 +266,15 @@
 }
 
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     NotifyRequest *request = [NotifyRequest message];
     request.alias = alias;
-    request.body.addKey.name = keyName;
-    request.body.addKey.key = key;
+    request.body.addKey.keysArray = [NSMutableArray arrayWithArray:keys];
+    request.body.addKey.deviceMetadata = deviceMetadata;
+    
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway

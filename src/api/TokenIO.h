@@ -19,6 +19,7 @@
 @protocol TKCryptoEngineFactory;
 @class TokenPayload;
 @class Key;
+@class DeviceMetadata;
 
 /**
  * Use this class to create a new member with `createMember`
@@ -160,17 +161,17 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
                    onError:(OnError)onError;
 
 /**
- * Sends a notification to request adding of a key
+ * Sends a notification to request adding keys
  *
  * @param alias alias to notify
- * @param keyName optional name of key
- * @param key the key
+ * @param keys list of new keys to add
+ * @param deviceMetadata device metadata of the keys. It will be shown in the pop up.
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
 - (void)notifyAddKey:(Alias *)alias
-             keyName:(NSString *)keyName
-                 key:(Key *)key
+                keys:(NSArray<Key *> *)keys
+      deviceMetadata:(DeviceMetadata *)deviceMetadata
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError;
 
