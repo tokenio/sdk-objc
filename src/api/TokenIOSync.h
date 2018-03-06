@@ -127,7 +127,7 @@
  *
  * @param alias alias to notify
  * @param keys list of new keys to add
- * @param deviceMetadata device metadata of the keys
+ * @param deviceMetadata device metadata of the keys. It will be shown in the pop up.
  */
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys

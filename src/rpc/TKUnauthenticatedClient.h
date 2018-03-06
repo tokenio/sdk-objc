@@ -162,7 +162,7 @@
  *
  * @param alias alias to notify
  * @param keys list of new keys to add
- * @param deviceMetadata device metadata of the keys
+ * @param deviceMetadata device metadata of the keys. It will be shown in the pop up.
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
