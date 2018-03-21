@@ -100,11 +100,24 @@
 - (TKMemberSync *)getMember:(NSString *)memberId;
 
 /**
- * Returns a list of token-enabled banks the member can link.
+ * Returns a list of token enabled banks.
  *
+ * @param bankIds If specified, return banks whose 'id' matches any one of the given ids
+ * (case-insensitive). Can be at most 1000.
+ * @param search If specified, return banks whose 'name' or 'identifier' contains the given
+ * search string (case-insensitive)
+ * @param country If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2
+ * country code (case-insensitive)
+ * @param page Result page to retrieve. Default to 1 if not specified.
+ * @param perPage Maximum number of records per page. Can be at most 200. Default to 200
+ * if not specified.
  * @return a list of banks
  */
-- (NSArray<Bank *> *)getBanks;
+- (NSArray<Bank *> *)getBanks:(NSArray<NSString *> *)bankIds
+                       search:(NSString *)search
+                      country:(NSString *)country
+                         page:(int)page
+                      perPage:(int)perPage;
 
 /**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.

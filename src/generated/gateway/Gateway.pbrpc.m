@@ -830,6 +830,18 @@
              responseClass:[GetTransactionsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
+
+- (void)applyScaWithRequest:(ApplyScaRequest *)request handler:(void(^)(ApplyScaResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToApplyScaWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToApplyScaWithRequest:(ApplyScaRequest *)request handler:(void(^)(ApplyScaResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ApplySca"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ApplyScaResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
 
 /**
@@ -1010,6 +1022,50 @@
              responseClass:[GetTokenBlobResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark StoreTokenRequest(StoreTokenRequestRequest) returns (StoreTokenRequestResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens Requests.
+ * 
+ * 
+ * Store a Token Request
+ */
+- (void)storeTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToStoreTokenRequestWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens Requests.
+ * 
+ * 
+ * Store a Token Request
+ */
+- (GRPCProtoCall *)RPCToStoreTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"StoreTokenRequest"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[StoreTokenRequestResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark RetrieveTokenRequest(RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse)
+
+/**
+ * Retrviee a Token Request
+ */
+- (void)retrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToRetrieveTokenRequestWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Retrviee a Token Request
+ */
+- (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"RetrieveTokenRequest"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[RetrieveTokenRequestResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
@@ -1170,6 +1226,24 @@
   return [self RPCToMethod:@"ReplaceToken"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ReplaceTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark RequestSignature(RequestSignatureRequest) returns (RequestSignatureResponse)
+
+/**
+ * Request a Token signature
+ */
+- (void)requestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToRequestSignatureWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Request a Token signature
+ */
+- (GRPCProtoCall *)RPCToRequestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"RequestSignature"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[RequestSignatureResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)

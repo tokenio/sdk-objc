@@ -266,6 +266,8 @@ typedef struct AccountFeatures__storage_ {
 @dynamic tagsArray, tagsArray_Count;
 @dynamic isLocked;
 @dynamic hasAccountFeatures, accountFeatures;
+@dynamic lastCacheUpdateMs;
+@dynamic nextCacheUpdateMs;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
@@ -274,6 +276,8 @@ typedef struct Account__storage_ {
   NSString *bankId;
   NSMutableArray *tagsArray;
   AccountFeatures *accountFeatures;
+  int64_t lastCacheUpdateMs;
+  int64_t nextCacheUpdateMs;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -335,6 +339,24 @@ typedef struct Account__storage_ {
         .offset = (uint32_t)offsetof(Account__storage_, accountFeatures),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "lastCacheUpdateMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Account_FieldNumber_LastCacheUpdateMs,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Account__storage_, lastCacheUpdateMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "nextCacheUpdateMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Account_FieldNumber_NextCacheUpdateMs,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(Account__storage_, nextCacheUpdateMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -183,6 +183,71 @@ typedef struct Token__storage_ {
 
 @end
 
+#pragma mark - TokenRequest
+
+@implementation TokenRequest
+
+@dynamic id_p;
+@dynamic hasPayload, payload;
+@dynamic options, options_Count;
+
+typedef struct TokenRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *id_p;
+  TokenPayload *payload;
+  NSMutableDictionary *options;
+} TokenRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequest_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TokenRequest__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = TokenRequest_FieldNumber_Payload,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TokenRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "options",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequest_FieldNumber_Options,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(TokenRequest__storage_, options),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TokenRequest class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TokenRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - TokenSignature
 
 @implementation TokenSignature
@@ -1342,6 +1407,60 @@ BOOL TokenOperationResult_Status_IsValidValue(int32_t value__) {
       return NO;
   }
 }
+
+#pragma mark - RequestSignaturePayload
+
+@implementation RequestSignaturePayload
+
+@dynamic tokenId;
+@dynamic state;
+
+typedef struct RequestSignaturePayload__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
+  NSString *state;
+} RequestSignaturePayload__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = RequestSignaturePayload_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestSignaturePayload__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "state",
+        .dataTypeSpecific.className = NULL,
+        .number = RequestSignaturePayload_FieldNumber_State,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestSignaturePayload__storage_, state),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestSignaturePayload class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestSignaturePayload__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 
 #pragma clang diagnostic pop

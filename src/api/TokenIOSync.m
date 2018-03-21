@@ -102,10 +102,19 @@
     }];
 }
 
-- (NSArray<Bank *> *)getBanks {
+- (NSArray<Bank *> *)getBanks:(NSArray<NSString *> *)bankIds
+                       search:(NSString *)search
+                      country:(NSString *)country
+                         page:(int)page
+                      perPage:(int)perPage; {
     TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async getBanks:call.onSuccess
+        [self.async getBanks:bankIds
+                      search:search
+                     country:country
+                        page:page
+                     perPage:perPage
+                   onSuccess:call.onSuccess
                      onError:call.onError];
     }];
     

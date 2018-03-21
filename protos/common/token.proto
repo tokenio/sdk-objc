@@ -21,6 +21,12 @@ message Token {
   string replaced_by_token_id = 4;                        // ID of the latest token replacing it
 }
 
+message TokenRequest {
+  string id = 1;                                          // request id
+  TokenPayload payload = 2;                               // token payload
+  map<string, string> options = 3;                        // generic string map of options
+}
+
 message TokenSignature {
   // List of valid actions that one can perform on the Token. We use lowercase string value
   // of the action when computing a signature.
@@ -185,3 +191,13 @@ message TokenOperationResult {
     MORE_SIGNATURES_NEEDED = 2;
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Request signature
+//
+
+message RequestSignaturePayload {
+  string token_id = 1;
+  string state = 2;
+}
+

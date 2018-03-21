@@ -56,6 +56,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_RequiresExternalAuth = 8,
   Bank_FieldNumber_SupportsSendPayment = 9,
   Bank_FieldNumber_SupportsReceivePayment = 10,
+  Bank_FieldNumber_Provider = 11,
+  Bank_FieldNumber_Country = 12,
+  Bank_FieldNumber_Identifier = 13,
 };
 
 @interface Bank : GPBMessage
@@ -85,6 +88,15 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Connection allows for receiving payments */
 @property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
+/** Provider of the bank, e.g. Yodlee, FinApi, Token */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
+
+/** The ISO 3166-1 alpha-2 two letter country code in upper case. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
+
+/** Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *identifier;
+
 @end
 
 #pragma mark - BankInfo
@@ -111,6 +123,31 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
 
 /** OAuth starting URI */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankLinkingUri;
+
+@end
+
+#pragma mark - Paging
+
+typedef GPB_ENUM(Paging_FieldNumber) {
+  Paging_FieldNumber_Page = 1,
+  Paging_FieldNumber_PerPage = 2,
+  Paging_FieldNumber_PageCount = 3,
+  Paging_FieldNumber_TotalCount = 4,
+};
+
+@interface Paging : GPBMessage
+
+/** Index of current page */
+@property(nonatomic, readwrite) int32_t page;
+
+/** Number of records per page */
+@property(nonatomic, readwrite) int32_t perPage;
+
+/** Number of pages in total */
+@property(nonatomic, readwrite) int32_t pageCount;
+
+/** Number of records in total */
+@property(nonatomic, readwrite) int32_t totalCount;
 
 @end
 

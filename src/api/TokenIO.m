@@ -218,9 +218,19 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                              onError:onError];
 }
 
-- (void)getBanks:(OnSuccessWithBanks)onSuccess
+- (void)getBanks:(NSArray<NSString *> *)bankIds
+          search:(NSString *)search
+         country:(NSString *)country
+            page:(int)page
+         perPage:(int)perPage
+       onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
-    [unauthenticatedClient getBanks:onSuccess
+    [unauthenticatedClient getBanks:bankIds
+                             search:search
+                            country:country
+                               page:page
+                            perPage:perPage
+                          onSuccess:onSuccess
                             onError:onError];
 }
 

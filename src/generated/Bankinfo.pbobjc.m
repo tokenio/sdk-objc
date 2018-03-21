@@ -55,6 +55,9 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic requiresExternalAuth;
 @dynamic supportsSendPayment;
 @dynamic supportsReceivePayment;
+@dynamic provider;
+@dynamic country;
+@dynamic identifier;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[1];
@@ -62,6 +65,9 @@ typedef struct Bank__storage_ {
   NSString *name;
   NSString *logoUri;
   NSString *fullLogoUri;
+  NSString *provider;
+  NSString *country;
+  NSString *identifier;
 } Bank__storage_;
 
 // This method is threadsafe because it is initially called
@@ -151,6 +157,33 @@ typedef struct Bank__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
+      {
+        .name = "provider",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_Provider,
+        .hasIndex = 14,
+        .offset = (uint32_t)offsetof(Bank__storage_, provider),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "country",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_Country,
+        .hasIndex = 15,
+        .offset = (uint32_t)offsetof(Bank__storage_, country),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "identifier",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_Identifier,
+        .hasIndex = 16,
+        .offset = (uint32_t)offsetof(Bank__storage_, identifier),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Bank class]
@@ -224,6 +257,82 @@ typedef struct BankInfo__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankInfo__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Paging
+
+@implementation Paging
+
+@dynamic page;
+@dynamic perPage;
+@dynamic pageCount;
+@dynamic totalCount;
+
+typedef struct Paging__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t page;
+  int32_t perPage;
+  int32_t pageCount;
+  int32_t totalCount;
+} Paging__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "page",
+        .dataTypeSpecific.className = NULL,
+        .number = Paging_FieldNumber_Page,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Paging__storage_, page),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "perPage",
+        .dataTypeSpecific.className = NULL,
+        .number = Paging_FieldNumber_PerPage,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Paging__storage_, perPage),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "pageCount",
+        .dataTypeSpecific.className = NULL,
+        .number = Paging_FieldNumber_PageCount,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Paging__storage_, pageCount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "totalCount",
+        .dataTypeSpecific.className = NULL,
+        .number = Paging_FieldNumber_TotalCount,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Paging__storage_, totalCount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Paging class]
+                                     rootClass:[BankinfoRoot class]
+                                          file:BankinfoRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Paging__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

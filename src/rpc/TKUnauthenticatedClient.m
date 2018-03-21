@@ -203,9 +203,19 @@
     [rpc execute:call request:request];
 }
 
-- (void)getBanks:(OnSuccessWithBanks)onSuccess
+- (void)getBanks:(NSArray<NSString *> *)bankIds
+          search:(NSString *)search
+         country:(NSString *)country
+            page:(int)page
+         perPage:(int)perPage
+       onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     GetBanksRequest *request = [GetBanksRequest message];
+    request.idsArray = [NSMutableArray arrayWithArray:bankIds];
+    request.search = search;
+    request.country = country;
+    request.page = page;
+    request.perPage = perPage;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

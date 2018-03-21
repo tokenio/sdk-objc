@@ -53,9 +53,11 @@ CF_EXTERN_C_BEGIN
 @class NotifyBody;
 @class OauthBankAuthorization;
 @class Page;
+@class Paging;
 @class Profile;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
+@class RequestSignaturePayload;
 @class Signature;
 @class StepUp;
 @class Subscriber;
@@ -63,6 +65,7 @@ CF_EXTERN_C_BEGIN
 @class TokenMember;
 @class TokenOperationResult;
 @class TokenPayload;
+@class TokenRequest;
 @class Transaction;
 @class TransactionStepUp;
 @class Transfer;
@@ -1382,6 +1385,26 @@ int32_t GetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message
  **/
 void SetGetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message, int32_t value);
 
+#pragma mark - ApplyScaRequest
+
+typedef GPB_ENUM(ApplyScaRequest_FieldNumber) {
+  ApplyScaRequest_FieldNumber_AccountIdArray = 1,
+};
+
+@interface ApplyScaRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *accountIdArray;
+/** The number of items in @c accountIdArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger accountIdArray_Count;
+
+@end
+
+#pragma mark - ApplyScaResponse
+
+@interface ApplyScaResponse : GPBMessage
+
+@end
+
 #pragma mark - GetDefaultAccountRequest
 
 typedef GPB_ENUM(GetDefaultAccountRequest_FieldNumber) {
@@ -1518,6 +1541,65 @@ typedef GPB_ENUM(GetTokenBlobResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Blob *blob;
 /** Test to see if @c blob has been set. */
 @property(nonatomic, readwrite) BOOL hasBlob;
+
+@end
+
+#pragma mark - StoreTokenRequestRequest
+
+typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
+  StoreTokenRequestRequest_FieldNumber_Payload = 1,
+  StoreTokenRequestRequest_FieldNumber_Options = 2,
+};
+
+@interface StoreTokenRequestRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
+/** The number of items in @c options without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger options_Count;
+
+@end
+
+#pragma mark - StoreTokenRequestResponse
+
+typedef GPB_ENUM(StoreTokenRequestResponse_FieldNumber) {
+  StoreTokenRequestResponse_FieldNumber_TokenRequest = 1,
+};
+
+@interface StoreTokenRequestResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequest *tokenRequest;
+/** Test to see if @c tokenRequest has been set. */
+@property(nonatomic, readwrite) BOOL hasTokenRequest;
+
+@end
+
+#pragma mark - RetrieveTokenRequestRequest
+
+typedef GPB_ENUM(RetrieveTokenRequestRequest_FieldNumber) {
+  RetrieveTokenRequestRequest_FieldNumber_RequestId = 1,
+};
+
+@interface RetrieveTokenRequestRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *requestId;
+
+@end
+
+#pragma mark - RetrieveTokenRequestResponse
+
+typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
+  RetrieveTokenRequestResponse_FieldNumber_TokenRequest = 1,
+};
+
+@interface RetrieveTokenRequestResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequest *tokenRequest;
+/** Test to see if @c tokenRequest has been set. */
+@property(nonatomic, readwrite) BOOL hasTokenRequest;
 
 @end
 
@@ -1874,6 +1956,34 @@ typedef GPB_ENUM(ReplaceTokenResponse_FieldNumber) {
 
 @end
 
+#pragma mark - RequestSignatureRequest
+
+typedef GPB_ENUM(RequestSignatureRequest_FieldNumber) {
+  RequestSignatureRequest_FieldNumber_Payload = 1,
+};
+
+@interface RequestSignatureRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) RequestSignaturePayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@end
+
+#pragma mark - RequestSignatureResponse
+
+typedef GPB_ENUM(RequestSignatureResponse_FieldNumber) {
+  RequestSignatureResponse_FieldNumber_Signature = 1,
+};
+
+@interface RequestSignatureResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
 #pragma mark - CreateTransferRequest
 
 typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
@@ -2041,7 +2151,32 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 
 #pragma mark - GetBanksRequest
 
+typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
+  GetBanksRequest_FieldNumber_IdsArray = 1,
+  GetBanksRequest_FieldNumber_Search = 2,
+  GetBanksRequest_FieldNumber_Country = 3,
+  GetBanksRequest_FieldNumber_Page = 4,
+  GetBanksRequest_FieldNumber_PerPage = 5,
+};
+
 @interface GetBanksRequest : GPBMessage
+
+/** If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray;
+/** The number of items in @c idsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger idsArray_Count;
+
+/** If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *search;
+
+/** If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
+
+/** Result page to retrieve. Default to 1 if not specified */
+@property(nonatomic, readwrite) int32_t page;
+
+/** Maximum number of records per page. Can be at most 200. Default to 200 if not specified. */
+@property(nonatomic, readwrite) int32_t perPage;
 
 @end
 
@@ -2049,6 +2184,7 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetBanksResponse_FieldNumber) {
   GetBanksResponse_FieldNumber_BanksArray = 1,
+  GetBanksResponse_FieldNumber_Paging = 2,
 };
 
 @interface GetBanksResponse : GPBMessage
@@ -2057,6 +2193,11 @@ typedef GPB_ENUM(GetBanksResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Bank*> *banksArray;
 /** The number of items in @c banksArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger banksArray_Count;
+
+/** Paging info */
+@property(nonatomic, readwrite, strong, null_resettable) Paging *paging;
+/** Test to see if @c paging has been set. */
+@property(nonatomic, readwrite) BOOL hasPaging;
 
 @end
 

@@ -887,6 +887,7 @@ typedef struct RecoveryRule__storage_ {
 @dynamic lastRecoverySequence;
 @dynamic lastOperationSequence;
 @dynamic type;
+@dynamic tppId;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
@@ -899,6 +900,7 @@ typedef struct Member__storage_ {
   NSMutableArray *keysArray;
   NSMutableArray *unverifiedAliasHashesArray;
   RecoveryRule *recoveryRule;
+  NSString *tppId;
 } Member__storage_;
 
 // This method is threadsafe because it is initially called
@@ -987,6 +989,15 @@ typedef struct Member__storage_ {
         .offset = (uint32_t)offsetof(Member__storage_, type),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "tppId",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_TppId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Member__storage_, tppId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

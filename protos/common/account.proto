@@ -39,6 +39,8 @@ message Account {
   repeated AccountTag tags = 4;
   bool is_locked = 5;                   // indicates whether account requires re-linking (perhaps after member recovery)
   AccountFeatures account_features = 6; // features account supports
+  int64 last_cache_update_ms = 7;       // timestamp of the last time the balance/transaction cache was updated for that account
+  int64 next_cache_update_ms = 8;       // timestamp of the next scheduled time to update the balance/transaction cache for that account
 }
 
 // Account information. This is what the end user links with

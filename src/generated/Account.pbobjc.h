@@ -147,6 +147,8 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_TagsArray = 4,
   Account_FieldNumber_IsLocked = 5,
   Account_FieldNumber_AccountFeatures = 6,
+  Account_FieldNumber_LastCacheUpdateMs = 7,
+  Account_FieldNumber_NextCacheUpdateMs = 8,
 };
 
 /**
@@ -174,6 +176,12 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) AccountFeatures *accountFeatures;
 /** Test to see if @c accountFeatures has been set. */
 @property(nonatomic, readwrite) BOOL hasAccountFeatures;
+
+/** timestamp of the last time the balance/transaction cache was updated for that account */
+@property(nonatomic, readwrite) int64_t lastCacheUpdateMs;
+
+/** timestamp of the next scheduled time to update the balance/transaction cache for that account */
+@property(nonatomic, readwrite) int64_t nextCacheUpdateMs;
 
 @end
 
