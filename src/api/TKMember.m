@@ -778,6 +778,14 @@
                                          onError:onError];
 }
 
+- (void)ApplySca:(NSArray<NSString *> *)accountIds
+       onSuccess:(OnSuccess)onSuccess
+         onError:(OnError)onError {
+    [client ApplySca:accountIds
+           onSuccess:onSuccess
+             onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

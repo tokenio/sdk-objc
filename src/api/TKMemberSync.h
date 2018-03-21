@@ -602,5 +602,11 @@
  */
 - (NotifyStatus)triggerTransactionStepUpNotification:(NSString *)transactionId
                                            accountID:(NSString *)accountId;
-    
+
+/**
+ * To grant access to balances or transactions, a device will need to apply SCA with standard key.
+ *
+ * @param accountIds account ids for applying SCA
+ */
+- (void)ApplySca:(NSArray<NSString *> *)accountIds;
 @end
