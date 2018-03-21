@@ -10,6 +10,8 @@
 #if GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   @class AddAddressRequest;
   @class AddAddressResponse;
+  @class ApplyScaRequest;
+  @class ApplyScaResponse;
   @class BeginRecoveryRequest;
   @class BeginRecoveryResponse;
   @class CancelTokenRequest;
@@ -100,10 +102,14 @@
   @class NotifyResponse;
   @class ReplaceTokenRequest;
   @class ReplaceTokenResponse;
+  @class RequestSignatureRequest;
+  @class RequestSignatureResponse;
   @class RequestTransferRequest;
   @class RequestTransferResponse;
   @class ResolveAliasRequest;
   @class ResolveAliasResponse;
+  @class RetrieveTokenRequestRequest;
+  @class RetrieveTokenRequestResponse;
   @class RetryVerificationRequest;
   @class RetryVerificationResponse;
   @class SetDefaultAccountRequest;
@@ -112,6 +118,8 @@
   @class SetProfilePictureResponse;
   @class SetProfileRequest;
   @class SetProfileResponse;
+  @class StoreTokenRequestRequest;
+  @class StoreTokenRequestResponse;
   @class SubscribeToNotificationsRequest;
   @class SubscribeToNotificationsResponse;
   @class TriggerStepUpNotificationRequest;
@@ -749,6 +757,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
+
+- (void)applyScaWithRequest:(ApplyScaRequest *)request handler:(void(^)(ApplyScaResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToApplyScaWithRequest:(ApplyScaRequest *)request handler:(void(^)(ApplyScaResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
 
 /**
@@ -889,6 +904,40 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark StoreTokenRequest(StoreTokenRequestRequest) returns (StoreTokenRequestResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens Requests.
+ * 
+ * 
+ * Store a Token Request
+ */
+- (void)storeTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens Requests.
+ * 
+ * 
+ * Store a Token Request
+ */
+- (GRPCProtoCall *)RPCToStoreTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RetrieveTokenRequest(RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse)
+
+/**
+ * Retrviee a Token Request
+ */
+- (void)retrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Retrviee a Token Request
+ */
+- (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
@@ -1014,6 +1063,19 @@ NS_ASSUME_NONNULL_BEGIN
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
  */
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RequestSignature(RequestSignatureRequest) returns (RequestSignatureResponse)
+
+/**
+ * Request a Token signature
+ */
+- (void)requestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Request a Token signature
+ */
+- (GRPCProtoCall *)RPCToRequestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)

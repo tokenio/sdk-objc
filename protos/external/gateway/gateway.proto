@@ -359,6 +359,12 @@ message GetTransactionsResponse {
   io.token.proto.common.transaction.RequestStatus status = 3;
 }
 
+message ApplyScaRequest {
+  repeated string account_id = 1;
+}
+
+message ApplyScaResponse {}
+
 message GetDefaultAccountRequest {
   string member_id = 1; // ID of member; must be same as auth'd member
 }
@@ -402,6 +408,27 @@ message GetTokenBlobRequest {
 
 message GetTokenBlobResponse {
   io.token.proto.common.blob.Blob blob = 1; // "file" information
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token Requests
+//
+
+message StoreTokenRequestRequest {
+  io.token.proto.common.token.TokenPayload payload = 1;
+  map<string, string> options = 2;
+}
+
+message StoreTokenRequestResponse {
+  io.token.proto.common.token.TokenRequest token_request = 1;
+}
+
+message RetrieveTokenRequestRequest {
+  string request_id = 1;
+}
+
+message RetrieveTokenRequestResponse {
+  io.token.proto.common.token.TokenRequest token_request = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -504,6 +531,14 @@ message ReplaceTokenResponse {
   io.token.proto.common.token.TokenOperationResult result = 1; // Success/fail and new token data
 }
 
+message RequestSignatureRequest {
+  io.token.proto.common.token.RequestSignaturePayload payload = 1;
+}
+
+message RequestSignatureResponse {
+  io.token.proto.common.security.Signature signature = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfers.
 //
@@ -556,10 +591,16 @@ message GetTransfersResponse {
 //
 
 message GetBanksRequest {
+  repeated string ids = 1;            // If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
+  string search = 2;                  // If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
+  string country = 3;                 // If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
+  int32 page = 4;                     // Result page to retrieve. Default to 1 if not specified
+  int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Default to 200 if not specified.
 }
 
 message GetBanksResponse {
   repeated io.token.proto.common.bank.Bank banks = 1; // List of "link-able" banks
+  io.token.proto.common.bank.Paging paging = 2;       // Paging info
 }
 
 message GetBankInfoRequest {
@@ -930,6 +971,12 @@ service GatewayService {
     };
   }
 
+  rpc ApplySca (ApplyScaRequest) returns (ApplyScaResponse) {
+    option (google.api.http) = {
+        put: "/accounts/sca?account_id={account_id}"
+    };
+  }
+
   // Get information about the auth'd member's default account.
   // https://developer.token.io/sdk/#default-bank-account
   rpc GetDefaultAccount (GetDefaultAccountRequest) returns (GetDefaultAccountResponse) {
@@ -1005,6 +1052,24 @@ service GatewayService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Tokens Requests.
+  //
+
+  // Store a Token Request
+  rpc StoreTokenRequest (StoreTokenRequestRequest) returns (StoreTokenRequestResponse) {
+    option (google.api.http) = {
+        post: "/token-requests"
+    };
+  }
+
+  // Retrviee a Token Request
+  rpc RetrieveTokenRequest (RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse) {
+    option (google.api.http) = {
+        get: "/token-requests/{request_id}"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Tokens.
   //
 
@@ -1071,6 +1136,13 @@ service GatewayService {
     };
   }
 
+  // Request a Token signature
+  rpc RequestSignature (RequestSignatureRequest) returns (RequestSignatureResponse) {
+    option (google.api.http) = {
+        post: "/request-signature?tokenId={payload.token_id}&state={payload.state}"
+    };
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Token Transfers.
   //
@@ -1110,7 +1182,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
-        get: "/banks"
+        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}"
     };
   }
 

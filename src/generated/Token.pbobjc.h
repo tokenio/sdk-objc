@@ -210,6 +210,31 @@ typedef GPB_ENUM(Token_FieldNumber) {
 
 @end
 
+#pragma mark - TokenRequest
+
+typedef GPB_ENUM(TokenRequest_FieldNumber) {
+  TokenRequest_FieldNumber_Id_p = 1,
+  TokenRequest_FieldNumber_Payload = 2,
+  TokenRequest_FieldNumber_Options = 3,
+};
+
+@interface TokenRequest : GPBMessage
+
+/** request id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/** token payload */
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+/** generic string map of options */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
+/** The number of items in @c options without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger options_Count;
+
+@end
+
 #pragma mark - TokenSignature
 
 typedef GPB_ENUM(TokenSignature_FieldNumber) {
@@ -636,6 +661,21 @@ int32_t TokenOperationResult_Status_RawValue(TokenOperationResult *message);
  * was generated.
  **/
 void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int32_t value);
+
+#pragma mark - RequestSignaturePayload
+
+typedef GPB_ENUM(RequestSignaturePayload_FieldNumber) {
+  RequestSignaturePayload_FieldNumber_TokenId = 1,
+  RequestSignaturePayload_FieldNumber_State = 2,
+};
+
+@interface RequestSignaturePayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *state;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

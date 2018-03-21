@@ -12,7 +12,10 @@ message Bank {
   bool supports_information = 7;       // Connection allows for retrieval of information
   bool requires_external_auth = 8;     // Connection requires external authorization for creating transfers
   bool supports_send_payment = 9;      // Connection allows for payment initiation
-  bool supports_receive_payment = 10;   // Connection allows for receiving payments
+  bool supports_receive_payment = 10;  // Connection allows for receiving payments
+  string provider = 11;                // Provider of the bank, e.g. Yodlee, FinApi, Token
+  string country = 12;                 // The ISO 3166-1 alpha-2 two letter country code in upper case.
+  string identifier = 13;              // Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks.
 }
 
 // Depending on how user can interact with bank,
@@ -23,4 +26,11 @@ message BankInfo {
   string linking_uri = 1;        // BankAuthorization JSON starting URI
   string redirect_uri_regex = 2; // BankAuthorization JSON success URI pattern
   string bank_linking_uri = 3;   // OAuth starting URI
+}
+
+message Paging {
+  int32 page = 1;                // Index of current page
+  int32 per_page = 2;            // Number of records per page
+  int32 page_count = 3;          // Number of pages in total
+  int32 total_count = 4;         // Number of records in total
 }
