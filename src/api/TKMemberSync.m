@@ -673,6 +673,15 @@
     return [statusNumber intValue];
 }
 
+- (void)ApplySca:(NSArray<NSString *> *)accountIds {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async ApplySca:accountIds
+                   onSuccess:^{ call.onSuccess(nil); }
+                     onError:call.onError];
+        
+    }];
+}
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {

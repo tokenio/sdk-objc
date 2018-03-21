@@ -1400,6 +1400,30 @@
          withRequest:request
              onError:onError];
 }
+
+- (void)ApplySca:(NSArray<NSString *> *)accountIds
+       onSuccess:(OnSuccess)onSuccess
+         onError:(OnError)onError {
+    ApplyScaRequest *request = [ApplyScaRequest message];
+    request.accountIdArray = [NSMutableArray arrayWithArray:accountIds];
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToApplyScaWithRequest:request
+                           handler:^(ApplyScaResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+            usingKey:Key_Level_Standard
+             onError:onError];
+}
     
 #pragma mark private
 
