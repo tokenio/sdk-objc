@@ -25,14 +25,14 @@
 @property (readwrite) NSString *currency;
 
 /// Transfer amount, normally set by `create`.
-@property (readwrite) double lifetimeAmount;
+@property (readwrite) NSDecimalNumber *lifetimeAmount;
 
 /**
  * Specify how much redeemer can redeem each time.
  * For example, to enable 12x 10€ payments, set lifetimeAmount to 120,
  * chargeAmount to 10.
  */
-@property (readwrite) double chargeAmount;
+@property (readwrite) NSDecimalNumber *chargeAmount;
 
 /// Account ID from which to pay.
 @property (readwrite) NSString *accountId;
@@ -88,8 +88,8 @@
  * @return transfer token builder
  */
 - (id)init:(TKMember *)member
-    lifetimeAmount:(double)lifetimeAmount
-          currency:(NSString*)currency;
+lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
+  currency:(NSString *)currency;
 
 /**
  * Executes the request, creating the token. Throws error if external authorization is required.

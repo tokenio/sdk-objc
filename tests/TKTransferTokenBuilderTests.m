@@ -34,7 +34,8 @@
 
 - (void)testCreate {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -52,7 +53,8 @@
         
         NSArray<TransferEndpoint *> *destinations = @[destination];
         
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.redeemerAlias = payee.firstAlias;
         builder.destinations = destinations;
@@ -69,7 +71,8 @@
         
         NSArray<TransferEndpoint *> *destinations = @[destination];
         
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.destinations = destinations;
@@ -89,7 +92,8 @@
         pricing.sourceQuote.feesTotal = @"0.45";
         pricing.sourceQuote.accountCurrency = @"GBP";
         
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -102,7 +106,7 @@
         builder.purposeOfPayment = PurposeOfPayment_Other;
         builder.pricing = pricing;
         builder.descr = @"Test token";
-        builder.chargeAmount = 20;
+        builder.chargeAmount = [NSDecimalNumber decimalNumberWithString:@"20"];
         
         Token *token = [builder execute];
         
