@@ -73,8 +73,9 @@
                                           withName:@"file.json"
                                           withData:data];
         NSArray<Attachment*> *attachments = [NSArray arrayWithObjects:attachment, nil];
-        
-        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;

@@ -42,7 +42,8 @@
     // generate a notification so that our polling finds something.
     // To do this, we create, endorse, and redeem a transfer.
     // Payee receives a notification.
-    TransferTokenBuilder *builder = [self.payerSync createTransferToken:100.99
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount
                                                                currency:@"USD"];
     builder.accountId = self.payerAccountSync.id;
     builder.redeemerAlias = payerAlias;
@@ -51,11 +52,17 @@
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = payee.id;
     [self.payerSync endorseToken:token withKey:Key_Level_Standard];
-    [self.payerSync redeemToken:token amount:@(100.99) currency:@"USD" description:@"notify them" destination:destination];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    [self.payerSync redeemToken:token
+                         amount:redeemAmount
+                       currency:@"USD"
+                    description:@"notify them"
+                    destination:destination];
 
     // wait until we're sure notification has gone through...
     [self runUntilTrue:^ {
-        PagedArray<Notification *> *notifications = [self.payeeSync getNotificationsOffset:NULL limit:10];
+        PagedArray<Notification *> *notifications = [self.payeeSync getNotificationsOffset:NULL
+                                                                                     limit:10];
         return (notifications.items.count > 0);
     }];
 

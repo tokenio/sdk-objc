@@ -423,7 +423,7 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(double)amount
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
                                      currency:(NSString *)currency;
 
 /**
@@ -547,7 +547,7 @@
  * @param onError callback invoked on error
  */
 - (void)redeemToken:(Token *)token
-             amount:(NSNumber *)amount
+             amount:(NSDecimalNumber *)amount
            currency:(NSString *)currency
         description:(NSString *)description
         destination:(TransferEndpoint *)destination

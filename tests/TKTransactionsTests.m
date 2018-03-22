@@ -70,7 +70,8 @@
 
 - (void)testLookupTransaction {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -81,14 +82,15 @@
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
         Transfer *transfer = [payee redeemToken:token
-                                            amount:@100.99
-                                          currency:@"USD"
-                                       description:@"full amount"
-                                       destination:destination];
+                                         amount:amount
+                                       currency:@"USD"
+                                    description:@"full amount"
+                                    destination:destination];
         
         Transaction *transaction = [payerAccount getTransaction:transfer.transactionId];
         
-        XCTAssertEqualWithAccuracy(100.99, [transaction.amount.value doubleValue], 0.0);
+        XCTAssertEqualObjects(amount ,
+                              [NSDecimalNumber decimalNumberWithString:transaction.amount.value] );
         XCTAssertEqualObjects(@"USD", transaction.amount.currency);
         XCTAssertEqualObjects(token.id_p, transaction.tokenId);
         XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
@@ -98,7 +100,8 @@
 
 - (void)testLookupTransactions {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:49.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"49.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -108,9 +111,10 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = payeeAccount.member.id;
         destination.account.token.accountId = payeeAccount.id;
-        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"one" destination:destination];
-        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"two" destination:destination];
-        [payee redeemToken:token amount:@11.11 currency:@"USD" description:@"three" destination:destination];
+        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
+        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"one" destination:destination];
+        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"two" destination:destination];
+        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"three" destination:destination];
         
         PagedArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
         XCTAssertEqual(3, lookedUp.items.count);

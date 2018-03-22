@@ -59,8 +59,13 @@
     NSString *transactionId = nil;
     
     // generate some activity: create+endorse+redeem some transfer tokens
+    
     for (int count = 0; count < 5; count++) {
-        TransferTokenBuilder *builder = [self.payerSync createTransferToken:100.00 + count currency:@"EUR"];
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.00"];
+        amount = [amount decimalNumberByAdding:[NSDecimalNumber decimalNumberWithMantissa:count
+                                                                                 exponent:0
+                                                                               isNegative:NO]];
+        TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount currency:@"EUR"];
         builder.accountId = self.payerAccountSync.id;
         builder.redeemerMemberId = self.payerSync.id;
         builder.destinations = @[destination];

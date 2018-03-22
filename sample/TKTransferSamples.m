@@ -64,7 +64,8 @@
     __block Token *transferToken = nil;
     
     // createTransferToken begin snippet to include in docs
-    TransferTokenBuilder *builder = [payer createTransferToken:100.0
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
     builder.redeemerAlias = payeeAlias;
@@ -149,7 +150,8 @@
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
-    TransferTokenBuilder *builder = [payer createTransferToken:100.0
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
     builder.redeemerAlias = payeeAlias;
@@ -218,7 +220,8 @@
              withName: @"invoice.jpg"
              withData: loadImage(@"invoice.jpg")
             onSuccess: ^(Attachment *a) {
-                TransferTokenBuilder *builder = [payer createTransferToken:100.0
+                NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+                TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                                   currency:@"EUR"];
                 builder.accountId = payerAccount.id;
                 builder.redeemerAlias = payeeAlias;

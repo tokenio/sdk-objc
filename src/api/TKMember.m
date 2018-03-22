@@ -422,7 +422,7 @@
                       onError:onError];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(double)amount
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
                                      currency:(NSString *)currency {
     TransferTokenBuilder * builder = [TransferTokenBuilder alloc];
     return [builder init:self lifetimeAmount:amount currency:currency];
@@ -520,7 +520,7 @@
 }
 
 - (void)redeemToken:(Token *)token
-             amount:(NSNumber *)amount
+             amount:(NSDecimalNumber *)amount
            currency:(NSString *)currency
         description:(NSString *)description
         destination:(TransferEndpoint *)destination

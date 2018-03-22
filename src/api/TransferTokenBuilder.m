@@ -22,8 +22,8 @@
 @implementation TransferTokenBuilder
 
 - (id)init:(TKMember *)member
-    lifetimeAmount:(double)lifetimeAmount
-          currency:(NSString*)currency {
+lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
+  currency:(NSString*)currency {
     
     self = [super init];
     if (self) {
@@ -69,8 +69,8 @@
     TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
     payload.from = payer;
-    payload.transfer.lifetimeAmount = [NSString stringWithFormat:@"%g", self.lifetimeAmount];
-    payload.transfer.amount = [NSString stringWithFormat:@"%g", self.chargeAmount];
+    payload.transfer.lifetimeAmount = [self.lifetimeAmount stringValue];
+    payload.transfer.amount = [self.chargeAmount stringValue];
     payload.transfer.currency = self.currency;
     
     if (self.refId) {

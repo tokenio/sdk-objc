@@ -40,7 +40,8 @@
 
         NSArray<TransferEndpoint *> *destinations = @[destination];
 
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -64,7 +65,8 @@
         
         NSArray<TransferEndpoint *> *destinations = @[destination];
         
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"XXX"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -81,7 +83,8 @@
 
 - (void)testLookupToken {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.99
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -93,7 +96,8 @@
 
 - (void)testLookupTokens {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -101,7 +105,8 @@
         Token *token = [builder execute];
         [payer endorseToken:token withKey:Key_Level_Standard];
         
-        TransferTokenBuilder *builder2 = [payer createTransferToken:100.22
+        NSDecimalNumber *amount2 = [NSDecimalNumber decimalNumberWithString:@"100.22"];
+        TransferTokenBuilder *builder2 = [payer createTransferToken:amount2
                                                           currency:@"USD"];
         builder2.accountId = payerAccount.id;
         builder2.redeemerAlias = payee.firstAlias;
@@ -109,7 +114,8 @@
         Token *token2 = [builder2 execute];
         [payer endorseToken:token2 withKey:Key_Level_Standard];
         
-        TransferTokenBuilder *builder3 = [payer createTransferToken:100.33
+        NSDecimalNumber *amount3 = [NSDecimalNumber decimalNumberWithString:@"100.33"];
+        TransferTokenBuilder *builder3 = [payer createTransferToken:amount3
                                                           currency:@"USD"];
         builder3.accountId = payerAccount.id;
         builder3.redeemerAlias = payee.firstAlias;
@@ -132,7 +138,8 @@
 
 - (void)testEndorseToken {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -155,7 +162,8 @@
     [self run: ^(TokenIOSync *tokenIO) {
         NSString *descr = @"e\u0301\U0001F30D\U0001F340🇧🇭👰🏿👩‍👩‍👧‍👧我"; // decomposed é, globe, leaf; real unicode symbols
 
-        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
@@ -176,7 +184,8 @@
 
 - (void)testCancelToken {
     [self run: ^(TokenIOSync *tokenIO) {
-        TransferTokenBuilder *builder = [payer createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;

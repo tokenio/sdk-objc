@@ -139,7 +139,8 @@
         TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
-        TransferTokenBuilder *builder = [grantor createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [grantor createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
         builder.redeemerAlias = redeemer.firstAlias;
@@ -150,7 +151,12 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = redeemerAccount.member.id;
         destination.account.token.accountId = redeemerAccount.id;
-        [redeemer redeemToken:transferToken amount:@(50) currency:@"USD" description:@"" destination:destination];
+        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+        [redeemer redeemToken:transferToken
+                       amount:redeemAmount
+                     currency:@"USD"
+                  description:@""
+                  destination:destination];
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];
         [access forAllTransactions];
@@ -174,7 +180,8 @@
         TKMemberSync *redeemer = redeemerAccount.member;
         
         // Create and redeem transfer token to create a transaction.
-        TransferTokenBuilder *builder = [grantor createTransferToken:100.11
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+        TransferTokenBuilder *builder = [grantor createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = grantorAccount.id;
         builder.redeemerAlias = redeemer.firstAlias;
@@ -184,11 +191,12 @@
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
         destination.account.token.memberId = redeemerAccount.member.id;
         destination.account.token.accountId = redeemerAccount.id;
+        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
         [redeemer redeemToken:transferToken
-                          amount:@(50)
-                        currency:@"USD"
-                     description:@"lunch"
-                     destination:destination];
+                       amount:redeemAmount
+                     currency:@"USD"
+                  description:@"lunch"
+                  destination:destination];
         
         
         AccessTokenConfig *access = [[AccessTokenConfig alloc] initWithRedeemer:grantee.firstAlias];

@@ -345,7 +345,7 @@
     }];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(double)amount
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
                                      currency:(NSString *)currency {
     return [self.async createTransferToken:amount currency:currency];
 }
@@ -439,7 +439,7 @@
 }
 
 - (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
+                      amount:(NSDecimalNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description {
     TKRpcSyncCall<Transfer *> *call = [TKRpcSyncCall create];
@@ -455,7 +455,7 @@
 }
 
 - (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
+                      amount:(NSDecimalNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
                  destination:(TransferEndpoint *)destination {

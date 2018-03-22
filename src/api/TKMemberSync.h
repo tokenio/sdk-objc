@@ -333,7 +333,7 @@
  * @param currency currency code, e.g. "USD"
  * @return transfer token builder, can be executed to create a token
  */
-- (TransferTokenBuilder *)createTransferToken:(double)amount
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
                                      currency:(NSString *)currency;
 
 /** Creates a new access token for a list of resources.
@@ -429,7 +429,7 @@
  * @return transfer record
  */
 - (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
+                      amount:(NSDecimalNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description;
 
@@ -444,7 +444,7 @@
  * @return transfer record
  */
 - (Transfer *)redeemToken:(Token *)token
-                      amount:(NSNumber *)amount
+                      amount:(NSDecimalNumber *)amount
                     currency:(NSString *)currency
                  description:(NSString *)description
                  destination:(TransferEndpoint *)destination;
