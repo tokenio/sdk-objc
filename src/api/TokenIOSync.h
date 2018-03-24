@@ -111,13 +111,16 @@
  * @param page Result page to retrieve. Default to 1 if not specified.
  * @param perPage Maximum number of records per page. Can be at most 200. Default to 200
  * if not specified.
+ * @param sort The key to sort the results. Could be one of: name, provider and country. Defaults
+ * to name if not specified.
  * @return a list of banks
  */
 - (NSArray<Bank *> *)getBanks:(NSArray<NSString *> *)bankIds
                        search:(NSString *)search
                       country:(NSString *)country
                          page:(int)page
-                      perPage:(int)perPage;
+                      perPage:(int)perPage
+                         sort:(NSString *)sort;
 
 /**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.

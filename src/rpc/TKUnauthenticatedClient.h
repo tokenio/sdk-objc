@@ -137,6 +137,8 @@
  * @param page Result page to retrieve. Default to 1 if not specified.
  * @param perPage Maximum number of records per page. Can be at most 200. Default to 200
  * if not specified.
+ * @param sort The key to sort the results. Could be one of: name, provider and country. Defaults
+ * to name if not specified.
  * @param onSuccess invoked on success with a list of banks
  */
 - (void)getBanks:(NSArray<NSString *> *)bankIds
@@ -144,6 +146,7 @@
          country:(NSString *)country
             page:(int)page
          perPage:(int)perPage
+            sort:(NSString *)sort
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
 

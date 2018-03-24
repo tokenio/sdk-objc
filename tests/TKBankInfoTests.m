@@ -24,16 +24,31 @@
 
 - (void)testGetBanks {
     [self run: ^(TokenIOSync *tokenIO) {
-        NSArray *banks = [tokenIO getBanks:nil search:nil country:nil page:1 perPage:5];
+        NSArray *banks = [tokenIO getBanks:nil
+                                    search:nil
+                                   country:nil
+                                      page:1
+                                   perPage:5
+                                      sort:@"name"];
         XCTAssertTrue(banks.count == 5);
         
-        banks = [tokenIO getBanks:@[@"iron",@"gold"] search:nil country:nil page:1 perPage:10];
+        banks = [tokenIO getBanks:@[@"iron",@"gold"]
+                           search:nil
+                          country:nil
+                             page:1
+                          perPage:10
+                             sort:@"name"];
         XCTAssertTrue(banks.count == 2);
         
-        banks = [tokenIO getBanks:nil search:@"IRO" country:nil page:1 perPage:10];
+        banks = [tokenIO getBanks:nil
+                           search:@"GOLD"
+                          country:nil
+                             page:1
+                          perPage:10
+                             sort:@"country"];
         XCTAssertTrue(banks.count > 0);
         
-        banks = [tokenIO getBanks:nil search:nil country:@"US" page:1 perPage:10];
+        banks = [tokenIO getBanks:nil search:nil country:@"US" page:1 perPage:10 sort:@"name"];
         XCTAssertTrue(banks.count > 0);
     }];
 }

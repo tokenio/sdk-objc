@@ -2157,6 +2157,7 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
   GetBanksRequest_FieldNumber_Country = 3,
   GetBanksRequest_FieldNumber_Page = 4,
   GetBanksRequest_FieldNumber_PerPage = 5,
+  GetBanksRequest_FieldNumber_Sort = 6,
 };
 
 @interface GetBanksRequest : GPBMessage
@@ -2172,11 +2173,14 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 /** If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *country;
 
-/** Result page to retrieve. Default to 1 if not specified */
+/** Result page to retrieve. Defaults to 1 if not specified */
 @property(nonatomic, readwrite) int32_t page;
 
-/** Maximum number of records per page. Can be at most 200. Default to 200 if not specified. */
+/** Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified. */
 @property(nonatomic, readwrite) int32_t perPage;
+
+/** The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sort;
 
 @end
 

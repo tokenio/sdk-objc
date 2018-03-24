@@ -594,8 +594,9 @@ message GetBanksRequest {
   repeated string ids = 1;            // If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
   string search = 2;                  // If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
   string country = 3;                 // If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
-  int32 page = 4;                     // Result page to retrieve. Default to 1 if not specified
-  int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Default to 200 if not specified.
+  int32 page = 4;                     // Result page to retrieve. Defaults to 1 if not specified
+  int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified.
+  string sort = 6;                    // The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified.
 }
 
 message GetBanksResponse {
@@ -1182,7 +1183,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
-        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}"
+        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}&sort={sort}"
     };
   }
 

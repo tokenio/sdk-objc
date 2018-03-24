@@ -208,6 +208,7 @@
          country:(NSString *)country
             page:(int)page
          perPage:(int)perPage
+            sort:(NSString *)sort
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     GetBanksRequest *request = [GetBanksRequest message];
@@ -216,6 +217,7 @@
     request.country = country;
     request.page = page;
     request.perPage = perPage;
+    request.sort = sort;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

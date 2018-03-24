@@ -5883,6 +5883,7 @@ typedef struct GetTransfersResponse__storage_ {
 @dynamic country;
 @dynamic page;
 @dynamic perPage;
+@dynamic sort;
 
 typedef struct GetBanksRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -5891,6 +5892,7 @@ typedef struct GetBanksRequest__storage_ {
   NSMutableArray *idsArray;
   NSString *search;
   NSString *country;
+  NSString *sort;
 } GetBanksRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -5943,6 +5945,15 @@ typedef struct GetBanksRequest__storage_ {
         .offset = (uint32_t)offsetof(GetBanksRequest__storage_, perPage),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "sort",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBanksRequest_FieldNumber_Sort,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(GetBanksRequest__storage_, sort),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -223,6 +223,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
          country:(NSString *)country
             page:(int)page
          perPage:(int)perPage
+            sort:(NSString *)sort
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     [unauthenticatedClient getBanks:bankIds
@@ -230,6 +231,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                             country:country
                                page:page
                             perPage:perPage
+                               sort:sort
                           onSuccess:onSuccess
                             onError:onError];
 }
