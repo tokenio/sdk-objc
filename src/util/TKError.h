@@ -30,6 +30,11 @@ static NSString *const kTokenTransactionErrorDomain = @"io.tokensdk.transaction"
 static NSString *const kTokenRequestErrorDomain = @"io.tokensdk.request";
 
 /*
+ * Token error from AccountLinkingStatus.
+ */
+static NSString *const kTokenAccountLinkingErrorDomain = @"io.tokensdk.accountlinking";
+
+/*
  * Errors detail encapsulated by
  */
 static NSString *const TKEncapsulatedErrorKey = @"TKEncapsulatedErrorKey";
@@ -52,6 +57,9 @@ typedef enum {
     
     /* Raised when recovery process is invalid */
     kTKErrorInvalidRecoveryProcess = 106,
+    
+    /* Raised when Oauth access token not found */
+    kTKErrorOauthAccessTokenNotFound = 107,
 } TKErrorCode;
 
 
@@ -63,5 +71,7 @@ typedef enum {
 + (instancetype)errorFromTransferTokenStatus:(TransferTokenStatus)status;
 + (instancetype)errorFromTransactionStatus:(TransactionStatus)status;
 + (instancetype)errorFromRequestStatus:(RequestStatus)status userInfo:(NSDictionary *)info;
++ (instancetype)errorFromAccountLinkingStatus:(AccountLinkingStatus)status
+                                     userInfo:(NSDictionary *)info;
 
 @end

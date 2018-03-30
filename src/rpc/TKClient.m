@@ -327,6 +327,38 @@
              onError:onError];
 }
 
+- (void)linkAccounts:(NSString *)bankId
+         accessToken:(NSString *)accessToken
+           onSuccess:(OnSuccessWithAccounts)onSuccess
+             onError:(OnError)onError {
+    LinkAccountsOauthRequest *request = [LinkAccountsOauthRequest message];
+    request.authorization.bankId = bankId;
+    request.authorization.accessToken = accessToken;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToLinkAccountsOauthWithRequest:request
+                           handler:^(LinkAccountsOauthResponse *response, NSError *error) {
+                               if (response) {
+                                   if (response.status != AccountLinkingStatus_Success) {
+                                       onError([NSError
+                                                errorFromAccountLinkingStatus:response.status
+                                                userInfo:@{@"BankId":bankId}]);
+                                   }
+                                   else {
+                                       RpcLogCompleted(response);
+                                       onSuccess(response.accountsArray);
+                                   }
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
              onSuccess:(OnSuccess)onSuccess
                onError:(OnError)onError {
