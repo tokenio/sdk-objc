@@ -1,8 +1,11 @@
 #!/bin/bash
 
+destination=$(instruments -s devices | grep iPhone | tail -1 \
+     | sed 's/\(iPhone.*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
+
 xcodebuild \
     -workspace TokenSdk.xcworkspace \
     -scheme "All Tests - AWS Staging" \
     -sdk iphonesimulator \
-    -destination "platform=iOS Simulator,name=iPhone 8,OS=11.2" \
+    -destination "${destination}" \
     test
