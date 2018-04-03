@@ -199,14 +199,14 @@
     }];
 }
 
-- (NSArray<TKAccountSync *> *)linkBank:(NSString *)bankId {
+- (NSArray<TKAccountSync *> *)initiateAccountLinking:(NSString *)bankId {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async linkBank:bankId
-                   onSuccess:^(NSArray<TKAccount *> *accounts) {
-                       call.onSuccess([self _asyncToSync:accounts]);
-                   }
-                     onError:call.onError];
+        [self.async initiateAccountLinking:bankId
+                                 onSuccess:^(NSArray<TKAccount *> *accounts) {
+                                     call.onSuccess([self _asyncToSync:accounts]);
+                                 }
+                                   onError:call.onError];
     }];
 }
 

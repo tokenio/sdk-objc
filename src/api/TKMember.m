@@ -275,9 +275,9 @@
                                  onError:onError];
 }
 
-- (void)linkBank:(NSString *)bankId
-       onSuccess:(OnSuccessWithTKAccounts)onSuccess
-         onError:(OnError)onError {
+- (void)initiateAccountLinking:(NSString *)bankId
+                     onSuccess:(OnSuccessWithTKAccounts)onSuccess
+                       onError:(OnError)onError {
     [client getBankInfo:bankId
               onSuccess:^(BankInfo *info) {
                   // The authorization engine will be revoked after the accounts are linked.
