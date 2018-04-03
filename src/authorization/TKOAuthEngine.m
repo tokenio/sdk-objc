@@ -58,7 +58,7 @@
         return NO;
     }
     
-    NSString* url = request.URL.absoluteString;
+    NSString* urlStr = request.URL.absoluteString;
     
     NSError *error = nil;
     NSRegularExpression *regex = [NSRegularExpression
@@ -70,7 +70,7 @@
         return NO;
     }
     
-    NSArray* matches = [regex matchesInString:url options:0 range:NSMakeRange(0, url.length)];
+    NSArray* matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
     
     if (matches.count == 0) {
         return YES;
@@ -78,7 +78,8 @@
     
     completionUrlIsFound = YES;
     
-    NSArray<NSString *> *urlParts = [url componentsSeparatedByString:@"#|&"];
+    NSArray<NSString *> *urlParts = [urlStr componentsSeparatedByCharactersInSet:
+                                     [NSCharacterSet characterSetWithCharactersInString:@"#|&"]];
     for (int i = (int)urlParts.count - 1; i >=0; i--) {
         if ([urlParts[i] containsString:@"access_token="]) {
             onSuccess([urlParts[i] substringFromIndex:13]);
