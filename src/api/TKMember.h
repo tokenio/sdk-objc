@@ -240,16 +240,16 @@
                              onError:(OnError)onError;
 
 /**
- * Links a bank. The authorization browser will present and the accounts selected by user
- * will be linked.
+ * Initiates the account linking process. The authorization browser will present and the accounts
+ * selected by user will be linked.
  *
  * @param bankId bank Id
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)linkBank:(NSString *)bankId
-       onSuccess:(OnSuccessWithTKAccounts)onSuccess
-         onError:(OnError)onError;
+- (void)initiateAccountLinking:(NSString *)bankId
+                     onSuccess:(OnSuccessWithTKAccounts)onSuccess
+                       onError:(OnError)onError;
 
 /**
  * Links a set of funding bank accounts to Token and returns it to the caller.

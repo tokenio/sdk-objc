@@ -157,6 +157,8 @@
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
+		D039F81D206DCA09009A982B /* TKOauthEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = D039F81B206DCA09009A982B /* TKOauthEngine.h */; };
+		D039F820206DD192009A982B /* TKOAuthEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D039F81F206DD192009A982B /* TKOAuthEngine.m */; };
 		D03A55FE1FE0730C008342E0 /* TKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A55FC1FE0730C008342E0 /* TKBrowser.h */; };
 		D03A55FF1FE0730C008342E0 /* TKBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D03A55FD1FE0730C008342E0 /* TKBrowser.m */; };
 		D03A56021FE07368008342E0 /* TKAuthorizationEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A56001FE07368008342E0 /* TKAuthorizationEngine.h */; };
@@ -397,6 +399,8 @@
 		ABA7BFD0B8AF4A53D14F385F /* TKAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccount.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		D039F81B206DCA09009A982B /* TKOauthEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKOauthEngine.h; sourceTree = "<group>"; };
+		D039F81F206DD192009A982B /* TKOAuthEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKOAuthEngine.m; sourceTree = "<group>"; };
 		D03A55FC1FE0730C008342E0 /* TKBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBrowser.h; sourceTree = "<group>"; };
 		D03A55FD1FE0730C008342E0 /* TKBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKBrowser.m; sourceTree = "<group>"; };
 		D03A56001FE07368008342E0 /* TKAuthorizationEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKAuthorizationEngine.h; sourceTree = "<group>"; };
@@ -835,6 +839,8 @@
 				D09E3BC720191BDC00CA0405 /* ios */,
 				D03A56001FE07368008342E0 /* TKAuthorizationEngine.h */,
 				D03A56011FE07368008342E0 /* TKAuthorizationEngine.m */,
+				D039F81B206DCA09009A982B /* TKOauthEngine.h */,
+				D039F81F206DD192009A982B /* TKOAuthEngine.m */,
 			);
 			path = authorization;
 			sourceTree = "<group>";
@@ -1010,6 +1016,7 @@
 				ABA7B5CDA55B7289276869BF /* TKKeyStore.h in Headers */,
 				ABA7B34BF0A1DB2C1A5C388B /* DeviceInfo.h in Headers */,
 				ABA7B841C5B557B7A8C108DE /* TKInMemoryMemberKeys.h in Headers */,
+				D039F81D206DCA09009A982B /* TKOauthEngine.h in Headers */,
 				ABA7B702776867CC05577BE2 /* TKTokenCryptoEngineFactory.h in Headers */,
 				62DE91E98E94108682327CD8 /* TKRpcErrorHandler.h in Headers */,
 				D03A55FE1FE0730C008342E0 /* TKBrowser.h in Headers */,
@@ -1378,6 +1385,7 @@
 				1B3329221EE4455B00E3F145 /* TransferTokenBuilder.m in Sources */,
 				DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */,
 				DDF54B051E3179A200BE739B /* TKSecureEnclaveCryptoEngineFactory.m in Sources */,
+				D039F820206DD192009A982B /* TKOAuthEngine.m in Sources */,
 				ABA7B0303C146231D78BE96C /* seed.c in Sources */,
 				37637B571D989A930043345F /* Auth.pbobjc.m in Sources */,
 				ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */,

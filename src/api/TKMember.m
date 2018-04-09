@@ -5,14 +5,16 @@
 
 #import <Protobuf/GPBMessage.h>
 #import "gateway/Gateway.pbrpc.h"
-#import "Transferinstructions.pbobjc.h"
+
 #import "TKAccountSync.h"
-#import "TKHasher.h"
-#import "TKMemberSync.h"
-#import "TKMember.h"
-#import "TKClient.h"
 #import "TKAuthorizationEngine.h"
+#import "TKClient.h"
 #import "TKError.h"
+#import "TKHasher.h"
+#import "TKMember.h"
+#import "TKMemberSync.h"
+#import "TKOauthEngine.h"
+#import "Transferinstructions.pbobjc.h"
 
 @implementation TKMember {
     TKClient *client;
@@ -273,24 +275,19 @@
                                  onError:onError];
 }
 
-- (void)linkBank:(NSString *)bankId
-       onSuccess:(OnSuccessWithTKAccounts)onSuccess
-         onError:(OnError)onError {
+- (void)initiateAccountLinking:(NSString *)bankId
+                     onSuccess:(OnSuccessWithTKAccounts)onSuccess
+                       onError:(OnError)onError {
     [client getBankInfo:bankId
               onSuccess:^(BankInfo *info) {
-                  /* TODO: (sibinlu) Remove this convertion after getBankInfo
-                   return ExternalAuthorizationDetails.*/
-                  ExternalAuthorizationDetails *details = [ExternalAuthorizationDetails message];
-                  details.URL = info.linkingUri;
-                  details.completionPattern = info.redirectUriRegex;
-                  
                   // The authorization engine will be revoked after the accounts are linked.
-                  TKAuthorizationEngine *authEngine =
-                  [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.browserFactory
-                                           ExternalAuthorizationDetails:details];
+                  TKOauthEngine *authEngine =
+                  [[TKOauthEngine alloc] initWithBrowserFactory:self.browserFactory
+                                           url:info.bankLinkingUri];
                   [authEngine
-                   authorizeOnSuccess:^(BankAuthorization *bankAuth) {
-                       [client linkAccounts:bankAuth
+                   authorizeOnSuccess:^(NSString *accessToken) {
+                       [client linkAccounts:bankId
+                                accessToken:accessToken
                                   onSuccess:^(NSArray<Account *> *accounts) {
                                       onSuccess([self _mapAccounts:accounts]);
                                       [authEngine close];

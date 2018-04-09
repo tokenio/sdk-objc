@@ -71,4 +71,18 @@
                            userInfo:userInfo];
 }
 
++ (instancetype)errorFromAccountLinkingStatus:(AccountLinkingStatus)status
+                                     userInfo:(NSDictionary *)info {
+    NSString *description = [NSString stringWithFormat:@"Failed with account linking status %d",
+                             status];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (info != nil) {
+        [userInfo setDictionary:info];
+    }
+    [userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+    
+    return [NSError errorWithDomain:kTokenAccountLinkingErrorDomain
+                               code:status
+                           userInfo:userInfo];
+}
 @end
