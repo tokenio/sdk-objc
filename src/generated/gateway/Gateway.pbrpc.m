@@ -1,8 +1,9 @@
+#if !defined(GPB_GRPC_PROTOCOL_ONLY) || !GPB_GRPC_PROTOCOL_ONLY
 #import "gateway/Gateway.pbrpc.h"
 #import "gateway/Gateway.pbobjc.h"
-
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
+
 #import "google/api/Annotations.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Address.pbobjc.h"
@@ -23,7 +24,10 @@
 
 // Designated initializer
 - (instancetype)initWithHost:(NSString *)host {
-  return (self = [super initWithHost:host packageName:@"io.token.proto.gateway" serviceName:@"GatewayService"]);
+  self = [super initWithHost:host
+                 packageName:@"io.token.proto.gateway"
+                 serviceName:@"GatewayService"];
+  return self;
 }
 
 // Override superclass initializer to disallow different package and service names.
@@ -33,10 +37,13 @@
   return [self initWithHost:host];
 }
 
+#pragma mark - Class Methods
+
 + (instancetype)serviceWithHost:(NSString *)host {
   return [[self alloc] initWithHost:host];
 }
 
+#pragma mark - Method Implementations
 
 #pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
 
@@ -1246,6 +1253,24 @@
              responseClass:[RequestSignatureResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)
+
+/**
+ * Get a token ID from a reference ID
+ */
+- (void)getTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTokenIdWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get a token ID from a reference ID
+ */
+- (GRPCProtoCall *)RPCToGetTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTokenId"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTokenIdResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
 
 /**
@@ -1369,3 +1394,4 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 @end
+#endif

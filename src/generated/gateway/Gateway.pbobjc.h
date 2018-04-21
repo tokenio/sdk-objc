@@ -1607,6 +1607,7 @@ typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
 
 typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
   CreateTransferTokenRequest_FieldNumber_Payload = 1,
+  CreateTransferTokenRequest_FieldNumber_TokenRequestId = 2,
 };
 
 @interface CreateTransferTokenRequest : GPBMessage
@@ -1615,6 +1616,9 @@ typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
+
+/** ID of the token request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -1659,6 +1663,7 @@ void SetCreateTransferTokenResponse_Status_RawValue(CreateTransferTokenResponse 
 
 typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
   CreateAccessTokenRequest_FieldNumber_Payload = 1,
+  CreateAccessTokenRequest_FieldNumber_TokenRequestId = 2,
 };
 
 @interface CreateAccessTokenRequest : GPBMessage
@@ -1667,6 +1672,9 @@ typedef GPB_ENUM(CreateAccessTokenRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
+
+/** ID of the token request */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -1925,6 +1933,7 @@ typedef GPB_ENUM(ReplaceTokenRequest_CancelToken_FieldNumber) {
 typedef GPB_ENUM(ReplaceTokenRequest_CreateToken_FieldNumber) {
   ReplaceTokenRequest_CreateToken_FieldNumber_Payload = 1,
   ReplaceTokenRequest_CreateToken_FieldNumber_PayloadSignature = 2,
+  ReplaceTokenRequest_CreateToken_FieldNumber_TokenRequestId = 3,
 };
 
 @interface ReplaceTokenRequest_CreateToken : GPBMessage
@@ -1938,6 +1947,9 @@ typedef GPB_ENUM(ReplaceTokenRequest_CreateToken_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Signature *payloadSignature;
 /** Test to see if @c payloadSignature has been set. */
 @property(nonatomic, readwrite) BOOL hasPayloadSignature;
+
+/** Optional token request ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -1981,6 +1993,30 @@ typedef GPB_ENUM(RequestSignatureResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
 /** Test to see if @c signature has been set. */
 @property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
+#pragma mark - GetTokenIdRequest
+
+typedef GPB_ENUM(GetTokenIdRequest_FieldNumber) {
+  GetTokenIdRequest_FieldNumber_TokenRequestId = 1,
+};
+
+@interface GetTokenIdRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+@end
+
+#pragma mark - GetTokenIdResponse
+
+typedef GPB_ENUM(GetTokenIdResponse_FieldNumber) {
+  GetTokenIdResponse_FieldNumber_TokenId = 1,
+};
+
+@interface GetTokenIdResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 
 @end
 
@@ -2252,14 +2288,20 @@ typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
 
 typedef GPB_ENUM(CreateTestBankAccountResponse_FieldNumber) {
   CreateTestBankAccountResponse_FieldNumber_BankAuthorization = 1,
+  CreateTestBankAccountResponse_FieldNumber_Authorization = 2,
 };
 
 @interface CreateTestBankAccountResponse : GPBMessage
 
-/** authorization usable with linkAccounts */
+/** deprecated, will be removed from response */
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
 /** Test to see if @c bankAuthorization has been set. */
 @property(nonatomic, readwrite) BOOL hasBankAuthorization;
+
+/** authorization usable with linkAccounts */
+@property(nonatomic, readwrite, strong, null_resettable) OauthBankAuthorization *authorization;
+/** Test to see if @c authorization has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorization;
 
 @end
 

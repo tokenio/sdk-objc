@@ -1,15 +1,19 @@
+#if !defined(GPB_GRPC_PROTOCOL_ONLY) || !GPB_GRPC_PROTOCOL_ONLY
 #import "fank/Cma9.pbrpc.h"
 #import "fank/Cma9.pbobjc.h"
-
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
+
 #import "google/api/Annotations.pbobjc.h"
 
 @implementation Cma9Service
 
 // Designated initializer
 - (instancetype)initWithHost:(NSString *)host {
-  return (self = [super initWithHost:host packageName:@"io.token.proto.cma9" serviceName:@"Cma9Service"]);
+  self = [super initWithHost:host
+                 packageName:@"io.token.proto.cma9"
+                 serviceName:@"Cma9Service"];
+  return self;
 }
 
 // Override superclass initializer to disallow different package and service names.
@@ -19,10 +23,13 @@
   return [self initWithHost:host];
 }
 
+#pragma mark - Class Methods
+
 + (instancetype)serviceWithHost:(NSString *)host {
   return [[self alloc] initWithHost:host];
 }
 
+#pragma mark - Method Implementations
 
 #pragma mark CreateAccountRequest(AccountRequestsRequest) returns (AccountRequestsResponse)
 
@@ -169,3 +176,4 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 @end
+#endif

@@ -1,13 +1,15 @@
-#if !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+#if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
 #import "gateway/Gateway.pbobjc.h"
 #endif
 
+#if !defined(GPB_GRPC_PROTOCOL_ONLY) || !GPB_GRPC_PROTOCOL_ONLY
 #import <ProtoRPC/ProtoService.h>
 #import <ProtoRPC/ProtoRPC.h>
 #import <RxLibrary/GRXWriteable.h>
 #import <RxLibrary/GRXWriter.h>
+#endif
 
-#if GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+#if defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) && GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   @class AddAddressRequest;
   @class AddAddressResponse;
   @class ApplyScaRequest;
@@ -82,6 +84,8 @@
   @class GetTestBankNotificationsResponse;
   @class GetTokenBlobRequest;
   @class GetTokenBlobResponse;
+  @class GetTokenIdRequest;
+  @class GetTokenIdResponse;
   @class GetTokenRequest;
   @class GetTokenResponse;
   @class GetTokensRequest;
@@ -149,6 +153,8 @@
   #import "Transfer.pbobjc.h"
   #import "Alias.pbobjc.h"
 #endif
+
+@class GRPCProtoCall;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -1078,6 +1084,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToRequestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)
+
+/**
+ * Get a token ID from a reference ID
+ */
+- (void)getTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get a token ID from a reference ID
+ */
+- (GRPCProtoCall *)RPCToGetTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
 
 /**
@@ -1177,6 +1196,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+#if !defined(GPB_GRPC_PROTOCOL_ONLY) || !GPB_GRPC_PROTOCOL_ONLY
 /**
  * Basic service implementation, over gRPC, that only does
  * marshalling and parsing.
@@ -1185,5 +1206,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithHost:(NSString *)host NS_DESIGNATED_INITIALIZER;
 + (instancetype)serviceWithHost:(NSString *)host;
 @end
+#endif
 
 NS_ASSUME_NONNULL_END
+

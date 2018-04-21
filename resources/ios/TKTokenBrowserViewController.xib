@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -58,9 +60,8 @@
                     </subviews>
                     <color key="backgroundColor" red="0.10196078431372549" green="0.14901960784313725" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="64" id="3vn-l1-wjr"/>
-                        <constraint firstItem="yrp-HV-nZY" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="top" constant="20" id="4Iy-lR-XLh"/>
-                        <constraint firstItem="P5p-Ai-wh3" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="top" constant="22" id="KVp-Ft-b4r"/>
+                        <constraint firstItem="yrp-HV-nZY" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="topMargin" constant="-8" id="4Iy-lR-XLh"/>
+                        <constraint firstItem="P5p-Ai-wh3" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="topMargin" constant="-6" id="KVp-Ft-b4r"/>
                         <constraint firstItem="yrp-HV-nZY" firstAttribute="leading" secondItem="mNU-bK-CUs" secondAttribute="leading" constant="10" id="isq-pL-dIW"/>
                         <constraint firstItem="P5p-Ai-wh3" firstAttribute="centerX" secondItem="mNU-bK-CUs" secondAttribute="centerX" id="lbw-7I-qUe"/>
                     </constraints>
@@ -85,11 +86,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="5WK-5R-sp2" secondAttribute="bottom" id="A5P-n6-ZDS"/>
+                <constraint firstAttribute="topMargin" secondItem="mNU-bK-CUs" secondAttribute="bottom" constant="-44" id="BbJ-zn-ENp"/>
                 <constraint firstAttribute="trailing" secondItem="mNU-bK-CUs" secondAttribute="trailing" id="IUI-w3-I5y"/>
                 <constraint firstItem="5WK-5R-sp2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JIE-gF-fwU"/>
                 <constraint firstAttribute="trailing" secondItem="5WK-5R-sp2" secondAttribute="trailing" id="L9K-HF-sc7"/>
                 <constraint firstItem="tRM-2U-tk2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="W1s-ck-XSp"/>
-                <constraint firstItem="tRM-2U-tk2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="Y4h-mZ-8Ia"/>
+                <constraint firstItem="tRM-2U-tk2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="24" id="Y4h-mZ-8Ia"/>
                 <constraint firstItem="MQ7-4W-mdo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jC5-Lh-Yy9"/>
                 <constraint firstItem="mNU-bK-CUs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pXH-VX-mOI"/>
                 <constraint firstItem="MQ7-4W-mdo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="u6v-1J-66n"/>

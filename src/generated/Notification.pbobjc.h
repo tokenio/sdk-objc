@@ -39,6 +39,8 @@ CF_EXTERN_C_BEGIN
 @class PayerTransferFailed;
 @class PayerTransferProcessed;
 @class PaymentRequest;
+@class RecoveryCompleted;
+@class RequestTokenAndAddKey;
 @class StepUp;
 @class TokenCancelled;
 @class TokenPayload;
@@ -296,6 +298,15 @@ typedef GPB_ENUM(TransactionStepUp_FieldNumber) {
 
 @end
 
+#pragma mark - RecoveryCompleted
+
+/**
+ * A notification to notify a member that a recovery process has completed
+ **/
+@interface RecoveryCompleted : GPBMessage
+
+@end
+
 #pragma mark - AddKey
 
 typedef GPB_ENUM(AddKey_FieldNumber) {
@@ -390,6 +401,26 @@ typedef GPB_ENUM(TokenCancelled_FieldNumber) {
 
 @end
 
+#pragma mark - RequestTokenAndAddKey
+
+typedef GPB_ENUM(RequestTokenAndAddKey_FieldNumber) {
+  RequestTokenAndAddKey_FieldNumber_TokenRequestId = 1,
+  RequestTokenAndAddKey_FieldNumber_AddKey = 2,
+};
+
+/**
+ * A notification that a token needs to be created/endorsed, and that keys want to be added
+ **/
+@interface RequestTokenAndAddKey : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+/** Test to see if @c addKey has been set. */
+@property(nonatomic, readwrite) BOOL hasAddKey;
+
+@end
+
 #pragma mark - NotifyBody
 
 typedef GPB_ENUM(NotifyBody_FieldNumber) {
@@ -406,6 +437,8 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_TokenCancelled = 11,
   NotifyBody_FieldNumber_BalanceStepUp = 12,
   NotifyBody_FieldNumber_TransactionStepUp = 13,
+  NotifyBody_FieldNumber_RequestTokenAndAddKey = 14,
+  NotifyBody_FieldNumber_RecoveryCompleted = 15,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -423,6 +456,8 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_TokenCancelled = 11,
   NotifyBody_Body_OneOfCase_BalanceStepUp = 12,
   NotifyBody_Body_OneOfCase_TransactionStepUp = 13,
+  NotifyBody_Body_OneOfCase_RequestTokenAndAddKey = 14,
+  NotifyBody_Body_OneOfCase_RecoveryCompleted = 15,
 };
 
 /**
@@ -457,6 +492,10 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BalanceStepUp *balanceStepUp;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
+
+@property(nonatomic, readwrite, strong, null_resettable) RequestTokenAndAddKey *requestTokenAndAddKey;
+
+@property(nonatomic, readwrite, strong, null_resettable) RecoveryCompleted *recoveryCompleted;
 
 @end
 

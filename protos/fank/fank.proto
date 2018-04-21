@@ -106,9 +106,10 @@ message GetNotificationsResponse {
 
 message GetOauthAccessTokenRequest {
   string bic = 1;
-  string username = 2;
+  string profile = 2; // optional
   string memberId = 3;
   repeated Account accounts = 4;
+  string client_id = 5; // optional
 }
 
 message GetOauthAccessTokenResponse {

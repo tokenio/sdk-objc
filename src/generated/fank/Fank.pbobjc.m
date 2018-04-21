@@ -1007,16 +1007,18 @@ typedef struct FankGetNotificationsResponse__storage_ {
 @implementation FankGetOauthAccessTokenRequest
 
 @dynamic bic;
-@dynamic username;
+@dynamic profile;
 @dynamic memberId;
 @dynamic accountsArray, accountsArray_Count;
+@dynamic clientId;
 
 typedef struct FankGetOauthAccessTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *bic;
-  NSString *username;
+  NSString *profile;
   NSString *memberId;
   NSMutableArray *accountsArray;
+  NSString *clientId;
 } FankGetOauthAccessTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1035,11 +1037,11 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "username",
+        .name = "profile",
         .dataTypeSpecific.className = NULL,
-        .number = FankGetOauthAccessTokenRequest_FieldNumber_Username,
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_Profile,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, username),
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, profile),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -1060,6 +1062,15 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, accountsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "clientId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankGetOauthAccessTokenRequest_FieldNumber_ClientId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, clientId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -19,6 +19,7 @@ message Token {
   TokenPayload payload = 2;                               // Token payload, being signed.
   repeated TokenSignature payload_signatures = 3;         // Payload signatures.
   string replaced_by_token_id = 4;                        // ID of the latest token replacing it
+  string token_request_id = 5;                            // ID of the token request associated with the token (optional)
 }
 
 message TokenRequest {
@@ -78,6 +79,7 @@ message TokenPayload {
     string display_name = 1;                            // Name of recipient, to be shown to user
     string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
     string logo_url = 3;                                // URL pointing to recipient's logo
+    string secondary_name = 4;                          // Optional domain or email of the recipient, to be shown to user along with display_name
   }
 }
 

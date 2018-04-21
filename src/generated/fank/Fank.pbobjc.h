@@ -342,22 +342,27 @@ typedef GPB_ENUM(FankGetNotificationsResponse_FieldNumber) {
 
 typedef GPB_ENUM(FankGetOauthAccessTokenRequest_FieldNumber) {
   FankGetOauthAccessTokenRequest_FieldNumber_Bic = 1,
-  FankGetOauthAccessTokenRequest_FieldNumber_Username = 2,
+  FankGetOauthAccessTokenRequest_FieldNumber_Profile = 2,
   FankGetOauthAccessTokenRequest_FieldNumber_MemberId = 3,
   FankGetOauthAccessTokenRequest_FieldNumber_AccountsArray = 4,
+  FankGetOauthAccessTokenRequest_FieldNumber_ClientId = 5,
 };
 
 @interface FankGetOauthAccessTokenRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+/** optional */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *profile;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FankAccount*> *accountsArray;
 /** The number of items in @c accountsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger accountsArray_Count;
+
+/** optional */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *clientId;
 
 @end
 

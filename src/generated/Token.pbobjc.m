@@ -115,6 +115,7 @@ BOOL TransferTokenStatus_IsValidValue(int32_t value__) {
 @dynamic hasPayload, payload;
 @dynamic payloadSignaturesArray, payloadSignaturesArray_Count;
 @dynamic replacedByTokenId;
+@dynamic tokenRequestId;
 
 typedef struct Token__storage_ {
   uint32_t _has_storage_[1];
@@ -122,6 +123,7 @@ typedef struct Token__storage_ {
   TokenPayload *payload;
   NSMutableArray *payloadSignaturesArray;
   NSString *replacedByTokenId;
+  NSString *tokenRequestId;
 } Token__storage_;
 
 // This method is threadsafe because it is initially called
@@ -163,6 +165,15 @@ typedef struct Token__storage_ {
         .number = Token_FieldNumber_ReplacedByTokenId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Token__storage_, replacedByTokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = Token_FieldNumber_TokenRequestId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Token__storage_, tokenRequestId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -598,12 +609,14 @@ void TokenPayload_ClearBodyOneOfCase(TokenPayload *message) {
 @dynamic displayName;
 @dynamic refId;
 @dynamic logoURL;
+@dynamic secondaryName;
 
 typedef struct TokenPayload_ActingAs__storage_ {
   uint32_t _has_storage_[1];
   NSString *displayName;
   NSString *refId;
   NSString *logoURL;
+  NSString *secondaryName;
 } TokenPayload_ActingAs__storage_;
 
 // This method is threadsafe because it is initially called
@@ -637,6 +650,15 @@ typedef struct TokenPayload_ActingAs__storage_ {
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TokenPayload_ActingAs__storage_, logoURL),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "secondaryName",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_ActingAs_FieldNumber_SecondaryName,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TokenPayload_ActingAs__storage_, secondaryName),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };

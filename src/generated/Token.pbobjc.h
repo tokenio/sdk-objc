@@ -184,6 +184,7 @@ typedef GPB_ENUM(Token_FieldNumber) {
   Token_FieldNumber_Payload = 2,
   Token_FieldNumber_PayloadSignaturesArray = 3,
   Token_FieldNumber_ReplacedByTokenId = 4,
+  Token_FieldNumber_TokenRequestId = 5,
 };
 
 /**
@@ -207,6 +208,9 @@ typedef GPB_ENUM(Token_FieldNumber) {
 
 /** ID of the latest token replacing it */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *replacedByTokenId;
+
+/** ID of the token request associated with the token (optional) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -375,6 +379,7 @@ typedef GPB_ENUM(TokenPayload_ActingAs_FieldNumber) {
   TokenPayload_ActingAs_FieldNumber_DisplayName = 1,
   TokenPayload_ActingAs_FieldNumber_RefId = 2,
   TokenPayload_ActingAs_FieldNumber_LogoURL = 3,
+  TokenPayload_ActingAs_FieldNumber_SecondaryName = 4,
 };
 
 /**
@@ -391,6 +396,9 @@ typedef GPB_ENUM(TokenPayload_ActingAs_FieldNumber) {
 
 /** URL pointing to recipient's logo */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *logoURL;
+
+/** Optional domain or email of the recipient, to be shown to user along with display_name */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *secondaryName;
 
 @end
 

@@ -64,6 +64,9 @@ message TransactionStepUp {
   string transaction_id = 2; // Transaction ID
 }
 
+// A notification to notify a member that a recovery process has completed
+message RecoveryCompleted {}
+
 // A notification that a key wants to be added to a member. Clients should timeout the notification
 // and screen, once the expires_ms has passed
 message AddKey {
@@ -90,6 +93,11 @@ message TokenCancelled {
   string token_id = 1; // Token ID
 }
 
+// A notification that a token needs to be created/endorsed, and that keys want to be added
+message RequestTokenAndAddKey {
+  string token_request_id = 1;
+  AddKey add_key = 2;
+}
 
 // A data that goes in a NotifyRequest
 message NotifyBody {
@@ -107,6 +115,8 @@ message NotifyBody {
     io.token.proto.common.notification.TokenCancelled token_cancelled = 11;
     io.token.proto.common.notification.BalanceStepUp balance_step_up = 12;
     io.token.proto.common.notification.TransactionStepUp transaction_step_up = 13;
+    io.token.proto.common.notification.RequestTokenAndAddKey request_token_and_add_key = 14;
+    io.token.proto.common.notification.RecoveryCompleted recovery_completed = 15;
   }
 }
 

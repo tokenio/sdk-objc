@@ -567,6 +567,36 @@ typedef struct TransactionStepUp__storage_ {
 
 @end
 
+#pragma mark - RecoveryCompleted
+
+@implementation RecoveryCompleted
+
+
+typedef struct RecoveryCompleted__storage_ {
+  uint32_t _has_storage_[1];
+} RecoveryCompleted__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RecoveryCompleted class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RecoveryCompleted__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AddKey
 
 @implementation AddKey
@@ -794,6 +824,60 @@ typedef struct TokenCancelled__storage_ {
 
 @end
 
+#pragma mark - RequestTokenAndAddKey
+
+@implementation RequestTokenAndAddKey
+
+@dynamic tokenRequestId;
+@dynamic hasAddKey, addKey;
+
+typedef struct RequestTokenAndAddKey__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenRequestId;
+  AddKey *addKey;
+} RequestTokenAndAddKey__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = RequestTokenAndAddKey_FieldNumber_TokenRequestId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestTokenAndAddKey__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
+        .number = RequestTokenAndAddKey_FieldNumber_AddKey,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestTokenAndAddKey__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestTokenAndAddKey class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestTokenAndAddKey__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - NotifyBody
 
 @implementation NotifyBody
@@ -812,6 +896,8 @@ typedef struct TokenCancelled__storage_ {
 @dynamic tokenCancelled;
 @dynamic balanceStepUp;
 @dynamic transactionStepUp;
+@dynamic requestTokenAndAddKey;
+@dynamic recoveryCompleted;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -828,6 +914,8 @@ typedef struct NotifyBody__storage_ {
   TokenCancelled *tokenCancelled;
   BalanceStepUp *balanceStepUp;
   TransactionStepUp *transactionStepUp;
+  RequestTokenAndAddKey *requestTokenAndAddKey;
+  RecoveryCompleted *recoveryCompleted;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -950,6 +1038,24 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_TransactionStepUp,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, transactionStepUp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "requestTokenAndAddKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(RequestTokenAndAddKey),
+        .number = NotifyBody_FieldNumber_RequestTokenAndAddKey,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, requestTokenAndAddKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "recoveryCompleted",
+        .dataTypeSpecific.className = GPBStringifySymbol(RecoveryCompleted),
+        .number = NotifyBody_FieldNumber_RecoveryCompleted,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, recoveryCompleted),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
