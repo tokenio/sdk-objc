@@ -106,8 +106,6 @@
   @class NotifyResponse;
   @class ReplaceTokenRequest;
   @class ReplaceTokenResponse;
-  @class RequestSignatureRequest;
-  @class RequestSignatureResponse;
   @class RequestTransferRequest;
   @class RequestTransferResponse;
   @class ResolveAliasRequest;
@@ -122,6 +120,8 @@
   @class SetProfilePictureResponse;
   @class SetProfileRequest;
   @class SetProfileResponse;
+  @class SignTokenRequestStateRequest;
+  @class SignTokenRequestStateResponse;
   @class StoreTokenRequestRequest;
   @class StoreTokenRequestResponse;
   @class SubscribeToNotificationsRequest;
@@ -1071,17 +1071,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RequestSignature(RequestSignatureRequest) returns (RequestSignatureResponse)
+#pragma mark SignTokenRequestState(SignTokenRequestStateRequest) returns (SignTokenRequestStateResponse)
 
 /**
- * Request a Token signature
+ * Request a Token signature on a token request state payload (tokenId | state)
  */
-- (void)requestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)signTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Request a Token signature
+ * Request a Token signature on a token request state payload (tokenId | state)
  */
-- (GRPCProtoCall *)RPCToRequestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSignTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)

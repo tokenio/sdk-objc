@@ -534,11 +534,11 @@ message ReplaceTokenResponse {
   io.token.proto.common.token.TokenOperationResult result = 1; // Success/fail and new token data
 }
 
-message RequestSignatureRequest {
-  io.token.proto.common.token.RequestSignaturePayload payload = 1;
+message SignTokenRequestStateRequest {
+  io.token.proto.common.token.TokenRequestStatePayload payload = 1;
 }
 
-message RequestSignatureResponse {
+message SignTokenRequestStateResponse {
   io.token.proto.common.security.Signature signature = 1;
 }
 
@@ -1149,10 +1149,10 @@ service GatewayService {
     };
   }
 
-  // Request a Token signature
-  rpc RequestSignature (RequestSignatureRequest) returns (RequestSignatureResponse) {
+  // Request a Token signature on a token request state payload (tokenId | state)
+  rpc SignTokenRequestState (SignTokenRequestStateRequest) returns (SignTokenRequestStateResponse) {
     option (google.api.http) = {
-        post: "/request-signature?tokenId={payload.token_id}&state={payload.state}"
+        put: "/sign-token-request-state"
     };
   }
 

@@ -670,14 +670,14 @@ int32_t TokenOperationResult_Status_RawValue(TokenOperationResult *message);
  **/
 void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int32_t value);
 
-#pragma mark - RequestSignaturePayload
+#pragma mark - TokenRequestStatePayload
 
-typedef GPB_ENUM(RequestSignaturePayload_FieldNumber) {
-  RequestSignaturePayload_FieldNumber_TokenId = 1,
-  RequestSignaturePayload_FieldNumber_State = 2,
+typedef GPB_ENUM(TokenRequestStatePayload_FieldNumber) {
+  TokenRequestStatePayload_FieldNumber_TokenId = 1,
+  TokenRequestStatePayload_FieldNumber_State = 2,
 };
 
-@interface RequestSignaturePayload : GPBMessage
+@interface TokenRequestStatePayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
 

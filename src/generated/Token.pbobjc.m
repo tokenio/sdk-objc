@@ -1430,18 +1430,18 @@ BOOL TokenOperationResult_Status_IsValidValue(int32_t value__) {
   }
 }
 
-#pragma mark - RequestSignaturePayload
+#pragma mark - TokenRequestStatePayload
 
-@implementation RequestSignaturePayload
+@implementation TokenRequestStatePayload
 
 @dynamic tokenId;
 @dynamic state;
 
-typedef struct RequestSignaturePayload__storage_ {
+typedef struct TokenRequestStatePayload__storage_ {
   uint32_t _has_storage_[1];
   NSString *tokenId;
   NSString *state;
-} RequestSignaturePayload__storage_;
+} TokenRequestStatePayload__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1452,29 +1452,29 @@ typedef struct RequestSignaturePayload__storage_ {
       {
         .name = "tokenId",
         .dataTypeSpecific.className = NULL,
-        .number = RequestSignaturePayload_FieldNumber_TokenId,
+        .number = TokenRequestStatePayload_FieldNumber_TokenId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSignaturePayload__storage_, tokenId),
+        .offset = (uint32_t)offsetof(TokenRequestStatePayload__storage_, tokenId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
         .name = "state",
         .dataTypeSpecific.className = NULL,
-        .number = RequestSignaturePayload_FieldNumber_State,
+        .number = TokenRequestStatePayload_FieldNumber_State,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSignaturePayload__storage_, state),
+        .offset = (uint32_t)offsetof(TokenRequestStatePayload__storage_, state),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSignaturePayload class]
+        [GPBDescriptor allocDescriptorForClass:[TokenRequestStatePayload class]
                                      rootClass:[TokenRoot class]
                                           file:TokenRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSignaturePayload__storage_)
+                                   storageSize:sizeof(TokenRequestStatePayload__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

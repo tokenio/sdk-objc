@@ -1235,22 +1235,22 @@
              responseClass:[ReplaceTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark RequestSignature(RequestSignatureRequest) returns (RequestSignatureResponse)
+#pragma mark SignTokenRequestState(SignTokenRequestStateRequest) returns (SignTokenRequestStateResponse)
 
 /**
- * Request a Token signature
+ * Request a Token signature on a token request state payload (tokenId | state)
  */
-- (void)requestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToRequestSignatureWithRequest:request handler:handler] start];
+- (void)signTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSignTokenRequestStateWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
- * Request a Token signature
+ * Request a Token signature on a token request state payload (tokenId | state)
  */
-- (GRPCProtoCall *)RPCToRequestSignatureWithRequest:(RequestSignatureRequest *)request handler:(void(^)(RequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"RequestSignature"
+- (GRPCProtoCall *)RPCToSignTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SignTokenRequestState"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[RequestSignatureResponse class]
+             responseClass:[SignTokenRequestStateResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)

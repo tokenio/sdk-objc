@@ -57,7 +57,6 @@ CF_EXTERN_C_BEGIN
 @class Profile;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
-@class RequestSignaturePayload;
 @class Signature;
 @class StepUp;
 @class Subscriber;
@@ -66,6 +65,7 @@ CF_EXTERN_C_BEGIN
 @class TokenOperationResult;
 @class TokenPayload;
 @class TokenRequest;
+@class TokenRequestStatePayload;
 @class Transaction;
 @class TransactionStepUp;
 @class Transfer;
@@ -1968,27 +1968,27 @@ typedef GPB_ENUM(ReplaceTokenResponse_FieldNumber) {
 
 @end
 
-#pragma mark - RequestSignatureRequest
+#pragma mark - SignTokenRequestStateRequest
 
-typedef GPB_ENUM(RequestSignatureRequest_FieldNumber) {
-  RequestSignatureRequest_FieldNumber_Payload = 1,
+typedef GPB_ENUM(SignTokenRequestStateRequest_FieldNumber) {
+  SignTokenRequestStateRequest_FieldNumber_Payload = 1,
 };
 
-@interface RequestSignatureRequest : GPBMessage
+@interface SignTokenRequestStateRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) RequestSignaturePayload *payload;
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestStatePayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
 
 @end
 
-#pragma mark - RequestSignatureResponse
+#pragma mark - SignTokenRequestStateResponse
 
-typedef GPB_ENUM(RequestSignatureResponse_FieldNumber) {
-  RequestSignatureResponse_FieldNumber_Signature = 1,
+typedef GPB_ENUM(SignTokenRequestStateResponse_FieldNumber) {
+  SignTokenRequestStateResponse_FieldNumber_Signature = 1,
 };
 
-@interface RequestSignatureResponse : GPBMessage
+@interface SignTokenRequestStateResponse : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
 /** Test to see if @c signature has been set. */

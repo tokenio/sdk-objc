@@ -5360,16 +5360,16 @@ typedef struct ReplaceTokenResponse__storage_ {
 
 @end
 
-#pragma mark - RequestSignatureRequest
+#pragma mark - SignTokenRequestStateRequest
 
-@implementation RequestSignatureRequest
+@implementation SignTokenRequestStateRequest
 
 @dynamic hasPayload, payload;
 
-typedef struct RequestSignatureRequest__storage_ {
+typedef struct SignTokenRequestStateRequest__storage_ {
   uint32_t _has_storage_[1];
-  RequestSignaturePayload *payload;
-} RequestSignatureRequest__storage_;
+  TokenRequestStatePayload *payload;
+} SignTokenRequestStateRequest__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -5379,21 +5379,21 @@ typedef struct RequestSignatureRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(RequestSignaturePayload),
-        .number = RequestSignatureRequest_FieldNumber_Payload,
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenRequestStatePayload),
+        .number = SignTokenRequestStateRequest_FieldNumber_Payload,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSignatureRequest__storage_, payload),
+        .offset = (uint32_t)offsetof(SignTokenRequestStateRequest__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSignatureRequest class]
+        [GPBDescriptor allocDescriptorForClass:[SignTokenRequestStateRequest class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSignatureRequest__storage_)
+                                   storageSize:sizeof(SignTokenRequestStateRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -5403,16 +5403,16 @@ typedef struct RequestSignatureRequest__storage_ {
 
 @end
 
-#pragma mark - RequestSignatureResponse
+#pragma mark - SignTokenRequestStateResponse
 
-@implementation RequestSignatureResponse
+@implementation SignTokenRequestStateResponse
 
 @dynamic hasSignature, signature;
 
-typedef struct RequestSignatureResponse__storage_ {
+typedef struct SignTokenRequestStateResponse__storage_ {
   uint32_t _has_storage_[1];
   Signature *signature;
-} RequestSignatureResponse__storage_;
+} SignTokenRequestStateResponse__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -5423,20 +5423,20 @@ typedef struct RequestSignatureResponse__storage_ {
       {
         .name = "signature",
         .dataTypeSpecific.className = GPBStringifySymbol(Signature),
-        .number = RequestSignatureResponse_FieldNumber_Signature,
+        .number = SignTokenRequestStateResponse_FieldNumber_Signature,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSignatureResponse__storage_, signature),
+        .offset = (uint32_t)offsetof(SignTokenRequestStateResponse__storage_, signature),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSignatureResponse class]
+        [GPBDescriptor allocDescriptorForClass:[SignTokenRequestStateResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSignatureResponse__storage_)
+                                   storageSize:sizeof(SignTokenRequestStateResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

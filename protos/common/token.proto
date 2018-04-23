@@ -198,7 +198,7 @@ message TokenOperationResult {
 // Request signature
 //
 
-message RequestSignaturePayload {
+message TokenRequestStatePayload {
   string token_id = 1;
   string state = 2;
 }
