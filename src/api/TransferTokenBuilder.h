@@ -9,6 +9,7 @@
 
 @class TransferEndpoint;
 @class Alias;
+@class TokenPayload_ActingAs;
 
 /**
  * Helper class that builds Transfer Tokens.
@@ -78,6 +79,9 @@
 
 /// Specify reference ID. If not set, the Token system chooses a random one.
 @property (readwrite) NSString *refId;
+
+/// Set entity redeemer is acting on behalf of.
+@property (readwrite) TokenPayload_ActingAs *actingAs;
 
 /**
  * Initializes the transfer token builder.

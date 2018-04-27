@@ -116,6 +116,10 @@
     [self forAllTransactions];
 }
 
+- (void)actingAs:(TokenPayload_ActingAs *)actingAs {
+    payload.actingAs = actingAs;
+}
+
 - (TokenPayload *)toTokenPayload {
     [payload.access.resourcesArray addObjectsFromArray:[resources allObjects]];
     return payload;

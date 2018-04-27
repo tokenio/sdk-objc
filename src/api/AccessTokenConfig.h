@@ -102,6 +102,13 @@
 - (void)forAll;
 
 /**
+ * Set entity redeemer is acting on behalf of.
+ *
+ * @param actingAs entity redeemer is acting on behalf of.
+ */
+- (void)actingAs:(TokenPayload_ActingAs *)actingAs;
+
+/**
  * Converts configuration to TokenPayload object.
  *
  * @return TokenPayload object

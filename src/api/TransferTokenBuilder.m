@@ -133,6 +133,10 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
     if (self.purposeOfPayment) {
         payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
     }
+    
+    if (self.actingAs) {
+        payload.actingAs = self.actingAs;
+    }
 
     [[self.member getClient]
      createTransferToken:payload
