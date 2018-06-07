@@ -1,14 +1,17 @@
 syntax = "proto3";
 package io.token.proto.common.alias;
 option java_outer_classname = "AliasProtos";
+option csharp_namespace = "Tokenio.Proto.Common.AliasProtos";
+
+import "extensions/field.proto";
 
 // An Alias refers to a member in a "human readable" way.
 // Normally, an alias must be verified before it's useful.
 // E.g., payments to { EMAIL, "sandy@example.com" } work only if
 // some member has verified receiving an email at that address.
 message Alias {
-  Type type = 1;    // For example, EMAIL.
-  string value = 2; // For example, "sandy@example.com"
+  Type type = 1;                                                      // For example, EMAIL.
+  string value = 2 [(io.token.proto.extensions.field.redact) = true]; // For example, "sandy@example.com"
 
   enum Type {
     INVALID = 0;

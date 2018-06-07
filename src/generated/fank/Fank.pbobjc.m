@@ -18,6 +18,8 @@
  #import "Money.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Notification.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
+ #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -36,6 +38,8 @@
     registry = [[GPBExtensionRegistry alloc] init];
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+    [registry addExtensions:[MessageRoot extensionRegistry]];
   }
   return registry;
 }

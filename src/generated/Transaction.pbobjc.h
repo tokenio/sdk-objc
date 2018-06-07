@@ -162,6 +162,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
   Transaction_FieldNumber_TokenId = 6,
   Transaction_FieldNumber_TokenTransferId = 7,
   Transaction_FieldNumber_CreatedAtMs = 8,
+  Transaction_FieldNumber_Metadata = 9,
 };
 
 @interface Transaction : GPBMessage
@@ -191,6 +192,11 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 
 /** Creation time */
 @property(nonatomic, readwrite) int64_t createdAtMs;
+
+/** Additional fields. Optional. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
 
 @end
 

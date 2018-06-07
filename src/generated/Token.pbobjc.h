@@ -274,6 +274,7 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
   TokenMember_FieldNumber_Id_p = 1,
   TokenMember_FieldNumber_Username = 2,
   TokenMember_FieldNumber_Alias = 3,
+  TokenMember_FieldNumber_Realm = 4,
 };
 
 /**
@@ -292,6 +293,9 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
 
+/** realm the alias belongs to */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
+
 @end
 
 #pragma mark - TokenPayload
@@ -309,6 +313,7 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_Access = 10,
   TokenPayload_FieldNumber_EndorseUntilMs = 11,
   TokenPayload_FieldNumber_ActingAs = 12,
+  TokenPayload_FieldNumber_ReceiptRequested = 13,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -366,6 +371,8 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** Test to see if @c actingAs has been set. */
 @property(nonatomic, readwrite) BOOL hasActingAs;
 
+@property(nonatomic, readwrite) BOOL receiptRequested;
+
 @end
 
 /**
@@ -407,15 +414,19 @@ typedef GPB_ENUM(TokenPayload_ActingAs_FieldNumber) {
 typedef GPB_ENUM(ExternalAuthorizationDetails_FieldNumber) {
   ExternalAuthorizationDetails_FieldNumber_URL = 1,
   ExternalAuthorizationDetails_FieldNumber_CompletionPattern = 2,
+  ExternalAuthorizationDetails_FieldNumber_AuthorizationURL = 3,
 };
 
 @interface ExternalAuthorizationDetails : GPBMessage
 
-/** Display content from this URL to user to prompt for permission */
+/** Deprecated. Display content from this URL to user to prompt for permission */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
-/** If user navigates to URL matching this pattern, interaction is complete */
+/** Deprecated. If user navigates to URL matching this pattern, interaction is complete */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *completionPattern;
+
+/** Display content from this URL to user to prompt for permission; initiates OAuth payment flow */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *authorizationURL;
 
 @end
 

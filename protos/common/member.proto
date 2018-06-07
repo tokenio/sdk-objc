@@ -2,10 +2,13 @@ syntax = "proto3";
 package io.token.proto.common.member;
 
 option java_outer_classname = "MemberProtos";
+option csharp_namespace = "Tokenio.Proto.Common.MemberProtos";
 
 import "address.proto";
 import "alias.proto";
 import "security.proto";
+import "extensions/field.proto";
+import "extensions/message.proto";
 
 // Adds member key to the directory.
 message MemberAddKeyOperation {
@@ -22,6 +25,7 @@ message MemberAliasOperation {
   // Hash of alias to add/remove
   // https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
   string alias_hash = 1;
+  string realm = 2;
 }
 
 // Sets recovery rules for member. Overrides all previously set rules.
@@ -46,6 +50,8 @@ message MemberRecoveryOperation {
   }
 }
 
+message MemberDeleteOperation {}
+
 message MemberOperation {
    oneof operation {
      MemberAddKeyOperation add_key = 1;
@@ -55,6 +61,7 @@ message MemberOperation {
      MemberAliasOperation verify_alias = 6;
      MemberRecoveryRulesOperation recovery_rules = 7;
      MemberRecoveryOperation recover = 8;
+     MemberDeleteOperation delete = 9;
    }
 }
 
@@ -76,6 +83,7 @@ message MemberOperationMetadata {
   message AddAliasMetadata {
     string alias_hash = 1;
     io.token.proto.common.alias.Alias alias = 2;
+    string realm = 3;
   }
 }
 
@@ -109,6 +117,14 @@ message Member {
   int32 last_operation_sequence = 8;                    // sequence number for member's last operation
   MemberType type = 9;                                  // type of member
   string tpp_id = 10;                                   // TPP id associated with the member
+
+  enum MemberType {
+    INVALID_MEMBER_TYPE = 0;
+    PERSONAL = 1;
+    BUSINESS_UNVERIFIED = 2;
+    BUSINESS_VERIFIED = 3;
+    TRANSIENT = 4;
+  }
 }
 
 // A member address record
@@ -121,6 +137,7 @@ message AddressRecord {
 
 // Public profile
 message Profile {
+  option (io.token.proto.extensions.message.redact) = true;
   string display_name_first = 1;    // first name
   string display_name_last = 2;     // last name
   string original_picture_id = 3;   // blob ID. Ignored in set profile request
@@ -138,13 +155,24 @@ enum ProfilePictureSize {
   LARGE = 4;
 }
 
+message ReceiptContact {
+  string value = 1 [(io.token.proto.extensions.field.redact) = true];
+  Type type = 2;
+
+  enum Type {
+    INVALID = 0;
+    EMAIL = 1;
+  }
+}
+
 message Device {
   string name = 1;
   io.token.proto.common.security.Key key = 2;
 }
 
-enum MemberType {
+enum CreateMemberType {
   INVALID_MEMBER_TYPE = 0;
   PERSONAL = 1;
   BUSINESS = 2;
+  TRANSIENT = 3;
 }

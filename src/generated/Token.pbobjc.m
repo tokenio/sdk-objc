@@ -21,6 +21,8 @@
  #import "Transfer.pbobjc.h"
  #import "Transferinstructions.pbobjc.h"
  #import "Alias.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
+ #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -31,8 +33,19 @@
 
 @implementation TokenRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+    [registry addExtensions:[MessageRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -368,12 +381,14 @@ BOOL TokenSignature_Action_IsValidValue(int32_t value__) {
 @dynamic id_p;
 @dynamic username;
 @dynamic hasAlias, alias;
+@dynamic realm;
 
 typedef struct TokenMember__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *username;
   Alias *alias;
+  NSString *realm;
 } TokenMember__storage_;
 
 // This method is threadsafe because it is initially called
@@ -409,6 +424,15 @@ typedef struct TokenMember__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenMember_FieldNumber_Realm,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TokenMember__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TokenMember class]
@@ -443,6 +467,7 @@ typedef struct TokenMember__storage_ {
 @dynamic transfer;
 @dynamic access;
 @dynamic hasActingAs, actingAs;
+@dynamic receiptRequested;
 
 typedef struct TokenPayload__storage_ {
   uint32_t _has_storage_[2];
@@ -574,6 +599,15 @@ typedef struct TokenPayload__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "receiptRequested",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_FieldNumber_ReceiptRequested,
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TokenPayload class]
@@ -690,11 +724,13 @@ typedef struct TokenPayload_ActingAs__storage_ {
 
 @dynamic URL;
 @dynamic completionPattern;
+@dynamic authorizationURL;
 
 typedef struct ExternalAuthorizationDetails__storage_ {
   uint32_t _has_storage_[1];
   NSString *URL;
   NSString *completionPattern;
+  NSString *authorizationURL;
 } ExternalAuthorizationDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -721,6 +757,15 @@ typedef struct ExternalAuthorizationDetails__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "authorizationURL",
+        .dataTypeSpecific.className = NULL,
+        .number = ExternalAuthorizationDetails_FieldNumber_AuthorizationURL,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(ExternalAuthorizationDetails__storage_, authorizationURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[ExternalAuthorizationDetails class]
@@ -732,7 +777,7 @@ typedef struct ExternalAuthorizationDetails__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\001\001!!!\000";
+        "\002\001!!!\000\003\r\241!!\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

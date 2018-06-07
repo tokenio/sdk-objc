@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class Key;
 @class MemberAddKeyOperation;
 @class MemberAliasOperation;
+@class MemberDeleteOperation;
 @class MemberOperation;
 @class MemberOperationMetadata_AddAliasMetadata;
 @class MemberOperationResponseMetadata_AddAliasResponseMetadata;
@@ -75,27 +76,73 @@ GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void);
  **/
 BOOL ProfilePictureSize_IsValidValue(int32_t value);
 
-#pragma mark - Enum MemberType
+#pragma mark - Enum CreateMemberType
 
-typedef GPB_ENUM(MemberType) {
+typedef GPB_ENUM(CreateMemberType) {
   /**
    * Value used if any message's field encounters a value that is not defined
    * by this enum. The message will also have C functions to get/set the rawValue
    * of the field.
    **/
-  MemberType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  MemberType_InvalidMemberType = 0,
-  MemberType_Personal = 1,
-  MemberType_Business = 2,
+  CreateMemberType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  CreateMemberType_InvalidMemberType = 0,
+  CreateMemberType_Personal = 1,
+  CreateMemberType_Business = 2,
+  CreateMemberType_Transient = 3,
 };
 
-GPBEnumDescriptor *MemberType_EnumDescriptor(void);
+GPBEnumDescriptor *CreateMemberType_EnumDescriptor(void);
 
 /**
  * Checks to see if the given value is defined by the enum or was not known at
  * the time this source was generated.
  **/
-BOOL MemberType_IsValidValue(int32_t value);
+BOOL CreateMemberType_IsValidValue(int32_t value);
+
+#pragma mark - Enum Member_MemberType
+
+typedef GPB_ENUM(Member_MemberType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Member_MemberType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Member_MemberType_InvalidMemberType = 0,
+  Member_MemberType_Personal = 1,
+  Member_MemberType_BusinessUnverified = 2,
+  Member_MemberType_BusinessVerified = 3,
+  Member_MemberType_Transient = 4,
+};
+
+GPBEnumDescriptor *Member_MemberType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Member_MemberType_IsValidValue(int32_t value);
+
+#pragma mark - Enum ReceiptContact_Type
+
+typedef GPB_ENUM(ReceiptContact_Type) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  ReceiptContact_Type_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  ReceiptContact_Type_Invalid = 0,
+  ReceiptContact_Type_Email = 1,
+};
+
+GPBEnumDescriptor *ReceiptContact_Type_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL ReceiptContact_Type_IsValidValue(int32_t value);
 
 #pragma mark - MemberRoot
 
@@ -150,6 +197,7 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
 
 typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
   MemberAliasOperation_FieldNumber_AliasHash = 1,
+  MemberAliasOperation_FieldNumber_Realm = 2,
 };
 
 /**
@@ -162,6 +210,8 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
  * https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
  **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -231,6 +281,12 @@ typedef GPB_ENUM(MemberRecoveryOperation_Authorization_FieldNumber) {
 
 @end
 
+#pragma mark - MemberDeleteOperation
+
+@interface MemberDeleteOperation : GPBMessage
+
+@end
+
 #pragma mark - MemberOperation
 
 typedef GPB_ENUM(MemberOperation_FieldNumber) {
@@ -241,6 +297,7 @@ typedef GPB_ENUM(MemberOperation_FieldNumber) {
   MemberOperation_FieldNumber_VerifyAlias = 6,
   MemberOperation_FieldNumber_RecoveryRules = 7,
   MemberOperation_FieldNumber_Recover = 8,
+  MemberOperation_FieldNumber_Delete_p = 9,
 };
 
 typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
@@ -252,6 +309,7 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_VerifyAlias = 6,
   MemberOperation_Operation_OneOfCase_RecoveryRules = 7,
   MemberOperation_Operation_OneOfCase_Recover = 8,
+  MemberOperation_Operation_OneOfCase_Delete_p = 9,
 };
 
 @interface MemberOperation : GPBMessage
@@ -271,6 +329,8 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryRulesOperation *recoveryRules;
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryOperation *recover;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberDeleteOperation *delete_p;
 
 @end
 
@@ -336,6 +396,7 @@ void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message
 typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
   MemberOperationMetadata_AddAliasMetadata_FieldNumber_AliasHash = 1,
   MemberOperationMetadata_AddAliasMetadata_FieldNumber_Alias = 2,
+  MemberOperationMetadata_AddAliasMetadata_FieldNumber_Realm = 3,
 };
 
 @interface MemberOperationMetadata_AddAliasMetadata : GPBMessage
@@ -345,6 +406,8 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -465,7 +528,7 @@ typedef GPB_ENUM(Member_FieldNumber) {
 @property(nonatomic, readwrite) int32_t lastOperationSequence;
 
 /** type of member */
-@property(nonatomic, readwrite) MemberType type;
+@property(nonatomic, readwrite) Member_MemberType type;
 
 /** TPP id associated with the member */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tppId;
@@ -551,6 +614,33 @@ typedef GPB_ENUM(Profile_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *largePictureId;
 
 @end
+
+#pragma mark - ReceiptContact
+
+typedef GPB_ENUM(ReceiptContact_FieldNumber) {
+  ReceiptContact_FieldNumber_Value = 1,
+  ReceiptContact_FieldNumber_Type = 2,
+};
+
+@interface ReceiptContact : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *value;
+
+@property(nonatomic, readwrite) ReceiptContact_Type type;
+
+@end
+
+/**
+ * Fetches the raw value of a @c ReceiptContact's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t ReceiptContact_Type_RawValue(ReceiptContact *message);
+/**
+ * Sets the raw value of an @c ReceiptContact's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetReceiptContact_Type_RawValue(ReceiptContact *message, int32_t value);
 
 #pragma mark - Device
 

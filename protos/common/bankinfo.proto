@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.bank;
 
 option java_outer_classname = "BankProtos";
+option csharp_namespace = "Tokenio.Proto.Common.BankProtos";
 
 message Bank {
   string id = 1;
@@ -26,6 +27,7 @@ message BankInfo {
   string linking_uri = 1;        // BankAuthorization JSON starting URI
   string redirect_uri_regex = 2; // BankAuthorization JSON success URI pattern
   string bank_linking_uri = 3;   // OAuth starting URI
+  repeated string realm = 4;     // (Optional) Realms of the bank
 }
 
 message Paging {

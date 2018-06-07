@@ -105,6 +105,7 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
   BankInfo_FieldNumber_LinkingUri = 1,
   BankInfo_FieldNumber_RedirectUriRegex = 2,
   BankInfo_FieldNumber_BankLinkingUri = 3,
+  BankInfo_FieldNumber_RealmArray = 4,
 };
 
 /**
@@ -123,6 +124,11 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
 
 /** OAuth starting URI */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankLinkingUri;
+
+/** (Optional) Realms of the bank */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *realmArray;
+/** The number of items in @c realmArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger realmArray_Count;
 
 @end
 

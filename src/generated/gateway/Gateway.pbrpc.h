@@ -9,134 +9,140 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-#if defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) && GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
-  @class AddAddressRequest;
-  @class AddAddressResponse;
-  @class ApplyScaRequest;
-  @class ApplyScaResponse;
-  @class BeginRecoveryRequest;
-  @class BeginRecoveryResponse;
-  @class CancelTokenRequest;
-  @class CancelTokenResponse;
-  @class CompleteRecoveryRequest;
-  @class CompleteRecoveryResponse;
-  @class CompleteVerificationRequest;
-  @class CompleteVerificationResponse;
-  @class CreateAccessTokenRequest;
-  @class CreateAccessTokenResponse;
-  @class CreateBlobRequest;
-  @class CreateBlobResponse;
-  @class CreateMemberRequest;
-  @class CreateMemberResponse;
-  @class CreateTestBankAccountRequest;
-  @class CreateTestBankAccountResponse;
-  @class CreateTransferRequest;
-  @class CreateTransferResponse;
-  @class CreateTransferTokenRequest;
-  @class CreateTransferTokenResponse;
-  @class DeleteAddressRequest;
-  @class DeleteAddressResponse;
-  @class EndorseTokenRequest;
-  @class EndorseTokenResponse;
-  @class GetAccountRequest;
-  @class GetAccountResponse;
-  @class GetAccountsRequest;
-  @class GetAccountsResponse;
-  @class GetAddressRequest;
-  @class GetAddressResponse;
-  @class GetAddressesRequest;
-  @class GetAddressesResponse;
-  @class GetAliasesRequest;
-  @class GetAliasesResponse;
-  @class GetBalanceRequest;
-  @class GetBalanceResponse;
-  @class GetBalancesRequest;
-  @class GetBalancesResponse;
-  @class GetBankInfoRequest;
-  @class GetBankInfoResponse;
-  @class GetBanksRequest;
-  @class GetBanksResponse;
-  @class GetBlobRequest;
-  @class GetBlobResponse;
-  @class GetDefaultAccountRequest;
-  @class GetDefaultAccountResponse;
-  @class GetDefaultAgentRequest;
-  @class GetDefaultAgentResponse;
-  @class GetMemberRequest;
-  @class GetMemberResponse;
-  @class GetNotificationRequest;
-  @class GetNotificationResponse;
-  @class GetNotificationsRequest;
-  @class GetNotificationsResponse;
-  @class GetPairedDevicesRequest;
-  @class GetPairedDevicesResponse;
-  @class GetProfilePictureRequest;
-  @class GetProfilePictureResponse;
-  @class GetProfileRequest;
-  @class GetProfileResponse;
-  @class GetSubscriberRequest;
-  @class GetSubscriberResponse;
-  @class GetSubscribersRequest;
-  @class GetSubscribersResponse;
-  @class GetTestBankNotificationRequest;
-  @class GetTestBankNotificationResponse;
-  @class GetTestBankNotificationsRequest;
-  @class GetTestBankNotificationsResponse;
-  @class GetTokenBlobRequest;
-  @class GetTokenBlobResponse;
-  @class GetTokenIdRequest;
-  @class GetTokenIdResponse;
-  @class GetTokenRequest;
-  @class GetTokenResponse;
-  @class GetTokensRequest;
-  @class GetTokensResponse;
-  @class GetTransactionRequest;
-  @class GetTransactionResponse;
-  @class GetTransactionsRequest;
-  @class GetTransactionsResponse;
-  @class GetTransferRequest;
-  @class GetTransferResponse;
-  @class GetTransfersRequest;
-  @class GetTransfersResponse;
-  @class LinkAccountsOauthRequest;
-  @class LinkAccountsOauthResponse;
-  @class LinkAccountsRequest;
-  @class LinkAccountsResponse;
-  @class NotifyRequest;
-  @class NotifyResponse;
-  @class ReplaceTokenRequest;
-  @class ReplaceTokenResponse;
-  @class RequestTransferRequest;
-  @class RequestTransferResponse;
-  @class ResolveAliasRequest;
-  @class ResolveAliasResponse;
-  @class RetrieveTokenRequestRequest;
-  @class RetrieveTokenRequestResponse;
-  @class RetryVerificationRequest;
-  @class RetryVerificationResponse;
-  @class SetDefaultAccountRequest;
-  @class SetDefaultAccountResponse;
-  @class SetProfilePictureRequest;
-  @class SetProfilePictureResponse;
-  @class SetProfileRequest;
-  @class SetProfileResponse;
-  @class SignTokenRequestStateRequest;
-  @class SignTokenRequestStateResponse;
-  @class StoreTokenRequestRequest;
-  @class StoreTokenRequestResponse;
-  @class SubscribeToNotificationsRequest;
-  @class SubscribeToNotificationsResponse;
-  @class TriggerStepUpNotificationRequest;
-  @class TriggerStepUpNotificationResponse;
-  @class UnlinkAccountsRequest;
-  @class UnlinkAccountsResponse;
-  @class UnsubscribeFromNotificationsRequest;
-  @class UnsubscribeFromNotificationsResponse;
-  @class UpdateMemberRequest;
-  @class UpdateMemberResponse;
-  @class VerifyAliasRequest;
-  @class VerifyAliasResponse;
-#else
+@class AddAddressRequest;
+@class AddAddressResponse;
+@class ApplyScaRequest;
+@class ApplyScaResponse;
+@class BeginRecoveryRequest;
+@class BeginRecoveryResponse;
+@class CancelTokenRequest;
+@class CancelTokenResponse;
+@class CompleteRecoveryRequest;
+@class CompleteRecoveryResponse;
+@class CompleteVerificationRequest;
+@class CompleteVerificationResponse;
+@class CreateAccessTokenRequest;
+@class CreateAccessTokenResponse;
+@class CreateBlobRequest;
+@class CreateBlobResponse;
+@class CreateMemberRequest;
+@class CreateMemberResponse;
+@class CreateTestBankAccountRequest;
+@class CreateTestBankAccountResponse;
+@class CreateTransferRequest;
+@class CreateTransferResponse;
+@class CreateTransferTokenRequest;
+@class CreateTransferTokenResponse;
+@class DeleteAddressRequest;
+@class DeleteAddressResponse;
+@class DeleteMemberRequest;
+@class DeleteMemberResponse;
+@class EndorseTokenRequest;
+@class EndorseTokenResponse;
+@class GetAccountRequest;
+@class GetAccountResponse;
+@class GetAccountsRequest;
+@class GetAccountsResponse;
+@class GetAddressRequest;
+@class GetAddressResponse;
+@class GetAddressesRequest;
+@class GetAddressesResponse;
+@class GetAliasesRequest;
+@class GetAliasesResponse;
+@class GetBalanceRequest;
+@class GetBalanceResponse;
+@class GetBalancesRequest;
+@class GetBalancesResponse;
+@class GetBankInfoRequest;
+@class GetBankInfoResponse;
+@class GetBanksRequest;
+@class GetBanksResponse;
+@class GetBlobRequest;
+@class GetBlobResponse;
+@class GetDefaultAccountRequest;
+@class GetDefaultAccountResponse;
+@class GetDefaultAgentRequest;
+@class GetDefaultAgentResponse;
+@class GetMemberRequest;
+@class GetMemberResponse;
+@class GetNotificationRequest;
+@class GetNotificationResponse;
+@class GetNotificationsRequest;
+@class GetNotificationsResponse;
+@class GetPairedDevicesRequest;
+@class GetPairedDevicesResponse;
+@class GetProfilePictureRequest;
+@class GetProfilePictureResponse;
+@class GetProfileRequest;
+@class GetProfileResponse;
+@class GetReceiptContactRequest;
+@class GetReceiptContactResponse;
+@class GetSubscriberRequest;
+@class GetSubscriberResponse;
+@class GetSubscribersRequest;
+@class GetSubscribersResponse;
+@class GetTestBankNotificationRequest;
+@class GetTestBankNotificationResponse;
+@class GetTestBankNotificationsRequest;
+@class GetTestBankNotificationsResponse;
+@class GetTokenBlobRequest;
+@class GetTokenBlobResponse;
+@class GetTokenIdRequest;
+@class GetTokenIdResponse;
+@class GetTokenRequest;
+@class GetTokenResponse;
+@class GetTokensRequest;
+@class GetTokensResponse;
+@class GetTransactionRequest;
+@class GetTransactionResponse;
+@class GetTransactionsRequest;
+@class GetTransactionsResponse;
+@class GetTransferRequest;
+@class GetTransferResponse;
+@class GetTransfersRequest;
+@class GetTransfersResponse;
+@class LinkAccountsOauthRequest;
+@class LinkAccountsOauthResponse;
+@class LinkAccountsRequest;
+@class LinkAccountsResponse;
+@class NotifyRequest;
+@class NotifyResponse;
+@class ReplaceTokenRequest;
+@class ReplaceTokenResponse;
+@class RequestTransferRequest;
+@class RequestTransferResponse;
+@class ResolveAliasRequest;
+@class ResolveAliasResponse;
+@class RetrieveTokenRequestRequest;
+@class RetrieveTokenRequestResponse;
+@class RetryVerificationRequest;
+@class RetryVerificationResponse;
+@class SetDefaultAccountRequest;
+@class SetDefaultAccountResponse;
+@class SetProfilePictureRequest;
+@class SetProfilePictureResponse;
+@class SetProfileRequest;
+@class SetProfileResponse;
+@class SetReceiptContactRequest;
+@class SetReceiptContactResponse;
+@class SignTokenRequestStateRequest;
+@class SignTokenRequestStateResponse;
+@class StoreTokenRequestRequest;
+@class StoreTokenRequestResponse;
+@class SubscribeToNotificationsRequest;
+@class SubscribeToNotificationsResponse;
+@class TriggerStepUpNotificationRequest;
+@class TriggerStepUpNotificationResponse;
+@class UnlinkAccountsRequest;
+@class UnlinkAccountsResponse;
+@class UnsubscribeFromNotificationsRequest;
+@class UnsubscribeFromNotificationsResponse;
+@class UpdateMemberRequest;
+@class UpdateMemberResponse;
+@class VerifyAliasRequest;
+@class VerifyAliasResponse;
+
+#if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "google/api/Annotations.pbobjc.h"
   #import "Account.pbobjc.h"
   #import "Address.pbobjc.h"
@@ -152,6 +158,7 @@
   #import "Transaction.pbobjc.h"
   #import "Transfer.pbobjc.h"
   #import "Alias.pbobjc.h"
+  #import "extensions/Field.pbobjc.h"
 #endif
 
 @class GRPCProtoCall;
@@ -159,7 +166,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol GatewayService <NSObject>
+@protocol GatewayService <NSObject, GRPCProtoServiceInit>
 
 #pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
 
@@ -280,6 +287,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark SetReceiptContact(SetReceiptContactRequest) returns (SetReceiptContactResponse)
+
+/**
+ * Set a member's contact (e.g. email) for receipt delivery
+ */
+- (void)setReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Set a member's contact (e.g. email) for receipt delivery
+ */
+- (GRPCProtoCall *)RPCToSetReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetReceiptContact(GetReceiptContactRequest) returns (GetReceiptContactResponse)
+
+/**
+ * Get a member's email address for receipts
+ */
+- (void)getReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get a member's email address for receipts
+ */
+- (GRPCProtoCall *)RPCToGetReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
 
 /**
@@ -349,6 +382,13 @@ NS_ASSUME_NONNULL_BEGIN
  * Get auth'd members paired devices (as created by provisionDevice)
  */
 - (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark DeleteMember(DeleteMemberRequest) returns (DeleteMemberResponse)
+
+- (void)deleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToDeleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)

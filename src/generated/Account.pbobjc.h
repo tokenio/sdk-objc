@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class BankAccount;
 @class BankAccount_Ach;
 @class BankAccount_Bank;
+@class BankAccount_Custom;
 @class BankAccount_FasterPayments;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
@@ -197,6 +198,7 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_Metadata = 7,
   BankAccount_FieldNumber_AccountFeatures = 8,
   BankAccount_FieldNumber_FasterPayments = 9,
+  BankAccount_FieldNumber_Custom = 10,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -208,6 +210,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_Ach = 5,
   BankAccount_Account_OneOfCase_Bank = 6,
   BankAccount_Account_OneOfCase_FasterPayments = 9,
+  BankAccount_Account_OneOfCase_Custom = 10,
 };
 
 /**
@@ -232,6 +235,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_FasterPayments *fasterPayments;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Custom *custom;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
@@ -372,6 +377,24 @@ typedef GPB_ENUM(BankAccount_FasterPayments_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - BankAccount_Custom
+
+typedef GPB_ENUM(BankAccount_Custom_FieldNumber) {
+  BankAccount_Custom_FieldNumber_BankId = 1,
+  BankAccount_Custom_FieldNumber_Payload = 2,
+};
+
+/**
+ * Custom authorization
+ **/
+@interface BankAccount_Custom : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
 
 @end
 

@@ -1,5 +1,8 @@
 syntax = "proto3";
 package io.token.proto.gateway;
+option csharp_namespace = "Tokenio.Proto.Gateway";
+
+import "extensions/field.proto";
 
 // The payload is signed by the client for every request.
 
@@ -10,14 +13,14 @@ message HttpAuthPayload {
   string method = 1;       // HTTP method, e.g., "POST"
   string uri_host = 2;     // host, e.g., "api.sandbox.token.io"
   string uri_path = 3;     // path part of URL, e.g., "/aliases"
-  string query_string = 4; // query part of URL, e.g., "tokenId=tt:AMg...bXg5ny:5zKcENpV&offset=null&limit=100"
-  string request_body = 5; // request body, e.g., "{\"memberId\":\"m:Y9GkD...LdEn:5zKtXEAq\"}"
+  string query_string = 4 [(io.token.proto.extensions.field.redact) = true]; // query part of URL, e.g., "tokenId=tt:AMg...bXg5ny:5zKcENpV&offset=null&limit=100"
+  string request_body = 5 [(io.token.proto.extensions.field.redact) = true]; // request body, e.g., "{\"memberId\":\"m:Y9GkD...LdEn:5zKtXEAq\"}"
   int64 created_at_ms = 6; // creation time, e.g., "1515710877090"
 }
 
 // For gRPC communication, the payload is a serialized protbuf and creation time.
 // https://github.com/tokenio/sdk-java/blob/master/lib/src/main/java/io/token/rpc/ClientAuthenticator.java
 message GrpcAuthPayload {
-  bytes request = 1;
+  bytes request = 1 [(io.token.proto.extensions.field.redact) = true];
   int64 created_at_ms = 6;
 }

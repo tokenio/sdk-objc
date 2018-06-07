@@ -9,26 +9,26 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-#if defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) && GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
-  @class BankAuthorization;
-  @class FankAddAccountRequest;
-  @class FankAddAccountResponse;
-  @class FankAddClientRequest;
-  @class FankAddClientResponse;
-  @class FankAuthorizeLinkAccountsRequest;
-  @class FankGetAccountRequest;
-  @class FankGetAccountResponse;
-  @class FankGetAccountsRequest;
-  @class FankGetAccountsResponse;
-  @class FankGetClientRequest;
-  @class FankGetClientResponse;
-  @class FankGetNotificationRequest;
-  @class FankGetNotificationResponse;
-  @class FankGetNotificationsRequest;
-  @class FankGetNotificationsResponse;
-  @class FankGetOauthAccessTokenRequest;
-  @class FankGetOauthAccessTokenResponse;
-#else
+@class BankAuthorization;
+@class FankAddAccountRequest;
+@class FankAddAccountResponse;
+@class FankAddClientRequest;
+@class FankAddClientResponse;
+@class FankAuthorizeLinkAccountsRequest;
+@class FankGetAccountRequest;
+@class FankGetAccountResponse;
+@class FankGetAccountsRequest;
+@class FankGetAccountsResponse;
+@class FankGetClientRequest;
+@class FankGetClientResponse;
+@class FankGetNotificationRequest;
+@class FankGetNotificationResponse;
+@class FankGetNotificationsRequest;
+@class FankGetNotificationsResponse;
+@class FankGetOauthAccessTokenRequest;
+@class FankGetOauthAccessTokenResponse;
+
+#if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "google/api/Annotations.pbobjc.h"
   #import "Money.pbobjc.h"
   #import "Banklink.pbobjc.h"
@@ -40,7 +40,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol FankFankService <NSObject>
+@protocol FankFankService <NSObject, GRPCProtoServiceInit>
 
 #pragma mark AddClient(AddClientRequest) returns (AddClientResponse)
 

@@ -101,6 +101,7 @@ typedef GPB_ENUM(Key_FieldNumber) {
   Key_FieldNumber_PublicKey = 2,
   Key_FieldNumber_Level = 3,
   Key_FieldNumber_Algorithm = 4,
+  Key_FieldNumber_ExpiresAtMs = 5,
 };
 
 /**
@@ -119,6 +120,9 @@ typedef GPB_ENUM(Key_FieldNumber) {
 
 /** ED25519, ECDSA_SHA256, RS256 */
 @property(nonatomic, readwrite) Key_Algorithm algorithm;
+
+/** optional expiration date of the key */
+@property(nonatomic, readwrite) int64_t expiresAtMs;
 
 @end
 

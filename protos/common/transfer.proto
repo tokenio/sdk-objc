@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.transfer;
 
 option java_outer_classname = "TransferProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransferProtos";
 
 import "money.proto";
 import "security.proto";

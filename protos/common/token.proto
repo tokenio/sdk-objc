@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.token;
 
 option java_outer_classname = "TokenProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TokenProtos";
 
 import "blob.proto";
 import "money.proto";
@@ -47,6 +48,7 @@ message TokenMember {
   // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
   string username = 2;
   io.token.proto.common.alias.Alias alias = 3; // alias, such as an email address
+  string realm = 4; // realm the alias belongs to
 }
 
 message TokenPayload {
@@ -72,6 +74,7 @@ message TokenPayload {
   }
 
   ActingAs acting_as = 12;
+  bool receipt_requested = 13;
 
   // If a token is being created on behalf of another party, this
   // field contains a description of that entity.
@@ -106,8 +109,9 @@ enum TransferTokenStatus {
 }
 
 message ExternalAuthorizationDetails {
-  string url = 1;                // Display content from this URL to user to prompt for permission
-  string completion_pattern = 2; // If user navigates to URL matching this pattern, interaction is complete
+  string url = 1;                // Deprecated. Display content from this URL to user to prompt for permission
+  string completion_pattern = 2; // Deprecated. If user navigates to URL matching this pattern, interaction is complete
+  string authorization_url = 3;  // Display content from this URL to user to prompt for permission; initiates OAuth payment flow
 }
 
 message TransferBody {

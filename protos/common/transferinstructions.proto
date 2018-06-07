@@ -2,11 +2,13 @@ syntax = "proto3";
 package io.token.proto.common.transferinstructions;
 
 option java_outer_classname = "TransferInstructionsProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransferInstructionsProtos";
 
 import "account.proto";
 import "address.proto";
 import "banklink.proto";
 import "security.proto";
+import "extensions/message.proto";
 
 // A bank might require a Purpose of Payment for some transfers.
 enum PurposeOfPayment {
@@ -31,6 +33,7 @@ enum PaymentContext {
 }
 
 message CustomerData {
+  option (io.token.proto.extensions.message.redact) = true;
   repeated string legal_names = 1;                   // Repeated in case of joint account holders.
   io.token.proto.common.address.Address address = 2; // Physical address
 }

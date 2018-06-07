@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.transaction;
 
 option java_outer_classname = "TransactionProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransactionProtos";
 
 import "member.proto";
 import "money.proto";
@@ -39,6 +40,8 @@ message Transaction {
   string token_id = 6;                          // Points to the token, only set for Token transactions.
   string token_transfer_id = 7;                 // Points to the token transfer, only set for Token transactions.
   int64 created_at_ms = 8;                      // Creation time
+
+  map<string, string> metadata = 9;             // Additional fields. Optional.
 }
 
 message Balance {

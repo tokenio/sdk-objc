@@ -17,6 +17,8 @@
  #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "extensions/Message.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -26,8 +28,19 @@
 
 @implementation TransactionRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[MessageRoot extensionRegistry]];
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -191,6 +204,7 @@ BOOL RequestStatus_IsValidValue(int32_t value__) {
 @dynamic tokenId;
 @dynamic tokenTransferId;
 @dynamic createdAtMs;
+@dynamic metadata, metadata_Count;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -201,6 +215,7 @@ typedef struct Transaction__storage_ {
   NSString *description_p;
   NSString *tokenId;
   NSString *tokenTransferId;
+  NSMutableDictionary *metadata;
   int64_t createdAtMs;
 } Transaction__storage_;
 
@@ -281,6 +296,15 @@ typedef struct Transaction__storage_ {
         .offset = (uint32_t)offsetof(Transaction__storage_, createdAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = NULL,
+        .number = Transaction_FieldNumber_Metadata,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Transaction__storage_, metadata),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

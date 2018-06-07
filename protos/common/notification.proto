@@ -4,16 +4,18 @@ package io.token.proto.common.notification;
 import "banklink.proto";
 import "security.proto";
 import "token.proto";
+import "extensions/field.proto";
 
 option java_outer_classname = "NotificationProtos";
+option csharp_namespace = "Tokenio.Proto.Common.NotificationProtos";
 
 // Metadata for a notification
 message DeviceMetadata {
   string application = 1;   // Name of the application to add keys to (e.g. Token, Chrome)
   string application_version = 2; // Application version (e.g. 2.0)
   string device = 3;  // Device the application resides on (e.g. Mac, iPhone X), to support multiple devices
-  double longitude = 4; // Longitude of the user's location to signal where the request is coming from
-  double latitude = 5;  // Latitude of the user's location
+  double longitude = 4 [(io.token.proto.extensions.field.redact) = true]; // Longitude of the user's location to signal where the request is coming from
+  double latitude = 5 [(io.token.proto.extensions.field.redact) = true];  // Latitude of the user's location
 }
 
 // A notification to the payer that a transfer was successfully processed.

@@ -1,10 +1,15 @@
 syntax = "proto3";
 package io.token.proto.common.address;
 option java_outer_classname = "AddressProtos";
+option csharp_namespace = "Tokenio.Proto.Common.AddressProtos";
+
+import "extensions/message.proto";
 
 // A physical shipping/billing address. Modeled after OpenStreetMap format:
 // http://wiki.openstreetmap.org/wiki/Key:addr
 message Address {
+  option (io.token.proto.extensions.message.redact) = true;
+
   // The house number (may contain letters, dashes or other characters). Addresses
   // describes ways to tag a single building with multiple addresses.
   string house_number = 1;

@@ -208,12 +208,14 @@ typedef struct Bank__storage_ {
 @dynamic linkingUri;
 @dynamic redirectUriRegex;
 @dynamic bankLinkingUri;
+@dynamic realmArray, realmArray_Count;
 
 typedef struct BankInfo__storage_ {
   uint32_t _has_storage_[1];
   NSString *linkingUri;
   NSString *redirectUriRegex;
   NSString *bankLinkingUri;
+  NSMutableArray *realmArray;
 } BankInfo__storage_;
 
 // This method is threadsafe because it is initially called
@@ -247,6 +249,15 @@ typedef struct BankInfo__storage_ {
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BankInfo__storage_, bankLinkingUri),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realmArray",
+        .dataTypeSpecific.className = NULL,
+        .number = BankInfo_FieldNumber_RealmArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BankInfo__storage_, realmArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },
     };

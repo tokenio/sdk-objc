@@ -14,6 +14,7 @@
 #endif
 
  #import "Security.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -24,8 +25,18 @@
 
 @implementation SecurityRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -51,6 +62,7 @@ static GPBFileDescriptor *SecurityRoot_FileDescriptor(void) {
 @dynamic publicKey;
 @dynamic level;
 @dynamic algorithm;
+@dynamic expiresAtMs;
 
 typedef struct Key__storage_ {
   uint32_t _has_storage_[1];
@@ -58,6 +70,7 @@ typedef struct Key__storage_ {
   Key_Algorithm algorithm;
   NSString *id_p;
   NSString *publicKey;
+  int64_t expiresAtMs;
 } Key__storage_;
 
 // This method is threadsafe because it is initially called
@@ -101,6 +114,15 @@ typedef struct Key__storage_ {
         .offset = (uint32_t)offsetof(Key__storage_, algorithm),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "expiresAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Key_FieldNumber_ExpiresAtMs,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Key__storage_, expiresAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
