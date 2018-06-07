@@ -57,7 +57,7 @@ def fetch_protos()
     system("rm -f #{file}");
 
     file = download("io/token/rpc", "tokenio-rpc", "proto", RPC_PROTOS_VER)
-    system("unzip -d protos #{file} '*.proto'")
+    system("unzip -d protos -o #{file} '*.proto'")
     system("rm -f #{file}");
 
 end
