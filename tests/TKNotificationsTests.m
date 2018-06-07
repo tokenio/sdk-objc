@@ -193,7 +193,7 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
         TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
+                                                          currency:@"EUR"];
         builder.accountId = payerAccount.id;
         builder.redeemerAlias = payee.firstAlias;
         Token *token = [builder execute];
