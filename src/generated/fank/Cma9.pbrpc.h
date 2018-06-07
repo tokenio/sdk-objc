@@ -9,24 +9,24 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-#if defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) && GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
-  @class AccountBalancesRequest;
-  @class AccountBalancesResponse;
-  @class AccountRequest;
-  @class AccountRequestsRequest;
-  @class AccountRequestsResponse;
-  @class AccountResponse;
-  @class AccountTransactionsRequest;
-  @class AccountTransactionsResponse;
-  @class AccountsRequest;
-  @class AccountsResponse;
-  @class DeleteAccountRequestsRequest;
-  @class DeleteAccountRequestsResponse;
-  @class PaymentSubmissionsRequest;
-  @class PaymentSubmissionsResponse;
-  @class PaymentsRequest;
-  @class PaymentsResponse;
-#else
+@class AccountBalancesRequest;
+@class AccountBalancesResponse;
+@class AccountRequest;
+@class AccountRequestsRequest;
+@class AccountRequestsResponse;
+@class AccountResponse;
+@class AccountTransactionsRequest;
+@class AccountTransactionsResponse;
+@class AccountsRequest;
+@class AccountsResponse;
+@class DeleteAccountRequestsRequest;
+@class DeleteAccountRequestsResponse;
+@class PaymentSubmissionsRequest;
+@class PaymentSubmissionsResponse;
+@class PaymentsRequest;
+@class PaymentsResponse;
+
+#if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "google/api/Annotations.pbobjc.h"
 #endif
 
@@ -35,7 +35,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol Cma9Service <NSObject>
+@protocol Cma9Service <NSObject, GRPCProtoServiceInit>
 
 #pragma mark CreateAccountRequest(AccountRequestsRequest) returns (AccountRequestsResponse)
 

@@ -29,6 +29,8 @@
  #import "Transaction.pbobjc.h"
  #import "Transfer.pbobjc.h"
  #import "Alias.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
+ #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -48,6 +50,8 @@
     registry = [[GPBExtensionRegistry alloc] init];
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+    [registry addExtensions:[MessageRoot extensionRegistry]];
   }
   return registry;
 }
@@ -131,7 +135,7 @@ typedef struct Page__storage_ {
 
 typedef struct CreateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
-  MemberType memberType;
+  CreateMemberType memberType;
   NSString *nonce;
 } CreateMemberRequest__storage_;
 
@@ -152,7 +156,7 @@ typedef struct CreateMemberRequest__storage_ {
       },
       {
         .name = "memberType",
-        .dataTypeSpecific.enumDescFunc = MemberType_EnumDescriptor,
+        .dataTypeSpecific.enumDescFunc = CreateMemberType_EnumDescriptor,
         .number = CreateMemberRequest_FieldNumber_MemberType,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, memberType),
@@ -430,10 +434,12 @@ typedef struct GetMemberResponse__storage_ {
 @implementation ResolveAliasRequest
 
 @dynamic hasAlias, alias;
+@dynamic realm;
 
 typedef struct ResolveAliasRequest__storage_ {
   uint32_t _has_storage_[1];
   Alias *alias;
+  NSString *realm;
 } ResolveAliasRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -450,6 +456,15 @@ typedef struct ResolveAliasRequest__storage_ {
         .offset = (uint32_t)offsetof(ResolveAliasRequest__storage_, alias),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = ResolveAliasRequest_FieldNumber_Realm,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ResolveAliasRequest__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -840,6 +855,66 @@ typedef struct GetPairedDevicesResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetPairedDevicesResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - DeleteMemberRequest
+
+@implementation DeleteMemberRequest
+
+
+typedef struct DeleteMemberRequest__storage_ {
+  uint32_t _has_storage_[1];
+} DeleteMemberRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DeleteMemberRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(DeleteMemberRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - DeleteMemberResponse
+
+@implementation DeleteMemberResponse
+
+
+typedef struct DeleteMemberResponse__storage_ {
+  uint32_t _has_storage_[1];
+} DeleteMemberResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DeleteMemberResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(DeleteMemberResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -1894,6 +1969,176 @@ typedef struct GetProfilePictureResponse__storage_ {
 
 @end
 
+#pragma mark - SetReceiptContactRequest
+
+@implementation SetReceiptContactRequest
+
+@dynamic memberId;
+@dynamic hasContact, contact;
+
+typedef struct SetReceiptContactRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+  ReceiptContact *contact;
+} SetReceiptContactRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = SetReceiptContactRequest_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SetReceiptContactRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "contact",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReceiptContact),
+        .number = SetReceiptContactRequest_FieldNumber_Contact,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SetReceiptContactRequest__storage_, contact),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetReceiptContactRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SetReceiptContactRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SetReceiptContactResponse
+
+@implementation SetReceiptContactResponse
+
+
+typedef struct SetReceiptContactResponse__storage_ {
+  uint32_t _has_storage_[1];
+} SetReceiptContactResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetReceiptContactResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(SetReceiptContactResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetReceiptContactRequest
+
+@implementation GetReceiptContactRequest
+
+@dynamic memberId;
+
+typedef struct GetReceiptContactRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+} GetReceiptContactRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetReceiptContactRequest_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetReceiptContactRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetReceiptContactRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetReceiptContactRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetReceiptContactResponse
+
+@implementation GetReceiptContactResponse
+
+@dynamic hasContact, contact;
+
+typedef struct GetReceiptContactResponse__storage_ {
+  uint32_t _has_storage_[1];
+  ReceiptContact *contact;
+} GetReceiptContactResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "contact",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReceiptContact),
+        .number = GetReceiptContactResponse_FieldNumber_Contact,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetReceiptContactResponse__storage_, contact),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetReceiptContactResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetReceiptContactResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - SubscribeToNotificationsRequest
 
 @implementation SubscribeToNotificationsRequest
@@ -2229,11 +2474,13 @@ typedef struct UnsubscribeFromNotificationsResponse__storage_ {
 
 @dynamic hasAlias, alias;
 @dynamic hasBody, body;
+@dynamic realm;
 
 typedef struct NotifyRequest__storage_ {
   uint32_t _has_storage_[1];
   Alias *alias;
   NotifyBody *body;
+  NSString *realm;
 } NotifyRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2259,6 +2506,15 @@ typedef struct NotifyRequest__storage_ {
         .offset = (uint32_t)offsetof(NotifyRequest__storage_, body),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = NotifyRequest_FieldNumber_Realm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(NotifyRequest__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -6003,6 +6259,7 @@ typedef struct GetTransfersResponse__storage_ {
 @dynamic page;
 @dynamic perPage;
 @dynamic sort;
+@dynamic provider;
 
 typedef struct GetBanksRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -6012,6 +6269,7 @@ typedef struct GetBanksRequest__storage_ {
   NSString *search;
   NSString *country;
   NSString *sort;
+  NSString *provider;
 } GetBanksRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -6071,6 +6329,15 @@ typedef struct GetBanksRequest__storage_ {
         .number = GetBanksRequest_FieldNumber_Sort,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(GetBanksRequest__storage_, sort),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "provider",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBanksRequest_FieldNumber_Provider,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(GetBanksRequest__storage_, provider),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

@@ -1,5 +1,6 @@
 syntax = "proto3";
 package io.token.proto.gateway;
+option csharp_namespace = "Tokenio.Proto.Gateway";
 
 import "google/api/annotations.proto";
 
@@ -17,6 +18,7 @@ import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
 import "alias.proto";
+import "extensions/field.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Paging details.
@@ -32,7 +34,7 @@ message Page {
 
 message CreateMemberRequest {
   string nonce = 1; // random string; used only to de-duplicate requests.
-  io.token.proto.common.member.MemberType member_type = 2;
+  io.token.proto.common.member.CreateMemberType member_type = 2;
 }
 
 message CreateMemberResponse {
@@ -59,6 +61,7 @@ message GetMemberResponse {
 
 message ResolveAliasRequest {
   io.token.proto.common.alias.Alias alias = 1; // alias to resolve
+  string realm = 2;
 }
 
 message ResolveAliasResponse {
@@ -93,6 +96,10 @@ message GetPairedDevicesRequest {}
 message GetPairedDevicesResponse {
   repeated io.token.proto.common.member.Device devices = 1; // linked device info
 }
+
+message DeleteMemberRequest {}
+
+message DeleteMemberResponse {}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member account recovery.
@@ -195,6 +202,23 @@ message GetProfilePictureResponse {
   io.token.proto.common.blob.Blob blob = 1; // blob with image "file"
 }
 
+message SetReceiptContactRequest {
+  string member_id = 1;
+  io.token.proto.common.member.ReceiptContact contact = 2;
+}
+
+message SetReceiptContactResponse {
+}
+
+message GetReceiptContactRequest {
+  string member_id = 1;
+}
+
+message GetReceiptContactResponse {
+  io.token.proto.common.member.ReceiptContact contact = 1;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service
 //
@@ -231,6 +255,7 @@ message UnsubscribeFromNotificationsResponse {}
 message NotifyRequest {
   io.token.proto.common.alias.Alias alias = 1; // alias of member to notify
   io.token.proto.common.notification.NotifyBody body = 2; // notification details
+  string realm = 3; // realm of member to notify
 }
 
 message NotifyResponse {
@@ -416,7 +441,7 @@ message GetTokenBlobResponse {
 
 message StoreTokenRequestRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
-  map<string, string> options = 2;
+  map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true];
 }
 
 message StoreTokenRequestResponse {
@@ -608,6 +633,7 @@ message GetBanksRequest {
   int32 page = 4;                     // Result page to retrieve. Defaults to 1 if not specified
   int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified.
   string sort = 6;                    // The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified.
+  string provider = 7;                // (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive)
 }
 
 message GetBanksResponse {
@@ -724,11 +750,25 @@ service GatewayService {
     };
   }
 
+  // Set a member's contact (e.g. email) for receipt delivery
+  rpc SetReceiptContact (SetReceiptContactRequest) returns (SetReceiptContactResponse) {
+    option (google.api.http) = {
+        put: "/receipt-contact"
+    };
+  }
+
+  // Get a member's email address for receipts
+  rpc GetReceiptContact (GetReceiptContactRequest) returns (GetReceiptContactResponse) {
+    option (google.api.http) = {
+        get: "/receipt-contact"
+    };
+  }
+
   // Get ID of member that owns an alias, if any.
   // https://developer.token.io/sdk/#aliases
   rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
-      get: "/resolve-alias?value={alias.value}&type={alias.type}"
+      get: "/resolve-alias?value={alias.value}&type={alias.type}&realm={realm}"
     };
   }
 
@@ -759,6 +799,12 @@ service GatewayService {
   rpc GetPairedDevices (GetPairedDevicesRequest) returns (GetPairedDevicesResponse) {
     option (google.api.http) = {
       get: "/members/devices"
+    };
+  }
+
+  rpc DeleteMember (DeleteMemberRequest) returns (DeleteMemberResponse) {
+    option (google.api.http) = {
+      delete: "/members"
     };
   }
 
@@ -1202,7 +1248,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
-        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}&sort={sort}"
+        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}&sort={sort}&provider={provider}"
     };
   }
 

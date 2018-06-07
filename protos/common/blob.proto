@@ -1,11 +1,14 @@
 syntax = "proto3";
 package io.token.proto.common.blob;
 option java_outer_classname = "BlobProtos";
+option csharp_namespace = "Tokenio.Proto.Common.BlobProtos";
+
+import "extensions/field.proto";
 
 // Representation of a blob of data.
 message Blob {
   string id = 1;             // Hash of the payload, route, shard
-  Payload payload = 2;
+  Payload payload = 2 [(io.token.proto.extensions.field.redact) = true];
 
   enum AccessMode {
     DEFAULT = 0; // Owner or token-participants can read.

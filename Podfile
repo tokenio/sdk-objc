@@ -1,5 +1,7 @@
-TOKEN_PROTOS_VER = "1.0.475"
-FANK_PROTOS_VER = "1.0.16"
+TOKEN_PROTOS_VER = "1.0.492"
+FANK_PROTOS_VER = "1.0.17"
+RPC_PROTOS_VER = "1.0.119"
+
 platform :ios, '8.0'
 inhibit_all_warnings!
 
@@ -53,6 +55,11 @@ def fetch_protos()
     file = download("io/token/fank", "tokenio-fank", "proto", FANK_PROTOS_VER)
     system("unzip -d protos -o #{file} '*.proto'")
     system("rm -f #{file}");
+
+    file = download("io/token/rpc", "tokenio-rpc", "proto", RPC_PROTOS_VER)
+    system("unzip -d protos -o #{file} '*.proto'")
+    system("rm -f #{file}");
+
 end
 
 #
@@ -94,11 +101,13 @@ post_install do |installer|
     dir = "src/generated"
     system("rm -rf #{dir}");
 
-    gencommand = generate_protos_cmd("common", dir) +
+    gencommand = 
+        generate_protos_cmd("common", dir) +
         generate_protos_cmd("common/google/api", dir) + 
         generate_protos_cmd("common/google/protobuf", dir) +
         generate_protos_cmd("external/gateway", dir) +
-        generate_protos_cmd("fank", dir);
-
+        generate_protos_cmd("fank", dir) +
+        generate_protos_cmd("extensions", dir) ;
+    
     system(gencommand)
 end

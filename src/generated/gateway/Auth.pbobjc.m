@@ -14,6 +14,7 @@
 #endif
 
  #import "gateway/Auth.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,8 +24,18 @@
 
 @implementation AuthRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 

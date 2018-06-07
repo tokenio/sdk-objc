@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.common.money;
 
 option java_outer_classname = "MoneyProtos";
+option csharp_namespace = "Tokenio.Proto.Common.MoneyProtos";
 
 message Money {
   string currency = 1; // ISO4217, 3 letter currency code such as "USD" or "EUR".

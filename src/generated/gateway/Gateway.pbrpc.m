@@ -19,6 +19,7 @@
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Alias.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 
 @implementation GatewayService
 
@@ -199,6 +200,42 @@
              responseClass:[GetProfilePictureResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark SetReceiptContact(SetReceiptContactRequest) returns (SetReceiptContactResponse)
+
+/**
+ * Set a member's contact (e.g. email) for receipt delivery
+ */
+- (void)setReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetReceiptContactWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Set a member's contact (e.g. email) for receipt delivery
+ */
+- (GRPCProtoCall *)RPCToSetReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetReceiptContact"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[SetReceiptContactResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetReceiptContact(GetReceiptContactRequest) returns (GetReceiptContactResponse)
+
+/**
+ * Get a member's email address for receipts
+ */
+- (void)getReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetReceiptContactWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get a member's email address for receipts
+ */
+- (GRPCProtoCall *)RPCToGetReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetReceiptContact"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetReceiptContactResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
 
 /**
@@ -293,6 +330,18 @@
   return [self RPCToMethod:@"GetPairedDevices"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GetPairedDevicesResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark DeleteMember(DeleteMemberRequest) returns (DeleteMemberResponse)
+
+- (void)deleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToDeleteMemberWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToDeleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"DeleteMember"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[DeleteMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)

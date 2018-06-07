@@ -157,6 +157,10 @@
 		ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC1E54BAFDC11AA75D6D /* sha512.c */; };
 		ABA7BFD1305D790B9C78F6A2 /* TKTransactionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B6DD4C292426B677C39D /* TKTransactionsTests.m */; };
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
+		D039410720C9F02100B980CE /* Field.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D039410320C9F02100B980CE /* Field.pbobjc.h */; };
+		D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410420C9F02100B980CE /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410520C9F02100B980CE /* Field.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D039410A20C9F02100B980CE /* Message.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D039410620C9F02100B980CE /* Message.pbobjc.h */; };
 		D039F81D206DCA09009A982B /* TKOauthEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = D039F81B206DCA09009A982B /* TKOauthEngine.h */; };
 		D039F820206DD192009A982B /* TKOAuthEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D039F81F206DD192009A982B /* TKOAuthEngine.m */; };
 		D03A55FE1FE0730C008342E0 /* TKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A55FC1FE0730C008342E0 /* TKBrowser.h */; };
@@ -399,6 +403,10 @@
 		ABA7BFD0B8AF4A53D14F385F /* TKAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAccount.h; sourceTree = "<group>"; };
 		CF42EC24281AE183D82CB9A5 /* Pods-sdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
+		D039410320C9F02100B980CE /* Field.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.pbobjc.h; sourceTree = "<group>"; };
+		D039410420C9F02100B980CE /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
+		D039410520C9F02100B980CE /* Field.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.pbobjc.m; sourceTree = "<group>"; };
+		D039410620C9F02100B980CE /* Message.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.pbobjc.h; sourceTree = "<group>"; };
 		D039F81B206DCA09009A982B /* TKOauthEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKOauthEngine.h; sourceTree = "<group>"; };
 		D039F81F206DD192009A982B /* TKOAuthEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKOAuthEngine.m; sourceTree = "<group>"; };
 		D03A55FC1FE0730C008342E0 /* TKBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBrowser.h; sourceTree = "<group>"; };
@@ -496,6 +504,7 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				D039410220C9F02100B980CE /* extensions */,
 				4B3814061F394B0200557EEF /* Alias.pbobjc.h */,
 				4B3814071F394B0200557EEF /* Alias.pbobjc.m */,
 				FAE918C61F17E6FE001692CF /* fank */,
@@ -831,6 +840,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D039410220C9F02100B980CE /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D039410320C9F02100B980CE /* Field.pbobjc.h */,
+				D039410420C9F02100B980CE /* Message.pbobjc.m */,
+				D039410520C9F02100B980CE /* Field.pbobjc.m */,
+				D039410620C9F02100B980CE /* Message.pbobjc.h */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		D03A55FB1FE07269008342E0 /* authorization */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +972,7 @@
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
 				ABA7BEAFFA13B3E10325E528 /* TokenIOSync.h in Headers */,
 				ABA7B57D2B7432D496CE2A6D /* TokenIOBuilder.h in Headers */,
+				D039410A20C9F02100B980CE /* Message.pbobjc.h in Headers */,
 				DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */,
 				4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */,
 				D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */,
@@ -989,6 +1010,7 @@
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
 				37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */,
+				D039410720C9F02100B980CE /* Field.pbobjc.h in Headers */,
 				1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */,
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
@@ -1352,6 +1374,7 @@
 				ABA7B3247F83509D9AB5E5B5 /* TKMemberSync.m in Sources */,
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
+				D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */,
 				D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */,
 				D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */,
 				ABA7B59E860E46C4B7EF7F58 /* TokenIOSync.m in Sources */,
@@ -1371,6 +1394,7 @@
 				ABA7BF1C7D227E9E69133874 /* TKRpcSyncCall.m in Sources */,
 				8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */,
 				DDF54B041E31797900BE739B /* QHex.m in Sources */,
+				D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */,
 				4B240F851F28096300497B2D /* TKHasher.m in Sources */,
 				FAE918CC1F17E70B001692CF /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,

@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package io.token.proto.common.account;
 option java_outer_classname = "AccountProtos";
+option csharp_namespace = "Tokenio.Proto.Common.AccountProtos";
 
 import "banklink.proto";
+import "extensions/field.proto";
+import "extensions/message.proto";
 
 // The payload of the bank authorization request.
 // The value of the payload is encrypted as a serialized JSON object
@@ -11,8 +14,8 @@ import "banklink.proto";
 // as described at https://developer.token.io/bank-integration/
 message PlaintextBankAuthorization {
   string member_id = 1;    // Token member id
-  string account_name = 2; // e.g., "Checking account with # ending 5678"
-  BankAccount account = 3; // Account info by some method, e.g., SEPA
+  string account_name = 2 [(io.token.proto.extensions.field.redact) = true]; // e.g., "Checking account with # ending 5678"
+  BankAccount account = 3 [(io.token.proto.extensions.field.redact) = true]; // Account info by some method, e.g., SEPA
   int64 expiration_ms = 4; // Expiration time
 }
 
@@ -34,9 +37,9 @@ message AccountFeatures {
 // Token linked account.
 message Account {
   string id = 1;                        // account ID
-  string name = 2;                      // human-friendly name. E.g., "Checking account with number ...1234"
+  string name = 2 [(io.token.proto.extensions.field.redact) = true]; // human-friendly name. E.g., "Checking account with number ...1234"
   string bank_id = 3;                   // bank ID
-  repeated AccountTag tags = 4;
+  repeated AccountTag tags = 4 [(io.token.proto.extensions.field.redact) = true];
   bool is_locked = 5;                   // indicates whether account requires re-linking (perhaps after member recovery)
   AccountFeatures account_features = 6; // features account supports
   int64 last_cache_update_ms = 7;       // timestamp of the last time the balance/transaction cache was updated for that account
@@ -66,26 +69,37 @@ message BankAccount {
 
   // SWIFT transfer
   message Swift {
+    option (io.token.proto.extensions.message.redact) = true;
     string bic = 1;     // BIC code AAAABBCCDD
     string account = 2;
   }
 
   // SEPA transfer.
   message Sepa {
+    option (io.token.proto.extensions.message.redact) = true;
     string iban = 1;    // International Bank Account Number
     string bic = 2;     // Bic code. Optional, except for non EEA countries
   }
 
   // ACH transfer
   message Ach {
+    option (io.token.proto.extensions.message.redact) = true;
     string routing = 1; // Routing number
     string account = 2;
   }
 
   // Faster Payments Service transfer (UK)
   message FasterPayments {
+    option (io.token.proto.extensions.message.redact) = true;
     string sort_code = 1;
     string account_number = 2;
+  }
+
+  // Custom authorization
+  message Custom {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bank_id = 1;
+    string payload = 2;
   }
 
   oneof account {
@@ -96,9 +110,10 @@ message BankAccount {
     Ach ach = 5;
     Bank bank = 6;
     FasterPayments faster_payments = 9;
+    Custom custom = 10;
   }
 
-  map<string, string> metadata = 7;
+  map<string, string> metadata = 7 [(io.token.proto.extensions.field.redact) = true];
   AccountFeatures account_features = 8;
 }
 

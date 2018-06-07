@@ -1,6 +1,7 @@
 syntax = "proto3";
 package io.token.proto.common.subscriber;
 option java_outer_classname = "SubscriberProtos";
+option csharp_namespace = "Tokenio.Proto.Common.SubscriberProtos";
 
 // Subscriber object. Represent a subscription to notifications for a member.
 message Subscriber {

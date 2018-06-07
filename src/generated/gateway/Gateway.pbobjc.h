@@ -55,6 +55,7 @@ CF_EXTERN_C_BEGIN
 @class Page;
 @class Paging;
 @class Profile;
+@class ReceiptContact;
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
 @class Signature;
@@ -71,7 +72,7 @@ CF_EXTERN_C_BEGIN
 @class Transfer;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
-GPB_ENUM_FWD_DECLARE(MemberType);
+GPB_ENUM_FWD_DECLARE(CreateMemberType);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(RequestStatus);
@@ -195,7 +196,7 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 /** random string; used only to de-duplicate requests. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
-@property(nonatomic, readwrite) enum MemberType memberType;
+@property(nonatomic, readwrite) enum CreateMemberType memberType;
 
 @end
 
@@ -298,6 +299,7 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
   ResolveAliasRequest_FieldNumber_Alias = 1,
+  ResolveAliasRequest_FieldNumber_Realm = 2,
 };
 
 @interface ResolveAliasRequest : GPBMessage
@@ -306,6 +308,8 @@ typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -424,6 +428,18 @@ typedef GPB_ENUM(GetPairedDevicesResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Device*> *devicesArray;
 /** The number of items in @c devicesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger devicesArray_Count;
+
+@end
+
+#pragma mark - DeleteMemberRequest
+
+@interface DeleteMemberRequest : GPBMessage
+
+@end
+
+#pragma mark - DeleteMemberResponse
+
+@interface DeleteMemberResponse : GPBMessage
 
 @end
 
@@ -765,6 +781,55 @@ typedef GPB_ENUM(GetProfilePictureResponse_FieldNumber) {
 
 @end
 
+#pragma mark - SetReceiptContactRequest
+
+typedef GPB_ENUM(SetReceiptContactRequest_FieldNumber) {
+  SetReceiptContactRequest_FieldNumber_MemberId = 1,
+  SetReceiptContactRequest_FieldNumber_Contact = 2,
+};
+
+@interface SetReceiptContactRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
+/** Test to see if @c contact has been set. */
+@property(nonatomic, readwrite) BOOL hasContact;
+
+@end
+
+#pragma mark - SetReceiptContactResponse
+
+@interface SetReceiptContactResponse : GPBMessage
+
+@end
+
+#pragma mark - GetReceiptContactRequest
+
+typedef GPB_ENUM(GetReceiptContactRequest_FieldNumber) {
+  GetReceiptContactRequest_FieldNumber_MemberId = 1,
+};
+
+@interface GetReceiptContactRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@end
+
+#pragma mark - GetReceiptContactResponse
+
+typedef GPB_ENUM(GetReceiptContactResponse_FieldNumber) {
+  GetReceiptContactResponse_FieldNumber_Contact = 1,
+};
+
+@interface GetReceiptContactResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
+/** Test to see if @c contact has been set. */
+@property(nonatomic, readwrite) BOOL hasContact;
+
+@end
+
 #pragma mark - SubscribeToNotificationsRequest
 
 typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
@@ -872,6 +937,7 @@ typedef GPB_ENUM(UnsubscribeFromNotificationsRequest_FieldNumber) {
 typedef GPB_ENUM(NotifyRequest_FieldNumber) {
   NotifyRequest_FieldNumber_Alias = 1,
   NotifyRequest_FieldNumber_Body = 2,
+  NotifyRequest_FieldNumber_Realm = 3,
 };
 
 @interface NotifyRequest : GPBMessage
@@ -885,6 +951,9 @@ typedef GPB_ENUM(NotifyRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NotifyBody *body;
 /** Test to see if @c body has been set. */
 @property(nonatomic, readwrite) BOOL hasBody;
+
+/** realm of member to notify */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -2194,6 +2263,7 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
   GetBanksRequest_FieldNumber_Page = 4,
   GetBanksRequest_FieldNumber_PerPage = 5,
   GetBanksRequest_FieldNumber_Sort = 6,
+  GetBanksRequest_FieldNumber_Provider = 7,
 };
 
 @interface GetBanksRequest : GPBMessage
@@ -2217,6 +2287,9 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 
 /** The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sort;
+
+/** (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
 
 @end
 

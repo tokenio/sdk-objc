@@ -17,6 +17,8 @@
  #import "Address.pbobjc.h"
  #import "Alias.pbobjc.h"
  #import "Security.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
+ #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -27,8 +29,19 @@
 
 @implementation MemberRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[MessageRoot extensionRegistry]];
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -86,24 +99,26 @@ BOOL ProfilePictureSize_IsValidValue(int32_t value__) {
   }
 }
 
-#pragma mark - Enum MemberType
+#pragma mark - Enum CreateMemberType
 
-GPBEnumDescriptor *MemberType_EnumDescriptor(void) {
+GPBEnumDescriptor *CreateMemberType_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "InvalidMemberType\000Personal\000Business\000";
+        "InvalidMemberType\000Personal\000Business\000Tran"
+        "sient\000";
     static const int32_t values[] = {
-        MemberType_InvalidMemberType,
-        MemberType_Personal,
-        MemberType_Business,
+        CreateMemberType_InvalidMemberType,
+        CreateMemberType_Personal,
+        CreateMemberType_Business,
+        CreateMemberType_Transient,
     };
     GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MemberType)
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(CreateMemberType)
                                        valueNames:valueNames
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:MemberType_IsValidValue];
+                                     enumVerifier:CreateMemberType_IsValidValue];
     if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
       [worker release];
     }
@@ -111,11 +126,12 @@ GPBEnumDescriptor *MemberType_EnumDescriptor(void) {
   return descriptor;
 }
 
-BOOL MemberType_IsValidValue(int32_t value__) {
+BOOL CreateMemberType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case MemberType_InvalidMemberType:
-    case MemberType_Personal:
-    case MemberType_Business:
+    case CreateMemberType_InvalidMemberType:
+    case CreateMemberType_Personal:
+    case CreateMemberType_Business:
+    case CreateMemberType_Transient:
       return YES;
     default:
       return NO;
@@ -213,10 +229,12 @@ typedef struct MemberRemoveKeyOperation__storage_ {
 @implementation MemberAliasOperation
 
 @dynamic aliasHash;
+@dynamic realm;
 
 typedef struct MemberAliasOperation__storage_ {
   uint32_t _has_storage_[1];
   NSString *aliasHash;
+  NSString *realm;
 } MemberAliasOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -231,6 +249,15 @@ typedef struct MemberAliasOperation__storage_ {
         .number = MemberAliasOperation_FieldNumber_AliasHash,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, aliasHash),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberAliasOperation_FieldNumber_Realm,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, realm),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -414,6 +441,36 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
 
 @end
 
+#pragma mark - MemberDeleteOperation
+
+@implementation MemberDeleteOperation
+
+
+typedef struct MemberDeleteOperation__storage_ {
+  uint32_t _has_storage_[1];
+} MemberDeleteOperation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberDeleteOperation class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(MemberDeleteOperation__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - MemberOperation
 
 @implementation MemberOperation
@@ -426,6 +483,7 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
 @dynamic verifyAlias;
 @dynamic recoveryRules;
 @dynamic recover;
+@dynamic delete_p;
 
 typedef struct MemberOperation__storage_ {
   uint32_t _has_storage_[2];
@@ -436,6 +494,7 @@ typedef struct MemberOperation__storage_ {
   MemberAliasOperation *verifyAlias;
   MemberRecoveryRulesOperation *recoveryRules;
   MemberRecoveryOperation *recover;
+  MemberDeleteOperation *delete_p;
 } MemberOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -504,6 +563,15 @@ typedef struct MemberOperation__storage_ {
         .number = MemberOperation_FieldNumber_Recover,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, recover),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "delete_p",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberDeleteOperation),
+        .number = MemberOperation_FieldNumber_Delete_p,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, delete_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -661,11 +729,13 @@ void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message
 
 @dynamic aliasHash;
 @dynamic hasAlias, alias;
+@dynamic realm;
 
 typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
   uint32_t _has_storage_[1];
   NSString *aliasHash;
   Alias *alias;
+  NSString *realm;
 } MemberOperationMetadata_AddAliasMetadata__storage_;
 
 // This method is threadsafe because it is initially called
@@ -691,6 +761,15 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
         .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, alias),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_Realm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -893,7 +972,7 @@ typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
   int32_t lastRecoverySequence;
   int32_t lastOperationSequence;
-  MemberType type;
+  Member_MemberType type;
   NSString *id_p;
   NSString *lastHash;
   NSMutableArray *aliasHashesArray;
@@ -983,7 +1062,7 @@ typedef struct Member__storage_ {
       },
       {
         .name = "type",
-        .dataTypeSpecific.enumDescFunc = MemberType_EnumDescriptor,
+        .dataTypeSpecific.enumDescFunc = Member_MemberType_EnumDescriptor,
         .number = Member_FieldNumber_Type,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Member__storage_, type),
@@ -1026,6 +1105,47 @@ void SetMember_Type_RawValue(Member *message, int32_t value) {
   GPBDescriptor *descriptor = [Member descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Member_FieldNumber_Type];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Member_MemberType
+
+GPBEnumDescriptor *Member_MemberType_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidMemberType\000Personal\000BusinessUnver"
+        "ified\000BusinessVerified\000Transient\000";
+    static const int32_t values[] = {
+        Member_MemberType_InvalidMemberType,
+        Member_MemberType_Personal,
+        Member_MemberType_BusinessUnverified,
+        Member_MemberType_BusinessVerified,
+        Member_MemberType_Transient,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Member_MemberType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Member_MemberType_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Member_MemberType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Member_MemberType_InvalidMemberType:
+    case Member_MemberType_Personal:
+    case Member_MemberType_BusinessUnverified:
+    case Member_MemberType_BusinessVerified:
+    case Member_MemberType_Transient:
+      return YES;
+    default:
+      return NO;
+  }
 }
 
 #pragma mark - AddressRecord
@@ -1201,6 +1321,106 @@ typedef struct Profile__storage_ {
 }
 
 @end
+
+#pragma mark - ReceiptContact
+
+@implementation ReceiptContact
+
+@dynamic value;
+@dynamic type;
+
+typedef struct ReceiptContact__storage_ {
+  uint32_t _has_storage_[1];
+  ReceiptContact_Type type;
+  NSString *value;
+} ReceiptContact__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = ReceiptContact_FieldNumber_Value,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReceiptContact__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "type",
+        .dataTypeSpecific.enumDescFunc = ReceiptContact_Type_EnumDescriptor,
+        .number = ReceiptContact_FieldNumber_Type,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ReceiptContact__storage_, type),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReceiptContact class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReceiptContact__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t ReceiptContact_Type_RawValue(ReceiptContact *message) {
+  GPBDescriptor *descriptor = [ReceiptContact descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:ReceiptContact_FieldNumber_Type];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetReceiptContact_Type_RawValue(ReceiptContact *message, int32_t value) {
+  GPBDescriptor *descriptor = [ReceiptContact descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:ReceiptContact_FieldNumber_Type];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum ReceiptContact_Type
+
+GPBEnumDescriptor *ReceiptContact_Type_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Email\000";
+    static const int32_t values[] = {
+        ReceiptContact_Type_Invalid,
+        ReceiptContact_Type_Email,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(ReceiptContact_Type)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:ReceiptContact_Type_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL ReceiptContact_Type_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case ReceiptContact_Type_Invalid:
+    case ReceiptContact_Type_Email:
+      return YES;
+    default:
+      return NO;
+  }
+}
 
 #pragma mark - Device
 

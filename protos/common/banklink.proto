@@ -1,5 +1,6 @@
 syntax = "proto3";
 package io.token.proto.banklink;
+option csharp_namespace = "Tokenio.Proto.BankLink";
 
 import "security.proto";
 

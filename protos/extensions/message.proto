@@ -1,0 +1,10 @@
+syntax = "proto3";
+package io.token.proto.extensions.message;
+
+import "google/protobuf/descriptor.proto";
+
+option java_outer_classname = "MessageExtensions";
+
+extend google.protobuf.MessageOptions {
+  bool redact = 50000;
+}

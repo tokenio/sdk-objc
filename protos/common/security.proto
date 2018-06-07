@@ -2,6 +2,9 @@ syntax = "proto3";
 package io.token.proto.common.security;
 
 option java_outer_classname = "SecurityProtos";
+option csharp_namespace = "Tokenio.Proto.Common.SecurityProtos";
+
+import "extensions/field.proto";
 
 // Public key
 message Key {
@@ -9,6 +12,7 @@ message Key {
   string public_key = 2;   // Base64url encoded public key.
   Level level = 3;         // Privilege level: LOW, STANDARD, PRIVILEGED
   Algorithm algorithm = 4; // ED25519, ECDSA_SHA256, RS256
+  int64 expires_at_ms = 5; // optional expiration date of the key
 
   enum Algorithm {
     INVALID_ALGORITHM = 0;
@@ -26,10 +30,10 @@ message Key {
 }
 
 message PrivateKey {
-  string id = 1;               // Key ID.
-  string private_key = 2;      // Base64url encoded private key.
-  Key.Level level = 3;         // Key's privilege level.
-  Key.Algorithm algorithm = 4; // Algorithm to use with key.
+  string id = 1;                                                      // Key ID.
+  string private_key = 2 [(io.token.proto.extensions.field.redact) = true]; // Base64url encoded private key.
+  Key.Level level = 3;                                                // Key's privilege level.
+  Key.Algorithm algorithm = 4;                                        // Algorithm to use with key.
 }
 
 message Signature {
