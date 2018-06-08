@@ -148,6 +148,11 @@
 - (void)removeAliases:(NSArray<Alias *> *)aliases;
 
 /**
+ * Delete the member.
+ */
+- (void)deleteMember;
+
+/**
  * Subscribes a device to receive push notifications.
  *
  * @param handler handler that will send the notifications to this subscriber
