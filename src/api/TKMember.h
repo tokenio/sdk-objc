@@ -183,6 +183,12 @@
               onError:(OnError)onError;
 
 /**
+ * Delete the member.
+ */
+- (void)deleteMember:(OnSuccess)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Subscribes a device to receive push notifications
  *
  * @param handler handler that will send the notifications to this subscriber

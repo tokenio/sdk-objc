@@ -125,6 +125,28 @@
     
 }
 
+- (void)deleteMember:(Member *)member
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError {
+    DeleteMemberRequest *request = [DeleteMemberRequest message];
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToDeleteMemberWithRequest:request
+                           handler:^(DeleteMemberResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+            usingKey:Key_Level_Privileged
+             onError:onError];
+}
+
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError {
     GetAliasesRequest *request = [GetAliasesRequest message];

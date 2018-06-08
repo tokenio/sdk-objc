@@ -141,6 +141,14 @@
     }];
 }
 
+- (void)deleteMember {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async deleteMember:^{ call.onSuccess(nil); }
+                          onError:call.onError];
+    }];
+}
+
 - (Subscriber *)subscribeToNotifications:(NSString *)handler
                      handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];

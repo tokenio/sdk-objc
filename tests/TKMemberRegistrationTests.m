@@ -21,6 +21,9 @@
         XCTAssert(member.id.length > 0);
         XCTAssertEqualObjects(member.firstAlias, alias);
         XCTAssertEqual(member.keys.count, 3);
+        
+        [member deleteMember];
+        XCTAssertThrows([tokenIO getMember:member.id]);
     }];
 }
 

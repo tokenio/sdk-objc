@@ -89,6 +89,13 @@
              onError:(OnError)onError;
 
 /**
+ * Delete the member.
+ */
+- (void)deleteMember:(Member *)member
+           onSuccess:(OnSuccess)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Get aliases array. It shall be called after create member and login
  *
  * @param onSuccess invoked on success with aliases array

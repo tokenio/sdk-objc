@@ -225,6 +225,11 @@
                  onError:onError];
 }
 
+- (void)deleteMember:(OnSuccess)onSuccess
+             onError:(OnError)onError {
+    [client deleteMember:member onSuccess:onSuccess onError:onError];
+}
+
 - (void)subscribeToNotifications:(NSString *)handler
              handlerInstructions:(NSMutableDictionary<NSString *,NSString *> *)handlerInstructions
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
