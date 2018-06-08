@@ -46,6 +46,25 @@
     }];
 }
 
+
+- (void)testRemoveNonStoredKeys {
+    [self run: ^(TokenIOSync *tokenIO) {
+        TKMemberSync *member = [self createMember:tokenIO];
+        id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+        id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
+                                                           useLocalAuthentication:NO]
+                                     createEngine:@"Another"];
+        
+        [member approveKey:[engine generateKey:Key_Level_Privileged]];
+        [member approveKey:[engine generateKey:Key_Level_Standard]];
+        [member approveKey:[engine generateKey:Key_Level_Low]];
+        
+        XCTAssertEqual(member.keys.count, 6);
+        [member removeNonStoredKeys];
+        XCTAssertEqual(member.keys.count, 3);
+    }];
+}
+
 - (void)testLoginMember {
     [self run: ^(TokenIOSync *tokenIO) {
         TKMemberSync *created = [self createMember:tokenIO];

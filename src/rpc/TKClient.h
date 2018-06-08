@@ -47,6 +47,11 @@
          errorHandler:(TKRpcErrorHandler *)errorHandler;
 
 /**
+ * Returns the cypto module
+ */
+- (TKCrypto *)getCrypto;
+
+/**
  * Sets the On-Behalf-Of authentication value to be used
  * with this client. The value must correspond to an existing
  * Access Token ID issued for the client member.
@@ -59,6 +64,16 @@
  * Clears the access token value used with this client.
  */
 - (void)clearAccessToken;
+
+/**
+ * Looks up member information for the current user. The user is defined by
+ * the key used for authentication.
+ *
+ * @param memberId member id
+ */
+- (void)getMember:(NSString *)memberId
+        onSuccess:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError;
 
 /**
  * Updates a Token member by adding/removing keys/aliases. The operations

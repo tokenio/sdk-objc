@@ -98,6 +98,13 @@
 - (void)removeKey:(NSString *)keyId;
 
 /**
+ * Removes all public keys that do not have a corresponding private key stored on
+ * the current device from tke member.
+ *
+ */
+- (void)removeNonStoredKeys;
+
+/**
  * Removes a set of keys owned by this member.
  *
  * @param keyIds key IDs of the keys to remove

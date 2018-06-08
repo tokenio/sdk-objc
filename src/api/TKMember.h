@@ -120,6 +120,14 @@
            onError:(OnError)onError;
 
 /**
+ * Removes all public keys that do not have a corresponding private key stored on
+ * the current device from tke member.
+ *
+ */
+- (void)removeNonStoredKeys:(OnSuccess)onSuccess
+                    onError:(OnError)onError;
+
+/**
  * Resend alias verification message (email, text, etc.).
  *
  * @param alias resend verification message for this alias

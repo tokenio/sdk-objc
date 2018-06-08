@@ -11,6 +11,7 @@
 #import "TKClient.h"
 #import "TKError.h"
 #import "TKHasher.h"
+#import "TKLocalizer.h"
 #import "TKMember.h"
 #import "TKMemberSync.h"
 #import "TKOauthEngine.h"
@@ -138,6 +139,41 @@
                    onSuccess();
                }
                  onError:onError];
+}
+
+- (void)removeNonStoredKeys:(OnSuccess)onSuccess
+                    onError:(OnError)onError {
+    NSString *reason = TKLocalizedString(@"Signature_Reason_UpdateMember",
+                                         @"Authorise your Token account change");
+
+    NSArray<Key *> *storedKeys = [[client getCrypto] getKeyInfos:reason onError:onError];
+    if (!storedKeys) {
+        return;
+    }
+    
+    NSMutableSet<NSString *> *(^block)(NSArray<Key *> *) = ^(NSArray<Key *> * keys) {
+        NSMutableSet<NSString *> *keyIds = [NSMutableSet setWithCapacity:keys.count];
+        [keys enumerateObjectsUsingBlock:^(Key *key, NSUInteger idx, BOOL *stop) {
+            [keyIds addObject:key.id_p];
+        }];
+        return keyIds;
+    };
+    
+    NSMutableSet<NSString *> * storedKeyIds = block(storedKeys);
+    
+    __weak typeof(TKMember *) weakSelf = self;
+    [client getMember:self.id
+            onSuccess:^(Member * _Nonnull member) {
+                NSMutableSet<NSString *> *keyIds = block([member keysArray]);
+                [keyIds minusSet:storedKeyIds];
+                if ([keyIds count] == 0) {
+                    onSuccess();
+                }
+                else {
+                    [weakSelf removeKeys:[keyIds allObjects] onSuccess:onSuccess onError:onError];
+                }
+                
+            } onError:onError];
 }
 
 - (void)resendAliasVerification:(Alias *)alias

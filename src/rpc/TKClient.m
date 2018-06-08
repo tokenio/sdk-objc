@@ -55,12 +55,21 @@
     return self;
 }
 
+- (TKCrypto *)getCrypto {
+    return crypto;
+}
 - (void)useAccessToken:(NSString *)accessTokenId {
     onBehalfOfMemberId = accessTokenId;
 }
 
 - (void)clearAccessToken {
     onBehalfOfMemberId = nil;
+}
+
+- (void)getMember:(NSString *)memberId
+        onSuccess:(OnSuccessWithMember)onSuccess
+          onError:(OnError)onError {
+    [unauthenticatedClient getMember:memberId onSuccess:onSuccess onError:onError];
 }
 
 - (void)updateMember:(Member *)member
