@@ -139,6 +139,8 @@
  * if not specified.
  * @param sort The key to sort the results. Could be one of: name, provider and country. Defaults
  * to name if not specified.
+ * @param provider If specified, return banks whose 'provider' matches the provider
+ * (case-insensitive)
  * @param onSuccess invoked on success with a list of banks
  */
 - (void)getBanks:(NSArray<NSString *> *)bankIds
@@ -147,6 +149,7 @@
             page:(int)page
          perPage:(int)perPage
             sort:(NSString *)sort
+        provider:(NSString *)provider
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
 

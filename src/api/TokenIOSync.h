@@ -113,6 +113,8 @@
  * if not specified.
  * @param sort The key to sort the results. Could be one of: name, provider and country. Defaults
  * to name if not specified.
+ * @param provider If specified, return banks whose 'provider' matches the provider
+ * (case-insensitive)
  * @return a list of banks
  */
 - (NSArray<Bank *> *)getBanks:(NSArray<NSString *> *)bankIds
@@ -120,7 +122,8 @@
                       country:(NSString *)country
                          page:(int)page
                       perPage:(int)perPage
-                         sort:(NSString *)sort;
+                         sort:(NSString *)sort
+                     provider:(NSString *)provider;
 
 /**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.
