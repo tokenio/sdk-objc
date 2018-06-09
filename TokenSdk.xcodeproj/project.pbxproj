@@ -161,6 +161,8 @@
 		D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410420C9F02100B980CE /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410520C9F02100B980CE /* Field.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D039410A20C9F02100B980CE /* Message.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D039410620C9F02100B980CE /* Message.pbobjc.h */; };
+		D039410D20CBA6A600B980CE /* TokenCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = D039410B20CBA6A600B980CE /* TokenCluster.h */; };
+		D039410E20CBA6A600B980CE /* TokenCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410C20CBA6A600B980CE /* TokenCluster.m */; };
 		D039F81D206DCA09009A982B /* TKOauthEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = D039F81B206DCA09009A982B /* TKOauthEngine.h */; };
 		D039F820206DD192009A982B /* TKOAuthEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D039F81F206DD192009A982B /* TKOAuthEngine.m */; };
 		D03A55FE1FE0730C008342E0 /* TKBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D03A55FC1FE0730C008342E0 /* TKBrowser.h */; };
@@ -407,6 +409,8 @@
 		D039410420C9F02100B980CE /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
 		D039410520C9F02100B980CE /* Field.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.pbobjc.m; sourceTree = "<group>"; };
 		D039410620C9F02100B980CE /* Message.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.pbobjc.h; sourceTree = "<group>"; };
+		D039410B20CBA6A600B980CE /* TokenCluster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenCluster.h; sourceTree = "<group>"; };
+		D039410C20CBA6A600B980CE /* TokenCluster.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TokenCluster.m; sourceTree = "<group>"; };
 		D039F81B206DCA09009A982B /* TKOauthEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKOauthEngine.h; sourceTree = "<group>"; };
 		D039F81F206DD192009A982B /* TKOAuthEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKOAuthEngine.m; sourceTree = "<group>"; };
 		D03A55FC1FE0730C008342E0 /* TKBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBrowser.h; sourceTree = "<group>"; };
@@ -709,6 +713,8 @@
 				D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */,
 				E5F36FA91FAD41E10087FB69 /* TKBalance.h */,
 				E5F36FAB1FAD42E70087FB69 /* TKBalance.m */,
+				D039410B20CBA6A600B980CE /* TokenCluster.h */,
+				D039410C20CBA6A600B980CE /* TokenCluster.m */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -1000,6 +1006,7 @@
 				37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */,
 				FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */,
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
+				D039410D20CBA6A600B980CE /* TokenCluster.h in Headers */,
 				4B240F8D1F28135000497B2D /* Base58.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
@@ -1438,6 +1445,7 @@
 				ABA7BB461A7F37718AC111FC /* TKRpc.m in Sources */,
 				ABA7B72C231296BBE85D2752 /* TKCrypto.m in Sources */,
 				ABA7BAE5F33E9FD2D6D42E93 /* TKSignature.m in Sources */,
+				D039410E20CBA6A600B980CE /* TokenCluster.m in Sources */,
 				ABA7B87D04B88CBC531F9CD6 /* TKInMemoryKeyStore.m in Sources */,
 				FAE918CE1F17E70B001692CF /* Fank.pbrpc.m in Sources */,
 				ABA7BCE41707C6293B177ABE /* TKTokenSecretKey.m in Sources */,

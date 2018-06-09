@@ -14,22 +14,46 @@
 #import "TKJson.h"
 
 @implementation TKOauthEngine {
-    NSString *url;
     OnSuccessWithString onSuccess;
     OnError onError;
-    TKBrowser* browser;
+    TKBrowser *browser;
+    NSString *url;
+    NSString *pattern;
     
     BOOL completionUrlIsFound;
 }
 
-- (id)initWithBrowserFactory:(TKBrowserFactory)browserFactory
-                         url:(NSString *)url_ {
+- (id)initWithTokenCluster:(TokenCluster *)tokenCluster
+            BrowserFactory:(TKBrowserFactory)browserFactory
+                       url:(NSString *)url_ {
     self = [super init];
     
     if (self) {
         browser = browserFactory(self);
-        url = [url_ stringByAppendingString:@"&redirect_uri=https%3A%2F%2Ftoken.io"];
         completionUrlIsFound = NO;
+        
+        NSString *callbackUrl = [NSString stringWithFormat:@"https://%@/auth/callback",
+                                 tokenCluster.webAppUrl];
+        
+        url = [NSString stringWithFormat:@"%@&redirect_uri=%@",
+               url_,
+               [callbackUrl stringByAddingPercentEncodingWithAllowedCharacters:
+                [NSCharacterSet URLHostAllowedCharacterSet]]];
+        
+        //url = [url_ stringByAppendingString:@"&redirect_uri=https%3A%2F%2Ftoken.io"];
+        
+        pattern = [callbackUrl stringByAppendingString:@"([/?]?.*#).*access_token=.+"];
+        
+        
+//        final String callbackUrl = String.format(
+//                                                 "https://%s/auth/callback",
+//                                                 getTokenCluster().webAppUrl());
+//        String.format(
+//                      "%s&redirect_uri=%s",
+//                      linkingUrl,
+//                      URLEncoder.encode(callbackUrl, "UTF-8"));
+//
+//        callbackUrl + ))
     }
     
     return self;
@@ -61,16 +85,18 @@
     NSString* urlStr = request.URL.absoluteString;
     
     NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@".*token.io([/?]?.*#).*access_token=.+"
-                                  options:0
-                                  error:&error];
+    
     if (error != nil) {
         onError(error);
         return NO;
     }
     
-    NSArray* matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:pattern
+                                  options:0
+                                  error:&error];
+    
+    NSArray *matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
     
     if (matches.count == 0) {
         return YES;

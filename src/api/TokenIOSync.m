@@ -22,7 +22,7 @@
 
 + (TokenIOBuilder *)sandboxBuilder {
     TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
-    builder.host = @"api-grpc.sandbox.token.io";
+    builder.tokenCluster = [TokenCluster sandbox];
     builder.port = 443;
     builder.useSsl = YES;
     return builder;

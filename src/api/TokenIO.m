@@ -22,6 +22,7 @@
 #import "TKMemberRecoveryManager.h"
 
 @implementation TokenIO {
+    TokenCluster *tokenCluster;
     GatewayService *gateway;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
     int timeoutMs;
@@ -39,22 +40,22 @@
 
 + (TokenIOBuilder *)sandboxBuilder {
     TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
-    builder.host = @"api-grpc.sandbox.token.io";
+    builder.tokenCluster = [TokenCluster sandbox];
     builder.port = 443;
     builder.useSsl = YES;
     return builder;
 }
 
-- (id)initWithHost:(NSString *)host
-              port:(int)port
-         timeoutMs:(int)timeout
-      developerKey:(NSString *)developerKey_
-      languageCode:(NSString *)languageCode_
-            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
-    browserFactory:(TKBrowserFactory)browserFactory_
-            useSsl:(BOOL)useSsl
-         certsPath:(NSString *)certsPath
-globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
+- (id)initWithTokenCluster:(TokenCluster *)tokenCluster_
+                      port:(int)port
+                 timeoutMs:(int)timeout
+              developerKey:(NSString *)developerKey_
+              languageCode:(NSString *)languageCode_
+                    crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory_
+            browserFactory:(TKBrowserFactory)browserFactory_
+                    useSsl:(BOOL)useSsl
+                 certsPath:(NSString *)certsPath
+    globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     if (!developerKey_) {
         @throw [NSException exceptionWithName:@"NoDeveloperKeyException"
                                        reason:@"Please provide a developer key. Contact Token for more details."
@@ -63,7 +64,9 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
     self = [super init];
     
     if (self) {
-        NSString *address = [NSString stringWithFormat:@"%@:%d", host, port];
+        tokenCluster = tokenCluster_;
+        
+        NSString *address = [NSString stringWithFormat:@"%@:%d", tokenCluster.envUrl, port];
 
         if (!useSsl) {
             [GRPCCall useInsecureConnectionsForHost:address];
@@ -91,7 +94,6 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
         developerKey = [developerKey_ copy];
         browserFactory = browserFactory_;
         languageCode = [languageCode_ copy];
-        
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
                                  initWithGateway:gateway
                                  timeoutMs:timeoutMs
@@ -100,6 +102,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                  errorHandler:errorHandler];
         memberRecoveryManager = [[TKMemberRecoveryManager alloc]
                                  initWithGateway:gateway
+                                 tokenCluster:tokenCluster
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
                                  languageCode:languageCode
@@ -209,6 +212,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                // Request alias for the member
                                [client getAliases:^(NSArray<Alias *> *aliases) {
                                    onSuccess([TKMember member:member
+                                                 tokenCluster:tokenCluster
                                                     useClient:client
                                             useBrowserFactory:browserFactory
                                                       aliases:[NSMutableArray arrayWithArray:aliases]]);
@@ -372,6 +376,7 @@ globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
                                                       errorHandler:errorHandler];
                                   onSuccess([TKMember
                                              member:member
+                                             tokenCluster:tokenCluster
                                              useClient:client
                                              useBrowserFactory:browserFactory
                                              aliases:[NSMutableArray arrayWithObject:alias]]);

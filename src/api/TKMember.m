@@ -18,28 +18,33 @@
 #import "Transferinstructions.pbobjc.h"
 
 @implementation TKMember {
+    TokenCluster *tokenCluster;
     TKClient *client;
     Member *member;
     NSMutableArray<Alias *> *aliases;
 }
 
 + (TKMember *)member:(Member *)member
+        tokenCluster:(TokenCluster *)tokenCluster
            useClient:(TKClient *)client
    useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     return [[TKMember alloc] initWithMember:member
+                               tokenCluster:tokenCluster
                                   useClient:client
                           useBrowserFactory:browserFactory_
                                     aliases:aliases_];
 }
 
 - (id)initWithMember:(Member *)member_
+        tokenCluster:(TokenCluster *)tokenCluster_
            useClient:(TKClient *)client_
    useBrowserFactory:(TKBrowserFactory)browserFactory_
              aliases:(NSMutableArray<Alias *> *) aliases_ {
     self = [super init];
     
     if (self) {
+        tokenCluster = tokenCluster_;
         member = member_;
         client = client_;
         aliases = aliases_;
@@ -323,8 +328,10 @@
               onSuccess:^(BankInfo *info) {
                   // The authorization engine will be revoked after the accounts are linked.
                   TKOauthEngine *authEngine =
-                  [[TKOauthEngine alloc] initWithBrowserFactory:self.browserFactory
-                                           url:info.bankLinkingUri];
+                  [[TKOauthEngine alloc] initWithTokenCluster:tokenCluster
+                                               BrowserFactory:self.browserFactory
+                                                          url:info.bankLinkingUri];
+                
                   [authEngine
                    authorizeOnSuccess:^(NSString *accessToken) {
                        [client linkAccounts:bankId
