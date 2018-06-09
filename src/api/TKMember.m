@@ -328,8 +328,9 @@
               onSuccess:^(BankInfo *info) {
                   // The authorization engine will be revoked after the accounts are linked.
                   TKOauthEngine *authEngine =
-                  [[TKOauthEngine alloc] initWithBrowserFactory:self.browserFactory
-                                                            url:info.bankLinkingUri];
+                  [[TKOauthEngine alloc] initWithTokenCluster:tokenCluster
+                                               BrowserFactory:self.browserFactory
+                                                          url:info.bankLinkingUri];
                 
                   [authEngine
                    authorizeOnSuccess:^(NSString *accessToken) {

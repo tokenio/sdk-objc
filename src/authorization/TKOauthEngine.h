@@ -10,6 +10,7 @@
 #import "TKTypedef.h"
 #import "Token.pbobjc.h"
 #import "TKBrowser.h"
+#import "TokenCluster.h"
 
 /**
  * OAuth Engine handles bank linking in sdk.
@@ -18,8 +19,9 @@
 /**
  * Initialize with TKBrowserFactory and url.
  */
-- (id)initWithBrowserFactory:(TKBrowserFactory)browserFactory
-                         url:(NSString *)url;
+- (id)initWithTokenCluster:(TokenCluster *)tokenCluster
+            BrowserFactory:(TKBrowserFactory)browserFactory
+                       url:(NSString *)url;
 
 /**
  * Authorizes for the bank access token.
