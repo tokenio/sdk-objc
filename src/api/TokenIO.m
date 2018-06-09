@@ -102,6 +102,7 @@
                                  errorHandler:errorHandler];
         memberRecoveryManager = [[TKMemberRecoveryManager alloc]
                                  initWithGateway:gateway
+                                 tokenCluster:tokenCluster
                                  timeoutMs:timeoutMs
                                  developerKey:developerKey
                                  languageCode:languageCode
@@ -211,6 +212,7 @@
                                // Request alias for the member
                                [client getAliases:^(NSArray<Alias *> *aliases) {
                                    onSuccess([TKMember member:member
+                                                 tokenCluster:tokenCluster
                                                     useClient:client
                                             useBrowserFactory:browserFactory
                                                       aliases:[NSMutableArray arrayWithArray:aliases]]);
@@ -374,6 +376,7 @@
                                                       errorHandler:errorHandler];
                                   onSuccess([TKMember
                                              member:member
+                                             tokenCluster:tokenCluster
                                              useClient:client
                                              useBrowserFactory:browserFactory
                                              aliases:[NSMutableArray arrayWithObject:alias]]);

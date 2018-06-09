@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 #import "TKTypedef.h"
 #import "TKBrowser.h"
+#import "TokenCluster.h"
 
 @class GatewayService;
 @class TKRpcErrorHandler;
@@ -25,6 +26,7 @@
  * @return the member recovery manager
  */
 - (id)initWithGateway:(GatewayService *)gateway
+         tokenCluster:(TokenCluster *)tokenCluster
             timeoutMs:(int)timeoutMs
          developerKey:(NSString *)developerKey
          languageCode:(NSString *)languageCode

@@ -16,6 +16,7 @@
 #import "Money.pbobjc.h"
 #import "TransferTokenBuilder.h"
 #import "TKBrowser.h"
+#import "TokenCluster.h"
 
 @class Member;
 @class TKClient;
@@ -52,9 +53,10 @@
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
+        tokenCluster:(TokenCluster *)tokenCluster
            useClient:(TKClient *)client
    useBrowserFactory:(TKBrowserFactory)browserFactory
-             aliases:(NSMutableArray<Alias *> *) aliases_;
+             aliases:(NSMutableArray<Alias *> *) aliases;
 
 
 - (TKClient *)getClient;

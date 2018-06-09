@@ -25,9 +25,11 @@
     TKCrypto *crypto;
     MemberRecoveryOperation *recoveryOperation;
     Member *member;
+    TokenCluster *tokenCluster;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
+         tokenCluster:(TokenCluster *)tokenCluster_
             timeoutMs:(int)timeoutMs_
          developerKey:(NSString *)developerKey_
          languageCode:(NSString *)languageCode_
@@ -37,6 +39,7 @@
     self = [super init];
     if (self) {
         gateway = gateway_;
+        tokenCluster = tokenCluster_;
         timeoutMs = timeoutMs_;
         developerKey = [developerKey_ copy];
         languageCode = [languageCode_ copy];
@@ -203,6 +206,7 @@
                              errorHandler:errorHandler];
          onSuccess([TKMember
                     member:member
+                    tokenCluster:tokenCluster
                     useClient:client
                     useBrowserFactory:browserFactory
                     aliases:[NSMutableArray arrayWithObject:alias]]);
