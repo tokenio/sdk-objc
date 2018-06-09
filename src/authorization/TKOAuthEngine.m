@@ -40,20 +40,7 @@
                [callbackUrl stringByAddingPercentEncodingWithAllowedCharacters:
                 [NSCharacterSet URLHostAllowedCharacterSet]]];
         
-        //url = [url_ stringByAppendingString:@"&redirect_uri=https%3A%2F%2Ftoken.io"];
-        
         pattern = [callbackUrl stringByAppendingString:@"([/?]?.*#).*access_token=.+"];
-        
-        
-//        final String callbackUrl = String.format(
-//                                                 "https://%s/auth/callback",
-//                                                 getTokenCluster().webAppUrl());
-//        String.format(
-//                      "%s&redirect_uri=%s",
-//                      linkingUrl,
-//                      URLEncoder.encode(callbackUrl, "UTF-8"));
-//
-//        callbackUrl + ))
     }
     
     return self;
