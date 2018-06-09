@@ -10,6 +10,7 @@
 #import <objc/NSObject.h>
 #import "TKTypedef.h"
 #import "TKBrowser.h"
+#import "TokenCluster.h"
 
 
 @class GatewayService;
@@ -43,9 +44,9 @@
 + (TokenIOBuilder *)sandboxBuilder;
 
 /**
- * Creates a new instance that connects to the specified Token host and port.
+ * Creates a new instance that connects to the specified TokenCluster and port.
  *
- * @param host host to connect to
+ * @param tokenCluster TokenCluster to connect to
  * @param port gRPC port to connect to
  * @param timeout timeout value in ms
  * @param developerKey developer ID
@@ -56,16 +57,16 @@
  * @param certsPath use custom certs; otherwise, use the default root certs
  * @param globalRpcErrorCallback global RPC error callback to invoke on error
  */
-- (id)initWithHost:(NSString *)host
-              port:(int)port
-         timeoutMs:(int)timeout
-      developerKey:(NSString *)developerKey
-      languageCode:(NSString *)languageCode
-            crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
-    browserFactory:(TKBrowserFactory)browserFactory
-            useSsl:(BOOL)useSsl
-         certsPath:(NSString *)certsPath
-globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
+- (id)initWithTokenCluster:(TokenCluster *)tokenCluster
+                      port:(int)port
+                 timeoutMs:(int)timeout
+              developerKey:(NSString *)developerKey
+              languageCode:(NSString *)languageCode
+                    crypto:(id<TKCryptoEngineFactory>)cryptoEngineFactory
+            browserFactory:(TKBrowserFactory)browserFactory
+                    useSsl:(BOOL)useSsl
+                 certsPath:(NSString *)certsPath
+    globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the

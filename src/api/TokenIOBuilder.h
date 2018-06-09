@@ -6,6 +6,7 @@
 #import <objc/NSObject.h>
 #import "TKTypedef.h"
 #import "TKBrowser.h"
+#import "TokenCluster.h"
 
 
 @class TokenIOSync;
@@ -19,8 +20,8 @@
  */
 @interface TokenIOBuilder : NSObject
 
-/// Host address. For example, "api-grpc.sandbox.token.io".
-@property (readwrite, copy) NSString *host;
+/// TokenCluster.
+@property (readwrite, strong) TokenCluster *tokenCluster;
 
 /// Host port.
 @property (readwrite) int port;

@@ -49,7 +49,8 @@
     HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
     
     TokenIOBuilder *builder = [TokenIOSync builder];
-    builder.host = gateway.host;
+    builder.tokenCluster = [[TokenCluster alloc] initWithEnvUrl:gateway.host
+                                                      webAppUrl:gateway.host];
     builder.port = gateway.port;
     builder.useSsl = useSsl;
     builder.timeoutMs = 10 * 60 * 1000; // 10 minutes timeout to make debugging easier.

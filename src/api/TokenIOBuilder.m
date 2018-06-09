@@ -23,8 +23,8 @@
     self = [super init];
 
     if (self) {
-        self.host = @"api.token.io";
-        self.port = 9000;
+        self.tokenCluster = [TokenCluster sandbox];
+        self.port = 443;
         self.timeoutMs = 60 * 1000; // 60 seconds.
         self.useSsl = YES;
         self.globalRpcErrorCallback = ^(NSError *error) {/* noop default callback */};
@@ -53,7 +53,7 @@
 #endif
 
     return [[TokenIO alloc]
-            initWithHost:self.host
+            initWithTokenCluster:self.tokenCluster
             port:self.port
             timeoutMs:self.timeoutMs
             developerKey:self.developerKey
