@@ -17,7 +17,7 @@
     NSString *url;
     OnSuccessWithString onSuccess;
     OnError onError;
-    TKBrowser* browser;
+    TKBrowser *browser;
     
     BOOL completionUrlIsFound;
 }
@@ -70,7 +70,7 @@
         return NO;
     }
     
-    NSArray* matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
+    NSArray *matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
     
     if (matches.count == 0) {
         return YES;
