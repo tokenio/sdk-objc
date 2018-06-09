@@ -107,7 +107,8 @@
                       country:(NSString *)country
                          page:(int)page
                       perPage:(int)perPage
-                         sort:(NSString *)sort {
+                         sort:(NSString *)sort
+                     provider:(NSString *)provider {
     TKRpcSyncCall<NSArray<Bank *> *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getBanks:bankIds
@@ -116,6 +117,7 @@
                         page:page
                      perPage:perPage
                         sort:sort
+                    provider:provider
                    onSuccess:call.onSuccess
                      onError:call.onError];
     }];

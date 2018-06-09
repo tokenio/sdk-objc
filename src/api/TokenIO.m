@@ -228,6 +228,7 @@
             page:(int)page
          perPage:(int)perPage
             sort:(NSString *)sort
+        provider:(NSString *)provider
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     [unauthenticatedClient getBanks:bankIds
@@ -236,6 +237,7 @@
                                page:page
                             perPage:perPage
                                sort:sort
+                           provider:provider
                           onSuccess:onSuccess
                             onError:onError];
 }

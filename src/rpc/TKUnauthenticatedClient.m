@@ -209,6 +209,7 @@
             page:(int)page
          perPage:(int)perPage
             sort:(NSString *)sort
+        provider:(NSString *)provider
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     GetBanksRequest *request = [GetBanksRequest message];
@@ -218,6 +219,7 @@
     request.page = page;
     request.perPage = perPage;
     request.sort = sort;
+    request.provider = provider;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

@@ -29,7 +29,8 @@
                                    country:nil
                                       page:1
                                    perPage:5
-                                      sort:@"name"];
+                                      sort:@"name"
+                                  provider:@""];
         XCTAssertTrue(banks.count == 5);
         
         banks = [tokenIO getBanks:@[@"iron",@"gold"]
@@ -37,7 +38,8 @@
                           country:nil
                              page:1
                           perPage:10
-                             sort:@"name"];
+                             sort:@"name"
+                         provider:@""];
         XCTAssertTrue(banks.count == 2);
         
         banks = [tokenIO getBanks:nil
@@ -45,10 +47,17 @@
                           country:nil
                              page:1
                           perPage:10
-                             sort:@"country"];
+                             sort:@"country"
+                         provider:@""];
         XCTAssertTrue(banks.count > 0);
         
-        banks = [tokenIO getBanks:nil search:nil country:@"US" page:1 perPage:10 sort:@"name"];
+        banks = [tokenIO getBanks:nil
+                           search:nil
+                          country:@"US"
+                             page:1
+                          perPage:10
+                             sort:@"name"
+                         provider:@""];
         XCTAssertTrue(banks.count > 0);
     }];
 }
