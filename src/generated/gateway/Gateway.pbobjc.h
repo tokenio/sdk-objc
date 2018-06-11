@@ -78,6 +78,7 @@ GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(RequestStatus);
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
+GPB_ENUM_FWD_DECLARE(VerificationStatus);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -374,9 +375,27 @@ typedef GPB_ENUM(CompleteVerificationRequest_FieldNumber) {
 
 #pragma mark - CompleteVerificationResponse
 
+typedef GPB_ENUM(CompleteVerificationResponse_FieldNumber) {
+  CompleteVerificationResponse_FieldNumber_Status = 1,
+};
+
 @interface CompleteVerificationResponse : GPBMessage
 
+@property(nonatomic, readwrite) enum VerificationStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c CompleteVerificationResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t CompleteVerificationResponse_Status_RawValue(CompleteVerificationResponse *message);
+/**
+ * Sets the raw value of an @c CompleteVerificationResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCompleteVerificationResponse_Status_RawValue(CompleteVerificationResponse *message, int32_t value);
 
 #pragma mark - RetryVerificationRequest
 
@@ -498,6 +517,7 @@ typedef GPB_ENUM(CompleteRecoveryRequest_FieldNumber) {
 
 typedef GPB_ENUM(CompleteRecoveryResponse_FieldNumber) {
   CompleteRecoveryResponse_FieldNumber_RecoveryEntry = 1,
+  CompleteRecoveryResponse_FieldNumber_Status = 2,
 };
 
 @interface CompleteRecoveryResponse : GPBMessage
@@ -506,7 +526,21 @@ typedef GPB_ENUM(CompleteRecoveryResponse_FieldNumber) {
 /** Test to see if @c recoveryEntry has been set. */
 @property(nonatomic, readwrite) BOOL hasRecoveryEntry;
 
+@property(nonatomic, readwrite) enum VerificationStatus status;
+
 @end
+
+/**
+ * Fetches the raw value of a @c CompleteRecoveryResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t CompleteRecoveryResponse_Status_RawValue(CompleteRecoveryResponse *message);
+/**
+ * Sets the raw value of an @c CompleteRecoveryResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCompleteRecoveryResponse_Status_RawValue(CompleteRecoveryResponse *message, int32_t value);
 
 #pragma mark - VerifyAliasRequest
 

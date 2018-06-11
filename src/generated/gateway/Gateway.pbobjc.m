@@ -668,9 +668,11 @@ typedef struct CompleteVerificationRequest__storage_ {
 
 @implementation CompleteVerificationResponse
 
+@dynamic status;
 
 typedef struct CompleteVerificationResponse__storage_ {
   uint32_t _has_storage_[1];
+  VerificationStatus status;
 } CompleteVerificationResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -678,12 +680,23 @@ typedef struct CompleteVerificationResponse__storage_ {
 + (GPBDescriptor *)descriptor {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = VerificationStatus_EnumDescriptor,
+        .number = CompleteVerificationResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CompleteVerificationResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[CompleteVerificationResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CompleteVerificationResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -693,6 +706,18 @@ typedef struct CompleteVerificationResponse__storage_ {
 }
 
 @end
+
+int32_t CompleteVerificationResponse_Status_RawValue(CompleteVerificationResponse *message) {
+  GPBDescriptor *descriptor = [CompleteVerificationResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CompleteVerificationResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetCompleteVerificationResponse_Status_RawValue(CompleteVerificationResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [CompleteVerificationResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CompleteVerificationResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - RetryVerificationRequest
 
@@ -1080,9 +1105,11 @@ typedef struct CompleteRecoveryRequest__storage_ {
 @implementation CompleteRecoveryResponse
 
 @dynamic hasRecoveryEntry, recoveryEntry;
+@dynamic status;
 
 typedef struct CompleteRecoveryResponse__storage_ {
   uint32_t _has_storage_[1];
+  VerificationStatus status;
   MemberRecoveryOperation *recoveryEntry;
 } CompleteRecoveryResponse__storage_;
 
@@ -1101,6 +1128,15 @@ typedef struct CompleteRecoveryResponse__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = VerificationStatus_EnumDescriptor,
+        .number = CompleteRecoveryResponse_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(CompleteRecoveryResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[CompleteRecoveryResponse class]
@@ -1117,6 +1153,18 @@ typedef struct CompleteRecoveryResponse__storage_ {
 }
 
 @end
+
+int32_t CompleteRecoveryResponse_Status_RawValue(CompleteRecoveryResponse *message) {
+  GPBDescriptor *descriptor = [CompleteRecoveryResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CompleteRecoveryResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetCompleteRecoveryResponse_Status_RawValue(CompleteRecoveryResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [CompleteRecoveryResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:CompleteRecoveryResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - VerifyAliasRequest
 
