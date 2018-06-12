@@ -85,4 +85,19 @@
                                code:status
                            userInfo:userInfo];
 }
+
++ (instancetype)errorFromVerificationStatus:(VerificationStatus)status
+                                   userInfo:(NSDictionary *)info {
+    NSString *description = [NSString stringWithFormat:@"Failed with verification status %d",
+                             status];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (info != nil) {
+        [userInfo setDictionary:info];
+    }
+    [userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+    
+    return [NSError errorWithDomain:kTokenVerificationStatusErrorDomain
+                               code:status
+                           userInfo:userInfo];
+}
 @end
