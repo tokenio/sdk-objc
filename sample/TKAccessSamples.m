@@ -19,13 +19,12 @@
 
 -(void)testAccessTokens {
     TKMember *grantor = self.payerSync.async;
-    Alias *granteeAlias = self.payeeAlias;
     TKMember *grantee = self.payeeSync.async;
   
     __block Token *accessToken = nil;
     
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
+    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
     [access forAllAccounts];
     [access forAllBalances];
     
@@ -94,7 +93,7 @@
         // find token begin snippet to include in docs
         PagedArray<Token *> *ary = [self.payerSync getAccessTokensOffset:NULL limit:100];
         for (Token *at in ary.items) {
-            if ([at.payload.to.alias isEqual:granteeAlias]) {
+            if ([at.payload.to.id_p isEqual:self.payeeSync.id]) {
                 foundToken = at;
                 break;
             }
@@ -146,9 +145,8 @@
 
 -(void)testReplaceNoEndorse {
     TKMember *grantor = self.payerSync.async;
-    Alias *granteeAlias = self.payeeAlias;
 
-    AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
+    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
     [access forAllAccounts];
     
     __block Token *accessToken = [self.payerSync createAccessToken:access];
@@ -246,13 +244,12 @@
 -(void)testCarefullyUse {
     TKMember *grantor = self.payerSync.async;
     TKAccount *grantorAccount = self.payerAccountSync.async;
-    Alias *granteeAlias = self.payeeAlias;
     TKMember *grantee = self.payeeSync.async;
 
     __block Token *token1 = nil;
 
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig create:granteeAlias];
+    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
     [access forAllAccounts];
     [access forAllBalances];
 

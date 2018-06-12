@@ -16,6 +16,10 @@
     return [[AccessTokenConfig alloc] initWithRedeemer:redeemerAlias];
 }
 
++ (AccessTokenConfig *)createWithRedeemerId:(NSString *)redeemerId {
+    return [[AccessTokenConfig alloc] initWithRedeemerId:redeemerId];
+}
+
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom {
     return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
 }
@@ -27,6 +31,18 @@
         payload.version = @"1.0";
         payload.refId = [TKUtil nonce];
         payload.to.alias = redeemerAlias;
+        resources = [[NSMutableSet alloc] init];
+    }
+    return self;
+}
+
+- (id)initWithRedeemerId:(NSString *)redeemerId {
+    self = [super init];
+    if (self) {
+        payload = [TokenPayload message];
+        payload.version = @"1.0";
+        payload.refId = [TKUtil nonce];
+        payload.to.id_p = redeemerId;
         resources = [[NSMutableSet alloc] init];
     }
     return self;

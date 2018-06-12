@@ -58,7 +58,6 @@
 - (void)testCreateEndorseTransferToken {
     TKMember *payer = self.payerSync.async;
     TKAccount *payerAccount = self.payerAccountSync.async;
-    Alias *payeeAlias = self.payeeAlias;
     TKMember *payee = self.payeeSync.async;
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
@@ -68,7 +67,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.redeemerAlias = payeeAlias;
+    builder.redeemerMemberId = payee.id;
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
@@ -146,7 +145,6 @@
 - (void)testCancelTransferToken {
     TKMember *payer = self.payerSync.async;
     TKAccount *payerAccount = self.payerAccountSync.async;
-    Alias *payeeAlias = self.payeeAlias;
     NSString *refId = @"purchase:2017-11-01:28293336394ffby";
     __block Token *transferToken = nil;
     
@@ -154,7 +152,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.redeemerAlias = payeeAlias;
+    builder.redeemerMemberId = self.payeeSync.id;
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
@@ -200,7 +198,6 @@
 - (void)testTransferTokenWithBlob {
     TKMember *payer = self.payerSync.async;
     TKAccount *payerAccount = self.payerAccountSync.async;
-    Alias *payeeAlias = self.payeeAlias;
     TKMember *payee = self.payeeSync.async;
     __block Token *transferToken = nil;
     __block BOOL gotBlob = false;
@@ -224,7 +221,7 @@
                 TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                                   currency:@"EUR"];
                 builder.accountId = payerAccount.id;
-                builder.redeemerAlias = payeeAlias;
+                builder.redeemerMemberId = payee.id;
                 builder.attachments = @[a]; // associate attachment with token
                 
                 [builder executeAsync:^(Token *t) {

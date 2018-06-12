@@ -38,7 +38,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         XCTAssertNotNil(token);
     }];
@@ -56,7 +56,7 @@
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         builder.destinations = destinations;
         XCTAssertThrows([builder execute]);
     }];
@@ -96,9 +96,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
         builder.redeemerMemberId = payee.id;
-        builder.toAlias = payee.firstAlias;
         builder.toMemberId = payee.id;
         builder.destinations = destinations;
         builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
@@ -111,11 +109,9 @@
         Token *token = [builder execute];
         
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
-        XCTAssertEqualObjects(payee.firstAlias, token.payload.to.alias);
         XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
         XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.metadata.transferPurpose);
         XCTAssertEqualObjects(pricing.sourceQuote, token.payload.transfer.pricing.sourceQuote);
-        XCTAssertEqualObjects(payee.firstAlias, token.payload.transfer.redeemer.alias);
         XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
     }];
 }

@@ -44,13 +44,13 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         builder.destinations = destinations;
         Token *token = [builder execute];
         
         XCTAssertEqualObjects(@"100.99", token.payload.transfer.lifetimeAmount);
         XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
-        XCTAssertEqualObjects(payee.firstAlias, token.payload.transfer.redeemer.alias);
+        XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
         XCTAssertEqual(token.payload.transfer.instructions.destinationsArray.count, 1);
         XCTAssertEqual(0, token.payloadSignaturesArray_Count);
     }];
@@ -69,7 +69,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"XXX"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         builder.destinations = destinations;
         
         @try {
@@ -87,7 +87,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         Token *lookedUp = [payer getToken:token.id_p];
         XCTAssertEqualObjects(token, lookedUp);
@@ -100,8 +100,8 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
-        builder.toAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
+        builder.toMemberId = payee.id;
         Token *token = [builder execute];
         [payer endorseToken:token withKey:Key_Level_Standard];
         
@@ -109,8 +109,8 @@
         TransferTokenBuilder *builder2 = [payer createTransferToken:amount2
                                                           currency:@"USD"];
         builder2.accountId = payerAccount.id;
-        builder2.redeemerAlias = payee.firstAlias;
-        builder2.toAlias = payee.firstAlias;
+        builder2.redeemerMemberId = payee.id;
+        builder2.toMemberId = payee.id;
         Token *token2 = [builder2 execute];
         [payer endorseToken:token2 withKey:Key_Level_Standard];
         
@@ -118,8 +118,8 @@
         TransferTokenBuilder *builder3 = [payer createTransferToken:amount3
                                                           currency:@"USD"];
         builder3.accountId = payerAccount.id;
-        builder3.redeemerAlias = payee.firstAlias;
-        builder3.toAlias = payee.firstAlias;
+        builder3.redeemerMemberId = payee.id;
+        builder3.toMemberId = payee.id;
         Token *token3 = [builder3 execute];
         [payer endorseToken:token3 withKey:Key_Level_Standard];
         
@@ -142,7 +142,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -166,7 +166,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         builder.descr = descr;
         Token *token = [builder execute];
 
@@ -188,7 +188,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         
         TokenOperationResult *cancelledResult = [payer cancelToken:token];

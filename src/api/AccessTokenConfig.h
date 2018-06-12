@@ -21,6 +21,13 @@
 + (AccessTokenConfig *)create:(Alias *)redeemerAlias;
 
 /**
+ * Creates a new instance with a provided redeemer id (the 'payload.to' field).
+ *
+ * @param redeemerId id of the token redeemer
+ */
++ (AccessTokenConfig *)createWithRedeemerId:(NSString *)redeemerId;
+
+/**
  * Creates a new instance from an existing token payload.
  *
  * @param payloadToInitFrom token payload to initialize the config from
