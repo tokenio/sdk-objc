@@ -157,7 +157,7 @@
 + (NSObject *)_serializeSingle:(GPBFieldDescriptor *)field forMessage:(GPBMessage *)message {
     switch (field.dataType) {
         case GPBDataTypeBool:
-            return GPBGetMessageBoolField(message, field) == TRUE ? @"true" : @"false";
+            return GPBGetMessageBoolField(message, field) == TRUE ? @YES : @NO;
         case GPBDataTypeFloat:
             return @(GPBGetMessageFloatField(message, field));
         case GPBDataTypeDouble:

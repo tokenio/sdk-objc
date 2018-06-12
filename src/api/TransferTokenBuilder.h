@@ -83,6 +83,9 @@
 /// Set entity redeemer is acting on behalf of.
 @property (readwrite) TokenPayload_ActingAs *actingAs;
 
+/// If receipt is requested. Default to false.
+@property (readwrite) BOOL receiptRequested;
+
 /**
  * Initializes the transfer token builder.
  *
