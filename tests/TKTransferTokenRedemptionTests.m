@@ -41,7 +41,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
@@ -72,14 +72,12 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.bankAuthorization = [self createBankAuthorization:payer];
-        builder.redeemerAlias = payer.firstAlias;
+        builder.redeemerMemberId = payer.id;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
         
         XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-        NSLog(@"%@", payee.firstAlias);
-        NSLog(@"%@", payee.firstAlias);
         
 
         TransferEndpoint *destination = [[TransferEndpoint alloc] init];
@@ -106,7 +104,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         
@@ -143,7 +141,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         builder.destinations = destinations;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -172,7 +170,7 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];
@@ -200,8 +198,8 @@
         TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                           currency:@"USD"];
         builder.accountId = payerAccount.id;
-        builder.redeemerAlias = payee.firstAlias;
-        builder.toAlias = payee.firstAlias;
+        builder.redeemerMemberId = payee.id;
+        builder.toMemberId = payee.id;
         Token *token = [builder execute];
         TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
         token = [endorsedResult token];

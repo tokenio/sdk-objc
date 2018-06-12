@@ -18,8 +18,6 @@
 @implementation TKNotificationPollSamples
 
 -(void)testNotificationPolling {
-    Alias *payerAlias = self.payerAlias;
-    Alias *payeeAlias = self.payeeAlias;
     TKMember *payee = self.payeeSync.async;
     
     __block Subscriber *subscriber = nil;
@@ -46,8 +44,8 @@
     TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount
                                                                currency:@"USD"];
     builder.accountId = self.payerAccountSync.id;
-    builder.redeemerAlias = payerAlias;
-    builder.toAlias = payeeAlias;
+    builder.redeemerMemberId = self.payerSync.id;
+    builder.toMemberId = self.payeeSync.id;
     Token *token = [builder execute];
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = payee.id;
