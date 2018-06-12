@@ -102,7 +102,9 @@
         builder.accountId = payerAccount.id;
         builder.redeemerMemberId = payee.id;
         builder.toMemberId = payee.id;
+        builder.receiptRequested = YES;
         Token *token = [builder execute];
+        
         [payer endorseToken:token withKey:Key_Level_Standard];
         
         NSDecimalNumber *amount2 = [NSDecimalNumber decimalNumberWithString:@"100.22"];

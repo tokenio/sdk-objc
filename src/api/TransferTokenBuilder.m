@@ -138,6 +138,8 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
         payload.actingAs = self.actingAs;
     }
 
+    payload.receiptRequested = self.receiptRequested;
+    
     [[self.member getClient]
      createTransferToken:payload
      onSuccess:onSuccess
