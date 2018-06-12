@@ -101,7 +101,8 @@
          onSuccess(true);
      }
      onError:^(NSError* error) {
-         if (error.domain == kGRPCErrorDomain && error.code == 5) {
+         if (error.domain == kTokenVerificationStatusErrorDomain
+             && error.code == VerificationStatus_IncorrectCode) {
              // The code is invalid. But the request shall be marked as success.
              onSuccess(false);
          }

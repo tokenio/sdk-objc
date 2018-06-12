@@ -29,6 +29,37 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum VerificationStatus
+
+/**
+ * When the user verifies an alias, e.g. by entering a code,
+ * the verification may succeed or fail in one of several ways.
+ **/
+typedef GPB_ENUM(VerificationStatus) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  VerificationStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  VerificationStatus_Invalid = 0,
+  VerificationStatus_Unknown = 1,
+  VerificationStatus_Success = 2,
+  VerificationStatus_IncorrectCode = 3,
+  VerificationStatus_ExpiredCode = 4,
+
+  /** reached the limit of attempts to enter a specific code */
+  VerificationStatus_TooManyCodeAttempts = 5,
+};
+
+GPBEnumDescriptor *VerificationStatus_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL VerificationStatus_IsValidValue(int32_t value);
+
 #pragma mark - Enum Alias_Type
 
 typedef GPB_ENUM(Alias_Type) {

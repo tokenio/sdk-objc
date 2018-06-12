@@ -53,6 +53,49 @@ static GPBFileDescriptor *AliasRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum VerificationStatus
+
+GPBEnumDescriptor *VerificationStatus_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Unknown\000Success\000IncorrectCode\000Ex"
+        "piredCode\000TooManyCodeAttempts\000";
+    static const int32_t values[] = {
+        VerificationStatus_Invalid,
+        VerificationStatus_Unknown,
+        VerificationStatus_Success,
+        VerificationStatus_IncorrectCode,
+        VerificationStatus_ExpiredCode,
+        VerificationStatus_TooManyCodeAttempts,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(VerificationStatus)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:VerificationStatus_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL VerificationStatus_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case VerificationStatus_Invalid:
+    case VerificationStatus_Unknown:
+    case VerificationStatus_Success:
+    case VerificationStatus_IncorrectCode:
+    case VerificationStatus_ExpiredCode:
+    case VerificationStatus_TooManyCodeAttempts:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - Alias
 
 @implementation Alias

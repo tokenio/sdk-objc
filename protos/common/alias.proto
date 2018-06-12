@@ -25,3 +25,14 @@ message Alias {
     BANK = 6;     // for banks only
   }
 }
+
+// When the user verifies an alias, e.g. by entering a code,
+// the verification may succeed or fail in one of several ways.
+enum VerificationStatus {
+  INVALID = 0;
+  UNKNOWN = 1;
+  SUCCESS = 2;
+  INCORRECT_CODE = 3;
+  EXPIRED_CODE = 4;
+  TOO_MANY_CODE_ATTEMPTS = 5;     // reached the limit of attempts to enter a specific code
+}

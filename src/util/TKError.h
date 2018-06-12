@@ -35,6 +35,11 @@ static NSString *const kTokenRequestErrorDomain = @"io.tokensdk.request";
 static NSString *const kTokenAccountLinkingErrorDomain = @"io.tokensdk.accountlinking";
 
 /*
+ * Token error from VerificationStatus.
+ */
+static NSString *const kTokenVerificationStatusErrorDomain = @"io.tokensdk.verification";
+
+/*
  * Errors detail encapsulated by
  */
 static NSString *const TKEncapsulatedErrorKey = @"TKEncapsulatedErrorKey";
@@ -73,5 +78,7 @@ typedef enum {
 + (instancetype)errorFromRequestStatus:(RequestStatus)status userInfo:(NSDictionary *)info;
 + (instancetype)errorFromAccountLinkingStatus:(AccountLinkingStatus)status
                                      userInfo:(NSDictionary *)info;
++ (instancetype)errorFromVerificationStatus:(VerificationStatus)status
+                                   userInfo:(NSDictionary *)info;
 
 @end

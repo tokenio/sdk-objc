@@ -6,6 +6,8 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKUnauthenticatedClient.h"
+
+#import "TKError.h"
 #import "TKRpcLog.h"
 #import "TKRpc.h"
 #import "TKSignature.h"
@@ -368,6 +370,13 @@
                            handler:^(CompleteRecoveryResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
+                                   if (response.status != VerificationStatus_Success) {
+                                       onError([NSError
+                                                errorFromVerificationStatus:response.status
+                                                userInfo:nil]
+                                               );
+                                       return;
+                                   }
                                    onSuccess(response.recoveryEntry);
                                } else {
                                    [errorHandler handle:onError withError:error];

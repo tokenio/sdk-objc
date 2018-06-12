@@ -80,7 +80,9 @@ message CompleteVerificationRequest {
   string code = 2;            // verification code
 }
 
-message CompleteVerificationResponse {}
+message CompleteVerificationResponse {
+  io.token.proto.common.alias.VerificationStatus status = 1;
+}
 
 message RetryVerificationRequest {
   string member_id = 1;                        // member ID
@@ -121,6 +123,7 @@ message CompleteRecoveryRequest {
 
 message CompleteRecoveryResponse {
   io.token.proto.common.member.MemberRecoveryOperation recovery_entry = 1;
+  io.token.proto.common.alias.VerificationStatus status = 2;
 }
 
 message VerifyAliasRequest {
