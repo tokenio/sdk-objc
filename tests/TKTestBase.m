@@ -119,7 +119,7 @@
     __block TKMemberSync *member = [token createMember:alias];
     // Wait until the alias is created
     [self waitUntil:^{
-        member = [tokenIO getMember:member.id];
+        member = [token getMember:member.id];
         [self check:@"Can not create alias" condition:[member.aliases containsObject:alias]];
     }];
     return member;
