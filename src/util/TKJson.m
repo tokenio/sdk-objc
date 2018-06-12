@@ -328,7 +328,7 @@
 + (id)_deserializedObjectForField:(GPBFieldDescriptor*)field fromValue:(id)value {
     switch (field.dataType) {
         case GPBDataTypeBool:
-            return [NSNumber numberWithBool:[value isEqualToString:@"true"]];
+            return value;
         case GPBDataTypeFixed64:
         case GPBDataTypeSFixed64:
         case GPBDataTypeInt64:
