@@ -37,6 +37,16 @@
 - (Key *)generateKey:(Key_Level)level;
 
 /**
+ * Generates a key of the given level with an expiration date
+ *
+ * @param level key level
+ * @param expiresAtMs the expiration date of the key in milliseconds.
+ * @return the newly created key pair information
+ */
+- (Key *)generateKey:(Key_Level)level
+      withExpiration:(long long)expiresAtMs;
+
+/**
  * Gets a set of key-pair information to be used by a given member.
  *
  * @param reason the reason to get the key-pair

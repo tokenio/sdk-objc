@@ -74,4 +74,53 @@
     XCTAssert(!success);
 }
 
+- (void)testSign_usesValidKey {
+    Token *token = [Token message];
+    token.payload.transfer.amount = @"100.23";
+
+    long long now = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    long long tomorrow = now + 86400000;
+    Key *valid = [crypto generateKey:Key_Level_Low withExpiration:tomorrow];
+    [crypto generateKey:Key_Level_Low withExpiration:(now+2000)];
+    sleep(3);
+    TKSignature *signature = [crypto sign:token
+                                 usingKey:Key_Level_Low
+                                   reason:nil
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSign_usesValidKey sign fail with error %@", error);
+                                  }];
+    XCTAssertEqualObjects(signature.key.id_p, valid.id_p);
+
+    now = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    [crypto generateKey:Key_Level_Standard withExpiration:(now+2000)];
+    Key *validStandard = [crypto generateKey:Key_Level_Standard];
+    sleep(3);
+    TKSignature *signature2 = [crypto sign:token
+                                  usingKey:Key_Level_Standard
+                                    reason:nil
+                                   onError:^(NSError *error) {
+                                       TKLogError(@"testSign_usesValidKey sign fail with error %@", error);
+                                   }];
+    XCTAssertEqualObjects(signature2.key.id_p, validStandard.id_p);
+}
+
+- (void)testVerify_throwsOnExpiredKey {
+    Token *token = [Token message];
+    token.payload.transfer.amount = @"100.23";
+    
+    long long now = (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    Key *low = [crypto generateKey:Key_Level_Low withExpiration:(now+2000)];
+    
+    TKSignature *signature = [crypto sign:token
+                                 usingKey:Key_Level_Low
+                                   reason:nil
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSignAndVerify_message sign fail with error %@", error);
+                                  }];
+    sleep(3);
+    XCTAssertThrows([crypto verifySignature:signature.value
+                                 forMessage:token
+                                 usingKeyId:low.id_p]);
+}
+
 @end

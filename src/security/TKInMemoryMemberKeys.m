@@ -9,42 +9,59 @@
 
 
 @implementation TKInMemoryMemberKeys {
-    NSMutableDictionary<NSString*, TKTokenSecretKey*> *allKeys;
-    NSMutableDictionary<NSNumber*, NSString*> *currentKeys;
+    NSMutableDictionary<NSString*, TKTokenSecretKey*> *keys;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        allKeys = [NSMutableDictionary dictionary];
-        currentKeys = [NSMutableDictionary dictionary];
+        keys = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 - (void)addKey:(TKTokenSecretKey *)key {
-    [allKeys setObject:key forKey:key.id];
-    [currentKeys setObject:key.id forKey:@(key.level)];
+    if ([TKInMemoryMemberKeys isExpired: key]) {
+        [NSException
+         raise:NSInvalidArgumentException
+         format:@"Key: %@ has expired", key.id];
+    }
+    [keys setObject:key forKey:key.id];
 }
 
 - (TKTokenSecretKey *)lookupKeyById:(NSString *)id {
-    TKTokenSecretKey *key = [allKeys objectForKey:id];
+    TKTokenSecretKey *key = [keys objectForKey:id];
     if (!key) {
         [NSException
                 raise:NSInvalidArgumentException
                format:@"Can not find key with id: %@", id];
     }
+    if ([TKInMemoryMemberKeys isExpired: key]) {
+        [NSException
+         raise:NSInvalidArgumentException
+         format:@"Key with id: %@ has expired", id];
+    }
     return key;
 }
 
 - (TKTokenSecretKey *)lookupKeyByLevel:(Key_Level)keyLevel {
-    NSString *id = [currentKeys objectForKey:@(keyLevel)];
-    if (!id) {
-        [NSException
-                raise:NSInvalidArgumentException
-               format:@"Can not find key of level: %d", keyLevel];
+    NSEnumerator *enumerator = [keys keyEnumerator];
+    NSString* keyId;
+    while ((keyId = [enumerator nextObject])) {
+        TKTokenSecretKey *key = [keys objectForKey:keyId];
+        if (key.level == keyLevel && ![TKInMemoryMemberKeys isExpired: key]) {
+            return key;
+        }
     }
-    return [self lookupKeyById:id];
+    [NSException
+     raise:NSInvalidArgumentException
+     format:@"Can not find key of level: %d", keyLevel];
+    return nil;
+}
+
++ (bool) isExpired:(TKTokenSecretKey *)key {
+    return key.expiresAtMs && key.expiresAtMs <
+    (long long) ([[NSDate date] timeIntervalSince1970] * 1000);
 }
 
 @end

@@ -40,6 +40,12 @@ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     return key.keyInfo;
 }
 
+- (Key *)generateKey:(Key_Level)level withExpiration:(long long)expiresAtMs {
+    TKTokenSecretKey *key = [self _createNewKey:level withExpiration:expiresAtMs];
+    [keyStore addKey:key forMember:memberId];
+    return key.keyInfo;
+}
+
 - (Key *)getKeyInfo:(Key_Level)level
              reason:(NSString *)reason
             onError:(OnError)onError {
@@ -133,8 +139,8 @@ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
     unsigned char seed[32];
     if (ed25519_create_seed(seed)) {
         [NSException
-                raise:NSInternalInconsistencyException
-               format:@"Can't initialize random number generator"];
+         raise:NSInternalInconsistencyException
+         format:@"Can't initialize random number generator"];
     }
 
     unsigned char public_key[32], private_key[64];
@@ -145,6 +151,25 @@ useLocalAuthentication:(BOOL)useLocalAuthentication_ {
 
     return [TKTokenSecretKey keyWithLevel:keyLevel privateKey:privateKey publicKey:publicKey];
 }
+
+- (TKTokenSecretKey *)_createNewKey:(Key_Level)keyLevel
+                     withExpiration:(long long)expiresAtMs {
+    unsigned char seed[32];
+    if (ed25519_create_seed(seed)) {
+        [NSException
+         raise:NSInternalInconsistencyException
+         format:@"Can't initialize random number generator"];
+    }
+    
+    unsigned char public_key[32], private_key[64];
+    ed25519_create_keypair(public_key, private_key, seed);
+    
+    NSData *publicKey = [NSData dataWithBytes:public_key length:sizeof(public_key)];
+    NSData *privateKey = [NSData dataWithBytes:private_key length:sizeof(private_key)];
+    
+    return [TKTokenSecretKey keyWithLevel:keyLevel privateKey:privateKey publicKey:publicKey expiration:expiresAtMs];
+}
+
 
 - (TKSignature *)_createSignature:(NSData *)data
                     usingKeyLevel:(Key_Level)keyLevel {
