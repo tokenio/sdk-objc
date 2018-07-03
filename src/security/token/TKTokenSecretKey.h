@@ -16,10 +16,16 @@
 
 + (TKTokenSecretKey *)keyWithLevel:(Key_Level)level  privateKey:(NSData *)sk publicKey:(NSData *)pk;
 
++ (TKTokenSecretKey *)keyWithLevel:(Key_Level)level
+                        privateKey:(NSData *)sk
+                         publicKey:(NSData *)pk
+                        expiration:(NSNumber *) expiresAtMs;
+
 @property (nonatomic, readonly) NSString *id;
 @property (nonatomic, readonly) Key_Level level;
 @property (nonatomic, readonly) NSData *publicKey;
 @property (nonatomic, readonly) NSData *privateKey;
 @property (nonatomic, readonly) Key *keyInfo;
+@property (nonatomic, readonly) NSNumber *expiresAtMs;
 
 @end

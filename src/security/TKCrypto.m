@@ -36,6 +36,12 @@
     return [engine generateKey:level];
 }
 
+- (Key *)generateKey:(Key_Level)level
+      withExpiration:(NSNumber *)expiresAtMs {
+    return [engine generateKey:level
+                withExpiration:expiresAtMs];
+}
+
 
 - (NSArray<Key *> *)getKeyInfos:(NSString *)reason
                         onError:(OnError)onError {
