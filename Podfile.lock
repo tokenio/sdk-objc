@@ -44,6 +44,20 @@ DEPENDENCIES:
   - OrderedDictionary
   - Unirest (~> 1.1.4)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - "!ProtoCompiler"
+    - "!ProtoCompiler-gRPCPlugin"
+    - BoringSSL
+    - gRPC
+    - gRPC-Core
+    - gRPC-ProtoRPC
+    - gRPC-RxLibrary
+    - nanopb
+    - OrderedDictionary
+    - Protobuf
+    - Unirest
+
 SPEC CHECKSUMS:
   "!ProtoCompiler": 3e9dc8340c8f1bbab40aa0f5acb965a4be02f849
   "!ProtoCompiler-gRPCPlugin": 6f829fc44faf551947dc9f99452e2ed981497718
@@ -59,4 +73,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5ce95cac78ae61dcedc055be289f31b78bf70da1
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3

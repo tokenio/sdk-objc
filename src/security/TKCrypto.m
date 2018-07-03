@@ -37,7 +37,7 @@
 }
 
 - (Key *)generateKey:(Key_Level)level
-      withExpiration:(long long)expiresAtMs {
+      withExpiration:(NSNumber *)expiresAtMs {
     return [engine generateKey:level
                 withExpiration:expiresAtMs];
 }

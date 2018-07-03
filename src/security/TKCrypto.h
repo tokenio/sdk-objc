@@ -44,7 +44,7 @@
  * @return the newly created key pair information
  */
 - (Key *)generateKey:(Key_Level)level
-      withExpiration:(long long)expiresAtMs;
+      withExpiration:(NSNumber *)expiresAtMs;
 
 /**
  * Gets a set of key-pair information to be used by a given member.

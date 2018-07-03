@@ -45,9 +45,7 @@
 }
 
 - (TKTokenSecretKey *)lookupKeyByLevel:(Key_Level)keyLevel {
-    NSEnumerator *enumerator = [keys keyEnumerator];
-    NSString* keyId;
-    while ((keyId = [enumerator nextObject])) {
+    for (NSString* keyId in keys) {
         TKTokenSecretKey *key = [keys objectForKey:keyId];
         if (key.level == keyLevel && ![TKInMemoryMemberKeys isExpired: key]) {
             return key;
@@ -60,7 +58,7 @@
 }
 
 + (bool) isExpired:(TKTokenSecretKey *)key {
-    return key.expiresAtMs && key.expiresAtMs <
+    return key.expiresAtMs && key.expiresAtMs.longLongValue <
     (long long) ([[NSDate date] timeIntervalSince1970] * 1000);
 }
 

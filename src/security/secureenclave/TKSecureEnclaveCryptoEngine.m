@@ -39,7 +39,7 @@ static NSString* kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     return [self generateKeyPairWithLevel:level];
 }
 
-- (Key *)generateKey:(Key_Level)level withExpiration:(long long)expiresAtMs {
+- (Key *)generateKey:(Key_Level)level withExpiration:(NSNumber *)expiresAtMs {
     // TODO(MOB-344) implement;
     return nil;
 }

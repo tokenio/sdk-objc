@@ -16,7 +16,7 @@
 + (TKTokenSecretKey *)keyWithLevel:(Key_Level)level
                         privateKey:(NSData *)sk
                          publicKey:(NSData *)pk
-                        expiration:(long long) expiresAtMs {
+                        expiration:(NSNumber *) expiresAtMs {
     return [[TKTokenSecretKey alloc] initWithLevel:level privateKey:sk publicKey:pk expiration:expiresAtMs];
 }
 
@@ -35,7 +35,7 @@
 - (id)initWithLevel:(Key_Level)level
          privateKey:(NSData *)sk
           publicKey:(NSData *)pk
-         expiration:(long long)expiresAtMs{
+         expiration:(NSNumber *)expiresAtMs{
     self = [super init];
     
     if (self) {
@@ -59,7 +59,9 @@
     key.level = self.level;
     key.algorithm = Key_Algorithm_Ed25519;
     key.publicKey = [TKUtil base64UrlEncodeData:self.publicKey];
-    key.expiresAtMs = self.expiresAtMs;
+    if (self.expiresAtMs) {
+        key.expiresAtMs = self.expiresAtMs.longLongValue;
+    }
     return key;
 }
 
