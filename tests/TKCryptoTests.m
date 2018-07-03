@@ -115,7 +115,7 @@
                                  usingKey:Key_Level_Low
                                    reason:nil
                                   onError:^(NSError *error) {
-                                      TKLogError(@"testSignAndVerify_message sign fail with error %@", error);
+                                      TKLogError(@"testVerify_throwsOnExpiredKey sign fail with error %@", error);
                                   }];
     sleep(3);
     XCTAssertThrows([crypto verifySignature:signature.value
