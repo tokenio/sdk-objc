@@ -14,6 +14,8 @@
 		1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */; };
 		1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C72251DAF128600E9FC84 /* Subscriber.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1BB3B9AA1DA72BDF0012D306 /* TKNotificationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */; };
+		22EBBA4420F5680900E6A4DB /* Service.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 22EBBA4220F5680800E6A4DB /* Service.pbobjc.h */; };
+		22EBBA4520F5680900E6A4DB /* Service.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EBBA4320F5680800E6A4DB /* Service.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B4C1D989A930043345F /* Account.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B211D989A930043345F /* Account.pbobjc.h */; };
 		37637B4D1D989A930043345F /* Account.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 37637B221D989A930043345F /* Account.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		37637B561D989A930043345F /* Auth.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 37637B2D1D989A930043345F /* Auth.pbobjc.h */; };
@@ -248,6 +250,8 @@
 		1B7C72241DAF128600E9FC84 /* Subscriber.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscriber.pbobjc.h; sourceTree = "<group>"; };
 		1B7C72251DAF128600E9FC84 /* Subscriber.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscriber.pbobjc.m; sourceTree = "<group>"; };
 		1BB3B9A91DA72BDF0012D306 /* TKNotificationsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKNotificationsTests.m; sourceTree = "<group>"; };
+		22EBBA4220F5680800E6A4DB /* Service.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.pbobjc.h; sourceTree = "<group>"; };
+		22EBBA4320F5680800E6A4DB /* Service.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.pbobjc.m; sourceTree = "<group>"; };
 		27932CCA173CAF159694397E /* libPods-TokenSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C88C1E343E1E5719F3A91FD /* Pods-sdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdkTests/Pods-sdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBankInfoTests.m; sourceTree = "<group>"; };
@@ -850,6 +854,8 @@
 			isa = PBXGroup;
 			children = (
 				D039410320C9F02100B980CE /* Field.pbobjc.h */,
+				22EBBA4220F5680800E6A4DB /* Service.pbobjc.h */,
+				22EBBA4320F5680800E6A4DB /* Service.pbobjc.m */,
 				D039410420C9F02100B980CE /* Message.pbobjc.m */,
 				D039410520C9F02100B980CE /* Field.pbobjc.m */,
 				D039410620C9F02100B980CE /* Message.pbobjc.h */,
@@ -984,6 +990,7 @@
 				D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
+				22EBBA4420F5680900E6A4DB /* Service.pbobjc.h in Headers */,
 				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
 				DDF54B031E31797900BE739B /* QHex.h in Headers */,
 				37637B5C1D989A930043345F /* Annotations.pbobjc.h in Headers */,
@@ -1087,9 +1094,7 @@
 				8A9909141D890E820096A7FA /* Sources */,
 				8A9909151D890E820096A7FA /* Frameworks */,
 				8A9909161D890E820096A7FA /* Resources */,
-				90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */,
 				47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */,
-				26000291B9806E14A4C54910 /* 📦 Embed Pods Frameworks */,
 				5FC30FCA2EFE21EB84341A05 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
@@ -1220,22 +1225,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		26000291B9806E14A4C54910 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3638CDEA9334A1620FAC5C16 /* [CP] Check Pods Manifest.lock */ = {
@@ -1264,7 +1254,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1316,21 +1306,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		90C39706085657F07D914CE7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		92358EEBF311846E836E07B9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1342,7 +1317,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1364,7 +1339,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1402,6 +1377,7 @@
 				8A0734591DBFD1D100ED27C0 /* Transferinstructions.pbobjc.m in Sources */,
 				DDF54B041E31797900BE739B /* QHex.m in Sources */,
 				D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */,
+				22EBBA4520F5680900E6A4DB /* Service.pbobjc.m in Sources */,
 				4B240F851F28096300497B2D /* TKHasher.m in Sources */,
 				FAE918CC1F17E70B001692CF /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,

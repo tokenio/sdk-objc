@@ -19,6 +19,7 @@ import "transaction.proto";
 import "transfer.proto";
 import "alias.proto";
 import "extensions/field.proto";
+import "extensions/service.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Paging details.
@@ -491,6 +492,14 @@ message GetTokenResponse {
   io.token.proto.common.token.Token token = 1; // Token
 }
 
+message GetActiveAccessTokenRequest {
+  string to_member_id = 1; // Member ID of the recipient
+}
+
+message GetActiveAccessTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
 message GetTokensRequest {
   Type type = 1;          // ACCESS or TRANSFER
   Page page = 2;          // Optional paging settings.
@@ -773,6 +782,12 @@ service GatewayService {
     option (google.api.http) = {
       get: "/resolve-alias?value={alias.value}&type={alias.type}&realm={realm}"
     };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
   }
 
   // Get the auth'd member's aliases.
@@ -793,8 +808,14 @@ service GatewayService {
   // Retries verification. For example, if verifying an email alias,
   // re-sends verification-code email to the email address.
   rpc RetryVerification (RetryVerificationRequest) returns (RetryVerificationResponse) {
-  option (google.api.http) = {
+    option (google.api.http) = {
       post: "/verifications"
+    };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
     };
   }
 
@@ -821,6 +842,12 @@ service GatewayService {
   rpc BeginRecovery (BeginRecoveryRequest) returns (BeginRecoveryResponse) {
     option (google.api.http) = {
       post: "/recovery/verifications"
+    };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
     };
   }
 
@@ -926,6 +953,12 @@ service GatewayService {
     option (google.api.http) = {
         post: "/notify"
     };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "notify-source-ip", path: "{REMOTE_ADDRESS}"},
+        {key: "notify-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
   }
 
   // get notifications
@@ -949,6 +982,12 @@ service GatewayService {
   rpc RequestTransfer (RequestTransferRequest) returns (RequestTransferResponse) {
     option (google.api.http) = {
         post: "/request-transfer"
+    };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "notify-source-ip", path: "{REMOTE_ADDRESS}"},
+        {key: "notify-source-developer", path: "{DEVELOPER_ID}"}
+      ]
     };
   }
 
@@ -1141,6 +1180,12 @@ service GatewayService {
     option (google.api.http) = {
         post: "/tokens?type=transfer"
     };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
   }
 
   // Create an Access Token.
@@ -1149,6 +1194,12 @@ service GatewayService {
     option (google.api.http) = {
         post: "/tokens?type=access"
     };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
   }
 
   // Get information about one token.
@@ -1156,6 +1207,14 @@ service GatewayService {
   rpc GetToken (GetTokenRequest) returns (GetTokenResponse) {
     option (google.api.http) = {
         get: "/tokens/{token_id}"
+    };
+  }
+
+  // Get existing Access Token where the calling member is the
+  // remitter and provided member is the beneficiary.
+  rpc GetActiveAccessToken (GetActiveAccessTokenRequest) returns (GetActiveAccessTokenResponse) {
+    option (google.api.http) = {
+        get: "/tokens/active-access-token/{to_member_id}"
     };
   }
 

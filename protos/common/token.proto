@@ -11,6 +11,7 @@ import "security.proto";
 import "transfer.proto";
 import "transferinstructions.proto";
 import "alias.proto";
+import "extensions/field.proto";
 
 //
 // Generic token envelope definition.
@@ -24,9 +25,9 @@ message Token {
 }
 
 message TokenRequest {
-  string id = 1;                                          // request id
-  TokenPayload payload = 2;                               // token payload
-  map<string, string> options = 3;                        // generic string map of options
+  string id = 1;                                                                      // request id
+  TokenPayload payload = 2;                                                           // token payload
+  map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true]; // generic string map of options
 }
 
 message TokenSignature {

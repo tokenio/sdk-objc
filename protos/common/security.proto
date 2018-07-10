@@ -16,8 +16,8 @@ message Key {
 
   enum Algorithm {
     INVALID_ALGORITHM = 0;
-    ED25519 = 1;
-    ECDSA_SHA256 = 2;
+    ED25519 = 1;           // recommended
+    ECDSA_SHA256 = 2;      // recommended
     RS256 = 3;
   }
 

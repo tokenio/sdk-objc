@@ -1,6 +1,6 @@
-TOKEN_PROTOS_VER = "1.0.493"
+TOKEN_PROTOS_VER = "1.0.501"
 FANK_PROTOS_VER = "1.0.17"
-RPC_PROTOS_VER = "1.0.119"
+RPC_PROTOS_VER = "1.0.124"
 
 platform :ios, '8.0'
 inhibit_all_warnings!

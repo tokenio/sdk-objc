@@ -1,0 +1,19 @@
+syntax = "proto3";
+package io.token.proto.extensions.service;
+
+import "google/protobuf/descriptor.proto";
+
+option java_outer_classname = "ServiceExtensions";
+
+message RateLimitSelector {
+  repeated Selector selector = 1;
+
+  message Selector {
+    string key = 1;
+    string path = 2;
+  }
+}
+
+extend google.protobuf.MethodOptions {
+  repeated RateLimitSelector rate_limit = 5000;
+}

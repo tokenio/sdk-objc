@@ -40,7 +40,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol FankFankService <NSObject, GRPCProtoServiceInit>
+@protocol FankFankService <NSObject>
 
 #pragma mark AddClient(AddClientRequest) returns (AddClientResponse)
 

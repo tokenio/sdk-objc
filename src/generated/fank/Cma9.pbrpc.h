@@ -35,7 +35,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol Cma9Service <NSObject, GRPCProtoServiceInit>
+@protocol Cma9Service <NSObject>
 
 #pragma mark CreateAccountRequest(AccountRequestsRequest) returns (AccountRequestsResponse)
 

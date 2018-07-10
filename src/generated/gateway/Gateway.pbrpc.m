@@ -20,6 +20,7 @@
 #import "Transfer.pbobjc.h"
 #import "Alias.pbobjc.h"
 #import "extensions/Field.pbobjc.h"
+#import "extensions/Service.pbobjc.h"
 
 @implementation GatewayService
 
@@ -1188,6 +1189,26 @@
   return [self RPCToMethod:@"GetToken"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GetTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetActiveAccessToken(GetActiveAccessTokenRequest) returns (GetActiveAccessTokenResponse)
+
+/**
+ * Get existing Access Token where the calling member is the
+ * remitter and provided member is the beneficiary.
+ */
+- (void)getActiveAccessTokenWithRequest:(GetActiveAccessTokenRequest *)request handler:(void(^)(GetActiveAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetActiveAccessTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get existing Access Token where the calling member is the
+ * remitter and provided member is the beneficiary.
+ */
+- (GRPCProtoCall *)RPCToGetActiveAccessTokenWithRequest:(GetActiveAccessTokenRequest *)request handler:(void(^)(GetActiveAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetActiveAccessToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetActiveAccessTokenResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark GetTokens(GetTokensRequest) returns (GetTokensResponse)
