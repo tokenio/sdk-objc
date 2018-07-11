@@ -406,6 +406,15 @@
     }];
 }
 
+- (Token *)getActiveAccessToken:(NSString *)toMemberId {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getActiveAccessToken:toMemberId
+                   onSuccess:call.onSuccess
+                     onError:call.onError];
+    }];
+}
+
 - (PagedArray<Token *> *)getTransferTokensOffset:(NSString *)offset
                                            limit:(int)limit {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];

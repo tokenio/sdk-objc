@@ -379,9 +379,18 @@
  * Looks up an existing token.
  *
  * @param tokenId token id
- * @return transfer token returned by the server
+ * @return token returned by the server
  */
 - (Token *)getToken:(NSString *)tokenId;
+
+/**
+ * Looks up a existing access token where the calling member is the grantor and given member is
+ * the grantee.
+ *
+ * @param toMemberId beneficiary of the active access token
+ * @return access token returned by the server
+ */
+- (Token *)getActiveAccessToken:(NSString *)toMemberId;
 
 /**
  * Looks up transfer tokens owned by the member.
