@@ -516,8 +516,8 @@
        onSuccess:(OnSuccessWithToken)onSuccess
          onError:(OnError)onError {
     [client getActiveAccessToken:toMemberId
-           onSuccess:onSuccess
-             onError:onError];
+                       onSuccess:onSuccess
+                         onError:onError];
 }
 
 - (void)getTransferTokensOffset:(NSString *)offset

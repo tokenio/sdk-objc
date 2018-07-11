@@ -410,8 +410,8 @@
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async getActiveAccessToken:toMemberId
-                   onSuccess:call.onSuccess
-                     onError:call.onError];
+                               onSuccess:call.onSuccess
+                                 onError:call.onError];
     }];
 }
 

@@ -658,8 +658,8 @@
 }
 
 - (void)getActiveAccessToken:(NSString *)toMemberId
-       onSuccess:(OnSuccessWithToken)onSuccess
-         onError:(OnError)onError {
+                   onSuccess:(OnSuccessWithToken)onSuccess
+                     onError:(OnError)onError {
     GetActiveAccessTokenRequest *request = [GetActiveAccessTokenRequest message];
     request.toMemberId = toMemberId;
     RpcLogStart(request);

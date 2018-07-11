@@ -486,10 +486,10 @@
          onError:(OnError)onError;
 
 /**
- * Looks up a existing access token where the calling member is the grantor and given member is
- * the grantee.
+ * Looks up a existing access token where the calling member is the grantor and the given
+ * member is the grantee.
  *
- * @param toMemberId beneficiary of the active access token
+ * @param toMemberId grantee of the active access token
  */
 - (void)getActiveAccessToken:(NSString *)toMemberId
                    onSuccess:(OnSuccessWithToken)onSuccess
