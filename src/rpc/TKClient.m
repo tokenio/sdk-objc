@@ -657,6 +657,29 @@
              onError:onError];
 }
 
+- (void)getActiveAccessToken:(NSString *)toMemberId
+                   onSuccess:(OnSuccessWithToken)onSuccess
+                     onError:(OnError)onError {
+    GetActiveAccessTokenRequest *request = [GetActiveAccessTokenRequest message];
+    request.toMemberId = toMemberId;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToGetActiveAccessTokenWithRequest:request
+                           handler:^(GetActiveAccessTokenResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.token);
+                               } else {
+                                   [errorHandler handle:onError withError:error];
+                               }
+                           }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)getTokensOfType:(GetTokensRequest_Type)type
                  offset:(NSString *)offset
                   limit:(int)limit

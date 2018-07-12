@@ -1824,6 +1824,33 @@ typedef GPB_ENUM(GetTokenResponse_FieldNumber) {
 
 @end
 
+#pragma mark - GetActiveAccessTokenRequest
+
+typedef GPB_ENUM(GetActiveAccessTokenRequest_FieldNumber) {
+  GetActiveAccessTokenRequest_FieldNumber_ToMemberId = 1,
+};
+
+@interface GetActiveAccessTokenRequest : GPBMessage
+
+/** Member ID of the recipient */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *toMemberId;
+
+@end
+
+#pragma mark - GetActiveAccessTokenResponse
+
+typedef GPB_ENUM(GetActiveAccessTokenResponse_FieldNumber) {
+  GetActiveAccessTokenResponse_FieldNumber_Token = 1,
+};
+
+@interface GetActiveAccessTokenResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Token *token;
+/** Test to see if @c token has been set. */
+@property(nonatomic, readwrite) BOOL hasToken;
+
+@end
+
 #pragma mark - GetTokensRequest
 
 typedef GPB_ENUM(GetTokensRequest_FieldNumber) {

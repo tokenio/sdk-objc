@@ -512,6 +512,14 @@
              onError:onError];
 }
 
+- (void)getActiveAccessToken:(NSString *)toMemberId
+       onSuccess:(OnSuccessWithToken)onSuccess
+         onError:(OnError)onError {
+    [client getActiveAccessToken:toMemberId
+                       onSuccess:onSuccess
+                         onError:onError];
+}
+
 - (void)getTransferTokensOffset:(NSString *)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess

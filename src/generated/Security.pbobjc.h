@@ -43,7 +43,11 @@ typedef GPB_ENUM(Key_Algorithm) {
    **/
   Key_Algorithm_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Key_Algorithm_InvalidAlgorithm = 0,
+
+  /** recommended */
   Key_Algorithm_Ed25519 = 1,
+
+  /** recommended */
   Key_Algorithm_EcdsaSha256 = 2,
   Key_Algorithm_Rs256 = 3,
 };

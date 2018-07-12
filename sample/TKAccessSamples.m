@@ -89,19 +89,10 @@
     
     __block Token *foundToken = nil;
     
-    [self runUntilTrue:^ {
-        // find token begin snippet to include in docs
-        PagedArray<Token *> *ary = [self.payerSync getAccessTokensOffset:NULL limit:100];
-        for (Token *at in ary.items) {
-            if ([at.payload.to.id_p isEqual:self.payeeSync.id]) {
-                foundToken = at;
-                break;
-            }
-        }
-        // find token done snippet to include in docs
     
-        return (foundToken != nil) && [foundToken.id_p isEqual:accessToken.id_p];
-    } backOffTimeMs:1000];
+    // find token begin snippet to include in docs
+    foundToken = [self.payerSync getActiveAccessToken:self.payeeSync.id];
+    // find token done snippet to include in docs
     
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];

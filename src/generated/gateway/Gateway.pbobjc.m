@@ -30,6 +30,7 @@
  #import "Transfer.pbobjc.h"
  #import "Alias.pbobjc.h"
  #import "extensions/Field.pbobjc.h"
+ #import "extensions/Service.pbobjc.h"
  #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -52,6 +53,7 @@
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
     [registry addExtensions:[FieldRoot extensionRegistry]];
     [registry addExtensions:[MessageRoot extensionRegistry]];
+    [registry addExtensions:[ServiceRoot extensionRegistry]];
   }
   return registry;
 }
@@ -4927,6 +4929,92 @@ typedef struct GetTokenResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetTokenResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetActiveAccessTokenRequest
+
+@implementation GetActiveAccessTokenRequest
+
+@dynamic toMemberId;
+
+typedef struct GetActiveAccessTokenRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *toMemberId;
+} GetActiveAccessTokenRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "toMemberId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetActiveAccessTokenRequest_FieldNumber_ToMemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetActiveAccessTokenRequest__storage_, toMemberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetActiveAccessTokenRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetActiveAccessTokenRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetActiveAccessTokenResponse
+
+@implementation GetActiveAccessTokenResponse
+
+@dynamic hasToken, token;
+
+typedef struct GetActiveAccessTokenResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Token *token;
+} GetActiveAccessTokenResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "token",
+        .dataTypeSpecific.className = GPBStringifySymbol(Token),
+        .number = GetActiveAccessTokenResponse_FieldNumber_Token,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetActiveAccessTokenResponse__storage_, token),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetActiveAccessTokenResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetActiveAccessTokenResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
