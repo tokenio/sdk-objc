@@ -5,6 +5,8 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "google/api/Annotations.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Notification.pbobjc.h"
@@ -176,6 +178,30 @@
   return [self RPCToMethod:@"GetNotifications"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[FankGetNotificationsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
+
+/**
+ * 
+ * Used by sdk-java-tests to create members in the fank realms.
+ * 
+ * 
+ */
+- (void)verifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToVerifyAliasWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Used by sdk-java-tests to create members in the fank realms.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"VerifyAlias"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankVerifyAliasResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 @end

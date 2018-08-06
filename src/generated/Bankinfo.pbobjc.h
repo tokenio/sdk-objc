@@ -59,6 +59,7 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_Provider = 11,
   Bank_FieldNumber_Country = 12,
   Bank_FieldNumber_Identifier = 13,
+  Bank_FieldNumber_RequiresLegacyTransfer = 14,
 };
 
 @interface Bank : GPBMessage
@@ -87,6 +88,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 /** Connection allows for receiving payments */
 @property(nonatomic, readwrite) BOOL supportsReceivePayment;
+
+/** Connection only supports immediate redemption of transfers */
+@property(nonatomic, readwrite) BOOL requiresLegacyTransfer;
 
 /** Provider of the bank, e.g. Yodlee, FinApi, Token */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *provider;

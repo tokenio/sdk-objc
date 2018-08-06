@@ -36,7 +36,10 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAccountBalances;
 @class AccessBody_Resource_AllAccountTransactions;
 @class AccessBody_Resource_AllAccounts;
+@class AccessBody_Resource_AllAccountsAtBank;
 @class AccessBody_Resource_AllAddresses;
+@class AccessBody_Resource_AllBalancesAtBank;
+@class AccessBody_Resource_AllTransactionsAtBank;
 @class Alias;
 @class Attachment;
 @class Pricing;
@@ -274,7 +277,6 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
   TokenMember_FieldNumber_Id_p = 1,
   TokenMember_FieldNumber_Username = 2,
   TokenMember_FieldNumber_Alias = 3,
-  TokenMember_FieldNumber_Realm = 4,
 };
 
 /**
@@ -292,9 +294,6 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
-
-/** realm the alias belongs to */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -501,6 +500,9 @@ typedef GPB_ENUM(AccessBody_Resource_FieldNumber) {
   AccessBody_Resource_FieldNumber_Account = 6,
   AccessBody_Resource_FieldNumber_Transactions = 7,
   AccessBody_Resource_FieldNumber_Balance = 8,
+  AccessBody_Resource_FieldNumber_AllAccountsAtBank = 9,
+  AccessBody_Resource_FieldNumber_AllTransactionsAtBank = 10,
+  AccessBody_Resource_FieldNumber_AllBalancesAtBank = 11,
 };
 
 typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
@@ -513,6 +515,9 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
   AccessBody_Resource_Resource_OneOfCase_Account = 6,
   AccessBody_Resource_Resource_OneOfCase_Transactions = 7,
   AccessBody_Resource_Resource_OneOfCase_Balance = 8,
+  AccessBody_Resource_Resource_OneOfCase_AllAccountsAtBank = 9,
+  AccessBody_Resource_Resource_OneOfCase_AllTransactionsAtBank = 10,
+  AccessBody_Resource_Resource_OneOfCase_AllBalancesAtBank = 11,
 };
 
 @interface AccessBody_Resource : GPBMessage
@@ -534,6 +539,12 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountTransactions *transactions;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountBalance *balance;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank;
 
 @end
 
@@ -577,6 +588,21 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 
 @end
 
+#pragma mark - AccessBody_Resource_AllAccountsAtBank
+
+typedef GPB_ENUM(AccessBody_Resource_AllAccountsAtBank_FieldNumber) {
+  AccessBody_Resource_AllAccountsAtBank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Provides access to all member accounts at a specific bank.
+ **/
+@interface AccessBody_Resource_AllAccountsAtBank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
 #pragma mark - AccessBody_Resource_Account
 
 typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
@@ -604,6 +630,22 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 
 @end
 
+#pragma mark - AccessBody_Resource_AllTransactionsAtBank
+
+typedef GPB_ENUM(AccessBody_Resource_AllTransactionsAtBank_FieldNumber) {
+  AccessBody_Resource_AllTransactionsAtBank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Provides access to member transactions in all accounts at a specific bank.
+ * Normally used with AllAccountsAtBank (to get list of accounts)
+ **/
+@interface AccessBody_Resource_AllTransactionsAtBank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
 #pragma mark - AccessBody_Resource_AccountTransactions
 
 typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
@@ -627,6 +669,22 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
  * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountBalances : GPBMessage
+
+@end
+
+#pragma mark - AccessBody_Resource_AllBalancesAtBank
+
+typedef GPB_ENUM(AccessBody_Resource_AllBalancesAtBank_FieldNumber) {
+  AccessBody_Resource_AllBalancesAtBank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Provides access to member balance on all accounts at a specific bank.
+ * Normally used with AllAccountsAtBank (to get list of accounts)
+ **/
+@interface AccessBody_Resource_AllBalancesAtBank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @end
 

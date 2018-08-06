@@ -74,6 +74,9 @@ typedef GPB_ENUM(TransactionStatus) {
   /** the transaction has been successful */
   TransactionStatus_Success = 2,
 
+  /** the transaction requires authorization by the user to complete */
+  TransactionStatus_PendingExternalAuthorization = 15,
+
   /** the transaction has been canceled, rolled back */
   TransactionStatus_FailureCanceled = 10,
 

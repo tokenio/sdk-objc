@@ -232,6 +232,7 @@ message AccountBalancesResponse {
 
 message AccountTransactionsRequest {
   string AccountId = 1;
+  int32 page = 2;
 }
 
 message AccountTransactionsResponse {
@@ -398,7 +399,7 @@ service Cma9Service {
   // Used to query information about an account's transactions.
   rpc GetAccountTransactions (AccountTransactionsRequest) returns (AccountTransactionsResponse) {
     option (google.api.http) = {
-      get: "/cma9/accounts/{AccountId}/transactions"
+      get: "/cma9/accounts/{AccountId}/transactions?page={page}"
     };
   }
 

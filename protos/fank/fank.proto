@@ -3,6 +3,8 @@ package io.token.proto.bankapi;
 option objc_class_prefix = "Fank";
 
 import "google/api/annotations.proto";
+import "alias.proto";
+import "member.proto";
 import "money.proto";
 import "banklink.proto";
 import "notification.proto";
@@ -117,6 +119,16 @@ message GetOauthAccessTokenResponse {
   int64 expires_in_ms = 2;
 }
 
+message VerifyAliasRequest {
+  string bic = 1;
+  string member_id = 2;
+  io.token.proto.common.alias.Alias alias = 3;
+}
+
+message VerifyAliasResponse {
+  io.token.proto.common.member.Member member = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fank testing API, used to create accounts on the fly. Used for testing.
 //
@@ -188,6 +200,16 @@ service FankService {
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
         get: "/subscribers/{subscriber_id}/notifications"
+    };
+  }
+
+  //
+  // Used by sdk-java-tests to create members in the fank realms.
+  //
+
+  rpc VerifyAlias (VerifyAliasRequest) returns (VerifyAliasResponse) {
+    option (google.api.http) = {
+        post: "/verifyalias"
     };
   }
 }

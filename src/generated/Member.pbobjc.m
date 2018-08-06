@@ -729,13 +729,11 @@ void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message
 
 @dynamic aliasHash;
 @dynamic hasAlias, alias;
-@dynamic realm;
 
 typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
   uint32_t _has_storage_[1];
   NSString *aliasHash;
   Alias *alias;
-  NSString *realm;
 } MemberOperationMetadata_AddAliasMetadata__storage_;
 
 // This method is threadsafe because it is initially called
@@ -761,15 +759,6 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
         .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, alias),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "realm",
-        .dataTypeSpecific.className = NULL,
-        .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_Realm,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, realm),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -102,11 +102,13 @@ BOOL VerificationStatus_IsValidValue(int32_t value__) {
 
 @dynamic type;
 @dynamic value;
+@dynamic realm;
 
 typedef struct Alias__storage_ {
   uint32_t _has_storage_[1];
   Alias_Type type;
   NSString *value;
+  NSString *realm;
 } Alias__storage_;
 
 // This method is threadsafe because it is initially called
@@ -130,6 +132,15 @@ typedef struct Alias__storage_ {
         .number = Alias_FieldNumber_Value,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Alias__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realm",
+        .dataTypeSpecific.className = NULL,
+        .number = Alias_FieldNumber_Realm,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Alias__storage_, realm),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -206,6 +217,60 @@ BOOL Alias_Type_IsValidValue(int32_t value__) {
       return NO;
   }
 }
+
+#pragma mark - VerifyAliasPayload
+
+@implementation VerifyAliasPayload
+
+@dynamic memberId;
+@dynamic hasAlias, alias;
+
+typedef struct VerifyAliasPayload__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+  Alias *alias;
+} VerifyAliasPayload__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyAliasPayload_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VerifyAliasPayload__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = VerifyAliasPayload_FieldNumber_Alias,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(VerifyAliasPayload__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyAliasPayload class]
+                                     rootClass:[AliasRoot class]
+                                          file:AliasRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VerifyAliasPayload__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 
 #pragma clang diagnostic pop

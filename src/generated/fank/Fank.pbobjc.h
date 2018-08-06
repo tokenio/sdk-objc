@@ -27,8 +27,10 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Alias;
 @class FankAccount;
 @class FankClient;
+@class Member;
 @class Money;
 @class Notification;
 
@@ -378,6 +380,40 @@ typedef GPB_ENUM(FankGetOauthAccessTokenResponse_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accessToken;
 
 @property(nonatomic, readwrite) int64_t expiresInMs;
+
+@end
+
+#pragma mark - FankVerifyAliasRequest
+
+typedef GPB_ENUM(FankVerifyAliasRequest_FieldNumber) {
+  FankVerifyAliasRequest_FieldNumber_Bic = 1,
+  FankVerifyAliasRequest_FieldNumber_MemberId = 2,
+  FankVerifyAliasRequest_FieldNumber_Alias = 3,
+};
+
+@interface FankVerifyAliasRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - FankVerifyAliasResponse
+
+typedef GPB_ENUM(FankVerifyAliasResponse_FieldNumber) {
+  FankVerifyAliasResponse_FieldNumber_Member = 1,
+};
+
+@interface FankVerifyAliasResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Member *member;
+/** Test to see if @c member has been set. */
+@property(nonatomic, readwrite) BOOL hasMember;
 
 @end
 

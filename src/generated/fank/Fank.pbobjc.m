@@ -15,6 +15,8 @@
 
  #import "fank/Fank.pbobjc.h"
  #import "google/api/Annotations.pbobjc.h"
+ #import "Alias.pbobjc.h"
+ #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Banklink.pbobjc.h"
  #import "Notification.pbobjc.h"
@@ -1143,6 +1145,114 @@ typedef struct FankGetOauthAccessTokenResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetOauthAccessTokenResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankVerifyAliasRequest
+
+@implementation FankVerifyAliasRequest
+
+@dynamic bic;
+@dynamic memberId;
+@dynamic hasAlias, alias;
+
+typedef struct FankVerifyAliasRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bic;
+  NSString *memberId;
+  Alias *alias;
+} FankVerifyAliasRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bic",
+        .dataTypeSpecific.className = NULL,
+        .number = FankVerifyAliasRequest_FieldNumber_Bic,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, bic),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = FankVerifyAliasRequest_FieldNumber_MemberId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = FankVerifyAliasRequest_FieldNumber_Alias,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankVerifyAliasRequest class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankVerifyAliasRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FankVerifyAliasResponse
+
+@implementation FankVerifyAliasResponse
+
+@dynamic hasMember, member;
+
+typedef struct FankVerifyAliasResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Member *member;
+} FankVerifyAliasResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "member",
+        .dataTypeSpecific.className = GPBStringifySymbol(Member),
+        .number = FankVerifyAliasResponse_FieldNumber_Member,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FankVerifyAliasResponse__storage_, member),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FankVerifyAliasResponse class]
+                                     rootClass:[FankFankRoot class]
+                                          file:FankFankRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FankVerifyAliasResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

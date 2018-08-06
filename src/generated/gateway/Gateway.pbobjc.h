@@ -39,6 +39,7 @@ CF_EXTERN_C_BEGIN
 @class Blob;
 @class Blob_Payload;
 @class Device;
+@class EndorseAndAddKey;
 @class ExternalAuthorizationDetails;
 @class GetBalanceResponse;
 @class GetTokensRequest_TokenFilter;
@@ -71,6 +72,7 @@ CF_EXTERN_C_BEGIN
 @class TransactionStepUp;
 @class Transfer;
 @class TransferPayload;
+@class VerifyAliasPayload;
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
 GPB_ENUM_FWD_DECLARE(CreateMemberType);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
@@ -300,7 +302,6 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
   ResolveAliasRequest_FieldNumber_Alias = 1,
-  ResolveAliasRequest_FieldNumber_Realm = 2,
 };
 
 @interface ResolveAliasRequest : GPBMessage
@@ -309,8 +310,6 @@ typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 
@@ -459,6 +458,46 @@ typedef GPB_ENUM(GetPairedDevicesResponse_FieldNumber) {
 #pragma mark - DeleteMemberResponse
 
 @interface DeleteMemberResponse : GPBMessage
+
+@end
+
+#pragma mark - VerifyAliasOnBehalfRequest
+
+typedef GPB_ENUM(VerifyAliasOnBehalfRequest_FieldNumber) {
+  VerifyAliasOnBehalfRequest_FieldNumber_BankId = 1,
+  VerifyAliasOnBehalfRequest_FieldNumber_Payload = 2,
+  VerifyAliasOnBehalfRequest_FieldNumber_Signature = 3,
+};
+
+@interface VerifyAliasOnBehalfRequest : GPBMessage
+
+/** Bank ID of verifier */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/** Payload containing memberId and alias */
+@property(nonatomic, readwrite, strong, null_resettable) VerifyAliasPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+/** Signature of the verify alias payload */
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
+#pragma mark - VerifyAliasOnBehalfResponse
+
+typedef GPB_ENUM(VerifyAliasOnBehalfResponse_FieldNumber) {
+  VerifyAliasOnBehalfResponse_FieldNumber_Member = 1,
+};
+
+@interface VerifyAliasOnBehalfResponse : GPBMessage
+
+/** updated member */
+@property(nonatomic, readwrite, strong, null_resettable) Member *member;
+/** Test to see if @c member has been set. */
+@property(nonatomic, readwrite) BOOL hasMember;
 
 @end
 
@@ -986,7 +1025,7 @@ typedef GPB_ENUM(NotifyRequest_FieldNumber) {
 /** Test to see if @c body has been set. */
 @property(nonatomic, readwrite) BOOL hasBody;
 
-/** realm of member to notify */
+/** Deprecated */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
@@ -1177,6 +1216,85 @@ int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificat
  * was generated.
  **/
 void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value);
+
+#pragma mark - TriggerEndorseAndAddKeyNotificationRequest
+
+typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationRequest_FieldNumber) {
+  TriggerEndorseAndAddKeyNotificationRequest_FieldNumber_EndorseAndAddKey = 1,
+};
+
+@interface TriggerEndorseAndAddKeyNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey;
+/** Test to see if @c endorseAndAddKey has been set. */
+@property(nonatomic, readwrite) BOOL hasEndorseAndAddKey;
+
+@end
+
+#pragma mark - TriggerEndorseAndAddKeyNotificationResponse
+
+typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationResponse_FieldNumber) {
+  TriggerEndorseAndAddKeyNotificationResponse_FieldNumber_Status = 1,
+  TriggerEndorseAndAddKeyNotificationResponse_FieldNumber_NotificationId = 2,
+};
+
+@interface TriggerEndorseAndAddKeyNotificationResponse : GPBMessage
+
+/** was notification accepted? */
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+/**
+ * Fetches the raw value of a @c TriggerEndorseAndAddKeyNotificationResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TriggerEndorseAndAddKeyNotificationResponse_Status_RawValue(TriggerEndorseAndAddKeyNotificationResponse *message);
+/**
+ * Sets the raw value of an @c TriggerEndorseAndAddKeyNotificationResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTriggerEndorseAndAddKeyNotificationResponse_Status_RawValue(TriggerEndorseAndAddKeyNotificationResponse *message, int32_t value);
+
+#pragma mark - InvalidateNotificationRequest
+
+typedef GPB_ENUM(InvalidateNotificationRequest_FieldNumber) {
+  InvalidateNotificationRequest_FieldNumber_NotificationId = 1,
+};
+
+@interface InvalidateNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+#pragma mark - InvalidateNotificationResponse
+
+typedef GPB_ENUM(InvalidateNotificationResponse_FieldNumber) {
+  InvalidateNotificationResponse_FieldNumber_Status = 1,
+};
+
+@interface InvalidateNotificationResponse : GPBMessage
+
+/** was notification accepted? */
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c InvalidateNotificationResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t InvalidateNotificationResponse_Status_RawValue(InvalidateNotificationResponse *message);
+/**
+ * Sets the raw value of an @c InvalidateNotificationResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetInvalidateNotificationResponse_Status_RawValue(InvalidateNotificationResponse *message, int32_t value);
 
 #pragma mark - LinkAccountsRequest
 
@@ -2102,6 +2220,7 @@ typedef GPB_ENUM(ReplaceTokenResponse_FieldNumber) {
 
 typedef GPB_ENUM(SignTokenRequestStateRequest_FieldNumber) {
   SignTokenRequestStateRequest_FieldNumber_Payload = 1,
+  SignTokenRequestStateRequest_FieldNumber_TokenRequestId = 2,
 };
 
 @interface SignTokenRequestStateRequest : GPBMessage
@@ -2109,6 +2228,8 @@ typedef GPB_ENUM(SignTokenRequestStateRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequestStatePayload *payload;
 /** Test to see if @c payload has been set. */
 @property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -2126,27 +2247,32 @@ typedef GPB_ENUM(SignTokenRequestStateResponse_FieldNumber) {
 
 @end
 
-#pragma mark - GetTokenIdRequest
+#pragma mark - GetTokenRequestResultRequest
 
-typedef GPB_ENUM(GetTokenIdRequest_FieldNumber) {
-  GetTokenIdRequest_FieldNumber_TokenRequestId = 1,
+typedef GPB_ENUM(GetTokenRequestResultRequest_FieldNumber) {
+  GetTokenRequestResultRequest_FieldNumber_TokenRequestId = 1,
 };
 
-@interface GetTokenIdRequest : GPBMessage
+@interface GetTokenRequestResultRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
-#pragma mark - GetTokenIdResponse
+#pragma mark - GetTokenRequestResultResponse
 
-typedef GPB_ENUM(GetTokenIdResponse_FieldNumber) {
-  GetTokenIdResponse_FieldNumber_TokenId = 1,
+typedef GPB_ENUM(GetTokenRequestResultResponse_FieldNumber) {
+  GetTokenRequestResultResponse_FieldNumber_TokenId = 1,
+  GetTokenRequestResultResponse_FieldNumber_Signature = 2,
 };
 
-@interface GetTokenIdResponse : GPBMessage
+@interface GetTokenRequestResultResponse : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
 
 @end
 
@@ -2175,6 +2301,7 @@ typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
 
 typedef GPB_ENUM(CreateTransferResponse_FieldNumber) {
   CreateTransferResponse_FieldNumber_Transfer = 1,
+  CreateTransferResponse_FieldNumber_AuthorizationDetails = 2,
 };
 
 @interface CreateTransferResponse : GPBMessage
@@ -2183,6 +2310,11 @@ typedef GPB_ENUM(CreateTransferResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /** Test to see if @c transfer has been set. */
 @property(nonatomic, readwrite) BOOL hasTransfer;
+
+/** Optional: used when transfer status is PENDING_EXTERNAL_AUTHORIZATION */
+@property(nonatomic, readwrite, strong, null_resettable) ExternalAuthorizationDetails *authorizationDetails;
+/** Test to see if @c authorizationDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorizationDetails;
 
 @end
 

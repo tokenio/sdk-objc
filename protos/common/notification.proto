@@ -96,9 +96,17 @@ message TokenCancelled {
 }
 
 // A notification that a token needs to be created/endorsed, and that keys want to be added
-message RequestTokenAndAddKey {
-  string token_request_id = 1;
+message EndorseAndAddKey {
+  io.token.proto.common.token.TokenPayload payload = 1;
   AddKey add_key = 2;
+  string token_request_id = 3;    // Optional token request ID
+  string bank_id = 4;             // Optional bank ID
+  string state = 5;               // Optional token request state for signing
+}
+
+// A notification to indicate that a previously sent notification was invalidated
+message NotificationInvalidated {
+  string previous_notification_id = 1;
 }
 
 // A data that goes in a NotifyRequest
@@ -117,8 +125,9 @@ message NotifyBody {
     io.token.proto.common.notification.TokenCancelled token_cancelled = 11;
     io.token.proto.common.notification.BalanceStepUp balance_step_up = 12;
     io.token.proto.common.notification.TransactionStepUp transaction_step_up = 13;
-    io.token.proto.common.notification.RequestTokenAndAddKey request_token_and_add_key = 14;
+    io.token.proto.common.notification.EndorseAndAddKey endorse_and_add_key = 14;
     io.token.proto.common.notification.RecoveryCompleted recovery_completed = 15;
+    io.token.proto.common.notification.NotificationInvalidated notification_invalidated = 16;
   }
 }
 
@@ -145,6 +154,8 @@ message Notification {
     INVALID = 0;
     PENDING = 1;
     DELIVERED = 2;
+    COMPLETED = 3;      // The member has completed the notification
+    INVALIDATED = 4;    // the notification has been invalidated
   }
   Status status = 4;
 }

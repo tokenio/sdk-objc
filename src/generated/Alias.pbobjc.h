@@ -27,6 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Alias;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum VerificationStatus
@@ -121,6 +123,7 @@ BOOL Alias_Type_IsValidValue(int32_t value);
 typedef GPB_ENUM(Alias_FieldNumber) {
   Alias_FieldNumber_Type = 1,
   Alias_FieldNumber_Value = 2,
+  Alias_FieldNumber_Realm = 3,
 };
 
 /**
@@ -137,6 +140,9 @@ typedef GPB_ENUM(Alias_FieldNumber) {
 /** For example, "sandy\@example.com" */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
+/** For example, "token" */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
+
 @end
 
 /**
@@ -150,6 +156,26 @@ int32_t Alias_Type_RawValue(Alias *message);
  * was generated.
  **/
 void SetAlias_Type_RawValue(Alias *message, int32_t value);
+
+#pragma mark - VerifyAliasPayload
+
+typedef GPB_ENUM(VerifyAliasPayload_FieldNumber) {
+  VerifyAliasPayload_FieldNumber_MemberId = 1,
+  VerifyAliasPayload_FieldNumber_Alias = 2,
+};
+
+/**
+ * Payload containing a member ID and an alias, used in alias verification.
+ **/
+@interface VerifyAliasPayload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

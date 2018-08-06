@@ -31,16 +31,17 @@ CF_EXTERN_C_BEGIN
 @class BalanceStepUp;
 @class BankAuthorization;
 @class DeviceMetadata;
+@class EndorseAndAddKey;
 @class Key;
 @class LinkAccounts;
 @class LinkAccountsAndAddKey;
 @class NotificationContent;
+@class NotificationInvalidated;
 @class PayeeTransferProcessed;
 @class PayerTransferFailed;
 @class PayerTransferProcessed;
 @class PaymentRequest;
 @class RecoveryCompleted;
-@class RequestTokenAndAddKey;
 @class StepUp;
 @class TokenCancelled;
 @class TokenPayload;
@@ -88,6 +89,12 @@ typedef GPB_ENUM(Notification_Status) {
   Notification_Status_Invalid = 0,
   Notification_Status_Pending = 1,
   Notification_Status_Delivered = 2,
+
+  /** The member has completed the notification */
+  Notification_Status_Completed = 3,
+
+  /** the notification has been invalidated */
+  Notification_Status_Invalidated = 4,
 };
 
 GPBEnumDescriptor *Notification_Status_EnumDescriptor(void);
@@ -401,23 +408,52 @@ typedef GPB_ENUM(TokenCancelled_FieldNumber) {
 
 @end
 
-#pragma mark - RequestTokenAndAddKey
+#pragma mark - EndorseAndAddKey
 
-typedef GPB_ENUM(RequestTokenAndAddKey_FieldNumber) {
-  RequestTokenAndAddKey_FieldNumber_TokenRequestId = 1,
-  RequestTokenAndAddKey_FieldNumber_AddKey = 2,
+typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
+  EndorseAndAddKey_FieldNumber_Payload = 1,
+  EndorseAndAddKey_FieldNumber_AddKey = 2,
+  EndorseAndAddKey_FieldNumber_TokenRequestId = 3,
+  EndorseAndAddKey_FieldNumber_BankId = 4,
+  EndorseAndAddKey_FieldNumber_State = 5,
 };
 
 /**
  * A notification that a token needs to be created/endorsed, and that keys want to be added
  **/
-@interface RequestTokenAndAddKey : GPBMessage
+@interface EndorseAndAddKey : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
 
 @property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
 /** Test to see if @c addKey has been set. */
 @property(nonatomic, readwrite) BOOL hasAddKey;
+
+/** Optional token request ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+/** Optional bank ID */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/** Optional token request state for signing */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *state;
+
+@end
+
+#pragma mark - NotificationInvalidated
+
+typedef GPB_ENUM(NotificationInvalidated_FieldNumber) {
+  NotificationInvalidated_FieldNumber_PreviousNotificationId = 1,
+};
+
+/**
+ * A notification to indicate that a previously sent notification was invalidated
+ **/
+@interface NotificationInvalidated : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *previousNotificationId;
 
 @end
 
@@ -437,8 +473,9 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_TokenCancelled = 11,
   NotifyBody_FieldNumber_BalanceStepUp = 12,
   NotifyBody_FieldNumber_TransactionStepUp = 13,
-  NotifyBody_FieldNumber_RequestTokenAndAddKey = 14,
+  NotifyBody_FieldNumber_EndorseAndAddKey = 14,
   NotifyBody_FieldNumber_RecoveryCompleted = 15,
+  NotifyBody_FieldNumber_NotificationInvalidated = 16,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -456,8 +493,9 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_TokenCancelled = 11,
   NotifyBody_Body_OneOfCase_BalanceStepUp = 12,
   NotifyBody_Body_OneOfCase_TransactionStepUp = 13,
-  NotifyBody_Body_OneOfCase_RequestTokenAndAddKey = 14,
+  NotifyBody_Body_OneOfCase_EndorseAndAddKey = 14,
   NotifyBody_Body_OneOfCase_RecoveryCompleted = 15,
+  NotifyBody_Body_OneOfCase_NotificationInvalidated = 16,
 };
 
 /**
@@ -493,9 +531,11 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
-@property(nonatomic, readwrite, strong, null_resettable) RequestTokenAndAddKey *requestTokenAndAddKey;
+@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey;
 
 @property(nonatomic, readwrite, strong, null_resettable) RecoveryCompleted *recoveryCompleted;
+
+@property(nonatomic, readwrite, strong, null_resettable) NotificationInvalidated *notificationInvalidated;
 
 @end
 

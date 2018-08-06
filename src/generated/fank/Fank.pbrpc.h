@@ -27,9 +27,13 @@
 @class FankGetNotificationsResponse;
 @class FankGetOauthAccessTokenRequest;
 @class FankGetOauthAccessTokenResponse;
+@class FankVerifyAliasRequest;
+@class FankVerifyAliasResponse;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "google/api/Annotations.pbobjc.h"
+  #import "Alias.pbobjc.h"
+  #import "Member.pbobjc.h"
   #import "Money.pbobjc.h"
   #import "Banklink.pbobjc.h"
   #import "Notification.pbobjc.h"
@@ -134,6 +138,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(FankGetNotificationsRequest *)request handler:(void(^)(FankGetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
+
+/**
+ * 
+ * Used by sdk-java-tests to create members in the fank realms.
+ * 
+ * 
+ */
+- (void)verifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * 
+ * Used by sdk-java-tests to create members in the fank realms.
+ * 
+ * 
+ */
+- (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end
