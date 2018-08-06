@@ -217,6 +217,7 @@
     for (Alias *alias in toAddAliases) {
         MemberOperation *addAlias = [MemberOperation message];
         addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
+        addAlias.addAlias.realm = alias.realm;
         [addAliasOps addObject:addAlias];
         
         MemberOperationMetadata *metadata = [MemberOperationMetadata message];

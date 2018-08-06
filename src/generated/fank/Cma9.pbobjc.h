@@ -960,11 +960,14 @@ typedef GPB_ENUM(AccountBalancesResponse_FieldNumber) {
 
 typedef GPB_ENUM(AccountTransactionsRequest_FieldNumber) {
   AccountTransactionsRequest_FieldNumber_AccountId = 1,
+  AccountTransactionsRequest_FieldNumber_Page = 2,
 };
 
 @interface AccountTransactionsRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite) int32_t page;
 
 @end
 

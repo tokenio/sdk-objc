@@ -345,6 +345,18 @@
              responseClass:[DeleteMemberResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
+
+- (void)verifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToVerifyAliasOnBehalfWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToVerifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"VerifyAliasOnBehalf"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[VerifyAliasOnBehalfResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 /**
@@ -705,6 +717,42 @@
   return [self RPCToMethod:@"TriggerStepUpNotification"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[TriggerStepUpNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark TriggerEndorseAndAddKeyNotification(TriggerEndorseAndAddKeyNotificationRequest) returns (TriggerEndorseAndAddKeyNotificationResponse)
+
+/**
+ * send endorse and add key notification (approve with higher-privilege key)
+ */
+- (void)triggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToTriggerEndorseAndAddKeyNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * send endorse and add key notification (approve with higher-privilege key)
+ */
+- (GRPCProtoCall *)RPCToTriggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"TriggerEndorseAndAddKeyNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[TriggerEndorseAndAddKeyNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark InvalidateNotification(InvalidateNotificationRequest) returns (InvalidateNotificationResponse)
+
+/**
+ * send invalidate notification
+ */
+- (void)invalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToInvalidateNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * send invalidate notification
+ */
+- (GRPCProtoCall *)RPCToInvalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"InvalidateNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[InvalidateNotificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
@@ -1323,22 +1371,22 @@
              responseClass:[SignTokenRequestStateResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)
+#pragma mark GetTokenRequestResult(GetTokenRequestResultRequest) returns (GetTokenRequestResultResponse)
 
 /**
- * Get a token ID from a reference ID
+ * Get the token request result from the token request id
  */
-- (void)getTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetTokenIdWithRequest:request handler:handler] start];
+- (void)getTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTokenRequestResultWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
- * Get a token ID from a reference ID
+ * Get the token request result from the token request id
  */
-- (GRPCProtoCall *)RPCToGetTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetTokenId"
+- (GRPCProtoCall *)RPCToGetTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTokenRequestResult"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetTokenIdResponse class]
+             responseClass:[GetTokenRequestResultResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)

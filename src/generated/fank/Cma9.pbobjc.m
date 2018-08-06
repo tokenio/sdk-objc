@@ -2302,9 +2302,11 @@ typedef struct AccountBalancesResponse__storage_ {
 @implementation AccountTransactionsRequest
 
 @dynamic accountId;
+@dynamic page;
 
 typedef struct AccountTransactionsRequest__storage_ {
   uint32_t _has_storage_[1];
+  int32_t page;
   NSString *accountId;
 } AccountTransactionsRequest__storage_;
 
@@ -2322,6 +2324,15 @@ typedef struct AccountTransactionsRequest__storage_ {
         .offset = (uint32_t)offsetof(AccountTransactionsRequest__storage_, accountId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "page",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountTransactionsRequest_FieldNumber_Page,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(AccountTransactionsRequest__storage_, page),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt32,
       },
     };
     GPBDescriptor *localDescriptor =

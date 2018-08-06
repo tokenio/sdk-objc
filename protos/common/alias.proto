@@ -12,6 +12,7 @@ import "extensions/field.proto";
 message Alias {
   Type type = 1;                                                      // For example, EMAIL.
   string value = 2 [(io.token.proto.extensions.field.redact) = true]; // For example, "sandy@example.com"
+  string realm  = 3;                                                  // For example, "token"
 
   enum Type {
     INVALID = 0;
@@ -35,4 +36,10 @@ enum VerificationStatus {
   INCORRECT_CODE = 3;
   EXPIRED_CODE = 4;
   TOO_MANY_CODE_ATTEMPTS = 5;     // reached the limit of attempts to enter a specific code
+}
+
+// Payload containing a member ID and an alias, used in alias verification.
+message VerifyAliasPayload{
+  string member_id = 1;
+  Alias alias = 2;
 }

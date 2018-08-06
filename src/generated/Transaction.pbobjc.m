@@ -14,11 +14,11 @@
 #endif
 
  #import "Transaction.pbobjc.h"
+ #import "extensions/Field.pbobjc.h"
  #import "Member.pbobjc.h"
  #import "Money.pbobjc.h"
  #import "Security.pbobjc.h"
  #import "extensions/Message.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -36,8 +36,8 @@
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     registry = [[GPBExtensionRegistry alloc] init];
     // Merge in the imports (direct or indirect) that defined extensions.
-    [registry addExtensions:[MessageRoot extensionRegistry]];
     [registry addExtensions:[FieldRoot extensionRegistry]];
+    [registry addExtensions:[MessageRoot extensionRegistry]];
   }
   return registry;
 }
@@ -101,16 +101,18 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "InvalidStatus\000Pending\000Processing\000Success"
-        "\000FailureCanceled\000FailureInsufficientFund"
-        "s\000FailureInvalidCurrency\000FailurePermissi"
-        "onDenied\000FailureQuoteExpired\000FailureInva"
-        "lidAmount\000FailureInvalidQuote\000FailureExp"
-        "ired\000FailureGeneric\000";
+        "\000PendingExternalAuthorization\000FailureCan"
+        "celed\000FailureInsufficientFunds\000FailureIn"
+        "validCurrency\000FailurePermissionDenied\000Fa"
+        "ilureQuoteExpired\000FailureInvalidAmount\000F"
+        "ailureInvalidQuote\000FailureExpired\000Failur"
+        "eGeneric\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Pending,
         TransactionStatus_Processing,
         TransactionStatus_Success,
+        TransactionStatus_PendingExternalAuthorization,
         TransactionStatus_FailureCanceled,
         TransactionStatus_FailureInsufficientFunds,
         TransactionStatus_FailureInvalidCurrency,
@@ -140,6 +142,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
     case TransactionStatus_Pending:
     case TransactionStatus_Processing:
     case TransactionStatus_Success:
+    case TransactionStatus_PendingExternalAuthorization:
     case TransactionStatus_FailureCanceled:
     case TransactionStatus_FailureInsufficientFunds:
     case TransactionStatus_FailureInvalidCurrency:

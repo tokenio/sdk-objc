@@ -55,6 +55,7 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic requiresExternalAuth;
 @dynamic supportsSendPayment;
 @dynamic supportsReceivePayment;
+@dynamic requiresLegacyTransfer;
 @dynamic provider;
 @dynamic country;
 @dynamic identifier;
@@ -161,7 +162,7 @@ typedef struct Bank__storage_ {
         .name = "provider",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Provider,
-        .hasIndex = 14,
+        .hasIndex = 16,
         .offset = (uint32_t)offsetof(Bank__storage_, provider),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -170,7 +171,7 @@ typedef struct Bank__storage_ {
         .name = "country",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Country,
-        .hasIndex = 15,
+        .hasIndex = 17,
         .offset = (uint32_t)offsetof(Bank__storage_, country),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -179,10 +180,19 @@ typedef struct Bank__storage_ {
         .name = "identifier",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Identifier,
-        .hasIndex = 16,
+        .hasIndex = 18,
         .offset = (uint32_t)offsetof(Bank__storage_, identifier),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "requiresLegacyTransfer",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_RequiresLegacyTransfer,
+        .hasIndex = 14,
+        .offset = 15,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

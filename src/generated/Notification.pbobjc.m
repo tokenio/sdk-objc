@@ -837,18 +837,24 @@ typedef struct TokenCancelled__storage_ {
 
 @end
 
-#pragma mark - RequestTokenAndAddKey
+#pragma mark - EndorseAndAddKey
 
-@implementation RequestTokenAndAddKey
+@implementation EndorseAndAddKey
 
-@dynamic tokenRequestId;
+@dynamic hasPayload, payload;
 @dynamic hasAddKey, addKey;
+@dynamic tokenRequestId;
+@dynamic bankId;
+@dynamic state;
 
-typedef struct RequestTokenAndAddKey__storage_ {
+typedef struct EndorseAndAddKey__storage_ {
   uint32_t _has_storage_[1];
-  NSString *tokenRequestId;
+  TokenPayload *payload;
   AddKey *addKey;
-} RequestTokenAndAddKey__storage_;
+  NSString *tokenRequestId;
+  NSString *bankId;
+  NSString *state;
+} EndorseAndAddKey__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -857,31 +863,101 @@ typedef struct RequestTokenAndAddKey__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "tokenRequestId",
-        .dataTypeSpecific.className = NULL,
-        .number = RequestTokenAndAddKey_FieldNumber_TokenRequestId,
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .number = EndorseAndAddKey_FieldNumber_Payload,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestTokenAndAddKey__storage_, tokenRequestId),
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, payload),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "addKey",
         .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
-        .number = RequestTokenAndAddKey_FieldNumber_AddKey,
+        .number = EndorseAndAddKey_FieldNumber_AddKey,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestTokenAndAddKey__storage_, addKey),
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, addKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = EndorseAndAddKey_FieldNumber_TokenRequestId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = EndorseAndAddKey_FieldNumber_BankId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "state",
+        .dataTypeSpecific.className = NULL,
+        .number = EndorseAndAddKey_FieldNumber_State,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, state),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestTokenAndAddKey class]
+        [GPBDescriptor allocDescriptorForClass:[EndorseAndAddKey class]
                                      rootClass:[NotificationRoot class]
                                           file:NotificationRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestTokenAndAddKey__storage_)
+                                   storageSize:sizeof(EndorseAndAddKey__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NotificationInvalidated
+
+@implementation NotificationInvalidated
+
+@dynamic previousNotificationId;
+
+typedef struct NotificationInvalidated__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *previousNotificationId;
+} NotificationInvalidated__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "previousNotificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = NotificationInvalidated_FieldNumber_PreviousNotificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NotificationInvalidated__storage_, previousNotificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NotificationInvalidated class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NotificationInvalidated__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -909,8 +985,9 @@ typedef struct RequestTokenAndAddKey__storage_ {
 @dynamic tokenCancelled;
 @dynamic balanceStepUp;
 @dynamic transactionStepUp;
-@dynamic requestTokenAndAddKey;
+@dynamic endorseAndAddKey;
 @dynamic recoveryCompleted;
+@dynamic notificationInvalidated;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -927,8 +1004,9 @@ typedef struct NotifyBody__storage_ {
   TokenCancelled *tokenCancelled;
   BalanceStepUp *balanceStepUp;
   TransactionStepUp *transactionStepUp;
-  RequestTokenAndAddKey *requestTokenAndAddKey;
+  EndorseAndAddKey *endorseAndAddKey;
   RecoveryCompleted *recoveryCompleted;
+  NotificationInvalidated *notificationInvalidated;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1055,11 +1133,11 @@ typedef struct NotifyBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "requestTokenAndAddKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(RequestTokenAndAddKey),
-        .number = NotifyBody_FieldNumber_RequestTokenAndAddKey,
+        .name = "endorseAndAddKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(EndorseAndAddKey),
+        .number = NotifyBody_FieldNumber_EndorseAndAddKey,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(NotifyBody__storage_, requestTokenAndAddKey),
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, endorseAndAddKey),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1069,6 +1147,15 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_RecoveryCompleted,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, recoveryCompleted),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "notificationInvalidated",
+        .dataTypeSpecific.className = GPBStringifySymbol(NotificationInvalidated),
+        .number = NotifyBody_FieldNumber_NotificationInvalidated,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, notificationInvalidated),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1194,11 +1281,14 @@ GPBEnumDescriptor *Notification_Status_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Invalid\000Pending\000Delivered\000";
+        "Invalid\000Pending\000Delivered\000Completed\000Inva"
+        "lidated\000";
     static const int32_t values[] = {
         Notification_Status_Invalid,
         Notification_Status_Pending,
         Notification_Status_Delivered,
+        Notification_Status_Completed,
+        Notification_Status_Invalidated,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Notification_Status)
@@ -1218,6 +1308,8 @@ BOOL Notification_Status_IsValidValue(int32_t value__) {
     case Notification_Status_Invalid:
     case Notification_Status_Pending:
     case Notification_Status_Delivered:
+    case Notification_Status_Completed:
+    case Notification_Status_Invalidated:
       return YES;
     default:
       return NO;

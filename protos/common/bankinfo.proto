@@ -7,16 +7,17 @@ option csharp_namespace = "Tokenio.Proto.Common.BankProtos";
 message Bank {
   string id = 1;
   string name = 2;
-  string logo_uri = 3;                 // Square bank avatar icon
-  string full_logo_uri = 4;            // Full size bank icon
-  bool supports_appless = 5;           // Works with appless payments
-  bool supports_information = 7;       // Connection allows for retrieval of information
-  bool requires_external_auth = 8;     // Connection requires external authorization for creating transfers
-  bool supports_send_payment = 9;      // Connection allows for payment initiation
-  bool supports_receive_payment = 10;  // Connection allows for receiving payments
-  string provider = 11;                // Provider of the bank, e.g. Yodlee, FinApi, Token
-  string country = 12;                 // The ISO 3166-1 alpha-2 two letter country code in upper case.
-  string identifier = 13;              // Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks.
+  string logo_uri = 3;                  // Square bank avatar icon
+  string full_logo_uri = 4;             // Full size bank icon
+  bool supports_appless = 5;            // Works with appless payments
+  bool supports_information = 7;        // Connection allows for retrieval of information
+  bool requires_external_auth = 8;      // Connection requires external authorization for creating transfers
+  bool supports_send_payment = 9;       // Connection allows for payment initiation
+  bool supports_receive_payment = 10;   // Connection allows for receiving payments
+  bool requires_legacy_transfer = 14;   // Connection only supports immediate redemption of transfers
+  string provider = 11;                 // Provider of the bank, e.g. Yodlee, FinApi, Token
+  string country = 12;                  // The ISO 3166-1 alpha-2 two letter country code in upper case.
+  string identifier = 13;               // Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks.
 }
 
 // Depending on how user can interact with bank,

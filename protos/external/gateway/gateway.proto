@@ -62,7 +62,6 @@ message GetMemberResponse {
 
 message ResolveAliasRequest {
   io.token.proto.common.alias.Alias alias = 1; // alias to resolve
-  string realm = 2;
 }
 
 message ResolveAliasResponse {
@@ -103,6 +102,16 @@ message GetPairedDevicesResponse {
 message DeleteMemberRequest {}
 
 message DeleteMemberResponse {}
+
+message VerifyAliasOnBehalfRequest {
+  string bank_id = 1; // Bank ID of verifier
+  io.token.proto.common.alias.VerifyAliasPayload payload = 2; // Payload containing memberId and alias
+  io.token.proto.common.security.Signature signature = 3; // Signature of the verify alias payload
+}
+
+message VerifyAliasOnBehalfResponse {
+  io.token.proto.common.member.Member member = 1; // updated member
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member account recovery.
@@ -259,7 +268,7 @@ message UnsubscribeFromNotificationsResponse {}
 message NotifyRequest {
   io.token.proto.common.alias.Alias alias = 1; // alias of member to notify
   io.token.proto.common.notification.NotifyBody body = 2; // notification details
-  string realm = 3; // realm of member to notify
+  string realm = 3; // Deprecated
 }
 
 message NotifyResponse {
@@ -303,6 +312,22 @@ message TriggerStepUpNotificationResponse {
   io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
 
+message TriggerEndorseAndAddKeyNotificationRequest {
+  io.token.proto.common.notification.EndorseAndAddKey endorse_and_add_key = 1;
+}
+
+message TriggerEndorseAndAddKeyNotificationResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
+  string notification_id = 2;
+}
+
+message InvalidateNotificationRequest {
+  string notification_id= 1;
+}
+
+message InvalidateNotificationResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
 //
@@ -573,18 +598,20 @@ message ReplaceTokenResponse {
 
 message SignTokenRequestStateRequest {
   io.token.proto.common.token.TokenRequestStatePayload payload = 1;
+  string token_request_id = 2;
 }
 
 message SignTokenRequestStateResponse {
   io.token.proto.common.security.Signature signature = 1;
 }
 
-message GetTokenIdRequest {
+message GetTokenRequestResultRequest {
   string token_request_id = 1;
 }
 
-message GetTokenIdResponse {
+message GetTokenRequestResultResponse {
   string token_id = 1;
+  io.token.proto.common.security.Signature signature = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,6 +625,7 @@ message CreateTransferRequest {
 
 message CreateTransferResponse {
   io.token.proto.common.transfer.Transfer transfer = 1; // Resulting transfer spec
+  io.token.proto.common.token.ExternalAuthorizationDetails authorization_details = 2; // Optional: used when transfer status is PENDING_EXTERNAL_AUTHORIZATION
 }
 
 message GetTransferRequest {
@@ -719,6 +747,12 @@ service GatewayService {
     option (google.api.http) = {
         post: "/members/{update.member_id}/updates"
     };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
   }
 
   // Get information about a member
@@ -780,7 +814,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#aliases
   rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
-      get: "/resolve-alias?value={alias.value}&type={alias.type}&realm={realm}"
+      get: "/resolve-alias?value={alias.value}&type={alias.type}&realm={alias.realm}"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -829,6 +863,12 @@ service GatewayService {
   rpc DeleteMember (DeleteMemberRequest) returns (DeleteMemberResponse) {
     option (google.api.http) = {
       delete: "/members"
+    };
+  }
+
+  rpc VerifyAliasOnBehalf (VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse) {
+    option (google.api.http) = {
+      post: "/verifications/onbehalf"
     };
   }
 
@@ -995,6 +1035,20 @@ service GatewayService {
   rpc TriggerStepUpNotification (TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/stepup"
+    };
+  }
+
+  // send endorse and add key notification (approve with higher-privilege key)
+  rpc TriggerEndorseAndAddKeyNotification (TriggerEndorseAndAddKeyNotificationRequest) returns (TriggerEndorseAndAddKeyNotificationResponse) {
+    option (google.api.http) = {
+        post: "/notify/endorse-and-add-key"
+    };
+  }
+
+  // send invalidate notification
+  rpc InvalidateNotification (InvalidateNotificationRequest) returns (InvalidateNotificationResponse) {
+    option (google.api.http) = {
+        post: "/notify/invalidate-notification"
     };
   }
 
@@ -1264,10 +1318,10 @@ service GatewayService {
     };
   }
 
-  // Get a token ID from a reference ID
-  rpc GetTokenId (GetTokenIdRequest) returns (GetTokenIdResponse) {
+  // Get the token request result from the token request id
+  rpc GetTokenRequestResult (GetTokenRequestResultRequest) returns (GetTokenRequestResultResponse) {
     option (google.api.http) = {
-        get: "/token-requests/{token_request_id}/token_id"
+        get: "/token-requests/{token_request_id}/token_request_result"
     };
   }
 

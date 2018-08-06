@@ -12,6 +12,7 @@ import "transfer.proto";
 import "transferinstructions.proto";
 import "alias.proto";
 import "extensions/field.proto";
+import "extensions/message.proto";
 
 //
 // Generic token envelope definition.
@@ -49,7 +50,6 @@ message TokenMember {
   // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
   string username = 2;
   io.token.proto.common.alias.Alias alias = 3; // alias, such as an email address
-  string realm = 4; // realm the alias belongs to
 }
 
 message TokenPayload {
@@ -67,7 +67,7 @@ message TokenPayload {
   // expiration time.
   int64 expires_at_ms = 7;
   int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
-  string description = 8;                               // Optional
+  string description = 8 [(io.token.proto.extensions.field.redact) = true]; // Optional
 
   oneof body {
     TransferBody transfer = 9;
@@ -80,6 +80,7 @@ message TokenPayload {
   // If a token is being created on behalf of another party, this
   // field contains a description of that entity.
   message ActingAs {
+    option (io.token.proto.extensions.message.redact) = true;
     string display_name = 1;                            // Name of recipient, to be shown to user
     string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
     string logo_url = 3;                                // URL pointing to recipient's logo
@@ -143,6 +144,9 @@ message AccessBody {
       Account account = 6;
       AccountTransactions transactions = 7;
       AccountBalance balance = 8;
+      AllAccountsAtBank all_accounts_at_bank = 9;
+      AllTransactionsAtBank all_transactions_at_bank = 10;
+      AllBalancesAtBank all_balances_at_bank = 11;
     }
 
     // Provides access to all member addresses
@@ -157,6 +161,11 @@ message AccessBody {
     // to get list of accounts (and also getAccount() on any account).
     message AllAccounts {}
 
+    // Provides access to all member accounts at a specific bank.
+    message AllAccountsAtBank {
+      string bank_id = 1;
+    }
+
     // Provides access to basic info about a specific member account
     // (can call getAccount() on this account).
     message Account {
@@ -167,6 +176,12 @@ message AccessBody {
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountTransactions {}
 
+    // Provides access to member transactions in all accounts at a specific bank.
+    // Normally used with AllAccountsAtBank (to get list of accounts)
+    message AllTransactionsAtBank {
+      string bank_id = 1;
+    }
+
     // Provides access to a specific account transactions
     message AccountTransactions {
       string account_id = 1; // ID of account
@@ -175,6 +190,12 @@ message AccessBody {
     // Provides access to member balance on all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
+
+    // Provides access to member balance on all accounts at a specific bank.
+    // Normally used with AllAccountsAtBank (to get list of accounts)
+    message AllBalancesAtBank {
+      string bank_id = 1;
+    }
 
     // Provides access to a specific account's balance
     message AccountBalance {

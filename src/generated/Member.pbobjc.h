@@ -211,6 +211,7 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
  **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
 
+/** Realm of alias to add/remove */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
@@ -396,7 +397,6 @@ void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message
 typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
   MemberOperationMetadata_AddAliasMetadata_FieldNumber_AliasHash = 1,
   MemberOperationMetadata_AddAliasMetadata_FieldNumber_Alias = 2,
-  MemberOperationMetadata_AddAliasMetadata_FieldNumber_Realm = 3,
 };
 
 @interface MemberOperationMetadata_AddAliasMetadata : GPBMessage
@@ -406,8 +406,6 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
 
 @end
 

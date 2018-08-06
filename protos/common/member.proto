@@ -25,7 +25,7 @@ message MemberAliasOperation {
   // Hash of alias to add/remove
   // https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
   string alias_hash = 1;
-  string realm = 2;
+  string realm = 2; // Realm of alias to add/remove
 }
 
 // Sets recovery rules for member. Overrides all previously set rules.
@@ -83,7 +83,6 @@ message MemberOperationMetadata {
   message AddAliasMetadata {
     string alias_hash = 1;
     io.token.proto.common.alias.Alias alias = 2;
-    string realm = 3;
   }
 }
 

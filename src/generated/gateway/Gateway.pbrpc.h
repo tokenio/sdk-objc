@@ -89,9 +89,9 @@
 @class GetTestBankNotificationsResponse;
 @class GetTokenBlobRequest;
 @class GetTokenBlobResponse;
-@class GetTokenIdRequest;
-@class GetTokenIdResponse;
 @class GetTokenRequest;
+@class GetTokenRequestResultRequest;
+@class GetTokenRequestResultResponse;
 @class GetTokenResponse;
 @class GetTokensRequest;
 @class GetTokensResponse;
@@ -103,6 +103,8 @@
 @class GetTransferResponse;
 @class GetTransfersRequest;
 @class GetTransfersResponse;
+@class InvalidateNotificationRequest;
+@class InvalidateNotificationResponse;
 @class LinkAccountsOauthRequest;
 @class LinkAccountsOauthResponse;
 @class LinkAccountsRequest;
@@ -133,6 +135,8 @@
 @class StoreTokenRequestResponse;
 @class SubscribeToNotificationsRequest;
 @class SubscribeToNotificationsResponse;
+@class TriggerEndorseAndAddKeyNotificationRequest;
+@class TriggerEndorseAndAddKeyNotificationResponse;
 @class TriggerStepUpNotificationRequest;
 @class TriggerStepUpNotificationResponse;
 @class UnlinkAccountsRequest;
@@ -141,6 +145,8 @@
 @class UnsubscribeFromNotificationsResponse;
 @class UpdateMemberRequest;
 @class UpdateMemberResponse;
+@class VerifyAliasOnBehalfRequest;
+@class VerifyAliasOnBehalfResponse;
 @class VerifyAliasRequest;
 @class VerifyAliasResponse;
 
@@ -392,6 +398,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToDeleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
+
+- (void)verifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToVerifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
@@ -669,6 +682,32 @@ NS_ASSUME_NONNULL_BEGIN
  * send step-up (approve with higher-privilege key) request notification
  */
 - (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark TriggerEndorseAndAddKeyNotification(TriggerEndorseAndAddKeyNotificationRequest) returns (TriggerEndorseAndAddKeyNotificationResponse)
+
+/**
+ * send endorse and add key notification (approve with higher-privilege key)
+ */
+- (void)triggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * send endorse and add key notification (approve with higher-privilege key)
+ */
+- (GRPCProtoCall *)RPCToTriggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark InvalidateNotification(InvalidateNotificationRequest) returns (InvalidateNotificationResponse)
+
+/**
+ * send invalidate notification
+ */
+- (void)invalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * send invalidate notification
+ */
+- (GRPCProtoCall *)RPCToInvalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
@@ -1142,17 +1181,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToSignTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetTokenId(GetTokenIdRequest) returns (GetTokenIdResponse)
+#pragma mark GetTokenRequestResult(GetTokenRequestResultRequest) returns (GetTokenRequestResultResponse)
 
 /**
- * Get a token ID from a reference ID
+ * Get the token request result from the token request id
  */
-- (void)getTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Get a token ID from a reference ID
+ * Get the token request result from the token request id
  */
-- (GRPCProtoCall *)RPCToGetTokenIdWithRequest:(GetTokenIdRequest *)request handler:(void(^)(GetTokenIdResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
