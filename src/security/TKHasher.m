@@ -41,7 +41,9 @@
     if (alias.type == Alias_Type_Username) {
         return alias.value;
     }
-    return [TKHasher hashMessage:alias];
+    Alias *toHash = [alias copy];
+    toHash.realm = nil;
+    return [TKHasher hashMessage:toHash];
 }
 
 + (NSString *)serializeReadable:(NSData *)data {
