@@ -33,7 +33,11 @@
 }
 
 - (NSArray<Key *> *)keys {
-    return self.async.keys;
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getKeys:call.onSuccess
+                    onError:call.onError];
+    }];
 }
 
 - (NSArray<Alias *> *)aliases {

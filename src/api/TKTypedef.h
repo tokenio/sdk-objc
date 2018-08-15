@@ -26,6 +26,7 @@
 @class Pricing;
 @class Profile;
 @class Alias;
+@class Key;
 @class TokenMember;
 @class MemberRecoveryOperation;
 @class ExternalAuthorizationDetails;
@@ -42,6 +43,8 @@ typedef void (^ _Nonnull OnSuccessWithString)(NSString * _Nullable);
 
 typedef void (^ _Nonnull OnSuccessWithMember)(Member * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTKMember)(TKMember * _Nonnull);
+
+typedef void (^ _Nonnull OnSuccessWithKeys)(NSArray<Key *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAliases)(NSArray<Alias *> * _Nonnull);
 

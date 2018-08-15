@@ -87,6 +87,17 @@
     [client clearAccessToken];
 }
 
+- (void)getKeys:(OnSuccessWithKeys)onSuccess
+        onError:(OnError)onError {
+    __strong typeof(member) retainedMember = member;
+    [client getMember:self.id
+            onSuccess:^(Member * _Nonnull m) {
+                [retainedMember clear];
+                [retainedMember mergeFrom:m];
+                onSuccess(m.keysArray);
+            } onError:onError];
+}
+
 - (void)approveKey:(Key *)key
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError {

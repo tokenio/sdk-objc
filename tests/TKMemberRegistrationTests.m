@@ -52,6 +52,29 @@
     }];
 }
 
+- (void)testKeyExpiration {
+    [self run: ^(TokenIOSync *tokenIO) {
+        Alias *alias = [self generateAlias];
+        TKMemberSync *member = [tokenIO createMember:alias];
+        XCTAssertEqual(member.keys.count, 3);
+        
+        id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+        id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
+                                                           useLocalAuthentication:NO]
+                                     createEngine:@"Another"];
+        
+        NSNumber *futureExpriation = [NSNumber numberWithDouble:([[NSDate date] timeIntervalSince1970] * 1000 + 2000)];
+        [member approveKey:[engine generateKey:Key_Level_Privileged]];
+        [member approveKey:[engine generateKey:Key_Level_Standard withExpiration:futureExpriation]];
+        
+        XCTAssertEqual(member.keys.count, 5);
+        
+        // Wait until the key expires
+        [self waitUntil:^{
+            [self check:@"Key should expire" condition:(member.keys.count == 4)];
+        }];
+    }];
+}
 
 - (void)testRemoveNonStoredKeys {
     [self run: ^(TokenIOSync *tokenIO) {
