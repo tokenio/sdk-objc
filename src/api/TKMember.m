@@ -81,11 +81,10 @@
 
 - (void)getKeys:(OnSuccessWithKeys)onSuccess
         onError:(OnError)onError {
-    __strong typeof(member) retainedMember = member;
     [client getMember:self.id
             onSuccess:^(Member * _Nonnull m) {
-                [retainedMember clear];
-                [retainedMember mergeFrom:m];
+                [member clear];
+                [member mergeFrom:m];
                 onSuccess(m.keysArray);
             } onError:onError];
 }
