@@ -67,14 +67,6 @@
     return aliases.count > 0 ? aliases[0] : nil;
 }
 
-- (NSArray<Key *> *)keys {
-    NSMutableArray<Key *> *result = [NSMutableArray array];
-    for (Key *key in member.keysArray) {
-        [result addObject:key];
-    }
-    return result;
-}
-
 - (NSArray<Alias *> *)aliases {
     return [NSArray arrayWithArray:aliases];
 }
