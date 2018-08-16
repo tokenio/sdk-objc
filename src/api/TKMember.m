@@ -67,17 +67,10 @@
     return aliases.count > 0 ? aliases[0] : nil;
 }
 
-- (NSArray<Key *> *)keys {
-    NSMutableArray<Key *> *result = [NSMutableArray array];
-    for (Key *key in member.keysArray) {
-        [result addObject:key];
-    }
-    return result;
-}
-
 - (NSArray<Alias *> *)aliases {
     return [NSArray arrayWithArray:aliases];
 }
+
 
 - (void)useAccessToken:(NSString *)accessTokenId {
     [client useAccessToken:accessTokenId];
@@ -85,6 +78,16 @@
 
 - (void)clearAccessToken {
     [client clearAccessToken];
+}
+
+- (void)getKeys:(OnSuccessWithKeys)onSuccess
+        onError:(OnError)onError {
+    [client getMember:self.id
+            onSuccess:^(Member * _Nonnull m) {
+                [member clear];
+                [member mergeFrom:m];
+                onSuccess(member.keysArray);
+            } onError:onError];
 }
 
 - (void)approveKey:(Key *)key

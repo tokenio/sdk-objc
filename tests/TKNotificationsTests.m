@@ -156,7 +156,7 @@ void check(NSString *message, BOOL condition) {
 - (void)testGetPairedDevicesUnapprovedKey {
     [self run: ^(TokenIOSync *tokenIO) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        Key *key = [[payerAnotherDevice keys] firstObject];
+        Key *key = [[payerAnotherDevice getKeys] firstObject];
         DeviceMetadata *metadata = [DeviceMetadata message];
         metadata.application = @"Chrome";
         metadata.applicationVersion = @"53.0";
@@ -288,7 +288,7 @@ void check(NSString *message, BOOL condition) {
         [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
 
         
-        Key *key = [[payerAnotherDevice keys] firstObject];
+        Key *key = [[payerAnotherDevice getKeys] firstObject];
         DeviceMetadata *metadata = [DeviceMetadata message];
         metadata.application = @"Chrome";
         metadata.applicationVersion = @"53.0";

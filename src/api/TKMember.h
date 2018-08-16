@@ -42,8 +42,6 @@
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
 @property (readonly, retain) NSArray<Alias *> *aliases;
 
-/// Crypto keys.
-@property (readonly, retain) NSArray<Key *> *keys;
 
 /// Customized authorization browser creation block.
 @property (readonly, retain) TKBrowserFactory browserFactory;
@@ -74,6 +72,15 @@
  * Clears the access token value used with this client.
  */
 - (void)clearAccessToken;
+
+/**
+ * Gets public keys Array for the member.
+ *
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)getKeys:(OnSuccessWithKeys)onSuccess
+        onError:(OnError)onError;
 
 /**
  * Approves a key owned by this member. The key is added to the list
