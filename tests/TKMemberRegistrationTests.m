@@ -20,7 +20,7 @@
         TKMemberSync *member = [tokenIO createMember:alias];
         XCTAssert(member.id.length > 0);
         XCTAssertEqualObjects(member.firstAlias, alias);
-        XCTAssertEqual(member.keys.count, 3);
+        XCTAssertEqual([member getKeys].count, 3);
         
         [member deleteMember];
         XCTAssertThrows([tokenIO getMember:member.id]);
@@ -48,7 +48,7 @@
 
         TKMemberSync *memberNewDevice = [tokenIO getMember:newDevice.memberId];
         XCTAssertEqualObjects(member.firstAlias, memberNewDevice.firstAlias);
-        XCTAssertEqual(memberNewDevice.keys.count, 6); // 3 keys per device.
+        XCTAssertEqual([memberNewDevice getKeys].count, 6); // 3 keys per device.
     }];
 }
 
@@ -56,7 +56,7 @@
     [self run: ^(TokenIOSync *tokenIO) {
         Alias *alias = [self generateAlias];
         TKMemberSync *member = [tokenIO createMember:alias];
-        XCTAssertEqual(member.keys.count, 3);
+        XCTAssertEqual([member getKeys].count, 3);
         
         id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
         id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
@@ -67,12 +67,11 @@
         [member approveKey:[engine generateKey:Key_Level_Privileged]];
         [member approveKey:[engine generateKey:Key_Level_Standard withExpiration:futureExpriation]];
         
-        XCTAssertEqual(member.keys.count, 5);
+        XCTAssertEqual([member getKeys].count, 5);
         
         // Wait until the key expires
-        [self waitUntil:^{
-            [self check:@"Key should expire" condition:(member.keys.count == 4)];
-        }];
+        sleep(3);
+        XCTAssertEqual([member getKeys].count, 4);
     }];
 }
 
@@ -88,9 +87,9 @@
         [member approveKey:[engine generateKey:Key_Level_Standard]];
         [member approveKey:[engine generateKey:Key_Level_Low]];
         
-        XCTAssertEqual(member.keys.count, 6);
+        XCTAssertEqual([member getKeys].count, 6);
         [member removeNonStoredKeys];
-        XCTAssertEqual(member.keys.count, 3);
+        XCTAssertEqual([member getKeys].count, 3);
     }];
 }
 
@@ -100,7 +99,7 @@
         
         TKMemberSync *loggedIn = [tokenIO getMember:created.id];
         XCTAssert(loggedIn.id.length > 0);
-        XCTAssertEqual(loggedIn.keys.count, 3);
+        XCTAssertEqual([loggedIn getKeys].count, 3);
         XCTAssertEqualObjects(created.firstAlias, loggedIn.firstAlias);
     }];
 }

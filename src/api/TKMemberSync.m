@@ -32,14 +32,6 @@
     return self.async.firstAlias;
 }
 
-- (NSArray<Key *> *)keys {
-    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async getKeys:call.onSuccess
-                    onError:call.onError];
-    }];
-}
-
 - (NSArray<Alias *> *)aliases {
     return self.async.aliases;
 }
@@ -50,6 +42,14 @@
 
 - (void)clearAccessToken {
     [self.async clearAccessToken];
+}
+
+- (NSArray<Key *> *)getKeys {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getKeys:call.onSuccess
+                    onError:call.onError];
+    }];
 }
 
 - (void)approveKey:(Key *)key {

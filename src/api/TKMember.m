@@ -71,6 +71,7 @@
     return [NSArray arrayWithArray:aliases];
 }
 
+
 - (void)useAccessToken:(NSString *)accessTokenId {
     [client useAccessToken:accessTokenId];
 }
@@ -85,7 +86,7 @@
             onSuccess:^(Member * _Nonnull m) {
                 [member clear];
                 [member mergeFrom:m];
-                onSuccess(m.keysArray);
+                onSuccess(member.keysArray);
             } onError:onError];
 }
 

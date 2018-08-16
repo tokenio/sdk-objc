@@ -42,8 +42,6 @@
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
 @property (readonly, retain) NSArray<Alias *> *aliases;
 
-/// Crypto keys.
-@property (readonly, retain) NSArray<Key *> *keys;
 
 /// Customized authorization browser creation block.
 @property (readonly, retain) TKBrowserFactory browserFactory;

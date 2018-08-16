@@ -75,6 +75,13 @@
 - (void)clearAccessToken;
 
 /**
+ * Gets all active public keys.
+ *
+ * @return keys
+ */
+- (NSArray<Key *> *) getKeys;
+
+/**
  * Approves a key owned by this member. The key is added to the list
  * of valid keys for the member.
  *
