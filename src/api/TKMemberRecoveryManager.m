@@ -97,7 +97,7 @@
      code:code
      privilegedKey:key
      onSuccess:^(MemberRecoveryOperation *op) {
-         recoveryOperation = op;
+         self->recoveryOperation = op;
          onSuccess(true);
      }
      onError:^(NSError* error) {
@@ -164,7 +164,7 @@
          metadataArray:[NSArray array]
          reason:reason
          onSuccess:^(Member *member_) {
-             member = member_;
+             self->member = member_;
              [self _recoverAlias:alias
                         memberId:memberId
                   verificationId:verificationId
@@ -198,18 +198,18 @@
      code:code
      onSuccess:^{
          TKClient *client = [[TKClient alloc]
-                             initWithGateway:gateway
-                             crypto:crypto
-                             timeoutMs:timeoutMs
-                             developerKey:developerKey
-                             languageCode:languageCode
+                             initWithGateway:self->gateway
+                             crypto:self->crypto
+                             timeoutMs:self->timeoutMs
+                             developerKey:self->developerKey
+                             languageCode:self->languageCode
                              memberId:memberId
-                             errorHandler:errorHandler];
+                             errorHandler:self->errorHandler];
          onSuccess([TKMember
-                    member:member
-                    tokenCluster:tokenCluster
+                    member:self->member
+                    tokenCluster:self->tokenCluster
                     useClient:client
-                    useBrowserFactory:browserFactory
+                    useBrowserFactory:self->browserFactory
                     aliases:[NSMutableArray arrayWithObject:alias]]);
      } onError:onError];
 }

@@ -2,7 +2,7 @@ TOKEN_PROTOS_VER = "1.1.1"
 FANK_PROTOS_VER = "1.1.0"
 RPC_PROTOS_VER = "1.0.124"
 
-platform :ios, '8.0'
+platform :ios, '9.0'
 inhibit_all_warnings!
 
 target 'TokenSdk' do

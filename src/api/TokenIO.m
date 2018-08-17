@@ -125,7 +125,7 @@
      getTokenMember:tokenAgent
      onSuccess:^(TokenMember* tokenMember) {
          if (tokenMember && tokenMember.id_p && ![tokenMember.id_p isEqualToString:@""]) {
-             [unauthenticatedClient
+             [self->unauthenticatedClient
               createMemberId:^(NSString *memberId) {
                   [self _addKeysAndAlias:memberId
                                    alias:alias
@@ -201,20 +201,20 @@
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
                                TKCrypto *crypto = [self _createCrypto:memberId];
-                               TKClient *client = [[TKClient alloc] initWithGateway:gateway
+                               TKClient *client = [[TKClient alloc] initWithGateway:self->gateway
                                                                              crypto:crypto
-                                                                          timeoutMs:timeoutMs
-                                                                       developerKey:developerKey
-                                                                       languageCode:languageCode
+                                                                          timeoutMs:self->timeoutMs
+                                                                       developerKey:self->developerKey
+                                                                       languageCode:self->languageCode
                                                                            memberId:memberId
-                                                                       errorHandler:errorHandler];
+                                                                       errorHandler:self->errorHandler];
                                
                                // Request alias for the member
                                [client getAliases:^(NSArray<Alias *> *aliases) {
                                    onSuccess([TKMember member:member
-                                                 tokenCluster:tokenCluster
+                                                 tokenCluster:self->tokenCluster
                                                     useClient:client
-                                            useBrowserFactory:browserFactory
+                                            useBrowserFactory:self->browserFactory
                                                       aliases:[NSMutableArray arrayWithArray:aliases]]);
                                    
                                } onError:onError];
@@ -369,18 +369,18 @@
                           metadataArray:metadataArray
                               onSuccess:^(Member *member) {
                                   TKClient *client = [[TKClient alloc]
-                                                      initWithGateway:gateway
+                                                      initWithGateway:self->gateway
                                                       crypto:crypto
-                                                      timeoutMs:timeoutMs
-                                                      developerKey:developerKey
-                                                      languageCode:languageCode
+                                                      timeoutMs:self->timeoutMs
+                                                      developerKey:self->developerKey
+                                                      languageCode:self->languageCode
                                                       memberId:memberId
-                                                      errorHandler:errorHandler];
+                                                      errorHandler:self->errorHandler];
                                   onSuccess([TKMember
                                              member:member
-                                             tokenCluster:tokenCluster
+                                             tokenCluster:self->tokenCluster
                                              useClient:client
-                                             useBrowserFactory:browserFactory
+                                             useBrowserFactory:self->browserFactory
                                              aliases:[NSMutableArray arrayWithObject:alias]]);
                               }
                                 onError:onError];

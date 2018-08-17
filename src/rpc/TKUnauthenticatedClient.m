@@ -53,7 +53,7 @@
                                          RpcLogCompleted(response);
                                          onSuccess(response.memberId);
                                      } else {
-                                         [errorHandler handle:onError withError:error];
+                                         [self->errorHandler handle:onError withError:error];
                                      }
                                  }];
     [rpc execute:call request:request];
@@ -78,7 +78,7 @@
                                                onSuccess(nil);
                                            }
                                        } else {
-                                           [errorHandler handle:onError withError:error];
+                                           [self->errorHandler handle:onError withError:error];
                                        }
                                    }];
     [rpc execute:call request:request];
@@ -103,7 +103,7 @@
                                        onSuccess(nil);
                                    }
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -123,7 +123,7 @@
                                       RpcLogCompleted(response);
                                       onSuccess(response.member);
                                   } else {
-                                      [errorHandler handle:onError withError:error];
+                                      [self->errorHandler handle:onError withError:error];
                                   }
                               }
     ];
@@ -199,7 +199,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.member);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -232,7 +232,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.banksArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -253,7 +253,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -275,7 +275,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -300,7 +300,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -326,7 +326,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -348,7 +348,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.verificationId);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -379,7 +379,7 @@
                                    }
                                    onSuccess(response.recoveryEntry);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];
@@ -401,7 +401,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [rpc execute:call request:request];

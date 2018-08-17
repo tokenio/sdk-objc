@@ -91,16 +91,16 @@ ExternalAuthorizationDetails:(ExternalAuthorizationDetails *)details_ {
                                                                       options:0
                                                                         error:&err];
                  if (err != nil) {
-                     onError(err);
+                     self->onError(err);
                  } else {
                      BankAuthorization *bankAuth =
                      [TKJson deserializeMessageOfClass:[BankAuthorization class]
                                         fromDictionary:dict];
                      TKLogDebug(@"Received BankAuth %@",bankAuth)
-                     onSuccess(bankAuth);
+                     self->onSuccess(bankAuth);
                  }
              } else {
-                 onError(error);
+                 self->onError(error);
              }
          });
      }];
