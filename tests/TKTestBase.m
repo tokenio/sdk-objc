@@ -66,6 +66,10 @@
     return [[self sdkBuilder] buildAsync];
 }
 
+- (TokenIOSync *)syncSDK {
+    return [[self sdkBuilder] buildSync];
+}
+
 - (id)runWithResult:(AsyncTestBlockWithResult)block {
     __block NSException *error;
     __block id result = nil;
@@ -74,9 +78,9 @@
     dispatch_async(queue, ^{
         @try {
             TokenIOBuilder *builder = [self sdkBuilder];
-            tokenIO = [builder buildSync];
+            self->tokenIO = [builder buildSync];
 
-            result = block(tokenIO);
+            result = block(self->tokenIO);
         } @catch(NSException *e) {
             error = e;
         } @finally {

@@ -26,209 +26,195 @@
 
 - (void)setUp {
     [super setUp];
-    
-    [self run: ^(TokenIOSync *tokenIO) {
-        payerAccount = [self createAccount:tokenIO];
-        payer = payerAccount.member;
-        payeeAccount = [self createAccount:tokenIO];
-        payee = payeeAccount.member;
-    }];
+    TokenIOSync *tokenIO = [self syncSDK];
+    payerAccount = [self createAccount:tokenIO];
+    payer = payerAccount.member;
+    payeeAccount = [self createAccount:tokenIO];
+    payee = payeeAccount.member;
 }
 
 - (void)testRedeemToken {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        token = [endorsedResult token];
-        
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:@"lunch"
-                                    destination:destination];
-        bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Processing;
-        XCTAssert(transferComplete);
-        XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
-        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-    }];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    token = [endorsedResult token];
+    
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:@"lunch"
+                                destination:destination];
+    bool transferComplete = transfer.status == TransactionStatus_Success
+    || transfer.status == TransactionStatus_Processing;
+    XCTAssert(transferComplete);
+    XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+    XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
 - (void)testRedeemTokenBankAuthorization {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.bankAuthorization = [self createBankAuthorization:payer];
-        builder.redeemerMemberId = payer.id;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        token = [endorsedResult token];
-        
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-        
-
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
-        Transfer *transfer = [payer redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:@"lunch"
-                                    destination:destination];
-        bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Processing;
-        XCTAssert(transferComplete);
-        XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
-        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-    }];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.bankAuthorization = [self createBankAuthorization:payer];
+    builder.redeemerMemberId = payer.id;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    token = [endorsedResult token];
+    
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
+    Transfer *transfer = [payer redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:@"lunch"
+                                destination:destination];
+    bool transferComplete = transfer.status == TransactionStatus_Success
+    || transfer.status == TransactionStatus_Processing;
+    XCTAssert(transferComplete);
+    XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+    XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
 - (void)testRedeemToken_withParams {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        
-        token = [endorsedResult token];
-        
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-        
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:@"test"
-                                    destination:destination];
-
-        bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Processing;
-        XCTAssert(transferComplete);
-        XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
-        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-    }];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    
+    token = [endorsedResult token];
+    
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:@"test"
+                                destination:destination];
+    
+    bool transferComplete = transfer.status == TransactionStatus_Success
+    || transfer.status == TransactionStatus_Processing;
+    XCTAssert(transferComplete);
+    XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
+    XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
 - (void)testRedeemTokenDestination {
-    [self run: ^(TokenIOSync *tokenIO) {
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.accountId = payeeAccount.id;
-        destination.account.token.memberId = payee.id;
-        NSArray<TransferEndpoint *> *destinations = [NSArray arrayWithObjects:destination, nil];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        builder.destinations = destinations;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        token = [endorsedResult token];
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:@"lunch"
-                                    destination:destination];
-        
-        bool transferComplete = transfer.status == TransactionStatus_Success
-            || transfer.status == TransactionStatus_Processing;
-        XCTAssert(transferComplete);
-        XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
-        XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
-        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-    }];
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.accountId = payeeAccount.id;
+    destination.account.token.memberId = payee.id;
+    NSArray<TransferEndpoint *> *destinations = [NSArray arrayWithObjects:destination, nil];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    builder.destinations = destinations;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    token = [endorsedResult token];
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:@"lunch"
+                                destination:destination];
+    
+    bool transferComplete = transfer.status == TransactionStatus_Success
+    || transfer.status == TransactionStatus_Processing;
+    XCTAssert(transferComplete);
+    XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+    XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
+    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
 - (void)testLookupTransfer {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.42"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        token = [endorsedResult token];
-        
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-        
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:nil
-                                    destination:destination];
-        Transfer *lookedUp = [payer getTransfer:transfer.id_p];
-        
-        XCTAssertEqualObjects(transfer, lookedUp);
-    }];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.42"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    token = [endorsedResult token];
+    
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:nil
+                                destination:destination];
+    Transfer *lookedUp = [payer getTransfer:transfer.id_p];
+    
+    XCTAssertEqualObjects(transfer, lookedUp);
 }
 
 - (void)testLookupTransfers {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        builder.toMemberId = payee.id;
-        Token *token = [builder execute];
-        TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-        token = [endorsedResult token];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
+    Token *token = [builder execute];
+    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
+    token = [endorsedResult token];
+    
+    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
+    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
+    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
+    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
+    
+    
+    [self waitUntil:^{
+        PagedArray<Transfer *> *lookedUpPayer = [self->payer getTransfersOffset:NULL
+                                                                          limit:100
+                                                                        tokenId:token.id_p];
+        PagedArray<Transfer *> *lookedUpPayee = [self->payee getTransfersOffset:NULL
+                                                                          limit:100
+                                                                        tokenId:token.id_p];
         
-        XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+        [self check:@"Payer Transfer count" condition:lookedUpPayer.items.count == 3];
+        [self check:@"Payer Offset is present" condition:lookedUpPayer.offset != nil];
         
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
-        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
-        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
-        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:nil destination:destination];
-        
-
-        [self waitUntil:^{
-            PagedArray<Transfer *> *lookedUpPayer = [payer getTransfersOffset:NULL
-                                                                        limit:100
-                                                                      tokenId:token.id_p];
-            PagedArray<Transfer *> *lookedUpPayee = [payee getTransfersOffset:NULL
-                                                                        limit:100
-                                                                      tokenId:token.id_p];
-
-            [self check:@"Payer Transfer count" condition:lookedUpPayer.items.count == 3];
-            [self check:@"Payer Offset is present" condition:lookedUpPayer.offset != nil];
-
-            [self check:@"Payee Transfer count" condition:lookedUpPayee.items.count == 3];
-            [self check:@"Payee Offset is present" condition:lookedUpPayee.offset != nil];
-        }];
+        [self check:@"Payee Transfer count" condition:lookedUpPayee.items.count == 3];
+        [self check:@"Payee Offset is present" condition:lookedUpPayee.offset != nil];
     }];
 }
 

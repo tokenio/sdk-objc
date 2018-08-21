@@ -48,6 +48,8 @@ Pod::Spec.new do |s|
         ss.dependency "gRPC-ProtoRPC"
         ss.dependency "#{s.name}/Messages"
         ss.dependency "OrderedDictionary"
+        ss.ios.deployment_target = "9.0"
+        ss.osx.deployment_target = "10.12.1"
     end
 
     # SDK resources

@@ -54,6 +54,11 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 - (TokenIO *)asyncSDK;
 
 /**
+ * Creates a TokenIOSync SDK client with settings for testing environment.
+ */
+- (TokenIOSync *)syncSDK;
+
+/**
  * Creates a Token SDK builder with settings for testing environment.
  */
 - (TokenIOBuilder *)sdkBuilder;

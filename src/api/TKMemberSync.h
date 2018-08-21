@@ -51,9 +51,6 @@
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
 @property (readonly, retain) NSArray<Alias *> *aliases;
 
-/// Crypto keys.
-@property (readonly, retain) NSArray<Key *> *keys;
-
 /**
  * Creates new member that is implemented by delegating all the calls to the
  * asynchonous implementation `TKMember`.
