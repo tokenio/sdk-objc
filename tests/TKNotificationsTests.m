@@ -40,338 +40,301 @@ void check(NSString *message, BOOL condition) {
 
 - (void)setUp {
     [super setUp];
+    TokenIOSync *tokenIO = [self syncSDK];
+    payerAccount = [self createAccount:tokenIO];
+    payer = payerAccount.member;
+    payerAnotherDevice = [self createMember:tokenIO];
     
-    [self run: ^(TokenIOSync *tokenIO) {
-        payerAccount = [self createAccount:tokenIO];
-        payer = payerAccount.member;
-        payerAnotherDevice = [self createMember:tokenIO];
-
-        payeeAccount = [self createAccount:tokenIO];
-        payee = payeeAccount.member;
-        instructions = [NSMutableDictionary dictionaryWithDictionary:@{
-                    @"PLATFORM": @"TEST",
-                    @"TARGET": @"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"}];
-    }];
+    payeeAccount = [self createAccount:tokenIO];
+    payee = payeeAccount.member;
+    instructions = [NSMutableDictionary dictionaryWithDictionary:
+                    @{@"PLATFORM": @"TEST",
+                      @"TARGET":@"36f21423d991dfe63fc2e4b4177409d29141fd4bcbdb5bff202a10535581f979"}];
 }
 
 - (void)testTransfer {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        builder.toMemberId = payee.id;
-        Token *token = [builder execute];
-        
-        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-        
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
-        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
-
-        [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
+    Token *token = [builder execute];
+    
+    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
+    
+    [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
 }
 
 - (void)testNotifyPayeeTransfer {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        builder.toMemberId = payee.id;
-        Token *token = [builder execute];
-        
-        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
-        [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
-
-        [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
-    }];
+    [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
+    Token *token = [builder execute];
+    
+    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
+    
+    [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
 }
 
 - (void)testNotifyLinkAccounts {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        BankAuthorization* auth = [BankAuthorization message];
-        auth.bankId = @"iron";
-        [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
-        
-        [tokenIO notifyLinkAccounts:payer.firstAlias
-                      authorization:auth];
-
-        [self waitForNotification:@"LINK_ACCOUNTS"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    BankAuthorization* auth = [BankAuthorization message];
+    auth.bankId = @"iron";
+    [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
+    
+    [[self syncSDK] notifyLinkAccounts:payer.firstAlias authorization:auth];
+    
+    [self waitForNotification:@"LINK_ACCOUNTS"];
 }
 
 - (void)testNotifyAddKey {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        DeviceMetadata *metadata = [DeviceMetadata message];
-        metadata.application = @"Chrome";
-        metadata.applicationVersion = @"53.0";
-        metadata.device = @"Mac";
-        [tokenIO notifyAddKey:payer.firstAlias
-                         keys:[payerAnotherDevice keys]
-               deviceMetadata:metadata];
-
-        [self waitForNotification:@"ADD_KEY"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    DeviceMetadata *metadata = [DeviceMetadata message];
+    metadata.application = @"Chrome";
+    metadata.applicationVersion = @"53.0";
+    metadata.device = @"Mac";
+    [[self syncSDK] notifyAddKey:payer.firstAlias
+                            keys:[payerAnotherDevice getKeys]
+                  deviceMetadata:metadata];
+    
+    [self waitForNotification:@"ADD_KEY"];
 }
 
-// TODO: re-enable this test after the GetPairedDevices fix
 //- (void)testGetPairedDevices {
-//    [self run: ^(TokenIOSync *tokenIO) {
-//        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-//        Key *key = [[payerAnotherDevice keys] firstObject];
-//        DeviceMetadata *metadata = [DeviceMetadata message];
-//        metadata.application = @"Chrome";
-//        metadata.applicationVersion = @"53.0";
-//        metadata.device = @"Mac";
-//        [tokenIO notifyAddKey:payer.firstAlias
-//                         keys:@[key]
-//               deviceMetadata:metadata];
-//
-//        [self waitForNotification:@"ADD_KEY"];
-//        [payer approveKey:key];
-//
-//        NSArray<Device *> *devices = [payer getPairedDevices];
-//        XCTAssertEqual(1, [devices count]);
-//        XCTAssert([@"Chrome 53.0" isEqualToString:devices[0].name]);
-//        XCTAssert([key isEqual:devices[0].key]);
-//    }];
+//    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+//    Key *key = [[payerAnotherDevice getKeys] firstObject];
+//    DeviceMetadata *metadata = [DeviceMetadata message];
+//    metadata.application = @"Chrome";
+//    metadata.applicationVersion = @"53.0";
+//    metadata.device = @"Mac";
+//    [[self syncSDK] notifyAddKey:payer.firstAlias
+//                            keys:@[key]
+//                  deviceMetadata:metadata];
+//    
+//    [self waitForNotification:@"ADD_KEY"];
+//    [payer approveKey:key];
+//    
+//    NSArray<Device *> *devices = [payer getPairedDevices];
+//    XCTAssertEqual(1, [devices count]);
+//    XCTAssert([@"Chrome 53.0" isEqualToString:devices[0].name]);
+//    XCTAssert([key isEqual:devices[0].key]);
 //}
 
 - (void)testGetPairedDevicesUnapprovedKey {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        Key *key = [[payerAnotherDevice getKeys] firstObject];
-        DeviceMetadata *metadata = [DeviceMetadata message];
-        metadata.application = @"Chrome";
-        metadata.applicationVersion = @"53.0";
-        metadata.device = @"Mac";
-        [tokenIO notifyAddKey:payer.firstAlias
-                         keys:@[key]
-               deviceMetadata:metadata];
-
-        [self waitForNotification:@"ADD_KEY"];
-
-        NSArray<Device *> *devices = [payer getPairedDevices];
-        XCTAssertEqual(0, [devices count]);
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    Key *key = [[payerAnotherDevice getKeys] firstObject];
+    DeviceMetadata *metadata = [DeviceMetadata message];
+    metadata.application = @"Chrome";
+    metadata.applicationVersion = @"53.0";
+    metadata.device = @"Mac";
+    [[self syncSDK] notifyAddKey:payer.firstAlias
+                            keys:@[key]
+                  deviceMetadata:metadata];
+    
+    [self waitForNotification:@"ADD_KEY"];
+    
+    NSArray<Device *> *devices = [payer getPairedDevices];
+    XCTAssertEqual(0, [devices count]);
 }
 
 - (void)testNotifyPaymentRequest {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        TokenPayload *token = [TokenPayload message];
-        token.description_p = @"Description: 🍷🌺🌹";
-        token.from.alias = payer.firstAlias;
-        token.to.alias = payee.firstAlias;
-        token.transfer.amount = @"50";
-        token.transfer.lifetimeAmount = @"100";
-        token.transfer.currency = @"EUR";
-        [tokenIO notifyPaymentRequest:token];
-
-        [self waitForNotification:@"PAYMENT_REQUEST"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    TokenPayload *token = [TokenPayload message];
+    token.description_p = @"Description: 🍷🌺🌹";
+    token.from.alias = payer.firstAlias;
+    token.to.alias = payee.firstAlias;
+    token.transfer.amount = @"50";
+    token.transfer.lifetimeAmount = @"100";
+    token.transfer.currency = @"EUR";
+    [[self syncSDK] notifyPaymentRequest:token];
+    
+    [self waitForNotification:@"PAYMENT_REQUEST"];
 }
 
 - (void)testStepUp {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"EUR"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        
-        TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
-        XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
-        
-        NotifyStatus status = [payer triggerStepUpNotification:token.id_p];
-        XCTAssertEqual(status, NotifyStatus_Accepted);
-        
-        [self waitForNotification:@"STEP_UP"];
-        
-        result = [payer endorseToken:token withKey:Key_Level_Standard];
-        XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"EUR"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    
+    TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
+    XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
+    
+    NotifyStatus status = [payer triggerStepUpNotification:token.id_p];
+    XCTAssertEqual(status, NotifyStatus_Accepted);
+    
+    [self waitForNotification:@"STEP_UP"];
+    
+    result = [payer endorseToken:token withKey:Key_Level_Standard];
+    XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
 }
 
 - (void)testNotifyLinkAccountsAndAddKey {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-
-        Key *key = [[payerAnotherDevice keys] firstObject];
-        BankAuthorization* auth = [BankAuthorization message];
-        auth.bankId = @"iron";
-        [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
-        [tokenIO notifyLinkAccountsAndAddKey:payer.firstAlias
-                               authorization:auth
-                                     keyName:@"Chrome 53.0"
-                                         key:key];
-
-        [self waitForNotification:@"LINK_ACCOUNTS_AND_ADD_KEY"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    Key *key = [[payerAnotherDevice getKeys] firstObject];
+    BankAuthorization* auth = [BankAuthorization message];
+    auth.bankId = @"iron";
+    [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
+    [[self syncSDK] notifyLinkAccountsAndAddKey:payer.firstAlias
+                                  authorization:auth
+                                        keyName:@"Chrome 53.0"
+                                            key:key];
+    
+    [self waitForNotification:@"LINK_ACCOUNTS_AND_ADD_KEY"];
 }
 
 - (void)testGetSubscribers {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-
-        XCTAssert([payer getSubscribers].count == 1);
-
-        Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
-        XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-        XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
-        XCTAssert([subscriber.handlerInstructions[@"PLATFORM"]
-                   isEqualToString:lookedUp.handlerInstructions[@"PLATFORM"]]);
-    }];
+    Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    XCTAssert([payer getSubscribers].count == 1);
+    
+    Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
+    XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
+    XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
+    XCTAssert([subscriber.handlerInstructions[@"PLATFORM"]
+               isEqualToString:lookedUp.handlerInstructions[@"PLATFORM"]]);
 }
 
 - (void)testGetSubscribersWithBankId {
-    [self run: ^(TokenIOSync *tokenIO) {
-        NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
-        Subscriber * subscriber = [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
-        
-        XCTAssert([payer getSubscribers].count == 1);
-        
-        Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
-        XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-        XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
-    }];
+    NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
+    Subscriber * subscriber = [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
+    
+    XCTAssert([payer getSubscribers].count == 1);
+    
+    Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
+    XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
+    XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
 }
 
 
 - (void)testTransferNotification {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-        NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
-        [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        
-        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-        
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:redeemAmount
-                                       currency:@"USD"
-                                    description:@""
-                                    destination:destination];
-        XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
+    [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    
+    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:redeemAmount
+                                   currency:@"USD"
+                                description:@""
+                                destination:destination];
+    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
 - (void)testGetNotifications {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-
-        
-        Key *key = [[payerAnotherDevice getKeys] firstObject];
-        DeviceMetadata *metadata = [DeviceMetadata message];
-        metadata.application = @"Chrome";
-        metadata.applicationVersion = @"53.0";
-        metadata.device = @"Mac";
-        [tokenIO notifyAddKey:payer.firstAlias
-                         keys:@[key]
-               deviceMetadata:metadata];
-
-        [self waitForNotification:@"ADD_KEY"];
-    }];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    
+    Key *key = [[payerAnotherDevice getKeys] firstObject];
+    DeviceMetadata *metadata = [DeviceMetadata message];
+    metadata.application = @"Chrome";
+    metadata.applicationVersion = @"53.0";
+    metadata.device = @"Mac";
+    [[self syncSDK] notifyAddKey:payer.firstAlias
+                            keys:@[key]
+                  deviceMetadata:metadata];
+    
+    [self waitForNotification:@"ADD_KEY"];
 }
     
 - (void)testBalanceStepUpNotification {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    NotifyStatus status = [payer triggerBalanceStepUpNotification:@[payerAccount.id]];
+    XCTAssertEqual(status, NotifyStatus_Accepted);
+    
+    [self waitUntil:^{
+        PagedArray<Notification *> *notifications = [self->payer getNotificationsOffset:nil limit:100];
+        check(@"Notification count", notifications.items.count == 1);
         
-        NotifyStatus status = [payer triggerBalanceStepUpNotification:@[payerAccount.id]];
-        XCTAssertEqual(status, NotifyStatus_Accepted);
+        Notification* notification = [notifications.items objectAtIndex:0];
+        check(@"Delivery Status", notification.status == Notification_Status_Delivered);
+        check(@"Notification Type", [notification.content.type
+                                     isEqualToString:@"BALANCE_STEP_UP"]);
         
-        [self waitUntil:^{
-            PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil
-                                                                                limit:100];
-            check(@"Notification count", notifications.items.count == 1);
-            
-            Notification* notification = [notifications.items objectAtIndex:0];
-            check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-            check(@"Notification Type", [notification.content.type
-                                         isEqualToString:@"BALANCE_STEP_UP"]);
-            
-            BalanceStepUp *balanceStepUp = [TKJson
-                                            deserializeMessageOfClass:[BalanceStepUp class]
-                                            fromJSON:notification.content.payload];
-            check(@"BalanceStepUp AccountID",
-                  [balanceStepUp.accountIdArray[0] isEqualToString: payerAccount.id]);
-        }];
-        
+        BalanceStepUp *balanceStepUp = [TKJson
+                                        deserializeMessageOfClass:[BalanceStepUp class]
+                                        fromJSON:notification.content.payload];
+        check(@"BalanceStepUp AccountID",
+              [balanceStepUp.accountIdArray[0] isEqualToString: self->payerAccount.id]);
     }];
 }
     
 - (void)testTransationStepUpNotification {
-    [self run: ^(TokenIOSync *tokenIO) {
-        [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+    
+    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+    destination.account.token.memberId = payeeAccount.member.id;
+    destination.account.token.accountId = payeeAccount.id;
+    Transfer *transfer = [payee redeemToken:token
+                                     amount:amount
+                                   currency:@"USD"
+                                description:@"full amount"
+                                destination:destination];
+    
+    NotifyStatus status = [payer triggerTransactionStepUpNotification:transfer.transactionId
+                                                            accountID:payerAccount.id];
+    XCTAssertEqual(status, NotifyStatus_Accepted);
+    
+    [self waitUntil:^{
+        PagedArray<Notification *> *notifications = [self->payer getNotificationsOffset:nil
+                                                                                  limit:100];
+        check(@"Notification count", notifications.items.count == 2);
         
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-        TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                          currency:@"USD"];
-        builder.accountId = payerAccount.id;
-        builder.redeemerMemberId = payee.id;
-        Token *token = [builder execute];
-        token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+        Notification* notification = [notifications.items objectAtIndex:0];
+        check(@"Delivery Status", notification.status == Notification_Status_Delivered);
+        check(@"Notification Type", [notification.content.type
+                                     isEqualToString:@"TRANSACTION_STEP_UP"]);
         
-        TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-        destination.account.token.memberId = payeeAccount.member.id;
-        destination.account.token.accountId = payeeAccount.id;
-        Transfer *transfer = [payee redeemToken:token
-                                         amount:amount
-                                       currency:@"USD"
-                                    description:@"full amount"
-                                    destination:destination];
-        
-        NotifyStatus status = [payer triggerTransactionStepUpNotification:transfer.transactionId
-                                                                accountID:payerAccount.id];
-        XCTAssertEqual(status, NotifyStatus_Accepted);
-        
-        [self waitUntil:^{
-            PagedArray<Notification *> *notifications = [payer getNotificationsOffset:nil
-                                                                                limit:100];
-            check(@"Notification count", notifications.items.count == 2);
-            
-            Notification* notification = [notifications.items objectAtIndex:0];
-            check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-            check(@"Notification Type", [notification.content.type
-                                         isEqualToString:@"TRANSACTION_STEP_UP"]);
-            
-            TransactionStepUp *transactionStepup = [TKJson
-                                            deserializeMessageOfClass:[TransactionStepUp class]
-                                            fromJSON:notification.content.payload];
-            check(@"TransactionStepUp TransactionID",
-                  [transactionStepup.transactionId isEqualToString: transfer.transactionId]);
-            check(@"TransactionStepUp AccountID",
-                  [transactionStepup.accountId isEqualToString: payerAccount.id]);
-        }];
-        
+        TransactionStepUp *transactionStepup = [TKJson
+                                                deserializeMessageOfClass:[TransactionStepUp class]
+                                                fromJSON:notification.content.payload];
+        check(@"TransactionStepUp TransactionID",
+              [transactionStepup.transactionId isEqualToString: transfer.transactionId]);
+        check(@"TransactionStepUp AccountID",
+              [transactionStepup.accountId isEqualToString: self->payerAccount.id]);
     }];
 }
 

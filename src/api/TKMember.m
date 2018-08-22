@@ -84,9 +84,9 @@
         onError:(OnError)onError {
     [client getMember:self.id
             onSuccess:^(Member * _Nonnull m) {
-                [member clear];
-                [member mergeFrom:m];
-                onSuccess(member.keysArray);
+                [self->member clear];
+                [self->member mergeFrom:m];
+                onSuccess(self->member.keysArray);
             } onError:onError];
 }
 
@@ -196,7 +196,7 @@
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError {
     [client getAliases:^(NSArray<Alias *> *aliasArray) {
-        aliases = [NSMutableArray arrayWithArray: aliasArray];
+        self->aliases = [NSMutableArray arrayWithArray: aliasArray];
         onSuccess(aliasArray);
     }
                onError:onError];
@@ -232,7 +232,7 @@
               operations:[addAliasOps copy]
            metadataArray:metadataArray
                onSuccess:^(Member *m) {
-                   [aliases addObjectsFromArray:toAddAliases];
+                   [self->aliases addObjectsFromArray:toAddAliases];
                    [retainedMember clear];
                    [retainedMember mergeFrom:m];
                    onSuccess();
@@ -262,7 +262,7 @@
     [client updateMember:retainedMember
               operations:[removeAliasOps copy]
                onSuccess:^(Member *m) {
-                   [aliases removeObjectsInArray:toRemoveAliases];
+                   [self->aliases removeObjectsInArray:toRemoveAliases];
                    [retainedMember clear];
                    [retainedMember mergeFrom:m];
                    onSuccess();
@@ -332,21 +332,21 @@
               onSuccess:^(BankInfo *info) {
                   // The authorization engine will be revoked after the accounts are linked.
                   TKOauthEngine *authEngine =
-                  [[TKOauthEngine alloc] initWithTokenCluster:tokenCluster
+                  [[TKOauthEngine alloc] initWithTokenCluster:self->tokenCluster
                                                BrowserFactory:self.browserFactory
                                                           url:info.bankLinkingUri];
                 
                   [authEngine
                    authorizeOnSuccess:^(NSString *accessToken) {
-                       [client linkAccounts:bankId
-                                accessToken:accessToken
-                                  onSuccess:^(NSArray<Account *> *accounts) {
-                                      onSuccess([self _mapAccounts:accounts]);
-                                      [authEngine close];
-                                  } onError:^(NSError *error) {
-                                      onError(error);
-                                      [authEngine close];
-                                  }];
+                       [self->client linkAccounts:bankId
+                                      accessToken:accessToken
+                                        onSuccess:^(NSArray<Account *> *accounts) {
+                                            onSuccess([self _mapAccounts:accounts]);
+                                            [authEngine close];
+                                        } onError:^(NSError *error) {
+                                            onError(error);
+                                            [authEngine close];
+                                        }];
                    } onError:^(NSError *error) {
                        onError(error);
                        [authEngine close];
@@ -620,7 +620,7 @@
              && error.code == RequestStatus_MoreSignaturesNeeded
              && keyLevel == Key_Level_Low) {
              // Request again with Key_Level_Standard if more signatures are needed
-             [client
+             [self->client
               getTransaction:transactionId
               forAccount:accountId
               withKey:Key_Level_Standard
@@ -650,7 +650,7 @@
             && error.code == RequestStatus_MoreSignaturesNeeded
             && keyLevel == Key_Level_Low) {
             // Request again with Key_Level_Standard if more signatures are needed
-            [client
+            [self->client
              getTransactionsOffset:offset
              limit:limit
              forAccount:accountId
@@ -709,7 +709,7 @@
              && error.code == RequestStatus_MoreSignaturesNeeded
              && keyLevel == Key_Level_Low) {
              // Request again with Key_Level_Standard if more signatures are needed
-             [client
+             [self->client
               getBalance:accountId
               withKey:Key_Level_Standard
               onSuccess:onSuccess
@@ -734,7 +734,7 @@
              && error.code == RequestStatus_MoreSignaturesNeeded
              && keyLevel == Key_Level_Low) {
              // Request again with Key_Level_Standard if more signatures are needed
-             [client
+             [self->client
               getBalances:accountIds
               withKey:Key_Level_Standard
               onSuccess:onSuccess

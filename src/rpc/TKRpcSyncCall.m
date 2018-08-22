@@ -24,11 +24,11 @@
         
         dispatch_semaphore_t semaphore = isDone;
         _onSuccess = ^(id result_) {
-            result = result_;
+            self->result = result_;
             dispatch_semaphore_signal(semaphore);
         };
         _onError = ^(NSError *error_) {
-            error = error_;
+            self->error = error_;
             dispatch_semaphore_signal(semaphore);
         };
     }

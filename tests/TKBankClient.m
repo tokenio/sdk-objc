@@ -82,7 +82,7 @@ static NSString *const TEST_BIC = @"IRONUSCA000";
 - (UNIHTTPJsonResponse *)httpPutCall:(NSString *)url_ withData:(NSData *)data {
     return [[UNIRest putEntity:^(UNIBodyRequest *request) {
         [request setUrl:url_];
-        [request setHeaders:headers];
+        [request setHeaders:self->headers];
         [request setBody:data];
     }] asJson];
 }

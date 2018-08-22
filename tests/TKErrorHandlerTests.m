@@ -42,71 +42,67 @@
 }
 
 - (void)testErrorHandlerVersionMismatch {
-    [self run: ^(TokenIOSync *tokenIO) {
-        TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:^(NSError *error) {
-            XCTAssertTrue(error.code == kTKErrorSdkVersionMismatch);
-        }];
-        GRPCProtoCall *call = [gateway
-                RPCToResolveAliasWithRequest:request
-                                    handler:^(ResolveAliasResponse *response, NSError *error) {
-                                        if (response) {
-                                            XCTFail(@"onSuccess called but expected onError");
-                                        } else {
-                                            [errorHandler handle:syncCall.onError withError:error];
-                                        }
-                                    }];
-        call.requestHeaders[@"token-sdk"] = @"objc";
-        call.requestHeaders[@"token-sdk-version"] = @"0.0.1";
-        call.requestHeaders[@"token-dev-key"] = [self sdkBuilder].developerKey;
-
-        @try {
-            [syncCall run:^{
-                dispatch_after(
-                        dispatch_time(DISPATCH_TIME_NOW, 15000 * NSEC_PER_MSEC),
-                        dispatch_get_main_queue(), ^{
-                            [call cancel];
-                        });
-                [call start];
-            }];
-        } @catch(NSError *error) {
-            XCTAssertTrue(error.code == kTKErrorSdkVersionMismatch);
-            return;
-        }
-        XCTFail(@"Expected error is not raised");
+    TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:^(NSError *error) {
+        XCTAssertTrue(error.code == kTKErrorSdkVersionMismatch);
     }];
+    GRPCProtoCall *call = [gateway
+                           RPCToResolveAliasWithRequest:request
+                           handler:^(ResolveAliasResponse *response, NSError *error) {
+                               if (response) {
+                                   XCTFail(@"onSuccess called but expected onError");
+                               } else {
+                                   [errorHandler handle:self->syncCall.onError withError:error];
+                               }
+                           }];
+    call.requestHeaders[@"token-sdk"] = @"objc";
+    call.requestHeaders[@"token-sdk-version"] = @"0.0.1";
+    call.requestHeaders[@"token-dev-key"] = [self sdkBuilder].developerKey;
+    
+    @try {
+        [syncCall run:^{
+            dispatch_after(
+                           dispatch_time(DISPATCH_TIME_NOW, 15000 * NSEC_PER_MSEC),
+                           dispatch_get_main_queue(), ^{
+                               [call cancel];
+                           });
+            [call start];
+        }];
+    } @catch(NSError *error) {
+        XCTAssertTrue(error.code == kTKErrorSdkVersionMismatch);
+        return;
+    }
+    XCTFail(@"Expected error is not raised");
 }
 
 - (void)testErrorHandlerInvalidDeveloperKey {
-    [self run: ^(TokenIOSync *tokenIO) {
-        TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:^(NSError *error) {
-            XCTAssertTrue(error.code == kTKErrorInvalidDeveloperKey);
-        }];
-        GRPCProtoCall *call = [gateway
-                               RPCToResolveAliasWithRequest:request
-                               handler:^(ResolveAliasResponse *response, NSError *error) {
-                                   if (response) {
-                                       XCTFail(@"onSuccess called but expected onError");
-                                   } else {
-                                       [errorHandler handle:syncCall.onError withError:error];
-                                   }
-                               }];
-        call.requestHeaders[@"token-dev-key"] = @"";
-        
-        @try {
-            [syncCall run:^{
-                dispatch_after(
-                               dispatch_time(DISPATCH_TIME_NOW, 15000 * NSEC_PER_MSEC),
-                               dispatch_get_main_queue(), ^{
-                                   [call cancel];
-                               });
-                [call start];
-            }];
-        } @catch(NSError *error) {
-            XCTAssertTrue(error.code == kTKErrorInvalidDeveloperKey);
-            return;
-        }
-        XCTFail(@"Expected error is not raised");
+    TKRpcErrorHandler *errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:^(NSError *error) {
+        XCTAssertTrue(error.code == kTKErrorInvalidDeveloperKey);
     }];
+    GRPCProtoCall *call = [gateway
+                           RPCToResolveAliasWithRequest:request
+                           handler:^(ResolveAliasResponse *response, NSError *error) {
+                               if (response) {
+                                   XCTFail(@"onSuccess called but expected onError");
+                               } else {
+                                   [errorHandler handle:self->syncCall.onError withError:error];
+                               }
+                           }];
+    call.requestHeaders[@"token-dev-key"] = @"";
+    
+    @try {
+        [syncCall run:^{
+            dispatch_after(
+                           dispatch_time(DISPATCH_TIME_NOW, 15000 * NSEC_PER_MSEC),
+                           dispatch_get_main_queue(), ^{
+                               [call cancel];
+                           });
+            [call start];
+        }];
+    } @catch(NSError *error) {
+        XCTAssertTrue(error.code == kTKErrorInvalidDeveloperKey);
+        return;
+    }
+    XCTFail(@"Expected error is not raised");
 }
 
 @end

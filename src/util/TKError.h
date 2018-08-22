@@ -65,6 +65,9 @@ typedef enum {
     
     /* Raised when Oauth access token not found */
     kTKErrorOauthAccessTokenNotFound = 107,
+    
+    /* Raised when secure enclave is not supported */
+    kTKErrorSecureEnclaveIsNotSupported = 108
 } TKErrorCode;
 
 

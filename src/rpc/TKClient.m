@@ -89,49 +89,48 @@
            onSuccess:(OnSuccessWithMember)onSuccess
              onError:(OnError)onError {
     
-    [unauthenticatedClient getMember:memberId
-                           onSuccess:^(Member *newMember) {
-                               UpdateMemberRequest *request = [UpdateMemberRequest message];
-                               request.update.memberId = memberId;
-                               request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
-                               //Update to the latest lastHash before update member
-                               request.update.prevHash = newMember.lastHash;
-                               request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
-                               
-                               TKSignature *signature = [crypto sign:request.update
-                                                            usingKey:Key_Level_Privileged
-                                                              reason:TKLocalizedString(
-                                                                                       @"Signature_Reason_UpdateMember",
-                                                                                       @"Approve updating user account")
-                                                             onError:onError];
-                               if (!signature) {
-                                   return;
-                               }
-                               
-                               request.updateSignature.memberId = memberId;
-                               request.updateSignature.keyId = signature.key.id_p;
-                               request.updateSignature.signature = signature.value;
-                               RpcLogStart(request);
-                               
-                               GRPCProtoCall *call = [gateway
-                                                      RPCToUpdateMemberWithRequest:request
-                                                      handler:^(UpdateMemberResponse *response, NSError *error) {
-                                                          if (response) {
-                                                              RpcLogCompleted(response);
-                                                              onSuccess(response.member);
-                                                          } else {
-                                                              [errorHandler handle:onError withError:error];
-                                                          }
-                                                      }
-                                                      ];
-                               
-                               [self _startCall:call
-                                    withRequest:request
-                                        onError:onError];
-                           }
-                             onError:onError];
-    
-    
+    [unauthenticatedClient
+     getMember:memberId
+     onSuccess:^(Member *newMember) {
+         UpdateMemberRequest *request = [UpdateMemberRequest message];
+         request.update.memberId = self->memberId;
+         request.update.operationsArray = [NSMutableArray arrayWithArray:operations];
+         //Update to the latest lastHash before update member
+         request.update.prevHash = newMember.lastHash;
+         request.metadataArray = [NSMutableArray arrayWithArray:metadataArray];
+         
+         TKSignature *signature = [self->crypto
+                                   sign:request.update
+                                   usingKey:Key_Level_Privileged
+                                   reason:TKLocalizedString(@"Signature_Reason_UpdateMember",
+                                                            @"Approve updating user account")
+                                   onError:onError];
+         if (!signature) {
+             return;
+         }
+         
+         request.updateSignature.memberId = self->memberId;
+         request.updateSignature.keyId = signature.key.id_p;
+         request.updateSignature.signature = signature.value;
+         RpcLogStart(request);
+         
+         GRPCProtoCall *call = [self->gateway
+                                RPCToUpdateMemberWithRequest:request
+                                handler:^(UpdateMemberResponse *response, NSError *error) {
+                                    if (response) {
+                                        RpcLogCompleted(response);
+                                        onSuccess(response.member);
+                                    } else {
+                                        [self->errorHandler handle:onError withError:error];
+                                    }
+                                }
+                                ];
+         
+         [self _startCall:call
+              withRequest:request
+                  onError:onError];
+     }
+     onError:onError];
 }
 
 - (void)deleteMember:(Member *)member
@@ -146,7 +145,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -167,7 +166,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.aliasesArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -191,7 +190,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.verificationId);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -214,7 +213,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscriber);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -233,7 +232,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscribersArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -255,7 +254,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.subscriber);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -276,12 +275,13 @@
                            handler:^(GetNotificationsResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   PagedArray<Notification *> *paged = [[PagedArray<Notification *> alloc]
-                                                                 initWith: response.notificationsArray
-                                                                 offset: response.offset];
+                                   PagedArray<Notification *> *paged =
+                                   [[PagedArray<Notification *> alloc]
+                                    initWith: response.notificationsArray
+                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -303,7 +303,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.notification);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -320,12 +320,13 @@
     request.subscriberId = subscriberId;
     GRPCProtoCall *call = [gateway
                            RPCToUnsubscribeFromNotificationsWithRequest:request
-                           handler:^(UnsubscribeFromNotificationsResponse *response, NSError *error) {
+                           handler:^(UnsubscribeFromNotificationsResponse *response,
+                                     NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -349,7 +350,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.accountsArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -381,7 +382,7 @@
                                        onSuccess(response.accountsArray);
                                    }
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -404,7 +405,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     [self _startCall:call
@@ -424,7 +425,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.accountsArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -447,7 +448,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.account);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -470,7 +471,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.account);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -494,7 +495,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else { 
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -526,7 +527,7 @@
                                    }
                                } else {
                                    RpcLogError(error);
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -550,7 +551,7 @@
                                         onSuccess(response.token);
                                     } else {
                                         RpcLogError(error);
-                                        [errorHandler handle:onError withError:error];
+                                        [self->errorHandler handle:onError withError:error];
                                     }
                                 }];
 
@@ -579,7 +580,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -625,7 +626,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -648,7 +649,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -671,7 +672,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.token);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
 
@@ -701,7 +702,7 @@
                                                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -740,7 +741,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -777,7 +778,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.result);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -821,7 +822,7 @@
                                                 errorFromTransactionStatus:response.transfer.status]);
                                    }
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -845,7 +846,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.transfer);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -876,7 +877,7 @@
                                                                    offset: response.offset];
                                    onSuccess(paged);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -913,7 +914,7 @@
                                    }
                                    
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -957,7 +958,7 @@
                                    
                                    onSuccess(result);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -994,7 +995,7 @@
                                    }
                                    
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1036,7 +1037,7 @@
                                    }
                                    
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1072,7 +1073,7 @@
                                    attachment.type = type;
                                    onSuccess(attachment);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1096,7 +1097,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.blob);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1122,7 +1123,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.blob);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1161,7 +1162,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.address);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1185,7 +1186,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.address);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1207,7 +1208,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.addressesArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1231,7 +1232,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1255,7 +1256,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.info);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
 
@@ -1279,7 +1280,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.bankAuthorization);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1303,7 +1304,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.profile);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
 
@@ -1327,7 +1328,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.profile);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1353,7 +1354,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.blob);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1384,7 +1385,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1405,7 +1406,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.devicesArray);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
 
@@ -1429,7 +1430,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.status);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1452,7 +1453,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.status);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1478,7 +1479,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess(response.status);
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     
@@ -1501,7 +1502,7 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else {
-                                   [errorHandler handle:onError withError:error];
+                                   [self->errorHandler handle:onError withError:error];
                                }
                            }];
     

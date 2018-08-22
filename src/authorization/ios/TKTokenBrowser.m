@@ -35,7 +35,7 @@
         [topController presentViewController:browserViewController
                                     animated:true
                                   completion:^{
-                                      [browserViewController loadUrl:url];
+                                      [self->browserViewController loadUrl:url];
                                   }];
     } else {
         [browserViewController loadUrl:url];
