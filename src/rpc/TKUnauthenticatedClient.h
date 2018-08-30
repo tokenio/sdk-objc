@@ -209,6 +209,47 @@
                           onSuccess:(OnSuccess)onSuccess
                             onError:(OnError)onError;
 
+/**
+ * Notifies subscribed devices that a token payload should be endorsed and keys should be
+ * added.
+ *
+ * @param tokenPayload the token payload to be sent
+ * @param addKey the add key payload to be sent
+ * @param tokenRequestId optional token request id
+ * @param bankId optional bank id
+ * @param state optional token request state for signing
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
+                        addkey:(AddKey *)addKey
+                tokenRequestId:(NSString *)tokenRequestId
+                        bankId:(NSString *)bankId
+                         state:(NSString *)state
+                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                       onError:(OnError)onError;
+/**
+ * Invalidate a notification.
+ *
+ * @param notificationId notification id to invalidate
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)invalidateNotification:(NSString *)notificationId
+                     onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                       onError:(OnError)onError;
+
+/**
+ * Get the token request result based on a token's tokenRequestId.
+ *
+ * @param tokenRequestId token request id
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError;
+
 #pragma mark - Member Recovery
 
 /**

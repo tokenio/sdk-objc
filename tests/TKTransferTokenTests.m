@@ -8,6 +8,7 @@
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Account.pbobjc.h"
+#import "TokenRequestResult.h"
 #import "Transferinstructions.pbobjc.h"
 
 @interface TKTransferTokenTests : TKTestBase
@@ -189,4 +190,26 @@
     XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
 }
 
+- (void)testGetTokenRequestResult {
+    TokenIOSync *tokenIO = [self syncSDK];
+    
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                      currency:@"USD"];
+    builder.accountId = payerAccount.id;
+    builder.toMemberId = payee.id;
+    builder.redeemerMemberId = payee.id;
+    Token *token = [builder execute];
+    
+    NSString *tokenRequestId = [payee storeTokenRequest:token.payload options:nil];
+    
+    NSString *state = [TKUtil nonce];
+    Signature *signature = [payer signTokenRequestState:tokenRequestId
+                                                  tokenId:token.id_p
+                                                    state:state];
+    TokenRequestResult *result = [tokenIO getTokenRequestResult:tokenRequestId];
+    
+    XCTAssert([result.tokenId isEqualToString: token.id_p]);
+    XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+}
 @end

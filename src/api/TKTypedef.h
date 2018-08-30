@@ -31,6 +31,9 @@
 @class MemberRecoveryOperation;
 @class ExternalAuthorizationDetails;
 @class Device;
+@class TokenRequestResult;
+@class NotifyResult;
+@class Signature;
 
 typedef NS_ENUM(int32_t, NotifyStatus);
 
@@ -96,4 +99,7 @@ typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOpe
 
 typedef void (^ _Nonnull OnSuccessWithPairedDevices)(NSArray<Device *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithNotifyStatus)(NotifyStatus);
+typedef void (^ _Nonnull OnSuccessWithNotifyResult)(NotifyResult * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithTokenRequestResult)(TokenRequestResult * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithSignature)(Signature * _Nonnull);
 

@@ -178,6 +178,50 @@
     }];
 }
 
+- (NotifyResult *)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
+                                    keys:(NSArray<Key *> *)keys
+                          deviceMetadata:(DeviceMetadata *)deviceMetadata
+                          tokenRequestId:(NSString *)tokenRequestId
+                                  bankId:(NSString *)bankId
+                                   state:(NSString *)state {
+    TKRpcSyncCall<NotifyResult *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async notifyEndorseAndAddKey:tokenPayload
+                                      keys:keys
+                            deviceMetadata:deviceMetadata
+                            tokenRequestId:tokenRequestId
+                                    bankId:bankId
+                                     state:state
+                                 onSuccess:call.onSuccess
+                                   onError:call.onError];
+    }];
+}
+
+- (NotifyStatus)invalidateNotification:(NSString *)notificationId
+                             onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                               onError:(OnError)onError {
+    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
+    
+    NSNumber *statusNumber = [call run:^{
+        [self.async invalidateNotification:notificationId
+                                 onSuccess:^(NotifyStatus status){
+                                     call.onSuccess([NSNumber numberWithInt:status]);
+                                 }
+                                   onError:call.onError];
+    }];
+    
+    return [statusNumber intValue];
+}
+
+- (TokenRequestResult *)getTokenRequestResult:(NSString *)tokenRequestId {
+    TKRpcSyncCall<TokenRequestResult *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getTokenRequestResult:tokenRequestId
+                                onSuccess:call.onSuccess
+                                  onError:call.onError];
+    }];
+}
+
 #pragma mark - Member Recovery
 
 - (NSString* )beginMemberRecovery:(Alias *)alias {
