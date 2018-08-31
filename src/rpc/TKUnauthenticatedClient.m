@@ -15,6 +15,8 @@
 #import "TKRpcErrorHandler.h"
 #import "TKHasher.h"
 #import "TKUtil.h"
+#import "NotifyResult.h"
+#import "TokenRequestResult.h"
 
 @implementation TKUnauthenticatedClient {
     GatewayService *gateway;
@@ -325,6 +327,76 @@
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
+                        addkey:(AddKey *)addKey
+                tokenRequestId:(NSString *)tokenRequestId
+                        bankId:(NSString *)bankId
+                         state:(NSString *)state
+                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                       onError:(OnError)onError {
+    TriggerEndorseAndAddKeyNotificationRequest *request = [TriggerEndorseAndAddKeyNotificationRequest message];
+    request.endorseAndAddKey.payload = tokenPayload;
+    request.endorseAndAddKey.addKey = addKey;
+    request.endorseAndAddKey.tokenRequestId = tokenRequestId;
+    request.endorseAndAddKey.bankId = bankId;
+    request.endorseAndAddKey.state = state;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToTriggerEndorseAndAddKeyNotificationWithRequest:request
+                           handler:^(TriggerEndorseAndAddKeyNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess([NotifyResult createWithNotifyStatus:response.status
+                                                                   notificationId:response.notificationId]);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+- (void)invalidateNotification:(NSString *)notificationId
+                     onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                       onError:(OnError)onError {
+    InvalidateNotificationRequest *request = [InvalidateNotificationRequest message];
+    request.notificationId = notificationId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToInvalidateNotificationWithRequest:request
+                           handler:^(InvalidateNotificationResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.status);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [rpc execute:call request:request];
+}
+
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError {
+    GetTokenRequestResultRequest *request = [GetTokenRequestResultRequest message];
+    request.tokenRequestId = tokenRequestId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetTokenRequestResultWithRequest:request
+                           handler:^(GetTokenRequestResultResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess([TokenRequestResult createWithTokenId:response.tokenId
+                                                                         signature:response.signature]);
                                } else {
                                    [self->errorHandler handle:onError withError:error];
                                }

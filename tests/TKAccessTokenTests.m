@@ -16,7 +16,7 @@
 #import "Member.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "PagedArray.h"
-
+#import "TokenRequestResult.h"
 
 @interface TKAccessTokenTests : TKTestBase
 
@@ -161,4 +161,16 @@
     XCTAssertNotEqual(token.payload.refId, payload.refId);
 }
 
+- (void)testGetTokenRequestResult {
+    TokenIOSync *tokenIO = [self syncSDK];
+    NSString *tokenRequestId = [grantee storeTokenRequest:token.payload options:nil];
+    NSString *state = [TKUtil nonce];
+    Signature *signature = [grantor signTokenRequestState:tokenRequestId
+                                                 tokenId:token.id_p
+                                                   state:state];
+    TokenRequestResult *result = [tokenIO getTokenRequestResult:tokenRequestId];
+    
+    XCTAssert([result.tokenId isEqualToString: token.id_p]);
+    XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+}
 @end

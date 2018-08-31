@@ -289,6 +289,55 @@
                                                onError:onError];
 }
 
+- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
+                          keys:(NSArray<Key *> *)keys
+                deviceMetadata:(DeviceMetadata *)deviceMetadata
+                tokenRequestId:(NSString *)tokenRequestId
+                        bankId:(NSString *)bankId
+                         state:(NSString *)state
+                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                       onError:(OnError)onError {
+    AddKey *addKey = [AddKey message];
+    addKey.keysArray = [NSMutableArray arrayWithArray:keys];
+    addKey.deviceMetadata = deviceMetadata;
+    [unauthenticatedClient notifyEndorseAndAddKey:tokenPayload
+                                           addkey:addKey
+                                   tokenRequestId:tokenRequestId
+                                           bankId:bankId
+                                            state:state
+                                        onSuccess:onSuccess
+                                          onError:onError];
+}
+/**
+ * Invalidate a notification.
+ *
+ * @param notificationId notification id to invalidate
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)invalidateNotification:(NSString *)notificationId
+                     onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                       onError:(OnError)onError {
+    [unauthenticatedClient invalidateNotification:notificationId
+                                        onSuccess:onSuccess
+                                          onError:onError];
+}
+
+/**
+ * Get the token request result based on a token's tokenRequestId.
+ *
+ * @param tokenRequestId token request id
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError {
+    [unauthenticatedClient getTokenRequestResult:tokenRequestId
+                                       onSuccess:onSuccess
+                                         onError:onError];
+}
+
 #pragma mark - Member Recovery
 
 - (void)beginMemberRecovery:(Alias *)alias

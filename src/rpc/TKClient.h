@@ -624,4 +624,28 @@
 - (void)ApplySca:(NSArray<NSString *> *)accountIds
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
+
+/**
+ * Sign with a Token signature a token request state payload.
+ *
+ * @param tokenRequestId token request id
+ * @param tokenId token id
+ * @param state state
+ */
+- (void)signTokenRequestState:(NSString *)tokenRequestId
+                      tokenId:(NSString *)tokenId
+                        state:(NSString *)state
+                    onSuccess:(OnSuccessWithSignature)onSuccess
+                      onError:(OnError)onError;
+
+/**
+ * Stores a token request.
+ *
+ * @param tokenPayload transfer token payload
+ * @param options map of options
+ */
+- (void)storeTokenRequest:(TokenPayload *)tokenPayload
+                  options:(NSDictionary<NSString*, NSString*> *)options
+                onSuccess:(OnSuccessWithString)onSuccess
+                  onError:(OnError)onError;
 @end

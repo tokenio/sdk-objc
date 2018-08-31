@@ -1511,6 +1511,58 @@
             usingKey:Key_Level_Standard
              onError:onError];
 }
+
+- (void)signTokenRequestState:(NSString *)tokenRequestId
+                      tokenId:(NSString *)tokenId
+                        state:(NSString *)state
+                    onSuccess:(OnSuccessWithSignature)onSuccess
+                      onError:(OnError)onError {
+    SignTokenRequestStateRequest *request = [SignTokenRequestStateRequest message];
+    request.tokenRequestId = tokenRequestId;
+    request.payload.tokenId = tokenId;
+    request.payload.state = state;\
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToSignTokenRequestStateWithRequest:request
+                           handler:^(SignTokenRequestStateResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.signature);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)storeTokenRequest:(TokenPayload *)tokenPayload
+                  options:(NSDictionary<NSString*, NSString*> *)options
+                onSuccess:(OnSuccessWithString)onSuccess
+                  onError:(OnError)onError {
+    StoreTokenRequestRequest *request = [StoreTokenRequestRequest message];
+    request.options = [NSMutableDictionary dictionaryWithDictionary:options];
+    request.payload = tokenPayload;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToStoreTokenRequestWithRequest:request
+                           handler:^(StoreTokenRequestResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.tokenRequest.id_p);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
     
 #pragma mark private
 

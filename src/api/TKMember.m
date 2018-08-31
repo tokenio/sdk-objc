@@ -843,6 +843,28 @@
              onError:onError];
 }
 
+- (void)signTokenRequestState:(NSString *)tokenRequestId
+                      tokenId:(NSString *)tokenId
+                        state:(NSString *)state
+                    onSuccess:(OnSuccessWithSignature)onSuccess
+                      onError:(OnError)onError {
+    [client signTokenRequestState:tokenRequestId
+                          tokenId:tokenId
+                            state:state
+                        onSuccess:onSuccess
+                          onError:onError];
+}
+
+- (void)storeTokenRequest:(TokenPayload *)tokenPayload
+                  options:(NSDictionary<NSString*, NSString*> *)options
+                onSuccess:(OnSuccessWithString)onSuccess
+                  onError:(OnError)onError {
+    [client storeTokenRequest:tokenPayload
+                      options:options
+                    onSuccess:onSuccess
+                      onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

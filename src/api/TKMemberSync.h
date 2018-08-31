@@ -634,4 +634,25 @@
  * @param accountIds account ids for applying SCA
  */
 - (void)ApplySca:(NSArray<NSString *> *)accountIds;
+
+/**
+ * Sign with a Token signature a token request state payload.
+ *
+ * @param tokenRequestId token request id
+ * @param tokenId token id
+ * @param state state
+ */
+- (Signature *)signTokenRequestState:(NSString *)tokenRequestId
+                             tokenId:(NSString *)tokenId
+                               state:(NSString *)state;
+
+/**
+ * Stores a token request.
+ *
+ * @param tokenPayload transfer token payload
+ * @param options map of options
+ */
+- (NSString *)storeTokenRequest:(TokenPayload *)tokenPayload
+                        options:(NSDictionary<NSString*, NSString*> *)options;
+
 @end

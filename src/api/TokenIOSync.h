@@ -165,6 +165,42 @@
                             keyName:(NSString *)keyName
                                 key:(Key *)key;
 
+/**
+ * Notifies subscribed devices that a token payload should be endorsed and keys should be
+ * added.
+ *
+ * @param tokenPayload the token payload to be sent
+ * @param keys keys to be added
+ * @param deviceMetadata device metadata of the keys
+ * @param tokenRequestId optional token request id
+ * @param bankId optional bank id
+ * @param state optional token request state for signing
+ * @return notify result
+ */
+- (NotifyResult *)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
+                                    keys:(NSArray<Key *> *)keys
+                          deviceMetadata:(DeviceMetadata *)deviceMetadata
+                          tokenRequestId:(NSString *)tokenRequestId
+                                  bankId:(NSString *)bankId
+                                   state:(NSString *)state;
+/**
+ * Invalidate a notification.
+ *
+ * @param notificationId notification id to invalidate
+ * @return notify status
+ */
+- (NotifyStatus)invalidateNotification:(NSString *)notificationId
+                             onSuccess:(OnSuccessWithNotifyStatus)onSuccess
+                               onError:(OnError)onError;
+
+/**
+ * Get the token request result based on a token's tokenRequestId.
+ *
+ * @param tokenRequestId token request id
+ * @return token request result
+ */
+- (TokenRequestResult *)getTokenRequestResult:(NSString *)tokenRequestId;
+
 #pragma mark - Member Recovery
 
 /**

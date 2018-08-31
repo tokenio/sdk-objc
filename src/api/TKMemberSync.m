@@ -711,6 +711,31 @@
         
     }];
 }
+
+- (Signature *)signTokenRequestState:(NSString *)tokenRequestId
+                             tokenId:(NSString *)tokenId
+                               state:(NSString *)state {
+    TKRpcSyncCall<Signature *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async signTokenRequestState:tokenRequestId
+                                  tokenId:tokenId
+                                    state:state
+                                onSuccess:call.onSuccess
+                                  onError:call.onError];
+    }];
+}
+
+- (NSString *)storeTokenRequest:(TokenPayload *)tokenPayload
+                        options:(NSDictionary<NSString*, NSString*> *)options {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async storeTokenRequest:tokenPayload
+                              options:options
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {
