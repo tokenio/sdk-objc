@@ -223,6 +223,7 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
   TokenRequest_FieldNumber_Id_p = 1,
   TokenRequest_FieldNumber_Payload = 2,
   TokenRequest_FieldNumber_Options = 3,
+  TokenRequest_FieldNumber_UserRefId = 4,
 };
 
 @interface TokenRequest : GPBMessage
@@ -239,6 +240,8 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
 /** The number of items in @c options without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger options_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
 
 @end
 

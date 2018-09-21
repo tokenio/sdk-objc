@@ -865,6 +865,17 @@
                       onError:onError];
 }
 
+- (void)setReceiptContact:(ReceiptContact *)receiptContact
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    [client setReceiptContact:receiptContact onSuccess:onSuccess onError:onError];
+}
+
+- (void)getReceiptContact:(OnSuccessWithReceiptContact)onSuccess
+                  onError:(OnError)onError {
+    [client getReceiptContact:onSuccess onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

@@ -13,8 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "extensions/Message.pbobjc.h"
- #import "google/protobuf/Descriptor.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
+#import "google/protobuf/Descriptor.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

@@ -13,8 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "gateway/Auth.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
+#import "gateway/Auth.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

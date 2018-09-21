@@ -34,6 +34,7 @@
 @class TokenRequestResult;
 @class NotifyResult;
 @class Signature;
+@class ReceiptContact;
 
 typedef NS_ENUM(int32_t, NotifyStatus);
 
@@ -102,4 +103,5 @@ typedef void (^ _Nonnull OnSuccessWithNotifyStatus)(NotifyStatus);
 typedef void (^ _Nonnull OnSuccessWithNotifyResult)(NotifyResult * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTokenRequestResult)(TokenRequestResult * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithSignature)(Signature * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithReceiptContact)(ReceiptContact * _Nonnull);
 

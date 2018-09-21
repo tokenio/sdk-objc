@@ -13,12 +13,14 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Member.pbobjc.h"
- #import "Address.pbobjc.h"
- #import "Alias.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Member.pbobjc.h"
+#import "Address.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -62,7 +64,7 @@ static GPBFileDescriptor *MemberRoot_FileDescriptor(void) {
 #pragma mark - Enum ProfilePictureSize
 
 GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Original\000Small\000Medium\000Large\000";
@@ -79,7 +81,8 @@ GPBEnumDescriptor *ProfilePictureSize_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:ProfilePictureSize_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -102,7 +105,7 @@ BOOL ProfilePictureSize_IsValidValue(int32_t value__) {
 #pragma mark - Enum CreateMemberType
 
 GPBEnumDescriptor *CreateMemberType_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidMemberType\000Personal\000Business\000Tran"
@@ -119,7 +122,8 @@ GPBEnumDescriptor *CreateMemberType_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:CreateMemberType_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -955,7 +959,6 @@ typedef struct RecoveryRule__storage_ {
 @dynamic lastRecoverySequence;
 @dynamic lastOperationSequence;
 @dynamic type;
-@dynamic tppId;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
@@ -968,7 +971,6 @@ typedef struct Member__storage_ {
   NSMutableArray *keysArray;
   NSMutableArray *unverifiedAliasHashesArray;
   RecoveryRule *recoveryRule;
-  NSString *tppId;
 } Member__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1058,15 +1060,6 @@ typedef struct Member__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
-      {
-        .name = "tppId",
-        .dataTypeSpecific.className = NULL,
-        .number = Member_FieldNumber_TppId,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(Member__storage_, tppId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Member class]
@@ -1099,7 +1092,7 @@ void SetMember_Type_RawValue(Member *message, int32_t value) {
 #pragma mark - Enum Member_MemberType
 
 GPBEnumDescriptor *Member_MemberType_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidMemberType\000Personal\000BusinessUnver"
@@ -1117,7 +1110,8 @@ GPBEnumDescriptor *Member_MemberType_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Member_MemberType_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -1380,7 +1374,7 @@ void SetReceiptContact_Type_RawValue(ReceiptContact *message, int32_t value) {
 #pragma mark - Enum ReceiptContact_Type
 
 GPBEnumDescriptor *ReceiptContact_Type_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Email\000";
@@ -1394,7 +1388,8 @@ GPBEnumDescriptor *ReceiptContact_Type_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:ReceiptContact_Type_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

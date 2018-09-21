@@ -13,12 +13,15 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Notification.pbobjc.h"
- #import "Banklink.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "Token.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Notification.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Token.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -62,7 +65,7 @@ static GPBFileDescriptor *NotificationRoot_FileDescriptor(void) {
 #pragma mark - Enum NotifyStatus
 
 GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Accepted\000NoSubscribers\000";
@@ -77,7 +80,8 @@ GPBEnumDescriptor *NotifyStatus_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:NotifyStatus_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -846,6 +850,7 @@ typedef struct TokenCancelled__storage_ {
 @dynamic tokenRequestId;
 @dynamic bankId;
 @dynamic state;
+@dynamic hasContact, contact;
 
 typedef struct EndorseAndAddKey__storage_ {
   uint32_t _has_storage_[1];
@@ -854,6 +859,7 @@ typedef struct EndorseAndAddKey__storage_ {
   NSString *tokenRequestId;
   NSString *bankId;
   NSString *state;
+  ReceiptContact *contact;
 } EndorseAndAddKey__storage_;
 
 // This method is threadsafe because it is initially called
@@ -906,6 +912,15 @@ typedef struct EndorseAndAddKey__storage_ {
         .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, state),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "contact",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReceiptContact),
+        .number = EndorseAndAddKey_FieldNumber_Contact,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(EndorseAndAddKey__storage_, contact),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1278,7 +1293,7 @@ void SetNotification_Status_RawValue(Notification *message, int32_t value) {
 #pragma mark - Enum Notification_Status
 
 GPBEnumDescriptor *Notification_Status_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Pending\000Delivered\000Completed\000Inva"
@@ -1296,7 +1311,8 @@ GPBEnumDescriptor *Notification_Status_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Notification_Status_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

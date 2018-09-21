@@ -13,12 +13,14 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Transaction.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "Member.pbobjc.h"
- #import "Money.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Transaction.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -61,7 +63,7 @@ static GPBFileDescriptor *TransactionRoot_FileDescriptor(void) {
 #pragma mark - Enum TransactionType
 
 GPBEnumDescriptor *TransactionType_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidType\000Debit\000Credit\000";
@@ -76,7 +78,8 @@ GPBEnumDescriptor *TransactionType_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:TransactionType_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -97,7 +100,7 @@ BOOL TransactionType_IsValidValue(int32_t value__) {
 #pragma mark - Enum TransactionStatus
 
 GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidStatus\000Pending\000Processing\000Success"
@@ -106,7 +109,7 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
         "validCurrency\000FailurePermissionDenied\000Fa"
         "ilureQuoteExpired\000FailureInvalidAmount\000F"
         "ailureInvalidQuote\000FailureExpired\000Failur"
-        "eGeneric\000";
+        "eGeneric\000Sent\000Initiated\000";
     static const int32_t values[] = {
         TransactionStatus_InvalidStatus,
         TransactionStatus_Pending,
@@ -122,6 +125,8 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
         TransactionStatus_FailureInvalidQuote,
         TransactionStatus_FailureExpired,
         TransactionStatus_FailureGeneric,
+        TransactionStatus_Sent,
+        TransactionStatus_Initiated,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TransactionStatus)
@@ -129,7 +134,8 @@ GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:TransactionStatus_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -152,6 +158,8 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
     case TransactionStatus_FailureInvalidQuote:
     case TransactionStatus_FailureExpired:
     case TransactionStatus_FailureGeneric:
+    case TransactionStatus_Sent:
+    case TransactionStatus_Initiated:
       return YES;
     default:
       return NO;
@@ -161,7 +169,7 @@ BOOL TransactionStatus_IsValidValue(int32_t value__) {
 #pragma mark - Enum RequestStatus
 
 GPBEnumDescriptor *RequestStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidRequest\000SuccessfulRequest\000MoreSig"
@@ -177,7 +185,8 @@ GPBEnumDescriptor *RequestStatus_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:RequestStatus_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

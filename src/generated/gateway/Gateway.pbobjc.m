@@ -13,25 +13,27 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "gateway/Gateway.pbobjc.h"
- #import "google/api/Annotations.pbobjc.h"
- #import "Account.pbobjc.h"
- #import "Address.pbobjc.h"
- #import "Bankinfo.pbobjc.h"
- #import "Banklink.pbobjc.h"
- #import "Blob.pbobjc.h"
- #import "Member.pbobjc.h"
- #import "Money.pbobjc.h"
- #import "Notification.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "Subscriber.pbobjc.h"
- #import "Token.pbobjc.h"
- #import "Transaction.pbobjc.h"
- #import "Transfer.pbobjc.h"
- #import "Alias.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Service.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "gateway/Gateway.pbobjc.h"
+#import "google/api/Annotations.pbobjc.h"
+#import "Account.pbobjc.h"
+#import "Address.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Notification.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Subscriber.pbobjc.h"
+#import "Token.pbobjc.h"
+#import "Transaction.pbobjc.h"
+#import "Transfer.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Service.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -134,11 +136,13 @@ typedef struct Page__storage_ {
 
 @dynamic nonce;
 @dynamic memberType;
+@dynamic tokenRequestId;
 
 typedef struct CreateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
   CreateMemberType memberType;
   NSString *nonce;
+  NSString *tokenRequestId;
 } CreateMemberRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -164,6 +168,15 @@ typedef struct CreateMemberRequest__storage_ {
         .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, memberType),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateMemberRequest_FieldNumber_TokenRequestId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1039,6 +1052,92 @@ typedef struct VerifyAliasOnBehalfResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(VerifyAliasOnBehalfResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NormalizeAliasRequest
+
+@implementation NormalizeAliasRequest
+
+@dynamic hasAlias, alias;
+
+typedef struct NormalizeAliasRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Alias *alias;
+} NormalizeAliasRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = NormalizeAliasRequest_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NormalizeAliasRequest__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NormalizeAliasRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NormalizeAliasRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - NormalizeAliasResponse
+
+@implementation NormalizeAliasResponse
+
+@dynamic hasAlias, alias;
+
+typedef struct NormalizeAliasResponse__storage_ {
+  uint32_t _has_storage_[1];
+  Alias *alias;
+} NormalizeAliasResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = NormalizeAliasResponse_FieldNumber_Alias,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(NormalizeAliasResponse__storage_, alias),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[NormalizeAliasResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(NormalizeAliasResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -4751,11 +4850,13 @@ typedef struct GetTokenBlobResponse__storage_ {
 
 @dynamic hasPayload, payload;
 @dynamic options, options_Count;
+@dynamic userRefId;
 
 typedef struct StoreTokenRequestRequest__storage_ {
   uint32_t _has_storage_[1];
   TokenPayload *payload;
   NSMutableDictionary *options;
+  NSString *userRefId;
 } StoreTokenRequestRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -4780,6 +4881,15 @@ typedef struct StoreTokenRequestRequest__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(StoreTokenRequestRequest__storage_, options),
         .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "userRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = StoreTokenRequestRequest_FieldNumber_UserRefId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(StoreTokenRequestRequest__storage_, userRefId),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
@@ -5408,7 +5518,7 @@ void SetGetTokensRequest_Type_RawValue(GetTokensRequest *message, int32_t value)
 #pragma mark - Enum GetTokensRequest_Type
 
 GPBEnumDescriptor *GetTokensRequest_Type_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Access\000Transfer\000";
@@ -5423,7 +5533,8 @@ GPBEnumDescriptor *GetTokensRequest_Type_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:GetTokensRequest_Type_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -5555,7 +5666,7 @@ void SetGetTokensRequest_TokenFilter_Role_RawValue(GetTokensRequest_TokenFilter 
 #pragma mark - Enum GetTokensRequest_TokenFilter_Role
 
 GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Any\000From\000To\000Issuer\000";
@@ -5571,7 +5682,8 @@ GPBEnumDescriptor *GetTokensRequest_TokenFilter_Role_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:GetTokensRequest_TokenFilter_Role_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -6635,7 +6747,7 @@ void SetGetTransfersRequest_TransferFilter_Role_RawValue(GetTransfersRequest_Tra
 #pragma mark - Enum GetTransfersRequest_TransferFilter_Role
 
 GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Any\000Payer\000Payee\000";
@@ -6650,7 +6762,8 @@ GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void) 
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:GetTransfersRequest_TransferFilter_Role_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -6733,6 +6846,7 @@ typedef struct GetTransfersResponse__storage_ {
 @dynamic perPage;
 @dynamic sort;
 @dynamic provider;
+@dynamic tppId;
 
 typedef struct GetBanksRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -6743,6 +6857,7 @@ typedef struct GetBanksRequest__storage_ {
   NSString *country;
   NSString *sort;
   NSString *provider;
+  NSString *tppId;
 } GetBanksRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -6811,6 +6926,15 @@ typedef struct GetBanksRequest__storage_ {
         .number = GetBanksRequest_FieldNumber_Provider,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(GetBanksRequest__storage_, provider),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tppId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBanksRequest_FieldNumber_TppId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(GetBanksRequest__storage_, tppId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

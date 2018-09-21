@@ -103,6 +103,12 @@ typedef GPB_ENUM(TransactionStatus) {
 
   /** the transaction has failed due to other reasons */
   TransactionStatus_FailureGeneric = 5,
+
+  /** legacy transfers only: the transaction has been sent but has not been acknowledged by the bank */
+  TransactionStatus_Sent = 16,
+
+  /** the transaction has been initiated but the status is unknown */
+  TransactionStatus_Initiated = 17,
 };
 
 GPBEnumDescriptor *TransactionStatus_EnumDescriptor(void);

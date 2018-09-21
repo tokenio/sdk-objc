@@ -192,6 +192,7 @@ typedef GPB_ENUM(Page_FieldNumber) {
 typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
   CreateMemberRequest_FieldNumber_Nonce = 1,
   CreateMemberRequest_FieldNumber_MemberType = 2,
+  CreateMemberRequest_FieldNumber_TokenRequestId = 3,
 };
 
 @interface CreateMemberRequest : GPBMessage
@@ -200,6 +201,9 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @property(nonatomic, readwrite) enum CreateMemberType memberType;
+
+/** Optional token request ID, if set the member will be claimed by the TPP initiating the token request. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @end
 
@@ -498,6 +502,34 @@ typedef GPB_ENUM(VerifyAliasOnBehalfResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
+
+@end
+
+#pragma mark - NormalizeAliasRequest
+
+typedef GPB_ENUM(NormalizeAliasRequest_FieldNumber) {
+  NormalizeAliasRequest_FieldNumber_Alias = 1,
+};
+
+@interface NormalizeAliasRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - NormalizeAliasResponse
+
+typedef GPB_ENUM(NormalizeAliasResponse_FieldNumber) {
+  NormalizeAliasResponse_FieldNumber_Alias = 1,
+};
+
+@interface NormalizeAliasResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 @end
 
@@ -1770,6 +1802,7 @@ typedef GPB_ENUM(GetTokenBlobResponse_FieldNumber) {
 typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
   StoreTokenRequestRequest_FieldNumber_Payload = 1,
   StoreTokenRequestRequest_FieldNumber_Options = 2,
+  StoreTokenRequestRequest_FieldNumber_UserRefId = 3,
 };
 
 @interface StoreTokenRequestRequest : GPBMessage
@@ -1781,6 +1814,8 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
 /** The number of items in @c options without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger options_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
 
 @end
 
@@ -2457,6 +2492,7 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
   GetBanksRequest_FieldNumber_PerPage = 5,
   GetBanksRequest_FieldNumber_Sort = 6,
   GetBanksRequest_FieldNumber_Provider = 7,
+  GetBanksRequest_FieldNumber_TppId = 8,
 };
 
 @interface GetBanksRequest : GPBMessage
@@ -2483,6 +2519,9 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 
 /** (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
+
+/** (Optional) If specified, return banks which are integrated with the TPP */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId;
 
 @end
 

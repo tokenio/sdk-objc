@@ -485,7 +485,6 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_LastRecoverySequence = 7,
   Member_FieldNumber_LastOperationSequence = 8,
   Member_FieldNumber_Type = 9,
-  Member_FieldNumber_TppId = 10,
 };
 
 /**
@@ -527,9 +526,6 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 /** type of member */
 @property(nonatomic, readwrite) Member_MemberType type;
-
-/** TPP id associated with the member */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId;
 
 @end
 

@@ -4,6 +4,7 @@ package io.token.proto.common.notification;
 import "banklink.proto";
 import "security.proto";
 import "token.proto";
+import "member.proto";
 import "extensions/field.proto";
 
 option java_outer_classname = "NotificationProtos";
@@ -102,6 +103,7 @@ message EndorseAndAddKey {
   string token_request_id = 3;    // Optional token request ID
   string bank_id = 4;             // Optional bank ID
   string state = 5;               // Optional token request state for signing
+  io.token.proto.common.member.ReceiptContact contact = 6;    //Optional receipt contact
 }
 
 // A notification to indicate that a previously sent notification was invalidated

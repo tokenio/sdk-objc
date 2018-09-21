@@ -13,15 +13,15 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "fank/Fank.pbobjc.h"
- #import "google/api/Annotations.pbobjc.h"
- #import "Alias.pbobjc.h"
- #import "Member.pbobjc.h"
- #import "Money.pbobjc.h"
- #import "Banklink.pbobjc.h"
- #import "Notification.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import "fank/Fank.pbobjc.h"
+#import "google/api/Annotations.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "Member.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Notification.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

@@ -27,8 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountDetails;
 @class AccountFeatures;
-@class AccountTag;
 @class BankAccount;
 @class BankAccount_Ach;
 @class BankAccount_Bank;
@@ -41,6 +41,30 @@ CF_EXTERN_C_BEGIN
 @class BankAuthorization;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum AccountDetails_AccountType
+
+typedef GPB_ENUM(AccountDetails_AccountType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  AccountDetails_AccountType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  AccountDetails_AccountType_Invalid = 0,
+  AccountDetails_AccountType_Other = 1,
+  AccountDetails_AccountType_Checking = 2,
+  AccountDetails_AccountType_Savings = 3,
+  AccountDetails_AccountType_Loan = 4,
+};
+
+GPBEnumDescriptor *AccountDetails_AccountType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL AccountDetails_AccountType_IsValidValue(int32_t value);
 
 #pragma mark - AccountRoot
 
@@ -90,24 +114,6 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
 
 @end
 
-#pragma mark - AccountTag
-
-typedef GPB_ENUM(AccountTag_FieldNumber) {
-  AccountTag_FieldNumber_Key = 1,
-  AccountTag_FieldNumber_Value = 2,
-};
-
-/**
- * Optional account tag data.
- **/
-@interface AccountTag : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *key;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *value;
-
-@end
-
 #pragma mark - AccountFeatures
 
 typedef GPB_ENUM(AccountFeatures_FieldNumber) {
@@ -139,17 +145,60 @@ typedef GPB_ENUM(AccountFeatures_FieldNumber) {
 
 @end
 
+#pragma mark - AccountDetails
+
+typedef GPB_ENUM(AccountDetails_FieldNumber) {
+  AccountDetails_FieldNumber_Identifier = 1,
+  AccountDetails_FieldNumber_Type = 2,
+  AccountDetails_FieldNumber_Status = 3,
+  AccountDetails_FieldNumber_Metadata = 4,
+};
+
+/**
+ * Optional account details. Structure of the data is dependent on the underlying bank and is
+ * subject to change.
+ **/
+@interface AccountDetails : GPBMessage
+
+/** Bank account identifier */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *identifier;
+
+/** Type of account */
+@property(nonatomic, readwrite) AccountDetails_AccountType type;
+
+/** Status of account. E.g., "Active/Inactive/Frozen/Dormant" */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *status;
+
+/** Additional account metadata */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@end
+
+/**
+ * Fetches the raw value of a @c AccountDetails's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t AccountDetails_Type_RawValue(AccountDetails *message);
+/**
+ * Sets the raw value of an @c AccountDetails's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetAccountDetails_Type_RawValue(AccountDetails *message, int32_t value);
+
 #pragma mark - Account
 
 typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Id_p = 1,
   Account_FieldNumber_Name = 2,
   Account_FieldNumber_BankId = 3,
-  Account_FieldNumber_TagsArray = 4,
   Account_FieldNumber_IsLocked = 5,
   Account_FieldNumber_AccountFeatures = 6,
   Account_FieldNumber_LastCacheUpdateMs = 7,
   Account_FieldNumber_NextCacheUpdateMs = 8,
+  Account_FieldNumber_AccountDetails = 9,
 };
 
 /**
@@ -166,10 +215,6 @@ typedef GPB_ENUM(Account_FieldNumber) {
 /** bank ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AccountTag*> *tagsArray;
-/** The number of items in @c tagsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger tagsArray_Count;
-
 /** indicates whether account requires re-linking (perhaps after member recovery) */
 @property(nonatomic, readwrite) BOOL isLocked;
 
@@ -183,6 +228,11 @@ typedef GPB_ENUM(Account_FieldNumber) {
 
 /** timestamp of the next scheduled time to update the balance/transaction cache for that account */
 @property(nonatomic, readwrite) int64_t nextCacheUpdateMs;
+
+/** optional additional account details */
+@property(nonatomic, readwrite, strong, null_resettable) AccountDetails *accountDetails;
+/** Test to see if @c accountDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasAccountDetails;
 
 @end
 

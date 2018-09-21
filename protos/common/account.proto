@@ -19,12 +19,6 @@ message PlaintextBankAuthorization {
   int64 expiration_ms = 4; // Expiration time
 }
 
-// Optional account tag data.
-message AccountTag {
-  string key = 1;
-  string value = 2;
-}
-
 // Not all accounts support all Token features.
 message AccountFeatures {
   bool supports_payment = 1;            // **DEPRECATED** can both send and receive payments
@@ -34,16 +28,33 @@ message AccountFeatures {
   bool supports_receive_payment = 5;    // can receive payments to account
 }
 
+// Optional account details. Structure of the data is dependent on the underlying bank and is
+// subject to change.
+message AccountDetails {
+  enum AccountType {
+    INVALID = 0;
+    OTHER = 1;
+    CHECKING = 2;
+    SAVINGS = 3;
+    LOAN = 4;
+  }
+
+  string identifier = 1;                // Bank account identifier
+  AccountType type = 2;                 // Type of account
+  string status = 3;                    // Status of account. E.g., "Active/Inactive/Frozen/Dormant"
+  map<string, string> metadata = 4 [(io.token.proto.extensions.field.redact) = true]; // Additional account metadata
+}
+
 // Token linked account.
 message Account {
   string id = 1;                        // account ID
   string name = 2 [(io.token.proto.extensions.field.redact) = true]; // human-friendly name. E.g., "Checking account with number ...1234"
   string bank_id = 3;                   // bank ID
-  repeated AccountTag tags = 4 [(io.token.proto.extensions.field.redact) = true];
   bool is_locked = 5;                   // indicates whether account requires re-linking (perhaps after member recovery)
   AccountFeatures account_features = 6; // features account supports
   int64 last_cache_update_ms = 7;       // timestamp of the last time the balance/transaction cache was updated for that account
   int64 next_cache_update_ms = 8;       // timestamp of the next scheduled time to update the balance/transaction cache for that account
+  AccountDetails account_details = 9;   // optional additional account details
 }
 
 // Account information. This is what the end user links with

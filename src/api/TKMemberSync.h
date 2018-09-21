@@ -655,4 +655,17 @@
 - (NSString *)storeTokenRequest:(TokenPayload *)tokenPayload
                         options:(NSDictionary<NSString*, NSString*> *)options;
 
+/**
+ * Replaces the member's receipt contact.
+ *
+ * @param receiptContact receipt contact to set
+ */
+- (void)setReceiptContact:(ReceiptContact *)receiptContact;
+
+/**
+ * Gets the member's receipt contact.
+ *
+ * @return receipt contact
+ */
+- (ReceiptContact *)getReceiptContact;
 @end

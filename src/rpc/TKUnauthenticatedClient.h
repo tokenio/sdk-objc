@@ -218,6 +218,7 @@
  * @param tokenRequestId optional token request id
  * @param bankId optional bank id
  * @param state optional token request state for signing
+ * @param contact receipt contact
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
@@ -226,6 +227,7 @@
                 tokenRequestId:(NSString *)tokenRequestId
                         bankId:(NSString *)bankId
                          state:(NSString *)state
+                       contact:(ReceiptContact *)contact
                      onSuccess:(OnSuccessWithNotifyResult)onSuccess
                        onError:(OnError)onError;
 /**
