@@ -41,6 +41,7 @@ CF_EXTERN_C_BEGIN
 @class PayerTransferFailed;
 @class PayerTransferProcessed;
 @class PaymentRequest;
+@class ReceiptContact;
 @class RecoveryCompleted;
 @class StepUp;
 @class TokenCancelled;
@@ -416,6 +417,7 @@ typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
   EndorseAndAddKey_FieldNumber_TokenRequestId = 3,
   EndorseAndAddKey_FieldNumber_BankId = 4,
   EndorseAndAddKey_FieldNumber_State = 5,
+  EndorseAndAddKey_FieldNumber_Contact = 6,
 };
 
 /**
@@ -439,6 +441,11 @@ typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
 
 /** Optional token request state for signing */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *state;
+
+/** Optional receipt contact */
+@property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
+/** Test to see if @c contact has been set. */
+@property(nonatomic, readwrite) BOOL hasContact;
 
 @end
 

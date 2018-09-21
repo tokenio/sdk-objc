@@ -29,6 +29,7 @@ message TokenRequest {
   string id = 1;                                                                      // request id
   TokenPayload payload = 2;                                                           // token payload
   map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true]; // generic string map of options
+  string user_ref_id = 4;
 }
 
 message TokenSignature {

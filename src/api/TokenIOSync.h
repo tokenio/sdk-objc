@@ -175,6 +175,7 @@
  * @param tokenRequestId optional token request id
  * @param bankId optional bank id
  * @param state optional token request state for signing
+ * @param contact receipt contact
  * @return notify result
  */
 - (NotifyResult *)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
@@ -182,7 +183,9 @@
                           deviceMetadata:(DeviceMetadata *)deviceMetadata
                           tokenRequestId:(NSString *)tokenRequestId
                                   bankId:(NSString *)bankId
-                                   state:(NSString *)state;
+                                   state:(NSString *)state
+                                 contact:(ReceiptContact *)contact;
+
 /**
  * Invalidate a notification.
  *

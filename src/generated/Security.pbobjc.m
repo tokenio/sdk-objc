@@ -13,8 +13,10 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Security.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Security.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -168,7 +170,7 @@ void SetKey_Algorithm_RawValue(Key *message, int32_t value) {
 #pragma mark - Enum Key_Algorithm
 
 GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidAlgorithm\000Ed25519\000EcdsaSha256\000Rs2"
@@ -185,7 +187,8 @@ GPBEnumDescriptor *Key_Algorithm_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Key_Algorithm_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -207,7 +210,7 @@ BOOL Key_Algorithm_IsValidValue(int32_t value__) {
 #pragma mark - Enum Key_Level
 
 GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidLevel\000Privileged\000Standard\000Low\000";
@@ -223,7 +226,8 @@ GPBEnumDescriptor *Key_Level_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Key_Level_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

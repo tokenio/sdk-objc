@@ -109,6 +109,8 @@
 @class LinkAccountsOauthResponse;
 @class LinkAccountsRequest;
 @class LinkAccountsResponse;
+@class NormalizeAliasRequest;
+@class NormalizeAliasResponse;
 @class NotifyRequest;
 @class NotifyResponse;
 @class ReplaceTokenRequest;
@@ -405,6 +407,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)verifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToVerifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
+
+- (void)normalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToNormalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)

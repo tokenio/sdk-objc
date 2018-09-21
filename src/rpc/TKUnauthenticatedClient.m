@@ -339,6 +339,7 @@
                 tokenRequestId:(NSString *)tokenRequestId
                         bankId:(NSString *)bankId
                          state:(NSString *)state
+                       contact:(ReceiptContact *)contact
                      onSuccess:(OnSuccessWithNotifyResult)onSuccess
                        onError:(OnError)onError {
     TriggerEndorseAndAddKeyNotificationRequest *request = [TriggerEndorseAndAddKeyNotificationRequest message];
@@ -347,6 +348,7 @@
     request.endorseAndAddKey.tokenRequestId = tokenRequestId;
     request.endorseAndAddKey.bankId = bankId;
     request.endorseAndAddKey.state = state;
+    request.endorseAndAddKey.contact = contact;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

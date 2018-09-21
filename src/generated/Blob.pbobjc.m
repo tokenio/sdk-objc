@@ -13,8 +13,10 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Blob.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Blob.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -110,7 +112,7 @@ typedef struct Blob__storage_ {
 #pragma mark - Enum Blob_AccessMode
 
 GPBEnumDescriptor *Blob_AccessMode_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Default\000Public\000";
@@ -124,7 +126,8 @@ GPBEnumDescriptor *Blob_AccessMode_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Blob_AccessMode_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

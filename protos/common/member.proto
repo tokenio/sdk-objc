@@ -115,7 +115,6 @@ message Member {
   int32 last_recovery_sequence = 7;                     // sequence number for member's last recovery entry
   int32 last_operation_sequence = 8;                    // sequence number for member's last operation
   MemberType type = 9;                                  // type of member
-  string tpp_id = 10;                                   // TPP id associated with the member
 
   enum MemberType {
     INVALID_MEMBER_TYPE = 0;

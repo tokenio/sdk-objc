@@ -1563,7 +1563,53 @@
          withRequest:request
              onError:onError];
 }
+
+- (void)setReceiptContact:(ReceiptContact *)receiptContact
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError {
+    SetReceiptContactRequest *request = [SetReceiptContactRequest message];
+    request.contact = receiptContact;
+    RpcLogStart(request);
     
+    GRPCProtoCall *call = [gateway
+                           RPCToSetReceiptContactWithRequest:request
+                           handler:^(SetReceiptContactResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)getReceiptContact:(OnSuccessWithReceiptContact)onSuccess
+                  onError:(OnError)onError {
+    GetReceiptContactRequest *request = [GetReceiptContactRequest message];
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetReceiptContactWithRequest:request
+                           handler:^(GetReceiptContactResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.contact);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+
+
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel

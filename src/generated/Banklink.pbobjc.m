@@ -13,9 +13,11 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Banklink.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Banklink.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -57,7 +59,7 @@ static GPBFileDescriptor *BanklinkRoot_FileDescriptor(void) {
 #pragma mark - Enum AccountLinkingStatus
 
 GPBEnumDescriptor *AccountLinkingStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Success\000FailureBankAuthorization"
@@ -73,7 +75,8 @@ GPBEnumDescriptor *AccountLinkingStatus_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:AccountLinkingStatus_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

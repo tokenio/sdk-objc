@@ -736,6 +736,23 @@
     }];
 }
 
+- (void)setReceiptContact:(ReceiptContact *)receiptContact {
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async setReceiptContact:receiptContact
+                            onSuccess:^{ call.onSuccess(nil); }
+                              onError:call.onError];
+    }];
+}
+
+- (ReceiptContact *)getReceiptContact {
+    TKRpcSyncCall<ReceiptContact *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getReceiptContact:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {

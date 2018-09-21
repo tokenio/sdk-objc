@@ -13,7 +13,7 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Bankinfo.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

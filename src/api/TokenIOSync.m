@@ -183,7 +183,8 @@
                           deviceMetadata:(DeviceMetadata *)deviceMetadata
                           tokenRequestId:(NSString *)tokenRequestId
                                   bankId:(NSString *)bankId
-                                   state:(NSString *)state {
+                                   state:(NSString *)state
+                                 contact:(ReceiptContact *)contact {
     TKRpcSyncCall<NotifyResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async notifyEndorseAndAddKey:tokenPayload
@@ -192,6 +193,7 @@
                             tokenRequestId:tokenRequestId
                                     bankId:bankId
                                      state:state
+                                   contact:contact
                                  onSuccess:call.onSuccess
                                    onError:call.onError];
     }];

@@ -13,13 +13,15 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Transferinstructions.pbobjc.h"
- #import "Account.pbobjc.h"
- #import "Address.pbobjc.h"
- #import "Banklink.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Transferinstructions.pbobjc.h"
+#import "Account.pbobjc.h"
+#import "Address.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -62,7 +64,7 @@ static GPBFileDescriptor *TransferinstructionsRoot_FileDescriptor(void) {
 #pragma mark - Enum PurposeOfPayment
 
 GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Other\000PersonalExpenses\000PurchaseO"
@@ -84,7 +86,8 @@ GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PurposeOfPayment_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -110,7 +113,7 @@ BOOL PurposeOfPayment_IsValidValue(int32_t value__) {
 #pragma mark - Enum PaymentContext
 
 GPBEnumDescriptor *PaymentContext_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidContext\000OtherContext\000BillPayment\000"
@@ -130,7 +133,8 @@ GPBEnumDescriptor *PaymentContext_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PaymentContext_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

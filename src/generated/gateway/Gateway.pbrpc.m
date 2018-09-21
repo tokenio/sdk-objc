@@ -357,6 +357,18 @@
              responseClass:[VerifyAliasOnBehalfResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
+
+- (void)normalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToNormalizeAliasWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToNormalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"NormalizeAlias"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[NormalizeAliasResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 /**

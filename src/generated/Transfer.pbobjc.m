@@ -13,13 +13,15 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Transfer.pbobjc.h"
- #import "Money.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "Transaction.pbobjc.h"
- #import "Transferinstructions.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Transfer.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Transaction.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -206,7 +208,7 @@ void SetTransfer_Method_RawValue(Transfer *message, int32_t value) {
 #pragma mark - Enum Transfer_Method
 
 GPBEnumDescriptor *Transfer_Method_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Default\000Instant\000";
@@ -220,7 +222,8 @@ GPBEnumDescriptor *Transfer_Method_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Transfer_Method_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

@@ -13,8 +13,10 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "fank/Cma9.pbobjc.h"
- #import "google/api/Annotations.pbobjc.h"
+#import <stdatomic.h>
+
+#import "fank/Cma9.pbobjc.h"
+#import "google/api/Annotations.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -56,7 +58,7 @@ static GPBFileDescriptor *Cma9Root_FileDescriptor(void) {
 #pragma mark - Enum PaymentContextCode
 
 GPBEnumDescriptor *PaymentContextCode_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidCode\000BillPayment\000EcommerceGoods\000E"
@@ -77,7 +79,8 @@ GPBEnumDescriptor *PaymentContextCode_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PaymentContextCode_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -101,7 +104,7 @@ BOOL PaymentContextCode_IsValidValue(int32_t value__) {
 #pragma mark - Enum AccountSchemeName
 
 GPBEnumDescriptor *AccountSchemeName_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidAccountSchemeName\000Iban\000SortCodeAc"
@@ -119,7 +122,8 @@ GPBEnumDescriptor *AccountSchemeName_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:AccountSchemeName_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -140,7 +144,7 @@ BOOL AccountSchemeName_IsValidValue(int32_t value__) {
 #pragma mark - Enum AccountPermission
 
 GPBEnumDescriptor *AccountPermission_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidPermission\000ReadAccountsBasic\000Read"
@@ -175,7 +179,8 @@ GPBEnumDescriptor *AccountPermission_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:AccountPermission_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -207,7 +212,7 @@ BOOL AccountPermission_IsValidValue(int32_t value__) {
 #pragma mark - Enum CreditDebit
 
 GPBEnumDescriptor *CreditDebit_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidIndicator\000Credit\000Debit\000";
@@ -224,7 +229,8 @@ GPBEnumDescriptor *CreditDebit_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:CreditDebit_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -245,7 +251,7 @@ BOOL CreditDebit_IsValidValue(int32_t value__) {
 #pragma mark - Enum PaymentAgentSchemeName
 
 GPBEnumDescriptor *PaymentAgentSchemeName_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "InvalidAgentSchemeName\000Bicfi\000";
@@ -261,7 +267,8 @@ GPBEnumDescriptor *PaymentAgentSchemeName_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PaymentAgentSchemeName_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -836,7 +843,7 @@ void SetAccountRequestData_Status_RawValue(AccountRequestData *message, int32_t 
 #pragma mark - Enum AccountRequestData_AccountRequestStatus
 
 GPBEnumDescriptor *AccountRequestData_AccountRequestStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Authorised\000AwaitingAuthorisation"
@@ -856,7 +863,8 @@ GPBEnumDescriptor *AccountRequestData_AccountRequestStatus_EnumDescriptor(void) 
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:AccountRequestData_AccountRequestStatus_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -1020,7 +1028,7 @@ void SetServicer_SchemeName_RawValue(Servicer *message, int32_t value) {
 #pragma mark - Enum Servicer_ServicerSchemeName
 
 GPBEnumDescriptor *Servicer_ServicerSchemeName_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Bicfi\000";
@@ -1036,7 +1044,8 @@ GPBEnumDescriptor *Servicer_ServicerSchemeName_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Servicer_ServicerSchemeName_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -1405,7 +1414,7 @@ void SetBalance_Type_RawValue(Balance *message, int32_t value) {
 #pragma mark - Enum Balance_BalanceType
 
 GPBEnumDescriptor *Balance_BalanceType_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000ClosingAvailable\000ClosingBooked\000E"
@@ -1434,7 +1443,8 @@ GPBEnumDescriptor *Balance_BalanceType_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Balance_BalanceType_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -1660,7 +1670,7 @@ void SetTransaction_Status_RawValue(Transaction *message, int32_t value) {
 #pragma mark - Enum Transaction_TransactionStatus
 
 GPBEnumDescriptor *Transaction_TransactionStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Booked\000Pending\000";
@@ -1677,7 +1687,8 @@ GPBEnumDescriptor *Transaction_TransactionStatus_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:Transaction_TransactionStatus_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -3141,7 +3152,7 @@ void SetPaymentData_Status_RawValue(PaymentData *message, int32_t value) {
 #pragma mark - Enum PaymentData_PaymentSetupStatus
 
 GPBEnumDescriptor *PaymentData_PaymentSetupStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000AcceptedCustomerProfile\000Accepted"
@@ -3161,7 +3172,8 @@ GPBEnumDescriptor *PaymentData_PaymentSetupStatus_EnumDescriptor(void) {
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PaymentData_PaymentSetupStatus_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -3336,7 +3348,7 @@ void SetPaymentSubmissionData_Status_RawValue(PaymentSubmissionData *message, in
 #pragma mark - Enum PaymentSubmissionData_PaymentSubmissionStatus
 
 GPBEnumDescriptor *PaymentSubmissionData_PaymentSubmissionStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000AcceptedSettlementCompleted\000Acce"
@@ -3357,7 +3369,8 @@ GPBEnumDescriptor *PaymentSubmissionData_PaymentSubmissionStatus_EnumDescriptor(
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:PaymentSubmissionData_PaymentSubmissionStatus_IsValidValue
                               extraTextFormatInfo:extraTextFormatInfo];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

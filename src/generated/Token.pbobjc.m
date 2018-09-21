@@ -13,16 +13,18 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Token.pbobjc.h"
- #import "Blob.pbobjc.h"
- #import "Money.pbobjc.h"
- #import "Pricing.pbobjc.h"
- #import "Security.pbobjc.h"
- #import "Transfer.pbobjc.h"
- #import "Transferinstructions.pbobjc.h"
- #import "Alias.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Token.pbobjc.h"
+#import "Blob.pbobjc.h"
+#import "Money.pbobjc.h"
+#import "Pricing.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Transfer.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -66,7 +68,7 @@ static GPBFileDescriptor *TokenRoot_FileDescriptor(void) {
 #pragma mark - Enum TransferTokenStatus
 
 GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Success\000FailureRejected\000FailureI"
@@ -94,7 +96,8 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:TransferTokenStatus_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -214,12 +217,14 @@ typedef struct Token__storage_ {
 @dynamic id_p;
 @dynamic hasPayload, payload;
 @dynamic options, options_Count;
+@dynamic userRefId;
 
 typedef struct TokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   TokenPayload *payload;
   NSMutableDictionary *options;
+  NSString *userRefId;
 } TokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -253,6 +258,15 @@ typedef struct TokenRequest__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, options),
         .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "userRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequest_FieldNumber_UserRefId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(TokenRequest__storage_, userRefId),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
@@ -341,7 +355,7 @@ void SetTokenSignature_Action_RawValue(TokenSignature *message, int32_t value) {
 #pragma mark - Enum TokenSignature_Action
 
 GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Endorsed\000Cancelled\000";
@@ -356,7 +370,8 @@ GPBEnumDescriptor *TokenSignature_Action_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:TokenSignature_Action_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }
@@ -1596,7 +1611,7 @@ void SetTokenOperationResult_Status_RawValue(TokenOperationResult *message, int3
 #pragma mark - Enum TokenOperationResult_Status
 
 GPBEnumDescriptor *TokenOperationResult_Status_EnumDescriptor(void) {
-  static GPBEnumDescriptor *descriptor = NULL;
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Success\000MoreSignaturesNeeded\000";
@@ -1611,7 +1626,8 @@ GPBEnumDescriptor *TokenOperationResult_Status_EnumDescriptor(void) {
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
                                      enumVerifier:TokenOperationResult_Status_IsValidValue];
-    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
     }
   }

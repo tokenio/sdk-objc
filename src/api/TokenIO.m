@@ -295,6 +295,7 @@
                 tokenRequestId:(NSString *)tokenRequestId
                         bankId:(NSString *)bankId
                          state:(NSString *)state
+                       contact:(ReceiptContact *)contact
                      onSuccess:(OnSuccessWithNotifyResult)onSuccess
                        onError:(OnError)onError {
     AddKey *addKey = [AddKey message];
@@ -305,6 +306,7 @@
                                    tokenRequestId:tokenRequestId
                                            bankId:bankId
                                             state:state
+                                          contact:contact
                                         onSuccess:onSuccess
                                           onError:onError];
 }

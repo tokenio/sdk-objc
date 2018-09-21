@@ -13,10 +13,12 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
- #import "Account.pbobjc.h"
- #import "Banklink.pbobjc.h"
- #import "extensions/Field.pbobjc.h"
- #import "extensions/Message.pbobjc.h"
+#import <stdatomic.h>
+
+#import "Account.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -133,60 +135,6 @@ typedef struct PlaintextBankAuthorization__storage_ {
 
 @end
 
-#pragma mark - AccountTag
-
-@implementation AccountTag
-
-@dynamic key;
-@dynamic value;
-
-typedef struct AccountTag__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *key;
-  NSString *value;
-} AccountTag__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "key",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountTag_FieldNumber_Key,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccountTag__storage_, key),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "value",
-        .dataTypeSpecific.className = NULL,
-        .number = AccountTag_FieldNumber_Value,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AccountTag__storage_, value),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccountTag class]
-                                     rootClass:[AccountRoot class]
-                                          file:AccountRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccountTag__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - AccountFeatures
 
 @implementation AccountFeatures
@@ -269,6 +217,135 @@ typedef struct AccountFeatures__storage_ {
 
 @end
 
+#pragma mark - AccountDetails
+
+@implementation AccountDetails
+
+@dynamic identifier;
+@dynamic type;
+@dynamic status;
+@dynamic metadata, metadata_Count;
+
+typedef struct AccountDetails__storage_ {
+  uint32_t _has_storage_[1];
+  AccountDetails_AccountType type;
+  NSString *identifier;
+  NSString *status;
+  NSMutableDictionary *metadata;
+} AccountDetails__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "identifier",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountDetails_FieldNumber_Identifier,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AccountDetails__storage_, identifier),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "type",
+        .dataTypeSpecific.enumDescFunc = AccountDetails_AccountType_EnumDescriptor,
+        .number = AccountDetails_FieldNumber_Type,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(AccountDetails__storage_, type),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountDetails_FieldNumber_Status,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(AccountDetails__storage_, status),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = NULL,
+        .number = AccountDetails_FieldNumber_Metadata,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(AccountDetails__storage_, metadata),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccountDetails class]
+                                     rootClass:[AccountRoot class]
+                                          file:AccountRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AccountDetails__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t AccountDetails_Type_RawValue(AccountDetails *message) {
+  GPBDescriptor *descriptor = [AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountDetails_FieldNumber_Type];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetAccountDetails_Type_RawValue(AccountDetails *message, int32_t value) {
+  GPBDescriptor *descriptor = [AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountDetails_FieldNumber_Type];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum AccountDetails_AccountType
+
+GPBEnumDescriptor *AccountDetails_AccountType_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Other\000Checking\000Savings\000Loan\000";
+    static const int32_t values[] = {
+        AccountDetails_AccountType_Invalid,
+        AccountDetails_AccountType_Other,
+        AccountDetails_AccountType_Checking,
+        AccountDetails_AccountType_Savings,
+        AccountDetails_AccountType_Loan,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(AccountDetails_AccountType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:AccountDetails_AccountType_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL AccountDetails_AccountType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case AccountDetails_AccountType_Invalid:
+    case AccountDetails_AccountType_Other:
+    case AccountDetails_AccountType_Checking:
+    case AccountDetails_AccountType_Savings:
+    case AccountDetails_AccountType_Loan:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - Account
 
 @implementation Account
@@ -276,19 +353,19 @@ typedef struct AccountFeatures__storage_ {
 @dynamic id_p;
 @dynamic name;
 @dynamic bankId;
-@dynamic tagsArray, tagsArray_Count;
 @dynamic isLocked;
 @dynamic hasAccountFeatures, accountFeatures;
 @dynamic lastCacheUpdateMs;
 @dynamic nextCacheUpdateMs;
+@dynamic hasAccountDetails, accountDetails;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
   NSString *id_p;
   NSString *name;
   NSString *bankId;
-  NSMutableArray *tagsArray;
   AccountFeatures *accountFeatures;
+  AccountDetails *accountDetails;
   int64_t lastCacheUpdateMs;
   int64_t nextCacheUpdateMs;
 } Account__storage_;
@@ -327,15 +404,6 @@ typedef struct Account__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "tagsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountTag),
-        .number = Account_FieldNumber_TagsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Account__storage_, tagsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "isLocked",
         .dataTypeSpecific.className = NULL,
         .number = Account_FieldNumber_IsLocked,
@@ -370,6 +438,15 @@ typedef struct Account__storage_ {
         .offset = (uint32_t)offsetof(Account__storage_, nextCacheUpdateMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "accountDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccountDetails),
+        .number = Account_FieldNumber_AccountDetails,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(Account__storage_, accountDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

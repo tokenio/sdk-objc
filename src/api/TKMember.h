@@ -815,4 +815,18 @@
                 onSuccess:(OnSuccessWithString)onSuccess
                   onError:(OnError)onError;
 
+/**
+ * Replaces the member's receipt contact.
+ *
+ * @param receiptContact receipt contact to set
+ */
+- (void)setReceiptContact:(ReceiptContact *)receiptContact
+                onSuccess:(OnSuccess)onSuccess
+                  onError:(OnError)onError;
+
+/**
+ * Gets the member's receipt contact.
+ */
+- (void)getReceiptContact:(OnSuccessWithReceiptContact)onSuccess
+                  onError:(OnError)onError;
 @end

@@ -36,6 +36,7 @@ message Page {
 message CreateMemberRequest {
   string nonce = 1; // random string; used only to de-duplicate requests.
   io.token.proto.common.member.CreateMemberType member_type = 2;
+  string token_request_id = 3; // Optional token request ID, if set the member will be claimed by the TPP initiating the token request.
 }
 
 message CreateMemberResponse {
@@ -111,6 +112,14 @@ message VerifyAliasOnBehalfRequest {
 
 message VerifyAliasOnBehalfResponse {
   io.token.proto.common.member.Member member = 1; // updated member
+}
+
+message NormalizeAliasRequest {
+  io.token.proto.common.alias.Alias alias = 1;
+}
+
+message NormalizeAliasResponse {
+  io.token.proto.common.alias.Alias alias = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,6 +480,7 @@ message GetTokenBlobResponse {
 message StoreTokenRequestRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
   map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true];
+  string user_ref_id = 3;
 }
 
 message StoreTokenRequestResponse {
@@ -674,6 +684,7 @@ message GetBanksRequest {
   int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified.
   string sort = 6;                    // The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified.
   string provider = 7;                // (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive)
+  string tpp_id = 8;                  // (Optional) If specified, return banks which are integrated with the TPP
 }
 
 message GetBanksResponse {
@@ -869,6 +880,12 @@ service GatewayService {
   rpc VerifyAliasOnBehalf (VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse) {
     option (google.api.http) = {
       post: "/verifications/onbehalf"
+    };
+  }
+
+  rpc NormalizeAlias (NormalizeAliasRequest) returns (NormalizeAliasResponse) {
+    option (google.api.http) = {
+        get: "/aliases/normalize/{alias.type}/{alias.value}/{alias.realm}"
     };
   }
 
