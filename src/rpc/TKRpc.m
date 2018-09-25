@@ -63,6 +63,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
                   @"Signature_Reason_Authentication",
                   @"Approve authentication")
          onError:onError];
+    
+    if (!signature) {
+        return;
+    }
 
     call.requestHeaders[@"token-realm"] = kTokenRealm;
     call.requestHeaders[@"token-scheme"] = kTokenScheme;
