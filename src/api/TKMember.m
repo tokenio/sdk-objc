@@ -218,6 +218,17 @@
     NSMutableArray<MemberOperation *> *addAliasOps = [NSMutableArray array];
     NSMutableArray<MemberOperationMetadata *> *metadataArray = [NSMutableArray array];
     for (Alias *alias in toAddAliases) {
+        NSString *partnerId = retainedMember.partnerId;
+        if ([partnerId length] != 0) {
+            // Realm must equal member's partner ID if affiliated
+            if ([alias.realm length] != 0 && ![alias.realm isEqualToString:partnerId]) {
+                [NSException
+                   raise:NSInvalidArgumentException
+                   format:@"Invalid realm %@; expected %@", alias.realm, partnerId];
+            }
+            alias.realm = partnerId;
+        }
+
         MemberOperation *addAlias = [MemberOperation message];
         addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
         addAlias.addAlias.realm = alias.realm;
