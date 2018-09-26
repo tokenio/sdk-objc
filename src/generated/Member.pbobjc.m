@@ -475,6 +475,36 @@ typedef struct MemberDeleteOperation__storage_ {
 
 @end
 
+#pragma mark - MemberPartnerOperation
+
+@implementation MemberPartnerOperation
+
+
+typedef struct MemberPartnerOperation__storage_ {
+  uint32_t _has_storage_[1];
+} MemberPartnerOperation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberPartnerOperation class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(MemberPartnerOperation__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - MemberOperation
 
 @implementation MemberOperation
@@ -488,6 +518,8 @@ typedef struct MemberDeleteOperation__storage_ {
 @dynamic recoveryRules;
 @dynamic recover;
 @dynamic delete_p;
+@dynamic verifyPartner;
+@dynamic unverifyPartner;
 
 typedef struct MemberOperation__storage_ {
   uint32_t _has_storage_[2];
@@ -499,6 +531,8 @@ typedef struct MemberOperation__storage_ {
   MemberRecoveryRulesOperation *recoveryRules;
   MemberRecoveryOperation *recover;
   MemberDeleteOperation *delete_p;
+  MemberPartnerOperation *verifyPartner;
+  MemberPartnerOperation *unverifyPartner;
 } MemberOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -576,6 +610,24 @@ typedef struct MemberOperation__storage_ {
         .number = MemberOperation_FieldNumber_Delete_p,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, delete_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "verifyPartner",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberPartnerOperation),
+        .number = MemberOperation_FieldNumber_VerifyPartner,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, verifyPartner),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "unverifyPartner",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberPartnerOperation),
+        .number = MemberOperation_FieldNumber_UnverifyPartner,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, unverifyPartner),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -959,6 +1011,8 @@ typedef struct RecoveryRule__storage_ {
 @dynamic lastRecoverySequence;
 @dynamic lastOperationSequence;
 @dynamic type;
+@dynamic partnerId;
+@dynamic isVerifiedPartner;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
@@ -971,6 +1025,7 @@ typedef struct Member__storage_ {
   NSMutableArray *keysArray;
   NSMutableArray *unverifiedAliasHashesArray;
   RecoveryRule *recoveryRule;
+  NSString *partnerId;
 } Member__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1059,6 +1114,24 @@ typedef struct Member__storage_ {
         .offset = (uint32_t)offsetof(Member__storage_, type),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "partnerId",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_PartnerId,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Member__storage_, partnerId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "isVerifiedPartner",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_IsVerifiedPartner,
+        .hasIndex = 7,
+        .offset = 8,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -369,6 +369,18 @@
              responseClass:[NormalizeAliasResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark VerifyAffiliate(VerifyAffiliateRequest) returns (VerifyAffiliateResponse)
+
+- (void)verifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToVerifyAffiliateWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToVerifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"VerifyAffiliate"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[VerifyAffiliateResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 /**

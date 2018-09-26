@@ -147,6 +147,8 @@
 @class UnsubscribeFromNotificationsResponse;
 @class UpdateMemberRequest;
 @class UpdateMemberResponse;
+@class VerifyAffiliateRequest;
+@class VerifyAffiliateResponse;
 @class VerifyAliasOnBehalfRequest;
 @class VerifyAliasOnBehalfResponse;
 @class VerifyAliasRequest;
@@ -414,6 +416,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)normalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToNormalizeAliasWithRequest:(NormalizeAliasRequest *)request handler:(void(^)(NormalizeAliasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark VerifyAffiliate(VerifyAffiliateRequest) returns (VerifyAffiliateResponse)
+
+- (void)verifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToVerifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)

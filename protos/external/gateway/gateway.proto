@@ -37,6 +37,7 @@ message CreateMemberRequest {
   string nonce = 1; // random string; used only to de-duplicate requests.
   io.token.proto.common.member.CreateMemberType member_type = 2;
   string token_request_id = 3; // Optional token request ID, if set the member will be claimed by the TPP initiating the token request.
+  string partner_id = 4;
 }
 
 message CreateMemberResponse {
@@ -121,6 +122,12 @@ message NormalizeAliasRequest {
 message NormalizeAliasResponse {
   io.token.proto.common.alias.Alias alias = 1;
 }
+
+message VerifyAffiliateRequest {
+  string member_id = 1; // ID of affiliated TPP member to verify
+}
+
+message VerifyAffiliateResponse {}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member account recovery.
@@ -886,6 +893,12 @@ service GatewayService {
   rpc NormalizeAlias (NormalizeAliasRequest) returns (NormalizeAliasResponse) {
     option (google.api.http) = {
         get: "/aliases/normalize/{alias.type}/{alias.value}/{alias.realm}"
+    };
+  }
+
+  rpc VerifyAffiliate (VerifyAffiliateRequest) returns (VerifyAffiliateResponse) {
+    option (google.api.http) = {
+        put: "/members/affiliates/verify"
     };
   }
 
