@@ -222,9 +222,10 @@
         if ([partnerId length] != 0) {
             // Realm must equal member's partner ID if affiliated
             if ([alias.realm length] != 0 && ![alias.realm isEqualToString:partnerId]) {
-                [NSException
-                   raise:NSInvalidArgumentException
-                   format:@"Invalid realm %@; expected %@", alias.realm, partnerId];
+                onError([NSError
+                         errorFromErrorCode:kTKErrorInvalidRealm
+                         details:@"Alias realm must equal the affiliated partnerId"]);
+                return;
             }
             alias.realm = partnerId;
         }
