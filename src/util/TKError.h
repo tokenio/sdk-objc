@@ -67,7 +67,10 @@ typedef enum {
     kTKErrorOauthAccessTokenNotFound = 107,
     
     /* Raised when secure enclave is not supported */
-    kTKErrorSecureEnclaveIsNotSupported = 108
+    kTKErrorSecureEnclaveIsNotSupported = 108,
+
+    /* Raised when user specifies an invalid alias realm */
+    kTKErrorInvalidRealm = 109
 } TKErrorCode;
 
 

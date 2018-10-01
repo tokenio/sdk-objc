@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Balance_TypedBalance;
 @class Money;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -239,6 +240,8 @@ typedef GPB_ENUM(Balance_FieldNumber) {
   Balance_FieldNumber_AccountId = 1,
   Balance_FieldNumber_Current = 2,
   Balance_FieldNumber_Available = 3,
+  Balance_FieldNumber_UpdatedAtMs = 4,
+  Balance_FieldNumber_OtherBalancesArray = 5,
 };
 
 @interface Balance : GPBMessage
@@ -252,6 +255,33 @@ typedef GPB_ENUM(Balance_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Money *available;
 /** Test to see if @c available has been set. */
 @property(nonatomic, readwrite) BOOL hasAvailable;
+
+@property(nonatomic, readwrite) int64_t updatedAtMs;
+
+/** optional */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Balance_TypedBalance*> *otherBalancesArray;
+/** The number of items in @c otherBalancesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger otherBalancesArray_Count;
+
+@end
+
+#pragma mark - Balance_TypedBalance
+
+typedef GPB_ENUM(Balance_TypedBalance_FieldNumber) {
+  Balance_TypedBalance_FieldNumber_Type = 1,
+  Balance_TypedBalance_FieldNumber_Amount = 2,
+  Balance_TypedBalance_FieldNumber_UpdatedAtMs = 3,
+};
+
+@interface Balance_TypedBalance : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *type;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *amount;
+/** Test to see if @c amount has been set. */
+@property(nonatomic, readwrite) BOOL hasAmount;
+
+@property(nonatomic, readwrite) int64_t updatedAtMs;
 
 @end
 

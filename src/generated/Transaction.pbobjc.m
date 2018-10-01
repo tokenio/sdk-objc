@@ -366,12 +366,16 @@ void SetTransaction_Status_RawValue(Transaction *message, int32_t value) {
 @dynamic accountId;
 @dynamic hasCurrent, current;
 @dynamic hasAvailable, available;
+@dynamic updatedAtMs;
+@dynamic otherBalancesArray, otherBalancesArray_Count;
 
 typedef struct Balance__storage_ {
   uint32_t _has_storage_[1];
   NSString *accountId;
   Money *current;
   Money *available;
+  NSMutableArray *otherBalancesArray;
+  int64_t updatedAtMs;
 } Balance__storage_;
 
 // This method is threadsafe because it is initially called
@@ -407,6 +411,24 @@ typedef struct Balance__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "updatedAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Balance_FieldNumber_UpdatedAtMs,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Balance__storage_, updatedAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "otherBalancesArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Balance_TypedBalance),
+        .number = Balance_FieldNumber_OtherBalancesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Balance__storage_, otherBalancesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Balance class]
@@ -416,6 +438,72 @@ typedef struct Balance__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Balance__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Balance_TypedBalance
+
+@implementation Balance_TypedBalance
+
+@dynamic type;
+@dynamic hasAmount, amount;
+@dynamic updatedAtMs;
+
+typedef struct Balance_TypedBalance__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *type;
+  Money *amount;
+  int64_t updatedAtMs;
+} Balance_TypedBalance__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "type",
+        .dataTypeSpecific.className = NULL,
+        .number = Balance_TypedBalance_FieldNumber_Type,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Balance_TypedBalance__storage_, type),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = Balance_TypedBalance_FieldNumber_Amount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Balance_TypedBalance__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updatedAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = Balance_TypedBalance_FieldNumber_UpdatedAtMs,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Balance_TypedBalance__storage_, updatedAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Balance_TypedBalance class]
+                                     rootClass:[TransactionRoot class]
+                                          file:TransactionRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Balance_TypedBalance__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Balance)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

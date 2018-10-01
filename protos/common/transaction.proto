@@ -52,6 +52,14 @@ message Balance {
   string account_id = 1;
   io.token.proto.common.money.Money current = 2;
   io.token.proto.common.money.Money available = 3;
+  int64 updated_at_ms = 4;
+  repeated TypedBalance other_balances = 5; // optional
+
+  message TypedBalance {
+    string type = 1;
+    io.token.proto.common.money.Money amount = 2;
+    int64 updated_at_ms = 3;
+  }
 }
 
 enum RequestStatus {

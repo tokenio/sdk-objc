@@ -52,6 +52,8 @@ message MemberRecoveryOperation {
 
 message MemberDeleteOperation {}
 
+message MemberPartnerOperation {}
+
 message MemberOperation {
    oneof operation {
      MemberAddKeyOperation add_key = 1;
@@ -62,6 +64,8 @@ message MemberOperation {
      MemberRecoveryRulesOperation recovery_rules = 7;
      MemberRecoveryOperation recover = 8;
      MemberDeleteOperation delete = 9;
+     MemberPartnerOperation verify_partner = 10;
+     MemberPartnerOperation unverify_partner = 11;
    }
 }
 
@@ -115,6 +119,8 @@ message Member {
   int32 last_recovery_sequence = 7;                     // sequence number for member's last recovery entry
   int32 last_operation_sequence = 8;                    // sequence number for member's last operation
   MemberType type = 9;                                  // type of member
+  string partner_id = 10;                               // affiliated partner id
+  bool is_verified_partner = 11;                        // indicates if member is verified partner
 
   enum MemberType {
     INVALID_MEMBER_TYPE = 0;

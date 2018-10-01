@@ -36,6 +36,7 @@ CF_EXTERN_C_BEGIN
 @class MemberOperation;
 @class MemberOperationMetadata_AddAliasMetadata;
 @class MemberOperationResponseMetadata_AddAliasResponseMetadata;
+@class MemberPartnerOperation;
 @class MemberRecoveryOperation;
 @class MemberRecoveryOperation_Authorization;
 @class MemberRecoveryRulesOperation;
@@ -288,6 +289,12 @@ typedef GPB_ENUM(MemberRecoveryOperation_Authorization_FieldNumber) {
 
 @end
 
+#pragma mark - MemberPartnerOperation
+
+@interface MemberPartnerOperation : GPBMessage
+
+@end
+
 #pragma mark - MemberOperation
 
 typedef GPB_ENUM(MemberOperation_FieldNumber) {
@@ -299,6 +306,8 @@ typedef GPB_ENUM(MemberOperation_FieldNumber) {
   MemberOperation_FieldNumber_RecoveryRules = 7,
   MemberOperation_FieldNumber_Recover = 8,
   MemberOperation_FieldNumber_Delete_p = 9,
+  MemberOperation_FieldNumber_VerifyPartner = 10,
+  MemberOperation_FieldNumber_UnverifyPartner = 11,
 };
 
 typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
@@ -311,6 +320,8 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_RecoveryRules = 7,
   MemberOperation_Operation_OneOfCase_Recover = 8,
   MemberOperation_Operation_OneOfCase_Delete_p = 9,
+  MemberOperation_Operation_OneOfCase_VerifyPartner = 10,
+  MemberOperation_Operation_OneOfCase_UnverifyPartner = 11,
 };
 
 @interface MemberOperation : GPBMessage
@@ -332,6 +343,10 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) MemberRecoveryOperation *recover;
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberDeleteOperation *delete_p;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberPartnerOperation *verifyPartner;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberPartnerOperation *unverifyPartner;
 
 @end
 
@@ -485,6 +500,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_LastRecoverySequence = 7,
   Member_FieldNumber_LastOperationSequence = 8,
   Member_FieldNumber_Type = 9,
+  Member_FieldNumber_PartnerId = 10,
+  Member_FieldNumber_IsVerifiedPartner = 11,
 };
 
 /**
@@ -526,6 +543,12 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 /** type of member */
 @property(nonatomic, readwrite) Member_MemberType type;
+
+/** affiliated partner id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *partnerId;
+
+/** indicates if member is verified partner */
+@property(nonatomic, readwrite) BOOL isVerifiedPartner;
 
 @end
 

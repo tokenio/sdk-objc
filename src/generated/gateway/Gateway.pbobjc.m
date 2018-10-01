@@ -137,12 +137,14 @@ typedef struct Page__storage_ {
 @dynamic nonce;
 @dynamic memberType;
 @dynamic tokenRequestId;
+@dynamic partnerId;
 
 typedef struct CreateMemberRequest__storage_ {
   uint32_t _has_storage_[1];
   CreateMemberType memberType;
   NSString *nonce;
   NSString *tokenRequestId;
+  NSString *partnerId;
 } CreateMemberRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -175,6 +177,15 @@ typedef struct CreateMemberRequest__storage_ {
         .number = CreateMemberRequest_FieldNumber_TokenRequestId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "partnerId",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateMemberRequest_FieldNumber_PartnerId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(CreateMemberRequest__storage_, partnerId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -1138,6 +1149,79 @@ typedef struct NormalizeAliasResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NormalizeAliasResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyAffiliateRequest
+
+@implementation VerifyAffiliateRequest
+
+@dynamic memberId;
+
+typedef struct VerifyAffiliateRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+} VerifyAffiliateRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyAffiliateRequest_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VerifyAffiliateRequest__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyAffiliateRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VerifyAffiliateRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyAffiliateResponse
+
+@implementation VerifyAffiliateResponse
+
+
+typedef struct VerifyAffiliateResponse__storage_ {
+  uint32_t _has_storage_[1];
+} VerifyAffiliateResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyAffiliateResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(VerifyAffiliateResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;

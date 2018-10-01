@@ -193,6 +193,7 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
   CreateMemberRequest_FieldNumber_Nonce = 1,
   CreateMemberRequest_FieldNumber_MemberType = 2,
   CreateMemberRequest_FieldNumber_TokenRequestId = 3,
+  CreateMemberRequest_FieldNumber_PartnerId = 4,
 };
 
 @interface CreateMemberRequest : GPBMessage
@@ -204,6 +205,8 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 
 /** Optional token request ID, if set the member will be claimed by the TPP initiating the token request. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *partnerId;
 
 @end
 
@@ -530,6 +533,25 @@ typedef GPB_ENUM(NormalizeAliasResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - VerifyAffiliateRequest
+
+typedef GPB_ENUM(VerifyAffiliateRequest_FieldNumber) {
+  VerifyAffiliateRequest_FieldNumber_MemberId = 1,
+};
+
+@interface VerifyAffiliateRequest : GPBMessage
+
+/** ID of affiliated TPP member to verify */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@end
+
+#pragma mark - VerifyAffiliateResponse
+
+@interface VerifyAffiliateResponse : GPBMessage
 
 @end
 
