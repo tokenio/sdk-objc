@@ -42,13 +42,12 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.destinations = destinations;
     Token *token = [builder execute];
     
     XCTAssertEqualObjects(@"100.99", token.payload.transfer.lifetimeAmount);
     XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
-    XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
     XCTAssertEqual(token.payload.transfer.instructions.destinationsArray.count, 1);
     XCTAssertEqual(0, token.payloadSignaturesArray_Count);
 }
@@ -65,7 +64,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"XXX"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.destinations = destinations;
     
     @try {
@@ -81,7 +80,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     Token *lookedUp = [payer getToken:token.id_p];
     XCTAssertEqualObjects(token, lookedUp);
@@ -92,7 +91,6 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
     builder.toMemberId = payee.id;
     builder.receiptRequested = YES;
     Token *token = [builder execute];
@@ -103,7 +101,6 @@
     TransferTokenBuilder *builder2 = [payer createTransferToken:amount2
                                                        currency:@"USD"];
     builder2.accountId = payerAccount.id;
-    builder2.redeemerMemberId = payee.id;
     builder2.toMemberId = payee.id;
     Token *token2 = [builder2 execute];
     [payer endorseToken:token2 withKey:Key_Level_Standard];
@@ -112,7 +109,6 @@
     TransferTokenBuilder *builder3 = [payer createTransferToken:amount3
                                                        currency:@"USD"];
     builder3.accountId = payerAccount.id;
-    builder3.redeemerMemberId = payee.id;
     builder3.toMemberId = payee.id;
     Token *token3 = [builder3 execute];
     [payer endorseToken:token3 withKey:Key_Level_Standard];
@@ -133,7 +129,7 @@
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -154,7 +150,7 @@
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.descr = descr;
     Token *token = [builder execute];
     
@@ -174,7 +170,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
     TokenOperationResult *cancelledResult = [payer cancelToken:token];
@@ -198,7 +194,6 @@
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    builder.redeemerMemberId = payee.id;
     Token *token = [builder execute];
     
     NSString *tokenRequestId = [payee storeTokenRequest:token.payload options:nil];

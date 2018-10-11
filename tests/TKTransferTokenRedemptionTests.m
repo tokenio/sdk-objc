@@ -38,7 +38,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
     token = [endorsedResult token];
@@ -67,7 +67,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.bankAuthorization = [self createBankAuthorization:payer];
-    builder.redeemerMemberId = payer.id;
+    builder.toMemberId = payer.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
     token = [endorsedResult token];
@@ -97,7 +97,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
     
@@ -132,7 +132,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.destinations = destinations;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
@@ -159,7 +159,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
     token = [endorsedResult token];
@@ -185,7 +185,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];

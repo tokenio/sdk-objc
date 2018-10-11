@@ -48,10 +48,10 @@
 @property (readwrite) int64_t effectiveAtMs;
 
 /// Redeemer, specified by alias.
-@property (readwrite) Alias *redeemerAlias;
+@property (readwrite) Alias *redeemerAlias DEPRECATED_ATTRIBUTE;
 
 /// Redeemer, specified by Member ID.
-@property (readwrite) NSString* redeemerMemberId;
+@property (readwrite) NSString* redeemerMemberId DEPRECATED_ATTRIBUTE;
 
 /// Ppayer, specified by Alias.
 @property (readwrite) Alias *fromAlias;

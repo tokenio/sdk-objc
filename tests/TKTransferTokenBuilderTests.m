@@ -36,7 +36,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     XCTAssertNotNil(token);
 }
@@ -52,7 +52,7 @@
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.destinations = destinations;
     XCTAssertThrows([builder execute]);
 }
@@ -88,7 +88,6 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
     builder.toMemberId = payee.id;
     builder.destinations = destinations;
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
@@ -104,7 +103,6 @@
     XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
     XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.metadata.transferPurpose);
     XCTAssertEqualObjects(pricing.sourceQuote, token.payload.transfer.pricing.sourceQuote);
-    XCTAssertEqualObjects(payee.id, token.payload.transfer.redeemer.id_p);
 }
 
 @end

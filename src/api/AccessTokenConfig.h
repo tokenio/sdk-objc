@@ -14,18 +14,18 @@
 @interface AccessTokenConfig : NSObject 
 
 /**
- * Creates a new instance with a provided redeemer alias (the 'payload.to' field).
+ * Creates a new instance with a provided grantee alias.
  *
- * @param redeemerAlias alias of the token redeemer
+ * @param toAlias alias of the token grantee.
  */
-+ (AccessTokenConfig *)create:(Alias *)redeemerAlias;
++ (AccessTokenConfig *)create:(Alias *)toAlias;
 
 /**
- * Creates a new instance with a provided redeemer id (the 'payload.to' field).
+ * Creates a new instance with a provided grantee id.
  *
- * @param redeemerId id of the token redeemer
+ * @param toId id of the token grantee
  */
-+ (AccessTokenConfig *)createWithRedeemerId:(NSString *)redeemerId;
++ (AccessTokenConfig *)createWithToId:(NSString *)toId;
 
 /**
  * Creates a new instance from an existing token payload.
@@ -35,11 +35,11 @@
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom;
 
  /**
- * Creates a new instance with a provided redeemer alias (the 'payload.to' field).
+ * Creates a new instance with a provided grantee alias.
  *
- * @param redeemerAlias alias of the token redeemer
+ * @param toAlias alias of the token grantee
  */
-- (id)initWithRedeemer:(Alias *)redeemerAlias;
+- (id)initWithToAlias:(Alias *)toAlias;
 
 /**
  * Creates a new instance from an existing token payload.

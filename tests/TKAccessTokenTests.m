@@ -36,7 +36,7 @@
     Address *payload = [Address message];
     AddressRecord *address = [grantor addAddress:payload withName:@"name"];
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:grantee.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
     [access forAddress:address.id_p];
     token = [grantor createAccessToken:access];
 }
@@ -86,7 +86,7 @@
 - (void)testReplaceTokenLarge {
     TKAccountSync *account = [self createAccount:[self syncSDK]];
     TKMemberSync *grantor2 = account.member;
-    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:grantee.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
     Address *payload1 = [Address message];
     Address *payload2 = [Address message];
     Address *payload3 = [Address message];

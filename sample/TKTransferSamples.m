@@ -67,7 +67,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
@@ -152,7 +152,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = self.payeeSync.id;
+    builder.toMemberId = self.payeeSync.id;
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
@@ -221,7 +221,7 @@
                 TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                                   currency:@"EUR"];
                 builder.accountId = payerAccount.id;
-                builder.redeemerMemberId = payee.id;
+                builder.toMemberId = payee.id;
                 builder.attachments = @[a]; // associate attachment with token
                 
                 [builder executeAsync:^(Token *t) {
