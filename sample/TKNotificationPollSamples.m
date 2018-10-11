@@ -44,14 +44,13 @@
     TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount
                                                                currency:@"USD"];
     builder.accountId = self.payerAccountSync.id;
-    builder.redeemerMemberId = self.payerSync.id;
     builder.toMemberId = self.payeeSync.id;
     Token *token = [builder execute];
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = payee.id;
     [self.payerSync endorseToken:token withKey:Key_Level_Standard];
     NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    [self.payerSync redeemToken:token
+    [self.payeeSync redeemToken:token
                          amount:redeemAmount
                        currency:@"USD"
                     description:@"notify them"

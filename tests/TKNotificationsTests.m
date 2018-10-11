@@ -59,7 +59,6 @@ void check(NSString *message, BOOL condition) {
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
@@ -80,7 +79,6 @@ void check(NSString *message, BOOL condition) {
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
@@ -176,7 +174,7 @@ void check(NSString *message, BOOL condition) {
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
     TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
@@ -238,7 +236,7 @@ void check(NSString *message, BOOL condition) {
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     
     token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
@@ -301,7 +299,7 @@ void check(NSString *message, BOOL condition) {
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
-    builder.redeemerMemberId = payee.id;
+    builder.toMemberId = payee.id;
     Token *token = [builder execute];
     token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
     

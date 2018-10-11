@@ -1,7 +1,7 @@
 #!/bin/bash
 
 destination=$(instruments -s devices | grep iPhone | tail -1 \
-     | sed 's/\(iPhone.*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
+     | sed 's/\(iPhone[^\(]*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
 
 xcodebuild \
     -workspace TokenSdk.xcworkspace \

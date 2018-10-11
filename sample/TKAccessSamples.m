@@ -24,7 +24,7 @@
     __block Token *accessToken = nil;
     
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
     [access forAllAccounts];
     [access forAllBalances];
     
@@ -137,7 +137,7 @@
 -(void)testReplaceNoEndorse {
     TKMember *grantor = self.payerSync.async;
 
-    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
     [access forAllAccounts];
     
     __block Token *accessToken = [self.payerSync createAccessToken:access];
@@ -240,7 +240,7 @@
     __block Token *token1 = nil;
 
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig createWithRedeemerId:self.payeeSync.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
     [access forAllAccounts];
     [access forAllBalances];
 

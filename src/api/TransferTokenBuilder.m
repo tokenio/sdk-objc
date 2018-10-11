@@ -52,13 +52,6 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
                   userInfo:nil];
     }
     
-    if (!self.redeemerMemberId && !self.redeemerAlias) {
-         @throw [NSException
-         exceptionWithName:@"InvalidTokenException"
-                    reason:@"No redeemer found on token"
-                  userInfo:nil];       
-    }
-    
     TokenMember *payer = [TokenMember message];
 
     payer.id_p = [self.member id];
@@ -88,14 +81,6 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
     if (self.bankAuthorization) {
         payload.transfer.instructions.source.account.tokenAuthorization.authorization
         = self.bankAuthorization;
-    }
-    
-    if (self.redeemerAlias) {
-        payload.transfer.redeemer.alias = self.redeemerAlias;
-    }
-    
-    if (self.redeemerMemberId) {
-        payload.transfer.redeemer.id_p = self.redeemerMemberId;
     }
     
     if (self.toAlias) {

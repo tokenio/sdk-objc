@@ -12,37 +12,37 @@
     NSMutableSet<AccessBody_Resource *> * resources;
 }
 
-+ (AccessTokenConfig *)create:(Alias *)redeemerAlias {
-    return [[AccessTokenConfig alloc] initWithRedeemer:redeemerAlias];
++ (AccessTokenConfig *)create:(Alias *)toAlias {
+    return [[AccessTokenConfig alloc] initWithToAlias:toAlias];
 }
 
-+ (AccessTokenConfig *)createWithRedeemerId:(NSString *)redeemerId {
-    return [[AccessTokenConfig alloc] initWithRedeemerId:redeemerId];
++ (AccessTokenConfig *)createWithToId:(NSString *)toId {
+    return [[AccessTokenConfig alloc] initWithToId:toId];
 }
 
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom {
     return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
 }
 
-- (id)initWithRedeemer:(Alias *)redeemerAlias {
+- (id)initWithToAlias:(Alias *)toAlias {
     self = [super init];
     if (self) {
         payload = [TokenPayload message];
         payload.version = @"1.0";
         payload.refId = [TKUtil nonce];
-        payload.to.alias = redeemerAlias;
+        payload.to.alias = toAlias;
         resources = [[NSMutableSet alloc] init];
     }
     return self;
 }
 
-- (id)initWithRedeemerId:(NSString *)redeemerId {
+- (id)initWithToId:(NSString *)toId {
     self = [super init];
     if (self) {
         payload = [TokenPayload message];
         payload.version = @"1.0";
         payload.refId = [TKUtil nonce];
-        payload.to.id_p = redeemerId;
+        payload.to.id_p = toId;
         resources = [[NSMutableSet alloc] init];
     }
     return self;
