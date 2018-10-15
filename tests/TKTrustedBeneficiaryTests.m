@@ -34,7 +34,7 @@
     XCTAssertEqual([member getTrustedBeneficiaries].count, 1);
 }
 
-- (void)testRemoveTrustedBeneficiaries {
+- (void)testRemoveTrustedBeneficiary {
     NSString *beneficiaryMemberId1 = [[self syncSDK] createMember:[self generateAlias]].id;
     NSString *beneficiaryMemberId2 = [[self syncSDK] createMember:[self generateAlias]].id;
     [member addTrustedBeneficiary:beneficiaryMemberId1];
