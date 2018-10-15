@@ -18,6 +18,7 @@ import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
 import "alias.proto";
+import "transferinstructions.proto";
 import "extensions/field.proto";
 import "extensions/service.proto";
 
@@ -247,6 +248,35 @@ message GetReceiptContactResponse {
   io.token.proto.common.member.ReceiptContact contact = 1;
 }
 
+message AddTrustedBeneficiaryRequest {
+  io.token.proto.common.member.TrustedBeneficiary trusted_beneficiary = 1;
+}
+
+message AddTrustedBeneficiaryResponse {
+}
+
+message RemoveTrustedBeneficiaryRequest {
+  io.token.proto.common.member.TrustedBeneficiary trusted_beneficiary = 1;
+}
+
+message RemoveTrustedBeneficiaryResponse {
+}
+
+message GetTrustedBeneficiariesRequest {
+}
+
+message GetTrustedBeneficiariesResponse {
+  repeated io.token.proto.common.member.TrustedBeneficiary trusted_beneficiaries = 1;
+}
+
+message CreateCustomizationRequest {
+  io.token.proto.common.blob.Blob.Payload logo = 1;
+  map<string, string> colors = 2;
+}
+
+message CreateCustomizationResponse {
+  string customization_id = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service
@@ -451,6 +481,14 @@ message SetDefaultAccountRequest {
 message SetDefaultAccountResponse {
 }
 
+message ResolveTransferDestinationsRequest {
+  string account_id = 1;
+}
+
+message ResolveTransferDestinationsResponse {
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Blobs
 //
@@ -488,6 +526,7 @@ message StoreTokenRequestRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
   map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true];
   string user_ref_id = 3;
+  string customization_id = 4;
 }
 
 message StoreTokenRequestResponse {
@@ -500,6 +539,7 @@ message RetrieveTokenRequestRequest {
 
 message RetrieveTokenRequestResponse {
   io.token.proto.common.token.TokenRequest token_request = 1;
+  io.token.proto.common.member.Customization customization = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -980,6 +1020,37 @@ service GatewayService {
     };
   }
 
+  // Add a trusted beneficiary
+  // https://developer.token.io/sdk/#trusted-beneficiary
+  rpc AddTrustedBeneficiary (AddTrustedBeneficiaryRequest) returns (AddTrustedBeneficiaryResponse) {
+    option (google.api.http) = {
+        post: "/trusted-beneficiaries"
+    };
+  }
+
+  // Remove a trusted beneficiary
+  // https://developer.token.io/sdk/#trusted-beneficiary
+  rpc RemoveTrustedBeneficiary (RemoveTrustedBeneficiaryRequest) returns (RemoveTrustedBeneficiaryResponse) {
+    option (google.api.http) = {
+        delete: "/trusted-beneficiaries/{trusted_beneficiary.payload.member_id}"
+    };
+  }
+
+  // Get all trusted beneficiaries
+  // https://developer.token.io/sdk/#trusted-beneficiary
+  rpc GetTrustedBeneficiaries (GetTrustedBeneficiariesRequest) returns (GetTrustedBeneficiariesResponse) {
+    option (google.api.http) = {
+        get: "/trusted-beneficiaries"
+    };
+  }
+
+  // Set Customization
+  // https://developer.token.io/sdk/#customization
+  rpc CreateCustomization (CreateCustomizationRequest) returns (CreateCustomizationResponse) {
+  option (google.api.http) = {
+        post: "/customization"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Devices for notification service
@@ -1175,6 +1246,13 @@ service GatewayService {
   rpc SetDefaultAccount (SetDefaultAccountRequest) returns (SetDefaultAccountResponse) {
     option (google.api.http) = {
       put: "/members/{member_id}/default-account"
+    };
+  }
+
+  // Get the resolved transfer destinations of the given account.
+  rpc ResolveTransferDestinations (ResolveTransferDestinationsRequest) returns (ResolveTransferDestinationsResponse) {
+    option (google.api.http) = {
+      get: "/accounts/{account_id}/transfer-destinations"
     };
   }
 

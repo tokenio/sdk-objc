@@ -19,6 +19,7 @@
 #import "Banklink.pbobjc.h"
 #import "extensions/Field.pbobjc.h"
 #import "extensions/Message.pbobjc.h"
+#import "Providerspecific.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -225,6 +226,7 @@ typedef struct AccountFeatures__storage_ {
 @dynamic type;
 @dynamic status;
 @dynamic metadata, metadata_Count;
+@dynamic hasProviderSpecific, providerSpecific;
 
 typedef struct AccountDetails__storage_ {
   uint32_t _has_storage_[1];
@@ -232,6 +234,7 @@ typedef struct AccountDetails__storage_ {
   NSString *identifier;
   NSString *status;
   NSMutableDictionary *metadata;
+  ProviderAccountDetails *providerSpecific;
 } AccountDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -275,6 +278,15 @@ typedef struct AccountDetails__storage_ {
         .offset = (uint32_t)offsetof(AccountDetails__storage_, metadata),
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "providerSpecific",
+        .dataTypeSpecific.className = GPBStringifySymbol(ProviderAccountDetails),
+        .number = AccountDetails_FieldNumber_ProviderSpecific,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(AccountDetails__storage_, providerSpecific),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
