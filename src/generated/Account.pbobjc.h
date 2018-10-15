@@ -39,6 +39,7 @@ CF_EXTERN_C_BEGIN
 @class BankAccount_Token;
 @class BankAccount_TokenAuthorization;
 @class BankAuthorization;
+@class ProviderAccountDetails;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -152,6 +153,7 @@ typedef GPB_ENUM(AccountDetails_FieldNumber) {
   AccountDetails_FieldNumber_Type = 2,
   AccountDetails_FieldNumber_Status = 3,
   AccountDetails_FieldNumber_Metadata = 4,
+  AccountDetails_FieldNumber_ProviderSpecific = 5,
 };
 
 /**
@@ -173,6 +175,10 @@ typedef GPB_ENUM(AccountDetails_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) ProviderAccountDetails *providerSpecific;
+/** Test to see if @c providerSpecific has been set. */
+@property(nonatomic, readwrite) BOOL hasProviderSpecific;
 
 @end
 

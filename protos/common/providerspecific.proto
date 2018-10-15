@@ -1,0 +1,49 @@
+syntax = "proto3";
+package io.token.proto.common.providerspecific;
+option java_outer_classname = "ProviderSpecific";
+option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific";
+
+import "extensions/message.proto";
+import "address.proto";
+
+message ProviderAccountDetails {
+  oneof details {
+    Cma9AccountDetails cma9_account_details = 1;
+  }
+}
+
+message Cma9AccountDetails {
+  option (io.token.proto.extensions.message.redact) = true;
+  string party_id = 1;
+  string party_number = 2;
+  PartyType party_type = 3;
+  string name = 4;
+  string email_address = 5;
+  string phone = 6;
+  string mobile = 7;
+  repeated Cma9Address address = 8;
+
+  message Cma9Address {
+    AddressType address_type = 1;
+    io.token.proto.common.address.Address address = 2;
+  }
+
+  enum PartyType {
+    INVALID_PARTY_TYPE = 0;
+    DELEGATE = 1;
+    JOINT = 2;
+    SOLE = 3;
+  }
+
+  enum AddressType {
+    INVALID_ADDRESS_TYPE = 0;
+    BUSINESS = 1;
+    CORRESPONDENCE = 2;
+    DELIVERYTO = 3;
+    MAILTO = 4;
+    POBOX = 5;
+    POSTAL = 6;
+    RESIDENTIAL = 7;
+    STATEMENT = 8;
+  }
+}

@@ -753,6 +753,32 @@
     }];
 }
 
+- (void)addTrustedBeneficiary:(NSString *)memberId {
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async addTrustedBeneficiary:memberId
+                                onSuccess:^{ call.onSuccess(nil); }
+                                  onError:call.onError];
+    }];
+}
+
+- (void)removeTrustedBeneficiary:(NSString *)memberId {
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async removeTrustedBeneficiary:memberId
+                                onSuccess:^{ call.onSuccess(nil); }
+                                  onError:call.onError];
+    }];
+}
+
+- (NSArray<TrustedBeneficiary *> *)getTrustedBeneficiaries {
+    TKRpcSyncCall<NSArray<TrustedBeneficiary *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getTrustedBeneficiaries:call.onSuccess
+                                    onError:call.onError];
+    }];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {

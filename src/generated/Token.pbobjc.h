@@ -40,6 +40,9 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllAddresses;
 @class AccessBody_Resource_AllBalancesAtBank;
 @class AccessBody_Resource_AllTransactionsAtBank;
+@class AccessBody_Resource_AllTransferDestinations;
+@class AccessBody_Resource_AllTransferDestinationsAtBank;
+@class AccessBody_Resource_TransferDestinations;
 @class Alias;
 @class Attachment;
 @class Pricing;
@@ -446,10 +449,10 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 
 @interface TransferBody : GPBMessage
 
-/** Redeemer member. */
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer;
+/** Redeemer member (deprecated: use TokenPayload.to instead). */
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer DEPRECATED_ATTRIBUTE;
 /** Test to see if @c redeemer has been set. */
-@property(nonatomic, readwrite) BOOL hasRedeemer;
+@property(nonatomic, readwrite) BOOL hasRedeemer DEPRECATED_ATTRIBUTE;
 
 /** Transfer instructions. */
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
@@ -506,6 +509,9 @@ typedef GPB_ENUM(AccessBody_Resource_FieldNumber) {
   AccessBody_Resource_FieldNumber_AllAccountsAtBank = 9,
   AccessBody_Resource_FieldNumber_AllTransactionsAtBank = 10,
   AccessBody_Resource_FieldNumber_AllBalancesAtBank = 11,
+  AccessBody_Resource_FieldNumber_TransferDestinations = 12,
+  AccessBody_Resource_FieldNumber_AllTransferDestinations = 13,
+  AccessBody_Resource_FieldNumber_AllTransferDestinationsAtBank = 14,
 };
 
 typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
@@ -514,13 +520,16 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
   AccessBody_Resource_Resource_OneOfCase_AllAccounts = 2,
   AccessBody_Resource_Resource_OneOfCase_AllTransactions = 3,
   AccessBody_Resource_Resource_OneOfCase_AllBalances = 4,
+  AccessBody_Resource_Resource_OneOfCase_AllTransferDestinations = 13,
   AccessBody_Resource_Resource_OneOfCase_Address = 5,
   AccessBody_Resource_Resource_OneOfCase_Account = 6,
   AccessBody_Resource_Resource_OneOfCase_Transactions = 7,
   AccessBody_Resource_Resource_OneOfCase_Balance = 8,
+  AccessBody_Resource_Resource_OneOfCase_TransferDestinations = 12,
   AccessBody_Resource_Resource_OneOfCase_AllAccountsAtBank = 9,
   AccessBody_Resource_Resource_OneOfCase_AllTransactionsAtBank = 10,
   AccessBody_Resource_Resource_OneOfCase_AllBalancesAtBank = 11,
+  AccessBody_Resource_Resource_OneOfCase_AllTransferDestinationsAtBank = 14,
 };
 
 @interface AccessBody_Resource : GPBMessage
@@ -535,6 +544,8 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances;
 
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations;
+
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Account *account;
@@ -543,11 +554,15 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountBalance *balance;
 
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_TransferDestinations *transferDestinations;
+
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank;
 
 @end
 
@@ -701,6 +716,46 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
  * Provides access to a specific account's balance
  **/
 @interface AccessBody_Resource_AccountBalance : GPBMessage
+
+/** ID of account */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - AccessBody_Resource_AllTransferDestinations
+
+/**
+ * Provides access to the resolved transfer destinations of all accounts
+ **/
+@interface AccessBody_Resource_AllTransferDestinations : GPBMessage
+
+@end
+
+#pragma mark - AccessBody_Resource_AllTransferDestinationsAtBank
+
+typedef GPB_ENUM(AccessBody_Resource_AllTransferDestinationsAtBank_FieldNumber) {
+  AccessBody_Resource_AllTransferDestinationsAtBank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Provides access to the resolved transfer destinations of all accounts at a specific bank
+ **/
+@interface AccessBody_Resource_AllTransferDestinationsAtBank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - AccessBody_Resource_TransferDestinations
+
+typedef GPB_ENUM(AccessBody_Resource_TransferDestinations_FieldNumber) {
+  AccessBody_Resource_TransferDestinations_FieldNumber_AccountId = 1,
+};
+
+/**
+ * Provides access to the resolved transfer destinations of the specified account
+ **/
+@interface AccessBody_Resource_TransferDestinations : GPBMessage
 
 /** ID of account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;

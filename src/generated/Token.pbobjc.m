@@ -953,13 +953,16 @@ typedef struct AccessBody__storage_ {
 @dynamic allAccounts;
 @dynamic allTransactions;
 @dynamic allBalances;
+@dynamic allTransferDestinations;
 @dynamic address;
 @dynamic account;
 @dynamic transactions;
 @dynamic balance;
+@dynamic transferDestinations;
 @dynamic allAccountsAtBank;
 @dynamic allTransactionsAtBank;
 @dynamic allBalancesAtBank;
+@dynamic allTransferDestinationsAtBank;
 
 typedef struct AccessBody_Resource__storage_ {
   uint32_t _has_storage_[2];
@@ -974,6 +977,9 @@ typedef struct AccessBody_Resource__storage_ {
   AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank;
   AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank;
   AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank;
+  AccessBody_Resource_TransferDestinations *transferDestinations;
+  AccessBody_Resource_AllTransferDestinations *allTransferDestinations;
+  AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank;
 } AccessBody_Resource__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1078,6 +1084,33 @@ typedef struct AccessBody_Resource__storage_ {
         .number = AccessBody_Resource_FieldNumber_AllBalancesAtBank,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allBalancesAtBank),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transferDestinations",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_TransferDestinations),
+        .number = AccessBody_Resource_FieldNumber_TransferDestinations,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, transferDestinations),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allTransferDestinations",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllTransferDestinations),
+        .number = AccessBody_Resource_FieldNumber_AllTransferDestinations,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allTransferDestinations),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allTransferDestinationsAtBank",
+        .dataTypeSpecific.className = GPBStringifySymbol(AccessBody_Resource_AllTransferDestinationsAtBank),
+        .number = AccessBody_Resource_FieldNumber_AllTransferDestinationsAtBank,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(AccessBody_Resource__storage_, allTransferDestinationsAtBank),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1532,6 +1565,125 @@ typedef struct AccessBody_Resource_AccountBalance__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccessBody_Resource_AccountBalance__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AllTransferDestinations
+
+@implementation AccessBody_Resource_AllTransferDestinations
+
+
+typedef struct AccessBody_Resource_AllTransferDestinations__storage_ {
+  uint32_t _has_storage_[1];
+} AccessBody_Resource_AllTransferDestinations__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllTransferDestinations class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(AccessBody_Resource_AllTransferDestinations__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_AllTransferDestinationsAtBank
+
+@implementation AccessBody_Resource_AllTransferDestinationsAtBank
+
+@dynamic bankId;
+
+typedef struct AccessBody_Resource_AllTransferDestinationsAtBank__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bankId;
+} AccessBody_Resource_AllTransferDestinationsAtBank__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bankId",
+        .dataTypeSpecific.className = NULL,
+        .number = AccessBody_Resource_AllTransferDestinationsAtBank_FieldNumber_BankId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AccessBody_Resource_AllTransferDestinationsAtBank__storage_, bankId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_AllTransferDestinationsAtBank class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AccessBody_Resource_AllTransferDestinationsAtBank__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - AccessBody_Resource_TransferDestinations
+
+@implementation AccessBody_Resource_TransferDestinations
+
+@dynamic accountId;
+
+typedef struct AccessBody_Resource_TransferDestinations__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+} AccessBody_Resource_TransferDestinations__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = AccessBody_Resource_TransferDestinations_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(AccessBody_Resource_TransferDestinations__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[AccessBody_Resource_TransferDestinations class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(AccessBody_Resource_TransferDestinations__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(AccessBody_Resource)];
     NSAssert(descriptor == nil, @"Startup recursed!");

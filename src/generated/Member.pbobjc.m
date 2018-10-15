@@ -1533,6 +1533,115 @@ typedef struct Device__storage_ {
 
 @end
 
+#pragma mark - TrustedBeneficiary
+
+@implementation TrustedBeneficiary
+
+@dynamic hasPayload, payload;
+@dynamic hasSignature, signature;
+
+typedef struct TrustedBeneficiary__storage_ {
+  uint32_t _has_storage_[1];
+  TrustedBeneficiary_Payload *payload;
+  Signature *signature;
+} TrustedBeneficiary__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(TrustedBeneficiary_Payload),
+        .number = TrustedBeneficiary_FieldNumber_Payload,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TrustedBeneficiary__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .number = TrustedBeneficiary_FieldNumber_Signature,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TrustedBeneficiary__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TrustedBeneficiary class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TrustedBeneficiary__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - TrustedBeneficiary_Payload
+
+@implementation TrustedBeneficiary_Payload
+
+@dynamic memberId;
+@dynamic nonce;
+
+typedef struct TrustedBeneficiary_Payload__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *memberId;
+  NSString *nonce;
+} TrustedBeneficiary_Payload__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = TrustedBeneficiary_Payload_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(TrustedBeneficiary_Payload__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "nonce",
+        .dataTypeSpecific.className = NULL,
+        .number = TrustedBeneficiary_Payload_FieldNumber_Nonce,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(TrustedBeneficiary_Payload__storage_, nonce),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[TrustedBeneficiary_Payload class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(TrustedBeneficiary_Payload__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TrustedBeneficiary)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

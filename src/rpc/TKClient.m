@@ -1608,7 +1608,98 @@
              onError:onError];
 }
 
+- (void)addTrustedBeneficiary:(TrustedBeneficiary_Payload *)payload
+                    onSuccess:(OnSuccess)onSuccess
+                      onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:payload
+                                 usingKey:Key_Level_Standard
+                                   reason:TKLocalizedString(
+                                                            @"Signature_Reason_AddTrustedBeneficiary",
+                                                            @"Approve adding an address")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
 
+    AddTrustedBeneficiaryRequest *request = [AddTrustedBeneficiaryRequest message];
+    request.trustedBeneficiary.payload = payload;
+    request.trustedBeneficiary.signature.memberId = memberId;
+    request.trustedBeneficiary.signature.keyId = signature.key.id_p;
+    request.trustedBeneficiary.signature.signature = signature.value;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToAddTrustedBeneficiaryWithRequest:request
+                           handler:^(AddTrustedBeneficiaryResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)removeTrustedBeneficiary:(TrustedBeneficiary_Payload *)payload
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError {
+    TKSignature *signature = [crypto sign:payload
+                                 usingKey:Key_Level_Standard
+                                   reason:TKLocalizedString(
+                                                            @"Signature_Reason_RemoveTrustedBeneficiary",
+                                                            @"Approve adding an address")
+                                  onError:onError];
+    if (!signature) {
+        return;
+    }
+    
+    RemoveTrustedBeneficiaryRequest *request = [RemoveTrustedBeneficiaryRequest message];
+    request.trustedBeneficiary.payload = payload;
+    request.trustedBeneficiary.signature.memberId = memberId;
+    request.trustedBeneficiary.signature.keyId = signature.key.id_p;
+    request.trustedBeneficiary.signature.signature = signature.value;
+    RpcLogStart(request);
+
+    GRPCProtoCall *call = [gateway
+                           RPCToRemoveTrustedBeneficiaryWithRequest:request
+                           handler:^(RemoveTrustedBeneficiaryResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)getTrustedBeneficiaries:(OnSuccessWithTrustedBeneficiaries)onSuccess
+                        onError:(OnError)onError {
+    GetTrustedBeneficiariesRequest *request = [GetTrustedBeneficiariesRequest message];
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToGetTrustedBeneficiariesWithRequest:request
+                           handler:^(GetTrustedBeneficiariesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.trustedBeneficiariesArray);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
 
 #pragma mark private
 

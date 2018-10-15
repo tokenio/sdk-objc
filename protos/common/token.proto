@@ -118,7 +118,7 @@ message ExternalAuthorizationDetails {
 }
 
 message TransferBody {
-  TokenMember redeemer = 1;                                                          // Redeemer member.
+  TokenMember redeemer = 1 [deprecated = true];                                      // Redeemer member (deprecated: use TokenPayload.to instead).
   io.token.proto.common.transferinstructions.TransferInstructions instructions = 2;  // Transfer instructions.
   string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
@@ -141,13 +141,16 @@ message AccessBody {
       AllAccounts all_accounts = 2;
       AllAccountTransactions all_transactions = 3;
       AllAccountBalances all_balances = 4;
+      AllTransferDestinations all_transfer_destinations = 13;
       Address address = 5;
       Account account = 6;
       AccountTransactions transactions = 7;
       AccountBalance balance = 8;
+      TransferDestinations transfer_destinations = 12;
       AllAccountsAtBank all_accounts_at_bank = 9;
       AllTransactionsAtBank all_transactions_at_bank = 10;
       AllBalancesAtBank all_balances_at_bank = 11;
+      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14;
     }
 
     // Provides access to all member addresses
@@ -200,6 +203,19 @@ message AccessBody {
 
     // Provides access to a specific account's balance
     message AccountBalance {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to the resolved transfer destinations of all accounts
+    message AllTransferDestinations {}
+
+    // Provides access to the resolved transfer destinations of all accounts at a specific bank
+    message AllTransferDestinationsAtBank {
+      string bank_id = 1;
+    }
+
+    // Provides access to the resolved transfer destinations of the specified account
+    message TransferDestinations {
       string account_id = 1; // ID of account
     }
   }

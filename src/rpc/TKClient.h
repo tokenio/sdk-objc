@@ -663,4 +663,25 @@
  */
 - (void)getReceiptContact:(OnSuccessWithReceiptContact)onSuccess
                   onError:(OnError)onError;
+
+/**
+ * Marks a member as a trusted beneficiary.
+ */
+- (void)addTrustedBeneficiary:(TrustedBeneficiary_Payload *)payload
+                    onSuccess:(OnSuccess)onSuccess
+                      onError:(OnError)onError;
+
+/**
+ * Removes a trusted beneficiary.
+ */
+-(void)removeTrustedBeneficiary:(TrustedBeneficiary_Payload *)payload
+                      onSuccess:(OnSuccess)onSuccess
+                        onError:(OnError)onError;
+
+/**
+ * Gets a list of all of the user's trusted beneficiaries.
+ */
+-(void)getTrustedBeneficiaries:(OnSuccessWithTrustedBeneficiaries)onSuccess
+                       onError:(OnError)onError;
+
 @end
