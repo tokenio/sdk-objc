@@ -43,6 +43,7 @@ CF_EXTERN_C_BEGIN
 @class MemberRemoveKeyOperation;
 @class RecoveryRule;
 @class Signature;
+@class TrustedBeneficiary_Payload;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -673,6 +674,62 @@ typedef GPB_ENUM(Device_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Key *key;
 /** Test to see if @c key has been set. */
 @property(nonatomic, readwrite) BOOL hasKey;
+
+@end
+
+#pragma mark - TrustedBeneficiary
+
+typedef GPB_ENUM(TrustedBeneficiary_FieldNumber) {
+  TrustedBeneficiary_FieldNumber_Payload = 1,
+  TrustedBeneficiary_FieldNumber_Signature = 2,
+};
+
+@interface TrustedBeneficiary : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TrustedBeneficiary_Payload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *signature;
+/** Test to see if @c signature has been set. */
+@property(nonatomic, readwrite) BOOL hasSignature;
+
+@end
+
+#pragma mark - TrustedBeneficiary_Payload
+
+typedef GPB_ENUM(TrustedBeneficiary_Payload_FieldNumber) {
+  TrustedBeneficiary_Payload_FieldNumber_MemberId = 1,
+  TrustedBeneficiary_Payload_FieldNumber_Nonce = 2,
+};
+
+@interface TrustedBeneficiary_Payload : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - Customization
+
+typedef GPB_ENUM(Customization_FieldNumber) {
+  Customization_FieldNumber_CustomizationId = 1,
+  Customization_FieldNumber_LogoBlobId = 2,
+  Customization_FieldNumber_Colors = 3,
+};
+
+@interface Customization : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+
+/** logo blob id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *logoBlobId;
+
+/** colors in hex string #AARRGGBB */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *colors;
+/** The number of items in @c colors without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger colors_Count;
 
 @end
 

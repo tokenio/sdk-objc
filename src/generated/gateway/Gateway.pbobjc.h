@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
+@class Customization;
 @class Device;
 @class EndorseAndAddKey;
 @class ExternalAuthorizationDetails;
@@ -71,7 +72,9 @@ CF_EXTERN_C_BEGIN
 @class Transaction;
 @class TransactionStepUp;
 @class Transfer;
+@class TransferEndpoint;
 @class TransferPayload;
+@class TrustedBeneficiary;
 @class VerifyAliasPayload;
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
 GPB_ENUM_FWD_DECLARE(CreateMemberType);
@@ -957,6 +960,97 @@ typedef GPB_ENUM(GetReceiptContactResponse_FieldNumber) {
 
 @end
 
+#pragma mark - AddTrustedBeneficiaryRequest
+
+typedef GPB_ENUM(AddTrustedBeneficiaryRequest_FieldNumber) {
+  AddTrustedBeneficiaryRequest_FieldNumber_TrustedBeneficiary = 1,
+};
+
+@interface AddTrustedBeneficiaryRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TrustedBeneficiary *trustedBeneficiary;
+/** Test to see if @c trustedBeneficiary has been set. */
+@property(nonatomic, readwrite) BOOL hasTrustedBeneficiary;
+
+@end
+
+#pragma mark - AddTrustedBeneficiaryResponse
+
+@interface AddTrustedBeneficiaryResponse : GPBMessage
+
+@end
+
+#pragma mark - RemoveTrustedBeneficiaryRequest
+
+typedef GPB_ENUM(RemoveTrustedBeneficiaryRequest_FieldNumber) {
+  RemoveTrustedBeneficiaryRequest_FieldNumber_TrustedBeneficiary = 1,
+};
+
+@interface RemoveTrustedBeneficiaryRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TrustedBeneficiary *trustedBeneficiary;
+/** Test to see if @c trustedBeneficiary has been set. */
+@property(nonatomic, readwrite) BOOL hasTrustedBeneficiary;
+
+@end
+
+#pragma mark - RemoveTrustedBeneficiaryResponse
+
+@interface RemoveTrustedBeneficiaryResponse : GPBMessage
+
+@end
+
+#pragma mark - GetTrustedBeneficiariesRequest
+
+@interface GetTrustedBeneficiariesRequest : GPBMessage
+
+@end
+
+#pragma mark - GetTrustedBeneficiariesResponse
+
+typedef GPB_ENUM(GetTrustedBeneficiariesResponse_FieldNumber) {
+  GetTrustedBeneficiariesResponse_FieldNumber_TrustedBeneficiariesArray = 1,
+};
+
+@interface GetTrustedBeneficiariesResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TrustedBeneficiary*> *trustedBeneficiariesArray;
+/** The number of items in @c trustedBeneficiariesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger trustedBeneficiariesArray_Count;
+
+@end
+
+#pragma mark - CreateCustomizationRequest
+
+typedef GPB_ENUM(CreateCustomizationRequest_FieldNumber) {
+  CreateCustomizationRequest_FieldNumber_Logo = 1,
+  CreateCustomizationRequest_FieldNumber_Colors = 2,
+};
+
+@interface CreateCustomizationRequest : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Blob_Payload *logo;
+/** Test to see if @c logo has been set. */
+@property(nonatomic, readwrite) BOOL hasLogo;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *colors;
+/** The number of items in @c colors without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger colors_Count;
+
+@end
+
+#pragma mark - CreateCustomizationResponse
+
+typedef GPB_ENUM(CreateCustomizationResponse_FieldNumber) {
+  CreateCustomizationResponse_FieldNumber_CustomizationId = 1,
+};
+
+@interface CreateCustomizationResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+
+@end
+
 #pragma mark - SubscribeToNotificationsRequest
 
 typedef GPB_ENUM(SubscribeToNotificationsRequest_FieldNumber) {
@@ -1731,6 +1825,32 @@ typedef GPB_ENUM(SetDefaultAccountRequest_FieldNumber) {
 
 @end
 
+#pragma mark - ResolveTransferDestinationsRequest
+
+typedef GPB_ENUM(ResolveTransferDestinationsRequest_FieldNumber) {
+  ResolveTransferDestinationsRequest_FieldNumber_AccountId = 1,
+};
+
+@interface ResolveTransferDestinationsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - ResolveTransferDestinationsResponse
+
+typedef GPB_ENUM(ResolveTransferDestinationsResponse_FieldNumber) {
+  ResolveTransferDestinationsResponse_FieldNumber_DestinationsArray = 1,
+};
+
+@interface ResolveTransferDestinationsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+/** The number of items in @c destinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+
+@end
+
 #pragma mark - CreateBlobRequest
 
 typedef GPB_ENUM(CreateBlobRequest_FieldNumber) {
@@ -1825,6 +1945,7 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
   StoreTokenRequestRequest_FieldNumber_Payload = 1,
   StoreTokenRequestRequest_FieldNumber_Options = 2,
   StoreTokenRequestRequest_FieldNumber_UserRefId = 3,
+  StoreTokenRequestRequest_FieldNumber_CustomizationId = 4,
 };
 
 @interface StoreTokenRequestRequest : GPBMessage
@@ -1838,6 +1959,8 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger options_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
 
 @end
 
@@ -1871,6 +1994,7 @@ typedef GPB_ENUM(RetrieveTokenRequestRequest_FieldNumber) {
 
 typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
   RetrieveTokenRequestResponse_FieldNumber_TokenRequest = 1,
+  RetrieveTokenRequestResponse_FieldNumber_Customization = 2,
 };
 
 @interface RetrieveTokenRequestResponse : GPBMessage
@@ -1878,6 +2002,10 @@ typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequest *tokenRequest;
 /** Test to see if @c tokenRequest has been set. */
 @property(nonatomic, readwrite) BOOL hasTokenRequest;
+
+@property(nonatomic, readwrite, strong, null_resettable) Customization *customization;
+/** Test to see if @c customization has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomization;
 
 @end
 
