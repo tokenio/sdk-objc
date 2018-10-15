@@ -7,6 +7,7 @@ option csharp_namespace = "Tokenio.Proto.Common.AccountProtos";
 import "banklink.proto";
 import "extensions/field.proto";
 import "extensions/message.proto";
+import "providerspecific.proto";
 
 // The payload of the bank authorization request.
 // The value of the payload is encrypted as a serialized JSON object
@@ -43,6 +44,7 @@ message AccountDetails {
   AccountType type = 2;                 // Type of account
   string status = 3;                    // Status of account. E.g., "Active/Inactive/Frozen/Dormant"
   map<string, string> metadata = 4 [(io.token.proto.extensions.field.redact) = true]; // Additional account metadata
+  io.token.proto.common.providerspecific.ProviderAccountDetails provider_specific = 5;
 }
 
 // Token linked account.

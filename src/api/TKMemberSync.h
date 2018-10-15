@@ -668,4 +668,26 @@
  * @return receipt contact
  */
 - (ReceiptContact *)getReceiptContact;
+
+/**
+ * Marks a member as a trusted beneficiary.
+ *
+ * @param memberId the member ID of the beneficiary to entrust
+ */
+- (void)addTrustedBeneficiary:(NSString *)memberId;
+
+/**
+ * Removes a trusted beneficiary.
+ *
+ * @param memberId the membed ID of the trusted beneficiary to remove
+ */
+- (void)removeTrustedBeneficiary:(NSString *)memberId;
+
+/**
+ * Gets a list of all the user's trusted beneficiaries.
+ *
+ * @return list of trusted beneficiaries
+ */
+- (NSArray<TrustedBeneficiary *> *) getTrustedBeneficiaries;
+
 @end

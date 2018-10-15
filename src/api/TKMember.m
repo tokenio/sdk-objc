@@ -888,6 +888,29 @@
     [client getReceiptContact:onSuccess onError:onError];
 }
 
+- (void)addTrustedBeneficiary:(NSString *)memberId
+                    onSuccess:(OnSuccess)onSuccess
+                      onError:(OnError)onError {
+    TrustedBeneficiary_Payload *payload = [TrustedBeneficiary_Payload message];
+    payload.memberId = memberId;
+    payload.nonce = [TKUtil nonce];
+    [client addTrustedBeneficiary:payload onSuccess:onSuccess onError:onError];
+}
+
+- (void)removeTrustedBeneficiary:(NSString *)memberId
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError {
+    TrustedBeneficiary_Payload *payload = [TrustedBeneficiary_Payload message];
+    payload.memberId = memberId;
+    payload.nonce = [TKUtil nonce];
+    [client removeTrustedBeneficiary:payload onSuccess:onSuccess onError:onError];
+}
+
+- (void)getTrustedBeneficiaries:(OnSuccessWithTrustedBeneficiaries)onSuccess
+                        onError:(OnError)onError {
+    [client getTrustedBeneficiaries:onSuccess onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

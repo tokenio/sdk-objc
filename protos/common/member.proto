@@ -180,3 +180,13 @@ enum CreateMemberType {
   BUSINESS = 2;
   TRANSIENT = 3;
 }
+
+message TrustedBeneficiary {
+  Payload payload = 1;
+  io.token.proto.common.security.Signature signature = 2;
+
+  message Payload {
+    string member_id = 1;
+    string nonce = 2;
+  }
+}

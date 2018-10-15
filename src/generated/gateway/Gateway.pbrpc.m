@@ -19,6 +19,7 @@
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Alias.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
 #import "extensions/Field.pbobjc.h"
 #import "extensions/Service.pbobjc.h"
 
@@ -557,6 +558,66 @@
              responseClass:[DeleteAddressResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark AddTrustedBeneficiary(AddTrustedBeneficiaryRequest) returns (AddTrustedBeneficiaryResponse)
+
+/**
+ * Add a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (void)addTrustedBeneficiaryWithRequest:(AddTrustedBeneficiaryRequest *)request handler:(void(^)(AddTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAddTrustedBeneficiaryWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Add a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCProtoCall *)RPCToAddTrustedBeneficiaryWithRequest:(AddTrustedBeneficiaryRequest *)request handler:(void(^)(AddTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AddTrustedBeneficiary"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[AddTrustedBeneficiaryResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark RemoveTrustedBeneficiary(RemoveTrustedBeneficiaryRequest) returns (RemoveTrustedBeneficiaryResponse)
+
+/**
+ * Remove a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (void)removeTrustedBeneficiaryWithRequest:(RemoveTrustedBeneficiaryRequest *)request handler:(void(^)(RemoveTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToRemoveTrustedBeneficiaryWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Remove a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCProtoCall *)RPCToRemoveTrustedBeneficiaryWithRequest:(RemoveTrustedBeneficiaryRequest *)request handler:(void(^)(RemoveTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"RemoveTrustedBeneficiary"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[RemoveTrustedBeneficiaryResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetTrustedBeneficiaries(GetTrustedBeneficiariesRequest) returns (GetTrustedBeneficiariesResponse)
+
+/**
+ * Get all trusted beneficiaries
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (void)getTrustedBeneficiariesWithRequest:(GetTrustedBeneficiariesRequest *)request handler:(void(^)(GetTrustedBeneficiariesResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTrustedBeneficiariesWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get all trusted beneficiaries
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCProtoCall *)RPCToGetTrustedBeneficiariesWithRequest:(GetTrustedBeneficiariesRequest *)request handler:(void(^)(GetTrustedBeneficiariesResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTrustedBeneficiaries"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTrustedBeneficiariesResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark SubscribeToNotifications(SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse)
 
 /**
@@ -1009,6 +1070,24 @@
   return [self RPCToMethod:@"SetDefaultAccount"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[SetDefaultAccountResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark ResolveTransferDestinations(ResolveTransferDestinationsRequest) returns (ResolveTransferDestinationsResponse)
+
+/**
+ * Get the resolved transfer destinations of the given account.
+ */
+- (void)resolveTransferDestinationsWithRequest:(ResolveTransferDestinationsRequest *)request handler:(void(^)(ResolveTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToResolveTransferDestinationsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get the resolved transfer destinations of the given account.
+ */
+- (GRPCProtoCall *)RPCToResolveTransferDestinationsWithRequest:(ResolveTransferDestinationsRequest *)request handler:(void(^)(ResolveTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ResolveTransferDestinations"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResolveTransferDestinationsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
