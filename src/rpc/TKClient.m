@@ -55,15 +55,31 @@
     return self;
 }
 
+- (id)initWithRpc:(TKRpc *)rpc_
+          gateway:(GatewayService *)gateway_
+           Crypto:(TKCrypto *)crypto_
+         memberId:(NSString *)memberId_
+           client:(TKUnauthenticatedClient *) unauthenticatedClient_
+     errorHandler:(TKRpcErrorHandler *)errorHandler_ {
+    self = [super init];
+    
+    if (self) {
+        gateway = gateway_;
+        crypto = crypto_;
+        memberId = memberId_;
+        rpc = rpc_;
+        errorHandler = errorHandler_;
+        unauthenticatedClient = unauthenticatedClient_;
+    }
+    
+    return self;
+}
+
 - (TKCrypto *)getCrypto {
     return crypto;
 }
 - (void)useAccessToken:(NSString *)accessTokenId {
     onBehalfOfMemberId = accessTokenId;
-}
-
-- (void)clearAccessToken {
-    onBehalfOfMemberId = nil;
 }
 
 - (void)getMember:(NSString *)memberId
@@ -1746,6 +1762,15 @@
         usingKey:keyLevel
       onBehalfOf:onBehalfOfMemberId
          onError:onError];
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone {
+    return [[TKClient alloc] initWithRpc:rpc
+                                 gateway:gateway
+                                  Crypto:crypto
+                                memberId:memberId
+                                  client:unauthenticatedClient
+                            errorHandler:errorHandler];
 }
 
 @end

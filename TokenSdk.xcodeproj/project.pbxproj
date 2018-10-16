@@ -221,6 +221,8 @@
 		E5F36FA81FAD29AA0087FB69 /* TKAccountSamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */; };
 		E5F36FAA1FAD41E10087FB69 /* TKBalance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F36FA91FAD41E10087FB69 /* TKBalance.h */; };
 		E5F36FAC1FAD42E70087FB69 /* TKBalance.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F36FAB1FAD42E70087FB69 /* TKBalance.m */; };
+		F81421B6217600920004B584 /* TKRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = F81421B5217600920004B584 /* TKRepresentable.h */; };
+		F85BB8642177979700ECB1D5 /* TKRepresentableSync.h in Headers */ = {isa = PBXBuildFile; fileRef = F85BB8632177979700ECB1D5 /* TKRepresentableSync.h */; };
 		FA73A47A1E0EF1560079EAC8 /* Bankinfo.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */; };
 		FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA11A1BDB0D5DB155CD470 /* TKBankInfoTests.m */; };
@@ -484,6 +486,8 @@
 		E5F36FA71FAD29AA0087FB69 /* TKAccountSamples.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKAccountSamples.m; sourceTree = "<group>"; };
 		E5F36FA91FAD41E10087FB69 /* TKBalance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKBalance.h; sourceTree = "<group>"; };
 		E5F36FAB1FAD42E70087FB69 /* TKBalance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKBalance.m; sourceTree = "<group>"; };
+		F81421B5217600920004B584 /* TKRepresentable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRepresentable.h; sourceTree = "<group>"; };
+		F85BB8632177979700ECB1D5 /* TKRepresentableSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRepresentableSync.h; sourceTree = "<group>"; };
 		FA73A4781E0EF1560079EAC8 /* Bankinfo.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankinfo.pbobjc.h; sourceTree = "<group>"; };
 		FA73A4791E0EF1560079EAC8 /* Bankinfo.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankinfo.pbobjc.m; sourceTree = "<group>"; };
 		FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TokenSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -706,6 +710,7 @@
 		ABA7B2281FEA7BCDBB7045C3 /* api */ = {
 			isa = PBXGroup;
 			children = (
+				F85BB8632177979700ECB1D5 /* TKRepresentableSync.h */,
 				ABA7BBBA445C30817501F927 /* TKMemberSync.h */,
 				ABA7B3B3B7497B3EC3C6F2F7 /* TKMemberSync.m */,
 				ABA7BC35315815FA7C52A197 /* TokenIOSync.h */,
@@ -721,6 +726,7 @@
 				ABA7B2E9BD235EDC507216BE /* TKAccount.m */,
 				ABA7B5B3D15AD634892D98D4 /* TokenIO.m */,
 				ABA7BADCF833317256FF6F8A /* TokenIO.h */,
+				F81421B5217600920004B584 /* TKRepresentable.h */,
 				ABA7BD61CA7BB1D1369DC3B4 /* TKMember.h */,
 				ABA7B5B2892CFF8B1E4F0EE0 /* TKMember.m */,
 				3777163D1D99BF6800287239 /* TokenSdk.h */,
@@ -1046,6 +1052,7 @@
 				37637B621D989A930043345F /* Member.pbobjc.h in Headers */,
 				8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */,
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
+				F85BB8642177979700ECB1D5 /* TKRepresentableSync.h in Headers */,
 				ABA7B31148B04774C33BF931 /* fixedint.h in Headers */,
 				37637B581D989A930043345F /* Gateway.pbobjc.h in Headers */,
 				D039410720C9F02100B980CE /* Field.pbobjc.h in Headers */,
@@ -1074,6 +1081,7 @@
 				ABA7BB283641B72F79A6D91F /* TKTokenSecretKey.h in Headers */,
 				E5F36FAA1FAD41E10087FB69 /* TKBalance.h in Headers */,
 				ABA7B5CDA55B7289276869BF /* TKKeyStore.h in Headers */,
+				F81421B6217600920004B584 /* TKRepresentable.h in Headers */,
 				ABA7B34BF0A1DB2C1A5C388B /* DeviceInfo.h in Headers */,
 				ABA7B841C5B557B7A8C108DE /* TKInMemoryMemberKeys.h in Headers */,
 				D039F81D206DCA09009A982B /* TKOauthEngine.h in Headers */,

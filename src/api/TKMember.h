@@ -16,7 +16,9 @@
 #import "Money.pbobjc.h"
 #import "TransferTokenBuilder.h"
 #import "TKBrowser.h"
+#import "TKRepresentable.h"
 #import "TokenCluster.h"
+#import "TKRepresentable.h"
 
 @class Member;
 @class TKClient;
@@ -31,7 +33,7 @@
  * The class provides async API
  * </p>
  */
-@interface TKMember : NSObject
+@interface TKMember : NSObject <TKRepresentable>
 
 /// Member ID.
 @property (readonly, retain) NSString *id;
@@ -60,18 +62,11 @@
 - (TKClient *)getClient;
 
 /**
- * Sets the On-Behalf-Of authentication value to be used
- * with this client. The value must correspond to an existing
- * Access Token ID issued for the client member.
+ * Creates a member that acts as another member using an access token.
  *
  * @param accessTokenId the access token id
  */
-- (void)useAccessToken:(NSString *)accessTokenId;
-
-/**
- * Clears the access token value used with this client.
- */
-- (void)clearAccessToken;
+- (id<TKRepresentable>)forAccessToken:(NSString *)accessTokenId;
 
 /**
  * Gets public keys Array for the member.

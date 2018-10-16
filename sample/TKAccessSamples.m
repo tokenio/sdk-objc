@@ -64,8 +64,8 @@
     __block Money *balance0 = nil;
     
     // useAccessToken begin snippet to include in docs
-    [grantee useAccessToken:accessTokenId]; // future requests will behave as if we were grantor
-    [grantee getAccounts:^(NSArray <TKAccount *> *ary) {
+    id<TKRepresentable> representable = [grantee forAccessToken:accessTokenId]; // future requests will behave as if we were grantor
+    [representable getAccounts:^(NSArray <TKAccount *> *ary) {
         // use accounts
         [ary[0] getBalance:^(TKBalance * b) {
             balance0 = b.current;
@@ -74,8 +74,6 @@
                                            reason:[e localizedFailureReason]
                                          userInfo:[e userInfo]];
         }];
-        // if we're done using access token, clear it
-        [grantee clearAccessToken]; // future requests will behave normally
     } onError:^(NSError *e) {
         @throw [NSException exceptionWithName:@"UseAccessException"
                                        reason:[e localizedFailureReason]
@@ -192,9 +190,9 @@
                 break;
         }
     }
-    [granteeSync useAccessToken:accessToken.id_p];
+    id<TKRepresentableSync> representable = [granteeSync forAccessToken:accessToken.id_p];
     if (haveAllAccountsAccess && haveAllBalancesAccess) {
-        NSArray<TKAccountSync *> *accounts = [granteeSync getAccounts];
+        NSArray<TKAccountSync *> *accounts = [representable getAccounts];
         for (int i = 0 ; i < accounts.count; i++) {
             [accountIds addObject:accounts[i].id];
         }
@@ -207,10 +205,8 @@
     
     for (int i = 0; i < accountIds.count; i++) {
         @try {
-            Money *balance = [granteeSync getBalance:accountIds[i]
-                                             withKey:Key_Level_Standard].available;
-            [granteeSync clearAccessToken];
-            return balance;
+            return [representable getBalance:accountIds[i]
+                                     withKey:Key_Level_Standard].available;
         }
         @catch (NSError *error) {
             // If access grantor un-linked an account,

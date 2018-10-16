@@ -13,6 +13,7 @@
 #import "Security.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Blob.pbobjc.h"
+#import "TKRepresentableSync.h"
 #import "Token.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "PagedArray.h"
@@ -37,7 +38,7 @@
  * version. `TKMember` instance can be obtained by calling `async` method.
  * </p>
  */
-@interface TKMemberSync : NSObject
+@interface TKMemberSync : NSObject<TKRepresentableSync>
 
 /// Asynchronous API to member.
 @property (readonly, retain) TKMember *async;
@@ -58,18 +59,11 @@
 + (TKMemberSync *)member:(TKMember *)delegate;
 
 /**
- * Sets the On-Behalf-Of authentication value to be used
- * with this client.  The value must correspond to an existing
- * Access Token ID issued for the client member.
+ * Creates a member that acts as another member using an access token.
  *
  * @param accessTokenId the access token id
  */
-- (void)useAccessToken:(NSString *)accessTokenId;
-
-/**
- * Clears the access token value used with this client.
- */
-- (void)clearAccessToken;
+- (id<TKRepresentableSync>)forAccessToken:(NSString *)accessTokenId;
 
 /**
  * Gets all active public keys.
@@ -104,7 +98,7 @@
 /**
  * Removes all public keys that do not have a corresponding private key stored on
  * the current device from tke member.
- *
+ *x
  */
 - (void)removeNonStoredKeys;
 
@@ -234,21 +228,6 @@
 - (void)unlinkAccounts:(NSArray<NSString *> *)accountIds;
 
 /**
- * Looks up funding bank accounts linked to Token.
- *
- * @return list of accounts
- */
-- (NSArray<TKAccountSync *> *)getAccounts;
-
-/**
- * Looks up a funding bank account linked to Token.
- *
- * @param accountId account id
- * @return list of accounts
- */
-- (TKAccountSync *)getAccount:(NSString *)accountId;
-
-/**
  * Looks up a member's default bank account.
  *
  * @return account default account
@@ -261,26 +240,6 @@
  * @param accountId account id to set as default
  */
 - (void)setDefaultAccount:(NSString *)accountId;
-
-/**
- * Looks up account balance with a specific key level.
- *
- * @param accountId account id
- * @param keyLevel specifies the key to use
- * @return account balance
- */
-- (TKBalance *)getBalance:(NSString *)accountId
-                  withKey:(Key_Level)keyLevel;
-
-/**
- * Looks up account balances with a specific key level.
- *
- * @param accountIds account ids to get balance
- * @param keyLevel specifies the key to use
- * @return account balances
- */
-- (NSDictionary<NSString *,TKBalance *> *)getBalances:(NSArray<NSString *> *)accountIds
-                                              withKey:(Key_Level)keyLevel;
 
 /**
  * Looks up an existing token transfer.
@@ -319,21 +278,6 @@
  */
 - (AddressRecord *)addAddress:(Address *)address
                      withName:(NSString *)name;
-
-/**
- * Looks up an address by id.
- *
- * @param addressId the address id
- * @return an address record
- */
-- (AddressRecord *)getAddressWithId:(NSString *)addressId;
-
-/**
- * Looks up member addresses.
- *
- * @return a list of addresses
- */
-- (NSArray<AddressRecord *> *)getAddresses;
 
 /**
  * Deletes a member address by its id.
@@ -473,32 +417,6 @@
                     currency:(NSString *)currency
                  description:(NSString *)description
                  destination:(TransferEndpoint *)destination;
-
-/**
- * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
- *
- * @param transactionId ID of the transaction
- * @param keyLevel specifies the key to use
- * @return a looked up transaction
- */
-- (Transaction *)getTransaction:(NSString *)transactionId
-                     forAccount:(NSString *)accountId
-                        withKey:(Key_Level)keyLevel;
-
-/**
- * Looks up existing transactions. This is a full list of transactions with token transfers
- * being a subset.
- *
- * @param offset offset to start at (NULL for none)
- * @param limit max number of records to return
- * @param accountId account id
- * @param keyLevel specifies the key to use
- * @return a list of looked up transactions
- */
-- (PagedArray<Transaction *> *)getTransactionsOffset:(NSString *)offset
-                                               limit:(int)limit
-                                          forAccount:(NSString *)accountId
-                                             withKey:(Key_Level)keyLevel;
 
 /**
  * Uploads a blob to the server.

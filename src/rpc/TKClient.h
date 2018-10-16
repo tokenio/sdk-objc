@@ -27,7 +27,7 @@
  * class is a thin wrapper on top of gRPC generated client. Makes the API
  * easier to use.
  */
-@interface TKClient : NSObject
+@interface TKClient : NSObject <NSCopying>
 
 /**
  * @param gateway gateway gRPC client
@@ -59,11 +59,6 @@
  * @param accessTokenId the access token id
  */
 - (void)useAccessToken:(NSString *)accessTokenId;
-
-/**
- * Clears the access token value used with this client.
- */
-- (void)clearAccessToken;
 
 /**
  * Looks up member information for the current user. The user is defined by
