@@ -59,7 +59,7 @@
     TKMember *payer = self.payerSync.async;
     TKAccount *payerAccount = self.payerAccountSync.async;
     TKMember *payee = self.payeeSync.async;
-    NSString *refId = @"purchase:2017-11-01:28293336394ffby";
+    NSString *refId = @"purchase:2829363by";
     __block Token *transferToken = nil;
     
     // createTransferToken begin snippet to include in docs
@@ -145,7 +145,7 @@
 - (void)testCancelTransferToken {
     TKMember *payer = self.payerSync.async;
     TKAccount *payerAccount = self.payerAccountSync.async;
-    NSString *refId = @"purchase:2017-11-01:28293336394ffby";
+    NSString *refId = @"purchase:2829363by";
     __block Token *transferToken = nil;
     
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
