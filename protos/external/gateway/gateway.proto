@@ -269,6 +269,14 @@ message GetTrustedBeneficiariesResponse {
   repeated io.token.proto.common.member.TrustedBeneficiary trusted_beneficiaries = 1;
 }
 
+message CreateCustomizationRequest {
+  io.token.proto.common.blob.Blob.Payload logo = 1;
+  map<string, string> colors = 2;
+}
+
+message CreateCustomizationResponse {
+  string customization_id = 1;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Notification service
@@ -518,6 +526,7 @@ message StoreTokenRequestRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
   map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true];
   string user_ref_id = 3;
+  string customization_id = 4;
 }
 
 message StoreTokenRequestResponse {
@@ -530,6 +539,7 @@ message RetrieveTokenRequestRequest {
 
 message RetrieveTokenRequestResponse {
   io.token.proto.common.token.TokenRequest token_request = 1;
+  io.token.proto.common.member.Customization customization = 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1034,6 +1044,13 @@ service GatewayService {
     };
   }
 
+  // Set Customization
+  // https://developer.token.io/sdk/#customization
+  rpc CreateCustomization (CreateCustomizationRequest) returns (CreateCustomizationResponse) {
+  option (google.api.http) = {
+        post: "/customization"
+    };
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Devices for notification service

@@ -15,7 +15,7 @@
 }
 
 + (NSString *)nonce {
-    return [self randomStringWithLength:20];
+    return [self randomStringWithLength:18];
 }
 
 + (NSString *)base64EncodeBytes:(const char *)bytes length:(NSUInteger)length {

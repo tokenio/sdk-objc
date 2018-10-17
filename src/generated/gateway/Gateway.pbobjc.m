@@ -2689,6 +2689,103 @@ typedef struct GetTrustedBeneficiariesResponse__storage_ {
 
 @end
 
+#pragma mark - CreateCustomizationRequest
+
+@implementation CreateCustomizationRequest
+
+@dynamic hasLogo, logo;
+@dynamic colors, colors_Count;
+
+typedef struct CreateCustomizationRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Blob_Payload *logo;
+  NSMutableDictionary *colors;
+} CreateCustomizationRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "logo",
+        .dataTypeSpecific.className = GPBStringifySymbol(Blob_Payload),
+        .number = CreateCustomizationRequest_FieldNumber_Logo,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateCustomizationRequest__storage_, logo),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "colors",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateCustomizationRequest_FieldNumber_Colors,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(CreateCustomizationRequest__storage_, colors),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateCustomizationRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateCustomizationRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CreateCustomizationResponse
+
+@implementation CreateCustomizationResponse
+
+@dynamic customizationId;
+
+typedef struct CreateCustomizationResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *customizationId;
+} CreateCustomizationResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "customizationId",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateCustomizationResponse_FieldNumber_CustomizationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateCustomizationResponse__storage_, customizationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateCustomizationResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateCustomizationResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - SubscribeToNotificationsRequest
 
 @implementation SubscribeToNotificationsRequest
@@ -5241,12 +5338,14 @@ typedef struct GetTokenBlobResponse__storage_ {
 @dynamic hasPayload, payload;
 @dynamic options, options_Count;
 @dynamic userRefId;
+@dynamic customizationId;
 
 typedef struct StoreTokenRequestRequest__storage_ {
   uint32_t _has_storage_[1];
   TokenPayload *payload;
   NSMutableDictionary *options;
   NSString *userRefId;
+  NSString *customizationId;
 } StoreTokenRequestRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -5279,6 +5378,15 @@ typedef struct StoreTokenRequestRequest__storage_ {
         .number = StoreTokenRequestRequest_FieldNumber_UserRefId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(StoreTokenRequestRequest__storage_, userRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "customizationId",
+        .dataTypeSpecific.className = NULL,
+        .number = StoreTokenRequestRequest_FieldNumber_CustomizationId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(StoreTokenRequestRequest__storage_, customizationId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -5390,10 +5498,12 @@ typedef struct RetrieveTokenRequestRequest__storage_ {
 @implementation RetrieveTokenRequestResponse
 
 @dynamic hasTokenRequest, tokenRequest;
+@dynamic hasCustomization, customization;
 
 typedef struct RetrieveTokenRequestResponse__storage_ {
   uint32_t _has_storage_[1];
   TokenRequest *tokenRequest;
+  Customization *customization;
 } RetrieveTokenRequestResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -5408,6 +5518,15 @@ typedef struct RetrieveTokenRequestResponse__storage_ {
         .number = RetrieveTokenRequestResponse_FieldNumber_TokenRequest,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RetrieveTokenRequestResponse__storage_, tokenRequest),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "customization",
+        .dataTypeSpecific.className = GPBStringifySymbol(Customization),
+        .number = RetrieveTokenRequestResponse_FieldNumber_Customization,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RetrieveTokenRequestResponse__storage_, customization),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

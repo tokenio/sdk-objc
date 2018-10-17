@@ -1642,6 +1642,71 @@ typedef struct TrustedBeneficiary_Payload__storage_ {
 
 @end
 
+#pragma mark - Customization
+
+@implementation Customization
+
+@dynamic customizationId;
+@dynamic logoBlobId;
+@dynamic colors, colors_Count;
+
+typedef struct Customization__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *customizationId;
+  NSString *logoBlobId;
+  NSMutableDictionary *colors;
+} Customization__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "customizationId",
+        .dataTypeSpecific.className = NULL,
+        .number = Customization_FieldNumber_CustomizationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Customization__storage_, customizationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "logoBlobId",
+        .dataTypeSpecific.className = NULL,
+        .number = Customization_FieldNumber_LogoBlobId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Customization__storage_, logoBlobId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "colors",
+        .dataTypeSpecific.className = NULL,
+        .number = Customization_FieldNumber_Colors,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Customization__storage_, colors),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Customization class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Customization__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

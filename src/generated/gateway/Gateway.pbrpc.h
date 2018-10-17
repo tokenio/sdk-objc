@@ -27,6 +27,8 @@
 @class CreateAccessTokenResponse;
 @class CreateBlobRequest;
 @class CreateBlobResponse;
+@class CreateCustomizationRequest;
+@class CreateCustomizationResponse;
 @class CreateMemberRequest;
 @class CreateMemberResponse;
 @class CreateTestBankAccountRequest;
@@ -613,6 +615,21 @@ NS_ASSUME_NONNULL_BEGIN
  * https://developer.token.io/sdk/#trusted-beneficiary
  */
 - (GRPCProtoCall *)RPCToGetTrustedBeneficiariesWithRequest:(GetTrustedBeneficiariesRequest *)request handler:(void(^)(GetTrustedBeneficiariesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateCustomization(CreateCustomizationRequest) returns (CreateCustomizationResponse)
+
+/**
+ * Set Customization
+ * https://developer.token.io/sdk/#customization
+ */
+- (void)createCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Set Customization
+ * https://developer.token.io/sdk/#customization
+ */
+- (GRPCProtoCall *)RPCToCreateCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark SubscribeToNotifications(SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse)

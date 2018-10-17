@@ -218,6 +218,7 @@ typedef struct Token__storage_ {
 @dynamic hasPayload, payload;
 @dynamic options, options_Count;
 @dynamic userRefId;
+@dynamic customizationId;
 
 typedef struct TokenRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -225,6 +226,7 @@ typedef struct TokenRequest__storage_ {
   TokenPayload *payload;
   NSMutableDictionary *options;
   NSString *userRefId;
+  NSString *customizationId;
 } TokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -266,6 +268,15 @@ typedef struct TokenRequest__storage_ {
         .number = TokenRequest_FieldNumber_UserRefId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, userRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "customizationId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequest_FieldNumber_CustomizationId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TokenRequest__storage_, customizationId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
