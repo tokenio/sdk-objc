@@ -227,6 +227,7 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
   TokenRequest_FieldNumber_Payload = 2,
   TokenRequest_FieldNumber_Options = 3,
   TokenRequest_FieldNumber_UserRefId = 4,
+  TokenRequest_FieldNumber_CustomizationId = 5,
 };
 
 @interface TokenRequest : GPBMessage
@@ -245,6 +246,8 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger options_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
 
 @end
 

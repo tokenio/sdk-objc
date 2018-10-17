@@ -711,6 +711,28 @@ typedef GPB_ENUM(TrustedBeneficiary_Payload_FieldNumber) {
 
 @end
 
+#pragma mark - Customization
+
+typedef GPB_ENUM(Customization_FieldNumber) {
+  Customization_FieldNumber_CustomizationId = 1,
+  Customization_FieldNumber_LogoBlobId = 2,
+  Customization_FieldNumber_Colors = 3,
+};
+
+@interface Customization : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+
+/** logo blob id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *logoBlobId;
+
+/** colors in hex string #AARRGGBB */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *colors;
+/** The number of items in @c colors without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger colors_Count;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

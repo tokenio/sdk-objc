@@ -618,6 +618,26 @@
              responseClass:[GetTrustedBeneficiariesResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark CreateCustomization(CreateCustomizationRequest) returns (CreateCustomizationResponse)
+
+/**
+ * Set Customization
+ * https://developer.token.io/sdk/#customization
+ */
+- (void)createCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateCustomizationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Set Customization
+ * https://developer.token.io/sdk/#customization
+ */
+- (GRPCProtoCall *)RPCToCreateCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateCustomization"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateCustomizationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark SubscribeToNotifications(SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse)
 
 /**

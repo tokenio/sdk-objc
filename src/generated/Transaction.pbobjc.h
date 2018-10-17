@@ -108,7 +108,7 @@ typedef GPB_ENUM(TransactionStatus) {
   /** legacy transfers only: the transaction has been sent but has not been acknowledged by the bank */
   TransactionStatus_Sent = 16,
 
-  /** the transaction has been initiated but the status is unknown */
+  /** the transaction has been initiated but the result is unknown, this may be the final status and may not get updated later */
   TransactionStatus_Initiated = 17,
 };
 
