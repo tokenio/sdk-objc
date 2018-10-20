@@ -447,8 +447,7 @@
                                    if (response.status != VerificationStatus_Success) {
                                        onError([NSError
                                                 errorFromVerificationStatus:response.status
-                                                userInfo:nil]
-                                               );
+                                                userInfo:nil]);
                                        return;
                                    }
                                    onSuccess(response.recoveryEntry);

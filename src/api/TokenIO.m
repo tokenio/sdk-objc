@@ -354,7 +354,7 @@
                     memberId:(NSString *)memberId
               verificationId:(NSString *)verificationId
                         code:(NSString *)code
-                   onSuccess:(OnSuccessWithBoolean)onSuccess
+                   onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
     [memberRecoveryManager verifyMemberRecovery:alias
                                        memberId:memberId

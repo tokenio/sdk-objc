@@ -270,22 +270,18 @@
                          memberId:self.payerSync.id
                    verificationId:verificationId
                              code:userEnteredCode
-                        onSuccess:^(BOOL reallySuccessful) {
-                            if (reallySuccessful) {
-                                [tokenIO completeMemberRecovery:self.payerAlias
-                                                       memberId:self.payerSync.id
-                                                 verificationId:verificationId
-                                                           code:userEnteredCode
-                                                      onSuccess:^(TKMember *newMember) {
-                                                          member = newMember;
-                                                      } onError:^(NSError *e) {
-                                                          @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
-                                                                                         reason:[e localizedFailureReason]
-                                                                                       userInfo:[e userInfo]];
-                                                      }];
-                            } else {
-                                showPrompt(@"Please try again. Enter code emailed to you:");
-                            }
+                        onSuccess:^() {
+                            [tokenIO completeMemberRecovery:self.payerAlias
+                                                   memberId:self.payerSync.id
+                                             verificationId:verificationId
+                                                       code:userEnteredCode
+                                                  onSuccess:^(TKMember *newMember) {
+                                                      member = newMember;
+                                                  } onError:^(NSError *e) {
+                                                      @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
+                                                                                     reason:[e localizedFailureReason]
+                                                                                   userInfo:[e userInfo]];
+                                                  }];
                         } onError:^(NSError *e) {
                             @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
                                                            reason:[e localizedFailureReason]

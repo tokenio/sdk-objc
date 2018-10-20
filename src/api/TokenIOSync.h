@@ -224,9 +224,8 @@
  * @param memberId memberId to recover
  * @param verificationId verification Id from beginMemberRecovery call
  * @param code code from verification message
- * @return Boolean if the code is correct
  */
-- (BOOL)verifyMemberRecovery:(Alias *)alias
+- (void)verifyMemberRecovery:(Alias *)alias
                     memberId:(NSString *)memberId
               verificationId:(NSString *)verificationId
                         code:(NSString *)code;
