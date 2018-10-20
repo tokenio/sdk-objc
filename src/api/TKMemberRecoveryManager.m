@@ -77,7 +77,7 @@
                     memberId:(NSString *)memberId
               verificationId:(NSString *)verificationId
                         code:(NSString *)code
-                   onSuccess:(OnSuccessWithBoolean)onSuccess
+                   onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {
     if (crypto == nil) {
         crypto = [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
@@ -98,17 +98,10 @@
      privilegedKey:key
      onSuccess:^(MemberRecoveryOperation *op) {
          self->recoveryOperation = op;
-         onSuccess(true);
+         onSuccess();
      }
      onError:^(NSError* error) {
-         if (error.domain == kTokenVerificationStatusErrorDomain
-             && error.code == VerificationStatus_IncorrectCode) {
-             // The code is invalid. But the request shall be marked as success.
-             onSuccess(false);
-         }
-         else {
-             onError(error);
-         }
+         onError(error);
      }];
 }
 

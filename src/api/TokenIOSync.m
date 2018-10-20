@@ -237,22 +237,21 @@
 }
 
 
-- (BOOL)verifyMemberRecovery:(Alias *)alias
+- (void)verifyMemberRecovery:(Alias *)alias
                     memberId:(NSString *)memberId
               verificationId:(NSString *)verificationId
                         code:(NSString *)code {
-    TKRpcSyncCall<NSNumber *> *call = [TKRpcSyncCall create];
-    NSNumber *result = [call run:^{
+    TKRpcSyncCall<NSObject *> *call = [TKRpcSyncCall create];
+    [call run:^{
         [self.async verifyMemberRecovery:alias
                                 memberId:memberId
                           verificationId:verificationId
                                     code:code
-                               onSuccess:^(BOOL correct) {
-                                   call.onSuccess(@(correct));
+                               onSuccess:^(void) {
+                                   call.onSuccess(nil);
                                }
                                  onError:call.onError];
     }];
-    return [result boolValue];
 }
 
 
