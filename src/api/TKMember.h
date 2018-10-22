@@ -18,7 +18,6 @@
 #import "TKBrowser.h"
 #import "TKRepresentable.h"
 #import "TokenCluster.h"
-#import "TKRepresentable.h"
 
 @class Member;
 @class TKClient;
@@ -62,7 +61,7 @@
 - (TKClient *)getClient;
 
 /**
- * Creates a member that acts as another member using an access token.
+ * Creates a representable that acts as another member using an access token.
  *
  * @param accessTokenId the access token id
  */

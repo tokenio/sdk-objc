@@ -59,7 +59,7 @@
 + (TKMemberSync *)member:(TKMember *)delegate;
 
 /**
- * Creates a member that acts as another member using an access token.
+ * Creates a representable that acts as another member using an access token.
  *
  * @param accessTokenId the access token id
  */
@@ -98,7 +98,7 @@
 /**
  * Removes all public keys that do not have a corresponding private key stored on
  * the current device from tke member.
- *x
+ *
  */
 - (void)removeNonStoredKeys;
 

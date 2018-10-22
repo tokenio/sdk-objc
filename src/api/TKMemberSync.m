@@ -6,7 +6,6 @@
 #import "TKAccountSync.h"
 #import "TKMemberSync.h"
 #import "TKMember.h"
-#import "TKRepresentableSync.h"
 #import "TKRpcSyncCall.h"
 #import "TKAccount.h"
 

@@ -62,7 +62,6 @@
            client:(TKUnauthenticatedClient *) unauthenticatedClient_
      errorHandler:(TKRpcErrorHandler *)errorHandler_ {
     self = [super init];
-    
     if (self) {
         gateway = gateway_;
         crypto = crypto_;
@@ -71,7 +70,6 @@
         errorHandler = errorHandler_;
         unauthenticatedClient = unauthenticatedClient_;
     }
-    
     return self;
 }
 

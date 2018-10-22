@@ -29,6 +29,8 @@
  * Looks up a funding bank account linked to Token.
  *
  * @param accountId account id
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
 - (void)getAccount:(NSString *)accountId
          onSuccess:(OnSuccessWithTKAccount)onSuccess
@@ -39,6 +41,8 @@
  *
  * @param accountId account id
  * @param keyLevel specifies the key to use
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
  */
 - (void)getBalance:(NSString *)accountId
            withKey:(Key_Level)keyLevel
@@ -51,6 +55,7 @@
  * @param accountIds account ids to get balance
  * @param keyLevel specifies the key to use
  * @param onSuccess invoked on success with account balances
+ * @param onError callback invoked on error
  */
 - (void)getBalances:(NSArray<NSString *> *)accountIds
             withKey:(Key_Level)keyLevel
