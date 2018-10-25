@@ -71,13 +71,14 @@
     return [NSArray arrayWithArray:aliases];
 }
 
-
-- (void)useAccessToken:(NSString *)accessTokenId {
-    [client useAccessToken:accessTokenId];
-}
-
-- (void)clearAccessToken {
-    [client clearAccessToken];
+- (id<TKRepresentable>)forAccessToken:(NSString *)accessTokenId {
+    TKClient* cloned = [client copy];
+    [cloned useAccessToken:accessTokenId];
+    return [[TKMember alloc] initWithMember:member
+                               tokenCluster:tokenCluster
+                                  useClient:cloned
+                          useBrowserFactory:_browserFactory
+                                    aliases:aliases];
 }
 
 - (void)getKeys:(OnSuccessWithKeys)onSuccess

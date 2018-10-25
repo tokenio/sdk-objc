@@ -8,6 +8,7 @@
 
 #import "TKAccountSync.h"
 #import "TKMemberSync.h"
+#import "TKRepresentableSync.h"
 #import "TKTestBase.h"
 #import "TokenIOSync.h"
 #import "Address.pbobjc.h"
@@ -37,32 +38,32 @@
 
 - (void)testAnyAddressToken {
     Address *payload = [Address message];
-    AddressRecord *address = [self->grantor addAddress:payload withName:@"name"];
+    AddressRecord *address = [grantor addAddress:payload withName:@"name"];
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self->grantee.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
     [access forAllAddresses];
-    Token *token = [self->grantor createAccessToken:access];
+    Token *token = [grantor createAccessToken:access];
     
-    token = [[self->grantor endorseToken:token withKey:Key_Level_Standard] token];
+    token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [self->grantee useAccessToken:token.id_p];
-    AddressRecord *lookedUp = [self->grantee getAddressWithId:address.id_p];
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
+    AddressRecord *lookedUp = [representable getAddressWithId:address.id_p];
     
     XCTAssertEqualObjects(address, lookedUp);
 }
 
 - (void)testAddressToken {
     Address *payload = [Address message];
-    AddressRecord *address = [self->grantor addAddress:payload withName:@"name"];
+    AddressRecord *address = [grantor addAddress:payload withName:@"name"];
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self->grantee.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
     [access forAddress:address.id_p];
-    Token *token = [self->grantor createAccessToken:access];
+    Token *token = [grantor createAccessToken:access];
     
-    token = [[self->grantor endorseToken:token withKey:Key_Level_Standard] token];
+    token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [self->grantee useAccessToken:token.id_p];
-    AddressRecord *lookedUp = [self->grantee getAddressWithId:address.id_p];
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
+    AddressRecord *lookedUp = [representable getAddressWithId:address.id_p];
     
     XCTAssertEqualObjects(address, lookedUp);
 }
@@ -74,9 +75,9 @@
     
     token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:token.id_p];
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
     
-    Money *lookedUpBalance = [grantee getBalance:grantorAccount.id
+    Money *lookedUpBalance = [representable getBalance:grantorAccount.id
                                          withKey:Key_Level_Low].current;
     
     XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance.current);
@@ -89,8 +90,8 @@
     
     token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:token.id_p];
-    Money *lookedUpBalance = [grantee getBalance:grantorAccount.id
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
+    Money *lookedUpBalance = [representable getBalance:grantorAccount.id
                                          withKey:Key_Level_Low].current;
     XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance.current);
 }
@@ -102,8 +103,8 @@
     
     token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:token.id_p];
-    TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
+    TKAccountSync *lookedUpAccount = [representable getAccount:grantorAccount.id];
     XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
 }
 
@@ -114,8 +115,8 @@
     
     token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:token.id_p];
-    TKAccountSync *lookedUpAccount = [grantee getAccount:grantorAccount.id];
+    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
+    TKAccountSync *lookedUpAccount = [representable getAccount:grantorAccount.id];
     XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
 }
 
@@ -149,8 +150,8 @@
     
     accessToken = [[grantor endorseToken:accessToken withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:accessToken.id_p];
-    PagedArray<Transaction *> *lookedUpTransactions = [grantee getTransactionsOffset:nil
+    id<TKRepresentableSync> representable = [grantee forAccessToken:accessToken.id_p];
+    PagedArray<Transaction *> *lookedUpTransactions = [representable getTransactionsOffset:nil
                                                                                limit:100
                                                                           forAccount:grantorAccount.id
                                                                              withKey:Key_Level_Low];
@@ -188,8 +189,8 @@
     
     accessToken = [[grantor endorseToken:accessToken withKey:Key_Level_Standard] token];
     
-    [grantee useAccessToken:accessToken.id_p];
-    PagedArray<Transaction *> *lookedUpTransactions = [grantee
+    id<TKRepresentableSync> representable = [grantee forAccessToken:accessToken.id_p];
+    PagedArray<Transaction *> *lookedUpTransactions = [representable
                                                        getTransactionsOffset:nil
                                                        limit:100
                                                        forAccount:grantorAccount.id

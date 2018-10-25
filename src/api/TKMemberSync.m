@@ -36,12 +36,9 @@
     return self.async.aliases;
 }
 
-- (void)useAccessToken:(NSString *)accessTokenId {
-    [self.async useAccessToken:accessTokenId];
-}
-
-- (void)clearAccessToken {
-    [self.async clearAccessToken];
+- (id<TKRepresentableSync>)forAccessToken:(NSString *)accessTokenId {
+    TKMember *newAsync = (TKMember*) [self.async forAccessToken:accessTokenId];
+    return [[TKMemberSync alloc] initWithDelegate:newAsync];
 }
 
 - (NSArray<Key *> *)getKeys {
