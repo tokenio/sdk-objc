@@ -62,36 +62,6 @@
     XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
 }
 
-- (void)testRedeemTokenBankAuthorization {
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
-    builder.authorization = [self createBankAuthorization:payer];
-    builder.toMemberId = payer.id;
-    Token *token = [builder execute];
-    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-    token = [endorsedResult token];
-    
-    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-    
-    
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
-    Transfer *transfer = [payer redeemToken:token
-                                     amount:redeemAmount
-                                   currency:@"USD"
-                                description:@"lunch"
-                                destination:destination];
-    bool transferComplete = transfer.status == TransactionStatus_Success
-    || transfer.status == TransactionStatus_Processing;
-    XCTAssert(transferComplete);
-    XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
-    XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
-    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
-}
-
 - (void)testRedeemToken_withParams {
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
