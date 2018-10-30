@@ -253,16 +253,6 @@
                                         onError:onError];
 }
 
-- (void)notifyLinkAccounts:(Alias *)alias
-             authorization:(BankAuthorization *)authorization
-                 onSuccess:(OnSuccess)onSuccess
-                   onError:(OnError)onError {
-    [unauthenticatedClient notifyLinkAccounts:alias
-                                authorization:authorization
-                                    onSuccess:onSuccess
-                                      onError:onError];
-}
-
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys
       deviceMetadata:(DeviceMetadata *)deviceMetadata
@@ -273,20 +263,6 @@
                          deviceMetadata:deviceMetadata
                               onSuccess:onSuccess
                                 onError:onError];
-}
-
-- (void)notifyLinkAccountsAndAddKey:(Alias *)alias
-                      authorization:(BankAuthorization *)authorization
-                            keyName:(NSString *)keyName
-                                key:(Key *)key
-                          onSuccess:(OnSuccess)onSuccess
-                            onError:(OnError)onError {
-    [unauthenticatedClient notifyLinkAccountsAndAddKey:alias
-                                         authorization:authorization
-                                               keyName:keyName
-                                                   key:key
-                                             onSuccess:onSuccess
-                                               onError:onError];
 }
 
 - (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload

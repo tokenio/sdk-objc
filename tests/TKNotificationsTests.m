@@ -93,17 +93,6 @@ void check(NSString *message, BOOL condition) {
     [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
 }
 
-- (void)testNotifyLinkAccounts {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    BankAuthorization* auth = [BankAuthorization message];
-    auth.bankId = @"iron";
-    [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
-    
-    [[self syncSDK] notifyLinkAccounts:payer.firstAlias authorization:auth];
-    
-    [self waitForNotification:@"LINK_ACCOUNTS"];
-}
-
 - (void)testNotifyAddKey {
     [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
     DeviceMetadata *metadata = [DeviceMetadata message];
@@ -187,21 +176,6 @@ void check(NSString *message, BOOL condition) {
     
     result = [payer endorseToken:token withKey:Key_Level_Standard];
     XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
-}
-
-- (void)testNotifyLinkAccountsAndAddKey {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    
-    Key *key = [[payerAnotherDevice getKeys] firstObject];
-    BankAuthorization* auth = [BankAuthorization message];
-    auth.bankId = @"iron";
-    [auth.accountsArray addObjectsFromArray:@[[SealedMessage new]]];
-    [[self syncSDK] notifyLinkAccountsAndAddKey:payer.firstAlias
-                                  authorization:auth
-                                        keyName:@"Chrome 53.0"
-                                            key:key];
-    
-    [self waitForNotification:@"LINK_ACCOUNTS_AND_ADD_KEY"];
 }
 
 - (void)testGetSubscribers {
