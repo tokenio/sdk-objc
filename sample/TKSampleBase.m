@@ -26,10 +26,12 @@
     Money *fortune = [Money message];
     fortune.currency = @"EUR";
     fortune.value = @"5678.90";
-    _payerAccountSync = [_payerSync linkAccounts:[_payerSync createTestBankAccount:fortune]][0];
+    OauthBankAuthorization *auth = [_payerSync createTestBankAccount:fortune];
+    _payerAccountSync = [_payerSync linkAccounts:auth.bankId accessToken:auth.accessToken][0];
     _payeeSync = [self createMember:_tokenIOSync];
     _payeeAlias = _payeeSync.firstAlias;
-    _payeeAccountSync = [_payeeSync linkAccounts:[_payeeSync createTestBankAccount:fortune]][0];
+    OauthBankAuthorization *auth2 = [_payeeSync createTestBankAccount:fortune];
+    _payeeAccountSync = [_payeeSync linkAccounts:auth2.bankId accessToken:auth2.accessToken][0];
 }
 
 - (void)runUntilTrue:(int (^)(void))condition {

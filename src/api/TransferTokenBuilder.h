@@ -38,8 +38,8 @@
 /// Account ID from which to pay.
 @property (readwrite) NSString *accountId;
 
-/// Bank authorization for payment. This is useful if not paying from linked account.
-@property (readwrite) BankAuthorization *bankAuthorization;
+/// One-time authorization for payment.
+@property (readwrite) OauthBankAuthorization *authorization;
 
 /// Expiration time in ms since 1970.
 @property (readwrite) int64_t expiresAtMs;

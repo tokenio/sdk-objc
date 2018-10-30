@@ -227,6 +227,20 @@
     }];
 }
 
+- (NSArray<TKAccountSync *> *)linkAccounts:(NSString *)bankId
+                               accessToken:(NSString *)accessToken {
+    TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async linkAccounts:bankId
+                     accessToken:accessToken
+                       onSuccess:
+         ^(NSArray<TKAccount *> *accounts) {
+             call.onSuccess([self _asyncToSync:accounts]);
+         }
+                         onError:call.onError];
+    }];
+}
+
 - (NSArray<TKAccountSync *> *)linkAccounts:(BankAuthorization *)bankAuthorization {
     TKRpcSyncCall<id> *call = [TKRpcSyncCall create];
     return [call run:^{
@@ -593,8 +607,8 @@
 
 }
 
-- (BankAuthorization *)createTestBankAccount:(Money *)balance {
-    TKRpcSyncCall<BankAuthorization *> *call = [TKRpcSyncCall create];
+- (OauthBankAuthorization *)createTestBankAccount:(Money *)balance {
+    TKRpcSyncCall<OauthBankAuthorization *> *call = [TKRpcSyncCall create];
     return [call run:^{
         [self.async createTestBankAccount:balance
                                 onSuccess:call.onSuccess

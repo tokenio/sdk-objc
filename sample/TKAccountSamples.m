@@ -23,7 +23,8 @@
 @implementation TKAccountSamples
 
 - (void)testGetAccounts {
-    [self.payerSync linkAccounts:[self createBankAuthorization:self.payerSync]];
+    OauthBankAuthorization *auth = [self createBankAuthorization:self.payerSync];
+    [self.payerSync linkAccounts:auth.bankId accessToken:auth.accessToken];
     TKMember *member = self.payerSync.async;
     NSMutableDictionary<NSString*, NSNumber*> *sums = [NSMutableDictionary dictionaryWithCapacity:10];
     
