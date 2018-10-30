@@ -10,7 +10,7 @@
 @class TokenIOSync;
 @class TokenIO;
 @class TokenIOBuilder;
-@class BankAuthorization;
+@class OauthBankAuthorization;
 @class TKMemberSync;
 @class TKAccountSync;
 @class TKBankClient;
@@ -85,7 +85,7 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param member member
  * @return a bank authorization
  */
-- (BankAuthorization *)createBankAuthorization:(TKMemberSync *)member;
+- (OauthBankAuthorization *)createBankAuthorization:(TKMemberSync *)member;
 
 /**
  * Formats HostAndPort instance.

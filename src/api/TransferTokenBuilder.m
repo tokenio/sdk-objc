@@ -45,7 +45,7 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
              onError:(OnError)onError {
-    if (!self.accountId && !self.bankAuthorization) {
+    if (!self.accountId && !self.authorization) {
         @throw [NSException
          exceptionWithName:@"InvalidTokenException"
                     reason:@"No source account found on token"
@@ -78,9 +78,9 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
         payload.transfer.instructions.source.account.token.accountId = self.accountId;
     }
     
-    if (self.bankAuthorization) {
-        payload.transfer.instructions.source.account.tokenAuthorization.authorization
-        = self.bankAuthorization;
+    if (self.authorization) {
+        payload.transfer.instructions.source.account.custom.bankId = self.authorization.bankId;
+        payload.transfer.instructions.source.account.custom.payload = self.authorization.accessToken;
     }
     
     if (self.toAlias) {

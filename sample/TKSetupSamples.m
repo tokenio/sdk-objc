@@ -81,8 +81,9 @@
     balance.currency = @"EUR";
     balance.value = @"5678.00";
     [member createTestBankAccount:balance
-                        onSuccess:^(BankAuthorization* auth) {
-        [member linkAccounts:auth
+                        onSuccess:^(OauthBankAuthorization* auth) {
+        [member linkAccounts:auth.bankId
+                 accessToken:auth.accessToken
                    onSuccess:^(NSArray<TKAccount*> * _Nonnull accounts) {
             // use accounts
             account = accounts[0];

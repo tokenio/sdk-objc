@@ -516,7 +516,7 @@
  * Only works in test environments; doesn't work in production.
  */
 - (void)createTestBankAccount:(Money *)balance
-                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                    onSuccess:(OnSuccessWithOauthBankAuthorization)onSuccess
                       onError:(OnError)onError;
 
 /**

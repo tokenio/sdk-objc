@@ -66,7 +66,7 @@
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
-    builder.bankAuthorization = [self createBankAuthorization:payer];
+    builder.authorization = [self createBankAuthorization:payer];
     builder.toMemberId = payer.id;
     Token *token = [builder execute];
     TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];

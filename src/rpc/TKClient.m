@@ -1280,7 +1280,7 @@
 }
 
 - (void)createTestBankAccount:(Money *)balance
-                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                    onSuccess:(OnSuccessWithOauthBankAuthorization)onSuccess
                       onError:(OnError)onError {
     CreateTestBankAccountRequest *request = [CreateTestBankAccountRequest message];
     request.balance = balance;
@@ -1292,7 +1292,7 @@
                            ^(CreateTestBankAccountResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
-                                   onSuccess(response.bankAuthorization);
+                                   onSuccess(response.authorization);
                                } else {
                                    [self->errorHandler handle:onError withError:error];
                                }

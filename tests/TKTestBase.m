@@ -132,14 +132,14 @@
 - (TKAccountSync *)createAccount:(TokenIOSync *)token {
     TKMemberSync *member = [self createMember:token];
     
-    BankAuthorization * auth = [self createBankAuthorization:member];
+    OauthBankAuthorization * auth = [self createBankAuthorization:member];
 
-    NSArray<TKAccountSync *> *accounts = [member linkAccounts:auth];
+    NSArray<TKAccountSync *> *accounts = [member linkAccounts:auth.bankId accessToken:auth.accessToken];
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }
 
-- (BankAuthorization *)createBankAuthorization:(TKMemberSync *)member {
+- (OauthBankAuthorization *)createBankAuthorization:(TKMemberSync *)member {
     Money *balance = [Money message];
     balance.value = @"1000000.00";
     balance.currency = @"USD";

@@ -44,8 +44,8 @@
 }
 
 - (void)testGetBalances {
-    BankAuthorization *auth = [self createBankAuthorization:payer];
-    NSArray<TKAccountSync *> *accounts = [payer linkAccounts:auth];
+    OauthBankAuthorization *auth = [self createBankAuthorization:payer];
+    NSArray<TKAccountSync *> *accounts = [payer linkAccounts:auth.bankId accessToken:auth.accessToken];
     XCTAssert(accounts.count == 1);
     TKAccountSync *secondAccount = accounts[0];
     NSArray<NSString *> *accountIds = @[payerAccount.id, secondAccount.id];

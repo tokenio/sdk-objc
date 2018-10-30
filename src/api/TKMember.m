@@ -368,6 +368,18 @@
                 onError:onError];
 }
 
+- (void)linkAccounts:(NSString *)bankId
+         accessToken:(NSString *)accessToken
+           onSuccess:(OnSuccessWithTKAccounts)onSuccess
+             onError:(OnError)onError {
+    [client linkAccounts:bankId
+             accessToken:accessToken
+               onSuccess:^(NSArray<Account *> *accounts) {
+                   onSuccess([self _mapAccounts:accounts]);
+               }
+                 onError:onError];
+}
+
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError {
@@ -768,7 +780,7 @@
 }
 
 - (void)createTestBankAccount:(Money *)balance
-                    onSuccess:(OnSuccessWithBankAuthorization)onSuccess
+                    onSuccess:(OnSuccessWithOauthBankAuthorization)onSuccess
                       onError:(OnError)onError {
     [client createTestBankAccount:balance
                         onSuccess:onSuccess
