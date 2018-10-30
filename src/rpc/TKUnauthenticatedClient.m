@@ -261,28 +261,6 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyLinkAccounts:(Alias *)alias
-             authorization:(BankAuthorization *)authorization
-                 onSuccess:(OnSuccess)onSuccess
-                   onError:(OnError)onError {
-    NotifyRequest *request = [NotifyRequest message];
-    request.alias = alias;
-    request.body.linkAccounts.bankAuthorization = authorization;
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToNotifyWithRequest:request
-                           handler:^(NotifyResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess();
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
-    [rpc execute:call request:request];
-}
-
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys
       deviceMetadata:(DeviceMetadata *)deviceMetadata
@@ -293,32 +271,6 @@
     request.body.addKey.keysArray = [NSMutableArray arrayWithArray:keys];
     request.body.addKey.deviceMetadata = deviceMetadata;
     
-    RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToNotifyWithRequest:request
-                           handler:^(NotifyResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess();
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
-    [rpc execute:call request:request];
-}
-
-- (void)notifyLinkAccountsAndAddKey:(Alias *)alias
-                      authorization:(BankAuthorization *)authorization
-                            keyName:(NSString *)keyName
-                                key:(Key *)key
-                          onSuccess:(OnSuccess)onSuccess
-                            onError:(OnError)onError {
-    NotifyRequest *request = [NotifyRequest message];
-    request.alias = alias;
-    request.body.linkAccountsAndAddKey.linkAccounts.bankAuthorization = authorization;
-    request.body.linkAccountsAndAddKey.addKey.name = keyName;
-    request.body.linkAccountsAndAddKey.addKey.key = key;
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway

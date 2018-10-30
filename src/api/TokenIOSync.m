@@ -134,18 +134,6 @@
     }];
 }
 
-- (void)notifyLinkAccounts:(Alias *)alias
-             authorization:(BankAuthorization *)authorization{
-    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async notifyLinkAccounts:alias
-                         authorization:authorization
-                             onSuccess:^(void) {call.onSuccess(nil);}
-                               onError:call.onError
-         ];
-    }];
-}
-
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys
       deviceMetadata:(DeviceMetadata *)deviceMetadata {
@@ -158,23 +146,6 @@
                            call.onSuccess(nil);
                        }
                          onError:call.onError];
-    }];
-}
-
-- (void)notifyLinkAccountsAndAddKey:(Alias *)alias
-                      authorization:(BankAuthorization *)authorization
-                            keyName:(NSString *)keyName
-                                key:(Key *)key {
-    TKRpcSyncCall<TKMemberSync *> *call = [TKRpcSyncCall create];
-    [call run:^{
-        [self.async notifyLinkAccountsAndAddKey:alias
-                                  authorization:authorization
-                                        keyName:keyName
-                                            key:key
-                                      onSuccess:^(void) {
-                                          call.onSuccess(nil);
-                                      }
-                                        onError:call.onError];
     }];
 }
 
