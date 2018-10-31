@@ -34,12 +34,6 @@
         return [tokenIO createMember:alias];
     }];
 
-    // Wait until the alias is created
-    [self waitUntil:^{
-        NSArray<Alias *> *aliases = [member getAliases];
-        [self check:@"Can not create alias" condition:[alias isEqual:aliases.firstObject]];
-    }];
-    
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
     [self run: ^(TokenIOSync *tokenIO) {
@@ -112,11 +106,6 @@
         XCTAssertEqual([tokenIO aliasExists:alias], NO);
         
         [member addAlias:alias];
-        // Wait until the alias is created
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Can not create alias" condition:[aliases containsObject:alias]];
-        }];
         XCTAssertEqual([tokenIO aliasExists:alias], YES);
     }];
 }
@@ -129,11 +118,6 @@
         XCTAssertNil([tokenIO getMemberId:alias]);
         [member addAlias:alias];
         
-        // Wait until the alias is created
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Can not create alias" condition:[aliases containsObject:alias]];
-        }];
         XCTAssertTrue([[tokenIO getMemberId:alias] isEqualToString:member.id]);
     }];
 }
@@ -163,16 +147,12 @@
         TKMemberSync *member = [self createMember:tokenIO];
         
         [member addAlias:alias2];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Can not find alias2" condition:(aliases.count == 2)];
-        }];
+        NSArray<Alias *> *aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 2);
         
         [member addAlias:alias3];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Can not find alias3" condition:(aliases.count == 3)];
-        }];
+        aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 3);
     }];
 }
 
@@ -183,11 +163,6 @@
         
         TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
-        
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Aliases count should be 3" condition:(aliases.count == 3)];
-        }];
         
         // test aliases after login
         TKMemberSync *loginMember = [tokenIO getMember:member.id];
@@ -201,16 +176,13 @@
 
         TKMemberSync *member = [self createMember:tokenIO];
         [member addAlias:alias2];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Aliases count should be 2" condition:(aliases.count == 2)];
-        }];
+        
+        NSArray<Alias *> *aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 2);
 
         [member removeAlias:alias2];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Aliases count should be 1" condition:(aliases.count == 1)];
-        }];
+        aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 1);
     }];
 }
 
@@ -221,16 +193,12 @@
 
         TKMemberSync *member = [self createMember:tokenIO];
         [member addAliases:@[alias2, alias3]];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Aliases count should be 3" condition:(aliases.count == 3)];
-        }];
-
+        NSArray<Alias *> *aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 3);
+        
         [member removeAliases:@[alias2, alias3]];
-        [self waitUntil:^{
-            NSArray<Alias *> *aliases = [member getAliases];
-            [self check:@"Aliases count should be 1" condition:(aliases.count == 1)];
-        }];
+        aliases = [member getAliases];
+        XCTAssertEqual(aliases.count, 1);
     }];
 }
 
