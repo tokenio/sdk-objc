@@ -57,22 +57,6 @@
     XCTAssertThrows([builder execute]);
 }
 
-- (void)testNoRedeemer {
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    
-    destination.account.token.accountId = payeeAccount.id;
-    destination.account.token.memberId = payee.id;
-    
-    NSArray<TransferEndpoint *> *destinations = @[destination];
-    
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
-    builder.accountId = payerAccount.id;
-    builder.destinations = destinations;
-    XCTAssertThrows([builder execute]);
-}
-
 - (void)testFull {
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     
