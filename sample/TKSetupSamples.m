@@ -26,9 +26,12 @@
 
 - (void)testCreateSDKClient {
     // createSDK begin snippet to include in docs
-    TokenIOBuilder *builder = [TokenIO sandboxBuilder];
+    TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
+    // change the cluster if necessary
+    builder.tokenCluster = [TokenCluster sandbox];
+    builder.port = 443;
+    builder.useSsl = YES;
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-    builder.languageCode = @"en";
     TokenIO *tokenIO = [builder buildAsync];
     // createSDK done snippet to include in docs
     
@@ -40,7 +43,7 @@
     __block TKMember *newMember;
     
     // createMember begin snippet to include in docs
-    Alias *alias = [Alias new];
+    Alias *alias = [[Alias alloc] init];
     // For this test user, we generate a random alias to make sure nobody else
     // has claimed it. The "+noverify@" means Token automatically verifies this
     // alias (only works in test environments).
@@ -48,6 +51,7 @@
                     stringByAppendingString:@"+noverify@token.io"]
                    lowercaseString];
     alias.type = Alias_Type_Email;
+    alias.realm = @"token";
     [tokenIO createMember:alias onSuccess:^(TKMember *m) {
         newMember = m; // Use member.
     } onError:^(NSError *e) {
@@ -295,5 +299,81 @@
     }];
     TKMemberSync *memberSync = [TKMemberSync member:member];
     XCTAssertEqualObjects([memberSync firstAlias].value, memberAliasString);
+}
+
+- (void)testProfile {
+    __weak TKMember *member = self.payerSync.async;
+    __block NSString *fullName = nil;
+    
+    Profile *profile = [[Profile alloc] init];
+    profile.displayNameFirst = @"Jon";
+    profile.displayNameLast = @"Snow";
+    [member setProfile:profile
+             onSuccess:^(Profile *ignore) {
+                 [member getProfile:member.id
+                          onSuccess:^(Profile *p) {
+                              fullName = [NSString stringWithFormat:@"%@ %@", p.displayNameFirst, p.displayNameLast];
+                          }
+                            onError:^(NSError *e) {
+                                @throw [NSException exceptionWithName:@"GetProfileException"
+                                                               reason:[e localizedFailureReason]
+                                                             userInfo:[e userInfo]];
+                            }
+                  ];
+             } onError:^(NSError *e) {
+                 @throw [NSException exceptionWithName:@"SetProfileException"
+                                                reason:[e localizedFailureReason]
+                                              userInfo:[e userInfo]];
+             }
+     ];
+    // create profile picture done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (fullName != nil);
+    }];
+}
+
+- (void)testProfilePicture {
+    __weak TKMember *member = self.payerSync.async;
+    __block BOOL gotBlob = false;
+    
+    NSData* (^loadImage)(NSString*) = ^(NSString* ignored) {
+        return [[NSData alloc]
+                initWithBase64EncodedString:@"R0lGODlhAQABAIABAP///wAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                options:0];
+    };
+    
+    void (^displayImage)(NSData*) = ^(NSData* ignored) {
+        // doesn't use data, but makes example easier to understand
+        gotBlob = true;
+    };
+    
+    // create profile picture begin snippet to include in docs
+    [member setProfilePicture:member.id
+                     withType: @"image/gif"
+                     withName: @"selfie.gif"
+                     withData: loadImage(@"selfie.gif")
+                    onSuccess:^() {
+                        [member getProfilePicture:member.id
+                                             size:ProfilePictureSize_Small
+                                        onSuccess:^(Blob *blob) {
+                                            displayImage(blob.data);
+                                        } onError:^(NSError *e) {
+                                            @throw [NSException exceptionWithName:@"GetProfilePictureException"
+                                                                           reason:[e localizedFailureReason]
+                                                                         userInfo:[e userInfo]];
+                                        }
+                         ];
+                    } onError:^(NSError *e) {
+                        @throw [NSException exceptionWithName:@"SetProfilePictureException"
+                                                       reason:[e localizedFailureReason]
+                                                     userInfo:[e userInfo]];
+                    }
+     ];
+    // create profile picture done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (gotBlob == true);
+    }];
 }
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TokenSdk.h"
+#import "TokenProto.h"
 
 /*
  * Generic token error.

@@ -15,6 +15,7 @@
 #import "TKRpcErrorHandler.h"
 #import "TKError.h"
 #import "TKUnauthenticatedClient.h"
+#import "PagedArray.h"
 
 @implementation TKClient {
     GatewayService *gateway;

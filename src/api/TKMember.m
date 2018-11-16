@@ -6,6 +6,7 @@
 #import <Protobuf/GPBMessage.h>
 #import "gateway/Gateway.pbrpc.h"
 
+#import "TKAccount.h"
 #import "TKAccountSync.h"
 #import "TKAuthorizationEngine.h"
 #import "TKClient.h"

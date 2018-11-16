@@ -12,6 +12,7 @@
 #import "TKCrypto.h"
 #import "TKLocalizer.h"
 #import "TKError.h"
+#import "TKMember.h"
 
 @implementation TKMemberRecoveryManager {
     TKUnauthenticatedClient *unauthenticatedClient;

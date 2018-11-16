@@ -14,6 +14,7 @@
 #import "QHex.h"
 #import "TKLocalizer.h"
 #import "TKError.h"
+#import "TKUtil.h"
 
 // Header bytes (expected by OpenSSL) to be prepended to the raw public key data to
 // get the key in X509 format:

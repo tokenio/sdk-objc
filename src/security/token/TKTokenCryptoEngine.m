@@ -13,6 +13,7 @@
 #import "TKError.h"
 #import "TKLocalizer.h"
 #import "TKLogManager.h"
+#import "TKUtil.h"
 
 @implementation TKTokenCryptoEngine {
     id<TKKeyStore> keyStore;
