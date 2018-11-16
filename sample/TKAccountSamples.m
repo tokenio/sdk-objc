@@ -22,6 +22,225 @@
 
 @implementation TKAccountSamples
 
+- (void)testGetBanks {
+    TokenIO *tokenIO = self.tokenIOSync.async;
+    
+    __block NSArray<Bank *> *banks;
+    
+    // get 5 banks sorted by name loop begin snippet to include in docs
+    [tokenIO getBanks:nil
+               search:nil
+              country:nil
+                 page:1
+              perPage:5
+                 sort:@"name"
+             provider:@""
+            onSuccess:^(NSArray<Bank *> *banklist) {
+                banks = banklist;
+            } onError:^(NSError *e) {
+                // Something went wrong.
+                @throw [NSException exceptionWithName:@"GetBankException"
+                                               reason:[e localizedFailureReason]
+                                             userInfo:[e userInfo]];
+            }];
+    // get 5 banks sorted by name loop done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (banks.count == 5);
+    }];
+    
+    // get banks by ids loop begin snippet to include in docs
+    [tokenIO getBanks:@[@"iron",@"gold"]
+               search:nil
+              country:nil
+                 page:1
+              perPage:10
+                 sort:@"name"
+             provider:@""
+            onSuccess:^(NSArray<Bank *> *banklist) {
+                banks = banklist;
+            } onError:^(NSError *e) {
+                // Something went wrong.
+                @throw [NSException exceptionWithName:@"GetBankException"
+                                               reason:[e localizedFailureReason]
+                                             userInfo:[e userInfo]];
+            }];
+    // get banks by ids done begin snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (banks.count == 2);
+    }];
+    
+    // get banks by search string loop begin snippet to include in docs
+    [tokenIO getBanks:nil
+               search:@"GOLD"
+              country:nil
+                 page:1
+              perPage:10
+                 sort:@"country"
+             provider:@""
+            onSuccess:^(NSArray<Bank *> *banklist) {
+                banks = banklist;
+            } onError:^(NSError *e) {
+                // Something went wrong.
+                @throw [NSException exceptionWithName:@"GetBankException"
+                                               reason:[e localizedFailureReason]
+                                             userInfo:[e userInfo]];
+            }];
+    // get banks by search string done begin snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (banks.count > 0);
+    }];
+    
+    // get banks by country code loop begin snippet to include in docs
+    [tokenIO getBanks:nil
+               search:nil
+              country:@"US"
+                 page:1
+              perPage:10
+                 sort:@"name"
+             provider:@""
+            onSuccess:^(NSArray<Bank *> *bankList) {
+                banks = bankList;
+            } onError:^(NSError *e) {
+                // Something went wrong.
+                @throw [NSException exceptionWithName:@"GetBankException"
+                                               reason:[e localizedFailureReason]
+                                             userInfo:[e userInfo]];
+            }];
+    // get banks by search string done begin snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (banks.count > 0);
+    }];
+}
+
+// manual testing only
+- (void)testInitiateAccountLinking {
+    TKMember *member = self.payerSync.async;
+    __block NSArray<TKAccount *> * accounts;
+    
+    // initiate account linking loop begin snippet to include in docs
+    // This method will pop up TkBrowser with bank linking web page. After user finish the flow, the onSuccess callbank
+    // will be invoked. If you want to customize your browser user interface, you can implemnt TkBrowser and add the
+    // new TKBrowserFactory when you creating TokenIO.
+    [member initiateAccountLinking:@"iron"
+                         onSuccess:^(NSArray<TKAccount *> * accountList) {
+                             accounts = accountList;
+                         }
+                           onError:^(NSError *e) {
+                               if ([e.domain isEqualToString: kTokenErrorDomain]
+                                   && e.code == kTKErrorUserCancelled) {
+                                   // User Cancelled.
+                               } else if ([e.domain isEqualToString:kTokenAccountLinkingErrorDomain]
+                                   && e.code == AccountLinkingStatus_FailureBankAuthorizationRequired) {
+                                   // Wait for the link accounts notification to complete the whole process
+                               } else {
+                                   // Something went wrong.
+                                   @throw [NSException exceptionWithName:@"InitiateAccountLinkingException"
+                                                                  reason:[e localizedFailureReason]
+                                                                userInfo:[e userInfo]];
+                               }
+                           }];
+    // initiate account linking loop done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (accounts.count > 0);
+    }
+         backOffTimeMs:2
+         waitingTimeMs:60000];
+}
+
+// manual testing only
+-(void)testBankAuthorizationNotification {
+    TKMember *member = self.payerSync.async;
+    __block BOOL finish = NO;
+    __block Notification *notification;
+    __block NSArray<TKAccount *> * accounts;
+    
+    [member initiateAccountLinking:@"gold"
+                         onSuccess:^(NSArray<TKAccount *> * accountList) {
+                             //Success
+                         }
+                           onError:^(NSError *e) {
+                               if ([e.domain isEqualToString: kTokenErrorDomain]
+                                   && e.code == kTKErrorUserCancelled) {
+                                   // User Cancelled.
+                               } else if ([e.domain isEqualToString:kTokenAccountLinkingErrorDomain]
+                                          && e.code == AccountLinkingStatus_FailureBankAuthorizationRequired) {
+                                   // Wait for the link accounts notification to complete the whole process
+                                   finish = YES;
+                               } else {
+                                   // Something went wrong.
+                                   @throw [NSException exceptionWithName:@"InitiateAccountLinkingException"
+                                                                  reason:[e localizedFailureReason]
+                                                                userInfo:[e userInfo]];
+                               }
+                           }];
+    
+    [self runUntilTrue:^ {
+        if (finish) {
+            PagedArray<Notification *> *array = [self.payerSync getNotificationsOffset:0 limit:1];
+            if (array.items.count > 0) {
+                notification = array.items[0];
+                return true;
+            }
+        }
+        return false;
+    }
+         backOffTimeMs:2
+         waitingTimeMs:60000];
+    
+    NSString *notificationId = notification.id_p;
+    
+    // bank authorization notification loop begin snippet to include in docs
+    // Notification is available in push notification.
+    [member getNotification:notificationId
+                  onSuccess:^(Notification *notification) {
+                      if ([notification.content.type isEqualToString:@"LINK_ACCOUNTS"]) {
+                          LinkAccounts *content = [TKJson
+                                                   deserializeMessageOfClass:[LinkAccounts class]
+                                                   fromJSON:notification.content.payload];
+                          [member linkAccounts:content.bankAuthorization
+                                     onSuccess:^(NSArray<TKAccount *> * accountList) {
+                                         //Success
+                                         accounts = accountList;
+                                         
+                                     }
+                                       onError:^(NSError *e) {
+                                           if ([e.domain isEqualToString: kTokenErrorDomain]
+                                               && e.code == kTKErrorUserCancelled) {
+                                               // User Cancelled.
+                                           } else if ([e.domain isEqualToString:kTokenAccountLinkingErrorDomain]
+                                                      && e.code == AccountLinkingStatus_FailureBankAuthorizationRequired) {
+                                               // Wait for the link accounts notification to complete the whole process
+                                               finish = YES;
+                                           } else {
+                                               // Something went wrong.
+                                               @throw [NSException exceptionWithName:@"InitiateAccountLinkingException"
+                                                                              reason:[e localizedFailureReason]
+                                                                            userInfo:[e userInfo]];
+                                           }
+                                       }];
+                      } else {
+                          // This notification is for something else.
+                      }
+                  }
+                    onError: ^(NSError *e) {
+                        // Something went wrong.
+                        @throw [NSException exceptionWithName:@"GetNotificationException"
+                                                       reason:[e localizedFailureReason]
+                                                     userInfo:[e userInfo]];
+                    }
+     ];
+    // bank authorization notification loop done snippet to include in docs
+    
+    [self runUntilTrue:^ {
+        return (accounts.count > 0);
+    }];
+}
+
 - (void)testGetAccounts {
     OauthBankAuthorization *auth = [self createBankAuthorization:self.payerSync];
     [self.payerSync linkAccounts:auth.bankId accessToken:auth.accessToken];

@@ -35,17 +35,17 @@
 }
 
 - (void)runUntilTrue:(int (^)(void))condition {
-    [self runUntilTrue:condition backOffTimeMs:0];
+    [self runUntilTrue:condition backOffTimeMs:0 waitingTimeMs:20000];
 }
 
-- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs {
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs waitingTimeMs:(int)waitingTimeMs {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
     while(true) {
         if (condition()) {
             return;
         }
         NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        if (now - start < 20) {
+        if (now - start < waitingTimeMs) {
             usleep(1000 * backOffTimeMs);
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];

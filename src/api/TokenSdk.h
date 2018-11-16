@@ -21,17 +21,9 @@
 #import "TokenIOSync.h"
 #import "TokenIO.h"
 #import "TokenIOBuilder.h"
-
-#import "Account.pbobjc.h"
-#import "Member.pbobjc.h"
-#import "Money.pbobjc.h"
-#import "Notification.pbobjc.h"
-#import "Security.pbobjc.h"
-#import "Subscriber.pbobjc.h"
-#import "Token.pbobjc.h"
-#import "Notification.pbobjc.h"
-#import "Transaction.pbobjc.h"
-#import "Transfer.pbobjc.h"
-
+#import "TKError.h"
+#import "TokenProto.h"
+#import "TKJson.h"
+#import "NotifyResult.h"
 
 #endif /* TokenSdk_h */

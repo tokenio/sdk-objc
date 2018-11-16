@@ -37,8 +37,9 @@
  *
  * @param condition block that returns a Boolean
  * @param backOffTimeMs how long to wait between invocations of `condition`
+ * @param waitingTimeMs how long to wait the process to complete
  */
-- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs;
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs waitingTimeMs:(int)waitingTimeMs;
 
 /**
  * Invokes grpc-using block. Runs until `condition` block returns true,
