@@ -265,27 +265,22 @@
                                 onError:onError];
 }
 
-- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
-                          keys:(NSArray<Key *> *)keys
-                deviceMetadata:(DeviceMetadata *)deviceMetadata
-                tokenRequestId:(NSString *)tokenRequestId
-                        bankId:(NSString *)bankId
-                         state:(NSString *)state
-                       contact:(ReceiptContact *)contact
-                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
-                       onError:(OnError)onError {
+-(void)notifyCreateAndEndorseToken:(NSString *)tokenRequestId
+                              keys:(NSArray<Key *> *)keys
+                    deviceMetadata:(DeviceMetadata *)deviceMetadata
+                           contact:(ReceiptContact *)contact
+                         onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                           onError:(OnError)onError {
     AddKey *addKey = [AddKey message];
     addKey.keysArray = [NSMutableArray arrayWithArray:keys];
     addKey.deviceMetadata = deviceMetadata;
-    [unauthenticatedClient notifyEndorseAndAddKey:tokenPayload
-                                           addkey:addKey
-                                   tokenRequestId:tokenRequestId
-                                           bankId:bankId
-                                            state:state
-                                          contact:contact
-                                        onSuccess:onSuccess
-                                          onError:onError];
+    [unauthenticatedClient notifyCreateAndEndorseToken:tokenRequestId
+                                                addkey:addKey
+                                               contact:contact
+                                             onSuccess:onSuccess
+                                               onError:onError];
 }
+
 /**
  * Invalidate a notification.
  *

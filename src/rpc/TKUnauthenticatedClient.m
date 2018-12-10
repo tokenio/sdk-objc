@@ -286,26 +286,20 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
-                        addkey:(AddKey *)addKey
-                tokenRequestId:(NSString *)tokenRequestId
-                        bankId:(NSString *)bankId
-                         state:(NSString *)state
-                       contact:(ReceiptContact *)contact
-                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
-                       onError:(OnError)onError {
-    TriggerEndorseAndAddKeyNotificationRequest *request = [TriggerEndorseAndAddKeyNotificationRequest message];
-    request.endorseAndAddKey.payload = tokenPayload;
-    request.endorseAndAddKey.addKey = addKey;
-    request.endorseAndAddKey.tokenRequestId = tokenRequestId;
-    request.endorseAndAddKey.bankId = bankId;
-    request.endorseAndAddKey.state = state;
-    request.endorseAndAddKey.contact = contact;
+-(void)notifyCreateAndEndorseToken:(NSString *)tokenRequestId
+                            addkey:(AddKey *)addKey
+                           contact:(ReceiptContact *)contact
+                         onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                           onError:(OnError)onError {
+    TriggerCreateAndEndorseTokenNotificationRequest *request = [TriggerCreateAndEndorseTokenNotificationRequest message];
+    request.tokenRequestId = tokenRequestId;
+    request.addKey = addKey;
+    request.contact = contact;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
-                           RPCToTriggerEndorseAndAddKeyNotificationWithRequest:request
-                           handler:^(TriggerEndorseAndAddKeyNotificationResponse *response, NSError *error) {
+                           RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:request
+                           handler:^(TriggerCreateAndEndorseTokenNotificationResponse *response, NSError *error) {
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess([NotifyResult createWithNotifyStatus:response.status

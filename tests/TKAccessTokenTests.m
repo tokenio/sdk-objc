@@ -23,21 +23,41 @@
 @end
 
 @implementation TKAccessTokenTests {
-    TKMemberSync *grantor;
     TKMemberSync *grantee;
+    TKAccountSync *grantorAccount;
+    TKMemberSync *grantor;
+    TokenRequestPayload *requestPayload;
+    TokenRequestOptions *requestOptions;
     Token *token;
 }
 
 - (void)setUp {
     [super setUp];
     TokenIOSync *tokenIO = [self syncSDK];
-    grantor = [self createMember:tokenIO];
     grantee = [self createMember:tokenIO];
-    Address *payload = [Address message];
-    AddressRecord *address = [grantor addAddress:payload withName:@"name"];
+    grantorAccount = [self createAccount:tokenIO];
+    grantor = grantorAccount.member;
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
-    [access forAddress:address.id_p];
+    requestPayload = [[TokenRequestPayload alloc] init];
+    requestPayload.userRefId = [TKUtil nonce];
+    requestPayload.redirectURL = @"https://token.io";
+    requestPayload.to.id_p = grantee.id;
+    requestPayload.description_p = @"Account and balance access";
+    requestPayload.callbackState = [TKUtil nonce];
+    
+    GPBEnumArray *types = [[GPBEnumArray alloc] init];
+    [types addValue:TokenRequestPayload_AccessBody_ResourceType_Accounts];
+    [types addValue:TokenRequestPayload_AccessBody_ResourceType_Balances];
+    requestPayload.accessBody.typeArray = types;
+    
+    TokenRequestOptions *requestOptions = [[TokenRequestOptions alloc] init];
+    requestOptions.bankId = @"iron";
+    requestOptions.receiptRequested = false;
+    requestOptions.from.id_p = grantor.id;
+    
+    AccessTokenConfig *access = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    [access forAccount:grantorAccount.id];
+    [access forAccountBalances:grantorAccount.id];
     token = [grantor createAccessToken:access];
 }
 
@@ -76,9 +96,10 @@
 }
 
 - (void)testReplaceToken {
-    AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
-    [access forAll];
-    TokenOperationResult *replaced = [grantor replaceAccessToken:token accessTokenConfig:access];
+    AccessTokenConfig *accessToken = [AccessTokenConfig fromPayload:token.payload];
+    [accessToken forAccount:grantorAccount.id];
+    [accessToken forAccountTransactions:grantorAccount.id];
+    TokenOperationResult *replaced = [grantor replaceAccessToken:token accessTokenConfig:accessToken];
     XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [replaced status]);
     XCTAssertEqual(0, [[replaced token] payloadSignaturesArray_Count]);
 }
@@ -121,8 +142,6 @@
     [access forAccount:account.id];
     [access forAccountBalances:account.id];
     [access forAccountTransactions:account.id];
-    [access forAllTransactions];
-    [access forAllBalances];
     Token* token2 = [grantor2 createAccessToken:access];
     AccessTokenConfig *access2 = [AccessTokenConfig fromPayload:token2.payload];
     [access2 forAddress:address1.id_p];
@@ -131,43 +150,41 @@
     [access2 forAddress:address9.id_p];
     [access2 forAddress:address10.id_p];
     
-    
     TokenOperationResult *replaced = [grantor2 replaceAccessToken:token2 accessTokenConfig:access2];
     XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [replaced status]);
     XCTAssertEqual(0, [[replaced token] payloadSignaturesArray_Count]);
 }
 
 - (void)testReplaceAndEndorseToken {
-    AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
-    [access forAll];
-    TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:access];
+    AccessTokenConfig *accessToken = [AccessTokenConfig fromPayload:token.payload];
+    [accessToken forAccount:grantorAccount.id];
+    [accessToken forAccountTransactions:grantorAccount.id];
+    TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:accessToken];
     XCTAssertEqual(TokenOperationResult_Status_Success, [replaced status]);
     XCTAssertEqual(2, [[replaced token] payloadSignaturesArray_Count]);
     XCTAssert([[grantor getToken:token.id_p].replacedByTokenId isEqualToString:replaced.token.id_p]);
 }
 
 - (void)testAddingPermissionsIdempotent {
-    AccessTokenConfig *access = [AccessTokenConfig fromPayload:token.payload];
-    [access forAccount:grantee.id];
-    [access forAccount:grantee.id];
-    [access forAccount:grantee.id];
-    [access forAllAddresses];
-    [access forAllAddresses];
-    
-    [access from:grantee.id];
-    TokenPayload *payload = [access toTokenPayload];
-    NSUInteger count = [payload.access resourcesArray_Count];
+    AccessTokenConfig *accessToken = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    [accessToken forAccount:grantorAccount.id];
+    [accessToken forAccount:grantorAccount.id];
+    [accessToken forAccount:grantorAccount.id];
+    [accessToken forAccountBalances:grantorAccount.id];
+    [accessToken forAccountBalances:grantorAccount.id];
+
+    TokenPayload *tokenPayload = [accessToken toTokenPayload];
+    NSUInteger count = [tokenPayload.access resourcesArray_Count];
     XCTAssertEqual(2, count);
-    XCTAssertNotEqual(token.payload.refId, payload.refId);
+    XCTAssertNotEqual(token.payload.refId, tokenPayload.refId);
 }
 
 - (void)testGetTokenRequestResult {
     TokenIOSync *tokenIO = [self syncSDK];
-    NSString *tokenRequestId = [grantee storeTokenRequest:token.payload options:nil];
-    NSString *state = [TKUtil nonce];
+    NSString *tokenRequestId = [grantee storeTokenRequest:requestPayload requestOptions:requestOptions];
     Signature *signature = [grantor signTokenRequestState:tokenRequestId
                                                  tokenId:token.id_p
-                                                   state:state];
+                                                   state:requestPayload.callbackState];
     TokenRequestResult *result = [tokenIO getTokenRequestResult:tokenRequestId];
     
     XCTAssert([result.tokenId isEqualToString: token.id_p]);

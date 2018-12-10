@@ -736,13 +736,24 @@
     }];
 }
 
-- (NSString *)storeTokenRequest:(TokenPayload *)tokenPayload
-                        options:(NSDictionary<NSString*, NSString*> *)options {
+- (NSString *)storeTokenRequest:(TokenRequestPayload *)requestPayload
+                 requestOptions:(TokenRequestOptions *)requestOptions {
     TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async storeTokenRequest:tokenPayload
-                              options:options
+        [self.async storeTokenRequest:requestPayload
+                       requestOptions:requestOptions
                             onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
+}
+
+- (void)updateTokenRequest:(NSString *)requestId
+                   options:(TokenRequestOptions *)options {
+    TKRpcSyncCall<NSString *> *call = [TKRpcSyncCall create];
+    [call run:^{
+        [self.async updateTokenRequest:requestId
+                               options:options
+                            onSuccess:^{ call.onSuccess(nil); }
                               onError:call.onError];
     }];
 }

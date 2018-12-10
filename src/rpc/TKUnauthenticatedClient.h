@@ -180,26 +180,20 @@
              onError:(OnError)onError;
 
 /**
- * Notifies subscribed devices that a token payload should be endorsed and keys should be
- * added.
+ * Notifies subscribed devices that a token should be created and endorsed.
  *
- * @param tokenPayload the token payload to be sent
+ * @param tokenRequestId the token request ID to send
  * @param addKey the add key payload to be sent
- * @param tokenRequestId optional token request id
- * @param bankId optional bank id
- * @param state optional token request state for signing
- * @param contact receipt contact
+ * @param contact receipt contact to send
  * @param onSuccess invoked if successful
  * @param onError invoked if failed
  */
-- (void)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
-                        addkey:(AddKey *)addKey
-                tokenRequestId:(NSString *)tokenRequestId
-                        bankId:(NSString *)bankId
-                         state:(NSString *)state
-                       contact:(ReceiptContact *)contact
-                     onSuccess:(OnSuccessWithNotifyResult)onSuccess
-                       onError:(OnError)onError;
+- (void)notifyCreateAndEndorseToken:(NSString *)tokenRequestId
+                               addkey:(AddKey *)addKey
+                            contact:(ReceiptContact *)contact
+                          onSuccess:(OnSuccessWithNotifyResult)onSuccess
+                            onError:(OnError)onError;
+
 /**
  * Invalidate a notification.
  *

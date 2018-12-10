@@ -24,16 +24,13 @@
     __block BOOL isFinished = NO;
     
     [aisp
-     storeTokenRequest:[TKSampleModel aispEndrosePayload:member to:aisp]
-     options:[NSDictionary dictionary]
+     storeTokenRequest:[TKSampleModel accessTokenRequestPayload:aisp]
+     requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
          [self.tokenIOSync.async
-          notifyEndorseAndAddKey:[TKSampleModel aispEndrosePayload:member to:aisp]
+          notifyCreateAndEndorseToken:tokenRequestId
           keys:[NSArray arrayWithObject:[TKSampleModel lowKey:aisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
-          tokenRequestId:tokenRequestId
-          bankId:@"gold"
-          state:[TKUtil nonce]
           contact:[TKSampleModel receiptContact:member.firstAlias.value]
           onSuccess:^(NotifyResult *result) {
               notificationId = result.notificationId;
@@ -42,7 +39,6 @@
               @throw [NSException exceptionWithName:@"NotificationException"
                                              reason:[e localizedFailureReason]
                                            userInfo:[e userInfo]];
-              
           }];
      }
      onError:^(NSError *e) {
@@ -50,7 +46,6 @@
          @throw [NSException exceptionWithName:@"StoreTokenRequestException"
                                         reason:[e localizedFailureReason]
                                       userInfo:[e userInfo]];
-         
      }];
     
     [self runUntilTrue:^{
@@ -58,15 +53,15 @@
     }];
     
     NSString *accountId = self.payerAccountSync.id;
-    // aisp endore and add key begin snippet to include in docs
+    // aisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId
      onSuccess:^(Notification *notification) {
-         if ([notification.content.type isEqualToString:@"ENDORSE_AND_ADD_KEY"]) {
-             EndorseAndAddKey *content = [TKJson
-                                          deserializeMessageOfClass:[EndorseAndAddKey class]
+         if ([notification.content.type isEqualToString:@"CREATE_AND_ENDORSE_TOKEN"]) {
+             CreateAndEndorseToken *content = [TKJson
+                                          deserializeMessageOfClass:[CreateAndEndorseToken class]
                                           fromJSON:notification.content.payload];
-             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithPayload:content.payload];
+             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithTokenRequest:content.tokenRequest.requestPayload withRequestOptions:content.tokenRequest.requestOptions];
              [config forAccount:accountId];
              [config forAccountBalances:accountId];
              // Create Token
@@ -80,9 +75,9 @@
                    onSuccess:^(TokenOperationResult *result) {
                        // Sign the token request state
                        [member
-                        signTokenRequestState:content.tokenRequestId
+                        signTokenRequestState:content.tokenRequest.id_p
                         tokenId:result.token.id_p
-                        state:content.state
+                        state:content.tokenRequest.requestPayload.callbackState
                         onSuccess:^(Signature *ignore) {
                             // (Optional) Add keys to the member.
                             [member
@@ -129,7 +124,7 @@
                                         reason:[e localizedFailureReason]
                                       userInfo:[e userInfo]];
      }];
-    // aisp endore and add key end snippet to include in docs
+    // aisp create and endorse token end snippet to include in docs
     
     [self runUntilTrue:^{
         return isFinished == YES;
@@ -138,21 +133,18 @@
 
 - (void)testEndorseTransferToken {
     TKMember *member = self.payerSync.async;
-    TKMember *aisp = self.payeeSync.async;
+    TKMember *pisp = self.payeeSync.async;
     __block NSString *notificationId = nil;
     __block BOOL isFinished = NO;
     
-    [aisp
-     storeTokenRequest:[TKSampleModel pispEndrosePayload:member to:aisp]
-     options:[NSDictionary dictionary]
+    [pisp
+     storeTokenRequest:[TKSampleModel transferTokenRequestPayload:pisp]
+     requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
          [self.tokenIOSync.async
-          notifyEndorseAndAddKey:[TKSampleModel pispEndrosePayload:member to:aisp]
-          keys:[NSArray arrayWithObject:[TKSampleModel lowKey:aisp.id]]
+          notifyCreateAndEndorseToken:tokenRequestId
+          keys:[NSArray arrayWithObject:[TKSampleModel lowKey:pisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
-          tokenRequestId:tokenRequestId
-          bankId:@"gold"
-          state:[TKUtil nonce]
           contact:[TKSampleModel receiptContact:member.firstAlias.value]
           onSuccess:^(NotifyResult *result) {
               notificationId = result.notificationId;
@@ -177,25 +169,27 @@
     }];
     
     NSString *accountId = self.payerAccountSync.id;
-    // pisp endore and add key begin snippet to include in docs
+    // pisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId
      onSuccess:^(Notification *notification) {
-         if ([notification.content.type isEqualToString:@"ENDORSE_AND_ADD_KEY"]) {
-             EndorseAndAddKey *content = [TKJson
-                                          deserializeMessageOfClass:[EndorseAndAddKey class]
+         if ([notification.content.type isEqualToString:@"CREATE_AND_ENDORSE_TOKEN"]) {
+             CreateAndEndorseToken *content = [TKJson
+                                          deserializeMessageOfClass:[CreateAndEndorseToken class]
                                           fromJSON:notification.content.payload];
-             NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:content.payload.transfer.lifetimeAmount];
-             TransferTokenBuilder *builder =[member createTransferToken:amount currency:content.payload.transfer.currency];
-             builder.toAlias = content.payload.to.alias;
-             builder.toMemberId = content.payload.to.id_p;
+             NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:content.tokenRequest.requestPayload.transferBody.lifetimeAmount];
+             TransferTokenBuilder *builder =[member createTransferToken:amount currency:content.tokenRequest.requestPayload.transferBody.currency];
+             builder.toMemberId = content.tokenRequest.requestPayload.to.id_p;
+             if (content.tokenRequest.requestPayload.to.hasAlias) {
+                 builder.toAlias = content.tokenRequest.requestPayload.to.alias;
+             }
              builder.accountId = accountId;
-             builder.refId = content.payload.refId;
+             builder.refId = [TKUtil nonce];
              builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
              // Optional settings
              builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
              builder.descr = @"Lunch";
-             
+
              // Create Token
              [builder
               executeAsync:^(Token *token) {
@@ -206,9 +200,9 @@
                    onSuccess:^(TokenOperationResult *result) {
                        // Sign the token request state
                        [member
-                        signTokenRequestState:content.tokenRequestId
+                        signTokenRequestState:content.tokenRequest.id_p
                         tokenId:result.token.id_p
-                        state:content.state
+                        state:content.tokenRequest.requestPayload.callbackState
                         onSuccess:^(Signature *ignore) {
                             // (Optional) Add keys to the member.
                             [member
@@ -255,7 +249,7 @@
                                         reason:[e localizedFailureReason]
                                       userInfo:[e userInfo]];
      }];
-    // pisp endore and add key end snippet to include in docs
+    // pisp create and endorse token end snippet to include in docs
     
     [self runUntilTrue:^{
         return isFinished == YES;

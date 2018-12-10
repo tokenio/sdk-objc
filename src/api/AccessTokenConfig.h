@@ -34,6 +34,15 @@
  */
 + (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom;
 
+/**
+ * Creates a new instance from a token request.
+ *
+ * @param requestPayload token request payload
+ * @param requestOptions token request options
+ */
++ (AccessTokenConfig *)fromTokenRequest:(TokenRequestPayload *)requestPayload
+                     withRequestOptions:(TokenRequestOptions *)requestOptions;
+
  /**
  * Creates a new instance with a provided grantee alias.
  *
@@ -47,6 +56,15 @@
  * @param payloadToInitFrom token payload to initialize the config from
  */
 - (id)initWithPayload:(TokenPayload *)payloadToInitFrom;
+
+/**
+ * Creates a new instance from a token request.
+ *
+ * @param requestPayload token request payload
+ * @param requestOptions token request options
+ */
+- (id)initWithTokenRequest:(TokenRequestPayload *)requestPayload
+        withRequestOptions:(TokenRequestOptions *)requestOptions;
 
 /**
  * Sets 'from' field on the payload.
@@ -113,7 +131,7 @@
  *
  * @param actingAs entity redeemer is acting on behalf of.
  */
-- (void)actingAs:(TokenPayload_ActingAs *)actingAs;
+- (void)actingAs:(ActingAs *)actingAs;
 
 /**
  * Converts configuration to TokenPayload object.

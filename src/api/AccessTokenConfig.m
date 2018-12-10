@@ -24,6 +24,11 @@
     return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
 }
 
++ (AccessTokenConfig *)fromTokenRequest:(TokenRequestPayload *)requestPayload
+                     withRequestOptions:(TokenRequestOptions *)requestOptions {
+    return [[AccessTokenConfig alloc] initWithTokenRequest:requestPayload withRequestOptions:requestOptions];
+}
+
 - (id)initWithToAlias:(Alias *)toAlias {
     self = [super init];
     if (self) {
@@ -54,6 +59,23 @@
         payload = [payloadToInitFrom copy];
         [payload.access clear];
         payload.refId = [TKUtil nonce];
+        resources = [[NSMutableSet alloc] init];
+    }
+    return self;
+}
+
+- (id)initWithTokenRequest:(TokenRequestPayload *)requestPayload
+        withRequestOptions:(TokenRequestOptions *)requestOptions {
+    self = [super init];
+    if (self) {
+        payload = [TokenPayload message];
+        payload.version = @"1.0";
+        payload.refId = [TKUtil nonce];
+        payload.from = requestOptions.from;
+        payload.to = requestPayload.to;
+        payload.actingAs = requestPayload.actingAs;
+        payload.description_p = requestPayload.description;
+        payload.receiptRequested = requestOptions.receiptRequested;
         resources = [[NSMutableSet alloc] init];
     }
     return self;
@@ -132,7 +154,7 @@
     [self forAllTransactions];
 }
 
-- (void)actingAs:(TokenPayload_ActingAs *)actingAs {
+- (void)actingAs:(ActingAs *)actingAs {
     payload.actingAs = actingAs;
 }
 

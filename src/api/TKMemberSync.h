@@ -576,11 +576,20 @@
 /**
  * Stores a token request.
  *
- * @param tokenPayload transfer token payload
- * @param options map of options
+ * @param requestPayload token request payload
+ * @param requestOptions token request options
  */
-- (NSString *)storeTokenRequest:(TokenPayload *)tokenPayload
-                        options:(NSDictionary<NSString*, NSString*> *)options;
+- (NSString *)storeTokenRequest:(TokenRequestPayload *)requestPayload
+                 requestOptions:(TokenRequestOptions *)requestOptions;
+
+/**
+ * Updates an existing token request.
+ *
+ * @param requestId token request ID
+ * @param options new token request options
+ */
+- (void)updateTokenRequest:(NSString *)requestId
+                   options:(TokenRequestOptions *)options;
 
 /**
  * Replaces the member's receipt contact.
