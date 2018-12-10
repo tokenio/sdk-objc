@@ -402,6 +402,7 @@ typedef struct TokenRequestOptions__storage_ {
 @dynamic userRefId;
 @dynamic customizationId;
 @dynamic redirectURL;
+@dynamic refId;
 @dynamic hasTo, to;
 @dynamic hasActingAs, actingAs;
 @dynamic accessBody;
@@ -422,6 +423,7 @@ typedef struct TokenRequestPayload__storage_ {
   NSString *description_p;
   NSString *callbackState;
   NSString *destinationCountry;
+  NSString *refId;
 } TokenRequestPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -461,7 +463,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "to",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
         .number = TokenRequestPayload_FieldNumber_To,
-        .hasIndex = 3,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, to),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -470,7 +472,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "actingAs",
         .dataTypeSpecific.className = GPBStringifySymbol(ActingAs),
         .number = TokenRequestPayload_FieldNumber_ActingAs,
-        .hasIndex = 4,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, actingAs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -497,7 +499,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_Description_p,
-        .hasIndex = 5,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -506,7 +508,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "callbackState",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_CallbackState,
-        .hasIndex = 6,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, callbackState),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -515,8 +517,17 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "destinationCountry",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_DestinationCountry,
-        .hasIndex = 7,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, destinationCountry),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "refId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequestPayload_FieldNumber_RefId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, refId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

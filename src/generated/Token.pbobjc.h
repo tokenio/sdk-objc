@@ -327,6 +327,7 @@ typedef GPB_ENUM(TokenRequestPayload_FieldNumber) {
   TokenRequestPayload_FieldNumber_Description_p = 8,
   TokenRequestPayload_FieldNumber_CallbackState = 9,
   TokenRequestPayload_FieldNumber_DestinationCountry = 10,
+  TokenRequestPayload_FieldNumber_RefId = 11,
 };
 
 typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
@@ -342,6 +343,9 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *redirectURL;
+
+/** ref ID that will be transferred to the token payload */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
 /** Test to see if @c to has been set. */
@@ -699,15 +703,15 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readonly) AccessBody_Resource_Resource_OneOfCase resourceOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations DEPRECATED_ATTRIBUTE;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address;
 
@@ -719,13 +723,13 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_TransferDestinations *transferDestinations;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -737,7 +741,7 @@ void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message);
 #pragma mark - AccessBody_Resource_AllAddresses
 
 /**
- * Provides access to all member addresses
+ * **DEPRECATED** Provides access to all member addresses
  **/
 @interface AccessBody_Resource_AllAddresses : GPBMessage
 
@@ -762,7 +766,7 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccounts
 
 /**
- * Provides access to all member accounts. Enables getAccounts()
+ * **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
  * to get list of accounts (and also getAccount() on any account).
  **/
 @interface AccessBody_Resource_AllAccounts : GPBMessage
@@ -776,7 +780,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllAccountsAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to all member accounts at a specific bank.
+ * **DEPRECATED** Provides access to all member accounts at a specific bank.
  **/
 @interface AccessBody_Resource_AllAccountsAtBank : GPBMessage
 
@@ -804,7 +808,7 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccountTransactions
 
 /**
- * Provides access to member transactions in all accounts
+ * **DEPRECATED** Provides access to member transactions in all accounts
  * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountTransactions : GPBMessage
@@ -818,7 +822,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllTransactionsAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to member transactions in all accounts at a specific bank.
+ * **DEPRECATED** Provides access to member transactions in all accounts at a specific bank.
  * Normally used with AllAccountsAtBank (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllTransactionsAtBank : GPBMessage
@@ -846,7 +850,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccountBalances
 
 /**
- * Provides access to member balance on all accounts
+ * **DEPRECATED** Provides access to member balance on all accounts
  * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountBalances : GPBMessage
@@ -860,7 +864,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllBalancesAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to member balance on all accounts at a specific bank.
+ * **DEPRECATED** Provides access to member balance on all accounts at a specific bank.
  * Normally used with AllAccountsAtBank (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllBalancesAtBank : GPBMessage
@@ -888,7 +892,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllTransferDestinations
 
 /**
- * Provides access to the resolved transfer destinations of all accounts
+ * **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
  **/
 @interface AccessBody_Resource_AllTransferDestinations : GPBMessage
 
@@ -901,7 +905,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllTransferDestinationsAtBank_FieldNumber) 
 };
 
 /**
- * Provides access to the resolved transfer destinations of all accounts at a specific bank
+ * **DEPRECATED** Provides access to the resolved transfer destinations of all accounts at a specific bank
  **/
 @interface AccessBody_Resource_AllTransferDestinationsAtBank : GPBMessage
 

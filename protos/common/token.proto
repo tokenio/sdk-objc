@@ -49,6 +49,7 @@ message TokenRequestPayload {
   string customization_id = 2;
   string redirect_url = 3;
 
+  string ref_id = 11;       // ref ID that will be transferred to the token payload
   TokenMember to = 4;
   ActingAs acting_as = 5;
 
@@ -186,23 +187,23 @@ message AccessBody {
 
   message Resource {
     oneof resource {
-      AllAddresses all_addresses = 1;
-      AllAccounts all_accounts = 2;
-      AllAccountTransactions all_transactions = 3;
-      AllAccountBalances all_balances = 4;
-      AllTransferDestinations all_transfer_destinations = 13;
+      AllAddresses all_addresses = 1 [deprecated = true];
+      AllAccounts all_accounts = 2 [deprecated = true];
+      AllAccountTransactions all_transactions = 3 [deprecated = true];
+      AllAccountBalances all_balances = 4 [deprecated = true];
+      AllTransferDestinations all_transfer_destinations = 13 [deprecated = true];
       Address address = 5;
       Account account = 6;
       AccountTransactions transactions = 7;
       AccountBalance balance = 8;
       TransferDestinations transfer_destinations = 12;
-      AllAccountsAtBank all_accounts_at_bank = 9;
-      AllTransactionsAtBank all_transactions_at_bank = 10;
-      AllBalancesAtBank all_balances_at_bank = 11;
-      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14;
+      AllAccountsAtBank all_accounts_at_bank = 9 [deprecated = true];
+      AllTransactionsAtBank all_transactions_at_bank = 10 [deprecated = true];
+      AllBalancesAtBank all_balances_at_bank = 11 [deprecated = true];
+      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14 [deprecated = true];
     }
 
-    // Provides access to all member addresses
+    // **DEPRECATED** Provides access to all member addresses
     message AllAddresses {}
 
     // Provides access to a specific member address
@@ -210,11 +211,11 @@ message AccessBody {
       string address_id = 1; // ID of address
     }
 
-    // Provides access to all member accounts. Enables getAccounts()
+    // **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
     // to get list of accounts (and also getAccount() on any account).
     message AllAccounts {}
 
-    // Provides access to all member accounts at a specific bank.
+    // **DEPRECATED** Provides access to all member accounts at a specific bank.
     message AllAccountsAtBank {
       string bank_id = 1;
     }
@@ -225,11 +226,11 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to member transactions in all accounts
+    // **DEPRECATED** Provides access to member transactions in all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountTransactions {}
 
-    // Provides access to member transactions in all accounts at a specific bank.
+    // **DEPRECATED** Provides access to member transactions in all accounts at a specific bank.
     // Normally used with AllAccountsAtBank (to get list of accounts)
     message AllTransactionsAtBank {
       string bank_id = 1;
@@ -240,11 +241,11 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to member balance on all accounts
+    // **DEPRECATED** Provides access to member balance on all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
 
-    // Provides access to member balance on all accounts at a specific bank.
+    // **DEPRECATED** Provides access to member balance on all accounts at a specific bank.
     // Normally used with AllAccountsAtBank (to get list of accounts)
     message AllBalancesAtBank {
       string bank_id = 1;
@@ -255,10 +256,10 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to the resolved transfer destinations of all accounts
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
     message AllTransferDestinations {}
 
-    // Provides access to the resolved transfer destinations of all accounts at a specific bank
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts at a specific bank
     message AllTransferDestinationsAtBank {
       string bank_id = 1;
     }
