@@ -171,7 +171,8 @@ message ReceiptContact {
 
 message Device {
   string name = 1;
-  io.token.proto.common.security.Key key = 2;
+  io.token.proto.common.security.Key key = 2 [deprecated = true];
+  repeated io.token.proto.common.security.Key keys = 3;
 }
 
 enum CreateMemberType {

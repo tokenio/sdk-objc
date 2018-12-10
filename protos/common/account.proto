@@ -70,8 +70,9 @@ message BankAccount {
     string account_id = 2;
   }
 
-  // One-time encrypted authorization for an account
+  // Deprecated; unused
   message TokenAuthorization {
+    option deprecated = true;
     io.token.proto.banklink.BankAuthorization authorization = 1;
   }
 
@@ -117,7 +118,7 @@ message BankAccount {
 
   oneof account {
     Token token = 1;
-    TokenAuthorization token_authorization = 2;
+    TokenAuthorization token_authorization = 2 [deprecated = true];
     Swift swift = 3;
     Sepa sepa = 4;
     Ach ach = 5;

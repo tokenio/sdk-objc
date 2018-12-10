@@ -175,5 +175,23 @@
              responseClass:[PaymentSubmissionsResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark GetParty(PartyRequest) returns (PartyResponse)
+
+/**
+ * Used to get account details
+ */
+- (void)getPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetPartyWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Used to get account details
+ */
+- (GRPCProtoCall *)RPCToGetPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetParty"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[PartyResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 @end
 #endif

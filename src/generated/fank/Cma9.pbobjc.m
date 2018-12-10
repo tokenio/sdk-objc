@@ -3659,6 +3659,540 @@ typedef struct PaymentSubmissionsResponse__storage_ {
 
 @end
 
+#pragma mark - Address
+
+@implementation Address
+
+@dynamic addressType;
+@dynamic addressLineArray, addressLineArray_Count;
+@dynamic streetName;
+@dynamic buildingNumber;
+@dynamic postCode;
+@dynamic townName;
+@dynamic countrySubDivision;
+@dynamic country;
+
+typedef struct Address__storage_ {
+  uint32_t _has_storage_[1];
+  Address_AddressTypeEnum addressType;
+  NSMutableArray *addressLineArray;
+  NSString *streetName;
+  NSString *buildingNumber;
+  NSString *postCode;
+  NSString *townName;
+  NSString *countrySubDivision;
+  NSString *country;
+} Address__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "addressType",
+        .dataTypeSpecific.enumDescFunc = Address_AddressTypeEnum_EnumDescriptor,
+        .number = Address_FieldNumber_AddressType,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Address__storage_, addressType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "addressLineArray",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_AddressLineArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Address__storage_, addressLineArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "streetName",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_StreetName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Address__storage_, streetName),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "buildingNumber",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_BuildingNumber,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Address__storage_, buildingNumber),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "postCode",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_PostCode,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Address__storage_, postCode),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "townName",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_TownName,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Address__storage_, townName),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "countrySubDivision",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_CountrySubDivision,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Address__storage_, countrySubDivision),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "country",
+        .dataTypeSpecific.className = NULL,
+        .number = Address_FieldNumber_Country,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Address__storage_, country),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Address class]
+                                     rootClass:[Cma9Root class]
+                                          file:Cma9Root_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Address__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\010\001K\000\002\000AddressLine\000\003J\000\004N\000\005H\000\006H\000\007R\000\010G\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t Address_AddressType_RawValue(Address *message) {
+  GPBDescriptor *descriptor = [Address descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Address_FieldNumber_AddressType];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetAddress_AddressType_RawValue(Address *message, int32_t value) {
+  GPBDescriptor *descriptor = [Address descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Address_FieldNumber_AddressType];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Address_AddressTypeEnum
+
+GPBEnumDescriptor *Address_AddressTypeEnum_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Business\000Correspondence\000Delivery"
+        "To\000MailTo\000Pobox\000Postal\000Residential\000State"
+        "ment\000";
+    static const int32_t values[] = {
+        Address_AddressTypeEnum_Invalid,
+        Address_AddressTypeEnum_Business,
+        Address_AddressTypeEnum_Correspondence,
+        Address_AddressTypeEnum_DeliveryTo,
+        Address_AddressTypeEnum_MailTo,
+        Address_AddressTypeEnum_Pobox,
+        Address_AddressTypeEnum_Postal,
+        Address_AddressTypeEnum_Residential,
+        Address_AddressTypeEnum_Statement,
+    };
+    static const char *extraTextFormatInfo = "\t\000\007\000\001\010\000\002\016\000\003\n\000\004\006\000\005c\002\000\006\006\000\007\013\000\010\t\000";
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Address_AddressTypeEnum)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Address_AddressTypeEnum_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Address_AddressTypeEnum_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Address_AddressTypeEnum_Invalid:
+    case Address_AddressTypeEnum_Business:
+    case Address_AddressTypeEnum_Correspondence:
+    case Address_AddressTypeEnum_DeliveryTo:
+    case Address_AddressTypeEnum_MailTo:
+    case Address_AddressTypeEnum_Pobox:
+    case Address_AddressTypeEnum_Postal:
+    case Address_AddressTypeEnum_Residential:
+    case Address_AddressTypeEnum_Statement:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - Party
+
+@implementation Party
+
+@dynamic partyId;
+@dynamic partyNumber;
+@dynamic partyType;
+@dynamic name;
+@dynamic emailAddress;
+@dynamic phone;
+@dynamic mobile;
+@dynamic addressArray, addressArray_Count;
+
+typedef struct Party__storage_ {
+  uint32_t _has_storage_[1];
+  Party_PartyTypeEnum partyType;
+  NSString *partyId;
+  NSString *partyNumber;
+  NSString *name;
+  NSString *emailAddress;
+  NSString *phone;
+  NSString *mobile;
+  NSMutableArray *addressArray;
+} Party__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "partyId",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_PartyId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Party__storage_, partyId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "partyNumber",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_PartyNumber,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Party__storage_, partyNumber),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "partyType",
+        .dataTypeSpecific.enumDescFunc = Party_PartyTypeEnum_EnumDescriptor,
+        .number = Party_FieldNumber_PartyType,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Party__storage_, partyType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "name",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_Name,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Party__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "emailAddress",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_EmailAddress,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Party__storage_, emailAddress),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "phone",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_Phone,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Party__storage_, phone),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "mobile",
+        .dataTypeSpecific.className = NULL,
+        .number = Party_FieldNumber_Mobile,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Party__storage_, mobile),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "addressArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .number = Party_FieldNumber_AddressArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Party__storage_, addressArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Party class]
+                                     rootClass:[Cma9Root class]
+                                          file:Cma9Root_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Party__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\010\001G\000\002K\000\003I\000\004D\000\005L\000\006E\000\007F\000\010\000Address\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t Party_PartyType_RawValue(Party *message) {
+  GPBDescriptor *descriptor = [Party descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Party_FieldNumber_PartyType];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetParty_PartyType_RawValue(Party *message, int32_t value) {
+  GPBDescriptor *descriptor = [Party descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Party_FieldNumber_PartyType];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum Party_PartyTypeEnum
+
+GPBEnumDescriptor *Party_PartyTypeEnum_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Delegate\000Joint\000Sole\000";
+    static const int32_t values[] = {
+        Party_PartyTypeEnum_Invalid,
+        Party_PartyTypeEnum_Delegate,
+        Party_PartyTypeEnum_Joint,
+        Party_PartyTypeEnum_Sole,
+    };
+    static const char *extraTextFormatInfo = "\004\000\007\000\001\010\000\002\005\000\003\004\000";
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Party_PartyTypeEnum)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Party_PartyTypeEnum_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Party_PartyTypeEnum_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Party_PartyTypeEnum_Invalid:
+    case Party_PartyTypeEnum_Delegate:
+    case Party_PartyTypeEnum_Joint:
+    case Party_PartyTypeEnum_Sole:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - PartyData
+
+@implementation PartyData
+
+@dynamic hasParty, party;
+
+typedef struct PartyData__storage_ {
+  uint32_t _has_storage_[1];
+  Party *party;
+} PartyData__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "party",
+        .dataTypeSpecific.className = GPBStringifySymbol(Party),
+        .number = PartyData_FieldNumber_Party,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PartyData__storage_, party),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PartyData class]
+                                     rootClass:[Cma9Root class]
+                                          file:Cma9Root_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PartyData__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001E\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - PartyRequest
+
+@implementation PartyRequest
+
+@dynamic accountId;
+
+typedef struct PartyRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+} PartyRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = PartyRequest_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PartyRequest__storage_, accountId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PartyRequest class]
+                                     rootClass:[Cma9Root class]
+                                          file:Cma9Root_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PartyRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001I\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - PartyResponse
+
+@implementation PartyResponse
+
+@dynamic hasData_p, data_p;
+@dynamic hasLinks, links;
+@dynamic hasMeta, meta;
+
+typedef struct PartyResponse__storage_ {
+  uint32_t _has_storage_[1];
+  PartyData *data_p;
+  Links *links;
+  MetaData *meta;
+} PartyResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "data_p",
+        .dataTypeSpecific.className = GPBStringifySymbol(PartyData),
+        .number = PartyResponse_FieldNumber_Data_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PartyResponse__storage_, data_p),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "links",
+        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .number = PartyResponse_FieldNumber_Links,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(PartyResponse__storage_, links),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "meta",
+        .dataTypeSpecific.className = GPBStringifySymbol(MetaData),
+        .number = PartyResponse_FieldNumber_Meta,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(PartyResponse__storage_, meta),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PartyResponse class]
+                                     rootClass:[Cma9Root class]
+                                          file:Cma9Root_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PartyResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\003\001\000Data\000\002E\000\003D\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

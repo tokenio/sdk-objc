@@ -6,6 +6,7 @@ option csharp_namespace = "Tokenio.Proto.Common.PricingProtos";
 
 // A bank quote for a transfer
 message TransferQuote {
+  option deprecated = true;
   string id = 1;                // the quote id
   string account_currency = 2;  // the account currency
 
@@ -32,12 +33,14 @@ message TransferQuote {
 }
 
 message Pricing {
+  option deprecated = true;
   TransferQuote source_quote = 1;
   TransferQuote destination_quote = 2;
   PricingInstructions instructions = 3;
 }
 
 enum FeeResponsibility {
+  option deprecated = true;
   INVALID_FEE = 0;
   SOURCE_FEE = 1;      // fee at transfer source
   DESTINATION_FEE = 2; // fee at transfer destination
@@ -45,12 +48,14 @@ enum FeeResponsibility {
 }
 
 enum FxResponsibility {
+  option deprecated = true;
   INVALID_FX = 0;
   SOURCE_FX = 1;  // source handles FX
   SHARED_FX = 2;  // source and destination share FX
 }
 
 message PricingInstructions {
+  option deprecated = true;
   FeeResponsibility fees_paid_by = 1;
   FxResponsibility fx_performed_by = 2;
 }

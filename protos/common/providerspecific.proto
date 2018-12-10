@@ -22,6 +22,9 @@ message Cma9AccountDetails {
   string phone = 6;
   string mobile = 7;
   repeated Cma9Address address = 8;
+  AccountType account_type = 9;
+  AccountSubtype account_subtype = 10;
+  string description = 11;
 
   message Cma9Address {
     AddressType address_type = 1;
@@ -45,5 +48,23 @@ message Cma9AccountDetails {
     POSTAL = 6;
     RESIDENTIAL = 7;
     STATEMENT = 8;
+  }
+
+  enum AccountType {
+    INVALID_ACCOUNT_TYPE = 0;
+    BUSINESS_ACCOUNT = 1;
+    PERSONAL_ACCOUNT = 2;
+  }
+
+  enum AccountSubtype {
+    INVALID_ACCOUNT_SUBTYPE = 0;
+    CHARGE_CARD = 1;
+    CREDIT_CARD = 2;
+    CURRENT_ACCOUNT = 3;
+    EMONEY = 4;
+    LOAN = 5;
+    MORTGAGE = 6;
+    PREPAID_CARD = 7;
+    SAVINGS = 8;
   }
 }

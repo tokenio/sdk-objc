@@ -618,16 +618,12 @@ typedef struct RecoveryCompleted__storage_ {
 
 @implementation AddKey
 
-@dynamic name;
-@dynamic hasKey, key;
 @dynamic expiresMs;
 @dynamic keysArray, keysArray_Count;
 @dynamic hasDeviceMetadata, deviceMetadata;
 
 typedef struct AddKey__storage_ {
   uint32_t _has_storage_[1];
-  NSString *name;
-  Key *key;
   NSMutableArray *keysArray;
   DeviceMetadata *deviceMetadata;
   int64_t expiresMs;
@@ -640,28 +636,10 @@ typedef struct AddKey__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "name",
-        .dataTypeSpecific.className = NULL,
-        .number = AddKey_FieldNumber_Name,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AddKey__storage_, name),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "key",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
-        .number = AddKey_FieldNumber_Key,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AddKey__storage_, key),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "expiresMs",
         .dataTypeSpecific.className = NULL,
         .number = AddKey_FieldNumber_ExpiresMs,
-        .hasIndex = 2,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(AddKey__storage_, expiresMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -679,7 +657,7 @@ typedef struct AddKey__storage_ {
         .name = "deviceMetadata",
         .dataTypeSpecific.className = GPBStringifySymbol(DeviceMetadata),
         .number = AddKey_FieldNumber_DeviceMetadata,
-        .hasIndex = 3,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(AddKey__storage_, deviceMetadata),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -843,6 +821,9 @@ typedef struct TokenCancelled__storage_ {
 
 #pragma mark - EndorseAndAddKey
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+
 @implementation EndorseAndAddKey
 
 @dynamic hasPayload, payload;
@@ -939,6 +920,73 @@ typedef struct EndorseAndAddKey__storage_ {
 
 @end
 
+#pragma clang diagnostic pop
+
+#pragma mark - CreateAndEndorseToken
+
+@implementation CreateAndEndorseToken
+
+@dynamic hasTokenRequest, tokenRequest;
+@dynamic hasAddKey, addKey;
+@dynamic hasContact, contact;
+
+typedef struct CreateAndEndorseToken__storage_ {
+  uint32_t _has_storage_[1];
+  TokenRequest *tokenRequest;
+  AddKey *addKey;
+  ReceiptContact *contact;
+} CreateAndEndorseToken__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenRequest",
+        .dataTypeSpecific.className = GPBStringifySymbol(TokenRequest),
+        .number = CreateAndEndorseToken_FieldNumber_TokenRequest,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateAndEndorseToken__storage_, tokenRequest),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "addKey",
+        .dataTypeSpecific.className = GPBStringifySymbol(AddKey),
+        .number = CreateAndEndorseToken_FieldNumber_AddKey,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(CreateAndEndorseToken__storage_, addKey),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "contact",
+        .dataTypeSpecific.className = GPBStringifySymbol(ReceiptContact),
+        .number = CreateAndEndorseToken_FieldNumber_Contact,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(CreateAndEndorseToken__storage_, contact),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateAndEndorseToken class]
+                                     rootClass:[NotificationRoot class]
+                                          file:NotificationRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateAndEndorseToken__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - NotificationInvalidated
 
 @implementation NotificationInvalidated
@@ -1003,6 +1051,7 @@ typedef struct NotificationInvalidated__storage_ {
 @dynamic endorseAndAddKey;
 @dynamic recoveryCompleted;
 @dynamic notificationInvalidated;
+@dynamic createAndEndorseToken;
 
 typedef struct NotifyBody__storage_ {
   uint32_t _has_storage_[2];
@@ -1022,6 +1071,7 @@ typedef struct NotifyBody__storage_ {
   EndorseAndAddKey *endorseAndAddKey;
   RecoveryCompleted *recoveryCompleted;
   NotificationInvalidated *notificationInvalidated;
+  CreateAndEndorseToken *createAndEndorseToken;
 } NotifyBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1171,6 +1221,15 @@ typedef struct NotifyBody__storage_ {
         .number = NotifyBody_FieldNumber_NotificationInvalidated,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(NotifyBody__storage_, notificationInvalidated),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "createAndEndorseToken",
+        .dataTypeSpecific.className = GPBStringifySymbol(CreateAndEndorseToken),
+        .number = NotifyBody_FieldNumber_CreateAndEndorseToken,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(NotifyBody__storage_, createAndEndorseToken),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

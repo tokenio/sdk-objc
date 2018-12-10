@@ -358,6 +358,62 @@ message PaymentSubmissionsResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Get party information request/response
+//
+message Address {
+  enum AddressTypeEnum {
+    Invalid = 0;
+    Business = 1;
+    Correspondence = 2;
+    DeliveryTo = 3;
+    MailTo = 4;
+    POBox = 5;
+    Postal = 6;
+    Residential = 7;
+    Statement = 8;
+  }
+  AddressTypeEnum AddressType = 1;
+  repeated string AddressLine = 2;
+  string StreetName = 3;
+  string BuildingNumber = 4;
+  string PostCode = 5;
+  string TownName = 6;
+  string CountrySubDivision = 7;
+  string Country = 8;
+}
+
+message Party {
+  enum PartyTypeEnum {
+    Invalid = 0;
+    Delegate = 1;
+    Joint = 2;
+    Sole = 3;
+  }
+  string PartyId = 1;
+  string PartyNumber = 2;
+  PartyTypeEnum PartyType = 3;
+  string Name = 4;
+  string EmailAddress = 5;
+  string Phone = 6;
+  string Mobile = 7;
+  repeated Address Address = 8;
+}
+
+message PartyData {
+  Party Party = 1;
+}
+
+message PartyRequest {
+  string AccountId = 1;
+}
+
+message PartyResponse {
+  PartyData Data = 1;
+  Links Links = 2;
+  MetaData Meta = 3;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // CMA-9 Service REST API.
 //
 service Cma9Service {
@@ -414,6 +470,13 @@ service Cma9Service {
   rpc CreatePaymentSubmission (PaymentSubmissionsRequest) returns (PaymentSubmissionsResponse) {
     option (google.api.http) = {
       post: "/cma9/payment-submissions"
+    };
+  }
+
+  // Used to get account details
+  rpc GetParty (PartyRequest) returns (PartyResponse) {
+    option (google.api.http) = {
+      post: "/cma9/accounts/{AccountId}/party"
     };
   }
 }

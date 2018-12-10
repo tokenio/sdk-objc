@@ -30,6 +30,7 @@ CF_EXTERN_C_BEGIN
 @class AddKey;
 @class BalanceStepUp;
 @class BankAuthorization;
+@class CreateAndEndorseToken;
 @class DeviceMetadata;
 @class EndorseAndAddKey;
 @class Key;
@@ -46,6 +47,7 @@ CF_EXTERN_C_BEGIN
 @class StepUp;
 @class TokenCancelled;
 @class TokenPayload;
+@class TokenRequest;
 @class TransactionStepUp;
 @class TransferFailed;
 @class TransferProcessed;
@@ -318,8 +320,6 @@ typedef GPB_ENUM(TransactionStepUp_FieldNumber) {
 #pragma mark - AddKey
 
 typedef GPB_ENUM(AddKey_FieldNumber) {
-  AddKey_FieldNumber_Name = 1,
-  AddKey_FieldNumber_Key = 2,
   AddKey_FieldNumber_ExpiresMs = 3,
   AddKey_FieldNumber_KeysArray = 4,
   AddKey_FieldNumber_DeviceMetadata = 5,
@@ -330,14 +330,6 @@ typedef GPB_ENUM(AddKey_FieldNumber) {
  * and screen, once the expires_ms has passed
  **/
 @interface AddKey : GPBMessage
-
-/** **DEPRECATED** Human-readable name, e.g., "Chrome Browser" or "My App" */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
-/** **DEPRECATED** Key */
-@property(nonatomic, readwrite, strong, null_resettable) Key *key;
-/** Test to see if @c key has been set. */
-@property(nonatomic, readwrite) BOOL hasKey;
 
 /** Expiration time */
 @property(nonatomic, readwrite) int64_t expiresMs;
@@ -420,9 +412,7 @@ typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
   EndorseAndAddKey_FieldNumber_Contact = 6,
 };
 
-/**
- * A notification that a token needs to be created/endorsed, and that keys want to be added
- **/
+DEPRECATED_ATTRIBUTE
 @interface EndorseAndAddKey : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
@@ -441,6 +431,35 @@ typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
 
 /** Optional token request state for signing */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *state;
+
+/** Optional receipt contact */
+@property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
+/** Test to see if @c contact has been set. */
+@property(nonatomic, readwrite) BOOL hasContact;
+
+@end
+
+#pragma mark - CreateAndEndorseToken
+
+typedef GPB_ENUM(CreateAndEndorseToken_FieldNumber) {
+  CreateAndEndorseToken_FieldNumber_TokenRequest = 1,
+  CreateAndEndorseToken_FieldNumber_AddKey = 2,
+  CreateAndEndorseToken_FieldNumber_Contact = 3,
+};
+
+/**
+ * A notification that a token needs to be created/endorsed
+ **/
+@interface CreateAndEndorseToken : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequest *tokenRequest;
+/** Test to see if @c tokenRequest has been set. */
+@property(nonatomic, readwrite) BOOL hasTokenRequest;
+
+/** Optional key to add */
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+/** Test to see if @c addKey has been set. */
+@property(nonatomic, readwrite) BOOL hasAddKey;
 
 /** Optional receipt contact */
 @property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
@@ -483,6 +502,7 @@ typedef GPB_ENUM(NotifyBody_FieldNumber) {
   NotifyBody_FieldNumber_EndorseAndAddKey = 14,
   NotifyBody_FieldNumber_RecoveryCompleted = 15,
   NotifyBody_FieldNumber_NotificationInvalidated = 16,
+  NotifyBody_FieldNumber_CreateAndEndorseToken = 17,
 };
 
 typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
@@ -503,6 +523,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
   NotifyBody_Body_OneOfCase_EndorseAndAddKey = 14,
   NotifyBody_Body_OneOfCase_RecoveryCompleted = 15,
   NotifyBody_Body_OneOfCase_NotificationInvalidated = 16,
+  NotifyBody_Body_OneOfCase_CreateAndEndorseToken = 17,
 };
 
 /**
@@ -538,11 +559,13 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
-@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey;
+@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey DEPRECATED_ATTRIBUTE;
 
 @property(nonatomic, readwrite, strong, null_resettable) RecoveryCompleted *recoveryCompleted;
 
 @property(nonatomic, readwrite, strong, null_resettable) NotificationInvalidated *notificationInvalidated;
+
+@property(nonatomic, readwrite, strong, null_resettable) CreateAndEndorseToken *createAndEndorseToken;
 
 @end
 

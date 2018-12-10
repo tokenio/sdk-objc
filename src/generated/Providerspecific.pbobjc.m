@@ -124,10 +124,15 @@ void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *messag
 @dynamic phone;
 @dynamic mobile;
 @dynamic addressArray, addressArray_Count;
+@dynamic accountType;
+@dynamic accountSubtype;
+@dynamic description_p;
 
 typedef struct Cma9AccountDetails__storage_ {
   uint32_t _has_storage_[1];
   Cma9AccountDetails_PartyType partyType;
+  Cma9AccountDetails_AccountType accountType;
+  Cma9AccountDetails_AccountSubtype accountSubtype;
   NSString *partyId;
   NSString *partyNumber;
   NSString *name;
@@ -135,6 +140,7 @@ typedef struct Cma9AccountDetails__storage_ {
   NSString *phone;
   NSString *mobile;
   NSMutableArray *addressArray;
+  NSString *description_p;
 } Cma9AccountDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -215,6 +221,33 @@ typedef struct Cma9AccountDetails__storage_ {
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "accountType",
+        .dataTypeSpecific.enumDescFunc = Cma9AccountDetails_AccountType_EnumDescriptor,
+        .number = Cma9AccountDetails_FieldNumber_AccountType,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, accountType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "accountSubtype",
+        .dataTypeSpecific.enumDescFunc = Cma9AccountDetails_AccountSubtype_EnumDescriptor,
+        .number = Cma9AccountDetails_FieldNumber_AccountSubtype,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, accountSubtype),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "description_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Cma9AccountDetails_FieldNumber_Description_p,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Cma9AccountDetails class]
@@ -241,6 +274,30 @@ int32_t Cma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message) {
 void SetCma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_PartyType];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t Cma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message) {
+  GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountType];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetCma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message, int32_t value) {
+  GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountType];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t Cma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message) {
+  GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountSubtype];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetCma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message, int32_t value) {
+  GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountSubtype];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
@@ -328,6 +385,95 @@ BOOL Cma9AccountDetails_AddressType_IsValidValue(int32_t value__) {
     case Cma9AccountDetails_AddressType_Postal:
     case Cma9AccountDetails_AddressType_Residential:
     case Cma9AccountDetails_AddressType_Statement:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - Enum Cma9AccountDetails_AccountType
+
+GPBEnumDescriptor *Cma9AccountDetails_AccountType_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidAccountType\000BusinessAccount\000Perso"
+        "nalAccount\000";
+    static const int32_t values[] = {
+        Cma9AccountDetails_AccountType_InvalidAccountType,
+        Cma9AccountDetails_AccountType_BusinessAccount,
+        Cma9AccountDetails_AccountType_PersonalAccount,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Cma9AccountDetails_AccountType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Cma9AccountDetails_AccountType_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Cma9AccountDetails_AccountType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Cma9AccountDetails_AccountType_InvalidAccountType:
+    case Cma9AccountDetails_AccountType_BusinessAccount:
+    case Cma9AccountDetails_AccountType_PersonalAccount:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - Enum Cma9AccountDetails_AccountSubtype
+
+GPBEnumDescriptor *Cma9AccountDetails_AccountSubtype_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidAccountSubtype\000ChargeCard\000CreditC"
+        "ard\000CurrentAccount\000Emoney\000Loan\000Mortgage\000"
+        "PrepaidCard\000Savings\000";
+    static const int32_t values[] = {
+        Cma9AccountDetails_AccountSubtype_InvalidAccountSubtype,
+        Cma9AccountDetails_AccountSubtype_ChargeCard,
+        Cma9AccountDetails_AccountSubtype_CreditCard,
+        Cma9AccountDetails_AccountSubtype_CurrentAccount,
+        Cma9AccountDetails_AccountSubtype_Emoney,
+        Cma9AccountDetails_AccountSubtype_Loan,
+        Cma9AccountDetails_AccountSubtype_Mortgage,
+        Cma9AccountDetails_AccountSubtype_PrepaidCard,
+        Cma9AccountDetails_AccountSubtype_Savings,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Cma9AccountDetails_AccountSubtype)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Cma9AccountDetails_AccountSubtype_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Cma9AccountDetails_AccountSubtype_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Cma9AccountDetails_AccountSubtype_InvalidAccountSubtype:
+    case Cma9AccountDetails_AccountSubtype_ChargeCard:
+    case Cma9AccountDetails_AccountSubtype_CreditCard:
+    case Cma9AccountDetails_AccountSubtype_CurrentAccount:
+    case Cma9AccountDetails_AccountSubtype_Emoney:
+    case Cma9AccountDetails_AccountSubtype_Loan:
+    case Cma9AccountDetails_AccountSubtype_Mortgage:
+    case Cma9AccountDetails_AccountSubtype_PrepaidCard:
+    case Cma9AccountDetails_AccountSubtype_Savings:
       return YES;
     default:
       return NO;

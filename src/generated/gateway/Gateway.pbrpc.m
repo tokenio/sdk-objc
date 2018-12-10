@@ -842,6 +842,24 @@
              responseClass:[TriggerEndorseAndAddKeyNotificationResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark TriggerCreateAndEndorseTokenNotification(TriggerCreateAndEndorseTokenNotificationRequest) returns (TriggerCreateAndEndorseTokenNotificationResponse)
+
+/**
+ * send create and endorse token notification
+ */
+- (void)triggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * send create and endorse token notification
+ */
+- (GRPCProtoCall *)RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"TriggerCreateAndEndorseTokenNotification"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[TriggerCreateAndEndorseTokenNotificationResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark InvalidateNotification(InvalidateNotificationRequest) returns (InvalidateNotificationResponse)
 
 /**
@@ -1294,6 +1312,18 @@
              responseClass:[RetrieveTokenRequestResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+#pragma mark UpdateTokenRequest(UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse)
+
+- (void)updateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUpdateTokenRequestWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToUpdateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UpdateTokenRequest"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[UpdateTokenRequestResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
 #pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
@@ -1586,13 +1616,35 @@
              responseClass:[GetTransfersResponse class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+#pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" bank countries.
+ */
+- (void)getBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBanksCountriesWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ * Get a list of "link-able" bank countries.
+ */
+- (GRPCProtoCall *)RPCToGetBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBanksCountries"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetBanksCountriesResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+
+/**
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
  */
@@ -1601,10 +1653,6 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Bank Information Endpoints.
- * 
- * 
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
  */
