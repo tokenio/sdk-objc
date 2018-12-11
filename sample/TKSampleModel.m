@@ -34,7 +34,7 @@
 
 + (TokenRequestPayload *)accessTokenRequestPayload:(TKMember *)to {
     TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
-    payload.userRefId = [TKUtil nonce];
+    payload.refId = [TKUtil nonce];
     payload.redirectURL = @"https://token.io";
     payload.to.id_p = to.id;
     payload.description_p = @"Account and balance access";
@@ -49,7 +49,7 @@
 
 + (TokenRequestPayload *)transferTokenRequestPayload:(TKMember *)to {
     TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
-    payload.userRefId = [TKUtil nonce];
+    payload.refId = [TKUtil nonce];
     payload.redirectURL = @"https://token.io";
     payload.to.id_p = to.id;
     payload.description_p = @"Book purchase";

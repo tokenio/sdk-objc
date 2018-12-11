@@ -59,9 +59,10 @@
      onSuccess:^(Notification *notification) {
          if ([notification.content.type isEqualToString:@"CREATE_AND_ENDORSE_TOKEN"]) {
              CreateAndEndorseToken *content = [TKJson
-                                          deserializeMessageOfClass:[CreateAndEndorseToken class]
-                                          fromJSON:notification.content.payload];
-             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithTokenRequest:content.tokenRequest.requestPayload withRequestOptions:content.tokenRequest.requestOptions];
+                                               deserializeMessageOfClass:[CreateAndEndorseToken class]
+                                               fromJSON:notification.content.payload];
+             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithTokenRequest:content.tokenRequest.requestPayload
+                                                                      withRequestOptions:content.tokenRequest.requestOptions];
              [config forAccount:accountId];
              [config forAccountBalances:accountId];
              // Create Token
@@ -184,7 +185,7 @@
                  builder.toAlias = content.tokenRequest.requestPayload.to.alias;
              }
              builder.accountId = accountId;
-             builder.refId = [TKUtil nonce];
+             builder.refId = content.tokenRequest.requestPayload.refId;
              builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
              // Optional settings
              builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;

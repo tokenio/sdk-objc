@@ -190,7 +190,7 @@
     TokenIOSync *tokenIO = [self syncSDK];
     
     TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
-    payload.userRefId = [TKUtil nonce];
+    payload.refId = [TKUtil nonce];
     payload.redirectURL = @"https://token.io";
     payload.to.id_p = payee.id;
     payload.callbackState = [TKUtil nonce];
@@ -208,7 +208,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"EUR"];
     builder.toMemberId = payee.id;
     builder.accountId = payerAccount.id;
-    builder.refId = [TKUtil nonce];
+    builder.refId = payload.refId;
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
     // Optional settings
     builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
