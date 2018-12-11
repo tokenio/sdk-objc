@@ -74,21 +74,11 @@
 - (void)from:(NSString *)memberId;
 
 /**
- * Grants access to all addresses.
- */
-- (void)forAllAddresses;
-
-/**
  * Grants access to a given addressId.
  *
  * @param addressId address to grant access to
  */
 - (void)forAddress:(NSString *)addressId;
-
-/**
- * Grants access to all accounts.
- */
-- (void)forAllAccounts;
 
 /**
  * Grants access to a given accountId.
@@ -97,10 +87,6 @@
  */
 - (void)forAccount:(NSString *)accountId;
 
-/**
- * Grants access to all transactions.
- */
-- (void)forAllTransactions;
 
 /**
  * Grants access to a given account transactions.
@@ -110,21 +96,11 @@
 - (void)forAccountTransactions:(NSString *)accountId;
 
 /**
- * Grants access to all balances.
- */
-- (void)forAllBalances;
-
-/**
  * Grants access to a given account balances.
  * 
  * @param accountId account to grant access to balances
  */
 - (void)forAccountBalances:(NSString *)accountId;
-
-/**
- * Grants access to ALL resources (aka wildcard permissions).
- */
-- (void)forAll;
 
 /**
  * Set entity redeemer is acting on behalf of.

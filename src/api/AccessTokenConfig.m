@@ -87,25 +87,11 @@
     payload.from = payer;
 }
 
-- (void)forAllAddresses {
-    AccessBody_Resource_AllAddresses *addresses = [AccessBody_Resource_AllAddresses message];
-    AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.allAddresses = addresses;
-    [resources addObject:resource];
-}
-
 - (void)forAddress:(NSString *)addressId {
     AccessBody_Resource_Address *address = [AccessBody_Resource_Address message];
     address.addressId = addressId;
     AccessBody_Resource *resource = [AccessBody_Resource message];
     resource.address = address;
-    [resources addObject:resource];
-}
-
-- (void)forAllAccounts {
-    AccessBody_Resource_AllAccounts *accounts = [AccessBody_Resource_AllAccounts message];
-    AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.allAccounts = accounts;
     [resources addObject:resource];
 }
 
@@ -117,25 +103,11 @@
     [resources addObject:resource];
 }
 
-- (void)forAllTransactions {
-    AccessBody_Resource_AllAccountTransactions *transactions = [AccessBody_Resource_AllAccountTransactions message];
-    AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.allTransactions = transactions;
-    [resources addObject:resource];
-}
-
 - (void)forAccountTransactions:(NSString *)accountId {
     AccessBody_Resource_AccountTransactions *transactions = [AccessBody_Resource_AccountTransactions message];
     transactions.accountId = accountId;
     AccessBody_Resource *resource = [AccessBody_Resource message];
     resource.transactions = transactions;
-    [resources addObject:resource];
-}
-
-- (void)forAllBalances {
-    AccessBody_Resource_AllAccountBalances *balances = [AccessBody_Resource_AllAccountBalances message];
-    AccessBody_Resource *resource = [AccessBody_Resource message];
-    resource.allBalances = balances;
     [resources addObject:resource];
 }
 
@@ -145,13 +117,6 @@
     AccessBody_Resource *resource = [AccessBody_Resource message];
     resource.balance = balance;
     [resources addObject:resource];
-}
-
-- (void)forAll {
-    [self forAllAddresses];
-    [self forAllAccounts];
-    [self forAllBalances];
-    [self forAllTransactions];
 }
 
 - (void)actingAs:(ActingAs *)actingAs {

@@ -23,10 +23,12 @@
   
     __block Token *accessToken = nil;
     
+    NSString *accountId = [self.payerSync getAccounts][0].id;
+
     // createAccessToken begin snippet to include in docs
     AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
-    [access forAllAccounts];
-    [access forAllBalances];
+    [access forAccount:accountId];
+    [access forAccountBalances:accountId];
     
     [grantor createAccessToken:access
                      onSuccess:^(Token *at) {
@@ -92,11 +94,13 @@
     foundToken = [self.payerSync getActiveAccessToken:self.payeeSync.id];
     // find token done snippet to include in docs
     
+    NSString *addressId = [self.payerSync getAddresses][0].id_p;
+
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
-    [newAccess forAllAccounts];
-    [newAccess forAllBalances];
-    [newAccess forAllAddresses];
+    [newAccess forAccount:accountId];
+    [newAccess forAccountBalances:accountId];
+    [newAccess forAddress:addressId];
     
     [grantor replaceAndEndorseAccessToken:foundToken
                         accessTokenConfig:newAccess
@@ -134,19 +138,22 @@
 
 -(void)testReplaceNoEndorse {
     TKMember *grantor = self.payerSync.async;
-
+    NSString *accountId = [self.payerSync getAccounts][0].id;
+    
     AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
-    [access forAllAccounts];
+    [access forAccount:accountId];
     
     __block Token *accessToken = [self.payerSync createAccessToken:access];
     [self.payerSync endorseToken:accessToken withKey:Key_Level_Standard];
     Token *foundToken = accessToken;
    
+    NSString *addressId = [self.payerSync getAddresses][0].id_p;
+    
     // replaceNoEndorse begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
-    [newAccess forAllAccounts];
-    [newAccess forAllBalances];
-    [newAccess forAllAddresses];
+    [newAccess forAccount:accountId];
+    [newAccess forAccountBalances:accountId];
+    [newAccess forAddress:addressId];
 
     [grantor replaceAccessToken:foundToken
               accessTokenConfig:newAccess
@@ -235,10 +242,12 @@
 
     __block Token *token1 = nil;
 
+    
+    
     // createAccessToken begin snippet to include in docs
     AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
-    [access forAllAccounts];
-    [access forAllBalances];
+    [access forAccount:grantorAccount.id];
+    [access forAccountBalances:grantorAccount.id];
 
     [grantor createAccessToken:access
                      onSuccess:^(Token *at) {
