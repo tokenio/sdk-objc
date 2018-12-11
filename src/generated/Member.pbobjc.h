@@ -665,15 +665,20 @@ void SetReceiptContact_Type_RawValue(ReceiptContact *message, int32_t value);
 typedef GPB_ENUM(Device_FieldNumber) {
   Device_FieldNumber_Name = 1,
   Device_FieldNumber_Key = 2,
+  Device_FieldNumber_KeysArray = 3,
 };
 
 @interface Device : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-@property(nonatomic, readwrite, strong, null_resettable) Key *key;
+@property(nonatomic, readwrite, strong, null_resettable) Key *key DEPRECATED_ATTRIBUTE;
 /** Test to see if @c key has been set. */
-@property(nonatomic, readwrite) BOOL hasKey;
+@property(nonatomic, readwrite) BOOL hasKey DEPRECATED_ATTRIBUTE;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
+/** The number of items in @c keysArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger keysArray_Count;
 
 @end
 

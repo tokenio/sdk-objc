@@ -28,6 +28,7 @@
 CF_EXTERN_C_BEGIN
 
 @class Account;
+@class AddKey;
 @class Address;
 @class AddressRecord;
 @class Alias;
@@ -35,6 +36,7 @@ CF_EXTERN_C_BEGIN
 @class BalanceStepUp;
 @class Bank;
 @class BankAuthorization;
+@class BankFilter;
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
@@ -68,6 +70,8 @@ CF_EXTERN_C_BEGIN
 @class TokenOperationResult;
 @class TokenPayload;
 @class TokenRequest;
+@class TokenRequestOptions;
+@class TokenRequestPayload;
 @class TokenRequestStatePayload;
 @class Transaction;
 @class TransactionStepUp;
@@ -1365,12 +1369,65 @@ int32_t TriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificat
  **/
 void SetTriggerStepUpNotificationResponse_Status_RawValue(TriggerStepUpNotificationResponse *message, int32_t value);
 
+#pragma mark - TriggerCreateAndEndorseTokenNotificationRequest
+
+typedef GPB_ENUM(TriggerCreateAndEndorseTokenNotificationRequest_FieldNumber) {
+  TriggerCreateAndEndorseTokenNotificationRequest_FieldNumber_TokenRequestId = 1,
+  TriggerCreateAndEndorseTokenNotificationRequest_FieldNumber_AddKey = 2,
+  TriggerCreateAndEndorseTokenNotificationRequest_FieldNumber_Contact = 3,
+};
+
+@interface TriggerCreateAndEndorseTokenNotificationRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+/** Optional key to add */
+@property(nonatomic, readwrite, strong, null_resettable) AddKey *addKey;
+/** Test to see if @c addKey has been set. */
+@property(nonatomic, readwrite) BOOL hasAddKey;
+
+/** Optional receipt contact */
+@property(nonatomic, readwrite, strong, null_resettable) ReceiptContact *contact;
+/** Test to see if @c contact has been set. */
+@property(nonatomic, readwrite) BOOL hasContact;
+
+@end
+
+#pragma mark - TriggerCreateAndEndorseTokenNotificationResponse
+
+typedef GPB_ENUM(TriggerCreateAndEndorseTokenNotificationResponse_FieldNumber) {
+  TriggerCreateAndEndorseTokenNotificationResponse_FieldNumber_Status = 1,
+  TriggerCreateAndEndorseTokenNotificationResponse_FieldNumber_NotificationId = 2,
+};
+
+@interface TriggerCreateAndEndorseTokenNotificationResponse : GPBMessage
+
+/** was notification accepted? */
+@property(nonatomic, readwrite) enum NotifyStatus status;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@end
+
+/**
+ * Fetches the raw value of a @c TriggerCreateAndEndorseTokenNotificationResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TriggerCreateAndEndorseTokenNotificationResponse_Status_RawValue(TriggerCreateAndEndorseTokenNotificationResponse *message);
+/**
+ * Sets the raw value of an @c TriggerCreateAndEndorseTokenNotificationResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTriggerCreateAndEndorseTokenNotificationResponse_Status_RawValue(TriggerCreateAndEndorseTokenNotificationResponse *message, int32_t value);
+
 #pragma mark - TriggerEndorseAndAddKeyNotificationRequest
 
 typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationRequest_FieldNumber) {
   TriggerEndorseAndAddKeyNotificationRequest_FieldNumber_EndorseAndAddKey = 1,
 };
 
+DEPRECATED_ATTRIBUTE
 @interface TriggerEndorseAndAddKeyNotificationRequest : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey;
@@ -1386,6 +1443,7 @@ typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationResponse_FieldNumber) {
   TriggerEndorseAndAddKeyNotificationResponse_FieldNumber_NotificationId = 2,
 };
 
+DEPRECATED_ATTRIBUTE
 @interface TriggerEndorseAndAddKeyNotificationResponse : GPBMessage
 
 /** was notification accepted? */
@@ -1946,21 +2004,32 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
   StoreTokenRequestRequest_FieldNumber_Options = 2,
   StoreTokenRequestRequest_FieldNumber_UserRefId = 3,
   StoreTokenRequestRequest_FieldNumber_CustomizationId = 4,
+  StoreTokenRequestRequest_FieldNumber_RequestPayload = 5,
+  StoreTokenRequestRequest_FieldNumber_RequestOptions = 6,
 };
 
 @interface StoreTokenRequestRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload *requestPayload;
+/** Test to see if @c requestPayload has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestPayload;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
+/** Test to see if @c requestOptions has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestOptions;
+
+/** deprecated fields */
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload DEPRECATED_ATTRIBUTE;
 /** Test to see if @c payload has been set. */
-@property(nonatomic, readwrite) BOOL hasPayload;
+@property(nonatomic, readwrite) BOOL hasPayload DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options DEPRECATED_ATTRIBUTE;
 /** The number of items in @c options without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger options_Count;
+@property(nonatomic, readonly) NSUInteger options_Count DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -2006,6 +2075,29 @@ typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Customization *customization;
 /** Test to see if @c customization has been set. */
 @property(nonatomic, readwrite) BOOL hasCustomization;
+
+@end
+
+#pragma mark - UpdateTokenRequestRequest
+
+typedef GPB_ENUM(UpdateTokenRequestRequest_FieldNumber) {
+  UpdateTokenRequestRequest_FieldNumber_RequestId = 1,
+  UpdateTokenRequestRequest_FieldNumber_RequestOptions = 2,
+};
+
+@interface UpdateTokenRequestRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *requestId;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
+/** Test to see if @c requestOptions has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestOptions;
+
+@end
+
+#pragma mark - UpdateTokenRequestResponse
+
+@interface UpdateTokenRequestResponse : GPBMessage
 
 @end
 
@@ -2632,6 +2724,35 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 
 @end
 
+#pragma mark - GetBanksCountriesRequest
+
+typedef GPB_ENUM(GetBanksCountriesRequest_FieldNumber) {
+  GetBanksCountriesRequest_FieldNumber_Filter = 1,
+};
+
+@interface GetBanksCountriesRequest : GPBMessage
+
+/** (Optional) Filter by criteria in bank filter. Results must match all filter criteria. */
+@property(nonatomic, readwrite, strong, null_resettable) BankFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
+
+@end
+
+#pragma mark - GetBanksCountriesResponse
+
+typedef GPB_ENUM(GetBanksCountriesResponse_FieldNumber) {
+  GetBanksCountriesResponse_FieldNumber_CountriesArray = 1,
+};
+
+@interface GetBanksCountriesResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *countriesArray;
+/** The number of items in @c countriesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger countriesArray_Count;
+
+@end
+
 #pragma mark - GetBanksRequest
 
 typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
@@ -2643,22 +2764,17 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
   GetBanksRequest_FieldNumber_Sort = 6,
   GetBanksRequest_FieldNumber_Provider = 7,
   GetBanksRequest_FieldNumber_TppId = 8,
+  GetBanksRequest_FieldNumber_Filter = 9,
 };
 
 @interface GetBanksRequest : GPBMessage
 
-/** If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray;
-/** The number of items in @c idsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger idsArray_Count;
+/** (Optional) Filter by criteria in bank filter. Results must match all filter criteria. */
+@property(nonatomic, readwrite, strong, null_resettable) BankFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
 
-/** If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *search;
-
-/** If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive) */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
-
-/** Result page to retrieve. Defaults to 1 if not specified */
+/** Paging */
 @property(nonatomic, readwrite) int32_t page;
 
 /** Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified. */
@@ -2667,11 +2783,22 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 /** The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sort;
 
-/** (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive) */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
+/** DEPRECATED */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country DEPRECATED_ATTRIBUTE;
 
-/** (Optional) If specified, return banks which are integrated with the TPP */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId;
+/** DEPRECATED. If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray DEPRECATED_ATTRIBUTE;
+/** The number of items in @c idsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger idsArray_Count DEPRECATED_ATTRIBUTE;
+
+/** DEPRECATED. If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *search DEPRECATED_ATTRIBUTE;
+
+/** DEPRECATED. (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider DEPRECATED_ATTRIBUTE;
+
+/** DEPRECATED. (Optional) If specified, return banks which are integrated with the TPP */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -2742,16 +2869,10 @@ typedef GPB_ENUM(CreateTestBankAccountRequest_FieldNumber) {
 #pragma mark - CreateTestBankAccountResponse
 
 typedef GPB_ENUM(CreateTestBankAccountResponse_FieldNumber) {
-  CreateTestBankAccountResponse_FieldNumber_BankAuthorization = 1,
   CreateTestBankAccountResponse_FieldNumber_Authorization = 2,
 };
 
 @interface CreateTestBankAccountResponse : GPBMessage
-
-/** deprecated, will be removed from response */
-@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *bankAuthorization;
-/** Test to see if @c bankAuthorization has been set. */
-@property(nonatomic, readwrite) BOOL hasBankAuthorization;
 
 /** authorization usable with linkAccounts */
 @property(nonatomic, readwrite, strong, null_resettable) OauthBankAuthorization *authorization;

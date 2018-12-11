@@ -37,3 +37,12 @@ message Paging {
   int32 page_count = 3;          // Number of pages in total
   int32 total_count = 4;         // Number of records in total
 }
+
+message BankFilter {
+  string provider = 1;                // (Optional) Filter for banks whose 'provider' matches the provider (case-insensitive)
+  string tpp_id = 2;                  // (Optional) Filter for banks which are integrated with the TPP
+  string destination_country = 3;     // (Optional) Filter for banks that support sending to the destination country
+  string country = 4;                 // (Optional) Filter for banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
+  repeated string ids = 5;            // (Optional) Filter for banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
+  string search = 6;                  // (Optional) Filter for banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
+}

@@ -358,11 +358,24 @@ message TriggerStepUpNotificationResponse {
   io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
 
+message TriggerCreateAndEndorseTokenNotificationRequest {
+  string token_request_id = 1;
+  io.token.proto.common.notification.AddKey add_key = 2;      // Optional key to add
+  io.token.proto.common.member.ReceiptContact contact = 3;    // Optional receipt contact
+}
+
+message TriggerCreateAndEndorseTokenNotificationResponse {
+  io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
+  string notification_id = 2;
+}
+
 message TriggerEndorseAndAddKeyNotificationRequest {
+  option deprecated = true;         // Use CreateAndEndorseToken instead
   io.token.proto.common.notification.EndorseAndAddKey endorse_and_add_key = 1;
 }
 
 message TriggerEndorseAndAddKeyNotificationResponse {
+  option deprecated = true;         // Use CreateAndEndorseToken instead
   io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
   string notification_id = 2;
 }
@@ -523,10 +536,14 @@ message GetTokenBlobResponse {
 //
 
 message StoreTokenRequestRequest {
-  io.token.proto.common.token.TokenPayload payload = 1;
-  map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true];
-  string user_ref_id = 3;
-  string customization_id = 4;
+  io.token.proto.common.token.TokenRequestPayload request_payload = 5;
+  io.token.proto.common.token.TokenRequestOptions request_options = 6;
+
+  // deprecated fields
+  io.token.proto.common.token.TokenPayload payload = 1 [deprecated = true];
+  map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true, deprecated = true];
+  string user_ref_id = 3 [deprecated = true];
+  string customization_id = 4 [deprecated = true];
 }
 
 message StoreTokenRequestResponse {
@@ -540,6 +557,14 @@ message RetrieveTokenRequestRequest {
 message RetrieveTokenRequestResponse {
   io.token.proto.common.token.TokenRequest token_request = 1;
   io.token.proto.common.member.Customization customization = 2;
+}
+
+message UpdateTokenRequestRequest {
+  string request_id = 1;
+  io.token.proto.common.token.TokenRequestOptions request_options = 2;
+}
+
+message UpdateTokenRequestResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -723,15 +748,28 @@ message GetTransfersResponse {
 // Bank Information Endpoints.
 //
 
+message GetBanksCountriesRequest {
+  io.token.proto.common.bank.BankFilter filter = 1;     // (Optional) Filter by criteria in bank filter. Results must match all filter criteria.
+}
+
+message GetBanksCountriesResponse {
+  repeated string countries = 1;
+}
+
 message GetBanksRequest {
-  repeated string ids = 1;            // If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
-  string search = 2;                  // If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
-  string country = 3;                 // If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
+  io.token.proto.common.bank.BankFilter filter = 9;     // (Optional) Filter by criteria in bank filter. Results must match all filter criteria.
+
+  // Paging
   int32 page = 4;                     // Result page to retrieve. Defaults to 1 if not specified
   int32 per_page = 5;                 // Maximum number of records per page. Can be at most 200. Defaults to 200 if not specified.
   string sort = 6;                    // The key to sort the results. Could be one of: name, provider and country. Defaults to name if not specified.
-  string provider = 7;                // (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive)
-  string tpp_id = 8;                  // (Optional) If specified, return banks which are integrated with the TPP
+
+  // DEPRECATED
+  string country = 3 [deprecated = true];          // DEPRECATED. If specified, return banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
+  repeated string ids = 1 [deprecated = true];     // DEPRECATED. If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
+  string search = 2 [deprecated = true];           // DEPRECATED. If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
+  string provider = 7 [deprecated = true];         // DEPRECATED. (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive)
+  string tpp_id = 8 [deprecated = true];           // DEPRECATED. (Optional) If specified, return banks which are integrated with the TPP
 }
 
 message GetBanksResponse {
@@ -756,7 +794,6 @@ message CreateTestBankAccountRequest {
 }
 
 message CreateTestBankAccountResponse {
-  io.token.proto.banklink.BankAuthorization bank_authorization = 1; // deprecated, will be removed from response
   io.token.proto.banklink.OauthBankAuthorization authorization = 2; // authorization usable with linkAccounts
 }
 
@@ -1141,8 +1178,16 @@ service GatewayService {
 
   // send endorse and add key notification (approve with higher-privilege key)
   rpc TriggerEndorseAndAddKeyNotification (TriggerEndorseAndAddKeyNotificationRequest) returns (TriggerEndorseAndAddKeyNotificationResponse) {
+    option deprecated = true;         // Use CreateAndEndorseToken instead
     option (google.api.http) = {
         post: "/notify/endorse-and-add-key"
+    };
+  }
+
+  // send create and endorse token notification
+  rpc TriggerCreateAndEndorseTokenNotification (TriggerCreateAndEndorseTokenNotificationRequest) returns (TriggerCreateAndEndorseTokenNotificationResponse) {
+    option (google.api.http) = {
+        post: "/notify/create-and-endorse-token"
     };
   }
 
@@ -1332,6 +1377,12 @@ service GatewayService {
     };
   }
 
+  rpc UpdateTokenRequest (UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse) {
+    option (google.api.http) = {
+        put: "/token-requests/{request_id}"
+    };
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Tokens.
   //
@@ -1468,11 +1519,18 @@ service GatewayService {
   // Bank Information Endpoints.
   //
 
+  // Get a list of "link-able" bank countries.
+  rpc GetBanksCountries (GetBanksCountriesRequest) returns (GetBanksCountriesResponse) {
+  option (google.api.http) = {
+          get: "/banks/countries?ids={filter.ids}&search={filter.search}&country={filter.country}&provider={filter.provider}&destinationCountry={filter.destination_country}"
+      };
+  }
+
   // Get a list of "link-able" banks.
   // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
-        get: "/banks?ids={ids}&search={search}&country={country}&page={page}&perPage={per_page}&sort={sort}&provider={provider}"
+        get: "/banks?ids={filter.ids}&search={filter.search}&country={filter.country}&page={page}&perPage={per_page}&sort={sort}&provider={filter.provider}&destinationCountry={filter.destination_country}"
     };
   }
 

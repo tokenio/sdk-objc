@@ -881,14 +881,24 @@
                           onError:onError];
 }
 
-- (void)storeTokenRequest:(TokenPayload *)tokenPayload
-                  options:(NSDictionary<NSString*, NSString*> *)options
+- (void)storeTokenRequest:(TokenRequestPayload *)requestPayload
+           requestOptions:(TokenRequestOptions *)requestOptions
                 onSuccess:(OnSuccessWithString)onSuccess
                   onError:(OnError)onError {
-    [client storeTokenRequest:tokenPayload
-                      options:options
+    [client storeTokenRequest:requestPayload
+               requestOptions:requestOptions
                     onSuccess:onSuccess
                       onError:onError];
+}
+
+- (void)updateTokenRequest:(NSString *)requestId
+                   options:(TokenRequestOptions *)options
+                 onSuccess:(OnSuccess)onSuccess
+                   onError:(OnError)onError {
+    [client updateTokenRequest:requestId
+                       options:options
+                     onSuccess:onSuccess
+                       onError:onError];
 }
 
 - (void)setReceiptContact:(ReceiptContact *)receiptContact

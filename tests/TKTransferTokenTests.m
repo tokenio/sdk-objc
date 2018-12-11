@@ -189,14 +189,31 @@
 - (void)testGetTokenRequestResult {
     TokenIOSync *tokenIO = [self syncSDK];
     
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
-    builder.accountId = payerAccount.id;
-    builder.toMemberId = payee.id;
-    Token *token = [builder execute];
+    TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
+    payload.refId = [TKUtil nonce];
+    payload.redirectURL = @"https://token.io";
+    payload.to.id_p = payee.id;
+    payload.callbackState = [TKUtil nonce];
+    payload.transferBody.lifetimeAmount = @"100.99";
+    payload.transferBody.currency = @"EUR";
     
-    NSString *tokenRequestId = [payee storeTokenRequest:token.payload options:nil];
+    TokenRequestOptions *options = [[TokenRequestOptions alloc] init];
+    options.bankId = @"iron";
+    options.receiptRequested = false;
+    options.from.id_p = payer.id;
+    
+    NSString *tokenRequestId = [payee storeTokenRequest:payload requestOptions:options];
+    
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"EUR"];
+    builder.toMemberId = payee.id;
+    builder.accountId = payerAccount.id;
+    builder.refId = payload.refId;
+    builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
+    // Optional settings
+    builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
+
+    Token *token = [builder execute];
     
     NSString *state = [TKUtil nonce];
     Signature *signature = [payer signTokenRequestState:tokenRequestId

@@ -280,7 +280,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Token *token;
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization DEPRECATED_ATTRIBUTE;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Swift *swift;
 
@@ -335,8 +335,9 @@ typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
 };
 
 /**
- * One-time encrypted authorization for an account
+ * Deprecated; unused
  **/
+DEPRECATED_ATTRIBUTE
 @interface BankAccount_TokenAuthorization : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;

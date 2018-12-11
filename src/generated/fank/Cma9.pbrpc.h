@@ -21,6 +21,8 @@
 @class AccountsResponse;
 @class DeleteAccountRequestsRequest;
 @class DeleteAccountRequestsResponse;
+@class PartyRequest;
+@class PartyResponse;
 @class PaymentSubmissionsRequest;
 @class PaymentSubmissionsResponse;
 @class PaymentsRequest;
@@ -139,6 +141,19 @@ NS_ASSUME_NONNULL_BEGIN
  * Used to submit/redeem an existing payment object.
  */
 - (GRPCProtoCall *)RPCToCreatePaymentSubmissionWithRequest:(PaymentSubmissionsRequest *)request handler:(void(^)(PaymentSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetParty(PartyRequest) returns (PartyResponse)
+
+/**
+ * Used to get account details
+ */
+- (void)getPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Used to get account details
+ */
+- (GRPCProtoCall *)RPCToGetPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

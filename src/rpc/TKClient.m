@@ -1554,13 +1554,14 @@
              onError:onError];
 }
 
-- (void)storeTokenRequest:(TokenPayload *)tokenPayload
-                  options:(NSDictionary<NSString*, NSString*> *)options
+- (void)storeTokenRequest:(TokenRequestPayload *)requestPayload
+           requestOptions:(TokenRequestOptions *)requestOptions
                 onSuccess:(OnSuccessWithString)onSuccess
                   onError:(OnError)onError {
     StoreTokenRequestRequest *request = [StoreTokenRequestRequest message];
-    request.options = [NSMutableDictionary dictionaryWithDictionary:options];
-    request.payload = tokenPayload;
+    request.requestPayload = requestPayload;
+    request.requestOptions = requestOptions;
+    
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -1569,6 +1570,31 @@
                                if (response) {
                                    RpcLogCompleted(response);
                                    onSuccess(response.tokenRequest.id_p);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)updateTokenRequest:(NSString *)requestId
+                   options:(TokenRequestOptions *)options
+                 onSuccess:(OnSuccess)onSuccess
+                   onError:(OnError)onError {
+    UpdateTokenRequestRequest *request = [UpdateTokenRequestRequest message];
+    request.requestId = requestId;
+    request.requestOptions = options;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToUpdateTokenRequestWithRequest:request
+                           handler:^(UpdateTokenRequestResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
                                } else {
                                    [self->errorHandler handle:onError withError:error];
                                }

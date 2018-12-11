@@ -149,24 +149,18 @@
     }];
 }
 
-- (NotifyResult *)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
-                                    keys:(NSArray<Key *> *)keys
-                          deviceMetadata:(DeviceMetadata *)deviceMetadata
-                          tokenRequestId:(NSString *)tokenRequestId
-                                  bankId:(NSString *)bankId
-                                   state:(NSString *)state
-                                 contact:(ReceiptContact *)contact {
+- (NotifyResult *)notifyCreateAndEndorseToken:(NSString *)tokenRequestId
+                                         keys:(NSArray<Key *> *)keys
+                               deviceMetadata:(DeviceMetadata *)deviceMetadata
+                                      contact:(ReceiptContact *)contact {
     TKRpcSyncCall<NotifyResult *> *call = [TKRpcSyncCall create];
     return [call run:^{
-        [self.async notifyEndorseAndAddKey:tokenPayload
-                                      keys:keys
-                            deviceMetadata:deviceMetadata
-                            tokenRequestId:tokenRequestId
-                                    bankId:bankId
-                                     state:state
-                                   contact:contact
-                                 onSuccess:call.onSuccess
-                                   onError:call.onError];
+        [self.async notifyCreateAndEndorseToken:tokenRequestId
+                                           keys:keys
+                                 deviceMetadata:deviceMetadata
+                                        contact:contact
+                                      onSuccess:call.onSuccess
+                                        onError:call.onError];
     }];
 }
 

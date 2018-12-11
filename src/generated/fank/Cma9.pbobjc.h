@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class AccountDetails;
 @class AccountRequestData;
 @class AccountRequestSetup;
+@class Address;
 @class Balance;
 @class BalanceData;
 @class CreditorAccount;
@@ -44,6 +45,8 @@ CF_EXTERN_C_BEGIN
 @class Links;
 @class Meta;
 @class MetaData;
+@class Party;
+@class PartyData;
 @class PaymentData;
 @class PaymentSetup;
 @class PaymentSubmission;
@@ -331,6 +334,57 @@ GPBEnumDescriptor *PaymentSubmissionData_PaymentSubmissionStatus_EnumDescriptor(
  * the time this source was generated.
  **/
 BOOL PaymentSubmissionData_PaymentSubmissionStatus_IsValidValue(int32_t value);
+
+#pragma mark - Enum Address_AddressTypeEnum
+
+typedef GPB_ENUM(Address_AddressTypeEnum) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Address_AddressTypeEnum_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Address_AddressTypeEnum_Invalid = 0,
+  Address_AddressTypeEnum_Business = 1,
+  Address_AddressTypeEnum_Correspondence = 2,
+  Address_AddressTypeEnum_DeliveryTo = 3,
+  Address_AddressTypeEnum_MailTo = 4,
+  Address_AddressTypeEnum_Pobox = 5,
+  Address_AddressTypeEnum_Postal = 6,
+  Address_AddressTypeEnum_Residential = 7,
+  Address_AddressTypeEnum_Statement = 8,
+};
+
+GPBEnumDescriptor *Address_AddressTypeEnum_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Address_AddressTypeEnum_IsValidValue(int32_t value);
+
+#pragma mark - Enum Party_PartyTypeEnum
+
+typedef GPB_ENUM(Party_PartyTypeEnum) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Party_PartyTypeEnum_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Party_PartyTypeEnum_Invalid = 0,
+  Party_PartyTypeEnum_Delegate = 1,
+  Party_PartyTypeEnum_Joint = 2,
+  Party_PartyTypeEnum_Sole = 3,
+};
+
+GPBEnumDescriptor *Party_PartyTypeEnum_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Party_PartyTypeEnum_IsValidValue(int32_t value);
 
 #pragma mark - Cma9Root
 
@@ -1379,6 +1433,154 @@ typedef GPB_ENUM(PaymentSubmissionsResponse_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasLinks;
 
 @property(nonatomic, readwrite, strong, null_resettable) Meta *meta;
+/** Test to see if @c meta has been set. */
+@property(nonatomic, readwrite) BOOL hasMeta;
+
+@end
+
+#pragma mark - Address
+
+typedef GPB_ENUM(Address_FieldNumber) {
+  Address_FieldNumber_AddressType = 1,
+  Address_FieldNumber_AddressLineArray = 2,
+  Address_FieldNumber_StreetName = 3,
+  Address_FieldNumber_BuildingNumber = 4,
+  Address_FieldNumber_PostCode = 5,
+  Address_FieldNumber_TownName = 6,
+  Address_FieldNumber_CountrySubDivision = 7,
+  Address_FieldNumber_Country = 8,
+};
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Get party information request/response
+ **/
+@interface Address : GPBMessage
+
+@property(nonatomic, readwrite) Address_AddressTypeEnum addressType;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *addressLineArray;
+/** The number of items in @c addressLineArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger addressLineArray_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *streetName;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *buildingNumber;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *postCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *townName;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *countrySubDivision;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
+
+@end
+
+/**
+ * Fetches the raw value of a @c Address's @c addressType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Address_AddressType_RawValue(Address *message);
+/**
+ * Sets the raw value of an @c Address's @c addressType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetAddress_AddressType_RawValue(Address *message, int32_t value);
+
+#pragma mark - Party
+
+typedef GPB_ENUM(Party_FieldNumber) {
+  Party_FieldNumber_PartyId = 1,
+  Party_FieldNumber_PartyNumber = 2,
+  Party_FieldNumber_PartyType = 3,
+  Party_FieldNumber_Name = 4,
+  Party_FieldNumber_EmailAddress = 5,
+  Party_FieldNumber_Phone = 6,
+  Party_FieldNumber_Mobile = 7,
+  Party_FieldNumber_AddressArray = 8,
+};
+
+@interface Party : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *partyId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *partyNumber;
+
+@property(nonatomic, readwrite) Party_PartyTypeEnum partyType;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *emailAddress;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *phone;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *mobile;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Address*> *addressArray;
+/** The number of items in @c addressArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger addressArray_Count;
+
+@end
+
+/**
+ * Fetches the raw value of a @c Party's @c partyType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Party_PartyType_RawValue(Party *message);
+/**
+ * Sets the raw value of an @c Party's @c partyType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetParty_PartyType_RawValue(Party *message, int32_t value);
+
+#pragma mark - PartyData
+
+typedef GPB_ENUM(PartyData_FieldNumber) {
+  PartyData_FieldNumber_Party = 1,
+};
+
+@interface PartyData : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Party *party;
+/** Test to see if @c party has been set. */
+@property(nonatomic, readwrite) BOOL hasParty;
+
+@end
+
+#pragma mark - PartyRequest
+
+typedef GPB_ENUM(PartyRequest_FieldNumber) {
+  PartyRequest_FieldNumber_AccountId = 1,
+};
+
+@interface PartyRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - PartyResponse
+
+typedef GPB_ENUM(PartyResponse_FieldNumber) {
+  PartyResponse_FieldNumber_Data_p = 1,
+  PartyResponse_FieldNumber_Links = 2,
+  PartyResponse_FieldNumber_Meta = 3,
+};
+
+@interface PartyResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) PartyData *data_p;
+/** Test to see if @c data_p has been set. */
+@property(nonatomic, readwrite) BOOL hasData_p;
+
+@property(nonatomic, readwrite, strong, null_resettable) Links *links;
+/** Test to see if @c links has been set. */
+@property(nonatomic, readwrite) BOOL hasLinks;
+
+@property(nonatomic, readwrite, strong, null_resettable) MetaData *meta;
 /** Test to see if @c meta has been set. */
 @property(nonatomic, readwrite) BOOL hasMeta;
 

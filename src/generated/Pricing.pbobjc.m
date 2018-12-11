@@ -123,6 +123,9 @@ BOOL FxResponsibility_IsValidValue(int32_t value__) {
 
 #pragma mark - TransferQuote
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+
 @implementation TransferQuote
 
 @dynamic id_p;
@@ -218,6 +221,8 @@ typedef struct TransferQuote__storage_ {
 }
 
 @end
+
+#pragma clang diagnostic pop
 
 #pragma mark - TransferQuote_Fee
 
@@ -342,6 +347,9 @@ typedef struct TransferQuote_FxRate__storage_ {
 
 #pragma mark - Pricing
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+
 @implementation Pricing
 
 @dynamic hasSourceQuote, sourceQuote;
@@ -405,7 +413,12 @@ typedef struct Pricing__storage_ {
 
 @end
 
+#pragma clang diagnostic pop
+
 #pragma mark - PricingInstructions
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 
 @implementation PricingInstructions
 
@@ -458,6 +471,8 @@ typedef struct PricingInstructions__storage_ {
 }
 
 @end
+
+#pragma clang diagnostic pop
 
 int32_t PricingInstructions_FeesPaidBy_RawValue(PricingInstructions *message) {
   GPBDescriptor *descriptor = [PricingInstructions descriptor];

@@ -363,6 +363,104 @@ typedef struct Paging__storage_ {
 
 @end
 
+#pragma mark - BankFilter
+
+@implementation BankFilter
+
+@dynamic provider;
+@dynamic tppId;
+@dynamic destinationCountry;
+@dynamic country;
+@dynamic idsArray, idsArray_Count;
+@dynamic search;
+
+typedef struct BankFilter__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *provider;
+  NSString *tppId;
+  NSString *destinationCountry;
+  NSString *country;
+  NSMutableArray *idsArray;
+  NSString *search;
+} BankFilter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "provider",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_Provider,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, provider),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tppId",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_TppId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, tppId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destinationCountry",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_DestinationCountry,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, destinationCountry),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "country",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_Country,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, country),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "idsArray",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_IdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, idsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "search",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_Search,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, search),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BankFilter class]
+                                     rootClass:[BankinfoRoot class]
+                                          file:BankinfoRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BankFilter__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

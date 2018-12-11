@@ -1485,11 +1485,13 @@ BOOL ReceiptContact_Type_IsValidValue(int32_t value__) {
 
 @dynamic name;
 @dynamic hasKey, key;
+@dynamic keysArray, keysArray_Count;
 
 typedef struct Device__storage_ {
   uint32_t _has_storage_[1];
   NSString *name;
   Key *key;
+  NSMutableArray *keysArray;
 } Device__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1514,6 +1516,15 @@ typedef struct Device__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Device__storage_, key),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "keysArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .number = Device_FieldNumber_KeysArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Device__storage_, keysArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

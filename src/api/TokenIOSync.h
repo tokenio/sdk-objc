@@ -144,25 +144,17 @@
       deviceMetadata:(DeviceMetadata *)deviceMetadata;
 
 /**
- * Notifies subscribed devices that a token payload should be endorsed and keys should be
- * added.
+ * Notifies subscribed devices that a token should be created and endorsed.
  *
- * @param tokenPayload the token payload to be sent
- * @param keys keys to be added
- * @param deviceMetadata device metadata of the keys
- * @param tokenRequestId optional token request id
- * @param bankId optional bank id
- * @param state optional token request state for signing
- * @param contact receipt contact
- * @return notify result
+ * @param tokenRequestId the token request ID to send
+ * @param keys list of new keys to add
+ * @param deviceMetadata device metadata of the keys; it will be shown in in the pop-up
+ * @param contact receipt contact to send
  */
-- (NotifyResult *)notifyEndorseAndAddKey:(TokenPayload *)tokenPayload
-                                    keys:(NSArray<Key *> *)keys
-                          deviceMetadata:(DeviceMetadata *)deviceMetadata
-                          tokenRequestId:(NSString *)tokenRequestId
-                                  bankId:(NSString *)bankId
-                                   state:(NSString *)state
-                                 contact:(ReceiptContact *)contact;
+- (NotifyResult *)notifyCreateAndEndorseToken:(NSString *)tokenRequestId
+                                         keys:(NSArray<Key *> *)keys
+                               deviceMetadata:(DeviceMetadata *)deviceMetadata
+                                      contact:(ReceiptContact *)contact;
 
 /**
  * Invalidate a notification.

@@ -61,6 +61,8 @@
 @class GetBalancesResponse;
 @class GetBankInfoRequest;
 @class GetBankInfoResponse;
+@class GetBanksCountriesRequest;
+@class GetBanksCountriesResponse;
 @class GetBanksRequest;
 @class GetBanksResponse;
 @class GetBlobRequest;
@@ -147,6 +149,8 @@
 @class StoreTokenRequestResponse;
 @class SubscribeToNotificationsRequest;
 @class SubscribeToNotificationsResponse;
+@class TriggerCreateAndEndorseTokenNotificationRequest;
+@class TriggerCreateAndEndorseTokenNotificationResponse;
 @class TriggerEndorseAndAddKeyNotificationRequest;
 @class TriggerEndorseAndAddKeyNotificationResponse;
 @class TriggerStepUpNotificationRequest;
@@ -157,6 +161,8 @@
 @class UnsubscribeFromNotificationsResponse;
 @class UpdateMemberRequest;
 @class UpdateMemberResponse;
+@class UpdateTokenRequestRequest;
+@class UpdateTokenRequestResponse;
 @class VerifyAffiliateRequest;
 @class VerifyAffiliateResponse;
 @class VerifyAliasOnBehalfRequest;
@@ -786,6 +792,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToTriggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark TriggerCreateAndEndorseTokenNotification(TriggerCreateAndEndorseTokenNotificationRequest) returns (TriggerCreateAndEndorseTokenNotificationResponse)
+
+/**
+ * send create and endorse token notification
+ */
+- (void)triggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * send create and endorse token notification
+ */
+- (GRPCProtoCall *)RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark InvalidateNotification(InvalidateNotificationRequest) returns (InvalidateNotificationResponse)
 
 /**
@@ -1128,6 +1147,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark UpdateTokenRequest(UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse)
+
+- (void)updateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUpdateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
 
 /**
@@ -1355,23 +1381,36 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+#pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Bank Information Endpoints.
  * 
  * 
+ * Get a list of "link-able" bank countries.
+ */
+- (void)getBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ * Get a list of "link-able" bank countries.
+ */
+- (GRPCProtoCall *)RPCToGetBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+
+/**
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
  */
 - (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Bank Information Endpoints.
- * 
- * 
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
  */

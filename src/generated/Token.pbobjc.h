@@ -43,6 +43,7 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource_AllTransferDestinations;
 @class AccessBody_Resource_AllTransferDestinationsAtBank;
 @class AccessBody_Resource_TransferDestinations;
+@class ActingAs;
 @class Alias;
 @class Attachment;
 @class Pricing;
@@ -50,9 +51,13 @@ CF_EXTERN_C_BEGIN
 @class Token;
 @class TokenMember;
 @class TokenPayload;
-@class TokenPayload_ActingAs;
+@class TokenRequestOptions;
+@class TokenRequestPayload;
+@class TokenRequestPayload_AccessBody;
+@class TokenRequestPayload_TransferBody;
 @class TokenSignature;
 @class TransferBody;
+@class TransferEndpoint;
 @class TransferInstructions;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -108,6 +113,30 @@ GPBEnumDescriptor *TransferTokenStatus_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL TransferTokenStatus_IsValidValue(int32_t value);
+
+#pragma mark - Enum TokenRequestPayload_AccessBody_ResourceType
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_ResourceType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  TokenRequestPayload_AccessBody_ResourceType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  TokenRequestPayload_AccessBody_ResourceType_Invalid = 0,
+  TokenRequestPayload_AccessBody_ResourceType_Accounts = 1,
+  TokenRequestPayload_AccessBody_ResourceType_Balances = 2,
+  TokenRequestPayload_AccessBody_ResourceType_Transactions = 3,
+  TokenRequestPayload_AccessBody_ResourceType_TransferDestinations = 4,
+};
+
+GPBEnumDescriptor *TokenRequestPayload_AccessBody_ResourceType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL TokenRequestPayload_AccessBody_ResourceType_IsValidValue(int32_t value);
 
 #pragma mark - Enum TokenSignature_Action
 
@@ -228,6 +257,8 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
   TokenRequest_FieldNumber_Options = 3,
   TokenRequest_FieldNumber_UserRefId = 4,
   TokenRequest_FieldNumber_CustomizationId = 5,
+  TokenRequest_FieldNumber_RequestPayload = 6,
+  TokenRequest_FieldNumber_RequestOptions = 7,
 };
 
 @interface TokenRequest : GPBMessage
@@ -235,19 +266,181 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 /** request id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** token payload */
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
-/** Test to see if @c payload has been set. */
-@property(nonatomic, readwrite) BOOL hasPayload;
+/** immutable properties */
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload *requestPayload;
+/** Test to see if @c requestPayload has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestPayload;
 
-/** generic string map of options */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options;
+/** mutable properties */
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
+/** Test to see if @c requestOptions has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestOptions;
+
+/** deprecated fields */
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload DEPRECATED_ATTRIBUTE;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload DEPRECATED_ATTRIBUTE;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options DEPRECATED_ATTRIBUTE;
 /** The number of items in @c options without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger options_Count;
+@property(nonatomic, readonly) NSUInteger options_Count DEPRECATED_ATTRIBUTE;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId DEPRECATED_ATTRIBUTE;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId DEPRECATED_ATTRIBUTE;
+
+@end
+
+#pragma mark - TokenRequestOptions
+
+typedef GPB_ENUM(TokenRequestOptions_FieldNumber) {
+  TokenRequestOptions_FieldNumber_BankId = 1,
+  TokenRequestOptions_FieldNumber_From = 2,
+  TokenRequestOptions_FieldNumber_SourceAccountId = 3,
+  TokenRequestOptions_FieldNumber_ReceiptRequested = 4,
+};
+
+@interface TokenRequestOptions : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *from;
+/** Test to see if @c from has been set. */
+@property(nonatomic, readwrite) BOOL hasFrom;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountId;
+
+@property(nonatomic, readwrite) BOOL receiptRequested;
+
+@end
+
+#pragma mark - TokenRequestPayload
+
+typedef GPB_ENUM(TokenRequestPayload_FieldNumber) {
+  TokenRequestPayload_FieldNumber_UserRefId = 1,
+  TokenRequestPayload_FieldNumber_CustomizationId = 2,
+  TokenRequestPayload_FieldNumber_RedirectURL = 3,
+  TokenRequestPayload_FieldNumber_To = 4,
+  TokenRequestPayload_FieldNumber_ActingAs = 5,
+  TokenRequestPayload_FieldNumber_AccessBody = 6,
+  TokenRequestPayload_FieldNumber_TransferBody = 7,
+  TokenRequestPayload_FieldNumber_Description_p = 8,
+  TokenRequestPayload_FieldNumber_CallbackState = 9,
+  TokenRequestPayload_FieldNumber_DestinationCountry = 10,
+  TokenRequestPayload_FieldNumber_RefId = 11,
+};
+
+typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
+  TokenRequestPayload_RequestBody_OneOfCase_GPBUnsetOneOfCase = 0,
+  TokenRequestPayload_RequestBody_OneOfCase_AccessBody = 6,
+  TokenRequestPayload_RequestBody_OneOfCase_TransferBody = 7,
+};
+
+@interface TokenRequestPayload : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *redirectURL;
+
+/** ref ID that will be transferred to the token payload */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
+/** Test to see if @c to has been set. */
+@property(nonatomic, readwrite) BOOL hasTo;
+
+@property(nonatomic, readwrite, strong, null_resettable) ActingAs *actingAs;
+/** Test to see if @c actingAs has been set. */
+@property(nonatomic, readwrite) BOOL hasActingAs;
+
+@property(nonatomic, readonly) TokenRequestPayload_RequestBody_OneOfCase requestBodyOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_AccessBody *accessBody;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_TransferBody *transferBody;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *callbackState;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *destinationCountry;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'requestBody'.
+ **/
+void TokenRequestPayload_ClearRequestBodyOneOfCase(TokenRequestPayload *message);
+
+#pragma mark - TokenRequestPayload_AccessBody
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_FieldNumber) {
+  TokenRequestPayload_AccessBody_FieldNumber_TypeArray = 1,
+};
+
+@interface TokenRequestPayload_AccessBody : GPBMessage
+
+// |typeArray| contains |TokenRequestPayload_AccessBody_ResourceType|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *typeArray;
+/** The number of items in @c typeArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger typeArray_Count;
+
+@end
+
+#pragma mark - TokenRequestPayload_TransferBody
+
+typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
+  TokenRequestPayload_TransferBody_FieldNumber_Currency = 1,
+  TokenRequestPayload_TransferBody_FieldNumber_Amount = 2,
+  TokenRequestPayload_TransferBody_FieldNumber_DestinationsArray = 3,
+  TokenRequestPayload_TransferBody_FieldNumber_LifetimeAmount = 4,
+};
+
+@interface TokenRequestPayload_TransferBody : GPBMessage
+
+/** Optional: ISO4217, 3 letter currency code such as "USD" or "EUR". */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+/** Optional: Single token charge request acceptable range. Double. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+/** Optional: Token total lifetime amount. Double. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *lifetimeAmount;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+/** The number of items in @c destinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+
+@end
+
+#pragma mark - ActingAs
+
+typedef GPB_ENUM(ActingAs_FieldNumber) {
+  ActingAs_FieldNumber_DisplayName = 1,
+  ActingAs_FieldNumber_RefId = 2,
+  ActingAs_FieldNumber_LogoURL = 3,
+  ActingAs_FieldNumber_SecondaryName = 4,
+};
+
+/**
+ * If a token is being created on behalf of another party, this
+ * field contains a description of that entity.
+ **/
+@interface ActingAs : GPBMessage
+
+/** Name of recipient, to be shown to user */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *displayName;
+
+/** Optional reference ID of the recipient. Opaque to Token. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
+
+/** URL pointing to recipient's logo */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *logoURL;
+
+/** Optional domain or email of the recipient, to be shown to user along with display_name */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *secondaryName;
 
 @end
 
@@ -289,17 +482,17 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 };
 
 /**
- * Refers to a Token member by ID or by alias.
+ * Refers to a Token member by ID and/or by alias.
  **/
 @interface TokenMember : GPBMessage
 
-/** member ID */
+/** optional member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
-/** alias, such as an email address */
+/** optional alias, such as an email address */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
@@ -353,6 +546,10 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** Test to see if @c to has been set. */
 @property(nonatomic, readwrite) BOOL hasTo;
 
+@property(nonatomic, readwrite, strong, null_resettable) ActingAs *actingAs;
+/** Test to see if @c actingAs has been set. */
+@property(nonatomic, readwrite) BOOL hasActingAs;
+
 /** Optional */
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
 
@@ -375,10 +572,6 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
 
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload_ActingAs *actingAs;
-/** Test to see if @c actingAs has been set. */
-@property(nonatomic, readwrite) BOOL hasActingAs;
-
 @property(nonatomic, readwrite) BOOL receiptRequested;
 
 @end
@@ -387,35 +580,6 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
  * Clears whatever value was set for the oneof 'body'.
  **/
 void TokenPayload_ClearBodyOneOfCase(TokenPayload *message);
-
-#pragma mark - TokenPayload_ActingAs
-
-typedef GPB_ENUM(TokenPayload_ActingAs_FieldNumber) {
-  TokenPayload_ActingAs_FieldNumber_DisplayName = 1,
-  TokenPayload_ActingAs_FieldNumber_RefId = 2,
-  TokenPayload_ActingAs_FieldNumber_LogoURL = 3,
-  TokenPayload_ActingAs_FieldNumber_SecondaryName = 4,
-};
-
-/**
- * If a token is being created on behalf of another party, this
- * field contains a description of that entity.
- **/
-@interface TokenPayload_ActingAs : GPBMessage
-
-/** Name of recipient, to be shown to user */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *displayName;
-
-/** Optional reference ID of the recipient. Opaque to Token. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
-
-/** URL pointing to recipient's logo */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *logoURL;
-
-/** Optional domain or email of the recipient, to be shown to user along with display_name */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *secondaryName;
-
-@end
 
 #pragma mark - ExternalAuthorizationDetails
 
@@ -476,10 +640,10 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 /** The number of items in @c attachmentsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger attachmentsArray_Count;
 
-/** Optional: Transfer fees and fx charges. */
-@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing;
+/** Deprecated; unused. */
+@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing DEPRECATED_ATTRIBUTE;
 /** Test to see if @c pricing has been set. */
-@property(nonatomic, readwrite) BOOL hasPricing;
+@property(nonatomic, readwrite) BOOL hasPricing DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -539,15 +703,15 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readonly) AccessBody_Resource_Resource_OneOfCase resourceOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations DEPRECATED_ATTRIBUTE;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address;
 
@@ -559,13 +723,13 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_TransferDestinations *transferDestinations;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank DEPRECATED_ATTRIBUTE;
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -577,7 +741,7 @@ void AccessBody_Resource_ClearResourceOneOfCase(AccessBody_Resource *message);
 #pragma mark - AccessBody_Resource_AllAddresses
 
 /**
- * Provides access to all member addresses
+ * **DEPRECATED** Provides access to all member addresses
  **/
 @interface AccessBody_Resource_AllAddresses : GPBMessage
 
@@ -602,7 +766,7 @@ typedef GPB_ENUM(AccessBody_Resource_Address_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccounts
 
 /**
- * Provides access to all member accounts. Enables getAccounts()
+ * **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
  * to get list of accounts (and also getAccount() on any account).
  **/
 @interface AccessBody_Resource_AllAccounts : GPBMessage
@@ -616,7 +780,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllAccountsAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to all member accounts at a specific bank.
+ * **DEPRECATED** Provides access to all member accounts at a specific bank.
  **/
 @interface AccessBody_Resource_AllAccountsAtBank : GPBMessage
 
@@ -644,7 +808,7 @@ typedef GPB_ENUM(AccessBody_Resource_Account_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccountTransactions
 
 /**
- * Provides access to member transactions in all accounts
+ * **DEPRECATED** Provides access to member transactions in all accounts
  * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountTransactions : GPBMessage
@@ -658,7 +822,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllTransactionsAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to member transactions in all accounts at a specific bank.
+ * **DEPRECATED** Provides access to member transactions in all accounts at a specific bank.
  * Normally used with AllAccountsAtBank (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllTransactionsAtBank : GPBMessage
@@ -686,7 +850,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllAccountBalances
 
 /**
- * Provides access to member balance on all accounts
+ * **DEPRECATED** Provides access to member balance on all accounts
  * Normally used with AllAccounts (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllAccountBalances : GPBMessage
@@ -700,7 +864,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllBalancesAtBank_FieldNumber) {
 };
 
 /**
- * Provides access to member balance on all accounts at a specific bank.
+ * **DEPRECATED** Provides access to member balance on all accounts at a specific bank.
  * Normally used with AllAccountsAtBank (to get list of accounts)
  **/
 @interface AccessBody_Resource_AllBalancesAtBank : GPBMessage
@@ -728,7 +892,7 @@ typedef GPB_ENUM(AccessBody_Resource_AccountBalance_FieldNumber) {
 #pragma mark - AccessBody_Resource_AllTransferDestinations
 
 /**
- * Provides access to the resolved transfer destinations of all accounts
+ * **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
  **/
 @interface AccessBody_Resource_AllTransferDestinations : GPBMessage
 
@@ -741,7 +905,7 @@ typedef GPB_ENUM(AccessBody_Resource_AllTransferDestinationsAtBank_FieldNumber) 
 };
 
 /**
- * Provides access to the resolved transfer destinations of all accounts at a specific bank
+ * **DEPRECATED** Provides access to the resolved transfer destinations of all accounts at a specific bank
  **/
 @interface AccessBody_Resource_AllTransferDestinationsAtBank : GPBMessage
 

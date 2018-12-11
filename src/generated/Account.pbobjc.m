@@ -688,6 +688,9 @@ typedef struct BankAccount_Token__storage_ {
 
 #pragma mark - BankAccount_TokenAuthorization
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+
 @implementation BankAccount_TokenAuthorization
 
 @dynamic hasAuthorization, authorization;
@@ -729,6 +732,8 @@ typedef struct BankAccount_TokenAuthorization__storage_ {
 }
 
 @end
+
+#pragma clang diagnostic pop
 
 #pragma mark - BankAccount_Bank
 

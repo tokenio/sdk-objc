@@ -161,6 +161,41 @@ typedef GPB_ENUM(Paging_FieldNumber) {
 
 @end
 
+#pragma mark - BankFilter
+
+typedef GPB_ENUM(BankFilter_FieldNumber) {
+  BankFilter_FieldNumber_Provider = 1,
+  BankFilter_FieldNumber_TppId = 2,
+  BankFilter_FieldNumber_DestinationCountry = 3,
+  BankFilter_FieldNumber_Country = 4,
+  BankFilter_FieldNumber_IdsArray = 5,
+  BankFilter_FieldNumber_Search = 6,
+};
+
+@interface BankFilter : GPBMessage
+
+/** (Optional) Filter for banks whose 'provider' matches the provider (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
+
+/** (Optional) Filter for banks which are integrated with the TPP */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId;
+
+/** (Optional) Filter for banks that support sending to the destination country */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *destinationCountry;
+
+/** (Optional) Filter for banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
+
+/** (Optional) Filter for banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray;
+/** The number of items in @c idsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger idsArray_Count;
+
+/** (Optional) Filter for banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *search;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

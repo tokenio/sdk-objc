@@ -1,0 +1,12 @@
+syntax = "proto3";
+package io.token.proto.common.bankstatus;
+
+option java_outer_classname = "BankStatusProtos";
+option csharp_namespace = "Tokenio.Proto.BankStatus";
+
+enum BankStatus {
+  INVALID = 0;
+  AVAILABLE = 1;
+  UNAVAILABLE = 2;
+  UNKNOWN = 3;
+}

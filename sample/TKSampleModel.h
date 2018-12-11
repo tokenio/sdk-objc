@@ -15,6 +15,12 @@
 
 + (TokenPayload *)pispEndrosePayload:(TKMember *)from to:(TKMember *)to;
 
++ (TokenRequestPayload *)accessTokenRequestPayload:(TKMember *)to;
+
++ (TokenRequestPayload *)transferTokenRequestPayload:(TKMember *)to;
+
++ (TokenRequestOptions *)tokenRequestOptions:(TKMember *)from;
+
 + (ReceiptContact *)receiptContact:(NSString *)email;
 
 + (DeviceMetadata *)deviceMetadata;

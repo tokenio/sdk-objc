@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum FeeResponsibility
 
-typedef GPB_ENUM(FeeResponsibility) {
+typedef DEPRECATED_ATTRIBUTE GPB_ENUM(FeeResponsibility) {
   /**
    * Value used if any message's field encounters a value that is not defined
    * by this enum. The message will also have C functions to get/set the rawValue
@@ -65,7 +65,7 @@ BOOL FeeResponsibility_IsValidValue(int32_t value);
 
 #pragma mark - Enum FxResponsibility
 
-typedef GPB_ENUM(FxResponsibility) {
+typedef DEPRECATED_ATTRIBUTE GPB_ENUM(FxResponsibility) {
   /**
    * Value used if any message's field encounters a value that is not defined
    * by this enum. The message will also have C functions to get/set the rawValue
@@ -118,6 +118,7 @@ typedef GPB_ENUM(TransferQuote_FieldNumber) {
 /**
  * A bank quote for a transfer
  **/
+DEPRECATED_ATTRIBUTE
 @interface TransferQuote : GPBMessage
 
 /** the quote id */
@@ -193,6 +194,7 @@ typedef GPB_ENUM(Pricing_FieldNumber) {
   Pricing_FieldNumber_Instructions = 3,
 };
 
+DEPRECATED_ATTRIBUTE
 @interface Pricing : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferQuote *sourceQuote;
@@ -216,6 +218,7 @@ typedef GPB_ENUM(PricingInstructions_FieldNumber) {
   PricingInstructions_FieldNumber_FxPerformedBy = 2,
 };
 
+DEPRECATED_ATTRIBUTE
 @interface PricingInstructions : GPBMessage
 
 @property(nonatomic, readwrite) FeeResponsibility feesPaidBy;

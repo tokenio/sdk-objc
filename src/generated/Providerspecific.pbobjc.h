@@ -84,6 +84,56 @@ GPBEnumDescriptor *Cma9AccountDetails_AddressType_EnumDescriptor(void);
  **/
 BOOL Cma9AccountDetails_AddressType_IsValidValue(int32_t value);
 
+#pragma mark - Enum Cma9AccountDetails_AccountType
+
+typedef GPB_ENUM(Cma9AccountDetails_AccountType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Cma9AccountDetails_AccountType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Cma9AccountDetails_AccountType_InvalidAccountType = 0,
+  Cma9AccountDetails_AccountType_BusinessAccount = 1,
+  Cma9AccountDetails_AccountType_PersonalAccount = 2,
+};
+
+GPBEnumDescriptor *Cma9AccountDetails_AccountType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Cma9AccountDetails_AccountType_IsValidValue(int32_t value);
+
+#pragma mark - Enum Cma9AccountDetails_AccountSubtype
+
+typedef GPB_ENUM(Cma9AccountDetails_AccountSubtype) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Cma9AccountDetails_AccountSubtype_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Cma9AccountDetails_AccountSubtype_InvalidAccountSubtype = 0,
+  Cma9AccountDetails_AccountSubtype_ChargeCard = 1,
+  Cma9AccountDetails_AccountSubtype_CreditCard = 2,
+  Cma9AccountDetails_AccountSubtype_CurrentAccount = 3,
+  Cma9AccountDetails_AccountSubtype_Emoney = 4,
+  Cma9AccountDetails_AccountSubtype_Loan = 5,
+  Cma9AccountDetails_AccountSubtype_Mortgage = 6,
+  Cma9AccountDetails_AccountSubtype_PrepaidCard = 7,
+  Cma9AccountDetails_AccountSubtype_Savings = 8,
+};
+
+GPBEnumDescriptor *Cma9AccountDetails_AccountSubtype_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Cma9AccountDetails_AccountSubtype_IsValidValue(int32_t value);
+
 #pragma mark - ProviderspecificRoot
 
 /**
@@ -134,6 +184,9 @@ typedef GPB_ENUM(Cma9AccountDetails_FieldNumber) {
   Cma9AccountDetails_FieldNumber_Phone = 6,
   Cma9AccountDetails_FieldNumber_Mobile = 7,
   Cma9AccountDetails_FieldNumber_AddressArray = 8,
+  Cma9AccountDetails_FieldNumber_AccountType = 9,
+  Cma9AccountDetails_FieldNumber_AccountSubtype = 10,
+  Cma9AccountDetails_FieldNumber_Description_p = 11,
 };
 
 @interface Cma9AccountDetails : GPBMessage
@@ -156,6 +209,12 @@ typedef GPB_ENUM(Cma9AccountDetails_FieldNumber) {
 /** The number of items in @c addressArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger addressArray_Count;
 
+@property(nonatomic, readwrite) Cma9AccountDetails_AccountType accountType;
+
+@property(nonatomic, readwrite) Cma9AccountDetails_AccountSubtype accountSubtype;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
 @end
 
 /**
@@ -169,6 +228,30 @@ int32_t Cma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message);
  * was generated.
  **/
 void SetCma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c Cma9AccountDetails's @c accountType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Cma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message);
+/**
+ * Sets the raw value of an @c Cma9AccountDetails's @c accountType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c Cma9AccountDetails's @c accountSubtype property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Cma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message);
+/**
+ * Sets the raw value of an @c Cma9AccountDetails's @c accountSubtype property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message, int32_t value);
 
 #pragma mark - Cma9AccountDetails_Cma9Address
 

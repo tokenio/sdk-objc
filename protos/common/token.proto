@@ -26,11 +26,70 @@ message Token {
 }
 
 message TokenRequest {
-  string id = 1;                                                                      // request id
-  TokenPayload payload = 2;                                                           // token payload
-  map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true]; // generic string map of options
-  string user_ref_id = 4;
-  string customization_id = 5;
+  string id = 1;                                // request id
+  TokenRequestPayload request_payload = 6;      // immutable properties
+  TokenRequestOptions request_options = 7;      // mutable properties
+
+  // deprecated fields
+  TokenPayload payload = 2 [deprecated = true];
+  map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true, deprecated = true];
+  string user_ref_id = 4 [deprecated = true];
+  string customization_id = 5 [deprecated = true];
+}
+
+message TokenRequestOptions {
+  string bank_id = 1;
+  TokenMember from = 2;
+  string source_account_id = 3;
+  bool receipt_requested = 4;
+}
+
+message TokenRequestPayload {
+  string user_ref_id = 1;
+  string customization_id = 2;
+  string redirect_url = 3;
+
+  string ref_id = 11;       // ref ID that will be transferred to the token payload
+  TokenMember to = 4;
+  ActingAs acting_as = 5;
+
+  oneof request_body {
+    AccessBody access_body = 6;
+    TransferBody transfer_body = 7;
+  }
+
+  string description = 8 [(io.token.proto.extensions.field.redact) = true];
+  string callback_state = 9;
+  string destination_country = 10;
+
+  message AccessBody {
+    repeated ResourceType type = 1;
+
+    enum ResourceType {
+      INVALID = 0;
+      ACCOUNTS = 1;
+      BALANCES = 2;
+      TRANSACTIONS = 3;
+      TRANSFER_DESTINATIONS = 4;
+    }
+  }
+
+  message TransferBody {
+    string currency = 1;                                                                    // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+    string amount = 2;                                                                      // Optional: Single token charge request acceptable range. Double.
+    string lifetime_amount = 4;                                                             // Optional: Token total lifetime amount. Double.
+    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 3;
+  }
+}
+
+// If a token is being created on behalf of another party, this
+// field contains a description of that entity.
+message ActingAs {
+  option (io.token.proto.extensions.message.redact) = true;
+  string display_name = 1;                            // Name of recipient, to be shown to user
+  string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
+  string logo_url = 3;                                // URL pointing to recipient's logo
+  string secondary_name = 4;                          // Optional domain or email of the recipient, to be shown to user along with display_name
 }
 
 message TokenSignature {
@@ -46,12 +105,12 @@ message TokenSignature {
   io.token.proto.common.security.Signature signature = 2;
 }
 
-// Refers to a Token member by ID or by alias.
+// Refers to a Token member by ID and/or by alias.
 message TokenMember {
-  string id = 1;                               // member ID
+  string id = 1;                               // optional member ID
   // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
   string username = 2;
-  io.token.proto.common.alias.Alias alias = 3; // alias, such as an email address
+  io.token.proto.common.alias.Alias alias = 3; // optional alias, such as an email address
 }
 
 message TokenPayload {
@@ -60,7 +119,9 @@ message TokenPayload {
 
   TokenMember issuer = 3;                               // Token issuer, bank.
   TokenMember from = 4;                                 // Payer member.
+
   TokenMember to = 5;                                   // Payee member.
+  ActingAs acting_as = 12;
 
   int64 effective_at_ms = 6;                            // Optional
 
@@ -76,20 +137,8 @@ message TokenPayload {
     AccessBody access = 10;
   }
 
-  ActingAs acting_as = 12;
   bool receipt_requested = 13;
-
-  // If a token is being created on behalf of another party, this
-  // field contains a description of that entity.
-  message ActingAs {
-    option (io.token.proto.extensions.message.redact) = true;
-    string display_name = 1;                            // Name of recipient, to be shown to user
-    string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
-    string logo_url = 3;                                // URL pointing to recipient's logo
-    string secondary_name = 4;                          // Optional domain or email of the recipient, to be shown to user along with display_name
-  }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfer Token
@@ -125,7 +174,7 @@ message TransferBody {
   string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
   repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
-  io.token.proto.common.pricing.Pricing pricing = 9;                                 // Optional: Transfer fees and fx charges.
+  io.token.proto.common.pricing.Pricing pricing = 9 [deprecated = true];             // Deprecated; unused.
 }
 
 
@@ -138,23 +187,23 @@ message AccessBody {
 
   message Resource {
     oneof resource {
-      AllAddresses all_addresses = 1;
-      AllAccounts all_accounts = 2;
-      AllAccountTransactions all_transactions = 3;
-      AllAccountBalances all_balances = 4;
-      AllTransferDestinations all_transfer_destinations = 13;
+      AllAddresses all_addresses = 1 [deprecated = true];
+      AllAccounts all_accounts = 2 [deprecated = true];
+      AllAccountTransactions all_transactions = 3 [deprecated = true];
+      AllAccountBalances all_balances = 4 [deprecated = true];
+      AllTransferDestinations all_transfer_destinations = 13 [deprecated = true];
       Address address = 5;
       Account account = 6;
       AccountTransactions transactions = 7;
       AccountBalance balance = 8;
       TransferDestinations transfer_destinations = 12;
-      AllAccountsAtBank all_accounts_at_bank = 9;
-      AllTransactionsAtBank all_transactions_at_bank = 10;
-      AllBalancesAtBank all_balances_at_bank = 11;
-      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14;
+      AllAccountsAtBank all_accounts_at_bank = 9 [deprecated = true];
+      AllTransactionsAtBank all_transactions_at_bank = 10 [deprecated = true];
+      AllBalancesAtBank all_balances_at_bank = 11 [deprecated = true];
+      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14 [deprecated = true];
     }
 
-    // Provides access to all member addresses
+    // **DEPRECATED** Provides access to all member addresses
     message AllAddresses {}
 
     // Provides access to a specific member address
@@ -162,11 +211,11 @@ message AccessBody {
       string address_id = 1; // ID of address
     }
 
-    // Provides access to all member accounts. Enables getAccounts()
+    // **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
     // to get list of accounts (and also getAccount() on any account).
     message AllAccounts {}
 
-    // Provides access to all member accounts at a specific bank.
+    // **DEPRECATED** Provides access to all member accounts at a specific bank.
     message AllAccountsAtBank {
       string bank_id = 1;
     }
@@ -177,11 +226,11 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to member transactions in all accounts
+    // **DEPRECATED** Provides access to member transactions in all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountTransactions {}
 
-    // Provides access to member transactions in all accounts at a specific bank.
+    // **DEPRECATED** Provides access to member transactions in all accounts at a specific bank.
     // Normally used with AllAccountsAtBank (to get list of accounts)
     message AllTransactionsAtBank {
       string bank_id = 1;
@@ -192,11 +241,11 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to member balance on all accounts
+    // **DEPRECATED** Provides access to member balance on all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
 
-    // Provides access to member balance on all accounts at a specific bank.
+    // **DEPRECATED** Provides access to member balance on all accounts at a specific bank.
     // Normally used with AllAccountsAtBank (to get list of accounts)
     message AllBalancesAtBank {
       string bank_id = 1;
@@ -207,10 +256,10 @@ message AccessBody {
       string account_id = 1; // ID of account
     }
 
-    // Provides access to the resolved transfer destinations of all accounts
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
     message AllTransferDestinations {}
 
-    // Provides access to the resolved transfer destinations of all accounts at a specific bank
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts at a specific bank
     message AllTransferDestinationsAtBank {
       string bank_id = 1;
     }
