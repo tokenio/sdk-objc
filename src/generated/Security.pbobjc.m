@@ -706,6 +706,71 @@ typedef struct SealedMessage_RsaAesMethod__storage_ {
 
 @end
 
+#pragma mark - SecurityMetadata
+
+@implementation SecurityMetadata
+
+@dynamic ipAddress;
+@dynamic geoLocation;
+@dynamic deviceFingerprint;
+
+typedef struct SecurityMetadata__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *ipAddress;
+  NSString *geoLocation;
+  NSString *deviceFingerprint;
+} SecurityMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "ipAddress",
+        .dataTypeSpecific.className = NULL,
+        .number = SecurityMetadata_FieldNumber_IpAddress,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SecurityMetadata__storage_, ipAddress),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "geoLocation",
+        .dataTypeSpecific.className = NULL,
+        .number = SecurityMetadata_FieldNumber_GeoLocation,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SecurityMetadata__storage_, geoLocation),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "deviceFingerprint",
+        .dataTypeSpecific.className = NULL,
+        .number = SecurityMetadata_FieldNumber_DeviceFingerprint,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(SecurityMetadata__storage_, deviceFingerprint),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SecurityMetadata class]
+                                     rootClass:[SecurityRoot class]
+                                          file:SecurityRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SecurityMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

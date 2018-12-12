@@ -47,7 +47,7 @@ DEPENDENCIES:
   - Unirest (~> 1.1.4)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - "!ProtoCompiler"
     - "!ProtoCompiler-gRPCPlugin"
     - BoringSSL-GRPC
@@ -73,6 +73,6 @@ SPEC CHECKSUMS:
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
-PODFILE CHECKSUM: e46c523949406e586f1e88585ea0f6f8356784fd
+PODFILE CHECKSUM: f9ef181253c42209d9356bd1d58b2ee791d6fe93
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0

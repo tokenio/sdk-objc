@@ -342,6 +342,24 @@ typedef GPB_ENUM(SealedMessage_RsaAesMethod_FieldNumber) {
 
 @end
 
+#pragma mark - SecurityMetadata
+
+typedef GPB_ENUM(SecurityMetadata_FieldNumber) {
+  SecurityMetadata_FieldNumber_IpAddress = 1,
+  SecurityMetadata_FieldNumber_GeoLocation = 2,
+  SecurityMetadata_FieldNumber_DeviceFingerprint = 3,
+};
+
+@interface SecurityMetadata : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ipAddress;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *geoLocation;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *deviceFingerprint;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

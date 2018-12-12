@@ -77,3 +77,9 @@ message SealedMessage {
     string signature_key_id = 7;      // the key-id of the signature
   }
 }
+
+message SecurityMetadata {
+  string ip_address = 1;
+  string geo_location = 2;
+  string device_fingerprint = 3;
+}
