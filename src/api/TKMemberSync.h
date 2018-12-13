@@ -626,4 +626,11 @@
  */
 - (NSArray<TrustedBeneficiary *> *) getTrustedBeneficiaries;
 
+/**
+ * Sets the security metadata to be sent with each request.
+ *
+ * @param securityMetadata the security metadata
+ */
+-(void)setSecurityMetadata:(SecurityMetadata *)securityMetadata;
+
 @end

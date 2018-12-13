@@ -29,6 +29,7 @@
         crypto:(TKCrypto *)crypto
        usingKey:(Key_Level)keyLevel
      onBehalfOf:(NSString *)onBehalfOfMemberId
+securityMetadata:(SecurityMetadata *)securityMetadata
         onError:(OnError)onError;
 
 @end

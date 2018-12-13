@@ -935,6 +935,10 @@
     [client getTrustedBeneficiaries:onSuccess onError:onError];
 }
 
+-(void)setSecurityMetadata:(SecurityMetadata *)securityMetadata {
+    [client setSecurityMetadata:securityMetadata];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {

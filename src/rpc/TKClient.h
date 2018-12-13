@@ -61,6 +61,13 @@
 - (void)useAccessToken:(NSString *)accessTokenId;
 
 /**
+ * Sets the security metadata to be sent with each request.
+ *
+ * @param metadata the security metadata
+ */
+-(void)setSecurityMetadata:(SecurityMetadata *)metadata;
+
+/**
  * Looks up member information for the current user. The user is defined by
  * the key used for authentication.
  *
