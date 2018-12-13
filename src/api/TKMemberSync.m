@@ -801,6 +801,10 @@
     }];
 }
 
+-(void)setSecurityMetadata:(SecurityMetadata *)securityMetadata {
+    [self.async setSecurityMetadata:securityMetadata];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccountSync *> *)_asyncToSync:(NSArray<TKAccount *> *)asyncAccounts {

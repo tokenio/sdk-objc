@@ -50,6 +50,7 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
          crypto:(TKCrypto *)crypto
        usingKey:(Key_Level)keyLevel
      onBehalfOf:(NSString *)onBehalfOfMemberId
+securityMetadata:(SecurityMetadata *)securityMetadata
         onError:(OnError)onError { 
     unsigned long long now = (unsigned long long)([[NSDate date] timeIntervalSince1970] * 1000);
 
@@ -74,6 +75,10 @@ NSString *const kTokenScheme = @"Token-Ed25519-SHA512";
     call.requestHeaders[@"token-key-id"] = signature.key.id_p;
     call.requestHeaders[@"token-signature"] = signature.value;
     call.requestHeaders[@"token-created-at-ms"] = [NSString stringWithFormat:@"%llu", now];
+    
+    if (securityMetadata != nil) {
+        call.requestHeaders[@"token-security-metadata"] = [TKJson serializeBase64:securityMetadata];
+    }
     
     [self _setSdkHeaders:call];
 

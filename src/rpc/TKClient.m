@@ -25,6 +25,7 @@
     NSString *onBehalfOfMemberId;
     TKRpcErrorHandler *errorHandler;
     TKUnauthenticatedClient *unauthenticatedClient;
+    SecurityMetadata *securityMetadata;
 }
 
 - (id)initWithGateway:(GatewayService *)gateway_
@@ -1742,6 +1743,10 @@
              onError:onError];
 }
 
+-(void)setSecurityMetadata:(SecurityMetadata *)metadata {
+    securityMetadata = metadata;
+}
+
 #pragma mark private
 
 - (ReplaceTokenRequest *)_createReplaceTokenRequest:(Token *)tokenToCancel
@@ -1786,6 +1791,7 @@
           crypto:crypto
         usingKey:keyLevel
       onBehalfOf:onBehalfOfMemberId
+securityMetadata:securityMetadata
          onError:onError];
 }
 
