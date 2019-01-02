@@ -37,6 +37,14 @@
                BlueprintName = "TokenSdkTests"
                ReferencedContainer = "container:TokenSdk.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TKAccountSamples/testBankAuthorizationNotification">
+               </Test>
+               <Test
+                  Identifier = "TKAccountSamples/testInitiateAccountLinking">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
