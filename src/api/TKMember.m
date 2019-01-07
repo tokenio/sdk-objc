@@ -523,17 +523,6 @@
                  onError:onError];
 }
 
-- (void)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                   accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
-                           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
-                             onError:(OnError)onError {
-    [accessTokenConfig from:self.id];
-    [client replaceAndEndorseToken:tokenToCancel
-                     tokenToCreate:[accessTokenConfig toTokenPayload]
-                         onSuccess:onSuccess
-                           onError:onError];
-}
-
 - (void)getToken:(NSString *)tokenId
        onSuccess:(OnSuccessWithToken)onSuccess
          onError:(OnError)onError {

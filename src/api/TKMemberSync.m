@@ -401,17 +401,6 @@
     }];
 }
 
-- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig {
-    TKRpcSyncCall<TokenOperationResult *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self.async replaceAndEndorseAccessToken:tokenToCancel
-                               accessTokenConfig:accessTokenConfig
-                                       onSuccess:call.onSuccess
-                                         onError:call.onError];
-    }];
-}
-
 - (Token *)getToken:(NSString *)tokenId {
     TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
     return [call run:^{
