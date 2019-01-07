@@ -417,16 +417,6 @@
                    onError:(OnError)onError;
 
 /**
- * Cancels the existing access token, creates a replacement, and endorses it.
- *
- * @param tokenToCancel old token to cancel
- * @param accessTokenConfig access token configuration to create a new token from
- */
-- (void)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                   accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
-                           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
-                             onError:(OnError)onError;
-/**
  * Looks up a existing transfer token.
  *
  * @param tokenId token id

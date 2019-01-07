@@ -605,52 +605,6 @@
              onError:onError];
 }
 
-- (void)replaceAndEndorseToken:(Token *)tokenToCancel
-                 tokenToCreate:(TokenPayload *)tokenToCreate
-                     onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
-                       onError:(OnError)onError {
-    ReplaceTokenRequest *request = [self _createReplaceTokenRequest:tokenToCancel
-                                                      tokenToCreate:tokenToCreate
-                                                            onError:onError];
-    if (!request) {
-        return;
-    }
-
-    NSString *reason = (tokenToCancel.payload.access != nil && tokenToCancel.payload.access.resourcesArray_Count > 0)
-            ? @"Signature_Reason_EndorseAccessToken"
-            : @"Signature_Reason_EndorseTransferToken";
-    TKSignature *signature = [crypto signPayload:tokenToCreate
-                                          action:TokenSignature_Action_Endorsed
-                                        usingKey:Key_Level_Standard
-                                          reason:TKLocalizedString(
-                                                  reason,
-                                                  @"Approve endorsing token")
-                                         onError:onError];
-    if (!signature) {
-        return;
-    }
-
-    request.createToken.payloadSignature.memberId = memberId;
-    request.createToken.payloadSignature.keyId = signature.key.id_p;
-    request.createToken.payloadSignature.signature = signature.value;
-    RpcLogStart(request);
-    
-    GRPCProtoCall *call = [gateway
-                           RPCToReplaceTokenWithRequest: request
-                           handler:^(ReplaceTokenResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.result);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
-    
-    [self _startCall:call
-         withRequest:request
-             onError:onError];
-}
-
 - (void)getToken:(NSString *)tokenId
        onSuccess:(OnSuccessWithToken)onSuccess
          onError:(OnError)onError {

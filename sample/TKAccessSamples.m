@@ -102,16 +102,27 @@
     [newAccess forAccountBalances:accountId];
     [newAccess forAddress:addressId];
     
-    [grantor replaceAndEndorseAccessToken:foundToken
-                        accessTokenConfig:newAccess
-                                onSuccess:^(TokenOperationResult *result) {
-                                    accessToken = result.token;
-                                } onError:^(NSError *e) {
-                                    // something went wrong
-                                    @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
-                                                                   reason:[e localizedFailureReason]
-                                                                 userInfo:[e userInfo]];
-                                }];
+    [grantor replaceAccessToken:foundToken
+              accessTokenConfig:newAccess
+                      onSuccess:^(TokenOperationResult *result) {
+                          [grantor endorseToken:result.token
+                                        withKey:Key_Level_Standard
+                                      onSuccess:^(TokenOperationResult *result) {
+                                          accessToken = result.token;
+                                      } onError:^(NSError *e) {
+                                          // something went wrong
+                                          @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                                         reason:[e localizedFailureReason]
+                                                                       userInfo:[e userInfo]];
+                                      }];
+                      }
+                        onError:^(NSError *e) {
+                            // something went wrong
+                            @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
+                        }];
+                          
     // replaceAndEndorseAccessToken done snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -290,16 +301,26 @@
 
     __block Token *token2 = nil;
 
-    [grantor replaceAndEndorseAccessToken:token1
-                        accessTokenConfig:newAccess
-                                onSuccess:^(TokenOperationResult *result) {
-                                    token2 = result.token;
-                                } onError:^(NSError *e) {
-                                    // something went wrong
-                                    @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
-                                                                   reason:[e localizedFailureReason]
-                                                                 userInfo:[e userInfo]];
-                                }];
+    [grantor replaceAccessToken:token1
+              accessTokenConfig:newAccess
+                      onSuccess:^(TokenOperationResult *result) {
+                          [grantor endorseToken:result.token
+                                        withKey:Key_Level_Standard
+                                      onSuccess:^(TokenOperationResult *result) {
+                                          token2 = result.token;
+                                      } onError:^(NSError *e) {
+                                          // something went wrong
+                                          @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                                         reason:[e localizedFailureReason]
+                                                                       userInfo:[e userInfo]];
+                                      }];
+                      }
+                        onError:^(NSError *e) {
+                            // something went wrong
+                            @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
+                                                           reason:[e localizedFailureReason]
+                                                         userInfo:[e userInfo]];
+                        }];
 
     [self runUntilTrue:^ {
         return (token2 != nil);

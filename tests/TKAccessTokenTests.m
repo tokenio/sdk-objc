@@ -155,16 +155,6 @@
     XCTAssertEqual(0, [[replaced token] payloadSignaturesArray_Count]);
 }
 
-- (void)testReplaceAndEndorseToken {
-    AccessTokenConfig *accessToken = [AccessTokenConfig fromPayload:token.payload];
-    [accessToken forAccount:grantorAccount.id];
-    [accessToken forAccountTransactions:grantorAccount.id];
-    TokenOperationResult *replaced = [grantor replaceAndEndorseAccessToken:token accessTokenConfig:accessToken];
-    XCTAssertEqual(TokenOperationResult_Status_Success, [replaced status]);
-    XCTAssertEqual(2, [[replaced token] payloadSignaturesArray_Count]);
-    XCTAssert([[grantor getToken:token.id_p].replacedByTokenId isEqualToString:replaced.token.id_p]);
-}
-
 - (void)testAddingPermissionsIdempotent {
     AccessTokenConfig *accessToken = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
     [accessToken forAccount:grantorAccount.id];

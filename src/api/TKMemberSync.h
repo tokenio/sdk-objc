@@ -323,16 +323,6 @@
                            accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
 
 /**
- * Cancels an existing access token, creates a replacement, and endorses it.
- *
- * @param tokenToCancel old token to cancel
- * @param accessTokenConfig access token configuration to create a new token from
- * @return result of the replacement operation
- */
-- (TokenOperationResult *)replaceAndEndorseAccessToken:(Token *)tokenToCancel
-                                     accessTokenConfig:(AccessTokenConfig *)accessTokenConfig;
-
-/**
  * Looks up an existing token.
  *
  * @param tokenId token id

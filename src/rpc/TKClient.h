@@ -282,18 +282,6 @@
              onError:(OnError)onError;
 
 /**
- * Cancels the existing token, creates a replacement, and endorses it.
- * Supported only for access tokens.
- *
- * @param tokenToCancel old token to replace
- * @param tokenToCreate new token to create
- */
-- (void)replaceAndEndorseToken:(Token *)tokenToCancel
-                 tokenToCreate:(TokenPayload *)tokenToCreate
-                     onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
-                       onError:(OnError)onError;
-
-/**
  * Looks up an existing token.
  *
  * @param tokenId token id
