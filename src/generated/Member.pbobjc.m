@@ -1660,12 +1660,14 @@ typedef struct TrustedBeneficiary_Payload__storage_ {
 @dynamic customizationId;
 @dynamic logoBlobId;
 @dynamic colors, colors_Count;
+@dynamic consentText;
 
 typedef struct Customization__storage_ {
   uint32_t _has_storage_[1];
   NSString *customizationId;
   NSString *logoBlobId;
   NSMutableDictionary *colors;
+  NSString *consentText;
 } Customization__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1699,6 +1701,15 @@ typedef struct Customization__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Customization__storage_, colors),
         .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "consentText",
+        .dataTypeSpecific.className = NULL,
+        .number = Customization_FieldNumber_ConsentText,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Customization__storage_, consentText),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };

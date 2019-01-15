@@ -196,4 +196,5 @@ message Customization {
   string customization_id = 1;
   string logo_blob_id = 2;            // logo blob id
   map<string, string> colors = 3;     // colors in hex string #AARRGGBB
+  string consent_text = 4;
 }

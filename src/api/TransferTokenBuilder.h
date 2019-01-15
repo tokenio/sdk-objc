@@ -9,7 +9,7 @@
 
 @class TransferEndpoint;
 @class Alias;
-@class TokenPayload_ActingAs;
+@class ActingAs;
 
 /**
  * Helper class that builds Transfer Tokens.
@@ -65,9 +65,6 @@
 /// Description.
 @property (readwrite) NSString *descr;
 
-/// Fees, FX.
-@property (readwrite) Pricing *pricing;
-
 /// Purpose of payment.
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 
@@ -81,7 +78,7 @@
 @property (readwrite) NSString *refId;
 
 /// Set entity redeemer is acting on behalf of.
-@property (readwrite) TokenPayload_ActingAs *actingAs;
+@property (readwrite) ActingAs *actingAs;
 
 /// If receipt is requested. Default to false.
 @property (readwrite) BOOL receiptRequested;

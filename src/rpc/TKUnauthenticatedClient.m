@@ -217,13 +217,13 @@
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     GetBanksRequest *request = [GetBanksRequest message];
-    request.idsArray = [NSMutableArray arrayWithArray:bankIds];
-    request.search = search;
-    request.country = country;
+    request.filter.idsArray = [NSMutableArray arrayWithArray:bankIds];
+    request.filter.search = search;
+    request.filter.country = country;
     request.page = page;
     request.perPage = perPage;
     request.sort = sort;
-    request.provider = provider;
+    request.filter.provider = provider;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway

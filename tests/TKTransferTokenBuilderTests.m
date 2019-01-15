@@ -64,9 +64,6 @@
     destination.account.token.memberId = payee.id;
     
     NSArray<TransferEndpoint *> *destinations = @[destination];
-    Pricing *pricing = [Pricing message];
-    pricing.sourceQuote.feesTotal = @"0.45";
-    pricing.sourceQuote.accountCurrency = @"GBP";
     
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
@@ -77,7 +74,6 @@
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
     builder.expiresAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0 + 100000;
     builder.purposeOfPayment = PurposeOfPayment_Other;
-    builder.pricing = pricing;
     builder.descr = @"Test token";
     builder.chargeAmount = [NSDecimalNumber decimalNumberWithString:@"20"];
     
@@ -86,7 +82,6 @@
     XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
     XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
     XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.metadata.transferPurpose);
-    XCTAssertEqualObjects(pricing.sourceQuote, token.payload.transfer.pricing.sourceQuote);
 }
 
 @end

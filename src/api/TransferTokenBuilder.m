@@ -8,16 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TransferTokenBuilder.h"
+#import "Account.pbobjc.h"
+#import "Transferinstructions.pbobjc.h"
+
+#import "TKAccount.h"
+#import "TKClient.h"
+#import "TKError.h"
+#import "TKMember.h"
+#import "TKOauthEngine.h"
+#import "TKRpcSyncCall.h"
 #import "TokenIOSync.h"
 #import "TokenIO.h"
-#import "TKClient.h"
-#import "TKMember.h"
-#import "Transferinstructions.pbobjc.h"
-#import "Account.pbobjc.h"
-#import "TKError.h"
-#import "TKRpcSyncCall.h"
-#import "TKAuthorizationEngine.h"
+#import "TransferTokenBuilder.h"
 
 @implementation TransferTokenBuilder
 
@@ -111,10 +113,6 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
         [payload.transfer.attachmentsArray addObjectsFromArray:self.attachments];
     }
     
-    if (self.pricing) {
-        payload.transfer.pricing = self.pricing;
-    }
-    
     if (self.purposeOfPayment) {
         payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
     }
@@ -129,31 +127,37 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
      createTransferToken:payload
      onSuccess:onSuccess
      onAuthRequired:^(ExternalAuthorizationDetails *details) {
-         TKAuthorizationEngine *authEngine =
-         [[TKAuthorizationEngine alloc] initWithBrowserFactory:self.member.browserFactory
-                                  ExternalAuthorizationDetails:details];
-         
-         [authEngine
-          authorizeOnSuccess:^(BankAuthorization *auth) {
-              payload.transfer.instructions.source.account.tokenAuthorization.authorization = auth;
-              
-              [[self.member getClient]
-               createTransferToken:payload
-               onSuccess:onSuccess
-               onAuthRequired:^(ExternalAuthorizationDetails *details) {
-                   /* We tried using the authorization we received,
-                    but bank apparently wants other authorization, so fail. */
-                   onError([NSError
-                            errorFromTransferTokenStatus:
-                            TransferTokenStatus_FailureExternalAuthorizationRequired]);
-               }
-               onError:onError];
-              
-              [authEngine close];
-          } onError:^(NSError *error) {
-              onError(error);
-              [authEngine close];
-          }];
+         [self.member
+          getAccount:self.accountId
+          onSuccess:^(TKAccount *account) {
+              TKOauthEngine *authEngine =
+              [[TKOauthEngine alloc] initWithTokenCluster:self.member.tokenCluster
+                                           BrowserFactory:self.member.browserFactory
+                                                      url:details.authorizationURL];
+              [authEngine
+               authorizeOnSuccess:^(NSString *accessToken) {
+                   payload.transfer.instructions.source.account.custom.bankId = account.bankId;
+                   payload.transfer.instructions.source.account.custom.payload = accessToken;
+                   
+                   [[self.member getClient]
+                    createTransferToken:payload
+                    onSuccess:onSuccess
+                    onAuthRequired:^(ExternalAuthorizationDetails *details) {
+                        /* We tried using the authorization we received,
+                         but bank apparently wants other authorization, so fail. */
+                        onError([NSError
+                                 errorFromTransferTokenStatus:
+                                 TransferTokenStatus_FailureExternalAuthorizationRequired]);
+                    }
+                    onError:onError];
+                   
+                   [authEngine close];
+               } onError:^(NSError *error) {
+                   onError(error);
+                   [authEngine close];
+               }];
+          }
+          onError:onError];
      }
      onError:onError];
 }

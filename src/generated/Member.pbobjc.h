@@ -722,6 +722,7 @@ typedef GPB_ENUM(Customization_FieldNumber) {
   Customization_FieldNumber_CustomizationId = 1,
   Customization_FieldNumber_LogoBlobId = 2,
   Customization_FieldNumber_Colors = 3,
+  Customization_FieldNumber_ConsentText = 4,
 };
 
 @interface Customization : GPBMessage
@@ -735,6 +736,8 @@ typedef GPB_ENUM(Customization_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *colors;
 /** The number of items in @c colors without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger colors_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *consentText;
 
 @end
 

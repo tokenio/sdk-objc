@@ -47,6 +47,9 @@
 /// Customized authorization browser creation block.
 @property (readonly, retain) TKBrowserFactory browserFactory;
 
+/// Current token cluster
+@property (readonly, retain) TokenCluster *tokenCluster;
+
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
  * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.

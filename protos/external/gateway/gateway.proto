@@ -272,6 +272,7 @@ message GetTrustedBeneficiariesResponse {
 message CreateCustomizationRequest {
   io.token.proto.common.blob.Blob.Payload logo = 1;
   map<string, string> colors = 2;
+  string consent_text = 3;
 }
 
 message CreateCustomizationResponse {
