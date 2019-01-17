@@ -125,8 +125,8 @@
  * @param memberId member id
  */
 - (void)getMember:(NSString *)memberId
-           onSuccess:(OnSuccessWithTKMember)onSuccess
-            onError:(OnError)onError;
+        onSuccess:(OnSuccessWithTKMember)onSuccess
+          onError:(OnError)onError;
 
 /**
  * Returns a list of token enabled banks.
@@ -155,6 +155,16 @@
         provider:(NSString *)provider
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
+
+/**
+ * Returns a list of token enabled countries for banks.
+ *
+ * @param provider If specified, return banks whose 'provider' matches the provider
+ * (case-insensitive)
+ */
+- (void)getBanksCountries:(NSString *)provider
+                onSuccess:(OnSuccessWithStrings)onSuccess
+                  onError:(OnError)onError;
 
 /**
  * Sends a notification to request payment. The from alias in tokenpayload will be notified.

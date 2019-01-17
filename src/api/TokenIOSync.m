@@ -121,7 +121,15 @@
                    onSuccess:call.onSuccess
                      onError:call.onError];
     }];
-    
+}
+
+- (NSArray<NSString *> *)getBanksCountries:(NSString *)provider {
+    TKRpcSyncCall<NSArray<NSString *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self.async getBanksCountries:provider
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+    }];
 }
 
 - (void)notifyPaymentRequest:(TokenPayload *)token {

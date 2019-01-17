@@ -61,4 +61,9 @@
     XCTAssertNotNil(info.redirectUriRegex);
 }
 
+- (void)testGetBanksCountries {
+    TokenIOSync *tokenIO = [self syncSDK];
+    NSArray *countries = [tokenIO getBanksCountries:@"token"];
+    XCTAssertTrue(countries.count > 0);
+}
 @end

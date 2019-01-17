@@ -241,6 +241,28 @@
     [rpc execute:call request:request];
 }
 
+- (void)getBanksCountries:(NSString *)provider
+                onSuccess:(OnSuccessWithStrings)onSuccess
+                  onError:(OnError)onError {
+    GetBanksCountriesRequest *request = [GetBanksCountriesRequest message];
+    request.filter.provider = provider;
+    
+    RpcLogStart(request);
+    GRPCProtoCall *call = [gateway
+                           RPCToGetBanksCountriesWithRequest:request
+                           handler:
+                           ^(GetBanksCountriesResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.countriesArray);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [rpc execute:call request:request];
+}
+
 - (void)notifyPaymentRequest:(TokenPayload *)token
                    onSuccess:(OnSuccess)onSuccess
                      onError:(OnError)onError {

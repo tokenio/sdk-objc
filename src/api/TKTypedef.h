@@ -108,3 +108,4 @@ typedef void (^ _Nonnull OnSuccessWithTokenRequestResult)(TokenRequestResult * _
 typedef void (^ _Nonnull OnSuccessWithSignature)(Signature * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithReceiptContact)(ReceiptContact * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTrustedBeneficiaries)(NSArray<TrustedBeneficiary *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithStrings)(NSArray<NSString *> * _Nonnull);

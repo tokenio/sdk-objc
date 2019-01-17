@@ -154,6 +154,16 @@
          onError:(OnError)onError;
 
 /**
+ * Returns a list of token enabled countries for banks.
+ *
+ * @param provider If specified, return banks whose 'provider' matches the provider
+ * (case-insensitive)
+ */
+- (void)getBanksCountries:(NSString *)provider
+                onSuccess:(OnSuccessWithStrings)onSuccess
+                  onError:(OnError)onError;
+
+/**
  * Sends a notification to request payment.  The from alias in tokenpayload will be notified.
  *
  * @param token payload of a token to be sent

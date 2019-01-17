@@ -180,13 +180,6 @@
                                onError:onError];
 }
 
-/**
- * Looks up token member for a given unknown alias.
- * Set alias Alias_Type_Unknown if the alias type is unknown
- *
- * @param alias alias to check
- * @param onSuccess invoked if successful; return token member if alias already exists, nil otherwise
- */
 - (void)getTokenMember:(Alias *)alias
              onSuccess:(OnSuccessWithTokenMember)onSuccess
                onError:(OnError)onError {
@@ -196,8 +189,8 @@
 }
 
 - (void)getMember:(NSString *)memberId
-           onSuccess:(OnSuccessWithTKMember)onSuccess
-            onError:(OnError)onError {
+        onSuccess:(OnSuccessWithTKMember)onSuccess
+          onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
                                TKCrypto *crypto = [self _createCrypto:memberId];
@@ -240,6 +233,14 @@
                            provider:provider
                           onSuccess:onSuccess
                             onError:onError];
+}
+
+- (void)getBanksCountries:(NSString *)provider
+                onSuccess:(OnSuccessWithStrings)onSuccess
+                  onError:(OnError)onError {
+    [unauthenticatedClient getBanksCountries:provider
+                                   onSuccess:onSuccess
+                                     onError:onError];
 }
 
 - (void)notifyPaymentRequest:(TokenPayload *)token
