@@ -105,6 +105,36 @@
     XCTAssert(!success);
 }
 
+- (void)testSignAndVerify_expired {
+    Token *token = [Token message];
+    token.payload.transfer.amount = @"100.23";
+    
+    NSNumber *expiredMs =
+    [NSNumber numberWithLongLong: ([[NSDate date] timeIntervalSince1970] + 3) * 1000];
+    Key *key = [crypto generateKey:Key_Level_Low withExpiration:expiredMs];
+    TKSignature *signature = [crypto sign:token
+                                   action:TokenSignature_Action_Endorsed
+                                 usingKey:Key_Level_Low
+                                   reason:nil
+                                  onError:^(NSError *error) {
+                                      TKLogError(@"testSignAndVerify_token sign fail with error %@", error);
+                                  }];
+    XCTAssertEqualObjects(signature.key.id_p, key.id_p);
+    XCTAssert(signature.value.length > 0);
+    
+    bool success = [crypto verifySignature:signature.value
+                                  forToken:token
+                                    action:TokenSignature_Action_Endorsed
+                                usingKeyId:key.id_p];
+    XCTAssert(success);
+    
+    [NSThread sleepForTimeInterval:3];
+    XCTAssertThrows([crypto verifySignature:signature.value
+                                   forToken:token
+                                     action:TokenSignature_Action_Endorsed
+                                 usingKeyId:key.id_p]);
+}
+
 #if !(TARGET_IPHONE_SIMULATOR)
 - (void)testCancelSign {
     Token *token = [Token message];
