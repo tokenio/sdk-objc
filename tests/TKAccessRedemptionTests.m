@@ -38,7 +38,7 @@
 }
 
 - (void)testBalanceToken {
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccountBalances:grantorAccount.id];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [grantor createAccessToken:access onSuccess:^(Token *created) {
@@ -58,7 +58,7 @@
 }
 
 - (void)testAccountToken {
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccount:grantorAccount.id];
     
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
@@ -106,7 +106,7 @@
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccountTransactions:grantorAccount.id];
     
     expectation = [[TKTestExpectation alloc] init];

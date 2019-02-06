@@ -72,9 +72,9 @@
 		8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */; };
 		946239B71ED114F200C47BD0 /* Pricing.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */; };
+		948D195B1E2EF63D000258EE /* AccessTokenBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */; };
 		94DC2AD21E5E5E180088F55A /* TKErrorHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DE95BB9A2E706B1DE7C67D /* TKErrorHandlerTests.m */; };
-		94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */; };
+		94F8BFE21DD4EA29008904C9 /* AccessTokenBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */; };
 		94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAE5321DF218880023AAA8 /* PagedArray.h */; };
 		94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE5341DF21A590023AAA8 /* PagedArray.m */; };
 		999461EE21754553007DB3B1 /* TKTrustedBeneficiaryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */; };
@@ -325,8 +325,8 @@
 		946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pricing.pbobjc.m; sourceTree = "<group>"; };
 		946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Pricing.pbobjc.m; path = src/generated/Pricing.pbobjc.m; sourceTree = "<group>"; };
 		946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Pricing.pbobjc.h; path = src/generated/Pricing.pbobjc.h; sourceTree = "<group>"; };
-		94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenConfig.h; sourceTree = "<group>"; };
-		94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenConfig.m; sourceTree = "<group>"; };
+		94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenBuilder.h; sourceTree = "<group>"; };
+		94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenBuilder.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
 		94FAE5341DF21A590023AAA8 /* PagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedArray.m; sourceTree = "<group>"; };
 		999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTrustedBeneficiaryTests.m; sourceTree = "<group>"; };
@@ -716,8 +716,8 @@
 				ABA7BC8DA7F5DC3A1EEC68D7 /* TokenClientBuilder.m */,
 				1B3329231EE48FC100E3F145 /* TransferTokenBuilder.h */,
 				1B3329211EE4455B00E3F145 /* TransferTokenBuilder.m */,
-				94F8BFE01DD4E93E008904C9 /* AccessTokenConfig.h */,
-				94F8BFE11DD4EA29008904C9 /* AccessTokenConfig.m */,
+				94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */,
+				94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */,
 				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
 				D0B9C52E219CF37F00B55101 /* TokenProto.h */,
 				3777163D1D99BF6800287239 /* TokenSdk.h */,
@@ -997,7 +997,7 @@
 				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
 				4B240F841F28096300497B2D /* TKHasher.h in Headers */,
 				D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */,
-				948D195B1E2EF63D000258EE /* AccessTokenConfig.h in Headers */,
+				948D195B1E2EF63D000258EE /* AccessTokenBuilder.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
 				ABA7B57D2B7432D496CE2A6D /* TokenClientBuilder.h in Headers */,
@@ -1406,7 +1406,7 @@
 				8A040B791EBE8F9E00425C3A /* Blob.pbobjc.m in Sources */,
 				D03A55FF1FE0730C008342E0 /* TKBrowser.m in Sources */,
 				ABA7BA98793B0592D11A83BB /* sc.c in Sources */,
-				94F8BFE21DD4EA29008904C9 /* AccessTokenConfig.m in Sources */,
+				94F8BFE21DD4EA29008904C9 /* AccessTokenBuilder.m in Sources */,
 				37637B671D989A930043345F /* Notification.pbobjc.m in Sources */,
 				1B3329221EE4455B00E3F145 /* TransferTokenBuilder.m in Sources */,
 				DD6AD2A71E00786800358830 /* TKLogManager.m in Sources */,

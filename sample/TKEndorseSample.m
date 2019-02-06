@@ -61,13 +61,12 @@
              CreateAndEndorseToken *content = [TKJson
                                                deserializeMessageOfClass:[CreateAndEndorseToken class]
                                                fromJSON:notification.content.payload];
-             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithTokenRequest:content.tokenRequest.requestPayload
-                                                                      withRequestOptions:content.tokenRequest.requestOptions];
-             [config forAccount:accountId];
-             [config forAccountBalances:accountId];
+             AccessTokenBuilder *builder = [[AccessTokenBuilder alloc] initWithTokenRequest:content.tokenRequest];
+             [builder forAccount:accountId];
+             [builder forAccountBalances:accountId];
              // Create Token
              [member
-              createAccessToken:config
+              createAccessToken:builder
               onSuccess:^(Token *token) {
                   // Endorse Token
                   [member
@@ -178,19 +177,9 @@
              CreateAndEndorseToken *content = [TKJson
                                           deserializeMessageOfClass:[CreateAndEndorseToken class]
                                           fromJSON:notification.content.payload];
-             NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:content.tokenRequest.requestPayload.transferBody.lifetimeAmount];
-             TransferTokenBuilder *builder =[member createTransferToken:amount currency:content.tokenRequest.requestPayload.transferBody.currency];
-             builder.toMemberId = content.tokenRequest.requestPayload.to.id_p;
-             if (content.tokenRequest.requestPayload.to.hasAlias) {
-                 builder.toAlias = content.tokenRequest.requestPayload.to.alias;
-             }
+             
+             TransferTokenBuilder *builder =[member createTransferToken:content.tokenRequest];
              builder.accountId = accountId;
-             builder.refId = content.tokenRequest.requestPayload.refId;
-             builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
-             // Optional settings
-             builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
-             builder.descr = @"Lunch";
-
              // Create Token
              [builder
               executeAsync:^(Token *token) {

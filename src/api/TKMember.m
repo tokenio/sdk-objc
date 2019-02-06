@@ -493,28 +493,31 @@
                       onError:onError];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
-                                     currency:(NSString *)currency {
-    TransferTokenBuilder * builder = [TransferTokenBuilder alloc];
-    return [builder init:self lifetimeAmount:amount currency:currency];
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency {
+    return [[TransferTokenBuilder alloc] init:self lifetimeAmount:amount currency:currency];
 }
 
-- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest {
+    return [[TransferTokenBuilder alloc] init:self tokenRequest:tokenRequest];
+}
+
+- (void)createAccessToken:(AccessTokenBuilder *)accessTokenBuilder
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
-    [accessTokenConfig from:self.id];
-    [client createAccessToken:[accessTokenConfig toTokenPayload]
+    [accessTokenBuilder from:self.id];
+    [client createAccessToken:[accessTokenBuilder toTokenPayload]
+               tokenRequestId:[accessTokenBuilder tokenRequestId]
                     onSuccess:^(Token *token) { onSuccess(token); }
                       onError:onError];
 }
 
 - (void)replaceAccessToken:(Token *)tokenToCancel
-         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+        accessTokenBuilder:(AccessTokenBuilder *)accessTokenBuilder
                  onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                    onError:(OnError)onError {
-    [accessTokenConfig from:self.id];
+    [accessTokenBuilder from:self.id];
     [client replaceToken:tokenToCancel
-           tokenToCreate:[accessTokenConfig toTokenPayload]
+           tokenToCreate:[accessTokenBuilder toTokenPayload]
                onSuccess:onSuccess
                  onError:onError];
 }

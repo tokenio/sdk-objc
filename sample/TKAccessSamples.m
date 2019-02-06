@@ -26,7 +26,7 @@
     NSString *accountId = self.payerAccount.id;
 
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:self.payee.id];
     [access forAccount:accountId];
     [access forAccountBalances:accountId];
     
@@ -102,13 +102,13 @@
     }];
 
     // replaceAndEndorseAccessToken begin snippet to include in docs
-    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    AccessTokenBuilder *newAccess = [AccessTokenBuilder fromPayload:foundToken.payload];
     [newAccess forAccount:accountId];
     [newAccess forAccountBalances:accountId];
     [newAccess forAccountTransactions:accountId];
     
     [grantor replaceAccessToken:foundToken
-              accessTokenConfig:newAccess
+              accessTokenBuilder:newAccess
                       onSuccess:^(TokenOperationResult *result) {
                           [grantor endorseToken:result.token
                                         withKey:Key_Level_Standard
@@ -156,7 +156,7 @@
     TKMember *grantor = self.payer;
     NSString *accountId = self.payerAccount.id;
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:self.payee.id];
     [access forAccount:accountId];
     
     __block Token *originToken = nil;
@@ -186,12 +186,12 @@
     
     __block Token *accessToken = nil;
     // replaceNoEndorse begin snippet to include in docs
-    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:originToken.payload];
+    AccessTokenBuilder *newAccess = [AccessTokenBuilder fromPayload:originToken.payload];
     [newAccess forAccount:accountId];
     [newAccess forAccountBalances:accountId];
 
     [grantor replaceAccessToken:originToken
-              accessTokenConfig:newAccess
+              accessTokenBuilder:newAccess
                       onSuccess:^(TokenOperationResult *result) {
                           accessToken = result.token;
                       } onError:^(NSError *e) {

@@ -521,11 +521,15 @@
 }
 
 - (void)createTransferToken:(TokenPayload *)payload
+             tokenRequestId:(NSString *)tokenRequestId
                   onSuccess:(OnSuccessWithToken)onSuccess
              onAuthRequired:(OnAuthRequired)onAuthRequired
                     onError:(OnError)onError {
     CreateTransferTokenRequest *request = [CreateTransferTokenRequest message];
     request.payload = payload;
+    if (tokenRequestId && tokenRequestId.length > 0) {
+        request.tokenRequestId = tokenRequestId;
+    }
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -553,10 +557,14 @@
 }
 
 - (void)createAccessToken:(TokenPayload *)payload
-          onSuccess:(OnSuccessWithToken)onSuccess
-            onError:(OnError)onError {
+           tokenRequestId:(NSString *)tokenRequestId
+                onSuccess:(OnSuccessWithToken)onSuccess
+                  onError:(OnError)onError {
     CreateAccessTokenRequest *request = [CreateAccessTokenRequest message];
     request.payload = payload;
+    if (tokenRequestId && tokenRequestId.length > 0) {
+        request.tokenRequestId = tokenRequestId;
+    }
     RpcLogStart(request);
 
     GRPCProtoCall *call = [gateway

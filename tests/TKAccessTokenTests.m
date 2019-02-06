@@ -6,7 +6,7 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "AccessTokenConfig.h"
+#import "AccessTokenBuilder.h"
 #import "TKAccount.h"
 #import "TKMember.h"
 #import "TKTestBase.h"
@@ -28,6 +28,7 @@
     TKMember *grantor;
     TokenRequestPayload *requestPayload;
     TokenRequestOptions *requestOptions;
+    TokenRequest *tokenRequest;
     Token *token;
 }
 
@@ -55,7 +56,10 @@
     requestOptions.receiptRequested = false;
     requestOptions.from.id_p = grantor.id;
     
-    AccessTokenConfig *access = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    tokenRequest = [TokenRequest message];
+    tokenRequest.requestPayload = requestPayload;
+    tokenRequest.requestOptions = requestOptions;
+    AccessTokenBuilder *access = [AccessTokenBuilder fromTokenRequest:tokenRequest];
     [access forAccount:grantorAccount.id];
     [access forAccountBalances:grantorAccount.id];
     
@@ -126,12 +130,12 @@
 }
 
 - (void)testReplaceToken {
-    AccessTokenConfig *accessToken = [AccessTokenConfig fromPayload:token.payload];
+    AccessTokenBuilder *accessToken = [AccessTokenBuilder fromPayload:token.payload];
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccountTransactions:grantorAccount.id];
     
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    [grantor replaceAccessToken:token accessTokenConfig:accessToken onSuccess:^(TokenOperationResult *result) {
+    [grantor replaceAccessToken:token accessTokenBuilder:accessToken onSuccess:^(TokenOperationResult *result) {
         XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [result status]);
         XCTAssertEqual(0, [[result token] payloadSignaturesArray_Count]);
         
@@ -141,7 +145,7 @@
 }
 
 - (void)testAddingPermissionsIdempotent {
-    AccessTokenConfig *accessToken = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    AccessTokenBuilder *accessToken = [AccessTokenBuilder fromTokenRequest:tokenRequest]; 
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccount:grantorAccount.id];

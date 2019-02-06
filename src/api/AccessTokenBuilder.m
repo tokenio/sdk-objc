@@ -5,28 +5,28 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AccessTokenConfig.h"
+#import "AccessTokenBuilder.h"
 
-@implementation AccessTokenConfig {
+@implementation AccessTokenBuilder {
     TokenPayload * payload;
     NSMutableSet<AccessBody_Resource *> * resources;
+    NSString *tokenRequestId;
 }
 
-+ (AccessTokenConfig *)create:(Alias *)toAlias {
-    return [[AccessTokenConfig alloc] initWithToAlias:toAlias];
++ (AccessTokenBuilder *)create:(Alias *)toAlias {
+    return [[AccessTokenBuilder alloc] initWithToAlias:toAlias];
 }
 
-+ (AccessTokenConfig *)createWithToId:(NSString *)toId {
-    return [[AccessTokenConfig alloc] initWithToId:toId];
++ (AccessTokenBuilder *)createWithToId:(NSString *)toId {
+    return [[AccessTokenBuilder alloc] initWithToId:toId];
 }
 
-+ (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom {
-    return [[AccessTokenConfig alloc] initWithPayload:payloadToInitFrom];
++ (AccessTokenBuilder *)fromPayload:(TokenPayload *)payloadToInitFrom {
+    return [[AccessTokenBuilder alloc] initWithPayload:payloadToInitFrom];
 }
 
-+ (AccessTokenConfig *)fromTokenRequest:(TokenRequestPayload *)requestPayload
-                     withRequestOptions:(TokenRequestOptions *)requestOptions {
-    return [[AccessTokenConfig alloc] initWithTokenRequest:requestPayload withRequestOptions:requestOptions];
++ (AccessTokenBuilder *)fromTokenRequest:(TokenRequest *)tokenRequest {
+    return [[AccessTokenBuilder alloc] initWithTokenRequest:tokenRequest];
 }
 
 - (id)initWithToAlias:(Alias *)toAlias {
@@ -64,19 +64,19 @@
     return self;
 }
 
-- (id)initWithTokenRequest:(TokenRequestPayload *)requestPayload
-        withRequestOptions:(TokenRequestOptions *)requestOptions {
+- (id)initWithTokenRequest:(TokenRequest *)tokenRequest{
     self = [super init];
     if (self) {
         payload = [TokenPayload message];
         payload.version = @"1.0";
         payload.refId = [TKUtil nonce];
-        payload.from = requestOptions.from;
-        payload.to = requestPayload.to;
-        payload.actingAs = requestPayload.actingAs;
-        payload.description_p = requestPayload.description;
-        payload.receiptRequested = requestOptions.receiptRequested;
+        payload.from = tokenRequest.requestOptions.from;
+        payload.to = tokenRequest.requestPayload.to;
+        payload.actingAs = tokenRequest.requestPayload.actingAs;
+        payload.description_p = tokenRequest.requestPayload.description;
+        payload.receiptRequested = tokenRequest.requestOptions.receiptRequested;
         resources = [[NSMutableSet alloc] init];
+        tokenRequestId = tokenRequest.id_p;
     }
     return self;
 }
@@ -126,5 +126,9 @@
 - (TokenPayload *)toTokenPayload {
     [payload.access.resourcesArray addObjectsFromArray:[resources allObjects]];
     return payload;
+}
+
+- (NSString *)tokenRequestId {
+    return tokenRequestId;
 }
 @end
