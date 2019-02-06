@@ -9,21 +9,18 @@
 #ifndef TokenSdk_h
 #define TokenSdk_h
 
-
-#import "TKAccountSync.h"
+#import "PagedArray.h"
+#import "NotifyResult.h"
 #import "TKAccount.h"
 #import "TKBalance.h"
-#import "TKTokenCryptoEngineFactory.h"
-#import "TKMemberSync.h"
-#import "TKMember.h"
-#import "TKInMemoryKeyStore.h"
-#import "TKTypedef.h"
-#import "TokenIOSync.h"
-#import "TokenIO.h"
-#import "TokenIOBuilder.h"
 #import "TKError.h"
-#import "TokenProto.h"
+#import "TKInMemoryKeyStore.h"
 #import "TKJson.h"
-#import "NotifyResult.h"
+#import "TKMember.h"
+#import "TKTokenCryptoEngineFactory.h"
+#import "TKTypedef.h"
+#import "TokenClient.h"
+#import "TokenClientBuilder.h"
+#import "TokenProto.h"
 
 #endif /* TokenSdk_h */

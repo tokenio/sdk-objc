@@ -3,10 +3,10 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
+#import "TKAccount.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Account.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "Pricing.pbobjc.h"
@@ -15,26 +15,25 @@
 @end
 
 @implementation TKTransferTokenBuilderTests {
-    TKAccountSync *payerAccount;
-    TKMemberSync *payer;
-    TKAccountSync *payeeAccount;
-    TKMemberSync *payee;
+    TKAccount *payerAccount;
+    TKMember *payer;
+    TKAccount *payeeAccount;
+    TKMember *payee;
 }
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    payerAccount = [self createAccount:tokenIO];
+    TokenClient *tokenClient = [self client];
+    payerAccount = [self createAccount:tokenClient];
     payer = payerAccount.member;
-    payeeAccount = [self createAccount:tokenIO];
+    payeeAccount = [self createAccount:tokenClient];
     payee = payeeAccount.member;
 }
 
 
 - (void)testCreate {
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
@@ -50,8 +49,7 @@
     NSArray<TransferEndpoint *> *destinations = @[destination];
     
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
+    TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"USD"];
     builder.toMemberId = payee.id;
     builder.destinations = destinations;
     XCTAssertThrows([builder execute]);

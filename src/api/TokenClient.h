@@ -6,21 +6,22 @@
 #ifndef TokenIO_h
 #define TokenIO_h
 
-#import "Alias.pbobjc.h"
 #import <objc/NSObject.h>
-#import "TKTypedef.h"
+
+#import "Alias.pbobjc.h"
+
 #import "TKBrowser.h"
+#import "TKTypedef.h"
 #import "TokenCluster.h"
 
-
-@class GatewayService;
-@class TokenIOBuilder;
-@class TKMemberSync;
-@class TokenIOSync;
-@protocol TKCryptoEngineFactory;
-@class TokenPayload;
-@class Key;
 @class DeviceMetadata;
+@class GatewayService;
+@class Key;
+@class TKMember;
+@class TokenClientBuilder;
+@class TokenPayload;
+
+@protocol TKCryptoEngineFactory;
 
 /**
  * Use this class to create a new member with `createMember`
@@ -30,18 +31,18 @@
  * The class provides async API 
  * </p>
  */
-@interface TokenIO : NSObject
+@interface TokenClient : NSObject
 
 /**
- * Creates a new builder object that can be used to customize the `TokenIOAsync`
+ * Creates a new builder object that can be used to customize the `TokenClient`
  * instance being built.
  */
-+ (TokenIOBuilder *)builder;
++ (TokenClientBuilder *)builder;
 
 /**
  * Creates a new builder object with host, port, and useSsl set for the sandbox testing environment.
  */
-+ (TokenIOBuilder *)sandboxBuilder;
++ (TokenClientBuilder *)sandboxBuilder;
 
 /**
  * Creates a new instance that connects to the specified TokenCluster and port.

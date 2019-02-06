@@ -4,61 +4,70 @@
 //
 
 #import "Transaction.pbobjc.h"
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
+#import "TKAccount.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Account.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "TKBalance.h"
+#import "PagedArray.h"
 
 @interface TKTransactionsTests : TKTestBase
 @end
 
 @implementation TKTransactionsTests {
-    TKAccountSync *payerAccount;
-    TKMemberSync *payer;
-    TKAccountSync *payeeAccount;
-    TKMemberSync *payee;
+    TKAccount *payerAccount;
+    TKMember *payer;
+    TKAccount *payeeAccount;
+    TKMember *payee;
 }
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    payerAccount = [self createAccount:tokenIO];
+    TokenClient *tokenClient = [self client];
+    payerAccount = [self createAccount:tokenClient];
     payer = payerAccount.member;
-    payeeAccount = [self createAccount:tokenIO];
+    payeeAccount = [self createAccount:tokenClient];
     payee = payeeAccount.member;
 }
 
 - (void)testGetBalance {
-    TKBalance *balance = [payerAccount getBalance];
-    Money *currentBalance = balance.current;
-    XCTAssert([currentBalance.value intValue] > 0);
-    XCTAssertEqualObjects(@"USD", currentBalance.currency);
-    Money *availableBalance = balance.available;
-    XCTAssert([availableBalance.value intValue] > 0);
-    XCTAssertEqualObjects(@"USD", availableBalance.currency);
+    TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
+    [payerAccount getBalance:^(TKBalance *balance) {
+        Money *currentBalance = balance.current;
+        XCTAssert([currentBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", currentBalance.currency);
+        Money *availableBalance = balance.available;
+        XCTAssert([availableBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", availableBalance.currency);
+        [expactation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expactation] timeout:10];
 }
 
 - (void)testGetBalances {
     OauthBankAuthorization *auth = [self createBankAuthorization:payer];
-    NSArray<TKAccountSync *> *accounts = [payer linkAccounts:auth.bankId accessToken:auth.accessToken];
+    NSArray<TKAccount *> *accounts = [self linkAccounts:auth to:payer];
     XCTAssert(accounts.count == 1);
-    TKAccountSync *secondAccount = accounts[0];
+    TKAccount *secondAccount = accounts[0];
     NSArray<NSString *> *accountIds = @[payerAccount.id, secondAccount.id];
-    NSDictionary<NSString *,TKBalance *> *balances = [payer getBalances:accountIds withKey:Key_Level_Low];
-    XCTAssert(balances.allKeys.count == 2);
     
-    TKBalance *balance = balances[payerAccount.id];
-    Money *currentBalance = balance.current;
-    XCTAssert([currentBalance.value intValue] > 0);
-    XCTAssertEqualObjects(@"USD", currentBalance.currency);
-    Money *availableBalance = balance.available;
-    XCTAssert([availableBalance.value intValue] > 0);
-    XCTAssertEqualObjects(@"USD", availableBalance.currency);
+    TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
+    [payer getBalances:accountIds withKey:Key_Level_Low onSuccess:^(NSDictionary<NSString *, TKBalance *> *balances) {
+        XCTAssert(balances.allKeys.count == 2);
+        TKBalance *balance = balances[self->payerAccount.id];
+        Money *currentBalance = balance.current;
+        XCTAssert([currentBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", currentBalance.currency);
+        Money *availableBalance = balance.available;
+        XCTAssert([availableBalance.value intValue] > 0);
+        XCTAssertEqualObjects(@"USD", availableBalance.currency);
+        [expactation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expactation] timeout:10];
 }
 
 - (void)testLookupTransaction {
@@ -67,48 +76,75 @@
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
     
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    Transfer *transfer = [payee redeemToken:token
-                                     amount:amount
-                                   currency:@"USD"
-                                description:@"full amount"
-                                destination:destination];
-    
-    Transaction *transaction = [payerAccount getTransaction:transfer.transactionId];
-    
-    XCTAssertEqualObjects(amount ,
-                          [NSDecimalNumber decimalNumberWithString:transaction.amount.value] );
-    XCTAssertEqualObjects(@"USD", transaction.amount.currency);
-    XCTAssertEqualObjects(token.id_p, transaction.tokenId);
-    XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
-    XCTAssertTrue([transaction.description containsString:@"full amount"]);
+    TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token *created) {
+        [self->payer endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = self->payeeAccount.member.id;
+            destination.account.token.accountId = self->payeeAccount.id;
+            [self->payee
+             redeemToken:[result token]
+             amount:amount
+             currency:@"USD"
+             description:@"full amount"
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 [self->payerAccount getTransaction:transfer.transactionId onSuccess:^(Transaction *transaction) {
+                     XCTAssertEqualObjects(amount, [NSDecimalNumber decimalNumberWithString:transaction.amount.value]);
+                     XCTAssertEqualObjects(@"USD", transaction.amount.currency);
+                     XCTAssertEqualObjects(created.id_p, transaction.tokenId);
+                     XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
+                     XCTAssertTrue([transaction.description containsString:@"full amount"]);
+                     [expactation fulfill];
+                 } onError:THROWERROR];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expactation] timeout:10];
 }
 
 - (void)testLookupTransactions {
+    
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"49.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
+    __block Token *endorsed = nil;
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token *token) {
+        [self->payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *endorsedResult) {
+            XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+            endorsed = [endorsedResult token];
+            [expectation fulfill];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
     
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
+    destination.account.token.memberId = self->payeeAccount.member.id;
+    destination.account.token.accountId = self->payeeAccount.id;
     NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
-    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"one" destination:destination];
-    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"two" destination:destination];
-    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"three" destination:destination];
+    for (int i = 0; i < 3; i++) {
+        TKTestExpectation *redeemExpectation = [[TKTestExpectation alloc] init];
+        [self->payee
+         redeemToken:endorsed
+         amount:redeemAmount
+         currency:@"USD"
+         description:nil
+         destination:destination
+         onSuccess:^(Transfer *transfer) {
+             [redeemExpectation fulfill];
+         } onError:THROWERROR];
+        [self waitForExpectations:@[redeemExpectation] timeout:10];
+    }
     
-    PagedArray<Transaction *> *lookedUp = [payerAccount getTransactionsOffset:NULL limit:3];
-    XCTAssertEqual(3, lookedUp.items.count);
-    XCTAssertNotNil(lookedUp.offset);
+    TKTestExpectation *lookedUpExpectation = [[TKTestExpectation alloc] init];
+    [payerAccount getTransactionsOffset:NULL limit:3 onSuccess:^(PagedArray<Transaction *> *lookedUp) {
+        XCTAssertEqual(3, lookedUp.items.count);
+        XCTAssertNotNil(lookedUp.offset);
+        [lookedUpExpectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[lookedUpExpectation] timeout:10];
 }
-
 @end

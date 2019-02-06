@@ -17,8 +17,7 @@
 #import "TKMember.h"
 #import "TKOauthEngine.h"
 #import "TKRpcSyncCall.h"
-#import "TokenIOSync.h"
-#import "TokenIO.h"
+#import "TokenClient.h"
 #import "TransferTokenBuilder.h"
 
 @implementation TransferTokenBuilder

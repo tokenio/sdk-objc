@@ -8,16 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TokenIOBuilder.h"
-#import "TokenIOSync.h"
-#import "TokenIO.h"
+#import "TokenClientBuilder.h"
+#import "TokenClient.h"
 #import "TKSecureEnclaveCryptoEngineFactory.h"
 #import "TKTokenCryptoEngineFactory.h"
+
 #if TARGET_OS_IPHONE
 #import "TKTokenBrowser.h"
 #endif
 
-@implementation TokenIOBuilder
+@implementation TokenClientBuilder
 
 - (id)init {
     self = [super init];
@@ -33,12 +33,7 @@
     return self;
 }
 
-- (TokenIOSync *)buildSync {
-    TokenIO* tokenIO = [self buildAsync];
-    return [[TokenIOSync alloc] initWithDelegate:tokenIO];
-}
-
-- (TokenIO *)buildAsync {
+- (TokenClient *)build {
     if (!self.cryptoEngineFactory) {
         self.cryptoEngineFactory =
         [TKSecureEnclaveCryptoEngineFactory factoryWithAuthenticationOption:false];
@@ -52,7 +47,7 @@
     }
 #endif
 
-    return [[TokenIO alloc]
+    return [[TokenClient alloc]
             initWithTokenCluster:self.tokenCluster
             port:self.port
             timeoutMs:self.timeoutMs

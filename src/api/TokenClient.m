@@ -9,19 +9,20 @@
 #import <GRPCClient/GRPCCall+Tests.h>
 
 #import "gateway/Gateway.pbrpc.h"
-#import "TKMember.h"
-#import "TKMemberSync.h"
-#import "TokenIO.h"
-#import "TokenIOBuilder.h"
-#import "TKUnauthenticatedClient.h"
-#import "TKHasher.h"
-#import "TKClient.h"
-#import "DeviceInfo.h"
-#import "TKRpcErrorHandler.h"
-#import "TKLocalizer.h"
-#import "TKMemberRecoveryManager.h"
 
-@implementation TokenIO {
+#import "DeviceInfo.h"
+#import "NotifyResult.h"
+#import "TKClient.h"
+#import "TKHasher.h"
+#import "TKLocalizer.h"
+#import "TKMember.h"
+#import "TKMemberRecoveryManager.h"
+#import "TKRpcErrorHandler.h"
+#import "TKUnauthenticatedClient.h"
+#import "TokenClient.h"
+#import "TokenClientBuilder.h"
+
+@implementation TokenClient {
     TokenCluster *tokenCluster;
     GatewayService *gateway;
     id<TKCryptoEngineFactory> cryptoEngineFactory;
@@ -34,12 +35,12 @@
     TKBrowserFactory browserFactory;
 }
 
-+ (TokenIOBuilder *)builder {
-    return [[TokenIOBuilder alloc] init];
++ (TokenClientBuilder *)builder {
+    return [[TokenClientBuilder alloc] init];
 }
 
-+ (TokenIOBuilder *)sandboxBuilder {
-    TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
++ (TokenClientBuilder *)sandboxBuilder {
+    TokenClientBuilder *builder = [[TokenClientBuilder alloc] init];
     builder.tokenCluster = [TokenCluster sandbox];
     builder.port = 443;
     builder.useSsl = YES;

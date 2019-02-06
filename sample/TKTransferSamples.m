@@ -22,11 +22,11 @@
 @implementation TKTransferSamples
 
 - (void)testNotifyPaymentRequest {
-    TokenIO *tokenIO = [self asyncSDK];
-    TKMember *payee = self.payeeSync.async;
+    TokenClient *tokenClient = [self client];
+    TKMember *payee = self.payee;
     Alias *payerAlias = self.payerAlias;
     
-    __block int waitingForPayment = false;
+    __block int notificationSent = false;
     
     // notifyPaymentRequest begin snippet to include in docs
     TokenPayload *payload = [TokenPayload message]; // hoped-for payment
@@ -36,29 +36,29 @@
     payload.transfer.lifetimeAmount = @"100";
     payload.transfer.currency = @"EUR";
     
-    [tokenIO notifyPaymentRequest:payload
-                        onSuccess:^ {
-                            // Notification sent.
-                            waitingForPayment = true;
-                        } onError:^(NSError *e) {
-                            // Something went wrong.
-                            // Maybe we used wrong alias?
-                            @throw [NSException exceptionWithName:@"NotifyException"
-                                                           reason:[e localizedFailureReason]
-                                                         userInfo:[e userInfo]];
-                        }
+    [tokenClient notifyPaymentRequest:payload
+                            onSuccess:^ {
+                                // Notification sent.
+                                notificationSent = true;
+                            } onError:^(NSError *e) {
+                                // Something went wrong.
+                                // Maybe we used wrong alias?
+                                @throw [NSException exceptionWithName:@"NotifyException"
+                                                               reason:[e localizedFailureReason]
+                                                             userInfo:[e userInfo]];
+                            }
      ];
      // notifyPaymentRequest done snippet to include in docs
     
     [self runUntilTrue:^ {
-        return waitingForPayment;
+        return notificationSent;
     }];
 }
 
 - (void)testCreateEndorseTransferToken {
-    TKMember *payer = self.payerSync.async;
-    TKAccount *payerAccount = self.payerAccountSync.async;
-    TKMember *payee = self.payeeSync.async;
+    TKMember *payer = self.payer;
+    TKAccount *payerAccount = self.payerAccount;
+    TKMember *payee = self.payee;
     NSString *refId = @"purchase:2829363by";
     __block Token *transferToken = nil;
     
@@ -143,8 +143,8 @@
 }
 
 - (void)testCancelTransferToken {
-    TKMember *payer = self.payerSync.async;
-    TKAccount *payerAccount = self.payerAccountSync.async;
+    TKMember *payer = self.payer;
+    TKAccount *payerAccount = self.payerAccount;
     NSString *refId = @"purchase:2829363by";
     __block Token *transferToken = nil;
     
@@ -152,7 +152,7 @@
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"EUR"];
     builder.accountId = payerAccount.id;
-    builder.toMemberId = self.payeeSync.id;
+    builder.toMemberId = self.payee.id;
     builder.descr = @"Book purchase";
     builder.refId = refId;
     
@@ -196,11 +196,11 @@
 }
 
 - (void)testTransferTokenWithBlob {
-    TKMember *payer = self.payerSync.async;
-    TKAccount *payerAccount = self.payerAccountSync.async;
-    TKMember *payee = self.payeeSync.async;
+    TKMember *payer = self.payer;
+    TKAccount *payerAccount = self.payerAccount;
+    TKMember *payee = self.payee;
     __block Token *transferToken = nil;
-    __block BOOL gotBlob = false;
+    __block int gotBlob = false;
     
     NSData* (^loadImage)(NSString*) = ^(NSString* ignored) {
         return [NSData data];
@@ -245,7 +245,26 @@
     [self runUntilTrue:^ {
         return (transferToken != nil);
     }];
-    [self.payerSync endorseToken:transferToken withKey:Key_Level_Standard];
+    
+    __block int tokenHasEndorsed = false;
+    
+    [self.payer endorseToken:transferToken
+                     withKey:Key_Level_Standard
+                   onSuccess:^(TokenOperationResult *result) {
+                       if (result.status == TransferTokenStatus_Success) {
+                           tokenHasEndorsed = true;
+                       }
+                   } onError: ^(NSError *e) {
+                       // Something went wrong.
+                       @throw [NSException exceptionWithName:@"EndorseTokenException"
+                                                      reason:[e localizedFailureReason]
+                                                    userInfo:[e userInfo]];
+                   }];
+    
+    [self runUntilTrue:^ {
+        return tokenHasEndorsed;
+    }];
+    
     NSString *tokenId = transferToken.id_p;
     
     // getTokenBlob begin snippet to include in docs
@@ -273,7 +292,7 @@
     // getTokenBlob done snippet to include in docs
     
     [self runUntilTrue:^ {
-        return (gotBlob == true);
+        return gotBlob;
     }];
 }
 

@@ -6,7 +6,6 @@
 #import "TKTypedef.h"
 #import "Security.pbobjc.h"
 
-
 /**
  * Represents the part of a token member that can be accessed through an access token.
  * 

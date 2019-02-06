@@ -3,30 +3,32 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
+#import "TKAccount.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Account.pbobjc.h"
 #import "TokenRequestResult.h"
 #import "Transferinstructions.pbobjc.h"
+#import "PagedArray.h"
 
 @interface TKTransferTokenTests : TKTestBase
 @end
 
 @implementation TKTransferTokenTests {
-    TKMemberSync *payer;
-    TKAccountSync *payerAccount;
-    TKMemberSync *payee;
-    TKAccountSync *payeeAccount;
+    TKMember *payer;
+    TKAccount *payerAccount;
+    TKMember *payee;
+    TKAccount *payeeAccount;
+    TokenClient *tokenClient;
 }
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    payerAccount = [self createAccount:tokenIO];
+    tokenClient = [self client];
+    payerAccount = [self createAccount:tokenClient];
     payer = payerAccount.member;
-    payeeAccount = [self createAccount:tokenIO];
+    payeeAccount = [self createAccount:tokenClient];
     payee = payeeAccount.member;
 }
 
@@ -82,47 +84,59 @@
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
-    Token *lookedUp = [payer getToken:token.id_p];
-    XCTAssertEqualObjects(token, lookedUp);
+    
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    [payer getToken:token.id_p onSuccess:^(Token *lookedUp) {
+        XCTAssertEqualObjects(token, lookedUp);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testLookupTokens {
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
-    builder.accountId = payerAccount.id;
-    builder.toMemberId = payee.id;
-    builder.receiptRequested = YES;
-    Token *token = [builder execute];
+    NSArray<NSDecimalNumber *> * amounts =
+    @[[NSDecimalNumber decimalNumberWithString:@"100.11"],
+      [NSDecimalNumber decimalNumberWithString:@"100.22"],
+      [NSDecimalNumber decimalNumberWithString:@"100.33"]];
     
-    [payer endorseToken:token withKey:Key_Level_Standard];
-    
-    NSDecimalNumber *amount2 = [NSDecimalNumber decimalNumberWithString:@"100.22"];
-    TransferTokenBuilder *builder2 = [payer createTransferToken:amount2
-                                                       currency:@"USD"];
-    builder2.accountId = payerAccount.id;
-    builder2.toMemberId = payee.id;
-    Token *token2 = [builder2 execute];
-    [payer endorseToken:token2 withKey:Key_Level_Standard];
-    
-    NSDecimalNumber *amount3 = [NSDecimalNumber decimalNumberWithString:@"100.33"];
-    TransferTokenBuilder *builder3 = [payer createTransferToken:amount3
-                                                       currency:@"USD"];
-    builder3.accountId = payerAccount.id;
-    builder3.toMemberId = payee.id;
-    Token *token3 = [builder3 execute];
-    [payer endorseToken:token3 withKey:Key_Level_Standard];
-    
-    [self waitUntil:^{
-        PagedArray<Token *> *lookedUpPayer = [self->payer getTransferTokensOffset:NULL limit:100];
-        PagedArray<Token *> *lookedUpPayee = [self->payee getTransferTokensOffset:NULL limit:100];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    expectation.expectedFulfillmentCount = amounts.count;
+    for (int i = 0; i < 3; i++) {
+        NSDecimalNumber *amount = amounts[i];
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.toMemberId = payee.id;
+        builder.receiptRequested = YES;
+        Token *token = [builder execute];
         
-        [self check:@"Payer Transfer Token count" condition:lookedUpPayer.items.count == 3];
-        [self check:@"Payer Offset is present" condition:lookedUpPayer.offset != nil];
+        [payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            [expectation fulfill];
+        } onError:THROWERROR];
+    }
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    TKTestExpectation *payerExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payer transfer tokens"];
+    TKTestExpectation *payeeExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payee transfer tokens"];
+    [self runUntilTrue:^{
+        [self->payer getTransferTokensOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
+            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
+                [payerExpectation fulfill];
+            }
+        } onError:THROWERROR];
         
-        [self check:@"Payee Transfer Token count" condition:lookedUpPayee.items.count == 3];
-        [self check:@"Payee Offset is present" condition:lookedUpPayee.offset != nil];
+        [self->payee getTransferTokensOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
+            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
+                [payeeExpectation fulfill];
+            }
+        } onError:THROWERROR];
+        
+        return (payerExpectation.isFulfilled && payeeExpectation.isFulfilled) ;
     }];
+    [self waitForExpectations:@[payerExpectation, payeeExpectation] timeout:10];
+    
 }
 
 - (void)testEndorseToken {
@@ -131,38 +145,43 @@
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
-    
-    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-    Token* endorsed = [endorsedResult token];
-    
-    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-    XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-    
-    XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.lifetimeAmount);
-    XCTAssertEqualObjects(@"USD", endorsed.payload.transfer.currency);
-    XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
-    XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+        Token* endorsed = [result token];
+        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
+        XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.lifetimeAmount);
+        XCTAssertEqualObjects(@"USD", endorsed.payload.transfer.currency);
+        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testEndorseToken_Unicode {
     NSString *descr = @"e\u0301\U0001F30D\U0001F340🇧🇭👰🏿👩‍👩‍👧‍👧我"; // decomposed é, globe, leaf; real unicode symbols
-    
+
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
     builder.descr = descr;
     Token *token = [builder execute];
-    
-    TokenOperationResult *endorsedResult = [payer endorseToken:token withKey:Key_Level_Standard];
-    Token* endorsed = [endorsedResult token];
-    
-    XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-    XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-    
-    XCTAssertEqualObjects(descr, endorsed.payload.description_p);
-    XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
-    XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+        Token* endorsed = [result token];
+        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
+        
+        XCTAssertEqualObjects(descr, endorsed.payload.description_p);
+        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testCancelToken {
@@ -172,23 +191,22 @@
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
     Token *token = [builder execute];
-    
-    TokenOperationResult *cancelledResult = [payer cancelToken:token];
-    Token *cancelled = [cancelledResult token];
-    XCTAssertEqual([cancelledResult status], TokenOperationResult_Status_Success);
-    
-    
-    XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-    
-    XCTAssertEqualObjects(@"100.11", cancelled.payload.transfer.lifetimeAmount);
-    XCTAssertEqualObjects(@"USD", cancelled.payload.transfer.currency);
-    XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
-    XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
+
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [payer cancelToken:token onSuccess:^(TokenOperationResult *result) {
+        Token* cancelled = [result token];
+        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
+        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
+        XCTAssertEqualObjects(@"100.11", cancelled.payload.transfer.lifetimeAmount);
+        XCTAssertEqualObjects(@"USD", cancelled.payload.transfer.currency);
+        XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetTokenRequestResult {
-    TokenIOSync *tokenIO = [self syncSDK];
-    
     TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
     payload.refId = [TKUtil nonce];
     payload.redirectURL = @"https://token.io";
@@ -196,14 +214,12 @@
     payload.callbackState = [TKUtil nonce];
     payload.transferBody.lifetimeAmount = @"100.99";
     payload.transferBody.currency = @"EUR";
-    
+
     TokenRequestOptions *options = [[TokenRequestOptions alloc] init];
     options.bankId = @"iron";
     options.receiptRequested = false;
     options.from.id_p = payer.id;
-    
-    NSString *tokenRequestId = [payee storeTokenRequest:payload requestOptions:options];
-    
+
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount currency:@"EUR"];
     builder.toMemberId = payee.id;
@@ -212,16 +228,21 @@
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
     // Optional settings
     builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
-
-    Token *token = [builder execute];
     
     NSString *state = [TKUtil nonce];
-    Signature *signature = [payer signTokenRequestState:tokenRequestId
-                                                  tokenId:token.id_p
-                                                    state:state];
-    TokenRequestResult *result = [tokenIO getTokenRequestResult:tokenRequestId];
     
-    XCTAssert([result.tokenId isEqualToString: token.id_p]);
-    XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [payee storeTokenRequest:payload requestOptions:options onSuccess:^(NSString *tokenRequestId) {
+        [builder executeAsync:^(Token *token){
+            [self->payer signTokenRequestState:tokenRequestId tokenId:token.id_p state:state onSuccess:^(Signature *signature) {
+                [self->tokenClient getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
+                    XCTAssert([result.tokenId isEqualToString: token.id_p]);
+                    XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+                    [expectation fulfill];
+                } onError:THROWERROR];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 @end

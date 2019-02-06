@@ -2,9 +2,9 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKMemberSync.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Bankinfo.pbobjc.h"
 
 @interface TKBankInfoTests : TKTestBase
@@ -13,57 +13,90 @@
 @implementation TKBankInfoTests
 
 - (void)testGetBanks {
-    TokenIOSync *tokenIO = [self syncSDK];
-    NSArray *banks = [tokenIO getBanks:nil
-                                search:nil
-                               country:nil
-                                  page:1
-                               perPage:5
-                                  sort:@"name"
-                              provider:@""];
-    XCTAssertTrue(banks.count == 5);
+    TokenClient *tokenClient = [self client];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    expectation.expectedFulfillmentCount = 4;
     
-    banks = [tokenIO getBanks:@[@"iron",@"gold"]
-                       search:nil
-                      country:nil
-                         page:1
-                      perPage:10
-                         sort:@"name"
-                     provider:@""];
-    XCTAssertTrue(banks.count == 2);
+    [tokenClient
+     getBanks:nil
+     search:nil
+     country:nil
+     page:1
+     perPage:5
+     sort:@"name"
+     provider:@""
+     onSuccess:^(NSArray *banks) {
+         XCTAssertTrue(banks.count == 5);
+         [expectation fulfill];
+     } onError:THROWERROR];
     
-    banks = [tokenIO getBanks:nil
-                       search:@"GOLD"
-                      country:nil
-                         page:1
-                      perPage:10
-                         sort:@"country"
-                     provider:@""];
-    XCTAssertTrue(banks.count > 0);
+    [tokenClient
+     getBanks:@[@"iron",@"gold"]
+     search:nil
+     country:nil
+     page:1
+     perPage:10
+     sort:@"name"
+     provider:@""
+     onSuccess:^(NSArray *banks) {
+         XCTAssertTrue(banks.count == 2);
+         [expectation fulfill];
+     } onError:THROWERROR];
     
-    banks = [tokenIO getBanks:nil
-                       search:nil
-                      country:@"US"
-                         page:1
-                      perPage:10
-                         sort:@"name"
-                     provider:@""];
-    XCTAssertTrue(banks.count > 0);
+    [tokenClient
+     getBanks:nil
+     search:@"GOLD"
+     country:nil
+     page:1
+     perPage:10
+     sort:@"country"
+     provider:@""
+     onSuccess:^(NSArray *banks) {
+         XCTAssertTrue(banks.count > 0);
+         [expectation fulfill];
+     } onError:THROWERROR];
+    
+    [tokenClient
+     getBanks:nil
+     search:nil
+     country:@"US"
+     page:1
+     perPage:10
+     sort:@"name"
+     provider:@""
+     onSuccess:^(NSArray *banks) {
+         XCTAssertTrue(banks.count > 0);
+         [expectation fulfill];
+     } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetBankInfo {
-    TKMemberSync *member = [self createMember:[self syncSDK]];
+    TKMember *member = [self createMember:[self client]];
     NSString *bankId = @"iron";
     
-    BankInfo *info = [member getBankInfo:bankId];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     
-    XCTAssertNotNil(info.linkingUri);
-    XCTAssertNotNil(info.redirectUriRegex);
+    [member getBankInfo:bankId onSuccess:^(BankInfo *info) {
+        XCTAssertNotNil(info.linkingUri);
+        XCTAssertNotNil(info.redirectUriRegex);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetBanksCountries {
-    TokenIOSync *tokenIO = [self syncSDK];
-    NSArray *countries = [tokenIO getBanksCountries:@"token"];
-    XCTAssertTrue(countries.count > 0);
+    TokenClient *tokenClient = [self client];
+    
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    
+    [tokenClient getBanksCountries:@"token" onSuccess:^(NSArray<NSString *> *countries) {
+        XCTAssertTrue(countries.count > 0);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 @end

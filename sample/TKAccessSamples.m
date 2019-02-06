@@ -18,15 +18,15 @@
 @implementation TKAccessSamples
 
 -(void)testAccessTokens {
-    TKMember *grantor = self.payerSync.async;
-    TKMember *grantee = self.payeeSync.async;
+    TKMember *grantor = self.payer;
+    TKMember *grantee = self.payee;
   
     __block Token *accessToken = nil;
     
-    NSString *accountId = [self.payerSync getAccounts][0].id;
+    NSString *accountId = self.payerAccount.id;
 
     // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payee.id];
     [access forAccount:accountId];
     [access forAccountBalances:accountId];
     
@@ -88,19 +88,24 @@
     }];
     
     __block Token *foundToken = nil;
-    
-    
     // find token begin snippet to include in docs
-    foundToken = [self.payerSync getActiveAccessToken:self.payeeSync.id];
+    [self.payer getActiveAccessToken:self.payee.id onSuccess:^(Token *token) {
+        foundToken = token;
+    } onError:^(NSError *e) {
+        @throw [NSException exceptionWithName:@"GetActiveAccessTokenException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
     // find token done snippet to include in docs
-    
-    NSString *addressId = [self.payerSync getAddresses][0].id_p;
+    [self runUntilTrue:^{
+        return (foundToken != nil);
+    }];
 
     // replaceAndEndorseAccessToken begin snippet to include in docs
     AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
     [newAccess forAccount:accountId];
     [newAccess forAccountBalances:accountId];
-    [newAccess forAddress:addressId];
+    [newAccess forAccountTransactions:accountId];
     
     [grantor replaceAccessToken:foundToken
               accessTokenConfig:newAccess
@@ -148,25 +153,44 @@
 }
 
 -(void)testReplaceNoEndorse {
-    TKMember *grantor = self.payerSync.async;
-    NSString *accountId = [self.payerSync getAccounts][0].id;
+    TKMember *grantor = self.payer;
+    NSString *accountId = self.payerAccount.id;
     
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
+    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payee.id];
     [access forAccount:accountId];
     
-    __block Token *accessToken = [self.payerSync createAccessToken:access];
-    [self.payerSync endorseToken:accessToken withKey:Key_Level_Standard];
-    Token *foundToken = accessToken;
-   
-    NSString *addressId = [self.payerSync getAddresses][0].id_p;
+    __block Token *originToken = nil;
+    [grantor createAccessToken:access
+                     onSuccess:^(Token *at) {
+                         [grantor endorseToken:at
+                                       withKey:Key_Level_Standard
+                                     onSuccess:^(TokenOperationResult *result) {
+                                         originToken = result.token;
+                                     } onError:^(NSError *e) {
+                                         // Something went wrong.
+                                         @throw [NSException exceptionWithName:@"EndorseAccessException"
+                                                                        reason:[e localizedFailureReason]
+                                                                      userInfo:[e userInfo]];
+                                     }];
+                     } onError:^(NSError *e) {
+                         // Something went wrong.
+                         @throw [NSException exceptionWithName:@"GrantAccessException"
+                                                        reason:[e localizedFailureReason]
+                                                      userInfo:[e userInfo]];
+                     }];
     
+    [self runUntilTrue:^ {
+        return (originToken != nil);
+    }];
+   
+    
+    __block Token *accessToken = nil;
     // replaceNoEndorse begin snippet to include in docs
-    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:foundToken.payload];
+    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:originToken.payload];
     [newAccess forAccount:accountId];
     [newAccess forAccountBalances:accountId];
-    [newAccess forAddress:addressId];
 
-    [grantor replaceAccessToken:foundToken
+    [grantor replaceAccessToken:originToken
               accessTokenConfig:newAccess
                       onSuccess:^(TokenOperationResult *result) {
                           accessToken = result.token;
@@ -179,175 +203,27 @@
     // replaceNoEndorse done snippet to include in docs
 
     [self runUntilTrue:^ {
-        return (![accessToken.id_p isEqual:foundToken.id_p]);
+        return (![accessToken.id_p isEqual:originToken.id_p]);
     }];
 }
 
--(Money*)carefullyUse:(TKMember*)grantee
-              tokenId:(NSString*)tokenId {
-    TKMemberSync *granteeSync = [TKMemberSync member:grantee];
-    Token *accessToken = [granteeSync getToken:tokenId];
-    while ([accessToken.replacedByTokenId length] > 0) {
-        accessToken = [granteeSync getToken:accessToken.replacedByTokenId];
-    }
-    NSMutableArray *accountIds = [NSMutableArray array];
-    Boolean haveAllAccountsAccess = false;
-    Boolean haveAllBalancesAccess = false;
-    for (int i = 0; i < accessToken.payload.access.resourcesArray_Count; i++) {
-        switch (accessToken.payload.access.resourcesArray[i].resourceOneOfCase) {
-            case AccessBody_Resource_Resource_OneOfCase_Balance:
-                [accountIds addObject: accessToken.payload.access.resourcesArray[i].balance.accountId];
-                break;
-            case AccessBody_Resource_Resource_OneOfCase_AllAccounts:
-                haveAllAccountsAccess = true;
-                break;
-            case AccessBody_Resource_Resource_OneOfCase_AllBalances:
-                haveAllBalancesAccess = true;
-                break;
-            default:
-                break;
-        }
-    }
-    id<TKRepresentableSync> representable = [granteeSync forAccessToken:accessToken.id_p];
-    if (haveAllAccountsAccess && haveAllBalancesAccess) {
-        NSArray<TKAccountSync *> *accounts = [representable getAccounts];
-        for (int i = 0 ; i < accounts.count; i++) {
-            [accountIds addObject:accounts[i].id];
-        }
-    }
-
-    if (accountIds.count < 1) {
-        // We have access to no accounts; return zero balance
-        return [Money new];
-    }
+-(Token *)findAccessToken:(TKMember*)grantee tokenId:(NSString*)tokenId {
+    __block Token *accessToken = nil;
+    [grantee getToken:tokenId onSuccess:^(Token *token) {
+        accessToken = token;
+    } onError:^(NSError *e) {
+        @throw [NSException exceptionWithName:@"GetAccessTokenException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
+    [self runUntilTrue:^ {
+        return (accessToken != nil);
+    }];
     
-    for (int i = 0; i < accountIds.count; i++) {
-        @try {
-            return [representable getBalance:accountIds[i]
-                                     withKey:Key_Level_Standard].available;
-        }
-        @catch (NSError *error) {
-            // If access grantor un-linked an account,
-            // getting that account's balance fails.
-            if (error.code == 9) {
-                // skip this account
-                continue;
-            }
-            // ...but if we hit some other type of error, it's really an error
-            @throw error;
-        }
+    if ([accessToken.replacedByTokenId length] > 0) {
+        return [self findAccessToken:grantee tokenId:accessToken.replacedByTokenId];
+    } else {
+        return accessToken;
     }
-    
-    // We have access to no accounts; return zero balance
-    return [Money new];
 }
-
-/**
- * Use an access token that might or might not grant allAccounts access
- * (so maybe )
- */
--(void)testCarefullyUse {
-    TKMember *grantor = self.payerSync.async;
-    TKAccount *grantorAccount = self.payerAccountSync.async;
-    TKMember *grantee = self.payeeSync.async;
-
-    __block Token *token1 = nil;
-
-    
-    
-    // createAccessToken begin snippet to include in docs
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:self.payeeSync.id];
-    [access forAccount:grantorAccount.id];
-    [access forAccountBalances:grantorAccount.id];
-
-    [grantor createAccessToken:access
-                     onSuccess:^(Token *at) {
-                         // created (and uploaded) but not yet endorsed
-                         token1 = at;
-                     } onError:^(NSError *e) {
-                         // Something went wrong.
-                         @throw [NSException exceptionWithName:@"GrantAccessException"
-                                                        reason:[e localizedFailureReason]
-                                                      userInfo:[e userInfo]];
-                     }];
-    // createAccessToken done snippet to include in docs
-
-    [self runUntilTrue:^ {
-        return (token1 != nil);
-    }];
-
-    [grantor endorseToken:token1
-                  withKey:Key_Level_Standard
-                onSuccess:^(TokenOperationResult *result) {
-                    token1 = result.token;
-                } onError:^(NSError *e) {
-                    // Something went wrong.
-                    @throw [NSException exceptionWithName:@"EndorseAccessException"
-                                                   reason:[e localizedFailureReason]
-                                                 userInfo:[e userInfo]];
-                }];
-
-    [self runUntilTrue:^ {
-        return (token1.payloadSignaturesArray_Count > 0);
-    }];
-
-    Money * balance1 = [self carefullyUse:grantee
-                                  tokenId:token1.id_p];
-    NSAssert([balance1.value floatValue] > 10.0, @"I should see a legitimate balance");
-
-    AccessTokenConfig *newAccess = [AccessTokenConfig fromPayload:token1.payload];
-    [newAccess forAccount:grantorAccount.id];
-    [newAccess forAccountBalances:grantorAccount.id];
-
-    __block Token *token2 = nil;
-
-    [grantor replaceAccessToken:token1
-              accessTokenConfig:newAccess
-                      onSuccess:^(TokenOperationResult *result) {
-                          [grantor endorseToken:result.token
-                                        withKey:Key_Level_Standard
-                                      onSuccess:^(TokenOperationResult *result) {
-                                          token2 = result.token;
-                                      } onError:^(NSError *e) {
-                                          // something went wrong
-                                          @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
-                                                                         reason:[e localizedFailureReason]
-                                                                       userInfo:[e userInfo]];
-                                      }];
-                      }
-                        onError:^(NSError *e) {
-                            // something went wrong
-                            @throw [NSException exceptionWithName:@"ReplaceAccessTokenException"
-                                                           reason:[e localizedFailureReason]
-                                                         userInfo:[e userInfo]];
-                        }];
-
-    [self runUntilTrue:^ {
-        return (token2 != nil);
-    }];
-
-    Money * balance2 = [self carefullyUse:grantee
-                                  tokenId:token1.id_p];
-    NSAssert([balance2.value floatValue] > 10.0, @"I should see a legitimate balance");
-    
-    __block int finishedUnlink = 0;
-    [grantor unlinkAccounts:@[grantorAccount.id]
-                  onSuccess:^() {
-                      finishedUnlink = 1;
-                  } onError:^(NSError *e) {
-                      // something went wrong
-                      @throw [NSException exceptionWithName:@"UnlinkAccountException"
-                                                     reason:[e localizedFailureReason]
-                                                   userInfo:[e userInfo]];
-                  }];
-    
-    [self runUntilTrue:^ {
-        return finishedUnlink;
-    }];
-    
-    Money * balance3 = [self carefullyUse:grantee
-                                  tokenId:token1.id_p];
-    NSAssert([balance3.value floatValue] == 0.0, @"I should see 0 balance (no accessed accounts)");
-}
-
 @end

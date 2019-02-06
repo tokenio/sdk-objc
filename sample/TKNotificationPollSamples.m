@@ -18,7 +18,7 @@
 @implementation TKNotificationPollSamples
 
 -(void)testNotificationPolling {
-    TKMember *payee = self.payeeSync.async;
+    TKMember *payee = self.payee;
     
     __block Subscriber *subscriber = nil;
     
@@ -41,30 +41,45 @@
     // To do this, we create, endorse, and redeem a transfer.
     // Payee receives a notification.
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount
-                                                               currency:@"USD"];
-    builder.accountId = self.payerAccountSync.id;
-    builder.toMemberId = self.payeeSync.id;
+    TransferTokenBuilder *builder = [self.payer createTransferToken:amount currency:@"USD"];
+    builder.accountId = self.payerAccount.id;
+    builder.toMemberId = self.payee.id;
     Token *token = [builder execute];
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = payee.id;
-    [self.payerSync endorseToken:token withKey:Key_Level_Standard];
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    [self.payeeSync redeemToken:token
-                         amount:redeemAmount
-                       currency:@"USD"
-                    description:@"notify them"
-                    destination:destination];
+    
+    __block Transfer *transfer = nil;
+    [self.payer endorseToken:token
+                     withKey:Key_Level_Standard
+                   onSuccess:^(TokenOperationResult *result) {
+                       NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+                       [self.payee redeemToken:token
+                                        amount:redeemAmount
+                                      currency:@"USD"
+                                   description:@"notify them"
+                                   destination:destination
+                                     onSuccess:^(Transfer *t) {
+                                         transfer = t;
+                                     } onError:^(NSError *e) {
+                                         // Something went wrong.
+                                         @throw [NSException exceptionWithName:@"EndorseTokenException"
+                                                                        reason:[e localizedFailureReason]
+                                                                      userInfo:[e userInfo]];
+                                     }];
+                   } onError:^(NSError *e) {
+                       // Something went wrong.
+                       @throw [NSException exceptionWithName:@"RedeemTokenException"
+                                                      reason:[e localizedFailureReason]
+                                                    userInfo:[e userInfo]];
+                   }];
 
-    // wait until we're sure notification has gone through...
     [self runUntilTrue:^ {
-        PagedArray<Notification *> *notifications = [self.payeeSync getNotificationsOffset:NULL
-                                                                                     limit:10];
-        return (notifications.items.count > 0);
+        return (transfer != nil);
     }];
+    // wait until we're sure notification has gone through...
+    [self runUntilNotificationReceived:self.payee];
 
     __block Notification *notification = nil;
-
     // poll begin snippet to include in docs
     [payee getNotificationsOffset:NULL
                             limit:10

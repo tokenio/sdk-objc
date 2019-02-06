@@ -18,8 +18,8 @@
 @implementation TKEndorseSample
 
 - (void)testEndorseAccessToken {
-    TKMember *member = self.payerSync.async;
-    TKMember *aisp = self.payeeSync.async;
+    TKMember *member = self.payer;
+    TKMember *aisp = self.payee;
     __block NSString *notificationId = nil;
     __block BOOL isFinished = NO;
     
@@ -27,7 +27,7 @@
      storeTokenRequest:[TKSampleModel accessTokenRequestPayload:aisp]
      requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
-         [self.tokenIOSync.async
+         [self.tokenClient
           notifyCreateAndEndorseToken:tokenRequestId
           keys:[NSArray arrayWithObject:[TKSampleModel lowKey:aisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
@@ -52,7 +52,7 @@
         return notificationId != nil;
     }];
     
-    NSString *accountId = self.payerAccountSync.id;
+    NSString *accountId = self.payerAccount.id;
     // aisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId
@@ -133,8 +133,8 @@
 }
 
 - (void)testEndorseTransferToken {
-    TKMember *member = self.payerSync.async;
-    TKMember *pisp = self.payeeSync.async;
+    TKMember *member = self.payer;
+    TKMember *pisp = self.payee;
     __block NSString *notificationId = nil;
     __block BOOL isFinished = NO;
     
@@ -142,7 +142,7 @@
      storeTokenRequest:[TKSampleModel transferTokenRequestPayload:pisp]
      requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
-         [self.tokenIOSync.async
+         [self.tokenClient
           notifyCreateAndEndorseToken:tokenRequestId
           keys:[NSArray arrayWithObject:[TKSampleModel lowKey:pisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
@@ -169,7 +169,7 @@
         return notificationId != nil;
     }];
     
-    NSString *accountId = self.payerAccountSync.id;
+    NSString *accountId = self.payerAccount.id;
     // pisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId

@@ -10,20 +10,20 @@
 
 #import "TKTestBase.h"
 #import "TKUtil.h"
-#import "TokenIOSync.h"
-#import "TKMemberSync.h"
+#import "TokenClient.h"
+#import "TKMember.h"
 
 @interface TKProfileTests : TKTestBase
 
 @end
 
 @implementation TKProfileTests {
-    TKMemberSync *member;
+    TKMember *member;
 }
 
 - (void)setUp {
     [super setUp];
-    member = [[self syncSDK] createMember:[self generateAlias]];
+    member = [self createMember:[self client]];
 }
 
 - (void)testProfile {
@@ -31,11 +31,16 @@
     profile.displayNameFirst = @"Meimei";
     profile.displayNameLast = @"Han";
     
-    Profile* result = [member setProfile:profile];
-    result = [member getProfile:member.id];
-    
-    XCTAssertEqualObjects(profile.displayNameFirst, result.displayNameFirst);
-    XCTAssertEqualObjects(profile.displayNameLast, result.displayNameLast);
+    __weak TKMember *weakMember = member;
+    TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
+    [weakMember setProfile:profile onSuccess:^(Profile *p) {
+        [weakMember getProfile:weakMember.id onSuccess:^(Profile *result) {
+            XCTAssertEqualObjects(profile.displayNameFirst, result.displayNameFirst);
+            XCTAssertEqualObjects(profile.displayNameLast, result.displayNameLast);
+            [expactation fulfill];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expactation] timeout:10];
 }
 
 - (void)testProfilePicture {
@@ -48,35 +53,40 @@
     UIGraphicsEndImageContext();
     
     NSData* data = UIImagePNGRepresentation(image);
-    [member setProfilePicture:member.id withType:@"image/png" withName:@"testImage" withData:data];
     
-    Blob *blob = [member getProfilePicture:member.id size:ProfilePictureSize_Original];
-    XCTAssertNotNil(blob);
-    XCTAssertNotNil(blob.data);
-    
-    UIImage* resultImage = [UIImage imageWithData:data];
-    
-    // get pixels
-    uint32_t* rgbImageBuf = (uint32_t*)malloc(resultImage.size.width * resultImage.size.height * 4);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    context = CGBitmapContextCreate(rgbImageBuf,
-                                    resultImage.size.width,
-                                    resultImage.size.height,
-                                    8,
-                                    resultImage.size.width * 4 ,
-                                    colorSpace,
-                                    kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
-    CGContextDrawImage(context, CGRectMake(0, 0, resultImage.size.width, resultImage.size.height), resultImage.CGImage);
-    
-    XCTAssertTrue(rgbImageBuf[0] == 0x123456ff);
-    
-    
-    if (rgbImageBuf) {
-        free(rgbImageBuf);
-    }
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpace);
+    __weak TKMember *weakMember = member;
+    TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
+    [weakMember setProfilePicture:member.id withType:@"image/png" withName:@"testImage" withData:data onSuccess:^ {
+        [weakMember getProfilePicture:weakMember.id size:ProfilePictureSize_Original onSuccess:^(Blob *blob) {
+            XCTAssertNotNil(blob);
+            XCTAssertNotNil(blob.data);
+            [expactation fulfill];
+            
+            UIImage* resultImage = [UIImage imageWithData:data];
+            
+            // get pixels
+            uint32_t* rgbImageBuf = (uint32_t*)malloc(resultImage.size.width * resultImage.size.height * 4);
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+            CGContextRef context = CGBitmapContextCreate(rgbImageBuf,
+                                                         resultImage.size.width,
+                                                         resultImage.size.height,
+                                                         8,
+                                                         resultImage.size.width * 4 ,
+                                                         colorSpace,
+                                                         kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+            CGContextDrawImage(context, CGRectMake(0, 0, resultImage.size.width, resultImage.size.height), resultImage.CGImage);
+            
+            XCTAssertTrue(rgbImageBuf[0] == 0x123456ff);
+            
+            
+            if (rgbImageBuf) {
+                free(rgbImageBuf);
+            }
+            CGContextRelease(context);
+            CGColorSpaceRelease(colorSpace);
+            
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expactation] timeout:10];
 }
-
-
 @end

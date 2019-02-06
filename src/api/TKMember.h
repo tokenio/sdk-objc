@@ -5,19 +5,20 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AccessTokenConfig.h"
-#import "TKTypedef.h"
-#import "Subscriber.pbobjc.h"
-#import "Banklink.pbobjc.h"
-#import "Security.pbobjc.h"
-#import "Blob.pbobjc.h"
 #import "Address.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "TransferTokenBuilder.h"
+#import "Security.pbobjc.h"
+#import "Subscriber.pbobjc.h"
+
+#import "AccessTokenConfig.h"
 #import "TKBrowser.h"
 #import "TKRepresentable.h"
+#import "TKTypedef.h"
 #import "TokenCluster.h"
+#import "TransferTokenBuilder.h"
 
 @class Member;
 @class TKClient;
@@ -52,7 +53,7 @@
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
- * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
+ * Use `TokenClient` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
         tokenCluster:(TokenCluster *)tokenCluster

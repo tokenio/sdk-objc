@@ -26,20 +26,20 @@
 
 - (void)testCreateSDKClient {
     // createSDK begin snippet to include in docs
-    TokenIOBuilder *builder = [[TokenIOBuilder alloc] init];
+    TokenClientBuilder *builder = [[TokenClientBuilder alloc] init];
     // change the cluster if necessary
     builder.tokenCluster = [TokenCluster sandbox];
     builder.port = 443;
     builder.useSsl = YES;
     builder.developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-    TokenIO *tokenIO = [builder buildAsync];
+    TokenClient *tokenClient = [builder build];
     // createSDK done snippet to include in docs
     
-    XCTAssertNotNil(tokenIO);
+    XCTAssertNotNil(tokenClient);
 }
 
 - (void)testCreateMember {
-    TokenIO *tokenIO = [self asyncSDK];
+    TokenClient *tokenClient = [self client];
     __block TKMember *newMember;
     
     // createMember begin snippet to include in docs
@@ -52,14 +52,15 @@
                    lowercaseString];
     alias.type = Alias_Type_Email;
     alias.realm = @"token";
-    [tokenIO createMember:alias onSuccess:^(TKMember *m) {
-        newMember = m; // Use member.
-    } onError:^(NSError *e) {
-        // Something went wrong.
-        @throw [NSException exceptionWithName:@"CreateMemberFailedException"
-                                       reason:[e localizedFailureReason]
-                                     userInfo:[e userInfo]];
-    }];
+    [tokenClient createMember:alias
+                    onSuccess:^(TKMember *m) {
+                        newMember = m; // Use member.
+                    } onError:^(NSError *e) {
+                        // Something went wrong.
+                        @throw [NSException exceptionWithName:@"CreateMemberFailedException"
+                                                       reason:[e localizedFailureReason]
+                                                     userInfo:[e userInfo]];
+                    }];
     // createMember done snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -69,8 +70,8 @@
 
 - (void)testLinkTestBankAccount {
     __block TKMember *member = nil;
-    TokenIO *tokenIO = [self asyncSDK];
-    [tokenIO createMember:[self generateAlias] onSuccess:^(TKMember *m) {
+    TokenClient *tokenClient = [self client];
+    [tokenClient createMember:[self generateAlias] onSuccess:^(TKMember *m) {
         member = m;
     } onError:^(NSError *e) {
         @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
@@ -121,40 +122,46 @@
     // we'll have them use the same keystore so that they can share keys
     // (as would happen if they used the "regular" keystore).
     id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
-    TokenIOBuilder *beforeBuilder = [self sdkBuilder];
+    TokenClientBuilder *beforeBuilder = [self sdkBuilder];
     beforeBuilder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
                                                               useLocalAuthentication:NO];
-    TokenIO *beforeTokenIO = [beforeBuilder buildAsync];
+    TokenClient *beforeTokenClient = [beforeBuilder build];
     
     Alias *alias = [Alias new];
     alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
     alias.type = Alias_Type_Email;
-    [beforeTokenIO createMember:alias onSuccess:^(TKMember *m) {
-        member = m; // Use member.
-    } onError:^(NSError *e) {
-        // Something went wrong.
-        @throw [NSException exceptionWithName:@"CreateMemberFailedException" reason:[e localizedFailureReason] userInfo:[e userInfo]];
-    }];
+    [beforeTokenClient createMember:alias
+                          onSuccess:^(TKMember *m) {
+                              member = m; // Use member.
+                          } onError:^(NSError *e) {
+                              // Something went wrong.
+                              @throw [NSException
+                                      exceptionWithName:@"CreateMemberFailedException"
+                                      reason:[e localizedFailureReason]
+                                      userInfo:[e userInfo]];
+                          }];
     [self runUntilTrue:^ {
         return (member != nil);
     }];
+    
     NSString *memberId = member.id;
-    TokenIOBuilder *builder = [self sdkBuilder];
+    TokenClientBuilder *builder = [self sdkBuilder];
     builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
                                                         useLocalAuthentication:NO];
-    TokenIO *tokenIO = [builder buildAsync];
+    TokenClient *tokenClient = [builder build];
     
     __block TKMember *loggedInMember;
 
     // loginMember begin snippet to include in docs
-    [tokenIO getMember:memberId onSuccess:^(TKMember *m) {
-        loggedInMember = m; // Use member.
-    } onError:^(NSError *e) {
-        // Something went wrong.
-        @throw [NSException exceptionWithName:@"LoginMemberFailedException"
-                                       reason:[e localizedFailureReason]
-                                     userInfo:[e userInfo]];
-    }];
+    [tokenClient getMember:memberId
+                 onSuccess:^(TKMember *m) {
+                     loggedInMember = m; // Use member.
+                 } onError:^(NSError *e) {
+                     // Something went wrong.
+                     @throw [NSException exceptionWithName:@"LoginMemberFailedException"
+                                                    reason:[e localizedFailureReason]
+                                                  userInfo:[e userInfo]];
+                 }];
     // loginMember done snippet to include in docs
     
     // make sure it worked:
@@ -166,11 +173,11 @@
 -(void)testProvisionDevice {
     // We have two sdks, one for our new device, one for our "main" device.
     // Each needs its own keystore: provisionDevice _replaces_ keys.
-    TokenIOBuilder *builder = [self sdkBuilder];
+    TokenClientBuilder *builder = [self sdkBuilder];
     id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
     builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
                                                         useLocalAuthentication:NO];
-    TokenIO *tokenIO = [builder buildAsync];
+    TokenClient *tokenClient = [builder build];
     Alias *memberAlias = self.payerAlias;
     __block Key *sentKey = nil;
     
@@ -178,54 +185,68 @@
     metadata.application = @"Token Test";
     metadata.device = @"iPhone";
     // provisionNotify begin snippet to include in docs
-    [tokenIO provisionDevice:memberAlias
-                   onSuccess:^(DeviceInfo *di) {
-                       for (Key* k in di.keys) {
-                           if (k.level == Key_Level_Low) {
-                               [tokenIO notifyAddKey:memberAlias
-                                             keys:@[k]
-                                      deviceMetadata:metadata
-                                           onSuccess:^() {
-                                               sentKey = k;
-                                           } onError:^(NSError *e) {
-                                               @throw [NSException exceptionWithName:@"NotifyFailedException"
-                                                                              reason:[e localizedFailureReason]
-                                                                            userInfo:[e userInfo]];
-                                           }];
-                               break;
+    [tokenClient provisionDevice:memberAlias
+                       onSuccess:^(DeviceInfo *di) {
+                           for (Key* k in di.keys) {
+                               if (k.level == Key_Level_Low) {
+                                   [tokenClient notifyAddKey:memberAlias
+                                                        keys:@[k]
+                                              deviceMetadata:metadata
+                                                   onSuccess:^() {
+                                                       sentKey = k;
+                                                   } onError:^(NSError *e) {
+                                                       @throw [NSException
+                                                               exceptionWithName:@"NotifyFailedException"
+                                                               reason:[e localizedFailureReason]
+                                                               userInfo:[e userInfo]];
+                                                   }];
+                                   break;
+                               }
                            }
-                       }
-                   } onError:^(NSError *e) {
-                       @throw [NSException exceptionWithName:@"ProvisionDeviceFailedException"
-                                                      reason:[e localizedFailureReason]
-                                                    userInfo:[e userInfo]];
-                   }];
+                       } onError:^(NSError *e) {
+                           @throw [NSException exceptionWithName:@"ProvisionDeviceFailedException"
+                                                          reason:[e localizedFailureReason]
+                                                        userInfo:[e userInfo]];
+                       }];
     // provisionNotify done snippet to include in docs
     
     [self runUntilTrue:^ {
         return (sentKey != nil);
     }];
     
-    [self.payerSync approveKey:sentKey];
+    __block int keyHasApproved = false;
+    
+    [self.payer approveKey:sentKey
+                 onSuccess:^{
+                     keyHasApproved = true;
+                 } onError:^(NSError *e){
+                     @throw [NSException exceptionWithName:@"ProvisionDeviceFailedException"
+                                                    reason:[e localizedFailureReason]
+                                                  userInfo:[e userInfo]];
+                 }];
+    
+    [self runUntilTrue:^ {
+        return keyHasApproved;
+    }];
     
     __block TKMember *member = nil;
     
     // provisionLogin begin snippet to include in docs
-    [tokenIO getMemberId:memberAlias
-               onSuccess:^(NSString *id) {
-                   [tokenIO getMember:id
-                              onSuccess:^(TKMember *m) {
-                                  member = m;
-                              } onError:^(NSError *e) {
-                                  @throw [NSException exceptionWithName:@"LoginFailedException"
-                                                                 reason:[e localizedFailureReason]
-                                                               userInfo:[e userInfo]];
-                              }];
-               } onError:^(NSError *e) {
-                   @throw [NSException exceptionWithName:@"FindMemberFailedException"
-                                                  reason:[e localizedFailureReason]
-                                                userInfo:[e userInfo]];
-               }];
+    [tokenClient getMemberId:memberAlias
+                   onSuccess:^(NSString *id) {
+                       [tokenClient getMember:id
+                                    onSuccess:^(TKMember *m) {
+                                        member = m;
+                                    } onError:^(NSError *e) {
+                                        @throw [NSException exceptionWithName:@"LoginFailedException"
+                                                                       reason:[e localizedFailureReason]
+                                                                     userInfo:[e userInfo]];
+                                    }];
+                   } onError:^(NSError *e) {
+                       @throw [NSException exceptionWithName:@"FindMemberFailedException"
+                                                      reason:[e localizedFailureReason]
+                                                    userInfo:[e userInfo]];
+                   }];
     // provisionLogin done snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -238,73 +259,75 @@
 
     // Create a new SDK client with its own keystore to make sure
     // we don't interfere with/use keys used to create the member
-    TokenIOBuilder *builder = [self sdkBuilder];
+    TokenClientBuilder *builder = [self sdkBuilder];
     id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
     builder.cryptoEngineFactory = [TKTokenCryptoEngineFactory factoryWithStore:store
                                                         useLocalAuthentication:NO];
-    TokenIO *tokenIO = [builder buildAsync];
-    __block int prompting = NO;
+    TokenClient *tokenClient = [builder build];
+    __block int prompting = false;
 
     void (^showPrompt)(NSString *s) = ^(NSString *s) {
-        prompting = YES;
+        prompting = true;
     };
     
     __block NSString* verificationId = nil;
     // beginRecovery begin snippet to include in docs
-    [tokenIO beginMemberRecovery:self.payerAlias
-                       onSuccess:^(NSString *verificationId_) {
-                           // prompt user to enter code:
-                           verificationId = verificationId_;
-                           showPrompt(@"Enter code emailed to you:");
-                       } onError:^(NSError *e) {
-                           @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
-                                                          reason:[e localizedFailureReason]
-                                                        userInfo:[e userInfo]];
-                       }];
+    [tokenClient beginMemberRecovery:self.payerAlias
+                           onSuccess:^(NSString *verificationId_) {
+                               // prompt user to enter code:
+                               verificationId = verificationId_;
+                               showPrompt(@"Enter code emailed to you:");
+                           } onError:^(NSError *e) {
+                               @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
+                                                              reason:[e localizedFailureReason]
+                                                            userInfo:[e userInfo]];
+                           }];
     // beginRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {
-        return (prompting != NO);
+        return prompting;
     }];
 
     NSString *userEnteredCode = @"1thru6"; // The test users can bypass the verification, so any code works.
     __block TKMember *member = nil;
 
     // completeRecovery begin snippet to include in docs
-    [tokenIO verifyMemberRecovery:self.payerAlias
-                         memberId:self.payerSync.id
-                   verificationId:verificationId
-                             code:userEnteredCode
-                        onSuccess:^() {
-                            [tokenIO completeMemberRecovery:self.payerAlias
-                                                   memberId:self.payerSync.id
-                                             verificationId:verificationId
-                                                       code:userEnteredCode
-                                                  onSuccess:^(TKMember *newMember) {
-                                                      member = newMember;
-                                                  } onError:^(NSError *e) {
-                                                      @throw [NSException exceptionWithName:@"CompleteRecoveryFailedException"
-                                                                                     reason:[e localizedFailureReason]
-                                                                                   userInfo:[e userInfo]];
-                                                  }];
-                        } onError:^(NSError *e) {
-                            @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
-                                                           reason:[e localizedFailureReason]
-                                                         userInfo:[e userInfo]];
-                        }];
+    [tokenClient verifyMemberRecovery:self.payerAlias
+                             memberId:self.payer.id
+                       verificationId:verificationId
+                                 code:userEnteredCode
+                            onSuccess:^() {
+                                [tokenClient completeMemberRecovery:self.payerAlias
+                                                           memberId:self.payer.id
+                                                     verificationId:verificationId
+                                                               code:userEnteredCode
+                                                          onSuccess:^(TKMember *newMember) {
+                                                              member = newMember;
+                                                          } onError:^(NSError *e) {
+                                                              @throw [NSException
+                                                                      exceptionWithName:@"CompleteRecoveryFailedException"
+                                                                      reason:[e localizedFailureReason]
+                                                                      userInfo:[e userInfo]];
+                                                          }];
+                            } onError:^(NSError *e) {
+                                @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
+                                                               reason:[e localizedFailureReason]
+                                                             userInfo:[e userInfo]];
+                            }];
     // completeRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {
         return (member != nil);
     }];
-    TKMemberSync *memberSync = [TKMemberSync member:member];
-    XCTAssertEqualObjects([memberSync firstAlias].value, memberAliasString);
+    
+    XCTAssertEqualObjects([member firstAlias].value, memberAliasString);
 }
 
 - (void)testProfile {
-    __weak TKMember *member = self.payerSync.async;
+    __weak TKMember *member = self.payer;
     __block NSString *fullName = nil;
     
+    // create profile picture begin snippet to include in docs
     Profile *profile = [[Profile alloc] init];
     profile.displayNameFirst = @"Jon";
     profile.displayNameLast = @"Snow";
@@ -334,8 +357,8 @@
 }
 
 - (void)testProfilePicture {
-    __weak TKMember *member = self.payerSync.async;
-    __block BOOL gotBlob = false;
+    __weak TKMember *member = self.payer;
+    __block int gotBlob = false;
     
     NSData* (^loadImage)(NSString*) = ^(NSString* ignored) {
         return [[NSData alloc]
@@ -373,7 +396,7 @@
     // create profile picture done snippet to include in docs
     
     [self runUntilTrue:^ {
-        return (gotBlob == true);
+        return gotBlob;
     }];
 }
 @end

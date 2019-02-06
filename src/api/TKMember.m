@@ -7,14 +7,12 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKAccount.h"
-#import "TKAccountSync.h"
 #import "TKAuthorizationEngine.h"
 #import "TKClient.h"
 #import "TKError.h"
 #import "TKHasher.h"
 #import "TKLocalizer.h"
 #import "TKMember.h"
-#import "TKMemberSync.h"
 #import "TKOauthEngine.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -938,8 +936,7 @@
 }
 
 - (TKAccount *)_mapAccount:(Account *)account {
-    TKMemberSync *memberSync = [TKMemberSync member:self];
-    return [TKAccount account:account of:memberSync useClient:client];
+    return [TKAccount account:account of:self useClient:client];
 }
 
 @end
