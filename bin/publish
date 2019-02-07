@@ -7,9 +7,9 @@ usage="publish [-m] [-r] [-p] --
 
 where:
     -m
-        Increment major version (V.x.x)
+        Increment major version (V.0.0)
     -r
-        Increment minor version (x.V.x)
+        Increment minor version (x.V.0)
     -p
         Increment patch version (x.x.V). Default if no options provided."
 
@@ -17,7 +17,7 @@ major=null
 minor=null
 patch=null
 
-while getopts ":m:r:p" opt; do
+while getopts ":mrp" opt; do
   case $opt in
     m)
       major=true
@@ -110,18 +110,17 @@ patch_value=$(get_part ${old_version} 3)
 
 if [ "${major}" != "null" ]; then
     major_value=$((major_value + 1))
-fi
-
-if [ "${minor}" != "null" ]; then
+    minor_value=0
+    patch_value=0
+elif [ "${minor}" != "null" ]; then
     minor_value=$((minor_value + 1))
-fi
-
-if [ "${patch}" != "null" ]; then
+    patch_value=0
+elif [ "${patch}" != "null" ]; then
     patch_value=$((patch_value + 1))
 fi
 
 new_version="${major_value}.${minor_value}.${patch_value}"
-
+echo ${new_version}
 update_version ${old_version} ${new_version}
 tag_release ${new_version}
 publish_podspec
