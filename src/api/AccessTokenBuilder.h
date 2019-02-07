@@ -11,37 +11,35 @@
 /**
  * Helps building an access token payload.
  */
-@interface AccessTokenConfig : NSObject 
+@interface AccessTokenBuilder : NSObject 
 
 /**
  * Creates a new instance with a provided grantee alias.
  *
  * @param toAlias alias of the token grantee.
  */
-+ (AccessTokenConfig *)create:(Alias *)toAlias;
++ (AccessTokenBuilder *)create:(Alias *)toAlias;
 
 /**
  * Creates a new instance with a provided grantee id.
  *
  * @param toId id of the token grantee
  */
-+ (AccessTokenConfig *)createWithToId:(NSString *)toId;
++ (AccessTokenBuilder *)createWithToId:(NSString *)toId;
 
 /**
  * Creates a new instance from an existing token payload.
  *
  * @param payloadToInitFrom token payload to initialize the config from
  */
-+ (AccessTokenConfig *)fromPayload:(TokenPayload *)payloadToInitFrom;
++ (AccessTokenBuilder *)fromPayload:(TokenPayload *)payloadToInitFrom;
 
 /**
  * Creates a new instance from a token request.
  *
- * @param requestPayload token request payload
- * @param requestOptions token request options
+ * @param tokenRequest token request
  */
-+ (AccessTokenConfig *)fromTokenRequest:(TokenRequestPayload *)requestPayload
-                     withRequestOptions:(TokenRequestOptions *)requestOptions;
++ (AccessTokenBuilder *)fromTokenRequest:(TokenRequest *)tokenRequest;
 
  /**
  * Creates a new instance with a provided grantee alias.
@@ -60,11 +58,9 @@
 /**
  * Creates a new instance from a token request.
  *
- * @param requestPayload token request payload
- * @param requestOptions token request options
+ * @param tokenRequest token request
  */
-- (id)initWithTokenRequest:(TokenRequestPayload *)requestPayload
-        withRequestOptions:(TokenRequestOptions *)requestOptions;
+- (id)initWithTokenRequest:(TokenRequest *)tokenRequest;
 
 /**
  * Sets 'from' field on the payload.
@@ -116,4 +112,10 @@
  */
 - (TokenPayload *)toTokenPayload;
 
+/**
+ * Returns corresponding token request id.
+ *
+ * @return token request id
+ */
+- (NSString *)tokenRequestId;
 @end

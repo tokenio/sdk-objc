@@ -5,19 +5,20 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AccessTokenConfig.h"
-#import "TKTypedef.h"
-#import "Subscriber.pbobjc.h"
-#import "Banklink.pbobjc.h"
-#import "Security.pbobjc.h"
-#import "Blob.pbobjc.h"
 #import "Address.pbobjc.h"
+#import "Banklink.pbobjc.h"
+#import "Blob.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
-#import "TransferTokenBuilder.h"
+#import "Security.pbobjc.h"
+#import "Subscriber.pbobjc.h"
+
+#import "AccessTokenBuilder.h"
 #import "TKBrowser.h"
 #import "TKRepresentable.h"
+#import "TKTypedef.h"
 #import "TokenCluster.h"
+#import "TransferTokenBuilder.h"
 
 @class Member;
 @class TKClient;
@@ -52,7 +53,7 @@
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
- * Use `TokenIO` or `TokenIOSync` to obtain an instance of this class.
+ * Use `TokenClient` to obtain an instance of this class.
  */
 + (TKMember *)member:(Member *)member
         tokenCluster:(TokenCluster *)tokenCluster
@@ -394,17 +395,24 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
-                                     currency:(NSString *)currency;
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency;
+
+/**
+ * Creates a new transfer token builder from token request.
+ *
+ * @param tokenRequest token request
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest;
 
 /**
  * Creates a new access token for a list of resources.
  *
- * @param accessTokenConfig the access token configuration object
+ * @param accessTokenBuilder the access token configuration object
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
+- (void)createAccessToken:(AccessTokenBuilder *)accessTokenBuilder
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError;
 
@@ -412,10 +420,10 @@
  * Cancels the existing access token and creates a replacement for it.
  *
  * @param tokenToCancel old token to cancel
- * @param accessTokenConfig access token configuration to create a new token from
+ * @param accessTokenBuilder access token configuration to create a new token from
  */
 - (void)replaceAccessToken:(Token *)tokenToCancel
-         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+        accessTokenBuilder:(AccessTokenBuilder *)accessTokenBuilder
                  onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                    onError:(OnError)onError;
 

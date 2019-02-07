@@ -7,9 +7,7 @@
 
 #import "TKTypedef.h"
 
-
 @class Account;
-@class TKMemberSync;
 @class TKClient;
 @class Token;
 
@@ -23,7 +21,7 @@
 @interface TKAccount : NSObject
 
 /// Owner member.
-@property (nonatomic, readonly) TKMemberSync *member;
+@property (nonatomic, readonly) TKMember *member;
 
 /// Id by which Token system identifies this account.
 @property (nonatomic, readonly) NSString *id;
@@ -50,7 +48,7 @@
 @property (nonatomic, readonly) BOOL requiresExternalAuth;
 
 + (TKAccount *)account:(Account *)account
-                    of:(TKMemberSync *)member
+                    of:(TKMember *)member
              useClient:(TKClient *)client;
 
 /**

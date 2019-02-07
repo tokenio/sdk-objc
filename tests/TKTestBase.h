@@ -3,21 +3,25 @@
 // Copyright (c) 2016 Token Inc. All rights reserved.
 //
 
-#import "Alias.pbobjc.h"
-
 #import <XCTest/XCTest.h>
 
-@class TokenIOSync;
-@class TokenIO;
-@class TokenIOBuilder;
+#import "Alias.pbobjc.h"
+#import "TKTestExpectation.h"
+
+@class TokenClient;
+@class TokenClientBuilder;
 @class OauthBankAuthorization;
-@class TKMemberSync;
-@class TKAccountSync;
+@class TKMember;
+@class Notification;
+@class TKAccount;
 @class TKBankClient;
 @class HostAndPort;
 
-typedef void (^AsyncTestBlock)(TokenIOSync *);
-typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
+typedef void (^AsyncTestBlock)(TokenClient *);
+typedef id (^AsyncTestBlockWithResult)(TokenClient *);
+
+#define THROWERROR ^(NSError *error) { @throw error; }
+#define IGNOREERROR ^(NSError *error) { @throw error; }
 
 /**
  * Base class for the integration tests. The derived classes invoke run method
@@ -49,35 +53,30 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
 - (id)runWithResult:(AsyncTestBlockWithResult)block;
 
 /**
- * Creates a TokenIO SDK client with settings for testing environment.
+ * Creates a Token client with settings for testing environment.
  */
-- (TokenIO *)asyncSDK;
-
-/**
- * Creates a TokenIOSync SDK client with settings for testing environment.
- */
-- (TokenIOSync *)syncSDK;
+- (TokenClient *)client;
 
 /**
  * Creates a Token SDK builder with settings for testing environment.
  */
-- (TokenIOBuilder *)sdkBuilder;
+- (TokenClientBuilder *)sdkBuilder;
 
 /**
  * Creates a new member with an auto generated alias and key.
  *
- * @param tokenIO an entry point for Token API
+ * @param tokenClient an entry point for Token API
  * @return a member
  */
-- (TKMemberSync *)createMember:(TokenIOSync *)tokenIO;
+- (TKMember *)createMember:(TokenClient *)tokenClient;
 
 /**
  * Creates a new member/account.
  *
- * @param tokenIO an entry point for Token API
+ * @param tokenClient an entry point for Token API
  * @return an account
  */
-- (TKAccountSync *)createAccount:(TokenIOSync *)tokenIO;
+- (TKAccount *)createAccount:(TokenClient *)tokenClient;
 
 /**
  * Creates a new bank authorization for a member
@@ -85,7 +84,16 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param member member
  * @return a bank authorization
  */
-- (OauthBankAuthorization *)createBankAuthorization:(TKMemberSync *)member;
+- (OauthBankAuthorization *)createBankAuthorization:(TKMember *)member;
+
+/**
+ * Links accounnts to a member.
+ *
+ * @param bankAuthorization bank authorization for accounts.
+ * @param member member
+ * @return a bank authorization
+ */
+- (NSArray<TKAccount *> *)linkAccounts:(OauthBankAuthorization *)bankAuthorization to:(TKMember *)member;
 
 /**
  * Formats HostAndPort instance.
@@ -129,5 +137,36 @@ typedef id (^AsyncTestBlockWithResult)(TokenIOSync *);
  * @param block block to try
  */
 - (void)waitUntil:(void (^)(void))block;
+
+/**
+ * Invokes grpc-using block. Runs until `condition` block returns true,
+ * hits exception, or times out.
+ *
+ * Sample code uses async, as we expect most devs will use.
+ * We want to make sure sample code works without cluttering it with asserts.
+ * Thus the async sample code has side effects;
+ * after the sample code, runUntilTrue to assert side effect happens.
+ *
+ * @param condition block that returns a Boolean
+ * @param backOffTimeMs how long to wait between invocations of `condition`
+ * @param waitingTimeMs how long to wait the process to complete
+ */
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs waitingTimeMs:(int)waitingTimeMs;
+
+/**
+ * Invokes grpc-using block. Runs until `condition` block returns true,
+ * hits exception, or times out. Does not sleep between invocations of
+ * `condition`.
+ *
+ * @param condition block that returns a Boolean
+ */
+- (void)runUntilTrue:(int (^)(void))condition;
+
+/**
+ * Runs until one notification found, hits exception, or times out.
+ *
+ * @param member member
+ */
+- (Notification *)runUntilNotificationReceived:(TKMember *)member;
 
 @end

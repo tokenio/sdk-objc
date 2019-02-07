@@ -8,17 +8,18 @@
 #import "TKTestBase.h"
 #import "HostAndPort.h"
 #import "TKBankClient.h"
-#import "TokenIOSync.h"
-#import "TokenIOBuilder.h"
-#import "TKMemberSync.h"
-#import "TKAccountSync.h"
+#import "TokenClient.h"
+#import "TokenClientBuilder.h"
+#import "TKMember.h"
+#import "TKAccount.h"
 #import "TKInMemoryKeyStore.h"
 #import "TKLogManager.h"
 #import "TKTokenCryptoEngineFactory.h"
-
+#import "TKRpcSyncCall.h"
+#import "PagedArray.h"
 
 @implementation TKTestBase {
-    TokenIOSync *tokenIO;
+    TokenClient *tokenClient;
     dispatch_queue_t queue;
     BOOL useSsl;
 }
@@ -37,7 +38,7 @@
 }
 
 - (void)run:(AsyncTestBlock)block {
-   [self runWithResult: ^id(TokenIOSync *tio) {
+   [self runWithResult: ^id(TokenClient *tio) {
        block(tio);
        return nil;
    }];
@@ -45,10 +46,10 @@
 
 
 // create an SDK client builder with settings appropriate for testing environment
-- (TokenIOBuilder *)sdkBuilder {
+- (TokenClientBuilder *)sdkBuilder {
     HostAndPort *gateway = [self hostAndPort:@"TOKEN_GATEWAY" withDefaultPort:9000];
     
-    TokenIOBuilder *builder = [TokenIOSync builder];
+    TokenClientBuilder *builder = [TokenClient builder];
     builder.tokenCluster = [[TokenCluster alloc] initWithEnvUrl:gateway.host
                                                       webAppUrl:gateway.host];
     builder.port = gateway.port;
@@ -62,12 +63,8 @@
     return builder;
 }
 
-- (TokenIO *)asyncSDK {
-    return [[self sdkBuilder] buildAsync];
-}
-
-- (TokenIOSync *)syncSDK {
-    return [[self sdkBuilder] buildSync];
+- (TokenClient *)client {
+    return [[self sdkBuilder] build];
 }
 
 - (id)runWithResult:(AsyncTestBlockWithResult)block {
@@ -77,10 +74,9 @@
     dispatch_semaphore_t done = dispatch_semaphore_create(0);
     dispatch_async(queue, ^{
         @try {
-            TokenIOBuilder *builder = [self sdkBuilder];
-            self->tokenIO = [builder buildSync];
+            self->tokenClient = [self client];
 
-            result = block(self->tokenIO);
+            result = block(self->tokenClient);
         } @catch(NSException *e) {
             error = e;
         } @finally {
@@ -118,27 +114,48 @@
     return result;
 }
 
-- (TKMemberSync *)createMember:(TokenIOSync *)token {
+- (TKMember *)createMember:(TokenClient *)tokenClient {
     Alias *alias = [self generateAlias];
-    __block TKMemberSync *member = [token createMember:alias];
-    return member;
+    TKRpcSyncCall<TKMember *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [tokenClient createMember:alias
+                        onSuccess:call.onSuccess
+                          onError:call.onError];
+         
+    }];
 }
 
-- (TKAccountSync *)createAccount:(TokenIOSync *)token {
-    TKMemberSync *member = [self createMember:token];
-    
+- (TKAccount *)createAccount:(TokenClient *)tokenClient {
+    TKMember *member = [self createMember:tokenClient];
     OauthBankAuthorization * auth = [self createBankAuthorization:member];
 
-    NSArray<TKAccountSync *> *accounts = [member linkAccounts:auth.bankId accessToken:auth.accessToken];
+    NSArray<TKAccount *> *accounts = [self linkAccounts:auth to:member];
+    
     XCTAssert(accounts.count == 1);
     return accounts[0];
 }
 
-- (OauthBankAuthorization *)createBankAuthorization:(TKMemberSync *)member {
+- (NSArray<TKAccount *> *)linkAccounts:(OauthBankAuthorization *)bankAuthorization to:(TKMember *)member {
+    TKRpcSyncCall<NSArray<TKAccount *> *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [member linkAccounts:bankAuthorization.bankId
+                 accessToken:bankAuthorization.accessToken
+                   onSuccess:call.onSuccess
+                     onError:call.onError];
+    }];
+}
+
+- (OauthBankAuthorization *)createBankAuthorization:(TKMember *)member {
     Money *balance = [Money message];
     balance.value = @"1000000.00";
     balance.currency = @"USD";
-    return [member createTestBankAccount:balance];
+    TKRpcSyncCall<OauthBankAuthorization *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [member createTestBankAccount:balance
+                            onSuccess:call.onSuccess
+                              onError:call.onError];
+        
+    }];
 }
 
 - (HostAndPort *)hostAndPort:(NSString *)var withDefaultPort:(int)port {
@@ -192,7 +209,7 @@
 - (void)waitUntil:(void (^)(void))block {
     NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
     for (useconds_t waitTimeMs = 100; ; waitTimeMs *= 2) {
-        typedef void (^AsyncTestBlock)(TokenIOSync *);
+        typedef void (^AsyncTestBlock)(TokenClient *);
         @try {
             block();
             return;
@@ -208,4 +225,48 @@
     }
 }
 
+- (void)runUntilTrue:(int (^)(void))condition {
+    [self runUntilTrue:condition backOffTimeMs:0 waitingTimeMs:20000];
+}
+
+- (void)runUntilTrue:(int (^)(void))condition backOffTimeMs:(int)backOffTimeMs waitingTimeMs:(int)waitingTimeMs {
+    NSTimeInterval start = [[NSDate date] timeIntervalSince1970];
+    while(true) {
+        if (condition()) {
+            return;
+        }
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        if (now - start < waitingTimeMs) {
+            usleep(1000 * backOffTimeMs);
+            [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
+                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        } else {
+            // time is up; try one last time...
+            XCTAssertTrue(condition());
+            return;
+        }
+    }
+}
+
+- (Notification *)runUntilNotificationReceived:(TKMember *)member; {
+    TKRpcSyncCall<PagedArray<Notification *> *> *call = [TKRpcSyncCall create];
+    __block Notification *result = nil;
+    [self runUntilTrue:^ {
+        PagedArray<Notification *> * array = [call run:^{
+            [member getNotificationsOffset:0
+                                     limit:1
+                                 onSuccess:call.onSuccess
+                                   onError:call.onError];
+            
+        }];
+        if (array.items.count > 0) {
+            result = array.items[0];
+            return true;
+        }
+        return false;
+    }
+         backOffTimeMs:2
+         waitingTimeMs:60000];
+    return result;
+}
 @end

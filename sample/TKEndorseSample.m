@@ -18,8 +18,8 @@
 @implementation TKEndorseSample
 
 - (void)testEndorseAccessToken {
-    TKMember *member = self.payerSync.async;
-    TKMember *aisp = self.payeeSync.async;
+    TKMember *member = self.payer;
+    TKMember *aisp = self.payee;
     __block NSString *notificationId = nil;
     __block BOOL isFinished = NO;
     
@@ -27,7 +27,7 @@
      storeTokenRequest:[TKSampleModel accessTokenRequestPayload:aisp]
      requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
-         [self.tokenIOSync.async
+         [self.tokenClient
           notifyCreateAndEndorseToken:tokenRequestId
           keys:[NSArray arrayWithObject:[TKSampleModel lowKey:aisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
@@ -52,7 +52,7 @@
         return notificationId != nil;
     }];
     
-    NSString *accountId = self.payerAccountSync.id;
+    NSString *accountId = self.payerAccount.id;
     // aisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId
@@ -61,13 +61,12 @@
              CreateAndEndorseToken *content = [TKJson
                                                deserializeMessageOfClass:[CreateAndEndorseToken class]
                                                fromJSON:notification.content.payload];
-             AccessTokenConfig *config = [[AccessTokenConfig alloc] initWithTokenRequest:content.tokenRequest.requestPayload
-                                                                      withRequestOptions:content.tokenRequest.requestOptions];
-             [config forAccount:accountId];
-             [config forAccountBalances:accountId];
+             AccessTokenBuilder *builder = [[AccessTokenBuilder alloc] initWithTokenRequest:content.tokenRequest];
+             [builder forAccount:accountId];
+             [builder forAccountBalances:accountId];
              // Create Token
              [member
-              createAccessToken:config
+              createAccessToken:builder
               onSuccess:^(Token *token) {
                   // Endorse Token
                   [member
@@ -133,8 +132,8 @@
 }
 
 - (void)testEndorseTransferToken {
-    TKMember *member = self.payerSync.async;
-    TKMember *pisp = self.payeeSync.async;
+    TKMember *member = self.payer;
+    TKMember *pisp = self.payee;
     __block NSString *notificationId = nil;
     __block BOOL isFinished = NO;
     
@@ -142,7 +141,7 @@
      storeTokenRequest:[TKSampleModel transferTokenRequestPayload:pisp]
      requestOptions:[TKSampleModel tokenRequestOptions:member]
      onSuccess:^(NSString * tokenRequestId) {
-         [self.tokenIOSync.async
+         [self.tokenClient
           notifyCreateAndEndorseToken:tokenRequestId
           keys:[NSArray arrayWithObject:[TKSampleModel lowKey:pisp.id]]
           deviceMetadata:[TKSampleModel deviceMetadata]
@@ -169,7 +168,7 @@
         return notificationId != nil;
     }];
     
-    NSString *accountId = self.payerAccountSync.id;
+    NSString *accountId = self.payerAccount.id;
     // pisp create and endorse token begin snippet to include in docs
     [member
      getNotification:notificationId
@@ -178,19 +177,9 @@
              CreateAndEndorseToken *content = [TKJson
                                           deserializeMessageOfClass:[CreateAndEndorseToken class]
                                           fromJSON:notification.content.payload];
-             NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:content.tokenRequest.requestPayload.transferBody.lifetimeAmount];
-             TransferTokenBuilder *builder =[member createTransferToken:amount currency:content.tokenRequest.requestPayload.transferBody.currency];
-             builder.toMemberId = content.tokenRequest.requestPayload.to.id_p;
-             if (content.tokenRequest.requestPayload.to.hasAlias) {
-                 builder.toAlias = content.tokenRequest.requestPayload.to.alias;
-             }
+             
+             TransferTokenBuilder *builder =[member createTransferToken:content.tokenRequest];
              builder.accountId = accountId;
-             builder.refId = content.tokenRequest.requestPayload.refId;
-             builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
-             // Optional settings
-             builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
-             builder.descr = @"Lunch";
-
              // Create Token
              [builder
               executeAsync:^(Token *token) {

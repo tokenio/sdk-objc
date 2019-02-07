@@ -254,8 +254,10 @@
  * Creates a new transfer token.
  *
  * @param payload transfer token payload
+ * @param tokenRequestId token request id
  */
 - (void)createTransferToken:(TokenPayload *)payload
+             tokenRequestId:(NSString *)tokenRequestId
                   onSuccess:(OnSuccessWithToken)onSuccess
              onAuthRequired:(OnAuthRequired)onAuthRequired
                     onError:(OnError)onError;
@@ -264,8 +266,10 @@
  * Creates a new access token.
  *
  * @param payload access token payload
+ * @param tokenRequestId token request id
  */
 - (void)createAccessToken:(TokenPayload *)payload
+           tokenRequestId:(NSString *)tokenRequestId
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError;
 

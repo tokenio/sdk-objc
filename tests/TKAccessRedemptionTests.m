@@ -6,80 +6,79 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
-#import "TKRepresentableSync.h"
+#import "TKAccount.h"
+#import "TKMember.h"
+#import "TKRepresentable.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "TKBalance.h"
 #import "TKError.h"
+#import "PagedArray.h"
 
 @interface TKAccessRedemptionTests : TKTestBase
 
 @end
 
 @implementation TKAccessRedemptionTests {
-    TKAccountSync *grantorAccount;
-    TKMemberSync *grantor;
-    TKMemberSync *grantee;
+    TKAccount *grantorAccount;
+    TKMember *grantor;
+    TKMember *grantee;
 }
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    grantorAccount = [self createAccount:tokenIO];
+    TokenClient *tokenClient = [self client];
+    grantorAccount = [self createAccount:tokenClient];
     grantor = [grantorAccount member];
-    grantee = [self createMember:tokenIO];
-}
-
-- (void)testAddressToken {
-    Address *payload = [Address message];
-    AddressRecord *address = [grantor addAddress:payload withName:@"name"];
-    
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
-    [access forAddress:address.id_p];
-    Token *token = [grantor createAccessToken:access];
-    
-    token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
-    
-    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
-    AddressRecord *lookedUp = [representable getAddressWithId:address.id_p];
-    
-    XCTAssertEqualObjects(address, lookedUp);
+    grantee = [self createMember:tokenClient];
 }
 
 - (void)testBalanceToken {
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccountBalances:grantorAccount.id];
-    Token *token = [grantor createAccessToken:access];
-    
-    token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
-    
-    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
-    Money *lookedUpBalance = [representable getBalance:grantorAccount.id
-                                         withKey:Key_Level_Low].current;
-    XCTAssertEqualObjects(lookedUpBalance, grantorAccount.getBalance.current);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor createAccessToken:access onSuccess:^(Token *created) {
+        [self->grantor endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            id<TKRepresentable> representable = [self->grantee forAccessToken:[result token].id_p];
+            
+            [representable getBalance:self->grantorAccount.id withKey:Key_Level_Low onSuccess:^(TKBalance *lookedUpBalance) {
+                [self->grantorAccount getBalance:^(TKBalance *balance) {
+                    XCTAssertEqualObjects(lookedUpBalance.current, balance.current);
+                    XCTAssertEqualObjects(lookedUpBalance.available, balance.available);
+                    [expectation fulfill];
+                } onError:THROWERROR];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testAccountToken {
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccount:grantorAccount.id];
-    Token *token = [grantor createAccessToken:access];
     
-    token = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
-    
-    id<TKRepresentableSync> representable = [grantee forAccessToken:token.id_p];
-    TKAccountSync *lookedUpAccount = [representable getAccount:grantorAccount.id];
-    XCTAssertEqualObjects(grantorAccount.name, lookedUpAccount.name);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor createAccessToken:access onSuccess:^(Token *created) {
+        [self->grantor endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            id<TKRepresentable> representable = [self->grantee forAccessToken:[result token].id_p];
+            
+            [representable getAccount:self->grantorAccount.id onSuccess:^(TKAccount *lookedUpAccount) {
+                    XCTAssertEqualObjects(lookedUpAccount.name, self->grantorAccount.name);
+                
+                    [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testTransactionsToken {
-    TKAccountSync *redeemerAccount = [self createAccount:[self syncSDK]];
-    TKMemberSync *redeemer = redeemerAccount.member;
+    TKAccount *redeemerAccount = [self createAccount:[self client]];
+    TKMember *redeemer = redeemerAccount.member;
     
     // Create and redeem transfer token to create a transaction.
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
@@ -87,34 +86,46 @@
                                                         currency:@"USD"];
     builder.accountId = grantorAccount.id;
     builder.toMemberId = redeemer.id;
-    Token *transferToken = [builder execute];
-    transferToken = [[grantor endorseToken:transferToken withKey:Key_Level_Standard] token];
     
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = redeemerAccount.member.id;
-    destination.account.token.accountId = redeemerAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
-    [redeemer redeemToken:transferToken
-                   amount:redeemAmount
-                 currency:@"USD"
-              description:@"lunch"
-              destination:destination];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token *created) {
+        [self->grantor endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = redeemerAccount.member.id;
+            destination.account.token.accountId = redeemerAccount.id;
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            [redeemer
+             redeemToken:[result token]
+             amount:redeemAmount
+             currency:@"USD"
+             description:@"lunch"
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 [expectation fulfill];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
     
-    
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
     [access forAccountTransactions:grantorAccount.id];
-    Token *accessToken = [grantor createAccessToken:access];
     
-    accessToken = [[grantor endorseToken:accessToken withKey:Key_Level_Standard] token];
-    
-    id<TKRepresentableSync> representable = [grantee forAccessToken:accessToken.id_p];
-    PagedArray<Transaction *> *lookedUpTransactions = [representable
-                                                       getTransactionsOffset:nil
-                                                       limit:100
-                                                       forAccount:grantorAccount.id
-                                                       withKey:Key_Level_Low];
-    XCTAssertEqual(1, lookedUpTransactions.items.count);
-    XCTAssertNotNil(lookedUpTransactions.offset);
+    expectation = [[TKTestExpectation alloc] init];
+    [grantor createAccessToken:access onSuccess:^(Token *created) {
+        [self->grantor endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            id<TKRepresentable> representable = [self->grantee forAccessToken:[result token].id_p];
+            
+            [representable
+             getTransactionsOffset:nil
+             limit:100
+             forAccount:self->grantorAccount.id
+             withKey:Key_Level_Low
+             onSuccess:^(PagedArray<Transaction *> *lookedUpTransactions) {
+                 XCTAssertEqual(1, lookedUpTransactions.items.count);
+                 XCTAssertNotNil(lookedUpTransactions.offset);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
-
 @end

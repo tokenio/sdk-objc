@@ -4,13 +4,11 @@
 //
 
 #import <objc/NSObject.h>
-#import "TKTypedef.h"
 #import "TKBrowser.h"
+#import "TKTypedef.h"
 #import "TokenCluster.h"
 
-
-@class TokenIOSync;
-@class TokenIO;
+@class TokenClient;
 @protocol TKCryptoEngineFactory;
 @protocol TKKeyStore;
 
@@ -18,7 +16,7 @@
  * A builder that is used to customize and create `TokenIO` and 
  * `TokenIOSync` instances that serve as the Token API entry points.
  */
-@interface TokenIOBuilder : NSObject
+@interface TokenClientBuilder : NSObject
 
 /// TokenCluster.
 @property (readwrite, strong) TokenCluster *tokenCluster;
@@ -66,15 +64,9 @@
 - (id)init;
 
 /**
- * Creates a synchronous Token client object that is used as the 
- * entry point to the Token API.
- */
-- (TokenIOSync *)buildSync;
-
-/**
  * Creates an asynchronous Token client object that is used as the
  * entry point to the Token API.
  */
-- (TokenIO *)buildAsync;
+- (TokenClient *)build;
 
 @end

@@ -83,6 +83,9 @@
 /// If receipt is requested. Default to false.
 @property (readwrite) BOOL receiptRequested;
 
+/// Set the token request ID.
+@property (readwrite) NSString *tokenRequestId;
+
 /**
  * Initializes the transfer token builder.
  *
@@ -91,9 +94,16 @@
  * @param currency the currency of the token
  * @return transfer token builder
  */
-- (id)init:(TKMember *)member
-lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
-  currency:(NSString *)currency;
+- (id)init:(TKMember *)member lifetimeAmount:(NSDecimalNumber *)lifetimeAmount currency:(NSString *)currency;
+
+/**
+ * Initializes the transfer token builder.
+ *
+ * @param member the payer of the token
+ * @param tokenRequest token request
+ * @return transfer token builder
+ */
+- (id)init:(TKMember *)member tokenRequest:(TokenRequest *)tokenRequest;
 
 /**
  * Executes the request, creating the token. Throws error if external authorization is required.

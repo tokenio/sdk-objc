@@ -7,26 +7,18 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TokenIO.h"
+#import "TokenClient.h"
 
 
-@interface TokenIOTests : XCTestCase
+@interface TokenClientTests : XCTestCase
 
 @end
 
-@implementation TokenIOTests
-
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
+@implementation TokenClientTests
 
 - (void)testInitWithDeveloperKey {
     NSString *validDeveloperKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-    XCTAssertNotNil([[TokenIO alloc] initWithTokenCluster:[TokenCluster localhost]
+    XCTAssertNotNil([[TokenClient alloc] initWithTokenCluster:[TokenCluster localhost]
                                                      port:9001
                                                 timeoutMs:1000
                                              developerKey:validDeveloperKey
@@ -41,7 +33,7 @@
 }
 
 - (void)testInitWithoutDeveloperKey {
-    XCTAssertThrowsSpecificNamed([[TokenIO alloc] initWithTokenCluster:[TokenCluster localhost]
+    XCTAssertThrowsSpecificNamed([[TokenClient alloc] initWithTokenCluster:[TokenCluster localhost]
                                                                   port:9001
                                                              timeoutMs:1000
                                                           developerKey:nil

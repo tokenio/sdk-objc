@@ -7,14 +7,12 @@
 #import "gateway/Gateway.pbrpc.h"
 
 #import "TKAccount.h"
-#import "TKAccountSync.h"
 #import "TKAuthorizationEngine.h"
 #import "TKClient.h"
 #import "TKError.h"
 #import "TKHasher.h"
 #import "TKLocalizer.h"
 #import "TKMember.h"
-#import "TKMemberSync.h"
 #import "TKOauthEngine.h"
 #import "Transferinstructions.pbobjc.h"
 
@@ -495,28 +493,31 @@
                       onError:onError];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount
-                                     currency:(NSString *)currency {
-    TransferTokenBuilder * builder = [TransferTokenBuilder alloc];
-    return [builder init:self lifetimeAmount:amount currency:currency];
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency {
+    return [[TransferTokenBuilder alloc] init:self lifetimeAmount:amount currency:currency];
 }
 
-- (void)createAccessToken:(AccessTokenConfig *)accessTokenConfig
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest {
+    return [[TransferTokenBuilder alloc] init:self tokenRequest:tokenRequest];
+}
+
+- (void)createAccessToken:(AccessTokenBuilder *)accessTokenBuilder
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError {
-    [accessTokenConfig from:self.id];
-    [client createAccessToken:[accessTokenConfig toTokenPayload]
+    [accessTokenBuilder from:self.id];
+    [client createAccessToken:[accessTokenBuilder toTokenPayload]
+               tokenRequestId:[accessTokenBuilder tokenRequestId]
                     onSuccess:^(Token *token) { onSuccess(token); }
                       onError:onError];
 }
 
 - (void)replaceAccessToken:(Token *)tokenToCancel
-         accessTokenConfig:(AccessTokenConfig *)accessTokenConfig
+        accessTokenBuilder:(AccessTokenBuilder *)accessTokenBuilder
                  onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                    onError:(OnError)onError {
-    [accessTokenConfig from:self.id];
+    [accessTokenBuilder from:self.id];
     [client replaceToken:tokenToCancel
-           tokenToCreate:[accessTokenConfig toTokenPayload]
+           tokenToCreate:[accessTokenBuilder toTokenPayload]
                onSuccess:onSuccess
                  onError:onError];
 }
@@ -938,8 +939,7 @@
 }
 
 - (TKAccount *)_mapAccount:(Account *)account {
-    TKMemberSync *memberSync = [TKMemberSync member:self];
-    return [TKAccount account:account of:memberSync useClient:client];
+    return [TKAccount account:account of:self useClient:client];
 }
 
 @end

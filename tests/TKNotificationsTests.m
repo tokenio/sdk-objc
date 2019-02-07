@@ -3,26 +3,27 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
+#import "TKAccount.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
 #import "Account.pbobjc.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Transfer.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
+#import "Notification.pbobjc.h"
 #import "TKJson.h"
-
+#import "PagedArray.h"
 
 @interface TKNotificationsTests : TKTestBase
 @end
 
 @implementation TKNotificationsTests {
-    TKAccountSync *payerAccount;
-    TKMemberSync *payer;
-    TKMemberSync *payerAnotherDevice;
+    TKAccount *payerAccount;
+    TKMember *payer;
+    TKMember *payerAnotherDevice;
 
-    TKAccountSync *payeeAccount;
-    TKMemberSync *payee;
+    TKAccount *payeeAccount;
+    TKMember *payee;
     NSMutableDictionary * instructions;
 }
 
@@ -40,12 +41,12 @@ void check(NSString *message, BOOL condition) {
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    payerAccount = [self createAccount:tokenIO];
+    TokenClient *tokenClient = [self client];
+    payerAccount = [self createAccount:tokenClient];
     payer = payerAccount.member;
-    payerAnotherDevice = [self createMember:tokenIO];
-    
-    payeeAccount = [self createAccount:tokenIO];
+    payerAnotherDevice = [self createMember:tokenClient];
+
+    payeeAccount = [self createAccount:tokenClient];
     payee = payeeAccount.member;
     instructions = [NSMutableDictionary dictionaryWithDictionary:
                     @{@"PLATFORM": @"TEST",
@@ -53,263 +54,268 @@ void check(NSString *message, BOOL condition) {
 }
 
 - (void)testTransfer {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    
+    [self subscribeNotificationsFor:payer];
+
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
     
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-    
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
-    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
-    
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token* created) {
+        [self->payer endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = self->payeeAccount.member.id;
+            destination.account.token.accountId = self->payeeAccount.id;
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            
+            [self->payee
+             redeemToken:[result token]
+             amount:redeemAmount
+             currency:@"USD"
+             description:@""
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 [expectation fulfill];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+
     [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
 }
 
 - (void)testNotifyPayeeTransfer {
-    [payee subscribeToNotifications:@"token" handlerInstructions:instructions];
+    [self subscribeNotificationsFor:payee];
+    
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
     
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-    
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
-    [payee redeemToken:token amount:redeemAmount currency:@"USD" description:@"" destination:destination];
-    
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token* created) {
+        [self->payer endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = self->payeeAccount.member.id;
+            destination.account.token.accountId = self->payeeAccount.id;
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            
+            [self->payee
+             redeemToken:[result token]
+             amount:redeemAmount
+             currency:@"USD"
+             description:@""
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 [expectation fulfill];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+
     [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
 }
 
 - (void)testNotifyAddKey {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    [self subscribeNotificationsFor:payer];
     DeviceMetadata *metadata = [DeviceMetadata message];
     metadata.application = @"Chrome";
     metadata.applicationVersion = @"53.0";
     metadata.device = @"Mac";
-    [[self syncSDK] notifyAddKey:payer.firstAlias
-                            keys:[payerAnotherDevice getKeys]
-                  deviceMetadata:metadata];
-    
-    [self waitForNotification:@"ADD_KEY"];
-}
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [payerAnotherDevice getKeys:^(NSArray<Key *> * keys) {
+        [[self client] notifyAddKey:self->payer.firstAlias keys:keys deviceMetadata:metadata onSuccess:^ {
+            [expectation fulfill];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 
-//- (void)testGetPairedDevices {
-//    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-//    Key *key = [[payerAnotherDevice getKeys] firstObject];
-//    DeviceMetadata *metadata = [DeviceMetadata message];
-//    metadata.application = @"Chrome";
-//    metadata.applicationVersion = @"53.0";
-//    metadata.device = @"Mac";
-//    [[self syncSDK] notifyAddKey:payer.firstAlias
-//                            keys:@[key]
-//                  deviceMetadata:metadata];
-//    
-//    [self waitForNotification:@"ADD_KEY"];
-//    [payer approveKey:key];
-//    
-//    NSArray<Device *> *devices = [payer getPairedDevices];
-//    XCTAssertEqual(1, [devices count]);
-//    XCTAssert([@"Chrome 53.0" isEqualToString:devices[0].name]);
-//    XCTAssert([key isEqual:devices[0].key]);
-//}
-
-- (void)testGetPairedDevicesUnapprovedKey {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    Key *key = [[payerAnotherDevice getKeys] firstObject];
-    DeviceMetadata *metadata = [DeviceMetadata message];
-    metadata.application = @"Chrome";
-    metadata.applicationVersion = @"53.0";
-    metadata.device = @"Mac";
-    [[self syncSDK] notifyAddKey:payer.firstAlias
-                            keys:@[key]
-                  deviceMetadata:metadata];
-    
     [self waitForNotification:@"ADD_KEY"];
-    
-    NSArray<Device *> *devices = [payer getPairedDevices];
-    XCTAssertEqual(0, [devices count]);
 }
 
 - (void)testNotifyPaymentRequest {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    TokenPayload *token = [TokenPayload message];
-    token.description_p = @"Description: 🍷🌺🌹";
-    token.from.alias = payer.firstAlias;
-    token.to.alias = payee.firstAlias;
-    token.transfer.amount = @"50";
-    token.transfer.lifetimeAmount = @"100";
-    token.transfer.currency = @"EUR";
-    [[self syncSDK] notifyPaymentRequest:token];
-    
+    [self subscribeNotificationsFor:payer];
+    TokenPayload *tokenPayload = [TokenPayload message];
+    tokenPayload.description_p = @"Description: 🍷🌺🌹";
+    tokenPayload.from.alias = payer.firstAlias;
+    tokenPayload.to.alias = payee.firstAlias;
+    tokenPayload.transfer.amount = @"50";
+    tokenPayload.transfer.lifetimeAmount = @"100";
+    tokenPayload.transfer.currency = @"EUR";
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [[self client] notifyPaymentRequest:tokenPayload onSuccess:^ {
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+
     [self waitForNotification:@"PAYMENT_REQUEST"];
 }
 
-- (void)testStepUp {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"EUR"];
-    builder.accountId = payerAccount.id;
-    builder.toMemberId = payee.id;
-    Token *token = [builder execute];
-    
-    TokenOperationResult *result = [payer endorseToken:token withKey:Key_Level_Low];
-    XCTAssertEqual(result.status, TokenOperationResult_Status_MoreSignaturesNeeded);
-    
-    NotifyStatus status = [payer triggerStepUpNotification:token.id_p];
-    XCTAssertEqual(status, NotifyStatus_Accepted);
-    
-    [self waitForNotification:@"STEP_UP"];
-    
-    result = [payer endorseToken:token withKey:Key_Level_Standard];
-    XCTAssertEqual(result.status, TokenOperationResult_Status_Success);
-}
-
 - (void)testGetSubscribers {
-    Subscriber * subscriber = [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    
-    XCTAssert([payer getSubscribers].count == 1);
-    
-    Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
-    XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-    XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
-    XCTAssert([subscriber.handlerInstructions[@"PLATFORM"]
-               isEqualToString:lookedUp.handlerInstructions[@"PLATFORM"]]);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [payer subscribeToNotifications:@"token" handlerInstructions:instructions onSuccess:^(Subscriber * subscriber) {
+        [self->payer getSubscribers:^(NSArray<Subscriber *> *subscribers) {
+            XCTAssert(subscribers.count == 1);
+            
+            [self->payer getSubscriber:subscriber.id_p onSuccess:^(Subscriber * lookedUp) {
+                XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
+                XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
+                XCTAssert([subscriber.handlerInstructions[@"PLATFORM"]
+                           isEqualToString:lookedUp.handlerInstructions[@"PLATFORM"]]);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetSubscribersWithBankId {
     NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
-    Subscriber * subscriber = [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
-    
-    XCTAssert([payer getSubscribers].count == 1);
-    
-    Subscriber * lookedUp = [payer getSubscriber:subscriber.id_p];
-    XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
-    XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty onSuccess:^(Subscriber * subscriber) {
+        [self->payer getSubscribers:^(NSArray<Subscriber *> *subscribers) {
+            XCTAssert(subscribers.count == 1);
+            
+            [self->payer getSubscriber:subscriber.id_p onSuccess:^(Subscriber * lookedUp) {
+                XCTAssert([subscriber.id_p isEqualToString:lookedUp.id_p]);
+                XCTAssert([subscriber.handler isEqualToString:lookedUp.handler]);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 
 - (void)testTransferNotification {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
-    [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
+    [self subscribeNotificationsFor:payer];
+//    NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
+//    [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
-    
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
-    
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
-    Transfer *transfer = [payee redeemToken:token
-                                     amount:redeemAmount
-                                   currency:@"USD"
-                                description:@""
-                                destination:destination];
-    XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token* created) {
+        [self->payer endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = self->payeeAccount.member.id;
+            destination.account.token.accountId = self->payeeAccount.id;
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
+            [self->payee
+             redeemToken:[result token]
+             amount:redeemAmount
+             currency:@"USD"
+             description:@""
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
+                 [expectation fulfill];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
-- (void)testGetNotifications {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    
-    
-    Key *key = [[payerAnotherDevice getKeys] firstObject];
-    DeviceMetadata *metadata = [DeviceMetadata message];
-    metadata.application = @"Chrome";
-    metadata.applicationVersion = @"53.0";
-    metadata.device = @"Mac";
-    [[self syncSDK] notifyAddKey:payer.firstAlias
-                            keys:@[key]
-                  deviceMetadata:metadata];
-    
-    [self waitForNotification:@"ADD_KEY"];
-}
-    
 - (void)testBalanceStepUpNotification {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
+    [self subscribeNotificationsFor:payer];
+
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [payer triggerBalanceStepUpNotification:@[payerAccount.id] onSuccess:^(NotifyStatus status) {
+        XCTAssertEqual(status, NotifyStatus_Accepted);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
     
-    NotifyStatus status = [payer triggerBalanceStepUpNotification:@[payerAccount.id]];
-    XCTAssertEqual(status, NotifyStatus_Accepted);
-    
-    [self waitUntil:^{
-        PagedArray<Notification *> *notifications = [self->payer getNotificationsOffset:nil limit:100];
-        check(@"Notification count", notifications.items.count == 1);
-        
-        Notification* notification = [notifications.items objectAtIndex:0];
-        check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-        check(@"Notification Type", [notification.content.type
-                                     isEqualToString:@"BALANCE_STEP_UP"]);
-        
-        BalanceStepUp *balanceStepUp = [TKJson
-                                        deserializeMessageOfClass:[BalanceStepUp class]
-                                        fromJSON:notification.content.payload];
-        check(@"BalanceStepUp AccountID",
-              [balanceStepUp.accountIdArray[0] isEqualToString: self->payerAccount.id]);
+    expectation = [[TKTestExpectation alloc] init];
+    [self runUntilTrue:^{
+        [self->payer getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
+            if (notifications.items.count >= 1) {
+                Notification* notification = [notifications.items objectAtIndex:0];
+                if ((notification.status == Notification_Status_Delivered)
+                    && ([notification.content.type isEqualToString:@"BALANCE_STEP_UP"])) {
+                    BalanceStepUp *balanceStepUp = [TKJson
+                                                    deserializeMessageOfClass:[BalanceStepUp class]
+                                                    fromJSON:notification.content.payload];
+                    if ([balanceStepUp.accountIdArray[0] isEqualToString: self->payerAccount.id]) {
+                        [expectation fulfill];
+                    }
+                }
+            }
+        } onError:THROWERROR];
+        return (int) expectation.isFulfilled;
     }];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
-    
+
 - (void)testTransationStepUpNotification {
-    [payer subscribeToNotifications:@"token" handlerInstructions:instructions];
-    
+    [self subscribeNotificationsFor:payer];
+
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
     builder.accountId = payerAccount.id;
     builder.toMemberId = payee.id;
-    Token *token = [builder execute];
-    token = [[payer endorseToken:token withKey:Key_Level_Standard] token];
     
-    TransferEndpoint *destination = [[TransferEndpoint alloc] init];
-    destination.account.token.memberId = payeeAccount.member.id;
-    destination.account.token.accountId = payeeAccount.id;
-    Transfer *transfer = [payee redeemToken:token
-                                     amount:amount
-                                   currency:@"USD"
-                                description:@"full amount"
-                                destination:destination];
-    
-    NotifyStatus status = [payer triggerTransactionStepUpNotification:transfer.transactionId
-                                                            accountID:payerAccount.id];
-    XCTAssertEqual(status, NotifyStatus_Accepted);
-    
-    [self waitUntil:^{
-        PagedArray<Notification *> *notifications = [self->payer getNotificationsOffset:nil
-                                                                                  limit:100];
-        check(@"Notification count", notifications.items.count == 2);
-        
-        Notification* notification = [notifications.items objectAtIndex:0];
-        check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-        check(@"Notification Type", [notification.content.type
-                                     isEqualToString:@"TRANSACTION_STEP_UP"]);
-        
-        TransactionStepUp *transactionStepup = [TKJson
-                                                deserializeMessageOfClass:[TransactionStepUp class]
-                                                fromJSON:notification.content.payload];
-        check(@"TransactionStepUp TransactionID",
-              [transactionStepup.transactionId isEqualToString: transfer.transactionId]);
-        check(@"TransactionStepUp AccountID",
-              [transactionStepup.accountId isEqualToString: self->payerAccount.id]);
+    __block NSString *transactionId = nil;
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [builder executeAsync:^(Token* created) {
+        [self->payer endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            TransferEndpoint *destination = [[TransferEndpoint alloc] init];
+            destination.account.token.memberId = self->payeeAccount.member.id;
+            destination.account.token.accountId = self->payeeAccount.id;
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            
+            [self->payee
+             redeemToken:[result token]
+             amount:redeemAmount
+             currency:@"USD"
+             description:@""
+             destination:destination onSuccess:^(Transfer *transfer) {
+                 transactionId = transfer.transactionId;
+                 [self->payer
+                  triggerTransactionStepUpNotification:transfer.transactionId
+                  accountID:self->payerAccount.id
+                  onSuccess:^(NotifyStatus status) {
+                      XCTAssertEqual(status, NotifyStatus_Accepted);
+                      [expectation fulfill];
+                 } onError:THROWERROR];
+             } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+
+    expectation = [[TKTestExpectation alloc] init];
+    [self runUntilTrue:^{
+        [self->payer getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
+            if (notifications.items.count >= 1) {
+                Notification* notification = [notifications.items objectAtIndex:0];
+                
+                if ((notification.status == Notification_Status_Delivered)
+                    && ([notification.content.type isEqualToString:@"TRANSACTION_STEP_UP"])) {
+                    TransactionStepUp *transactionStepup = [TKJson
+                                                            deserializeMessageOfClass:[TransactionStepUp class]
+                                                            fromJSON:notification.content.payload];
+                    if ([transactionStepup.transactionId isEqualToString: transactionId]
+                        && [transactionStepup.accountId isEqualToString: self->payerAccount.id]) {
+                        [expectation fulfill];
+                    }
+                }
+            }
+        } onError:THROWERROR];
+        return (int) expectation.isFulfilled;
     }];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
+- (void)subscribeNotificationsFor:(TKMember *)member {
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [member subscribeToNotifications:@"token" handlerInstructions:instructions onSuccess:^(Subscriber *subscriber) {
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+}
 /**
  * Wait for the delivered notification of the specified type.
  *
@@ -317,15 +323,21 @@ void check(NSString *message, BOOL condition) {
  * @param member user to check notifications for
  */
 - (void)waitForNotification:(NSString *)type
-                     member:(TKMemberSync *)member {
-    [self waitUntil:^{
-        PagedArray<Notification *> *notifications = [member getNotificationsOffset:nil limit:100];
-        check(@"Notification count", notifications.items.count == 1);
-
-        Notification* notification = [notifications.items objectAtIndex:0];
-        check(@"Delivery Status", notification.status == Notification_Status_Delivered);
-            check(@"Notification Type", [notification.content.type isEqualToString:type]);
+                     member:(TKMember *)member {
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [self runUntilTrue:^{
+        [member getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
+            if (notifications.items.count == 1) {
+                Notification* notification = [notifications.items objectAtIndex:0];
+                if ((notification.status == Notification_Status_Delivered)
+                    && ([notification.content.type isEqualToString:type])) {
+                    [expectation fulfill];
+                }
+            }
+        } onError:THROWERROR];
+        return (int) expectation.isFulfilled;
     }];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 /**

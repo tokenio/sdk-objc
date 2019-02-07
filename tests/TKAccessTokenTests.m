@@ -6,11 +6,11 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "AccessTokenConfig.h"
-#import "TKAccountSync.h"
-#import "TKMemberSync.h"
+#import "AccessTokenBuilder.h"
+#import "TKAccount.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "Address.pbobjc.h"
 #import "Account.pbobjc.h"
 #import "Member.pbobjc.h"
@@ -23,19 +23,20 @@
 @end
 
 @implementation TKAccessTokenTests {
-    TKMemberSync *grantee;
-    TKAccountSync *grantorAccount;
-    TKMemberSync *grantor;
+    TKMember *grantee;
+    TKAccount *grantorAccount;
+    TKMember *grantor;
     TokenRequestPayload *requestPayload;
     TokenRequestOptions *requestOptions;
+    TokenRequest *tokenRequest;
     Token *token;
 }
 
 - (void)setUp {
     [super setUp];
-    TokenIOSync *tokenIO = [self syncSDK];
-    grantee = [self createMember:tokenIO];
-    grantorAccount = [self createAccount:tokenIO];
+    TokenClient *tokenClient = [self client];
+    grantee = [self createMember:tokenClient];
+    grantorAccount = [self createAccount:tokenClient];
     grantor = grantorAccount.member;
     
     requestPayload = [[TokenRequestPayload alloc] init];
@@ -55,10 +56,19 @@
     requestOptions.receiptRequested = false;
     requestOptions.from.id_p = grantor.id;
     
-    AccessTokenConfig *access = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    tokenRequest = [TokenRequest message];
+    tokenRequest.requestPayload = requestPayload;
+    tokenRequest.requestOptions = requestOptions;
+    AccessTokenBuilder *access = [AccessTokenBuilder fromTokenRequest:tokenRequest];
     [access forAccount:grantorAccount.id];
     [access forAccountBalances:grantorAccount.id];
-    token = [grantor createAccessToken:access];
+    
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor createAccessToken:access onSuccess:^(Token *created) {
+        self->token = created;
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testCreateToken {
@@ -66,97 +76,76 @@
 }
 
 - (void)testLookupToken {
-    Token *lookedUp = [grantee getToken:token.id_p];
-    XCTAssertEqualObjects(token, lookedUp);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantee getToken:token.id_p onSuccess:^(Token *lookedUp) {
+        XCTAssertEqualObjects(self->token, lookedUp);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testLookupTokens {
-    [grantor endorseToken:token withKey:Key_Level_Standard];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
     [self waitUntil:^{
-        PagedArray<Token *> *lookedUp = [self->grantor getAccessTokensOffset:NULL limit:100];
+        __block PagedArray<Token *> *lookedUp = nil;
+        TKTestExpectation *lookedUpExpectation = [[TKTestExpectation alloc] init];
+        [self->grantor getAccessTokensOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *result) {
+            lookedUp = result;
+            [lookedUpExpectation fulfill];
+        } onError:THROWERROR];
+        [self waitForExpectations:@[lookedUpExpectation] timeout:10];
+        
         [self check:@"Access Token count" condition:lookedUp.items.count == 1];
         [self check:@"Offset is present" condition:lookedUp.offset != nil];
     }];
 }
 
 - (void)testEndorseToken {
-    Token *endorsed = [[grantor endorseToken:token withKey:Key_Level_Standard] token];
-    
-    XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-    XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
-    XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+        XCTAssertEqual(0, self->token.payloadSignaturesArray_Count);
+        XCTAssertEqual(2, [result token].payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Endorsed, [result token].payloadSignaturesArray[0].action);
+        
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testCancelToken {
-    Token *cancelled = [[grantor cancelToken:token] token];
-    
-    XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-    XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
-    XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor cancelToken:token onSuccess:^(TokenOperationResult *result) {
+        XCTAssertEqual(0, self->token.payloadSignaturesArray_Count);
+        XCTAssertEqual(2, [result token].payloadSignaturesArray_Count);
+        XCTAssertEqual(TokenSignature_Action_Cancelled, [result token].payloadSignaturesArray[0].action);
+        
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testReplaceToken {
-    AccessTokenConfig *accessToken = [AccessTokenConfig fromPayload:token.payload];
+    AccessTokenBuilder *accessToken = [AccessTokenBuilder fromPayload:token.payload];
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccountTransactions:grantorAccount.id];
-    TokenOperationResult *replaced = [grantor replaceAccessToken:token accessTokenConfig:accessToken];
-    XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [replaced status]);
-    XCTAssertEqual(0, [[replaced token] payloadSignaturesArray_Count]);
-}
-
-- (void)testReplaceTokenLarge {
-    TKAccountSync *account = [self createAccount:[self syncSDK]];
-    TKMemberSync *grantor2 = account.member;
-    AccessTokenConfig *access = [AccessTokenConfig createWithToId:grantee.id];
-    Address *payload1 = [Address message];
-    Address *payload2 = [Address message];
-    Address *payload3 = [Address message];
-    Address *payload4 = [Address message];
-    Address *payload5 = [Address message];
-    Address *payload6 = [Address message];
-    Address *payload7 = [Address message];
-    Address *payload8 = [Address message];
-    Address *payload9 = [Address message];
-    Address *payload10 = [Address message];
     
-    AddressRecord *address1 = [grantor2 addAddress:payload1 withName:@"name1"];
-    AddressRecord *address2 = [grantor2 addAddress:payload2 withName:@"name2"];
-    AddressRecord *address3 = [grantor2 addAddress:payload3 withName:@"name3"];
-    AddressRecord *address4 = [grantor2 addAddress:payload4 withName:@"name4"];
-    AddressRecord *address5 = [grantor2 addAddress:payload5 withName:@"name5"];
-    AddressRecord *address6 = [grantor2 addAddress:payload6 withName:@"name6"];
-    AddressRecord *address7 = [grantor2 addAddress:payload7 withName:@"name7"];
-    AddressRecord *address8 = [grantor2 addAddress:payload8 withName:@"name8"];
-    AddressRecord *address9 = [grantor2 addAddress:payload9 withName:@"name9"];
-    AddressRecord *address10 = [grantor2 addAddress:payload10 withName:@"name10"];
-    
-    [access forAddress:address1.id_p];
-    [access forAddress:address2.id_p];
-    [access forAddress:address3.id_p];
-    [access forAddress:address4.id_p];
-    [access forAddress:address5.id_p];
-    [access forAddress:address6.id_p];
-    [access forAddress:address7.id_p];
-    [access forAddress:address8.id_p];
-    
-    [access forAccount:account.id];
-    [access forAccountBalances:account.id];
-    [access forAccountTransactions:account.id];
-    Token* token2 = [grantor2 createAccessToken:access];
-    AccessTokenConfig *access2 = [AccessTokenConfig fromPayload:token2.payload];
-    [access2 forAddress:address1.id_p];
-    [access2 forAddress:address3.id_p];
-    [access2 forAddress:address4.id_p];
-    [access2 forAddress:address9.id_p];
-    [access2 forAddress:address10.id_p];
-    
-    TokenOperationResult *replaced = [grantor2 replaceAccessToken:token2 accessTokenConfig:access2];
-    XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [replaced status]);
-    XCTAssertEqual(0, [[replaced token] payloadSignaturesArray_Count]);
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantor replaceAccessToken:token accessTokenBuilder:accessToken onSuccess:^(TokenOperationResult *result) {
+        XCTAssertEqual(TokenOperationResult_Status_MoreSignaturesNeeded, [result status]);
+        XCTAssertEqual(0, [[result token] payloadSignaturesArray_Count]);
+        
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testAddingPermissionsIdempotent {
-    AccessTokenConfig *accessToken = [AccessTokenConfig fromTokenRequest:requestPayload withRequestOptions:requestOptions];
+    AccessTokenBuilder *accessToken = [AccessTokenBuilder fromTokenRequest:tokenRequest]; 
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccount:grantorAccount.id];
     [accessToken forAccount:grantorAccount.id];
@@ -170,14 +159,20 @@
 }
 
 - (void)testGetTokenRequestResult {
-    TokenIOSync *tokenIO = [self syncSDK];
-    NSString *tokenRequestId = [grantee storeTokenRequest:requestPayload requestOptions:requestOptions];
-    Signature *signature = [grantor signTokenRequestState:tokenRequestId
-                                                 tokenId:token.id_p
-                                                   state:requestPayload.callbackState];
-    TokenRequestResult *result = [tokenIO getTokenRequestResult:tokenRequestId];
-    
-    XCTAssert([result.tokenId isEqualToString: token.id_p]);
-    XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+    TokenClient *tokenClient = [self client];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [grantee storeTokenRequest:requestPayload requestOptions:requestOptions onSuccess:^(NSString *tokenRequestId) {
+        [self->grantor
+         signTokenRequestState:tokenRequestId
+         tokenId:self->token.id_p
+         state:self->requestPayload.callbackState onSuccess:^(Signature *signature) {
+             [tokenClient getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
+                 XCTAssert([result.tokenId isEqualToString: self->token.id_p]);
+                 XCTAssert([result.signature.signature isEqualToString: signature.signature]);
+                 [expectation fulfill];
+             } onError:THROWERROR];
+         } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 @end

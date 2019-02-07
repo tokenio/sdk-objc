@@ -3,203 +3,288 @@
 //  Copyright © 2016 Token Inc. All rights reserved.
 //
 
-#import "TokenSdk.h"
+#import "DeviceInfo.h"
 #import "TKCrypto.h"
 #import "TKTestBase.h"
-#import "DeviceInfo.h"
 #import "Token.pbobjc.h"
+#import "TokenSdk.h"
 
 @interface TKMemberRegistrationTests : TKTestBase
 @end
 
-@implementation TKMemberRegistrationTests
+@implementation TKMemberRegistrationTests {
+    TokenClient *tokenClient;
+    TKMember *member;
+}
+
+-(void)setUp {
+    [super setUp];
+    tokenClient = [self client];
+    member = [self createMember:tokenClient];
+}
 
 - (void)testCreateMember {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias = [self generateAlias];
-        TKMemberSync *member = [tokenIO createMember:alias];
-        XCTAssert(member.id.length > 0);
-        XCTAssertEqualObjects(member.firstAlias, alias);
-        XCTAssertEqual([member getKeys].count, 3);
-        
-        [member deleteMember];
-        XCTAssertThrows([tokenIO getMember:member.id]);
-    }];
+    Alias *alias = [self generateAlias];
+    __block TKMember *newMember = nil;
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    [tokenClient createMember:alias onSuccess:^(TKMember *created) {
+        newMember = created;
+        XCTAssert(created.id.length > 0);
+        XCTAssertEqualObjects(created.firstAlias, alias);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertKeysCount:3 for:newMember];
+    
+    expectation = [[XCTestExpectation alloc] init];
+    [newMember deleteMember:^{
+        [self->tokenClient getMember:newMember.id
+                           onSuccess:^(TKMember *member2) {
+                               XCTFail(@"An unexpected member is found");
+                           } onError:^(NSError *error) {
+                               [expectation fulfill];
+                           }];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testProvisionNewDevice {
-    Alias *alias = [self generateAlias];
-    // Create a member.
-    TKMemberSync *member = [self runWithResult:^TKMemberSync *(TokenIOSync *tokenIO) {
-        return [tokenIO createMember:alias];
-    }];
-
+    TokenClient *anotherClient = [self client];
+    
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
     // Generate keys on a new device, get the keys approved and login
     // with the new keys.
-    [self run: ^(TokenIOSync *tokenIO) {
-        DeviceInfo *newDevice = [tokenIO provisionDevice:member.firstAlias];
-        [member approveKeys:newDevice.keys];
-
-        TKMemberSync *memberNewDevice = [tokenIO getMember:newDevice.memberId];
-        XCTAssertEqualObjects(member.firstAlias, memberNewDevice.firstAlias);
-        XCTAssertEqual([memberNewDevice getKeys].count, 6); // 3 keys per device.
-    }];
+    [anotherClient provisionDevice:member.firstAlias onSuccess:^(DeviceInfo *newDevice) {
+        [self->member approveKeys:newDevice.keys onSuccess:^ {
+            [anotherClient getMember:newDevice.memberId onSuccess:^(TKMember *memberNewDevice) {
+                XCTAssertEqualObjects(self->member.firstAlias, memberNewDevice.firstAlias);
+                
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertKeysCount:6 for:member]; // 3 keys per device.
 }
 
 - (void)testKeyExpiration {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias = [self generateAlias];
-        TKMemberSync *member = [tokenIO createMember:alias];
-        XCTAssertEqual([member getKeys].count, 3);
-        
-        id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
-        id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
-                                                           useLocalAuthentication:NO]
-                                     createEngine:@"Another"];
-        
-        NSNumber *futureExpriation = [NSNumber numberWithDouble:([[NSDate date] timeIntervalSince1970] * 1000 + 2000)];
-        [member approveKey:[engine generateKey:Key_Level_Privileged]];
-        [member approveKey:[engine generateKey:Key_Level_Standard withExpiration:futureExpriation]];
-        
-        XCTAssertEqual([member getKeys].count, 5);
-        
-        // Wait until the key expires
-        sleep(3);
-        XCTAssertEqual([member getKeys].count, 4);
-    }];
+    
+    TKMember *member = [self createMember:tokenClient];
+    [self assertKeysCount:3 for:member];
+    
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+    id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
+                                                       useLocalAuthentication:NO]
+                                 createEngine:@"Another"];
+
+    NSNumber *futureExpriation = [NSNumber numberWithDouble:([[NSDate date] timeIntervalSince1970] * 1000 + 2000)];
+    
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member approveKeys:@[[engine generateKey:Key_Level_Privileged],
+                          [engine generateKey:Key_Level_Standard withExpiration:futureExpriation]]
+              onSuccess:^{
+                  [expectation fulfill];
+              }
+                onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertKeysCount:5 for:member];
+    // Wait until the key expires
+    sleep(3);
+    [self assertKeysCount:4 for:member];
 }
 
 - (void)testRemoveNonStoredKeys {
-    [self run: ^(TokenIOSync *tokenIO) {
-        TKMemberSync *member = [self createMember:tokenIO];
-        id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
-        id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
-                                                           useLocalAuthentication:NO]
-                                     createEngine:@"Another"];
-        
-        [member approveKey:[engine generateKey:Key_Level_Privileged]];
-        [member approveKey:[engine generateKey:Key_Level_Standard]];
-        [member approveKey:[engine generateKey:Key_Level_Low]];
-        
-        XCTAssertEqual([member getKeys].count, 6);
-        [member removeNonStoredKeys];
-        XCTAssertEqual([member getKeys].count, 3);
-    }];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    id<TKKeyStore> store = [[TKInMemoryKeyStore alloc] init];
+    id<TKCryptoEngine> engine = [[TKTokenCryptoEngineFactory factoryWithStore:store
+                                                       useLocalAuthentication:NO]
+                                 createEngine:@"Another"];
+    [member approveKeys:@[[engine generateKey:Key_Level_Privileged],
+                          [engine generateKey:Key_Level_Standard],
+                          [engine generateKey:Key_Level_Low]]
+              onSuccess:^{
+                  [expectation fulfill];
+              }
+                onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertKeysCount:6 for:member];
+    
+    expectation = [[XCTestExpectation alloc] init];
+    [member removeNonStoredKeys:^ {
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertKeysCount:3 for:member];
 }
 
 - (void)testLoginMember {
-    [self run: ^(TokenIOSync *tokenIO) {
-        TKMemberSync *created = [self createMember:tokenIO];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    [tokenClient getMember:member.id onSuccess:^(TKMember * loggedInMember) {
+        XCTAssert(loggedInMember.id.length > 0);
+        XCTAssertEqualObjects(self->member.firstAlias, loggedInMember.firstAlias);
         
-        TKMemberSync *loggedIn = [tokenIO getMember:created.id];
-        XCTAssert(loggedIn.id.length > 0);
-        XCTAssertEqual([loggedIn getKeys].count, 3);
-        XCTAssertEqualObjects(created.firstAlias, loggedIn.firstAlias);
-    }];
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testAliasExists {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias = [self generateAlias];
-        TKMemberSync *member = [self createMember:tokenIO];
-        
-        XCTAssertEqual([tokenIO aliasExists:alias], NO);
-        
-        [member addAlias:alias];
-        XCTAssertEqual([tokenIO aliasExists:alias], YES);
-    }];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    __weak TokenClient *weakClient = tokenClient;
+    __weak TKMember *weakMember = member;
+    Alias *alias = [self generateAlias];
+    [weakClient aliasExists:alias onSuccess:^(BOOL exists) {
+        XCTAssertEqual(exists, NO);
+        [weakMember addAlias:alias onSuccess:^ {
+            [weakClient aliasExists:alias onSuccess:^(BOOL exists) {
+                XCTAssertEqual(exists, YES);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetMemberID {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias = [self generateAlias];
-        TKMemberSync *member = [self createMember:tokenIO];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    Alias *alias = [self generateAlias];
+    __weak TKMember *weakMember = member;
+    __weak TokenClient *weakClient = tokenClient;
+    
+    [weakClient getMemberId:alias onSuccess:^(NSString *memberId) {
+        XCTAssertNil(memberId);
         
-        XCTAssertNil([tokenIO getMemberId:alias]);
-        [member addAlias:alias];
-        
-        XCTAssertTrue([[tokenIO getMemberId:alias] isEqualToString:member.id]);
-    }];
+        [weakMember addAlias:alias onSuccess:^ {
+            [weakClient getMemberId:alias onSuccess:^(NSString *memberId) {
+                XCTAssertTrue([memberId isEqualToString:weakMember.id]);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testGetTokenMember {
-    [self run: ^(TokenIOSync *tokenIO) {
-        //TODO: After the ResolveAliasRequest support other type (phone etc), we need to add tests here
-        TKMemberSync *emailMember = [self createMember:tokenIO];
-        
-        Alias *unknownAlias = [Alias new];
-        unknownAlias.value = emailMember.firstAlias.value;
-        unknownAlias.type = Alias_Type_Unknown;
-        
-        TokenMember* emailTokenMember = [tokenIO getTokenMember:unknownAlias];
-        XCTAssertEqual(emailTokenMember.alias.type, emailMember.firstAlias.type);
-        XCTAssertTrue([emailTokenMember.alias.value isEqualToString:emailMember.firstAlias.value]);
-        XCTAssertTrue([emailTokenMember.id_p isEqualToString:emailMember.id]);
-        
-    }];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    Alias *unknownAlias = [Alias new];
+    unknownAlias.value = member.firstAlias.value;
+    unknownAlias.type = Alias_Type_Unknown;
+    
+    [tokenClient getTokenMember:unknownAlias onSuccess:^(TokenMember *tokenMember) {
+        XCTAssertEqual(tokenMember.alias.type, self->member.firstAlias.type);
+        XCTAssertTrue([tokenMember.alias.value isEqualToString:self->member.firstAlias.value]);
+        XCTAssertTrue([tokenMember.id_p isEqualToString:self->member.id]);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testAddAlias {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias2 = [self generateAlias];
-        Alias *alias3 = [self generateAlias];
-
-        TKMemberSync *member = [self createMember:tokenIO];
+    __weak TKMember *weakMember = member;
+    
+    for (int i = 0; i < 2; i++) {
+        XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
         
-        [member addAlias:alias2];
-        NSArray<Alias *> *aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 2);
+        Alias *alias = [self generateAlias];
+        [member addAlias:alias onSuccess:^{
+            [expectation fulfill];
+        } onError:THROWERROR];
         
-        [member addAlias:alias3];
-        aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 3);
-    }];
+        [self waitForExpectations:@[expectation] timeout:10];
+        
+        [self assertAliasesCount:(2 + i) for:weakMember];
+    }
 }
 
 - (void)testGetAliases {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias2 = [self generateAlias];
-        Alias *alias3 = [self generateAlias];
-        
-        TKMemberSync *member = [self createMember:tokenIO];
-        [member addAliases:@[alias2, alias3]];
-        
-        // test aliases after login
-        TKMemberSync *loginMember = [tokenIO getMember:member.id];
-        XCTAssertEqual(loginMember.aliases.count, 3);
-    }];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    
+    Alias *alias2 = [self generateAlias];
+    Alias *alias3 = [self generateAlias];
+    
+    [member addAliases:@[alias2, alias3] onSuccess:^{
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertAliasesCount:3 for:member];
 }
 
 - (void)testRemoveAlias {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias2 = [self generateAlias];
-
-        TKMemberSync *member = [self createMember:tokenIO];
-        [member addAlias:alias2];
-        
-        NSArray<Alias *> *aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 2);
-
-        [member removeAlias:alias2];
-        aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 1);
-    }];
+    Alias *alias = [self generateAlias];
+    
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member addAlias:alias onSuccess:^{
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertAliasesCount:2 for:member];
+    
+    expectation = [[XCTestExpectation alloc] init];
+    [member removeAlias:alias onSuccess:^{
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertAliasesCount:1 for:member];
 }
 
 - (void)testRemoveAliases {
-    [self run: ^(TokenIOSync *tokenIO) {
-        Alias *alias2 = [self generateAlias];
-        Alias *alias3 = [self generateAlias];
-
-        TKMemberSync *member = [self createMember:tokenIO];
-        [member addAliases:@[alias2, alias3]];
-        NSArray<Alias *> *aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 3);
-        
-        [member removeAliases:@[alias2, alias3]];
-        aliases = [member getAliases];
-        XCTAssertEqual(aliases.count, 1);
-    }];
+    NSArray<Alias *> *aliases = @[[self generateAlias], [self generateAlias]];
+    
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member addAliases:aliases onSuccess:^{
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertAliasesCount:1 + aliases.count for:member];
+    
+    expectation = [[XCTestExpectation alloc] init];
+    [member removeAliases:aliases onSuccess:^{
+        [expectation fulfill];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertAliasesCount:1 for:member];
 }
 
+- (void)assertKeysCount:(NSInteger)count for:(TKMember *)member {
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member getKeys:^(NSArray<Key *> *array) {
+        XCTAssertEqual(array.count, count);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+}
+
+- (void)assertAliasesCount:(NSInteger)count for:(TKMember *)member {
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member getAliases:^(NSArray<Alias *> *array) {
+        XCTAssertEqual(array.count, count);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:20];
+}
 @end

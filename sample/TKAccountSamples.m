@@ -23,26 +23,26 @@
 @implementation TKAccountSamples
 
 - (void)testGetBanks {
-    TokenIO *tokenIO = self.tokenIOSync.async;
+    TokenClient *tokenClient = self.tokenClient;
     
     __block NSArray<Bank *> *banks;
     
     // get 5 banks sorted by name loop begin snippet to include in docs
-    [tokenIO getBanks:nil
-               search:nil
-              country:nil
-                 page:1
-              perPage:5
-                 sort:@"name"
-             provider:@""
-            onSuccess:^(NSArray<Bank *> *banklist) {
-                banks = banklist;
-            } onError:^(NSError *e) {
-                // Something went wrong.
-                @throw [NSException exceptionWithName:@"GetBankException"
-                                               reason:[e localizedFailureReason]
-                                             userInfo:[e userInfo]];
-            }];
+    [tokenClient getBanks:nil
+                   search:nil
+                  country:nil
+                     page:1
+                  perPage:5
+                     sort:@"name"
+                 provider:@""
+                onSuccess:^(NSArray<Bank *> *banklist) {
+                    banks = banklist;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"GetBankException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
     // get 5 banks sorted by name loop done snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -50,20 +50,20 @@
     }];
     
     // get banks by ids loop begin snippet to include in docs
-    [tokenIO getBanks:@[@"iron",@"gold"]
-               search:nil
-              country:nil
-                 page:1
-              perPage:10
-                 sort:@"name"
-             provider:@""
-            onSuccess:^(NSArray<Bank *> *banklist) {
-                banks = banklist;
-            } onError:^(NSError *e) {
-                // Something went wrong.
-                @throw [NSException exceptionWithName:@"GetBankException"
-                                               reason:[e localizedFailureReason]
-                                             userInfo:[e userInfo]];
+    [tokenClient getBanks:@[@"iron",@"gold"]
+                   search:nil
+                  country:nil
+                     page:1
+                  perPage:10
+                     sort:@"name"
+                 provider:@""
+                onSuccess:^(NSArray<Bank *> *banklist) {
+                    banks = banklist;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"GetBankException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
             }];
     // get banks by ids done begin snippet to include in docs
     
@@ -72,21 +72,21 @@
     }];
     
     // get banks by search string loop begin snippet to include in docs
-    [tokenIO getBanks:nil
-               search:@"GOLD"
-              country:nil
-                 page:1
-              perPage:10
-                 sort:@"country"
-             provider:@""
-            onSuccess:^(NSArray<Bank *> *banklist) {
-                banks = banklist;
-            } onError:^(NSError *e) {
-                // Something went wrong.
-                @throw [NSException exceptionWithName:@"GetBankException"
-                                               reason:[e localizedFailureReason]
-                                             userInfo:[e userInfo]];
-            }];
+    [tokenClient getBanks:nil
+                   search:@"GOLD"
+                  country:nil
+                     page:1
+                  perPage:10
+                     sort:@"country"
+                 provider:@""
+                onSuccess:^(NSArray<Bank *> *banklist) {
+                    banks = banklist;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"GetBankException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
     // get banks by search string done begin snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -94,21 +94,21 @@
     }];
     
     // get banks by country code loop begin snippet to include in docs
-    [tokenIO getBanks:nil
-               search:nil
-              country:@"US"
-                 page:1
-              perPage:10
-                 sort:@"name"
-             provider:@""
-            onSuccess:^(NSArray<Bank *> *bankList) {
-                banks = bankList;
-            } onError:^(NSError *e) {
-                // Something went wrong.
-                @throw [NSException exceptionWithName:@"GetBankException"
-                                               reason:[e localizedFailureReason]
-                                             userInfo:[e userInfo]];
-            }];
+    [tokenClient getBanks:nil
+                   search:nil
+                  country:@"US"
+                     page:1
+                  perPage:10
+                     sort:@"name"
+                 provider:@""
+                onSuccess:^(NSArray<Bank *> *bankList) {
+                    banks = bankList;
+                } onError:^(NSError *e) {
+                    // Something went wrong.
+                    @throw [NSException exceptionWithName:@"GetBankException"
+                                                   reason:[e localizedFailureReason]
+                                                 userInfo:[e userInfo]];
+                }];
     // get banks by search string done begin snippet to include in docs
     
     [self runUntilTrue:^ {
@@ -118,7 +118,7 @@
 
 // manual testing only
 - (void)testInitiateAccountLinking {
-    TKMember *member = self.payerSync.async;
+    TKMember *member = self.payer;
     __block NSArray<TKAccount *> * accounts;
     
     // initiate account linking loop begin snippet to include in docs
@@ -154,8 +154,8 @@
 
 // manual testing only
 -(void)testBankAuthorizationNotification {
-    TKMember *member = self.payerSync.async;
-    __block BOOL finish = NO;
+    TKMember *member = self.payer;
+    __block int finish = false;
     __block Notification *notification;
     __block NSArray<TKAccount *> * accounts;
     
@@ -170,7 +170,7 @@
                                } else if ([e.domain isEqualToString:kTokenAccountLinkingErrorDomain]
                                           && e.code == AccountLinkingStatus_FailureBankAuthorizationRequired) {
                                    // Wait for the link accounts notification to complete the whole process
-                                   finish = YES;
+                                   finish = true;
                                } else {
                                    // Something went wrong.
                                    @throw [NSException exceptionWithName:@"InitiateAccountLinkingException"
@@ -180,17 +180,10 @@
                            }];
     
     [self runUntilTrue:^ {
-        if (finish) {
-            PagedArray<Notification *> *array = [self.payerSync getNotificationsOffset:0 limit:1];
-            if (array.items.count > 0) {
-                notification = array.items[0];
-                return true;
-            }
-        }
-        return false;
-    }
-         backOffTimeMs:2
-         waitingTimeMs:60000];
+        return finish;
+    }];
+    
+    notification = [self runUntilNotificationReceived: self.payer];
     
     NSString *notificationId = notification.id_p;
     
@@ -242,9 +235,21 @@
 }
 
 - (void)testGetAccounts {
-    OauthBankAuthorization *auth = [self createBankAuthorization:self.payerSync];
-    [self.payerSync linkAccounts:auth.bankId accessToken:auth.accessToken];
-    TKMember *member = self.payerSync.async;
+    OauthBankAuthorization *auth = [self createBankAuthorization:self.payer];
+    __block int accountLinked = false;
+    [self.payer linkAccounts:auth.bankId accessToken:auth.accessToken onSuccess:^(NSArray<TKAccount *> *accounts) {
+        accountLinked = true;
+    } onError:^(NSError *e) {
+        // Something went wrong.
+        @throw [NSException exceptionWithName:@"LinkAccountException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
+    [self runUntilTrue:^ {
+        return accountLinked;
+    }];
+    
+    TKMember *member = self.payer;
     NSMutableDictionary<NSString*, NSNumber*> *sums = [NSMutableDictionary dictionaryWithCapacity:10];
     
     // account loop begin snippet to include in docs
@@ -274,28 +279,48 @@
 
 - (void)testGetTransactions {
     TransferEndpoint *destination = [TransferEndpoint message];
-    destination.account.token.accountId = self.payeeAccountSync.id;
-    destination.account.token.memberId = self.payeeSync.id;
-    NSString *transactionId = nil;
+    destination.account.token.accountId = self.payeeAccount.id;
+    destination.account.token.memberId = self.payee.id;
+    __block NSString *transactionId = nil;
     
     // generate some activity: create+endorse+redeem some transfer tokens
-    
+    __block int transactionCount = 0;
     for (int count = 0; count < 5; count++) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.00"];
         amount = [amount decimalNumberByAdding:[NSDecimalNumber decimalNumberWithMantissa:count
                                                                                  exponent:0
                                                                                isNegative:NO]];
-        TransferTokenBuilder *builder = [self.payerSync createTransferToken:amount currency:@"EUR"];
-        builder.accountId = self.payerAccountSync.id;
-        builder.toMemberId = self.payerSync.id;
+        TransferTokenBuilder *builder = [self.payer createTransferToken:amount currency:@"EUR"];
+        builder.accountId = self.payerAccount.id;
+        builder.toMemberId = self.payer.id;
         builder.destinations = @[destination];
         Token *transferToken = [builder execute];
-        [self.payerSync endorseToken:transferToken withKey:Key_Level_Standard];
-        transactionId =[self.payerSync redeemToken:transferToken].transactionId;
+        [self.payer endorseToken:transferToken
+                         withKey:Key_Level_Standard
+                       onSuccess:^(TokenOperationResult *result) {
+                           [self.payer redeemToken:result.token
+                                         onSuccess:^(Transfer *transfer) {
+                                             transactionId = transfer.transactionId;
+                                             transactionCount = transactionCount + 1;
+                                         } onError: ^(NSError *e) {
+                                             // Something went wrong.
+                                             @throw [NSException exceptionWithName:@"EndorseTokenException"
+                                                                            reason:[e localizedFailureReason]
+                                                                          userInfo:[e userInfo]];
+                                         }];
+                       } onError: ^(NSError *e) {
+                           // Something went wrong.
+                           @throw [NSException exceptionWithName:@"RedeemTokenException"
+                                                          reason:[e localizedFailureReason]
+                                                        userInfo:[e userInfo]];
+                       }];
     }
+    [self runUntilTrue:^ {
+        return (transactionCount == 5);
+    }];
     
-    TKMember *payer = self.payerSync.async;
-    TKAccount *payerAccount = self.payerAccountSync.async;
+    TKMember *payer = self.payer;
+    TKAccount *payerAccount = self.payerAccount;
     
     __block int displayed = 0;
     void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {

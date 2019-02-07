@@ -11,7 +11,7 @@
 #import "TKRpcErrorHandler.h"
 #import "TKRpcSyncCall.h"
 #import "HostAndPort.h"
-#import "TokenIOBuilder.h"
+#import "TokenClientBuilder.h"
 
 @interface TKErrorHandlerTests : TKTestBase {
     GatewayService *gateway;

@@ -17,23 +17,52 @@
 #import "TKMember.h"
 #import "TKOauthEngine.h"
 #import "TKRpcSyncCall.h"
-#import "TokenIOSync.h"
-#import "TokenIO.h"
+#import "TokenClient.h"
 #import "TransferTokenBuilder.h"
 
 @implementation TransferTokenBuilder
 
-- (id)init:(TKMember *)member
-lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
-  currency:(NSString*)currency {
-    
+- (id)init:(TKMember *)member lifetimeAmount:(NSDecimalNumber *)lifetimeAmount currency:(NSString*)currency {
     self = [super init];
     if (self) {
         self.member = member;
         self.lifetimeAmount = lifetimeAmount;
         self.currency = currency;
     }
-    
+    return self;
+}
+
+- (id)init:(TKMember *)member tokenRequest:(TokenRequest *)tokenRequest {
+    self = [super init];
+    if (self) {
+        self.member = member;
+        self.refId = tokenRequest.requestPayload.refId;
+        self.fromAlias = tokenRequest.requestOptions.from.alias;
+        self.fromMemberId = tokenRequest.requestOptions.from.id_p;
+        self.toAlias = tokenRequest.requestPayload.to.alias;
+        self.toMemberId = tokenRequest.requestPayload.to.id_p;
+        self.descr = tokenRequest.requestPayload.description_p;
+        self.receiptRequested = tokenRequest.requestOptions.receiptRequested;
+        
+        NSString *requestLifeTimeAmount = tokenRequest.requestPayload.transferBody.lifetimeAmount;
+        if (requestLifeTimeAmount && requestLifeTimeAmount.length > 0) {
+            self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestLifeTimeAmount];
+        }
+        
+        self.currency = tokenRequest.requestPayload.transferBody.currency;
+        
+        NSString *requestChargeAmounnt = tokenRequest.requestPayload.transferBody.amount;
+        if (requestChargeAmounnt && requestChargeAmounnt.length > 0) {
+            self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestChargeAmounnt];
+        }
+        
+        self.destinations = tokenRequest.requestPayload.transferBody.destinationsArray;
+        
+        if (tokenRequest.requestPayload.hasActingAs && tokenRequest.requestPayload.actingAs.displayName.length > 0) {
+            self.actingAs = tokenRequest.requestPayload.actingAs;
+        }
+        self.tokenRequestId = tokenRequest.id_p;
+    }
     return self;
 }
 
@@ -125,6 +154,7 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
     
     [[self.member getClient]
      createTransferToken:payload
+     tokenRequestId:self.tokenRequestId
      onSuccess:onSuccess
      onAuthRequired:^(ExternalAuthorizationDetails *details) {
          [self.member
@@ -141,6 +171,7 @@ lifetimeAmount:(NSDecimalNumber *)lifetimeAmount
                    
                    [[self.member getClient]
                     createTransferToken:payload
+                    tokenRequestId:self.tokenRequestId
                     onSuccess:onSuccess
                     onAuthRequired:^(ExternalAuthorizationDetails *details) {
                         /* We tried using the authorization we received,

@@ -6,30 +6,31 @@
 #import "Account.pbobjc.h"
 
 #import "HostAndPort.h"
-#import "TKAccountSync.h"
+#import "TKAccount.h"
 #import "TKJson.h"
-#import "TKMemberSync.h"
+#import "TKMember.h"
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
+#import "TokenClient.h"
 #import "TKBankClient.h"
 #import "TKUtil.h"
 #import "fank/Fank.pbobjc.h"
+#import "TKRpcSyncCall.h"
 
 
 @interface TKAccountsTests : TKTestBase
 @end
 
 @implementation TKAccountsTests {
-    TKMemberSync *member;
+    TKMember *member;
     FankClient *fankClient;
-    NSArray<TKAccountSync *> *accounts;
+    NSArray<TKAccount *> *accounts;
     NSString *bankId;
 }
 
 - (void)setUp {
     [super setUp];
     bankId = @"iron";
-    member = [self createMember:[self syncSDK]];
+    member = [self createMember:[self client]];
     NSString *firstName = [@"FirstName-" stringByAppendingString:[TKUtil nonce]];
     NSString *lastName = [@"LastName-" stringByAppendingString:[TKUtil nonce]];
     fankClient = [self.bank addClientWithFirstName:firstName lastName:lastName];
@@ -50,61 +51,99 @@
                                                                         clientId: fankClient.id_p
                                                                   accountNumbers: [NSArray arrayWithObjects: checking.accountNumber, saving.accountNumber, nil]];
     [auth.accountsArray addObjectsFromArray:encAccounts];
-    accounts = [member linkAccounts:auth];
+    
+    TKRpcSyncCall<NSArray<TKAccount *> *> *call = [TKRpcSyncCall create];
+    accounts = [call run:^{
+        [self->member linkAccounts:auth
+                   onSuccess:call.onSuccess
+                     onError:call.onError];
+    }];
 }
 
 - (void)testDefaultAccount {
+    __weak TKMember *weakMember = member;
+    
     XCTAssert(accounts.count == 2);
     XCTAssertNotNil(accounts[0].id);
     XCTAssertNotNil(accounts[1].id);
     
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
     // Confirm default is already set.
-    TKAccountSync *val = [member getDefaultAccount];
-    XCTAssertEqualObjects(val.id, accounts[0].id);
+    [weakMember getDefaultAccount:^(TKAccount *defaultAccount) {
+        XCTAssertEqualObjects(defaultAccount.id, self->accounts[0].id);
+        // Set new default and ensure it works.
+        [weakMember setDefaultAccount:self->accounts[1].id onSuccess:^ {
+            [weakMember getDefaultAccount:^(TKAccount *defaultAccount) {
+                XCTAssertEqualObjects(defaultAccount.id, self->accounts[1].id);
+                [expectation fulfill];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+
+    [self waitForExpectations:@[expectation] timeout:10];
     
-    // Set new default and ensure it works.
-    [member setDefaultAccount:accounts[1].id];
-    val = [member getDefaultAccount];
-    XCTAssertEqualObjects(val.id, accounts[1].id);
-    
+    expectation = [[XCTestExpectation alloc] init];
     // Ensure unlinking an account results in a new default.
-    [member unlinkAccounts:@[accounts[1].id]];
-    val = [member getDefaultAccount];
-    XCTAssertEqualObjects(val.id, accounts[0].id);
-    XCTAssertNotEqualObjects(val.id, accounts[1].id);
+    [weakMember unlinkAccounts:@[accounts[1].id] onSuccess:^ {
+        [weakMember getDefaultAccount:^(TKAccount *defaultAccount) {
+            XCTAssertEqualObjects(defaultAccount.id, self->accounts[0].id);
+            [expectation fulfill];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+ 
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testLinkAccounts {
+    __weak TKMember *weakMember = member;
+    
     XCTAssert(accounts.count == 2);
     XCTAssertNotNil(accounts[0].id);
     XCTAssertEqualObjects(@"Checking", accounts[0].name);
     XCTAssertEqualObjects(bankId, accounts[0].bankId);
     
-    [member unlinkAccounts:@[accounts[0].id]];
-    accounts = [member getAccounts];
-    XCTAssert(accounts.count == 1);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [weakMember unlinkAccounts:@[accounts[0].id] onSuccess:^ {
+        [weakMember getAccounts:^(NSArray<TKAccount *> *array) {
+            XCTAssert(array.count == 1);
+            [expectation fulfill];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testLookupAccounts {
-    accounts = [member getAccounts];
-    XCTAssert(accounts.count == 2);
-    XCTAssertEqualObjects(@"Checking", accounts[0].name);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member getAccounts:^(NSArray<TKAccount *> *array) {
+        XCTAssert(self->accounts.count == 2);
+        XCTAssertEqualObjects(@"Checking", self->accounts[0].name);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 - (void)testLookupAccount {
-    accounts = [member getAccounts];
-    XCTAssert(accounts.count == 2);
-    XCTAssertEqualObjects(@"Checking", accounts[0].name);
-    XCTAssertEqualObjects(@"iron", accounts[0].bankId);
-    XCTAssert(!accounts[0].isLocked);
-    XCTAssert(accounts[0].supportsReceivePayment);
-    XCTAssert(accounts[0].supportsSendPayment);
-    XCTAssert(accounts[0].supportsInformation);
-    XCTAssert(!accounts[0].requiresExternalAuth);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member getAccounts:^(NSArray<TKAccount *> *array) {
+        XCTAssert(self->accounts.count == 2);
+        XCTAssertEqualObjects(@"Checking", self->accounts[0].name);
+        XCTAssertEqualObjects(@"iron", self->accounts[0].bankId);
+        XCTAssert(!self->accounts[0].isLocked);
+        XCTAssert(self->accounts[0].supportsReceivePayment);
+        XCTAssert(self->accounts[0].supportsSendPayment);
+        XCTAssert(self->accounts[0].supportsInformation);
+        XCTAssert(!self->accounts[0].requiresExternalAuth);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
     
-    TKAccountSync *account = [member getAccount:accounts[0].id];
-    XCTAssertEqualObjects(@"Checking", account.name);
-    XCTAssertEqualObjects(@"iron", account.bankId);
+    expectation = [[XCTestExpectation alloc] init];
+    [member getAccount:accounts[0].id onSuccess:^(TKAccount *account) {
+        XCTAssertEqualObjects(@"Checking", account.name);
+        XCTAssertEqualObjects(@"iron", account.bankId);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 @end

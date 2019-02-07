@@ -9,43 +9,83 @@
 #import <XCTest/XCTest.h>
 
 #import "TKTestBase.h"
-#import "TokenIOSync.h"
-#import "TKMemberSync.h"
+#import "TokenClient.h"
+#import "TKMember.h"
+#import "TKRpcSyncCall.h"
 
 @interface TKTrustedBeneficiaryTests : TKTestBase
 
 @end
 
 @implementation TKTrustedBeneficiaryTests {
-    TKMemberSync *member;
+    TokenClient *client;
+    TKMember *member;
 }
 
 - (void)setUp {
     [super setUp];
-    member = [[self syncSDK] createMember:[self generateAlias]];
+    client = [self client];
+    member = [self createMember:client];
 }
 
 - (void)testAddTrustedBeneficiary {
-    XCTAssertEqual([member getTrustedBeneficiaries].count, 0);
+    [self assertTrustedBeneficiariesCount:0];
 
-    NSString *beneficiaryMemberId = [[self syncSDK] createMember:[self generateAlias]].id;
-    [member addTrustedBeneficiary:beneficiaryMemberId];
+    NSString *beneficiaryMemberId = [self createMember:client].id;
     
-    XCTAssertEqual([member getTrustedBeneficiaries].count, 1);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member addTrustedBeneficiary:beneficiaryMemberId
+                        onSuccess:^ {
+                            [expectation fulfill];
+                        } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertTrustedBeneficiariesCount:1];
 }
 
 - (void)testRemoveTrustedBeneficiary {
-    NSString *beneficiaryMemberId1 = [[self syncSDK] createMember:[self generateAlias]].id;
-    NSString *beneficiaryMemberId2 = [[self syncSDK] createMember:[self generateAlias]].id;
-    [member addTrustedBeneficiary:beneficiaryMemberId1];
-    [member addTrustedBeneficiary:beneficiaryMemberId2];
-    XCTAssertEqual([member getTrustedBeneficiaries].count, 2);
+    NSString *beneficiaryMemberId1 = [self createMember:client].id;
+    NSString *beneficiaryMemberId2 = [self createMember:client].id;
     
-    [member removeTrustedBeneficiary:beneficiaryMemberId1];
-    XCTAssertEqual([member getTrustedBeneficiaries].count, 1);
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    expectation.expectedFulfillmentCount = 2;
+    [member addTrustedBeneficiary:beneficiaryMemberId1
+                        onSuccess:^ {
+                            [expectation fulfill];
+                        } onError:THROWERROR];
+    [member addTrustedBeneficiary:beneficiaryMemberId2
+                        onSuccess:^ {
+                            [expectation fulfill];
+                        } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
     
-    [member removeTrustedBeneficiary:beneficiaryMemberId2];
-    XCTAssertEqual([member getTrustedBeneficiaries].count, 0);
+    [self assertTrustedBeneficiariesCount:2];
+
+    expectation = [[XCTestExpectation alloc] init];
+    [member removeTrustedBeneficiary:beneficiaryMemberId1
+                           onSuccess:^ {
+                               [expectation fulfill];
+                           } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    
+    [self assertTrustedBeneficiariesCount:1];
+
+    expectation = [[XCTestExpectation alloc] init];
+    [member removeTrustedBeneficiary:beneficiaryMemberId2
+                           onSuccess:^ {
+                               [expectation fulfill];
+                           } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+    [self assertTrustedBeneficiariesCount:0];
+}
+
+- (void) assertTrustedBeneficiariesCount:(NSInteger)count {
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member getTrustedBeneficiaries:^(NSArray<TrustedBeneficiary *> * array) {
+        XCTAssertEqual(array.count, count);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 }
 
 @end
