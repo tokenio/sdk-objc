@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class MemberDeleteOperation;
 @class MemberOperation;
 @class MemberOperationMetadata_AddAliasMetadata;
+@class MemberOperationMetadata_AddKeyMetadata;
 @class MemberOperationResponseMetadata_AddAliasResponseMetadata;
 @class MemberPartnerOperation;
 @class MemberRecoveryOperation;
@@ -384,11 +385,13 @@ typedef GPB_ENUM(MemberUpdate_FieldNumber) {
 
 typedef GPB_ENUM(MemberOperationMetadata_FieldNumber) {
   MemberOperationMetadata_FieldNumber_AddAliasMetadata = 1,
+  MemberOperationMetadata_FieldNumber_AddKeyMetadata = 2,
 };
 
 typedef GPB_ENUM(MemberOperationMetadata_Type_OneOfCase) {
   MemberOperationMetadata_Type_OneOfCase_GPBUnsetOneOfCase = 0,
   MemberOperationMetadata_Type_OneOfCase_AddAliasMetadata = 1,
+  MemberOperationMetadata_Type_OneOfCase_AddKeyMetadata = 2,
 };
 
 /**
@@ -400,6 +403,8 @@ typedef GPB_ENUM(MemberOperationMetadata_Type_OneOfCase) {
 @property(nonatomic, readonly) MemberOperationMetadata_Type_OneOfCase typeOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberOperationMetadata_AddAliasMetadata *addAliasMetadata;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberOperationMetadata_AddKeyMetadata *addKeyMetadata;
 
 @end
 
@@ -422,6 +427,18 @@ typedef GPB_ENUM(MemberOperationMetadata_AddAliasMetadata_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
+
+@end
+
+#pragma mark - MemberOperationMetadata_AddKeyMetadata
+
+typedef GPB_ENUM(MemberOperationMetadata_AddKeyMetadata_FieldNumber) {
+  MemberOperationMetadata_AddKeyMetadata_FieldNumber_KeychainId = 1,
+};
+
+@interface MemberOperationMetadata_AddKeyMetadata : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keychainId;
 
 @end
 
@@ -723,11 +740,16 @@ typedef GPB_ENUM(Customization_FieldNumber) {
   Customization_FieldNumber_LogoBlobId = 2,
   Customization_FieldNumber_Colors = 3,
   Customization_FieldNumber_ConsentText = 4,
+  Customization_FieldNumber_Name = 5,
+  Customization_FieldNumber_AppName = 6,
 };
 
 @interface Customization : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId;
+
+/** display name */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 /** logo blob id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *logoBlobId;
@@ -737,7 +759,49 @@ typedef GPB_ENUM(Customization_FieldNumber) {
 /** The number of items in @c colors without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger colors_Count;
 
+/** use '\\n' for line breaks. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *consentText;
+
+/** TODO(RD-1985): re-evaluate app_name */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *appName;
+
+@end
+
+#pragma mark - Keychain
+
+typedef GPB_ENUM(Keychain_FieldNumber) {
+  Keychain_FieldNumber_KeychainId = 1,
+  Keychain_FieldNumber_Name = 2,
+  Keychain_FieldNumber_KeysArray = 3,
+};
+
+@interface Keychain : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keychainId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
+/** The number of items in @c keysArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger keysArray_Count;
+
+@end
+
+#pragma mark - MemberInfo
+
+typedef GPB_ENUM(MemberInfo_FieldNumber) {
+  MemberInfo_FieldNumber_Id_p = 1,
+  MemberInfo_FieldNumber_AliasesArray = 2,
+};
+
+@interface MemberInfo : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/** verified aliases */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Alias*> *aliasesArray;
+/** The number of items in @c aliasesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger aliasesArray_Count;
 
 @end
 

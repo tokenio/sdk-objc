@@ -48,7 +48,9 @@ CF_EXTERN_C_BEGIN
 @class GetTokensRequest_TokenFilter;
 @class GetTransfersRequest_TransferFilter;
 @class Key;
+@class Keychain;
 @class Member;
+@class MemberInfo;
 @class MemberOperationMetadata;
 @class MemberRecoveryOperation;
 @class MemberUpdate;
@@ -1030,6 +1032,8 @@ typedef GPB_ENUM(CreateCustomizationRequest_FieldNumber) {
   CreateCustomizationRequest_FieldNumber_Logo = 1,
   CreateCustomizationRequest_FieldNumber_Colors = 2,
   CreateCustomizationRequest_FieldNumber_ConsentText = 3,
+  CreateCustomizationRequest_FieldNumber_Name = 4,
+  CreateCustomizationRequest_FieldNumber_AppName = 5,
 };
 
 @interface CreateCustomizationRequest : GPBMessage
@@ -1043,6 +1047,10 @@ typedef GPB_ENUM(CreateCustomizationRequest_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger colors_Count;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *consentText;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *appName;
 
 @end
 
@@ -1909,6 +1917,35 @@ typedef GPB_ENUM(ResolveTransferDestinationsResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+
+@end
+
+#pragma mark - ConfirmFundsRequest
+
+typedef GPB_ENUM(ConfirmFundsRequest_FieldNumber) {
+  ConfirmFundsRequest_FieldNumber_AccountId = 1,
+  ConfirmFundsRequest_FieldNumber_Amount = 2,
+};
+
+@interface ConfirmFundsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, strong, null_resettable) Money *amount;
+/** Test to see if @c amount has been set. */
+@property(nonatomic, readwrite) BOOL hasAmount;
+
+@end
+
+#pragma mark - ConfirmFundsResponse
+
+typedef GPB_ENUM(ConfirmFundsResponse_FieldNumber) {
+  ConfirmFundsResponse_FieldNumber_FundsAvailable = 1,
+};
+
+@interface ConfirmFundsResponse : GPBMessage
+
+@property(nonatomic, readwrite) BOOL fundsAvailable;
 
 @end
 
@@ -2851,6 +2888,102 @@ typedef GPB_ENUM(GetBankInfoResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) BankInfo *info;
 /** Test to see if @c info has been set. */
 @property(nonatomic, readwrite) BOOL hasInfo;
+
+@end
+
+#pragma mark - CreateKeychainRequest
+
+typedef GPB_ENUM(CreateKeychainRequest_FieldNumber) {
+  CreateKeychainRequest_FieldNumber_Name = 1,
+};
+
+@interface CreateKeychainRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@end
+
+#pragma mark - CreateKeychainResponse
+
+typedef GPB_ENUM(CreateKeychainResponse_FieldNumber) {
+  CreateKeychainResponse_FieldNumber_KeychainId = 1,
+};
+
+@interface CreateKeychainResponse : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keychainId;
+
+@end
+
+#pragma mark - UpdateKeychainInfoRequest
+
+typedef GPB_ENUM(UpdateKeychainInfoRequest_FieldNumber) {
+  UpdateKeychainInfoRequest_FieldNumber_KeychainId = 1,
+  UpdateKeychainInfoRequest_FieldNumber_Name = 2,
+};
+
+@interface UpdateKeychainInfoRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *keychainId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@end
+
+#pragma mark - UpdateKeychainInfoResponse
+
+@interface UpdateKeychainInfoResponse : GPBMessage
+
+@end
+
+#pragma mark - GetKeychainsRequest
+
+@interface GetKeychainsRequest : GPBMessage
+
+@end
+
+#pragma mark - GetKeychainsResponse
+
+typedef GPB_ENUM(GetKeychainsResponse_FieldNumber) {
+  GetKeychainsResponse_FieldNumber_KeychainsArray = 1,
+};
+
+@interface GetKeychainsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Keychain*> *keychainsArray;
+/** The number of items in @c keychainsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger keychainsArray_Count;
+
+@end
+
+#pragma mark - GetMemberInfoRequest
+
+typedef GPB_ENUM(GetMemberInfoRequest_FieldNumber) {
+  GetMemberInfoRequest_FieldNumber_MemberId = 1,
+};
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank member only requests.
+ **/
+@interface GetMemberInfoRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@end
+
+#pragma mark - GetMemberInfoResponse
+
+typedef GPB_ENUM(GetMemberInfoResponse_FieldNumber) {
+  GetMemberInfoResponse_FieldNumber_MemberInfo = 1,
+};
+
+@interface GetMemberInfoResponse : GPBMessage
+
+/** Member info */
+@property(nonatomic, readwrite, strong, null_resettable) MemberInfo *memberInfo;
+/** Test to see if @c memberInfo has been set. */
+@property(nonatomic, readwrite) BOOL hasMemberInfo;
 
 @end
 

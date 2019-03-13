@@ -23,12 +23,16 @@
 @class CompleteRecoveryResponse;
 @class CompleteVerificationRequest;
 @class CompleteVerificationResponse;
+@class ConfirmFundsRequest;
+@class ConfirmFundsResponse;
 @class CreateAccessTokenRequest;
 @class CreateAccessTokenResponse;
 @class CreateBlobRequest;
 @class CreateBlobResponse;
 @class CreateCustomizationRequest;
 @class CreateCustomizationResponse;
+@class CreateKeychainRequest;
+@class CreateKeychainResponse;
 @class CreateMemberRequest;
 @class CreateMemberResponse;
 @class CreateTestBankAccountRequest;
@@ -71,6 +75,10 @@
 @class GetDefaultAccountResponse;
 @class GetDefaultAgentRequest;
 @class GetDefaultAgentResponse;
+@class GetKeychainsRequest;
+@class GetKeychainsResponse;
+@class GetMemberInfoRequest;
+@class GetMemberInfoResponse;
 @class GetMemberRequest;
 @class GetMemberResponse;
 @class GetNotificationRequest;
@@ -159,6 +167,8 @@
 @class UnlinkAccountsResponse;
 @class UnsubscribeFromNotificationsRequest;
 @class UnsubscribeFromNotificationsResponse;
+@class UpdateKeychainInfoRequest;
+@class UpdateKeychainInfoResponse;
 @class UpdateMemberRequest;
 @class UpdateMemberResponse;
 @class UpdateTokenRequestRequest;
@@ -192,9 +202,715 @@
 #endif
 
 @class GRPCProtoCall;
+@class GRPCUnaryProtoCall;
+@class GRPCStreamingProtoCall;
+@class GRPCCallOptions;
+@protocol GRPCProtoResponseHandler;
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol GatewayService2 <NSObject>
+
+#pragma mark CreateMember(CreateMemberRequest) returns (CreateMemberResponse)
+
+/**
+ * Create a member. Mints a member ID; newly-created member does not yet
+ * have keys, alias, or anything other than an ID.
+ * Used by createMember, https://developer.token.io/sdk/#create-a-member
+ * (SDK's createMember also uses UpdateMember rpc).
+ */
+- (GRPCUnaryProtoCall *)createMemberWithMessage:(CreateMemberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UpdateMember(UpdateMemberRequest) returns (UpdateMemberResponse)
+
+/**
+ * Apply member updates. Used when adding/removing keys, aliases to/from member.
+ * These updates require a signature.
+ * See how Java SDK's Client.updateMember uses it:
+ * https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
+ * See how JS SDK's AuthHttpClient._memberUpdate uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
+ */
+- (GRPCUnaryProtoCall *)updateMemberWithMessage:(UpdateMemberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetMember(GetMemberRequest) returns (GetMemberResponse)
+
+/**
+ * Get information about a member
+ */
+- (GRPCUnaryProtoCall *)getMemberWithMessage:(GetMemberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetProfile(SetProfileRequest) returns (SetProfileResponse)
+
+/**
+ * set profile information (display name)
+ * Ignores picture fields; use SetProfilePicture for those.
+ * https://developer.token.io/sdk/#profile
+ */
+- (GRPCUnaryProtoCall *)setProfileWithMessage:(SetProfileRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetProfile(GetProfileRequest) returns (GetProfileResponse)
+
+/**
+ * get a member's profile (display information)
+ * https://developer.token.io/sdk/#profile
+ */
+- (GRPCUnaryProtoCall *)getProfileWithMessage:(GetProfileRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetProfilePicture(SetProfilePictureRequest) returns (SetProfilePictureResponse)
+
+/**
+ * upload an image to use as auth'd member's profile picture
+ * Automatically creates smaller sizes; this works best with square images.
+ * https://developer.token.io/sdk/#profile
+ */
+- (GRPCUnaryProtoCall *)setProfilePictureWithMessage:(SetProfilePictureRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetProfilePicture(GetProfilePictureRequest) returns (GetProfilePictureResponse)
+
+/**
+ * Get member's profile picture (can also use GetBlob with a blob ID from profile)
+ * https://developer.token.io/sdk/#profile
+ */
+- (GRPCUnaryProtoCall *)getProfilePictureWithMessage:(GetProfilePictureRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetReceiptContact(SetReceiptContactRequest) returns (SetReceiptContactResponse)
+
+/**
+ * Set a member's contact (e.g. email) for receipt delivery
+ */
+- (GRPCUnaryProtoCall *)setReceiptContactWithMessage:(SetReceiptContactRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetReceiptContact(GetReceiptContactRequest) returns (GetReceiptContactResponse)
+
+/**
+ * Get a member's email address for receipts
+ */
+- (GRPCUnaryProtoCall *)getReceiptContactWithMessage:(GetReceiptContactRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ResolveAlias(ResolveAliasRequest) returns (ResolveAliasResponse)
+
+/**
+ * Get ID of member that owns an alias, if any.
+ * https://developer.token.io/sdk/#aliases
+ */
+- (GRPCUnaryProtoCall *)resolveAliasWithMessage:(ResolveAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAliases(GetAliasesRequest) returns (GetAliasesResponse)
+
+/**
+ * Get the auth'd member's aliases.
+ * https://developer.token.io/sdk/#aliases
+ */
+- (GRPCUnaryProtoCall *)getAliasesWithMessage:(GetAliasesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CompleteVerification(CompleteVerificationRequest) returns (CompleteVerificationResponse)
+
+/**
+ * Use a verification code
+ */
+- (GRPCUnaryProtoCall *)completeVerificationWithMessage:(CompleteVerificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RetryVerification(RetryVerificationRequest) returns (RetryVerificationResponse)
+
+/**
+ * Retries verification. For example, if verifying an email alias,
+ * re-sends verification-code email to the email address.
+ */
+- (GRPCUnaryProtoCall *)retryVerificationWithMessage:(RetryVerificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetPairedDevices(GetPairedDevicesRequest) returns (GetPairedDevicesResponse)
+
+/**
+ * Get auth'd members paired devices (as created by provisionDevice)
+ */
+- (GRPCUnaryProtoCall *)getPairedDevicesWithMessage:(GetPairedDevicesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark DeleteMember(DeleteMemberRequest) returns (DeleteMemberResponse)
+
+- (GRPCUnaryProtoCall *)deleteMemberWithMessage:(DeleteMemberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
+
+- (GRPCUnaryProtoCall *)verifyAliasOnBehalfWithMessage:(VerifyAliasOnBehalfRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
+
+- (GRPCUnaryProtoCall *)normalizeAliasWithMessage:(NormalizeAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark VerifyAffiliate(VerifyAffiliateRequest) returns (VerifyAffiliateResponse)
+
+- (GRPCUnaryProtoCall *)verifyAffiliateWithMessage:(VerifyAffiliateRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Member account recovery
+ * 
+ * 
+ * Begin member recovery. If the member has a "normal consumer" recovery rule,
+ * this sends a recovery message to their email address.
+ * https://developer.token.io/sdk/#recovery
+ */
+- (GRPCUnaryProtoCall *)beginRecoveryWithMessage:(BeginRecoveryRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CompleteRecovery(CompleteRecoveryRequest) returns (CompleteRecoveryResponse)
+
+/**
+ * Complete member recovery.
+ * https://developer.token.io/sdk/#recovery
+ */
+- (GRPCUnaryProtoCall *)completeRecoveryWithMessage:(CompleteRecoveryRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
+
+/**
+ * Verify an alias
+ */
+- (GRPCUnaryProtoCall *)verifyAliasWithMessage:(VerifyAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
+
+/**
+ * Get member ID of "normal consumer" recovery agent.
+ * https://developer.token.io/sdk/#recovery
+ */
+- (GRPCUnaryProtoCall *)getDefaultAgentWithMessage:(GetDefaultAgentRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AddAddress(AddAddressRequest) returns (AddAddressResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Member addresses and preferences
+ * 
+ * 
+ * Add a shipping address
+ * https://developer.token.io/sdk/#address
+ */
+- (GRPCUnaryProtoCall *)addAddressWithMessage:(AddAddressRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAddress(GetAddressRequest) returns (GetAddressResponse)
+
+/**
+ * Get one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
+ */
+- (GRPCUnaryProtoCall *)getAddressWithMessage:(GetAddressRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAddresses(GetAddressesRequest) returns (GetAddressesResponse)
+
+/**
+ * Get all of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
+ */
+- (GRPCUnaryProtoCall *)getAddressesWithMessage:(GetAddressesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse)
+
+/**
+ * Remove one of the auth'd member's shipping addresses
+ * https://developer.token.io/sdk/#address
+ */
+- (GRPCUnaryProtoCall *)deleteAddressWithMessage:(DeleteAddressRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AddTrustedBeneficiary(AddTrustedBeneficiaryRequest) returns (AddTrustedBeneficiaryResponse)
+
+/**
+ * Add a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCUnaryProtoCall *)addTrustedBeneficiaryWithMessage:(AddTrustedBeneficiaryRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RemoveTrustedBeneficiary(RemoveTrustedBeneficiaryRequest) returns (RemoveTrustedBeneficiaryResponse)
+
+/**
+ * Remove a trusted beneficiary
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCUnaryProtoCall *)removeTrustedBeneficiaryWithMessage:(RemoveTrustedBeneficiaryRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTrustedBeneficiaries(GetTrustedBeneficiariesRequest) returns (GetTrustedBeneficiariesResponse)
+
+/**
+ * Get all trusted beneficiaries
+ * https://developer.token.io/sdk/#trusted-beneficiary
+ */
+- (GRPCUnaryProtoCall *)getTrustedBeneficiariesWithMessage:(GetTrustedBeneficiariesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateCustomization(CreateCustomizationRequest) returns (CreateCustomizationResponse)
+
+/**
+ * Set Customization
+ * https://developer.token.io/sdk/#customization
+ */
+- (GRPCUnaryProtoCall *)createCustomizationWithMessage:(CreateCustomizationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SubscribeToNotifications(SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Devices for notification service
+ * 
+ * 
+ * subscribe member to notifications
+ * https://developer.token.io/sdk/#notifications
+ */
+- (GRPCUnaryProtoCall *)subscribeToNotificationsWithMessage:(SubscribeToNotificationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetSubscribers(GetSubscribersRequest) returns (GetSubscribersResponse)
+
+/**
+ * get member's notification subscriber[s]
+ * https://developer.token.io/sdk/#notifications
+ */
+- (GRPCUnaryProtoCall *)getSubscribersWithMessage:(GetSubscribersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetSubscriber(GetSubscriberRequest) returns (GetSubscriberResponse)
+
+/**
+ * get one of a member's notification subscribers
+ * https://developer.token.io/sdk/#notifications
+ */
+- (GRPCUnaryProtoCall *)getSubscriberWithMessage:(GetSubscriberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UnsubscribeFromNotifications(UnsubscribeFromNotificationsRequest) returns (UnsubscribeFromNotificationsResponse)
+
+/**
+ * unsubscribe one of a member's subscribers from notifications
+ * https://developer.token.io/sdk/#notifications
+ */
+- (GRPCUnaryProtoCall *)unsubscribeFromNotificationsWithMessage:(UnsubscribeFromNotificationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark Notify(NotifyRequest) returns (NotifyResponse)
+
+/**
+ * send a notification
+ * https://developer.token.io/sdk/#notifications
+ */
+- (GRPCUnaryProtoCall *)notifyWithMessage:(NotifyRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse)
+
+/**
+ * get notifications
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
+- (GRPCUnaryProtoCall *)getNotificationsWithMessage:(GetNotificationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
+
+/**
+ * get one particular notification
+ * https://developer.token.io/sdk/#polling-for-notifications
+ */
+- (GRPCUnaryProtoCall *)getNotificationWithMessage:(GetNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RequestTransfer(RequestTransferRequest) returns (RequestTransferResponse)
+
+/**
+ * send transfer-request notification
+ * https://developer.token.io/sdk/#request-payment
+ */
+- (GRPCUnaryProtoCall *)requestTransferWithMessage:(RequestTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark TriggerStepUpNotification(TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse)
+
+/**
+ * send step-up (approve with higher-privilege key) request notification
+ */
+- (GRPCUnaryProtoCall *)triggerStepUpNotificationWithMessage:(TriggerStepUpNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark TriggerEndorseAndAddKeyNotification(TriggerEndorseAndAddKeyNotificationRequest) returns (TriggerEndorseAndAddKeyNotificationResponse)
+
+/**
+ * send endorse and add key notification (approve with higher-privilege key)
+ */
+- (GRPCUnaryProtoCall *)triggerEndorseAndAddKeyNotificationWithMessage:(TriggerEndorseAndAddKeyNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark TriggerCreateAndEndorseTokenNotification(TriggerCreateAndEndorseTokenNotificationRequest) returns (TriggerCreateAndEndorseTokenNotificationResponse)
+
+/**
+ * send create and endorse token notification
+ */
+- (GRPCUnaryProtoCall *)triggerCreateAndEndorseTokenNotificationWithMessage:(TriggerCreateAndEndorseTokenNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark InvalidateNotification(InvalidateNotificationRequest) returns (InvalidateNotificationResponse)
+
+/**
+ * send invalidate notification
+ */
+- (GRPCUnaryProtoCall *)invalidateNotificationWithMessage:(InvalidateNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank accounts.
+ * 
+ * 
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)linkAccountsWithMessage:(LinkAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark LinkAccountsOauth(LinkAccountsOauthRequest) returns (LinkAccountsOauthResponse)
+
+/**
+ * associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)linkAccountsOauthWithMessage:(LinkAccountsOauthRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UnlinkAccounts(UnlinkAccountsRequest) returns (UnlinkAccountsResponse)
+
+/**
+ * un-associate bank accounts with member
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)unlinkAccountsWithMessage:(UnlinkAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccount(GetAccountRequest) returns (GetAccountResponse)
+
+/**
+ * get info about one linked account
+ * https://developer.token.io/sdk/#get-accounts
+ */
+- (GRPCUnaryProtoCall *)getAccountWithMessage:(GetAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccounts(GetAccountsRequest) returns (GetAccountsResponse)
+
+/**
+ * get info about linked accounts
+ * https://developer.token.io/sdk/#get-accounts
+ */
+- (GRPCUnaryProtoCall *)getAccountsWithMessage:(GetAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBalance(GetBalanceRequest) returns (GetBalanceResponse)
+
+/**
+ * get current and available balance for a linked account
+ * https://developer.token.io/sdk/#get-account-balance
+ */
+- (GRPCUnaryProtoCall *)getBalanceWithMessage:(GetBalanceRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBalances(GetBalancesRequest) returns (GetBalancesResponse)
+
+- (GRPCUnaryProtoCall *)getBalancesWithMessage:(GetBalancesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTransaction(GetTransactionRequest) returns (GetTransactionResponse)
+
+/**
+ * get information about a particular transaction
+ * https://developer.token.io/sdk/#get-transactions
+ */
+- (GRPCUnaryProtoCall *)getTransactionWithMessage:(GetTransactionRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse)
+
+/**
+ * get information about several transactions
+ * https://developer.token.io/sdk/#get-transactions
+ */
+- (GRPCUnaryProtoCall *)getTransactionsWithMessage:(GetTransactionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
+
+- (GRPCUnaryProtoCall *)applyScaWithMessage:(ApplyScaRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetDefaultAccount(GetDefaultAccountRequest) returns (GetDefaultAccountResponse)
+
+/**
+ * Get information about the auth'd member's default account.
+ * https://developer.token.io/sdk/#default-bank-account
+ */
+- (GRPCUnaryProtoCall *)getDefaultAccountWithMessage:(GetDefaultAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetDefaultAccount(SetDefaultAccountRequest) returns (SetDefaultAccountResponse)
+
+/**
+ * Set one auth'd member's accounts as its default account.
+ * https://developer.token.io/sdk/#default-bank-account
+ */
+- (GRPCUnaryProtoCall *)setDefaultAccountWithMessage:(SetDefaultAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ResolveTransferDestinations(ResolveTransferDestinationsRequest) returns (ResolveTransferDestinationsResponse)
+
+/**
+ * Get the resolved transfer destinations of the given account.
+ */
+- (GRPCUnaryProtoCall *)resolveTransferDestinationsWithMessage:(ResolveTransferDestinationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ConfirmFunds(ConfirmFundsRequest) returns (ConfirmFundsResponse)
+
+/**
+ * Confirm that the given account has sufficient funds to cover the charge.
+ */
+- (GRPCUnaryProtoCall *)confirmFundsWithMessage:(ConfirmFundsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Testing.
+ * 
+ * 
+ * Create a test account at "iron" test bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)createTestBankAccountWithMessage:(CreateTestBankAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTestBankNotification(GetTestBankNotificationRequest) returns (GetTestBankNotificationResponse)
+
+/**
+ * Get notification from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get a notification is GetNotification.
+ */
+- (GRPCUnaryProtoCall *)getTestBankNotificationWithMessage:(GetTestBankNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTestBankNotifications(GetTestBankNotificationsRequest) returns (GetTestBankNotificationsResponse)
+
+/**
+ * Get notifications from "iron" test bank. Useful for Token when testing its test bank.
+ * Normal way to get notifications is GetNotifications.
+ */
+- (GRPCUnaryProtoCall *)getTestBankNotificationsWithMessage:(GetTestBankNotificationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateBlob(CreateBlobRequest) returns (CreateBlobResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Blobs.
+ * 
+ * 
+ * Create a blob.
+ * https://developer.token.io/sdk/#transfer-token-options
+ */
+- (GRPCUnaryProtoCall *)createBlobWithMessage:(CreateBlobRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBlob(GetBlobRequest) returns (GetBlobResponse)
+
+/**
+ * Fetch a blob. Works if the authenticated member is the blob's
+ * owner or if the blob is public-access.
+ * https://developer.token.io/sdk/#transfer-token-options
+ */
+- (GRPCUnaryProtoCall *)getBlobWithMessage:(GetBlobRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTokenBlob(GetTokenBlobRequest) returns (GetTokenBlobResponse)
+
+/**
+ * Fetch a blob using a Token's authority. Works if Blob is attached to token
+ * and authenticated member is the Token's "from" or "to".
+ * https://developer.token.io/sdk/#transfer-token-options
+ */
+- (GRPCUnaryProtoCall *)getTokenBlobWithMessage:(GetTokenBlobRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark StoreTokenRequest(StoreTokenRequestRequest) returns (StoreTokenRequestResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens Requests.
+ * 
+ * 
+ * Store a Token Request
+ */
+- (GRPCUnaryProtoCall *)storeTokenRequestWithMessage:(StoreTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RetrieveTokenRequest(RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse)
+
+/**
+ * Retrviee a Token Request
+ */
+- (GRPCUnaryProtoCall *)retrieveTokenRequestWithMessage:(RetrieveTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UpdateTokenRequest(UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse)
+
+- (GRPCUnaryProtoCall *)updateTokenRequestWithMessage:(UpdateTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens.
+ * 
+ * 
+ * Create a Transfer Token.
+ * https://developer.token.io/sdk/#create-transfer-token
+ */
+- (GRPCUnaryProtoCall *)createTransferTokenWithMessage:(CreateTransferTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateAccessToken(CreateAccessTokenRequest) returns (CreateAccessTokenResponse)
+
+/**
+ * Create an Access Token.
+ * https://developer.token.io/sdk/#create-access-token
+ */
+- (GRPCUnaryProtoCall *)createAccessTokenWithMessage:(CreateAccessTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetToken(GetTokenRequest) returns (GetTokenResponse)
+
+/**
+ * Get information about one token.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ */
+- (GRPCUnaryProtoCall *)getTokenWithMessage:(GetTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetActiveAccessToken(GetActiveAccessTokenRequest) returns (GetActiveAccessTokenResponse)
+
+/**
+ * Get existing Access Token where the calling member is the
+ * remitter and provided member is the beneficiary.
+ */
+- (GRPCUnaryProtoCall *)getActiveAccessTokenWithMessage:(GetActiveAccessTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTokens(GetTokensRequest) returns (GetTokensResponse)
+
+/**
+ * Gets list of tokens the member has given/received.
+ * Used by getTransferTokens, getAccessTokens.
+ * https://developer.token.io/sdk/#get-tokens
+ * https://developer.token.io/sdk/#replace-access-token
+ */
+- (GRPCUnaryProtoCall *)getTokensWithMessage:(GetTokensRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EndorseToken(EndorseTokenRequest) returns (EndorseTokenResponse)
+
+/**
+ * Endorse a token
+ * https://developer.token.io/sdk/#endorse-transfer-token
+ * https://developer.token.io/sdk/#endorse-access-token
+ */
+- (GRPCUnaryProtoCall *)endorseTokenWithMessage:(EndorseTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CancelToken(CancelTokenRequest) returns (CancelTokenResponse)
+
+/**
+ * Cancel a token
+ * https://developer.token.io/sdk/#cancel-transfer-token
+ * https://developer.token.io/sdk/#cancel-access-token
+ */
+- (GRPCUnaryProtoCall *)cancelTokenWithMessage:(CancelTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ReplaceToken(ReplaceTokenRequest) returns (ReplaceTokenResponse)
+
+/**
+ * Replace an access token
+ * https://developer.token.io/sdk/#replace-access-token
+ * 
+ * See how replaceAndEndorseToken uses it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ */
+- (GRPCUnaryProtoCall *)replaceTokenWithMessage:(ReplaceTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SignTokenRequestState(SignTokenRequestStateRequest) returns (SignTokenRequestStateResponse)
+
+/**
+ * Request a Token signature on a token request state payload (tokenId | state)
+ */
+- (GRPCUnaryProtoCall *)signTokenRequestStateWithMessage:(SignTokenRequestStateRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTokenRequestResult(GetTokenRequestResultRequest) returns (GetTokenRequestResultResponse)
+
+/**
+ * Get the token request result from the token request id
+ */
+- (GRPCUnaryProtoCall *)getTokenRequestResultWithMessage:(GetTokenRequestResultRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Token Transfers.
+ * 
+ * 
+ * Redeem a transfer token, creating a transfer.
+ * https://developer.token.io/sdk/#redeem-transfer-token
+ * 
+ * See how redeemToken calls it:
+ * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
+ */
+- (GRPCUnaryProtoCall *)createTransferWithMessage:(CreateTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
+
+/**
+ * Get information about one transfer.
+ * https://developer.token.io/sdk/#get-transfers
+ */
+- (GRPCUnaryProtoCall *)getTransferWithMessage:(GetTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
+
+/**
+ * Get a list of the auth'd member's transfers.
+ * https://developer.token.io/sdk/#get-transfers
+ */
+- (GRPCUnaryProtoCall *)getTransfersWithMessage:(GetTransfersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank Information Endpoints.
+ * 
+ * 
+ * Get a list of "link-able" bank countries.
+ */
+- (GRPCUnaryProtoCall *)getBanksCountriesWithMessage:(GetBanksCountriesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBanks(GetBanksRequest) returns (GetBanksResponse)
+
+/**
+ * Get a list of "link-able" banks.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)getBanksWithMessage:(GetBanksRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBankInfo(GetBankInfoRequest) returns (GetBankInfoResponse)
+
+/**
+ * Get information useful for linking one bank.
+ * https://developer.token.io/sdk/#link-a-bank-account
+ */
+- (GRPCUnaryProtoCall *)getBankInfoWithMessage:(GetBankInfoRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateKeychain(CreateKeychainRequest) returns (CreateKeychainResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Keychain management.
+ * 
+ * Create a keychain with a name.
+ */
+- (GRPCUnaryProtoCall *)createKeychainWithMessage:(CreateKeychainRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UpdateKeychainInfo(UpdateKeychainInfoRequest) returns (UpdateKeychainInfoResponse)
+
+/**
+ * Update a keychain's info.
+ */
+- (GRPCUnaryProtoCall *)updateKeychainInfoWithMessage:(UpdateKeychainInfoRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetKeychains(GetKeychainsRequest) returns (GetKeychainsResponse)
+
+/**
+ * Get all the keychains of a member.
+ */
+- (GRPCUnaryProtoCall *)getKeychainsWithMessage:(GetKeychainsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetMemberInfo(GetMemberInfoRequest) returns (GetMemberInfoResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank member only requests.
+ * 
+ * Get member information about a member who links at least an account from this bank
+ */
+- (GRPCUnaryProtoCall *)getMemberInfoWithMessage:(GetMemberInfoRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+@end
 
 @protocol GatewayService <NSObject>
 
@@ -1003,6 +1719,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToResolveTransferDestinationsWithRequest:(ResolveTransferDestinationsRequest *)request handler:(void(^)(ResolveTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark ConfirmFunds(ConfirmFundsRequest) returns (ConfirmFundsResponse)
+
+/**
+ * Confirm that the given account has sufficient funds to cover the charge.
+ */
+- (void)confirmFundsWithRequest:(ConfirmFundsRequest *)request handler:(void(^)(ConfirmFundsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Confirm that the given account has sufficient funds to cover the charge.
+ */
+- (GRPCProtoCall *)RPCToConfirmFundsWithRequest:(ConfirmFundsRequest *)request handler:(void(^)(ConfirmFundsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark CreateTestBankAccount(CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse)
 
 /**
@@ -1432,6 +2161,70 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark CreateKeychain(CreateKeychainRequest) returns (CreateKeychainResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Keychain management.
+ * 
+ * Create a keychain with a name.
+ */
+- (void)createKeychainWithRequest:(CreateKeychainRequest *)request handler:(void(^)(CreateKeychainResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Keychain management.
+ * 
+ * Create a keychain with a name.
+ */
+- (GRPCProtoCall *)RPCToCreateKeychainWithRequest:(CreateKeychainRequest *)request handler:(void(^)(CreateKeychainResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UpdateKeychainInfo(UpdateKeychainInfoRequest) returns (UpdateKeychainInfoResponse)
+
+/**
+ * Update a keychain's info.
+ */
+- (void)updateKeychainInfoWithRequest:(UpdateKeychainInfoRequest *)request handler:(void(^)(UpdateKeychainInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Update a keychain's info.
+ */
+- (GRPCProtoCall *)RPCToUpdateKeychainInfoWithRequest:(UpdateKeychainInfoRequest *)request handler:(void(^)(UpdateKeychainInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetKeychains(GetKeychainsRequest) returns (GetKeychainsResponse)
+
+/**
+ * Get all the keychains of a member.
+ */
+- (void)getKeychainsWithRequest:(GetKeychainsRequest *)request handler:(void(^)(GetKeychainsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get all the keychains of a member.
+ */
+- (GRPCProtoCall *)RPCToGetKeychainsWithRequest:(GetKeychainsRequest *)request handler:(void(^)(GetKeychainsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetMemberInfo(GetMemberInfoRequest) returns (GetMemberInfoResponse)
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank member only requests.
+ * 
+ * Get member information about a member who links at least an account from this bank
+ */
+- (void)getMemberInfoWithRequest:(GetMemberInfoRequest *)request handler:(void(^)(GetMemberInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Bank member only requests.
+ * 
+ * Get member information about a member who links at least an account from this bank
+ */
+- (GRPCProtoCall *)RPCToGetMemberInfoWithRequest:(GetMemberInfoRequest *)request handler:(void(^)(GetMemberInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 @end
 
 
@@ -1440,8 +2233,10 @@ NS_ASSUME_NONNULL_BEGIN
  * Basic service implementation, over gRPC, that only does
  * marshalling and parsing.
  */
-@interface GatewayService : GRPCProtoService<GatewayService>
-- (instancetype)initWithHost:(NSString *)host NS_DESIGNATED_INITIALIZER;
+@interface GatewayService : GRPCProtoService<GatewayService, GatewayService2>
+- (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithHost:(NSString *)host;
++ (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
 + (instancetype)serviceWithHost:(NSString *)host;
 @end
 #endif

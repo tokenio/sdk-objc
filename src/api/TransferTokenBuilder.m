@@ -37,9 +37,13 @@
     if (self) {
         self.member = member;
         self.refId = tokenRequest.requestPayload.refId;
-        self.fromAlias = tokenRequest.requestOptions.from.alias;
+        if (tokenRequest.requestOptions.from.hasAlias) {
+            self.fromAlias = tokenRequest.requestOptions.from.alias;
+        }
         self.fromMemberId = tokenRequest.requestOptions.from.id_p;
-        self.toAlias = tokenRequest.requestPayload.to.alias;
+        if (tokenRequest.requestPayload.to.hasAlias) {
+            self.toAlias = tokenRequest.requestPayload.to.alias;
+        }
         self.toMemberId = tokenRequest.requestPayload.to.id_p;
         self.descr = tokenRequest.requestPayload.description_p;
         self.receiptRequested = tokenRequest.requestOptions.receiptRequested;

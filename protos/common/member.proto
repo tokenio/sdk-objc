@@ -82,11 +82,16 @@ message MemberUpdate {
 message MemberOperationMetadata {
   oneof type {
     AddAliasMetadata add_alias_metadata = 1;
+    AddKeyMetadata add_key_metadata = 2;
   }
 
   message AddAliasMetadata {
     string alias_hash = 1;
     io.token.proto.common.alias.Alias alias = 2;
+  }
+
+  message AddKeyMetadata {
+    string keychain_id = 1;
   }
 }
 
@@ -194,7 +199,21 @@ message TrustedBeneficiary {
 
 message Customization {
   string customization_id = 1;
+  string name = 5;                    // display name
   string logo_blob_id = 2;            // logo blob id
   map<string, string> colors = 3;     // colors in hex string #AARRGGBB
-  string consent_text = 4;
+  string consent_text = 4;            // use '\n' for line breaks.
+  // TODO(RD-1985): re-evaluate app_name
+  string app_name = 6;                // the name of the corresponding app
+}
+
+message Keychain {
+  string keychain_id = 1;
+  string name = 2;
+  repeated io.token.proto.common.security.Key keys = 3;
+}
+
+message MemberInfo {
+  string id = 1;
+  repeated io.token.proto.common.alias.Alias aliases = 2;            // verified aliases
 }

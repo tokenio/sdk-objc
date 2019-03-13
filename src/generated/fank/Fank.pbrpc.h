@@ -40,9 +40,79 @@
 #endif
 
 @class GRPCProtoCall;
+@class GRPCUnaryProtoCall;
+@class GRPCStreamingProtoCall;
+@class GRPCCallOptions;
+@protocol GRPCProtoResponseHandler;
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol FankFankService2 <NSObject>
+
+#pragma mark AddClient(AddClientRequest) returns (AddClientResponse)
+
+- (GRPCUnaryProtoCall *)addClientWithMessage:(FankAddClientRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetClient(GetClientRequest) returns (GetClientResponse)
+
+- (GRPCUnaryProtoCall *)getClientWithMessage:(FankGetClientRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AddAccount(AddAccountRequest) returns (AddAccountResponse)
+
+- (GRPCUnaryProtoCall *)addAccountWithMessage:(FankAddAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccounts(GetAccountsRequest) returns (GetAccountsResponse)
+
+- (GRPCUnaryProtoCall *)getAccountsWithMessage:(FankGetAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccount(GetAccountRequest) returns (GetAccountResponse)
+
+- (GRPCUnaryProtoCall *)getAccountWithMessage:(FankGetAccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AuthorizeLinkAccounts(AuthorizeLinkAccountsRequest) returns (BankAuthorization)
+
+- (GRPCUnaryProtoCall *)authorizeLinkAccountsWithMessage:(FankAuthorizeLinkAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AuthorizeLinkAccountsGet(AuthorizeLinkAccountsRequest) returns (BankAuthorization)
+
+- (GRPCUnaryProtoCall *)authorizeLinkAccountsGetWithMessage:(FankAuthorizeLinkAccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetOauthAccessToken(GetOauthAccessTokenRequest) returns (GetOauthAccessTokenResponse)
+
+/**
+ * 
+ * Used by bank-demo to obtain access token.
+ * 
+ */
+- (GRPCUnaryProtoCall *)getOauthAccessTokenWithMessage:(FankGetOauthAccessTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetNotification(GetNotificationRequest) returns (GetNotificationResponse)
+
+/**
+ * 
+ * Used by clients to make sure that notifications were routed and correctly delivered to
+ * the fank. This is mainly for testing the flow where a notification is sent through a bank
+ * instead of straight to devices.
+ * 
+ */
+- (GRPCUnaryProtoCall *)getNotificationWithMessage:(FankGetNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse)
+
+- (GRPCUnaryProtoCall *)getNotificationsWithMessage:(FankGetNotificationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark VerifyAlias(VerifyAliasRequest) returns (VerifyAliasResponse)
+
+/**
+ * 
+ * Used by sdk-java-tests to create members in the fank realms.
+ * 
+ * 
+ */
+- (GRPCUnaryProtoCall *)verifyAliasWithMessage:(FankVerifyAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+@end
 
 @protocol FankFankService <NSObject>
 
@@ -167,8 +237,10 @@ NS_ASSUME_NONNULL_BEGIN
  * Basic service implementation, over gRPC, that only does
  * marshalling and parsing.
  */
-@interface FankFankService : GRPCProtoService<FankFankService>
-- (instancetype)initWithHost:(NSString *)host NS_DESIGNATED_INITIALIZER;
+@interface FankFankService : GRPCProtoService<FankFankService, FankFankService2>
+- (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithHost:(NSString *)host;
++ (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
 + (instancetype)serviceWithHost:(NSString *)host;
 @end
 #endif

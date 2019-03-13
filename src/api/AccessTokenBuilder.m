@@ -119,6 +119,22 @@
     [resources addObject:resource];
 }
 
+- (void)forTransferDestinations:(NSString *)accountId {
+    AccessBody_Resource_TransferDestinations *transferDestinations =[AccessBody_Resource_TransferDestinations message];
+    transferDestinations.accountId = accountId;
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.transferDestinations = transferDestinations;
+    [resources addObject:resource];
+}
+
+- (void)forFundsConfirmation:(NSString *)accountId {
+    AccessBody_Resource_FundsConfirmation *fundsConfirmation =[AccessBody_Resource_FundsConfirmation message];
+    fundsConfirmation.accountId = accountId;
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.fundsConfirmation = fundsConfirmation;
+    [resources addObject:resource];
+}
+
 - (void)actingAs:(ActingAs *)actingAs {
     payload.actingAs = actingAs;
 }

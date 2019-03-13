@@ -72,14 +72,14 @@
 /**
  * Grants access to a given addressId.
  *
- * @param addressId address to grant access to
+ * @param addressId address id
  */
 - (void)forAddress:(NSString *)addressId;
 
 /**
  * Grants access to a given accountId.
  *
- * @param accountId account to grant access to
+ * @param accountId account id
  */
 - (void)forAccount:(NSString *)accountId;
 
@@ -87,17 +87,33 @@
 /**
  * Grants access to a given account transactions.
  *
- * @param accountId account to grant access to transactions
+ * @param accountId account id
  */
 - (void)forAccountTransactions:(NSString *)accountId;
 
 /**
  * Grants access to a given account balances.
  * 
- * @param accountId account to grant access to balances
+ * @param accountId account id
  */
 - (void)forAccountBalances:(NSString *)accountId;
 
+/**
+ * Grants access to all transfer destinations at the given account.
+ *
+ * @param accountId account id
+ */
+- (void)forTransferDestinations:(NSString *)accountId;
+
+
+/**
+ * Grants the ability to confirm whether the account has sufficient funds to cover
+ * a given charge.
+ *
+ * @param accountId account id
+ */
+- (void)forFundsConfirmation:(NSString *)accountId;
+    
 /**
  * Set entity redeemer is acting on behalf of.
  *

@@ -71,6 +71,7 @@ message TokenRequestPayload {
       BALANCES = 2;
       TRANSACTIONS = 3;
       TRANSFER_DESTINATIONS = 4;
+      FUNDS_CONFIRMATIONS = 5;
     }
   }
 
@@ -187,29 +188,61 @@ message AccessBody {
 
   message Resource {
     oneof resource {
+      // access to account data
+      Account account = 6;
+      AccountTransactions transactions = 7;
+      AccountBalance balance = 8;
+      TransferDestinations transfer_destinations = 12;
+
+      // other permissions
+      FundsConfirmation funds_confirmation = 15;
+
+      // deprecated
+      Address address = 5 [deprecated = true];
       AllAddresses all_addresses = 1 [deprecated = true];
       AllAccounts all_accounts = 2 [deprecated = true];
       AllAccountTransactions all_transactions = 3 [deprecated = true];
       AllAccountBalances all_balances = 4 [deprecated = true];
       AllTransferDestinations all_transfer_destinations = 13 [deprecated = true];
-      Address address = 5;
-      Account account = 6;
-      AccountTransactions transactions = 7;
-      AccountBalance balance = 8;
-      TransferDestinations transfer_destinations = 12;
       AllAccountsAtBank all_accounts_at_bank = 9 [deprecated = true];
       AllTransactionsAtBank all_transactions_at_bank = 10 [deprecated = true];
       AllBalancesAtBank all_balances_at_bank = 11 [deprecated = true];
       AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14 [deprecated = true];
     }
 
-    // **DEPRECATED** Provides access to all member addresses
-    message AllAddresses {}
-
     // Provides access to a specific member address
     message Address {
       string address_id = 1; // ID of address
     }
+
+    // Provides access to basic info about a specific member account
+    // (can call getAccount() on this account).
+    message Account {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account transactions
+    message AccountTransactions {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account's balance
+    message AccountBalance {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to the resolved transfer destinations of the specified account
+    message TransferDestinations {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides ability to check whether the account has sufficient funds to cover a given charge
+    message FundsConfirmation {
+      string account_id = 1; // ID of account
+    }
+
+    // **DEPRECATED** Provides access to all member addresses
+    message AllAddresses {}
 
     // **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
     // to get list of accounts (and also getAccount() on any account).
@@ -218,12 +251,6 @@ message AccessBody {
     // **DEPRECATED** Provides access to all member accounts at a specific bank.
     message AllAccountsAtBank {
       string bank_id = 1;
-    }
-
-    // Provides access to basic info about a specific member account
-    // (can call getAccount() on this account).
-    message Account {
-      string account_id = 1; // ID of account
     }
 
     // **DEPRECATED** Provides access to member transactions in all accounts
@@ -236,11 +263,6 @@ message AccessBody {
       string bank_id = 1;
     }
 
-    // Provides access to a specific account transactions
-    message AccountTransactions {
-      string account_id = 1; // ID of account
-    }
-
     // **DEPRECATED** Provides access to member balance on all accounts
     // Normally used with AllAccounts (to get list of accounts)
     message AllAccountBalances {}
@@ -251,11 +273,6 @@ message AccessBody {
       string bank_id = 1;
     }
 
-    // Provides access to a specific account's balance
-    message AccountBalance {
-      string account_id = 1; // ID of account
-    }
-
     // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
     message AllTransferDestinations {}
 
@@ -264,10 +281,6 @@ message AccessBody {
       string bank_id = 1;
     }
 
-    // Provides access to the resolved transfer destinations of the specified account
-    message TransferDestinations {
-      string account_id = 1; // ID of account
-    }
   }
 }
 

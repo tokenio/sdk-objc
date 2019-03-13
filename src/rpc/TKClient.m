@@ -945,6 +945,7 @@
             usingKey:keyLevel
              onError:onError];
 }
+
 - (void)getTransaction:(NSString *)transactionId
             forAccount:(NSString *)accountId
                withKey:(Key_Level)keyLevel
@@ -1061,8 +1062,8 @@
 }
 
 - (void)getBlob:(NSString *)blobId
-         onSuccess:(OnSuccessWithBlob)onSuccess
-           onError:(OnError)onError {
+      onSuccess:(OnSuccessWithBlob)onSuccess
+        onError:(OnError)onError {
     GetBlobRequest *request = [GetBlobRequest message];
     request.blobId = blobId;
     RpcLogStart(request);

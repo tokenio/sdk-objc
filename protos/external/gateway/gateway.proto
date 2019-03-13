@@ -273,6 +273,8 @@ message CreateCustomizationRequest {
   io.token.proto.common.blob.Blob.Payload logo = 1;
   map<string, string> colors = 2;
   string consent_text = 3;
+  string name = 4;
+  string app_name = 5;
 }
 
 message CreateCustomizationResponse {
@@ -501,6 +503,15 @@ message ResolveTransferDestinationsRequest {
 
 message ResolveTransferDestinationsResponse {
   repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 1;
+}
+
+message ConfirmFundsRequest {
+  string account_id = 1;
+  io.token.proto.common.money.Money amount = 2;
+}
+
+message ConfirmFundsResponse {
+  bool funds_available = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -784,6 +795,42 @@ message GetBankInfoRequest {
 
 message GetBankInfoResponse {
   io.token.proto.common.bank.BankInfo info = 1; // Linking info
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Keychain management.
+//
+
+message CreateKeychainRequest {
+  string name = 1;
+}
+
+message CreateKeychainResponse {
+  string keychain_id = 1;
+}
+
+message UpdateKeychainInfoRequest {
+  string keychain_id = 1;
+  string name = 2;
+}
+
+message UpdateKeychainInfoResponse {}
+
+message GetKeychainsRequest {}
+
+message GetKeychainsResponse {
+  repeated io.token.proto.common.member.Keychain keychains = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Bank member only requests.
+//
+message GetMemberInfoRequest {
+  string member_id = 1;
+}
+
+message GetMemberInfoResponse {
+  io.token.proto.common.member.MemberInfo member_info = 1; // Member info
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1302,6 +1349,13 @@ service GatewayService {
     };
   }
 
+  // Confirm that the given account has sufficient funds to cover the charge.
+  rpc ConfirmFunds (ConfirmFundsRequest) returns (ConfirmFundsResponse) {
+    option (google.api.http) = {
+      put: "/accounts/{account_id}/funds-confirmation"
+    };
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Testing.
   //
@@ -1540,6 +1594,40 @@ service GatewayService {
   rpc GetBankInfo (GetBankInfoRequest) returns (GetBankInfoResponse) {
     option (google.api.http) = {
         get: "/banks/{bank_id}/info"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Keychain management.
+  //
+  // Create a keychain with a name.
+  rpc CreateKeychain (CreateKeychainRequest) returns (CreateKeychainResponse) {
+    option (google.api.http) = {
+        post: "/keychain"
+    };
+  }
+
+  // Update a keychain's info.
+  rpc UpdateKeychainInfo (UpdateKeychainInfoRequest) returns (UpdateKeychainInfoResponse) {
+    option (google.api.http) = {
+        put: "/keychain/id/info"
+    };
+  }
+
+  // Get all the keychains of a member.
+  rpc GetKeychains (GetKeychainsRequest) returns (GetKeychainsResponse) {
+    option (google.api.http) = {
+        get: "/keychains"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Bank member only requests.
+  //
+  // Get member information about a member who links at least an account from this bank
+  rpc GetMemberInfo (GetMemberInfoRequest) returns (GetMemberInfoResponse) {
+    option (google.api.http) = {
+        get: "/members/info/{member_id}"
     };
   }
 }

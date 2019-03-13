@@ -33,9 +33,80 @@
 #endif
 
 @class GRPCProtoCall;
+@class GRPCUnaryProtoCall;
+@class GRPCStreamingProtoCall;
+@class GRPCCallOptions;
+@protocol GRPCProtoResponseHandler;
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol Cma9Service2 <NSObject>
+
+#pragma mark CreateAccountRequest(AccountRequestsRequest) returns (AccountRequestsResponse)
+
+/**
+ * Used to request information about accounts and transactions.
+ */
+- (GRPCUnaryProtoCall *)createAccountRequestWithMessage:(AccountRequestsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RemoveAccountRequest(DeleteAccountRequestsRequest) returns (DeleteAccountRequestsResponse)
+
+/**
+ * Used to delete a request for account/transaction information.
+ */
+- (GRPCUnaryProtoCall *)removeAccountRequestWithMessage:(DeleteAccountRequestsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccounts(AccountsRequest) returns (AccountsResponse)
+
+/**
+ * Used to retrieve a list of accounts the AISP is authorized to access
+ */
+- (GRPCUnaryProtoCall *)getAccountsWithMessage:(AccountsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccount(AccountRequest) returns (AccountResponse)
+
+/**
+ * Used to query information about a particular account.
+ */
+- (GRPCUnaryProtoCall *)getAccountWithMessage:(AccountRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccountBalances(AccountBalancesRequest) returns (AccountBalancesResponse)
+
+/**
+ * Used to query account balances.
+ */
+- (GRPCUnaryProtoCall *)getAccountBalancesWithMessage:(AccountBalancesRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAccountTransactions(AccountTransactionsRequest) returns (AccountTransactionsResponse)
+
+/**
+ * Used to query information about an account's transactions.
+ */
+- (GRPCUnaryProtoCall *)getAccountTransactionsWithMessage:(AccountTransactionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreatePayment(PaymentsRequest) returns (PaymentsResponse)
+
+/**
+ * Used to create a payment object, later to be redeemed.
+ */
+- (GRPCUnaryProtoCall *)createPaymentWithMessage:(PaymentsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreatePaymentSubmission(PaymentSubmissionsRequest) returns (PaymentSubmissionsResponse)
+
+/**
+ * Used to submit/redeem an existing payment object.
+ */
+- (GRPCUnaryProtoCall *)createPaymentSubmissionWithMessage:(PaymentSubmissionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetParty(PartyRequest) returns (PartyResponse)
+
+/**
+ * Used to get account details
+ */
+- (GRPCUnaryProtoCall *)getPartyWithMessage:(PartyRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+@end
 
 @protocol Cma9Service <NSObject>
 
@@ -164,8 +235,10 @@ NS_ASSUME_NONNULL_BEGIN
  * Basic service implementation, over gRPC, that only does
  * marshalling and parsing.
  */
-@interface Cma9Service : GRPCProtoService<Cma9Service>
-- (instancetype)initWithHost:(NSString *)host NS_DESIGNATED_INITIALIZER;
+@interface Cma9Service : GRPCProtoService<Cma9Service, Cma9Service2>
+- (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithHost:(NSString *)host;
++ (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
 + (instancetype)serviceWithHost:(NSString *)host;
 @end
 #endif
