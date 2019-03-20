@@ -147,4 +147,10 @@
     return randomString;
 }
 
++ (Alias *)normalizeAlias:(Alias *)alias {
+    Alias *normalized = [alias copy];
+    normalized.value = [[alias.value lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return normalized;
+}
+
 @end
