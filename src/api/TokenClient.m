@@ -86,6 +86,9 @@
                 @throw error;
             }
         }
+        if (!developerKey_) {
+            developerKey_ = @"f3982819-5d8d-4123-9601-886df2780f42";
+        }
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
