@@ -188,14 +188,14 @@
 
 - (Alias *)generateEmailAlias {
     Alias *alias = [Alias new];
-    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
+    alias.value = [[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"];
     alias.type = Alias_Type_Email;
     return alias;
 }
 
 - (Alias *)generatePhoneAlias {
     Alias *alias = [Alias new];
-    alias.value = [[[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"] lowercaseString];
+    alias.value = [[@"alias-" stringByAppendingString:[TKUtil nonce]] stringByAppendingString:@"+noverify@token.io"];
     alias.type = Alias_Type_Phone;
     return alias;
 }

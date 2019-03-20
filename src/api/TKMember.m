@@ -228,14 +228,15 @@
             alias.realm = partnerId;
         }
 
+        Alias *normalized = [TKUtil normalizeAlias:alias];
         MemberOperation *addAlias = [MemberOperation message];
-        addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
+        addAlias.addAlias.aliasHash = [TKHasher hashAlias:normalized];
         addAlias.addAlias.realm = alias.realm;
         [addAliasOps addObject:addAlias];
         
         MemberOperationMetadata *metadata = [MemberOperationMetadata message];
-        metadata.addAliasMetadata.alias = alias;
-        metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:alias];
+        metadata.addAliasMetadata.alias = normalized;
+        metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:normalized];
         [metadataArray addObject:metadata];
     }
     [client updateMember:retainedMember
@@ -266,7 +267,8 @@
     NSMutableArray *removeAliasOps = [NSMutableArray array];
     for (Alias *alias in toRemoveAliases) {
         MemberOperation *removeAlias = [MemberOperation message];
-        removeAlias.removeAlias.aliasHash = [TKHasher hashAlias:alias];
+        Alias *normalized = [TKUtil normalizeAlias:alias];
+        removeAlias.removeAlias.aliasHash = [TKHasher hashAlias:normalized];
         [removeAliasOps addObject:removeAlias];
     }
     [client updateMember:retainedMember

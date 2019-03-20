@@ -31,7 +31,7 @@
     [tokenClient createMember:alias onSuccess:^(TKMember *created) {
         newMember = created;
         XCTAssert(created.id.length > 0);
-        XCTAssertEqualObjects(created.firstAlias, alias);
+        XCTAssertEqualObjects(created.firstAlias, [TKUtil normalizeAlias:alias]);
         [expectation fulfill];
     } onError:THROWERROR];
     

@@ -375,7 +375,9 @@
     }
 
     MemberOperation *addAlias = [MemberOperation message];
-    addAlias.addAlias.aliasHash = [TKHasher hashAlias:alias];
+    Alias *normalized = [TKUtil normalizeAlias:alias];
+
+    addAlias.addAlias.aliasHash = [TKHasher hashAlias:normalized];
     [operations addObject:addAlias];
 
     MemberOperation *recoverOp = [MemberOperation message];
@@ -383,8 +385,8 @@
     [operations addObject:recoverOp];
     
     MemberOperationMetadata *metadata = [MemberOperationMetadata message];
-    metadata.addAliasMetadata.alias = alias;
-    metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:alias];
+    metadata.addAliasMetadata.alias = normalized;
+    metadata.addAliasMetadata.aliasHash = [TKHasher hashAlias:normalized];
     [metadataArray addObject:metadata];
     
     [unauthenticatedClient createMember:memberId
@@ -405,7 +407,7 @@
                                              tokenCluster:self->tokenCluster
                                              useClient:client
                                              useBrowserFactory:self->browserFactory
-                                             aliases:[NSMutableArray arrayWithObject:alias]]);
+                                             aliases:[NSMutableArray arrayWithObject:normalized]]);
                               }
                                 onError:onError];
 }

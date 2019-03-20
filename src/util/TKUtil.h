@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "TokenProto.h"
 
 /**
  * Set of utility methods.
@@ -135,5 +135,13 @@
  * @return converted string
  */
 + (NSString *)camelCaseToSnakeCase:(NSString *)string;
+
+/**
+ * Normalize an alias.
+ *
+ * @param alias to normalize
+ * @return normalized alias
+ */
++ (Alias *)normalizeAlias:(Alias *)alias;
 
 @end
