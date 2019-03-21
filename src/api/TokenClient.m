@@ -87,7 +87,7 @@
             }
         }
         if (!developerKey_) {
-            developerKey_ = @"f3982819-5d8d-4123-9601-886df2780f42";
+            developerKey_ = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
         }
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
