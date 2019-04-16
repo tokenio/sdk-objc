@@ -169,6 +169,10 @@
 		D03A56031FE07368008342E0 /* TKAuthorizationEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D03A56011FE07368008342E0 /* TKAuthorizationEngine.m */; };
 		D03A56131FE08DE5008342E0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D03A56121FE08DE4008342E0 /* UIKit.framework */; };
 		D04A98E9200D5C6E002F4F57 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D04A98EB200D5C6E002F4F57 /* Localizable.strings */; };
+		D062EFEC22615B0100189D65 /* Bankstatus.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D062EFE822615B0100189D65 /* Bankstatus.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D062EFED22615B0100189D65 /* Bankstatus.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */; };
+		D062EFEE22615B0100189D65 /* Consent.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D062EFEA22615B0100189D65 /* Consent.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D062EFEF22615B0100189D65 /* Consent.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFEB22615B0100189D65 /* Consent.pbobjc.h */; };
 		D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */; };
 		D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
@@ -425,6 +429,10 @@
 		D03A56121FE08DE4008342E0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D04A98EA200D5C6E002F4F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D04A98EC200D5C84002F4F57 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D062EFE822615B0100189D65 /* Bankstatus.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bankstatus.pbobjc.m; sourceTree = "<group>"; };
+		D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankstatus.pbobjc.h; sourceTree = "<group>"; };
+		D062EFEA22615B0100189D65 /* Consent.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consent.pbobjc.m; sourceTree = "<group>"; };
+		D062EFEB22615B0100189D65 /* Consent.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consent.pbobjc.h; sourceTree = "<group>"; };
 		D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		D082409E1EFDC5050063D9E9 /* TKProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKProfileTests.m; sourceTree = "<group>"; };
@@ -524,6 +532,10 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */,
+				D062EFE822615B0100189D65 /* Bankstatus.pbobjc.m */,
+				D062EFEB22615B0100189D65 /* Consent.pbobjc.h */,
+				D062EFEA22615B0100189D65 /* Consent.pbobjc.m */,
 				D02A29982177EC190066E8B8 /* Providerspecific.pbobjc.h */,
 				D02A29992177EC190066E8B8 /* Providerspecific.pbobjc.m */,
 				D039410220C9F02100B980CE /* extensions */,
@@ -995,6 +1007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
+				D062EFED22615B0100189D65 /* Bankstatus.pbobjc.h in Headers */,
 				4B240F841F28096300497B2D /* TKHasher.h in Headers */,
 				D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */,
 				948D195B1E2EF63D000258EE /* AccessTokenBuilder.h in Headers */,
@@ -1039,6 +1052,7 @@
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
 				3777163E1D99BF6800287239 /* TokenSdk.h in Headers */,
 				37637B601D989A930043345F /* Descriptor.pbobjc.h in Headers */,
+				D062EFEF22615B0100189D65 /* Consent.pbobjc.h in Headers */,
 				37637B621D989A930043345F /* Member.pbobjc.h in Headers */,
 				8A0734581DBFD1D100ED27C0 /* Transferinstructions.pbobjc.h in Headers */,
 				ABA7B17B4D029AB93711EE58 /* ed25519.h in Headers */,
@@ -1115,7 +1129,6 @@
 				8A9909141D890E820096A7FA /* Sources */,
 				8A9909151D890E820096A7FA /* Frameworks */,
 				8A9909161D890E820096A7FA /* Resources */,
-				47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */,
 				5FC30FCA2EFE21EB84341A05 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
@@ -1177,6 +1190,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				sl,
@@ -1264,24 +1278,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		47707BB14A8AF42C2075C39B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		598DAD75055FED68BA4A5752 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1333,7 +1329,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -1342,7 +1338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TokenSdk/Pods-TokenSdk-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E4DCAD8EBF09CA387B79EE44 /* [CP] Check Pods Manifest.lock */ = {
@@ -1378,6 +1374,7 @@
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
 				D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */,
 				D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */,
+				D062EFEC22615B0100189D65 /* Bankstatus.pbobjc.m in Sources */,
 				D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */,
 				4B240F8C1F28135000497B2D /* Base58.c in Sources */,
 				8AED88F41E27F02A001AD3F7 /* Banklink.pbobjc.m in Sources */,
@@ -1430,6 +1427,7 @@
 				37637B651D989A930043345F /* Money.pbobjc.m in Sources */,
 				8A2937521DB825660034C110 /* Address.pbobjc.m in Sources */,
 				D0EFF974213769B20048636D /* NotifyResult.m in Sources */,
+				D062EFEE22615B0100189D65 /* Consent.pbobjc.m in Sources */,
 				ABA7B7A9B8E01207CF18847A /* TKBankClient.m in Sources */,
 				37637B5F1D989A930043345F /* HTTP.pbobjc.m in Sources */,
 				ABA7B01411EF72BFC5345CEF /* TKAccount.m in Sources */,

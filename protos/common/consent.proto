@@ -1,0 +1,51 @@
+syntax = "proto3";
+package io.token.proto.common.consent;
+option java_outer_classname = "ConsentProtos";
+option csharp_namespace = "Tokenio.Proto.Common.ConsentProtos";
+
+import "account.proto";
+import "extensions/field.proto";
+import "money.proto";
+import "token.proto";
+import "transferinstructions.proto";
+
+message Consent {
+  string id = 1;                                // Same as the corresponding token id
+  Beneficiary beneficiary = 2;
+  string member_id = 3;
+
+  oneof type {
+    InformationAccess information_access = 5;
+    Payment payment = 6;
+  }
+
+  message InformationAccess {
+    repeated ResourceAccess resource_access = 1;
+
+    message ResourceAccess {
+      io.token.proto.common.account.BankAccount account = 1;
+      repeated ResourceType resources = 2;
+
+      enum ResourceType {
+        INVALID_RESOURCE_TYPE = 0;
+        ACCOUNT = 1;
+        BALANCE = 2;
+        TRANSACTIONS = 3;
+        TRANSFER_DESTINATIONS = 4;
+        FUNDS_CONFIRMATIONS = 5;
+      }
+    }
+  }
+
+  message Payment {
+    io.token.proto.common.account.BankAccount account = 1;
+    io.token.proto.common.money.Money lifetime_amount = 2;
+    io.token.proto.common.money.Money amount = 3;
+    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 4;
+  }
+
+  message Beneficiary {
+    io.token.proto.common.token.TokenMember member = 1;
+    io.token.proto.common.token.ActingAs acting_as = 2;
+  }
+}

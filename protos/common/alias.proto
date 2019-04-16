@@ -24,6 +24,7 @@ message Alias {
     DOMAIN = 4;   // unused
     USERNAME = 5; // deprecated
     BANK = 6;     // for banks only
+    CUSTOM = 7;   // Custom type, for instance a bank specific customer ID.
   }
 }
 

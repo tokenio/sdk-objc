@@ -183,7 +183,7 @@ GPBEnumDescriptor *Alias_Type_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Unknown\000Email\000Phone\000Domain\000Usern"
-        "ame\000Bank\000";
+        "ame\000Bank\000Custom\000";
     static const int32_t values[] = {
         Alias_Type_Invalid,
         Alias_Type_Unknown,
@@ -192,6 +192,7 @@ GPBEnumDescriptor *Alias_Type_EnumDescriptor(void) {
         Alias_Type_Domain,
         Alias_Type_Username,
         Alias_Type_Bank,
+        Alias_Type_Custom,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Alias_Type)
@@ -216,6 +217,7 @@ BOOL Alias_Type_IsValidValue(int32_t value__) {
     case Alias_Type_Domain:
     case Alias_Type_Username:
     case Alias_Type_Bank:
+    case Alias_Type_Custom:
       return YES;
     default:
       return NO;

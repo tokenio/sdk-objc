@@ -37,6 +37,8 @@
 @class CreateMemberResponse;
 @class CreateTestBankAccountRequest;
 @class CreateTestBankAccountResponse;
+@class CreateTokenRequest;
+@class CreateTokenResponse;
 @class CreateTransferRequest;
 @class CreateTransferResponse;
 @class CreateTransferTokenRequest;
@@ -59,6 +61,8 @@
 @class GetAddressesResponse;
 @class GetAliasesRequest;
 @class GetAliasesResponse;
+@class GetAuthRequestPayloadRequest;
+@class GetAuthRequestPayloadResponse;
 @class GetBalanceRequest;
 @class GetBalanceResponse;
 @class GetBalancesRequest;
@@ -71,6 +75,10 @@
 @class GetBanksResponse;
 @class GetBlobRequest;
 @class GetBlobResponse;
+@class GetConsentRequest;
+@class GetConsentResponse;
+@class GetConsentsRequest;
+@class GetConsentsResponse;
 @class GetDefaultAccountRequest;
 @class GetDefaultAccountResponse;
 @class GetDefaultAgentRequest;
@@ -129,6 +137,8 @@
 @class NormalizeAliasResponse;
 @class NotifyRequest;
 @class NotifyResponse;
+@class PrepareTokenRequest;
+@class PrepareTokenResponse;
 @class RemoveTrustedBeneficiaryRequest;
 @class RemoveTrustedBeneficiaryResponse;
 @class ReplaceTokenRequest;
@@ -175,8 +185,6 @@
 @class UpdateTokenRequestResponse;
 @class VerifyAffiliateRequest;
 @class VerifyAffiliateResponse;
-@class VerifyAliasOnBehalfRequest;
-@class VerifyAliasOnBehalfResponse;
 @class VerifyAliasRequest;
 @class VerifyAliasResponse;
 
@@ -187,6 +195,7 @@
   #import "Bankinfo.pbobjc.h"
   #import "Banklink.pbobjc.h"
   #import "Blob.pbobjc.h"
+  #import "Consent.pbobjc.h"
   #import "Member.pbobjc.h"
   #import "Money.pbobjc.h"
   #import "Notification.pbobjc.h"
@@ -330,10 +339,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark DeleteMember(DeleteMemberRequest) returns (DeleteMemberResponse)
 
 - (GRPCUnaryProtoCall *)deleteMemberWithMessage:(DeleteMemberRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
-
-- (GRPCUnaryProtoCall *)verifyAliasOnBehalfWithMessage:(VerifyAliasOnBehalfRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
 
@@ -721,7 +726,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark RetrieveTokenRequest(RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse)
 
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (GRPCUnaryProtoCall *)retrieveTokenRequestWithMessage:(RetrieveTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -729,13 +734,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)updateTokenRequestWithMessage:(UpdateTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+#pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Tokens.
  * 
  * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (GRPCUnaryProtoCall *)prepareTokenWithMessage:(PrepareTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
+
+/**
+ * Create a Token.
+ */
+- (GRPCUnaryProtoCall *)createTokenWithMessage:(CreateTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+
+/**
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
@@ -817,6 +836,13 @@ NS_ASSUME_NONNULL_BEGIN
  * Get the token request result from the token request id
  */
 - (GRPCUnaryProtoCall *)getTokenRequestResultWithMessage:(GetTokenRequestResultRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+/**
+ * Gets a payload to sign
+ */
+- (GRPCUnaryProtoCall *)getAuthRequestPayloadWithMessage:(GetAuthRequestPayloadRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
 
@@ -909,6 +935,14 @@ NS_ASSUME_NONNULL_BEGIN
  * Get member information about a member who links at least an account from this bank
  */
 - (GRPCUnaryProtoCall *)getMemberInfoWithMessage:(GetMemberInfoRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetConsent(GetConsentRequest) returns (GetConsentResponse)
+
+- (GRPCUnaryProtoCall *)getConsentWithMessage:(GetConsentRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetConsents(GetConsentsRequest) returns (GetConsentsResponse)
+
+- (GRPCUnaryProtoCall *)getConsentsWithMessage:(GetConsentsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -1135,13 +1169,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToDeleteMemberWithRequest:(DeleteMemberRequest *)request handler:(void(^)(DeleteMemberResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
-
-- (void)verifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToVerifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
@@ -1866,12 +1893,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark RetrieveTokenRequest(RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse)
 
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (void)retrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -1883,23 +1910,49 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToUpdateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+#pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
 
 /**
  * //////////////////////////////////////////////////////////////////////////////////////////////////
  * Tokens.
  * 
  * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (void)prepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens.
+ * 
+ * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (GRPCProtoCall *)RPCToPrepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
+
+/**
+ * Create a Token.
+ */
+- (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Create a Token.
+ */
+- (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+
+/**
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
 - (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Tokens.
- * 
- * 
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
@@ -2049,6 +2102,19 @@ NS_ASSUME_NONNULL_BEGIN
  * Get the token request result from the token request id
  */
 - (GRPCProtoCall *)RPCToGetTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+/**
+ * Gets a payload to sign
+ */
+- (void)getAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Gets a payload to sign
+ */
+- (GRPCProtoCall *)RPCToGetAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
@@ -2223,6 +2289,20 @@ NS_ASSUME_NONNULL_BEGIN
  * Get member information about a member who links at least an account from this bank
  */
 - (GRPCProtoCall *)RPCToGetMemberInfoWithRequest:(GetMemberInfoRequest *)request handler:(void(^)(GetMemberInfoResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetConsent(GetConsentRequest) returns (GetConsentResponse)
+
+- (void)getConsentWithRequest:(GetConsentRequest *)request handler:(void(^)(GetConsentResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetConsentWithRequest:(GetConsentRequest *)request handler:(void(^)(GetConsentResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetConsents(GetConsentsRequest) returns (GetConsentsResponse)
+
+- (void)getConsentsWithRequest:(GetConsentsRequest *)request handler:(void(^)(GetConsentsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetConsentsWithRequest:(GetConsentsRequest *)request handler:(void(^)(GetConsentsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end
