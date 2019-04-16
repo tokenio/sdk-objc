@@ -34,6 +34,7 @@ CF_EXTERN_C_BEGIN
 @class BankAccount_Bank;
 @class BankAccount_Custom;
 @class BankAccount_FasterPayments;
+@class BankAccount_Guest;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
 @class BankAccount_Token;
@@ -255,6 +256,7 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_AccountFeatures = 8,
   BankAccount_FieldNumber_FasterPayments = 9,
   BankAccount_FieldNumber_Custom = 10,
+  BankAccount_FieldNumber_Guest = 11,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -267,6 +269,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_Bank = 6,
   BankAccount_Account_OneOfCase_FasterPayments = 9,
   BankAccount_Account_OneOfCase_Custom = 10,
+  BankAccount_Account_OneOfCase_Guest = 11,
 };
 
 /**
@@ -293,6 +296,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_FasterPayments *fasterPayments;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Custom *custom;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Guest *guest;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
@@ -353,7 +358,7 @@ typedef GPB_ENUM(BankAccount_Bank_FieldNumber) {
 };
 
 /**
- * Source account managed by a coop bank
+ * Source account managed by a co-opt bank
  **/
 @interface BankAccount_Bank : GPBMessage
 
@@ -452,6 +457,25 @@ typedef GPB_ENUM(BankAccount_Custom_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+
+@end
+
+#pragma mark - BankAccount_Guest
+
+typedef GPB_ENUM(BankAccount_Guest_FieldNumber) {
+  BankAccount_Guest_FieldNumber_BankId = 1,
+  BankAccount_Guest_FieldNumber_Nonce = 2,
+};
+
+/**
+ * Source account for guest checkout flow
+ **/
+@interface BankAccount_Guest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+/** optional */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
 
 @end
 

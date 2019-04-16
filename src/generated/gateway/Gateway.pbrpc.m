@@ -10,6 +10,7 @@
 #import "Bankinfo.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Blob.pbobjc.h"
+#import "Consent.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
@@ -560,27 +561,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[DeleteMemberResponse class]];
-}
-
-#pragma mark VerifyAliasOnBehalf(VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse)
-
-// Deprecated methods.
-- (void)verifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToVerifyAliasOnBehalfWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToVerifyAliasOnBehalfWithRequest:(VerifyAliasOnBehalfRequest *)request handler:(void(^)(VerifyAliasOnBehalfResponse *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"VerifyAliasOnBehalf"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[VerifyAliasOnBehalfResponse class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)verifyAliasOnBehalfWithMessage:(VerifyAliasOnBehalfRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"VerifyAliasOnBehalf"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[VerifyAliasOnBehalfResponse class]];
 }
 
 #pragma mark NormalizeAlias(NormalizeAliasRequest) returns (NormalizeAliasResponse)
@@ -2159,14 +2139,14 @@
 
 // Deprecated methods.
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (void)retrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRetrieveTokenRequestWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RetrieveTokenRequest"
@@ -2175,7 +2155,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * Retrviee a Token Request
+ * Retrieve a Token Request
  */
 - (GRPCUnaryProtoCall *)retrieveTokenRequestWithMessage:(RetrieveTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RetrieveTokenRequest"
@@ -2206,7 +2186,7 @@
              responseClass:[UpdateTokenRequestResponse class]];
 }
 
-#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+#pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
 
 // Deprecated methods.
 /**
@@ -2214,6 +2194,74 @@
  * Tokens.
  * 
  * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (void)prepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToPrepareTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens.
+ * 
+ * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (GRPCProtoCall *)RPCToPrepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"PrepareToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[PrepareTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Tokens.
+ * 
+ * 
+ * Prepare a token (resolve token payload and determine policy)
+ */
+- (GRPCUnaryProtoCall *)prepareTokenWithMessage:(PrepareTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"PrepareToken"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[PrepareTokenResponse class]];
+}
+
+#pragma mark CreateToken(CreateTokenRequest) returns (CreateTokenResponse)
+
+// Deprecated methods.
+/**
+ * Create a Token.
+ */
+- (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateTokenWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Create a Token.
+ */
+- (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateToken"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateTokenResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Create a Token.
+ */
+- (GRPCUnaryProtoCall *)createTokenWithMessage:(CreateTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"CreateToken"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[CreateTokenResponse class]];
+}
+
+#pragma mark CreateTransferToken(CreateTransferTokenRequest) returns (CreateTransferTokenResponse)
+
+// Deprecated methods.
+/**
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
@@ -2222,10 +2270,6 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Tokens.
- * 
- * 
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
@@ -2236,10 +2280,6 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * //////////////////////////////////////////////////////////////////////////////////////////////////
- * Tokens.
- * 
- * 
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
  */
@@ -2561,6 +2601,36 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GetTokenRequestResultResponse class]];
+}
+
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+// Deprecated methods.
+/**
+ * Gets a payload to sign
+ */
+- (void)getAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAuthRequestPayloadWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Gets a payload to sign
+ */
+- (GRPCProtoCall *)RPCToGetAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAuthRequestPayload"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetAuthRequestPayloadResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Gets a payload to sign
+ */
+- (GRPCUnaryProtoCall *)getAuthRequestPayloadWithMessage:(GetAuthRequestPayloadRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetAuthRequestPayload"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetAuthRequestPayloadResponse class]];
 }
 
 #pragma mark CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse)
@@ -2927,6 +2997,48 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GetMemberInfoResponse class]];
+}
+
+#pragma mark GetConsent(GetConsentRequest) returns (GetConsentResponse)
+
+// Deprecated methods.
+- (void)getConsentWithRequest:(GetConsentRequest *)request handler:(void(^)(GetConsentResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetConsentWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetConsentWithRequest:(GetConsentRequest *)request handler:(void(^)(GetConsentResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetConsent"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetConsentResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)getConsentWithMessage:(GetConsentRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetConsent"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetConsentResponse class]];
+}
+
+#pragma mark GetConsents(GetConsentsRequest) returns (GetConsentsResponse)
+
+// Deprecated methods.
+- (void)getConsentsWithRequest:(GetConsentsRequest *)request handler:(void(^)(GetConsentsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetConsentsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetConsentsWithRequest:(GetConsentsRequest *)request handler:(void(^)(GetConsentsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetConsents"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetConsentsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)getConsentsWithMessage:(GetConsentsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetConsents"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetConsentsResponse class]];
 }
 
 @end

@@ -9,6 +9,7 @@ import "address.proto";
 import "bankinfo.proto";
 import "banklink.proto";
 import "blob.proto";
+import "consent.proto";
 import "member.proto";
 import "money.proto";
 import "notification.proto";
@@ -105,16 +106,6 @@ message GetPairedDevicesResponse {
 message DeleteMemberRequest {}
 
 message DeleteMemberResponse {}
-
-message VerifyAliasOnBehalfRequest {
-  string bank_id = 1; // Bank ID of verifier
-  io.token.proto.common.alias.VerifyAliasPayload payload = 2; // Payload containing memberId and alias
-  io.token.proto.common.security.Signature signature = 3; // Signature of the verify alias payload
-}
-
-message VerifyAliasOnBehalfResponse {
-  io.token.proto.common.member.Member member = 1; // updated member
-}
 
 message NormalizeAliasRequest {
   io.token.proto.common.alias.Alias alias = 1;
@@ -583,7 +574,27 @@ message UpdateTokenRequestResponse {
 // Tokens
 //
 
+message PrepareTokenRequest {
+  io.token.proto.common.token.TokenPayload payload = 1;
+}
+
+message PrepareTokenResponse {
+  io.token.proto.common.token.TokenPayload resolved_payload = 1;
+  io.token.proto.common.token.Policy policy = 2;
+}
+
+message CreateTokenRequest {
+  io.token.proto.common.token.TokenPayload payload = 1;
+  repeated io.token.proto.common.security.Signature signatures = 2;
+  string token_request_id = 3; // optional ID of the token request
+}
+
+message CreateTokenResponse {
+  io.token.proto.common.token.Token token = 1;
+}
+
 message CreateTransferTokenRequest {
+  option deprecated = true; // use CreateTokenRequest instead
   io.token.proto.common.token.TokenPayload payload = 1; // TokenPayload, should have TransferBody
   string token_request_id = 2; // ID of the token request
 }
@@ -706,6 +717,14 @@ message GetTokenRequestResultRequest {
 message GetTokenRequestResultResponse {
   string token_id = 1;
   io.token.proto.common.security.Signature signature = 2;
+}
+
+message GetAuthRequestPayloadRequest {
+  string auth_request_id = 1;
+}
+
+message GetAuthRequestPayloadResponse {
+  io.token.proto.common.token.TokenPayload payload = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -833,6 +852,26 @@ message GetMemberInfoResponse {
   io.token.proto.common.member.MemberInfo member_info = 1; // Member info
 }
 
+message GetConsentRequest {
+  string bank_id = 1;
+  string consent_id = 2;
+}
+
+message GetConsentResponse {
+  io.token.proto.common.consent.Consent consent = 1;
+}
+
+message GetConsentsRequest {
+  string bank_id = 1;
+  io.token.proto.common.account.BankAccount bank_account = 2;
+  Page page = 3;
+}
+
+message GetConsentsResponse {
+  repeated io.token.proto.common.consent.Consent consents = 1;
+  string offset = 2;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Testing API calls
 //
@@ -867,7 +906,7 @@ message GetTestBankNotificationsResponse {
 //
 service GatewayService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Member registration, key and alias mamangement.
+  // Member registration, key and alias management.
   //
 
   // Create a member. Mints a member ID; newly-created member does not yet
@@ -1006,12 +1045,6 @@ service GatewayService {
   rpc DeleteMember (DeleteMemberRequest) returns (DeleteMemberResponse) {
     option (google.api.http) = {
       delete: "/members"
-    };
-  }
-
-  rpc VerifyAliasOnBehalf (VerifyAliasOnBehalfRequest) returns (VerifyAliasOnBehalfResponse) {
-    option (google.api.http) = {
-      post: "/verifications/onbehalf"
     };
   }
 
@@ -1425,7 +1458,7 @@ service GatewayService {
     };
   }
 
-  // Retrviee a Token Request
+  // Retrieve a Token Request
   rpc RetrieveTokenRequest (RetrieveTokenRequestRequest) returns (RetrieveTokenRequestResponse) {
     option (google.api.http) = {
         get: "/token-requests/{request_id}"
@@ -1442,6 +1475,26 @@ service GatewayService {
   // Tokens.
   //
 
+  // Prepare a token (resolve token payload and determine policy)
+  rpc PrepareToken (PrepareTokenRequest) returns (PrepareTokenResponse) {
+    option (google.api.http) = {
+        post: "/tokens/prepare"
+    };
+  }
+
+  // Create a Token.
+  rpc CreateToken (CreateTokenRequest) returns (CreateTokenResponse) {
+    option (google.api.http) = {
+        post: "/tokens"
+    };
+    option (io.token.proto.extensions.service.rate_limit) = {
+      selector: [
+        {key: "resolve-alias-remote-address", path: "{REMOTE_ADDRESS}"},
+        {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
+      ]
+    };
+  }
+
   // Create a Transfer Token.
   // https://developer.token.io/sdk/#create-transfer-token
   rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
@@ -1454,6 +1507,7 @@ service GatewayService {
         {key: "resolve-alias-source-developer", path: "{DEVELOPER_ID}"}
       ]
     };
+    option deprecated = true; // use CreateToken instead
   }
 
   // Create an Access Token.
@@ -1536,6 +1590,13 @@ service GatewayService {
   rpc GetTokenRequestResult (GetTokenRequestResultRequest) returns (GetTokenRequestResultResponse) {
     option (google.api.http) = {
         get: "/token-requests/{token_request_id}/token_request_result"
+    };
+  }
+
+  // Gets a payload to sign
+  rpc GetAuthRequestPayload (GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse) {
+    option (google.api.http) = {
+        get: "/auth-request-payloads/{auth_request_id}"
     };
   }
 
@@ -1628,6 +1689,18 @@ service GatewayService {
   rpc GetMemberInfo (GetMemberInfoRequest) returns (GetMemberInfoResponse) {
     option (google.api.http) = {
         get: "/members/info/{member_id}"
+    };
+  }
+
+  rpc GetConsent (GetConsentRequest) returns (GetConsentResponse) {
+  option (google.api.http) = {
+        get: "/banks/{bank_id}/consents/{consent_id}"
+    };
+  }
+
+  rpc GetConsents (GetConsentsRequest) returns (GetConsentsResponse) {
+  option (google.api.http) = {
+        get: "/consents?bank-id={bank_id}&offset={page.offset}&limit={page.limit}&account-swift-bic={account.swift.bic}&account-swift-account={account.swift.account}&account-sepa-iban={account.sepa.iban}&account-sepa-bic={account.sepa.bic}&account-ach-routing={account.ach.routing}&account-ach-account={account.ach.account}&account-faster-payments-sort-code={account.faster_payments.sort_code}&account-faster-payments-account-number={account.faster_payments.account_number}&account-custom-bank-id={account.custom.bank_id}&account-custom-payload={account.custom.payload}"
     };
   }
 }

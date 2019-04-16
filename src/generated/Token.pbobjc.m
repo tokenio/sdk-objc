@@ -2348,6 +2348,188 @@ typedef struct TokenRequestStatePayload__storage_ {
 
 @end
 
+#pragma mark - Policy
+
+@implementation Policy
+
+@dynamic policyOneOfCase;
+@dynamic singleSignature;
+
+typedef struct Policy__storage_ {
+  uint32_t _has_storage_[2];
+  Policy_SingleSignature *singleSignature;
+} Policy__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "singleSignature",
+        .dataTypeSpecific.className = GPBStringifySymbol(Policy_SingleSignature),
+        .number = Policy_FieldNumber_SingleSignature,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Policy__storage_, singleSignature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Policy class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Policy__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "policy",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void Policy_ClearPolicyOneOfCase(Policy *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - Policy_SingleSignature
+
+@implementation Policy_SingleSignature
+
+@dynamic hasSigner, signer;
+
+typedef struct Policy_SingleSignature__storage_ {
+  uint32_t _has_storage_[1];
+  Policy_Signer *signer;
+} Policy_SingleSignature__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "signer",
+        .dataTypeSpecific.className = GPBStringifySymbol(Policy_Signer),
+        .number = Policy_SingleSignature_FieldNumber_Signer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Policy_SingleSignature__storage_, signer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Policy_SingleSignature class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Policy_SingleSignature__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Policy)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Policy_Signer
+
+@implementation Policy_Signer
+
+@dynamic memberId;
+@dynamic keyLevel;
+@dynamic authorizationURL;
+
+typedef struct Policy_Signer__storage_ {
+  uint32_t _has_storage_[1];
+  Key_Level keyLevel;
+  NSString *memberId;
+  NSString *authorizationURL;
+} Policy_Signer__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "memberId",
+        .dataTypeSpecific.className = NULL,
+        .number = Policy_Signer_FieldNumber_MemberId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Policy_Signer__storage_, memberId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "keyLevel",
+        .dataTypeSpecific.enumDescFunc = Key_Level_EnumDescriptor,
+        .number = Policy_Signer_FieldNumber_KeyLevel,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Policy_Signer__storage_, keyLevel),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "authorizationURL",
+        .dataTypeSpecific.className = NULL,
+        .number = Policy_Signer_FieldNumber_AuthorizationURL,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Policy_Signer__storage_, authorizationURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Policy_Signer class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Policy_Signer__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\003\r\241!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Policy)];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t Policy_Signer_KeyLevel_RawValue(Policy_Signer *message) {
+  GPBDescriptor *descriptor = [Policy_Signer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Policy_Signer_FieldNumber_KeyLevel];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetPolicy_Signer_KeyLevel_RawValue(Policy_Signer *message, int32_t value) {
+  GPBDescriptor *descriptor = [Policy_Signer descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Policy_Signer_FieldNumber_KeyLevel];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 
 #pragma clang diagnostic pop
 

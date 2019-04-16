@@ -93,6 +93,9 @@ typedef GPB_ENUM(Alias_Type) {
 
   /** for banks only */
   Alias_Type_Bank = 6,
+
+  /** Custom type, for instance a bank specific customer ID. */
+  Alias_Type_Custom = 7,
 };
 
 GPBEnumDescriptor *Alias_Type_EnumDescriptor(void);

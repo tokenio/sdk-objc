@@ -76,7 +76,7 @@ message BankAccount {
     io.token.proto.banklink.BankAuthorization authorization = 1;
   }
 
-  // Source account managed by a coop bank
+  // Source account managed by a co-opt bank
   message Bank {
     string bank_id = 1;
   }
@@ -116,6 +116,12 @@ message BankAccount {
     string payload = 2;
   }
 
+  // Source account for guest checkout flow
+  message Guest {
+    string bank_id = 1;
+    string nonce = 2;   // optional
+  }
+
   oneof account {
     Token token = 1;
     TokenAuthorization token_authorization = 2 [deprecated = true];
@@ -125,6 +131,7 @@ message BankAccount {
     Bank bank = 6;
     FasterPayments faster_payments = 9;
     Custom custom = 10;
+    Guest guest = 11;
   }
 
   map<string, string> metadata = 7 [(io.token.proto.extensions.field.redact) = true];

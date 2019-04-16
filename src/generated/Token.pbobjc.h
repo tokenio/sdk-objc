@@ -47,6 +47,8 @@ CF_EXTERN_C_BEGIN
 @class ActingAs;
 @class Alias;
 @class Attachment;
+@class Policy_Signer;
+@class Policy_SingleSignature;
 @class Pricing;
 @class Signature;
 @class Token;
@@ -60,6 +62,7 @@ CF_EXTERN_C_BEGIN
 @class TransferBody;
 @class TransferEndpoint;
 @class TransferInstructions;
+GPB_ENUM_FWD_DECLARE(Key_Level);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -1003,6 +1006,81 @@ typedef GPB_ENUM(TokenRequestStatePayload_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *state;
 
 @end
+
+#pragma mark - Policy
+
+typedef GPB_ENUM(Policy_FieldNumber) {
+  Policy_FieldNumber_SingleSignature = 1,
+};
+
+typedef GPB_ENUM(Policy_Policy_OneOfCase) {
+  Policy_Policy_OneOfCase_GPBUnsetOneOfCase = 0,
+  Policy_Policy_OneOfCase_SingleSignature = 1,
+};
+
+@interface Policy : GPBMessage
+
+@property(nonatomic, readonly) Policy_Policy_OneOfCase policyOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) Policy_SingleSignature *singleSignature;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'policy'.
+ **/
+void Policy_ClearPolicyOneOfCase(Policy *message);
+
+#pragma mark - Policy_SingleSignature
+
+typedef GPB_ENUM(Policy_SingleSignature_FieldNumber) {
+  Policy_SingleSignature_FieldNumber_Signer = 1,
+};
+
+/**
+ * require member signature
+ **/
+@interface Policy_SingleSignature : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Policy_Signer *signer;
+/** Test to see if @c signer has been set. */
+@property(nonatomic, readwrite) BOOL hasSigner;
+
+@end
+
+#pragma mark - Policy_Signer
+
+typedef GPB_ENUM(Policy_Signer_FieldNumber) {
+  Policy_Signer_FieldNumber_MemberId = 1,
+  Policy_Signer_FieldNumber_KeyLevel = 2,
+  Policy_Signer_FieldNumber_AuthorizationURL = 3,
+};
+
+/**
+ * member whose signature is required for the token
+ **/
+@interface Policy_Signer : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite) enum Key_Level keyLevel;
+
+/** optional: authorization URL to obtain signature */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *authorizationURL;
+
+@end
+
+/**
+ * Fetches the raw value of a @c Policy_Signer's @c keyLevel property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t Policy_Signer_KeyLevel_RawValue(Policy_Signer *message);
+/**
+ * Sets the raw value of an @c Policy_Signer's @c keyLevel property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetPolicy_Signer_KeyLevel_RawValue(Policy_Signer *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

@@ -309,3 +309,24 @@ message TokenRequestStatePayload {
   string state = 2;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token policy
+//
+
+message Policy {
+  oneof policy {
+    SingleSignature single_signature = 1;
+  }
+
+  // require member signature
+  message SingleSignature {
+    Signer signer = 1;
+  }
+
+  // member whose signature is required for the token
+  message Signer {
+    string member_id = 1;
+    io.token.proto.common.security.Key.Level key_level = 2;
+    string authorization_url = 3;   // optional: authorization URL to obtain signature
+  }
+}
