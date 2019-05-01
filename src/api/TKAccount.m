@@ -63,6 +63,14 @@
     return account.accountFeatures.requiresExternalAuth;
 }
 
+- (AccountDetails *) accountDetails {
+    return account.accountDetails;
+}
+
+- (AccountFeatures *)accountFeatures {
+    return account.accountFeatures;
+}
+
 - (void)getBalance:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     [self.member getBalance:account.id_p
