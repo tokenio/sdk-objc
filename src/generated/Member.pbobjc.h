@@ -689,9 +689,9 @@ typedef GPB_ENUM(Device_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-@property(nonatomic, readwrite, strong, null_resettable) Key *key DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) Key *key GPB_DEPRECATED_MSG("io.token.proto.common.member.Device.key is deprecated (see member.proto).");
 /** Test to see if @c key has been set. */
-@property(nonatomic, readwrite) BOOL hasKey DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite) BOOL hasKey GPB_DEPRECATED_MSG("io.token.proto.common.member.Device.key is deprecated (see member.proto).");
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Key*> *keysArray;
 /** The number of items in @c keysArray without causing the array to be created. */

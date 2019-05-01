@@ -60,8 +60,7 @@
     [anotherClient provisionDevice:member.firstAlias onSuccess:^(DeviceInfo *newDevice) {
         [self->member approveKeys:newDevice.keys onSuccess:^ {
             [anotherClient getMember:newDevice.memberId onSuccess:^(TKMember *memberNewDevice) {
-                XCTAssertEqualObjects(self->member.firstAlias, memberNewDevice.firstAlias);
-                
+                [self assertAlias:self->member.firstAlias equalTo:memberNewDevice.firstAlias];
                 [expectation fulfill];
             } onError:THROWERROR];
         } onError:THROWERROR];
@@ -131,7 +130,7 @@
     
     [tokenClient getMember:member.id onSuccess:^(TKMember * loggedInMember) {
         XCTAssert(loggedInMember.id.length > 0);
-        XCTAssertEqualObjects(self->member.firstAlias, loggedInMember.firstAlias);
+        [self assertAlias:self->member.firstAlias equalTo:loggedInMember.firstAlias];
         
         [expectation fulfill];
     } onError:THROWERROR];
@@ -286,5 +285,10 @@
         [expectation fulfill];
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:20];
+}
+
+- (void)assertAlias:(Alias *)alias1 equalTo:(Alias *)alias2 {
+    XCTAssertEqual(alias1.type, alias2.type);
+    XCTAssertTrue([alias1.value isEqualToString:alias2.value]);
 }
 @end

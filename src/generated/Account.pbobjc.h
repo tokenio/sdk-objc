@@ -58,6 +58,7 @@ typedef GPB_ENUM(AccountDetails_AccountType) {
   AccountDetails_AccountType_Checking = 2,
   AccountDetails_AccountType_Savings = 3,
   AccountDetails_AccountType_Loan = 4,
+  AccountDetails_AccountType_Card = 5,
 };
 
 GPBEnumDescriptor *AccountDetails_AccountType_EnumDescriptor(void);
@@ -283,7 +284,7 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Token *token;
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.token_authorization is deprecated (see account.proto).");
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Swift *swift;
 
@@ -342,7 +343,7 @@ typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
 /**
  * Deprecated; unused
  **/
-DEPRECATED_ATTRIBUTE
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.TokenAuthorization is deprecated (see account.proto).")
 @interface BankAccount_TokenAuthorization : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;

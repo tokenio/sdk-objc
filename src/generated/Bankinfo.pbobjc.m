@@ -51,6 +51,7 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic logoUri;
 @dynamic fullLogoUri;
 @dynamic supportsAppless;
+@dynamic supportsGuestCheckout;
 @dynamic supportsInformation;
 @dynamic requiresExternalAuth;
 @dynamic supportsSendPayment;
@@ -126,8 +127,8 @@ typedef struct Bank__storage_ {
         .name = "supportsInformation",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_SupportsInformation,
-        .hasIndex = 6,
-        .offset = 7,  // Stored in _has_storage_ to save space.
+        .hasIndex = 8,
+        .offset = 9,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -135,8 +136,8 @@ typedef struct Bank__storage_ {
         .name = "requiresExternalAuth",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_RequiresExternalAuth,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -144,8 +145,8 @@ typedef struct Bank__storage_ {
         .name = "supportsSendPayment",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_SupportsSendPayment,
-        .hasIndex = 10,
-        .offset = 11,  // Stored in _has_storage_ to save space.
+        .hasIndex = 12,
+        .offset = 13,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -153,8 +154,8 @@ typedef struct Bank__storage_ {
         .name = "supportsReceivePayment",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_SupportsReceivePayment,
-        .hasIndex = 12,
-        .offset = 13,  // Stored in _has_storage_ to save space.
+        .hasIndex = 14,
+        .offset = 15,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -162,7 +163,7 @@ typedef struct Bank__storage_ {
         .name = "provider",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Provider,
-        .hasIndex = 16,
+        .hasIndex = 18,
         .offset = (uint32_t)offsetof(Bank__storage_, provider),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -171,7 +172,7 @@ typedef struct Bank__storage_ {
         .name = "country",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Country,
-        .hasIndex = 17,
+        .hasIndex = 19,
         .offset = (uint32_t)offsetof(Bank__storage_, country),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -180,7 +181,7 @@ typedef struct Bank__storage_ {
         .name = "identifier",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Identifier,
-        .hasIndex = 18,
+        .hasIndex = 20,
         .offset = (uint32_t)offsetof(Bank__storage_, identifier),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -189,8 +190,17 @@ typedef struct Bank__storage_ {
         .name = "requiresLegacyTransfer",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_RequiresLegacyTransfer,
-        .hasIndex = 14,
-        .offset = 15,  // Stored in _has_storage_ to save space.
+        .hasIndex = 16,
+        .offset = 17,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsGuestCheckout",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsGuestCheckout,
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -203,7 +213,9 @@ typedef struct Bank__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Bank__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -279,7 +291,9 @@ typedef struct BankInfo__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankInfo__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -355,7 +369,9 @@ typedef struct Paging__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Paging__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -453,7 +469,9 @@ typedef struct BankFilter__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankFilter__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;

@@ -689,4 +689,11 @@
 -(void)getTrustedBeneficiaries:(OnSuccessWithTrustedBeneficiaries)onSuccess
                        onError:(OnError)onError;
 
+/**
+ * Sets the app callback url of a member.
+ *
+ * @param appCallbackUrl the app callback url
+ */
+-(void)setAppCallbackUrl:(NSString *)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError;
+
 @end

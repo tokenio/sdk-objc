@@ -60,6 +60,7 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_Country = 12,
   Bank_FieldNumber_Identifier = 13,
   Bank_FieldNumber_RequiresLegacyTransfer = 14,
+  Bank_FieldNumber_SupportsGuestCheckout = 15,
 };
 
 @interface Bank : GPBMessage
@@ -76,6 +77,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 /** Works with appless payments */
 @property(nonatomic, readwrite) BOOL supportsAppless;
+
+/** Connection supports guest checkout */
+@property(nonatomic, readwrite) BOOL supportsGuestCheckout;
 
 /** Connection allows for retrieval of information */
 @property(nonatomic, readwrite) BOOL supportsInformation;

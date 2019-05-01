@@ -282,17 +282,17 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasRequestOptions;
 
 /** deprecated fields */
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.payload is deprecated (see token.proto).");
 /** Test to see if @c payload has been set. */
-@property(nonatomic, readwrite) BOOL hasPayload DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite) BOOL hasPayload GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.payload is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.options is deprecated (see token.proto).");
 /** The number of items in @c options without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger options_Count DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readonly) NSUInteger options_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.options is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.user_ref_id is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.customization_id is deprecated (see token.proto).");
 
 @end
 
@@ -383,6 +383,7 @@ void TokenRequestPayload_ClearRequestBodyOneOfCase(TokenRequestPayload *message)
 
 typedef GPB_ENUM(TokenRequestPayload_AccessBody_FieldNumber) {
   TokenRequestPayload_AccessBody_FieldNumber_TypeArray = 1,
+  TokenRequestPayload_AccessBody_FieldNumber_ResourceTypesArray = 2,
 };
 
 @interface TokenRequestPayload_AccessBody : GPBMessage
@@ -391,6 +392,11 @@ typedef GPB_ENUM(TokenRequestPayload_AccessBody_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *typeArray;
 /** The number of items in @c typeArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger typeArray_Count;
+
+/** ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved. */
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *resourceTypesArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
+/** The number of items in @c resourceTypesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger resourceTypesArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
 
 @end
 
@@ -622,9 +628,9 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 @interface TransferBody : GPBMessage
 
 /** Redeemer member (deprecated: use TokenPayload.to instead). */
-@property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) TokenMember *redeemer GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.redeemer is deprecated (see token.proto).");
 /** Test to see if @c redeemer has been set. */
-@property(nonatomic, readwrite) BOOL hasRedeemer DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite) BOOL hasRedeemer GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.redeemer is deprecated (see token.proto).");
 
 /** Transfer instructions. */
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
@@ -646,9 +652,9 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger attachmentsArray_Count;
 
 /** Deprecated; unused. */
-@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.pricing is deprecated (see token.proto).");
 /** Test to see if @c pricing has been set. */
-@property(nonatomic, readwrite) BOOL hasPricing DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite) BOOL hasPricing GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.pricing is deprecated (see token.proto).");
 
 @end
 
@@ -723,25 +729,25 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_FundsConfirmation *fundsConfirmation;
 
 /** deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Address *address GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.address is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAddresses *allAddresses GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_addresses is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccounts *allAccounts GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_accounts is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountTransactions *allTransactions GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_transactions is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountBalances *allBalances GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_balances is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinations *allTransferDestinations GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_transfer_destinations is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllAccountsAtBank *allAccountsAtBank GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_accounts_at_bank is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransactionsAtBank *allTransactionsAtBank GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_transactions_at_bank is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllBalancesAtBank *allBalancesAtBank GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_balances_at_bank is deprecated (see token.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AllTransferDestinationsAtBank *allTransferDestinationsAtBank GPB_DEPRECATED_MSG("io.token.proto.common.token.AccessBody.Resource.all_transfer_destinations_at_bank is deprecated (see token.proto).");
 
 @end
 
