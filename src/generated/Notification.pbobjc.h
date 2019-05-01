@@ -412,7 +412,7 @@ typedef GPB_ENUM(EndorseAndAddKey_FieldNumber) {
   EndorseAndAddKey_FieldNumber_Contact = 6,
 };
 
-DEPRECATED_ATTRIBUTE
+GPB_DEPRECATED_MSG("io.token.proto.common.notification.EndorseAndAddKey is deprecated (see notification.proto).")
 @interface EndorseAndAddKey : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
@@ -559,7 +559,7 @@ typedef GPB_ENUM(NotifyBody_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) TransactionStepUp *transactionStepUp;
 
-@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey GPB_DEPRECATED_MSG("io.token.proto.common.notification.NotifyBody.endorse_and_add_key is deprecated (see notification.proto).");
 
 @property(nonatomic, readwrite, strong, null_resettable) RecoveryCompleted *recoveryCompleted;
 

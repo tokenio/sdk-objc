@@ -1706,6 +1706,27 @@
              onError:onError];
 }
 
+-(void)setAppCallbackUrl:(NSString *)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError {
+    SetAppCallbackUrlRequest *request = [SetAppCallbackUrlRequest message];
+    request.appCallbackURL = appCallbackUrl;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToSetAppCallbackUrlWithRequest:request
+                           handler:^(SetAppCallbackUrlResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 -(void)setSecurityMetadata:(SecurityMetadata *)metadata {
     securityMetadata = metadata;
 }

@@ -65,6 +65,9 @@ message TokenRequestPayload {
   message AccessBody {
     repeated ResourceType type = 1;
 
+    //ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved.
+    repeated int64 resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
+
     enum ResourceType {
       INVALID = 0;
       ACCOUNTS = 1;

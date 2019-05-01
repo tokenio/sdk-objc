@@ -153,6 +153,8 @@
 @class RetrieveTokenRequestResponse;
 @class RetryVerificationRequest;
 @class RetryVerificationResponse;
+@class SetAppCallbackUrlRequest;
+@class SetAppCallbackUrlResponse;
 @class SetDefaultAccountRequest;
 @class SetDefaultAccountResponse;
 @class SetProfilePictureRequest;
@@ -347,6 +349,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark VerifyAffiliate(VerifyAffiliateRequest) returns (VerifyAffiliateResponse)
 
 - (GRPCUnaryProtoCall *)verifyAffiliateWithMessage:(VerifyAffiliateRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetAppCallbackUrl(SetAppCallbackUrlRequest) returns (SetAppCallbackUrlResponse)
+
+- (GRPCUnaryProtoCall *)setAppCallbackUrlWithMessage:(SetAppCallbackUrlRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
@@ -1183,6 +1189,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)verifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToVerifyAffiliateWithRequest:(VerifyAffiliateRequest *)request handler:(void(^)(VerifyAffiliateResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetAppCallbackUrl(SetAppCallbackUrlRequest) returns (SetAppCallbackUrlResponse)
+
+- (void)setAppCallbackUrlWithRequest:(SetAppCallbackUrlRequest *)request handler:(void(^)(SetAppCallbackUrlResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetAppCallbackUrlWithRequest:(SetAppCallbackUrlRequest *)request handler:(void(^)(SetAppCallbackUrlResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)

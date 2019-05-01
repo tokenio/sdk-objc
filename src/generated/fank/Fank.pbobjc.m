@@ -27,9 +27,9 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-#pragma mark - FankFankRoot
+#pragma mark - FankRoot
 
-@implementation FankFankRoot
+@implementation FankRoot
 
 + (GPBExtensionRegistry*)extensionRegistry {
   // This is called by +initialize so there is no need to worry
@@ -48,9 +48,9 @@
 
 @end
 
-#pragma mark - FankFankRoot_FileDescriptor
+#pragma mark - FankRoot_FileDescriptor
 
-static GPBFileDescriptor *FankFankRoot_FileDescriptor(void) {
+static GPBFileDescriptor *FankRoot_FileDescriptor(void) {
   // This is called by +initialize so there is no need to worry
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
@@ -114,13 +114,15 @@ typedef struct FankClient__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankClient class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankClient__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -179,13 +181,15 @@ typedef struct FankAccount__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAccount class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAccount__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -244,13 +248,15 @@ typedef struct FankAddClientRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAddClientRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddClientRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -287,13 +293,15 @@ typedef struct FankAddClientResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAddClientResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddClientResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -341,13 +349,15 @@ typedef struct FankGetClientRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetClientRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetClientRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -384,13 +394,15 @@ typedef struct FankGetClientResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetClientResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetClientResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -482,13 +494,15 @@ typedef struct FankAddAccountRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAddAccountRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddAccountRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -525,13 +539,15 @@ typedef struct FankAddAccountResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAddAccountResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddAccountResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -579,13 +595,15 @@ typedef struct FankGetAccountsRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetAccountsRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountsRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -622,13 +640,15 @@ typedef struct FankGetAccountsResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetAccountsResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountsResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -687,13 +707,15 @@ typedef struct FankGetAccountRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetAccountRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -730,13 +752,15 @@ typedef struct FankGetAccountResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetAccountResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -806,8 +830,8 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankAuthorizeLinkAccountsRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAuthorizeLinkAccountsRequest__storage_)
@@ -817,7 +841,9 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
         "\001\002\010\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -865,13 +891,15 @@ typedef struct FankGetNotificationRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetNotificationRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -908,13 +936,15 @@ typedef struct FankGetNotificationResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetNotificationResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -951,13 +981,15 @@ typedef struct FankGetNotificationsRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetNotificationsRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationsRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -994,13 +1026,15 @@ typedef struct FankGetNotificationsResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetNotificationsResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationsResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -1081,8 +1115,8 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetOauthAccessTokenRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetOauthAccessTokenRequest__storage_)
@@ -1092,7 +1126,9 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
         "\001\003\010\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -1140,13 +1176,15 @@ typedef struct FankGetOauthAccessTokenResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankGetOauthAccessTokenResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetOauthAccessTokenResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -1205,13 +1243,15 @@ typedef struct FankVerifyAliasRequest__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankVerifyAliasRequest class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankVerifyAliasRequest__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;
@@ -1248,13 +1288,15 @@ typedef struct FankVerifyAliasResponse__storage_ {
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[FankVerifyAliasResponse class]
-                                     rootClass:[FankFankRoot class]
-                                          file:FankFankRoot_FileDescriptor()
+                                     rootClass:[FankRoot class]
+                                          file:FankRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankVerifyAliasResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-    NSAssert(descriptor == nil, @"Startup recursed!");
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
     descriptor = localDescriptor;
   }
   return descriptor;

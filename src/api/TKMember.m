@@ -929,6 +929,10 @@
     [client setSecurityMetadata:securityMetadata];
 }
 
+-(void)setAppCallbackUrl:(NSString *)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError {
+    [client setAppCallbackUrl:appCallbackUrl onSuccess:onSuccess onError:onError];
+}
+
 #pragma mark private
 
 - (NSArray<TKAccount *> *)_mapAccounts:(NSArray<Account *> *)accounts {
@@ -943,5 +947,4 @@
 - (TKAccount *)_mapAccount:(Account *)account {
     return [TKAccount account:account of:self useClient:client];
 }
-
 @end

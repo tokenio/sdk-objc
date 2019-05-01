@@ -36,7 +36,7 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FankFankRoot
+#pragma mark - FankRoot
 
 /**
  * Exposes the extension registry for this file.
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  * which is a @c GPBExtensionRegistry that includes all the extensions defined by
  * this file and all files that it depends on.
  **/
-@interface FankFankRoot : GPBRootObject
+@interface FankRoot : GPBRootObject
 @end
 
 #pragma mark - FankClient

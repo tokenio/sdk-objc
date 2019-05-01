@@ -121,6 +121,12 @@ message VerifyAffiliateRequest {
 
 message VerifyAffiliateResponse {}
 
+message SetAppCallbackUrlRequest {
+  string app_callback_url = 1; // the custom app call back url
+}
+
+message SetAppCallbackUrlResponse {}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Member account recovery.
 //
@@ -539,14 +545,14 @@ message GetTokenBlobResponse {
 //
 
 message StoreTokenRequestRequest {
-  io.token.proto.common.token.TokenRequestPayload request_payload = 5;
-  io.token.proto.common.token.TokenRequestOptions request_options = 6;
-
   // deprecated fields
   io.token.proto.common.token.TokenPayload payload = 1 [deprecated = true];
   map<string, string> options = 2  [(io.token.proto.extensions.field.redact) = true, deprecated = true];
   string user_ref_id = 3 [deprecated = true];
   string customization_id = 4 [deprecated = true];
+
+  io.token.proto.common.token.TokenRequestPayload request_payload = 5;
+  io.token.proto.common.token.TokenRequestOptions request_options = 6;
 }
 
 message StoreTokenRequestResponse {
@@ -1057,6 +1063,12 @@ service GatewayService {
   rpc VerifyAffiliate (VerifyAffiliateRequest) returns (VerifyAffiliateResponse) {
     option (google.api.http) = {
         put: "/members/affiliates/verify"
+    };
+  }
+
+  rpc SetAppCallbackUrl (SetAppCallbackUrlRequest) returns (SetAppCallbackUrlResponse) {
+  option (google.api.http) = {
+        put: "/members/app-callback-url"
     };
   }
 

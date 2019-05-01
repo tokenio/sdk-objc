@@ -605,6 +605,27 @@
              responseClass:[VerifyAffiliateResponse class]];
 }
 
+#pragma mark SetAppCallbackUrl(SetAppCallbackUrlRequest) returns (SetAppCallbackUrlResponse)
+
+// Deprecated methods.
+- (void)setAppCallbackUrlWithRequest:(SetAppCallbackUrlRequest *)request handler:(void(^)(SetAppCallbackUrlResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetAppCallbackUrlWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSetAppCallbackUrlWithRequest:(SetAppCallbackUrlRequest *)request handler:(void(^)(SetAppCallbackUrlResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetAppCallbackUrl"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[SetAppCallbackUrlResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)setAppCallbackUrlWithMessage:(SetAppCallbackUrlRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"SetAppCallbackUrl"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[SetAppCallbackUrlResponse class]];
+}
+
 #pragma mark BeginRecovery(BeginRecoveryRequest) returns (BeginRecoveryResponse)
 
 // Deprecated methods.

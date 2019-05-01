@@ -902,7 +902,7 @@ typedef GPB_ENUM(GPBFieldOptions_FieldNumber) {
   GPBFieldOptions_FieldNumber_Deprecated = 3,
   GPBFieldOptions_FieldNumber_Lazy = 5,
   GPBFieldOptions_FieldNumber_Jstype = 6,
-  GPBFieldOptions_FieldNumber_Weak = 10,
+  GPBFieldOptions_FieldNumber_Weak_p = 10,
   GPBFieldOptions_FieldNumber_UninterpretedOptionArray = 999,
 };
 
@@ -984,9 +984,9 @@ typedef GPB_ENUM(GPBFieldOptions_FieldNumber) {
 
 @property(nonatomic, readwrite) BOOL hasDeprecated;
 /** For Google-internal migration only. Do not use. */
-@property(nonatomic, readwrite) BOOL weak;
+@property(nonatomic, readwrite) BOOL weak_p;
 
-@property(nonatomic, readwrite) BOOL hasWeak;
+@property(nonatomic, readwrite) BOOL hasWeak_p;
 /** The parser stores options it doesn't recognize here. See above. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GPBUninterpretedOption*> *uninterpretedOptionArray;
 /** The number of items in @c uninterpretedOptionArray without causing the array to be created. */

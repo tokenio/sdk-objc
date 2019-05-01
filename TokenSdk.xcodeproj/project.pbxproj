@@ -1129,7 +1129,6 @@
 				8A9909141D890E820096A7FA /* Sources */,
 				8A9909151D890E820096A7FA /* Frameworks */,
 				8A9909161D890E820096A7FA /* Resources */,
-				5FC30FCA2EFE21EB84341A05 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1291,21 +1290,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		5FC30FCA2EFE21EB84341A05 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		88322C6EC4F6BFB48550CB9C /* 📦 Copy Pods Resources */ = {

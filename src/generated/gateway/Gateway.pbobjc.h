@@ -526,6 +526,25 @@ typedef GPB_ENUM(VerifyAffiliateRequest_FieldNumber) {
 
 @end
 
+#pragma mark - SetAppCallbackUrlRequest
+
+typedef GPB_ENUM(SetAppCallbackUrlRequest_FieldNumber) {
+  SetAppCallbackUrlRequest_FieldNumber_AppCallbackURL = 1,
+};
+
+@interface SetAppCallbackUrlRequest : GPBMessage
+
+/** the custom app call back url */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *appCallbackURL;
+
+@end
+
+#pragma mark - SetAppCallbackUrlResponse
+
+@interface SetAppCallbackUrlResponse : GPBMessage
+
+@end
+
 #pragma mark - BeginRecoveryRequest
 
 typedef GPB_ENUM(BeginRecoveryRequest_FieldNumber) {
@@ -1400,7 +1419,7 @@ typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationRequest_FieldNumber) {
   TriggerEndorseAndAddKeyNotificationRequest_FieldNumber_EndorseAndAddKey = 1,
 };
 
-DEPRECATED_ATTRIBUTE
+GPB_DEPRECATED_MSG("io.token.proto.gateway.TriggerEndorseAndAddKeyNotificationRequest is deprecated (see gateway/gateway.proto).")
 @interface TriggerEndorseAndAddKeyNotificationRequest : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) EndorseAndAddKey *endorseAndAddKey;
@@ -1416,7 +1435,7 @@ typedef GPB_ENUM(TriggerEndorseAndAddKeyNotificationResponse_FieldNumber) {
   TriggerEndorseAndAddKeyNotificationResponse_FieldNumber_NotificationId = 2,
 };
 
-DEPRECATED_ATTRIBUTE
+GPB_DEPRECATED_MSG("io.token.proto.gateway.TriggerEndorseAndAddKeyNotificationResponse is deprecated (see gateway/gateway.proto).")
 @interface TriggerEndorseAndAddKeyNotificationResponse : GPBMessage
 
 /** was notification accepted? */
@@ -2012,6 +2031,19 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
 
 @interface StoreTokenRequestRequest : GPBMessage
 
+/** deprecated fields */
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.payload is deprecated (see gateway/gateway.proto).");
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.payload is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.options is deprecated (see gateway/gateway.proto).");
+/** The number of items in @c options without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger options_Count GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.options is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.user_ref_id is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId GPB_DEPRECATED_MSG("io.token.proto.gateway.StoreTokenRequestRequest.customization_id is deprecated (see gateway/gateway.proto).");
+
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload *requestPayload;
 /** Test to see if @c requestPayload has been set. */
 @property(nonatomic, readwrite) BOOL hasRequestPayload;
@@ -2019,19 +2051,6 @@ typedef GPB_ENUM(StoreTokenRequestRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
 /** Test to see if @c requestOptions has been set. */
 @property(nonatomic, readwrite) BOOL hasRequestOptions;
-
-/** deprecated fields */
-@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload DEPRECATED_ATTRIBUTE;
-/** Test to see if @c payload has been set. */
-@property(nonatomic, readwrite) BOOL hasPayload DEPRECATED_ATTRIBUTE;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *options DEPRECATED_ATTRIBUTE;
-/** The number of items in @c options without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger options_Count DEPRECATED_ATTRIBUTE;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId DEPRECATED_ATTRIBUTE;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId DEPRECATED_ATTRIBUTE;
 
 @end
 
@@ -2180,7 +2199,7 @@ typedef GPB_ENUM(CreateTransferTokenRequest_FieldNumber) {
   CreateTransferTokenRequest_FieldNumber_TokenRequestId = 2,
 };
 
-DEPRECATED_ATTRIBUTE
+GPB_DEPRECATED_MSG("io.token.proto.gateway.CreateTransferTokenRequest is deprecated (see gateway/gateway.proto).")
 @interface CreateTransferTokenRequest : GPBMessage
 
 /** TokenPayload, should have TransferBody */
@@ -2883,21 +2902,21 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sort;
 
 /** DEPRECATED */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *country DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.country is deprecated (see gateway/gateway.proto).");
 
 /** DEPRECATED. If specified, return banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.ids is deprecated (see gateway/gateway.proto).");
 /** The number of items in @c idsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger idsArray_Count DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readonly) NSUInteger idsArray_Count GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.ids is deprecated (see gateway/gateway.proto).");
 
 /** DEPRECATED. If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *search DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *search GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.search is deprecated (see gateway/gateway.proto).");
 
 /** DEPRECATED. (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive) */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *provider DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.provider is deprecated (see gateway/gateway.proto).");
 
 /** DEPRECATED. (Optional) If specified, return banks which are integrated with the TPP */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.tpp_id is deprecated (see gateway/gateway.proto).");
 
 @end
 

@@ -38,6 +38,7 @@ message AccountDetails {
     CHECKING = 2;
     SAVINGS = 3;
     LOAN = 4;
+    CARD = 5;
   }
 
   string identifier = 1;                // Bank account identifier
