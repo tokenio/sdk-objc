@@ -788,4 +788,12 @@
  */
 -(void)setAppCallbackUrl:(NSString *)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError;
 
+/**
+ * Resolves transfer destinations for the given account ID.
+ *
+ * @param accountId account ID
+ */
+-(void)resolveTransferDestinations:(NSString *)accountId
+                         onSuccess:(OnSuccessWithTransferEndpoints)onSuccess
+                           onError:(OnError)onError;
 @end

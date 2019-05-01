@@ -1727,6 +1727,29 @@
              onError:onError];
 }
 
+-(void)resolveTransferDestinations:(NSString *)accountId
+                         onSuccess:(OnSuccessWithTransferEndpoints)onSuccess
+                           onError:(OnError)onError {
+    ResolveTransferDestinationsRequest *request = [ResolveTransferDestinationsRequest message];
+    request.accountId = accountId;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToResolveTransferDestinationsWithRequest:request
+                           handler:^(ResolveTransferDestinationsResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.destinationsArray);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 -(void)setSecurityMetadata:(SecurityMetadata *)metadata {
     securityMetadata = metadata;
 }

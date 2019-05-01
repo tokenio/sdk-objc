@@ -8,6 +8,8 @@
 #import "TKTypedef.h"
 
 @class Account;
+@class AccountDetails;
+@class AccountFeatures;
 @class TKClient;
 @class Token;
 
@@ -46,6 +48,12 @@
 
 /// Flag indicating whether the account requires external authorization for creating transfers.
 @property (nonatomic, readonly) BOOL requiresExternalAuth;
+
+/// Account details
+@property (nonatomic, readonly) AccountDetails *accountDetails;
+
+/// Account features
+@property (nonatomic, readonly) AccountFeatures *accountFeatures;
 
 + (TKAccount *)account:(Account *)account
                     of:(TKMember *)member

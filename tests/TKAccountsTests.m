@@ -146,4 +146,17 @@
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
+- (void)testResolveTransferDestinations {
+    NSString *accountId = [[accounts objectAtIndex:0] id];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [member resolveTransferDestinations:accountId onSuccess:^(NSArray<TransferEndpoint *> *array) {
+        XCTAssert(array.count >= 1);
+        TransferEndpoint *transferEndpoint = [array objectAtIndex:0];
+        BankAccount *bankAccount = transferEndpoint.account;
+        XCTAssertTrue(![bankAccount.swift.account isEqualToString:@""]);
+        XCTAssertTrue(![bankAccount.swift.bic isEqualToString:@""]);
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+}
 @end
