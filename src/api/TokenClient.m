@@ -381,6 +381,7 @@
     Alias *normalized = [TKUtil normalizeAlias:alias];
 
     addAlias.addAlias.aliasHash = [TKHasher hashAlias:normalized];
+    addAlias.addAlias.realm = normalized.realm;
     [operations addObject:addAlias];
 
     MemberOperation *recoverOp = [MemberOperation message];
