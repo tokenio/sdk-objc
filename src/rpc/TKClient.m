@@ -149,6 +149,30 @@
      onError:onError];
 }
 
+- (void)verifyAlias:(NSString *)verificationId
+               code:(NSString *)code
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError {
+    VerifyAliasRequest *request = [VerifyAliasRequest message];
+    request.verificationId = verificationId;
+    request.code = code;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToVerifyAliasWithRequest: request
+                           handler:^(VerifyAliasResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess();
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)deleteMember:(Member *)member
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {

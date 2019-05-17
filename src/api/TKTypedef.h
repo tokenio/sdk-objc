@@ -37,6 +37,7 @@
 @class ReceiptContact;
 @class TrustedBeneficiary;
 @class TransferEndpoint;
+@class MemberRecoveryOperation_Authorization;
 
 typedef NS_ENUM(int32_t, NotifyStatus);
 
@@ -100,7 +101,7 @@ typedef void (^ _Nonnull OnSuccessWithProfile)(Profile * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithTokenMember)(TokenMember * _Nullable);
 
-typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOperation * _Nullable);
+typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOperation * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithPairedDevices)(NSArray<Device *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithNotifyStatus)(NotifyStatus);
@@ -111,3 +112,4 @@ typedef void (^ _Nonnull OnSuccessWithReceiptContact)(ReceiptContact * _Nonnull)
 typedef void (^ _Nonnull OnSuccessWithTrustedBeneficiaries)(NSArray<TrustedBeneficiary *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithStrings)(NSArray<NSString *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransferEndpoints)(NSArray<TransferEndpoint *> * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperationAuthorization)(MemberRecoveryOperation_Authorization * _Nonnull);

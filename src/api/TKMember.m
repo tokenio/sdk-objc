@@ -282,6 +282,13 @@
                  onError:onError];
 }
 
+- (void)verifyAlias:(NSString *)verificationId
+               code:(NSString *)code
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError {
+    [client verifyAlias:verificationId code:code onSuccess:onSuccess onError:onError];
+}
+
 - (void)deleteMember:(OnSuccess)onSuccess
              onError:(OnError)onError {
     [client deleteMember:member onSuccess:onSuccess onError:onError];
