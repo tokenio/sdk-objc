@@ -136,6 +136,21 @@
      onError:onError];
 }
 
+- (void)createMember:(Alias *)alias
+       recoveryAgent:(NSString *)recoveryAgent
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError {
+    [self->unauthenticatedClient
+     createMemberId:^(NSString *memberId) {
+         [self _addKeysAndAlias:memberId
+                          alias:alias
+          memberRecoveryAgentId:recoveryAgent
+                      onSuccess:onSuccess
+                        onError:onError];
+     }
+     onError:onError];
+}
+
 - (void)provisionDevice:(Alias *)alias
               onSuccess:(OnSuccessWithDeviceInfo)onSuccess
                 onError:(OnError)onError {

@@ -81,6 +81,17 @@
              onError:(OnError)onError;
 
 /**
+ * Creates a new Token member with a pair of auto generated keys and the
+ * given alias.
+ *
+ * @param alias member alias to use, must be unique
+ * @param recoveryAgent member id of the primary recovery agent.
+ */
+- (void)createMember:(Alias *)alias
+       recoveryAgent:(NSString *)recoveryAgent
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError;
+/**
  * Provisions a new device for an existing user. The call generates a set
  * of keys that are returned back. The keys need to be approved by an
  * existing device/keys.

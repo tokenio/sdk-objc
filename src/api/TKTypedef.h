@@ -101,7 +101,7 @@ typedef void (^ _Nonnull OnSuccessWithProfile)(Profile * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithTokenMember)(TokenMember * _Nullable);
 
-typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOperation * _Nullable);
+typedef void (^ _Nonnull OnSuccessWithMemberRecoveryOperation)(MemberRecoveryOperation * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithPairedDevices)(NSArray<Device *> * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithNotifyStatus)(NotifyStatus);
