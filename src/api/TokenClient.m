@@ -16,7 +16,6 @@
 #import "TKHasher.h"
 #import "TKLocalizer.h"
 #import "TKMember.h"
-#import "TKMemberRecoveryManager.h"
 #import "TKRpcErrorHandler.h"
 #import "TKUnauthenticatedClient.h"
 #import "TokenClient.h"
@@ -31,7 +30,6 @@
     NSString *languageCode;
     TKRpcErrorHandler *errorHandler;
     TKUnauthenticatedClient *unauthenticatedClient;
-    TKMemberRecoveryManager *memberRecoveryManager;
     TKBrowserFactory browserFactory;
 }
 
@@ -104,23 +102,13 @@
                                  developerKey:developerKey
                                  languageCode:languageCode
                                  errorHandler:errorHandler];
-        memberRecoveryManager = [[TKMemberRecoveryManager alloc]
-                                 initWithGateway:gateway
-                                 tokenCluster:tokenCluster
-                                 timeoutMs:timeoutMs
-                                 developerKey:developerKey
-                                 languageCode:languageCode
-                                 errorHandler:errorHandler
-                                 crypto:cryptoEngineFactory
-                                 browserFactory:browserFactory];
-        
     }
     
     return self;
 }
 
 - (void)createMember:(Alias *)alias
-            onSuccess:(OnSuccessWithTKMember)onSuccess
+           onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
     Alias *tokenAgent = [Alias message];
     tokenAgent.value = @"token.io";
@@ -154,7 +142,7 @@
     [unauthenticatedClient getMemberId:alias
               onSuccess:^(NSString *memberId) {
                   if (memberId) {
-                      TKCrypto *crypto = [self _createCrypto:memberId];
+                      TKCrypto *crypto = [self createCrypto:memberId];
                       NSArray<Key *> *keys = [crypto generateKeys];
                       onSuccess([DeviceInfo deviceInfo:memberId keys:keys]);
                   } else {
@@ -197,7 +185,7 @@
           onError:(OnError)onError {
     [unauthenticatedClient getMember:memberId
                            onSuccess:^(Member *member) {
-                               TKCrypto *crypto = [self _createCrypto:memberId];
+                               TKCrypto *crypto = [self createCrypto:memberId];
                                TKClient *client = [[TKClient alloc] initWithGateway:self->gateway
                                                                              crypto:crypto
                                                                           timeoutMs:self->timeoutMs
@@ -318,47 +306,92 @@
 
 #pragma mark - Member Recovery
 
-- (void)beginMemberRecovery:(Alias *)alias
-                  onSuccess:(OnSuccessWithString)onSuccess
-                    onError:(OnError)onError {
-    [memberRecoveryManager beginMemberRecovery:alias
-                                     onSuccess:onSuccess
-                                       onError:onError];
+- (void)beginRecovery:(Alias *)alias
+            onSuccess:(OnSuccessWithString)onSuccess
+              onError:(OnError)onError {
+    [unauthenticatedClient beginRecovery:alias onSuccess:onSuccess onError:onError];
 }
 
-- (void)verifyMemberRecovery:(Alias *)alias
-                    memberId:(NSString *)memberId
-              verificationId:(NSString *)verificationId
-                        code:(NSString *)code
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError {
-    [memberRecoveryManager verifyMemberRecovery:alias
-                                       memberId:memberId
-                                 verificationId:verificationId
-                                           code:code
-                                      onSuccess:onSuccess
-                                        onError:onError];
+- (void)createRecoveryAuthorization:(NSString *)memberId
+                                key:(Key *)privilegedKey
+                          onSuccess:(OnSuccessWithMemberRecoveryOperationAuthorization)onSuccess
+                            onError:(OnError)onError {
+    [unauthenticatedClient createRecoveryAuthorization:memberId key:privilegedKey onSuccess:onSuccess onError:onError];
 }
 
-- (void)completeMemberRecovery:(Alias *)alias
-                      memberId:(NSString *)memberId
-                verificationId:(NSString *)verificationId
-                          code:(NSString *)code
-                     onSuccess:(OnSuccessWithTKMember)onSuccess
-                       onError:(OnError)onError {
-    [memberRecoveryManager completeMemberRecovery:alias
-                                         memberId:memberId
-                                   verificationId:verificationId
-                                             code:code
-                                        onSuccess:onSuccess
-                                          onError:onError];
+- (void)completeRecovery:(NSString *)memberId
+      recoveryOperations:(NSArray<MemberRecoveryOperation *> *)recoveryOperations
+           privilegedKey:(Key *)privilegedKey
+                  crypto:(TKCrypto *)crypto
+               onSuccess:(OnSuccessWithTKMember)onSuccess
+                 onError:(OnError)onError {
+    [unauthenticatedClient completeRecovery:memberId
+                         recoveryOperations:recoveryOperations
+                              privilegedKey:privilegedKey
+                                     crypto:crypto
+                                  onSuccess:^(Member *member) {
+                                  TKClient *client = [[TKClient alloc]
+                                                      initWithGateway:self->gateway
+                                                      crypto:crypto
+                                                      timeoutMs:self->timeoutMs
+                                                      developerKey:self->developerKey
+                                                      languageCode:self->languageCode
+                                                      memberId:memberId
+                                                      errorHandler:self->errorHandler];
+                                  onSuccess([TKMember
+                                             member:member
+                                             tokenCluster:self->tokenCluster
+                                             useClient:client
+                                             useBrowserFactory:self->browserFactory
+                                             aliases:[NSMutableArray array]]);
+                              } onError:onError];
+}
+
+- (void)completeRecoveryWithDefaultRule:(NSString *)memberId
+                         verificationId:(NSString *)verificationId
+                                   code:(NSString *)code
+                                 crypto:(TKCrypto *)crypto
+                              onSuccess:(OnSuccessWithTKMember)onSuccess
+                                onError:(OnError)onError {
+    [unauthenticatedClient completeRecoveryWithDefaultRule:memberId
+                                            verificationId:verificationId
+                                                      code:code
+                                                    crypto:crypto
+                                                 onSuccess:^(Member *member) {
+                                                     TKClient *client = [[TKClient alloc]
+                                                                         initWithGateway:self->gateway
+                                                                         crypto:crypto
+                                                                         timeoutMs:self->timeoutMs
+                                                                         developerKey:self->developerKey
+                                                                         languageCode:self->languageCode
+                                                                         memberId:memberId
+                                                                         errorHandler:self->errorHandler];
+                                                     onSuccess([TKMember
+                                                                member:member
+                                                                tokenCluster:self->tokenCluster
+                                                                useClient:client
+                                                                useBrowserFactory:self->browserFactory
+                                                                aliases:[NSMutableArray array]]);
+                                                 } onError:onError];
+}
+
+- (void)getRecoveryAuthorization:(NSString *)verificationId
+                            code:(NSString *)code
+                   privilegedKey:(Key *)privilegedKey
+                       onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                         onError:(OnError)onError {
+    [unauthenticatedClient getRecoveryAuthorization:verificationId
+                                               code:code
+                                      privilegedKey:privilegedKey
+                                          onSuccess:onSuccess
+                                            onError:onError];
+}
+
+- (TKCrypto *)createCrypto:(NSString *)memberId {
+    return [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
 }
 
 #pragma mark - private
-
-- (TKCrypto *)_createCrypto:(NSString *)memberId {
-    return [[TKCrypto alloc] initWithEngine:[cryptoEngineFactory createEngine:memberId]];
-}
 
 // alias can be nil. In this case only add the key.
 - (void)_addKeysAndAlias:(NSString *)memberId
@@ -366,7 +399,7 @@
    memberRecoveryAgentId:(NSString *)agentId
                onSuccess:(void (^)(TKMember *))onSuccess
                  onError:(OnError)onError {
-    TKCrypto *crypto = [self _createCrypto:memberId];
+    TKCrypto *crypto = [self createCrypto:memberId];
     NSArray<Key *> *keys = [crypto generateKeys];
 
     NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
@@ -415,5 +448,4 @@
                               }
                                 onError:onError];
 }
-
 @end

@@ -229,41 +229,75 @@
 #pragma mark - Member Recovery
 
 /**
- * Begins member account recovery process by contacting alias. The verification message will be sent if the alias is valid.
+ * Begins account recovery.
  *
- * @param alias alias to recover
+ * @param alias the alias used to recover
  * @param onSuccess invoked if successful with verification Id
  * @param onError invoked if failed
  */
-- (void)beginMemberRecovery:(Alias *)alias
-                  onSuccess:(OnSuccessWithString)onSuccess
-                    onError:(OnError)onError;
+- (void)beginRecovery:(Alias *)alias
+            onSuccess:(OnSuccessWithString)onSuccess
+              onError:(OnError)onError;
 
 /**
- * Gets member recovery Operation by the verification code. Update member with this operation to get the recovered member.
+ * Create a recovery authorization for some agent to sign.
  *
- * @param verificationId verificationId from begin member recovery response
- * @param code code from verification message
- * @param key the new privileged key
- * @param onSuccess invoked if successful with member recovery operation
+ * @param memberId Id of member we claim to be.
+ * @param privilegedKey new privileged key we want to use.
+ * @param onSuccess invoked if successful with authorization structure for agent to sign
  * @param onError invoked if failed
  */
-- (void)getMemberRecoveryOperation:(NSString *)verificationId
-                              code:(NSString *)code
-                     privilegedKey:(Key *)key
-                         onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
-                           onError:(OnError)onError;
+- (void)createRecoveryAuthorization:(NSString *)memberId
+                                key:(Key *)privilegedKey
+                          onSuccess:(OnSuccessWithMemberRecoveryOperationAuthorization)onSuccess
+                            onError:(OnError)onError;
 
 /**
- * Recovers the alias with the recovered member.
+ * Completes account recovery.
  *
- * @param verificationId verificationId from begin member recovery response
- * @param code code from verification message
- * @param onSuccess invoked if successful
+ * @param memberId the member id
+ * @param recoveryOperations the member recovery operations
+ * @param privilegedKey the privileged public key in the member recovery operations
+ * @param cryptoEngine the new crypto engine
+ * @param onSuccess invoked if successful with member
  * @param onError invoked if failed
  */
-- (void)recoverAlias:(NSString *)verificationId
-                code:(NSString *)code
-           onSuccess:(OnSuccess)onSuccess
-             onError:(OnError)onError;
+- (void)completeRecovery:(NSString *)memberId
+      recoveryOperations:(NSArray<MemberRecoveryOperation *> *)recoveryOperations
+           privilegedKey:(Key *)privilegedKey
+                  crypto:(TKCrypto *)crypto
+               onSuccess:(OnSuccessWithMember)onSuccess
+                 onError:(OnError)onError;
+
+/**
+ * Completes account recovery if the default recovery rule was set.
+ *
+ * @param memberId the member id
+ * @param verificationId the verification id
+ * @param code the code
+ * @param cryptoEngine the new crypto engine
+ * @param onSuccess invoked if successful with member
+ * @param onError invoked if failed
+ */
+- (void)completeRecoveryWithDefaultRule:(NSString *)memberId
+                         verificationId:(NSString *)verificationId
+                                   code:(NSString *)code
+                                 crypto:(TKCrypto *)crypto
+                              onSuccess:(OnSuccessWithMember)onSuccess
+                                onError:(OnError)onError;
+
+/**
+ * Gets recovery authorization from Token.
+ *
+ * @param verificationId the verification id
+ * @param code the code
+ * @param privilegedKey the privileged key
+ * @param onSuccess invoked if successful with the recovery entry
+ * @param onError invoked if failed
+ */
+- (void)getRecoveryAuthorization:(NSString *)verificationId
+                            code:(NSString *)code
+                   privilegedKey:(Key *)privilegedKey
+                       onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                         onError:(OnError)onError;
 @end

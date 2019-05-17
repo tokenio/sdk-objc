@@ -106,6 +106,17 @@
              onError:(OnError)onError;
 
 /**
+ * Verifies a given alias.
+ *
+ * @param verificationId the verification id
+ * @param code the code
+ */
+- (void)verifyAlias:(NSString *)verificationId
+               code:(NSString *)code
+          onSuccess:(OnSuccess)onSuccess
+            onError:(OnError)onError;
+
+/**
  * Delete the member.
  */
 - (void)deleteMember:(Member *)member

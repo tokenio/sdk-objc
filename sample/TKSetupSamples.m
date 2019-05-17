@@ -272,16 +272,16 @@
     
     __block NSString* verificationId = nil;
     // beginRecovery begin snippet to include in docs
-    [tokenClient beginMemberRecovery:self.payerAlias
-                           onSuccess:^(NSString *verificationId_) {
-                               // prompt user to enter code:
-                               verificationId = verificationId_;
-                               showPrompt(@"Enter code emailed to you:");
-                           } onError:^(NSError *e) {
-                               @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
-                                                              reason:[e localizedFailureReason]
-                                                            userInfo:[e userInfo]];
-                           }];
+    [tokenClient beginRecovery:self.payerAlias
+                     onSuccess:^(NSString *verificationId_) {
+                         // prompt user to enter code:
+                         verificationId = verificationId_;
+                         showPrompt(@"Enter code emailed to you:");
+                     } onError:^(NSError *e) {
+                         @throw [NSException exceptionWithName:@"BeginRecoveryFailedException"
+                                                        reason:[e localizedFailureReason]
+                                                      userInfo:[e userInfo]];
+                     }];
     // beginRecovery done snippet to include in docs
 
     [self runUntilTrue:^ {
@@ -292,27 +292,26 @@
     __block TKMember *member = nil;
 
     // completeRecovery begin snippet to include in docs
-    [tokenClient verifyMemberRecovery:self.payerAlias
-                             memberId:self.payer.id
-                       verificationId:verificationId
-                                 code:userEnteredCode
-                            onSuccess:^() {
-                                [tokenClient completeMemberRecovery:self.payerAlias
-                                                           memberId:self.payer.id
-                                                     verificationId:verificationId
-                                                               code:userEnteredCode
-                                                          onSuccess:^(TKMember *newMember) {
-                                                              member = newMember;
-                                                          } onError:^(NSError *e) {
-                                                              @throw [NSException
-                                                                      exceptionWithName:@"CompleteRecoveryFailedException"
-                                                                      reason:[e localizedFailureReason]
-                                                                      userInfo:[e userInfo]];
-                                                          }];
-                            } onError:^(NSError *e) {
-                                @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
-                                                               reason:[e localizedFailureReason]
-                                                             userInfo:[e userInfo]];
+    TKCrypto *crypto = [tokenClient createCrypto:self.payer.id];
+    
+    [tokenClient completeRecoveryWithDefaultRule:self.payer.id
+                                  verificationId:verificationId
+                                            code:userEnteredCode
+                                          crypto:crypto
+                                       onSuccess:^(TKMember *newMember) {
+                                           [newMember verifyAlias:verificationId code:userEnteredCode
+                                                        onSuccess:^() {
+                                                            member = newMember;
+                                                            
+                                                        } onError:^(NSError *e) {
+                                                            @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
+                                                                                           reason:[e localizedFailureReason]
+                                                                                         userInfo:[e userInfo]];
+                                                        }];
+                                       } onError:^(NSError *e) {
+                                           @throw [NSException exceptionWithName:@"VerifyRecCodeFailedException"
+                                                                          reason:[e localizedFailureReason]
+                                                                        userInfo:[e userInfo]];
                             }];
     // completeRecovery done snippet to include in docs
 
@@ -320,7 +319,21 @@
         return (member != nil);
     }];
     
-    XCTAssertEqualObjects([member firstAlias].value, memberAliasString);
+    __block NSString *aliasValue = nil;
+    
+    [member getAliases:^(NSArray<Alias *> *array) {
+        aliasValue = array.firstObject.value;
+    } onError:^(NSError *e) {
+        @throw [NSException exceptionWithName:@"GetAliasesFailedException"
+                                       reason:[e localizedFailureReason]
+                                     userInfo:[e userInfo]];
+    }];
+    
+    [self runUntilTrue:^ {
+        return (aliasValue != nil);
+    }];
+    
+    XCTAssertEqualObjects(aliasValue, memberAliasString);
 }
 
 - (void)testProfile {

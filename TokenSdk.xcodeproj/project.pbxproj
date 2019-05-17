@@ -185,8 +185,6 @@
 		D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BCA20191BDC00CA0405 /* TKTokenBrowserViewController.h */; };
 		D09E3BCF20191BDC00CA0405 /* TKTokenBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BCB20191BDC00CA0405 /* TKTokenBrowser.m */; };
 		D0DECB2F220AC99B00A73BD5 /* TKTestExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DECB2E220AC99A00A73BD5 /* TKTestExpectation.m */; };
-		D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */; };
-		D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */; };
 		D0EFF96F213766510048636D /* TokenRequestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EFF96D213766510048636D /* TokenRequestResult.h */; };
 		D0EFF970213766510048636D /* TokenRequestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EFF96E213766510048636D /* TokenRequestResult.m */; };
 		D0EFF973213769B20048636D /* NotifyResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EFF971213769B20048636D /* NotifyResult.h */; };
@@ -447,8 +445,6 @@
 		D0B9C52E219CF37F00B55101 /* TokenProto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenProto.h; sourceTree = "<group>"; };
 		D0DECB2D220AC99A00A73BD5 /* TKTestExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestExpectation.h; sourceTree = "<group>"; };
 		D0DECB2E220AC99A00A73BD5 /* TKTestExpectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestExpectation.m; sourceTree = "<group>"; };
-		D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKMemberRecoveryManager.m; sourceTree = "<group>"; };
-		D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKMemberRecoveryManager.h; sourceTree = "<group>"; };
 		D0EFF96D213766510048636D /* TokenRequestResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenRequestResult.h; sourceTree = "<group>"; };
 		D0EFF96E213766510048636D /* TokenRequestResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TokenRequestResult.m; sourceTree = "<group>"; };
 		D0EFF971213769B20048636D /* NotifyResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotifyResult.h; sourceTree = "<group>"; };
@@ -741,8 +737,6 @@
 				D0EFF96D213766510048636D /* TokenRequestResult.h */,
 				D0EFF971213769B20048636D /* NotifyResult.h */,
 				D0EFF972213769B20048636D /* NotifyResult.m */,
-				D0EAC0691F9AC1A700C0E98A /* TKMemberRecoveryManager.h */,
-				D0EAC0681F9AC1A700C0E98A /* TKMemberRecoveryManager.m */,
 				E5F36FA91FAD41E10087FB69 /* TKBalance.h */,
 				E5F36FAB1FAD42E70087FB69 /* TKBalance.m */,
 				D039410B20CBA6A600B980CE /* TokenCluster.h */,
@@ -1017,7 +1011,6 @@
 				D039410A20C9F02100B980CE /* Message.pbobjc.h in Headers */,
 				DD0A775A1E4226B40058FB8A /* TKLocalizer.h in Headers */,
 				4B3814081F394B0200557EEF /* Alias.pbobjc.h in Headers */,
-				D0EAC06B1F9AC1A800C0E98A /* TKMemberRecoveryManager.h in Headers */,
 				ABA7BF36682B8CEB2577E661 /* TKCrypto.h in Headers */,
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
 				22EBBA4420F5680900E6A4DB /* Service.pbobjc.h in Headers */,
@@ -1357,7 +1350,6 @@
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
 				D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */,
-				D0EAC06A1F9AC1A800C0E98A /* TKMemberRecoveryManager.m in Sources */,
 				D062EFEC22615B0100189D65 /* Bankstatus.pbobjc.m in Sources */,
 				D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */,
 				4B240F8C1F28135000497B2D /* Base58.c in Sources */,

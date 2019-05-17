@@ -13,6 +13,7 @@
 #import "TKBrowser.h"
 #import "TKTypedef.h"
 #import "TokenCluster.h"
+#import "TKCrypto.h"
 
 @class DeviceMetadata;
 @class GatewayService;
@@ -235,56 +236,85 @@
 #pragma mark - Member Recovery
 
 /**
- * Begins member account recovery process by contacting alias. The verification message will
- * be sent if the alias is valid. All the member recovery methods shall be called by the same
- * TokenIO instance.
+ * Begins account recovery.
  *
- * @param alias alias to recover
+ * @param alias the alias used to recover
  * @param onSuccess invoked if successful with verification Id
  * @param onError invoked if failed
  */
-
-- (void)beginMemberRecovery:(Alias *)alias
-                  onSuccess:(OnSuccessWithString)onSuccess
-                    onError:(OnError)onError;
-
-/**
- * Verifies member recovery code after beginMemberRecovery is successful. All the member recovery
- * methods shall be called by the same TokenIO instance.
- *
- * @param alias alias to recover
- * @param memberId memberId to recover
- * @param verificationId verification Id from beginMemberRecovery call
- * @param code code from verification message
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
- */
-- (void)verifyMemberRecovery:(Alias *)alias
-                    memberId:(NSString *)memberId
-              verificationId:(NSString *)verificationId
-                        code:(NSString *)code
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError;
+- (void)beginRecovery:(Alias *)alias
+            onSuccess:(OnSuccessWithString)onSuccess
+              onError:(OnError)onError;
 
 /**
- * Completes member recovery process after verifyMemberRecoveryCode is successful. Uploads member's
- * public keys from this device to Token directory. All the member recovery methods shall be called
- * by the same TokenIO instance.
+ * Create a recovery authorization for some agent to sign.
  *
- * @param alias alias to recover
- * @param memberId memberId to recover
- * @param verificationId verification Id from beginMemberRecovery call
- * @param code code from verification message
- * @param onSuccess invoked if successful with TkMember
+ * @param memberId Id of member we claim to be.
+ * @param privilegedKey new privileged key we want to use.
+ * @param onSuccess invoked if successful with authorization structure for agent to sign
  * @param onError invoked if failed
  */
-- (void)completeMemberRecovery:(Alias *)alias
-                      memberId:(NSString *)memberId
-                verificationId:(NSString *)verificationId
-                          code:(NSString *)code
-                     onSuccess:(OnSuccessWithTKMember)onSuccess
-                       onError:(OnError)onError;
+- (void)createRecoveryAuthorization:(NSString *)memberId
+                                key:(Key *)privilegedKey
+                          onSuccess:(OnSuccessWithMemberRecoveryOperationAuthorization)onSuccess
+                            onError:(OnError)onError;
 
+/**
+ * Completes account recovery.
+ *
+ * @param memberId the member id
+ * @param recoveryOperations the member recovery operations
+ * @param privilegedKey the privileged public key in the member recovery operations
+ * @param crypto the new crypto
+ * @param onSuccess invoked if successful with member
+ * @param onError invoked if failed
+ */
+- (void)completeRecovery:(NSString *)memberId
+      recoveryOperations:(NSArray<MemberRecoveryOperation *> *)recoveryOperations
+           privilegedKey:(Key *)privilegedKey
+                  crypto:(TKCrypto *)crypto
+               onSuccess:(OnSuccessWithTKMember)onSuccess
+                 onError:(OnError)onError;
+
+/**
+ * Completes account recovery if the default recovery rule was set.
+ *
+ * @param memberId the member id
+ * @param verificationId the verification id
+ * @param code the code
+ * @param crypto the new crypto
+ * @param onSuccess invoked if successful with member
+ * @param onError invoked if failed
+ */
+- (void)completeRecoveryWithDefaultRule:(NSString *)memberId
+                         verificationId:(NSString *)verificationId
+                                   code:(NSString *)code
+                                 crypto:(TKCrypto *)crypto
+                              onSuccess:(OnSuccessWithTKMember)onSuccess
+                                onError:(OnError)onError;
+
+/**
+ * Gets recovery authorization from Token.
+ *
+ * @param verificationId the verification id
+ * @param code the code
+ * @param privilegedKey the privileged key
+ * @param onSuccess invoked if successful with the recovery entry
+ * @param onError invoked if failed
+ */
+- (void)getRecoveryAuthorization:(NSString *)verificationId
+                            code:(NSString *)code
+                   privilegedKey:(Key *)privilegedKey
+                       onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                         onError:(OnError)onError;
+
+/**
+ * Creates TKCrypto with member id.
+ *
+ * @param memberId the member id
+ * @return TKCrypto
+ */
+- (TKCrypto *)createCrypto:(NSString *)memberId;
 @end
 
 #endif

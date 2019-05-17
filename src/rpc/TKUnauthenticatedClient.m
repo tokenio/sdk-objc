@@ -376,9 +376,9 @@
 
 #pragma mark - Member Recovery
 
-- (void)beginMemberRecovery:(Alias *)alias
-                  onSuccess:(OnSuccessWithString)onSuccess
-                    onError:(OnError)onError {
+- (void)beginRecovery:(Alias *)alias
+            onSuccess:(OnSuccessWithString)onSuccess
+              onError:(OnError)onError {
     BeginRecoveryRequest *request = [BeginRecoveryRequest message];
     request.alias = alias;
     RpcLogStart(request);
@@ -396,15 +396,109 @@
     [rpc execute:call request:request];
 }
 
-- (void)getMemberRecoveryOperation:(NSString *)verificationId
-                              code:(NSString *)code
-                     privilegedKey:(Key *)key
-                         onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
-                           onError:(OnError)onError {
+- (void)createRecoveryAuthorization:(NSString *)memberId
+                                key:(Key *)privilegedKey
+                          onSuccess:(OnSuccessWithMemberRecoveryOperationAuthorization)onSuccess
+                            onError:(OnError)onError {
+    [self getMember:memberId
+          onSuccess:^(Member *member) {
+              MemberRecoveryOperation_Authorization *authorization =
+              [[MemberRecoveryOperation_Authorization alloc] init];
+              authorization.memberId = memberId;
+              authorization.prevHash = member.lastHash;
+              authorization.memberKey = privilegedKey;
+              onSuccess(authorization);
+          } onError:onError];
+}
+
+- (void)completeRecovery:(NSString *)memberId
+      recoveryOperations:(NSArray<MemberRecoveryOperation *> *)recoveryOperations
+           privilegedKey:(Key *)privilegedKey
+                  crypto:(TKCrypto *)crypto
+               onSuccess:(OnSuccessWithMember)onSuccess
+                 onError:(OnError)onError {
+    NSMutableArray<MemberOperation *> *operations = [NSMutableArray array];
+    for (MemberRecoveryOperation * recoveryOperation in recoveryOperations) {
+        MemberOperation *operation = [[MemberOperation alloc] init];
+        operation.recover = recoveryOperation;
+        [operations addObject:operation];
+    }
+    
+    // Adds AddKey operations.
+    Key *standardKey = [crypto generateKey:Key_Level_Standard];
+    Key *lowKey = [crypto generateKey:Key_Level_Low];
+    
+    if (!privilegedKey || !standardKey || !lowKey) {
+        onError([NSError
+                 errorFromErrorCode:kTKErrorKeyNotFound
+                 details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
+        return;
+    }
+    
+    MemberOperation *addKeyPrivileged = [MemberOperation message];
+    addKeyPrivileged.addKey.key = privilegedKey;
+    [operations addObject:addKeyPrivileged];
+    
+    MemberOperation *addKeyStandard = [MemberOperation message];
+    addKeyStandard.addKey.key = standardKey;
+    [operations addObject:addKeyStandard];
+    
+    MemberOperation *addKeyLow = [MemberOperation message];
+    addKeyLow.addKey.key = lowKey;
+    [operations addObject:addKeyLow];
+    
+    NSString *reason = TKLocalizedString(@"Signature_Reason_RecoverMember",
+                                         @"Approve to recover a Token member account");
+    [self getMember:memberId
+          onSuccess:^(Member *member) {
+              [self updateMember:memberId
+                          crypto:crypto
+                        prevHash:member.lastHash
+                      operations:operations
+                   metadataArray:[NSArray array]
+                          reason:reason
+                       onSuccess:onSuccess
+                         onError:onError];
+          } onError:onError];
+}
+
+- (void)completeRecoveryWithDefaultRule:(NSString *)memberId
+                         verificationId:(NSString *)verificationId
+                                   code:(NSString *)code
+                                 crypto:(TKCrypto *)crypto
+                              onSuccess:(OnSuccessWithMember)onSuccess
+                                onError:(OnError)onError {
+    Key *privilegedKey = [crypto generateKey:Key_Level_Privileged];
+    
+    if (!privilegedKey) {
+        onError([NSError
+                 errorFromErrorCode:kTKErrorKeyNotFound
+                 details:TKLocalizedString(@"Private_Key_Not_Found", @"Private Key Not Found")]);
+        return;
+    }
+    
+    [self getRecoveryAuthorization:verificationId
+                              code:code
+                     privilegedKey:privilegedKey
+                         onSuccess:^(MemberRecoveryOperation *mro) {
+                             [self completeRecovery:memberId
+                                 recoveryOperations:[NSArray arrayWithObject:mro]
+                                      privilegedKey:privilegedKey
+                                             crypto:crypto
+                                          onSuccess:onSuccess
+                                            onError:onError];
+                         } onError:onError];
+}
+
+- (void)getRecoveryAuthorization:(NSString *)verificationId
+                            code:(NSString *)code
+                   privilegedKey:(Key *)privilegedKey
+                       onSuccess:(OnSuccessWithMemberRecoveryOperation)onSuccess
+                         onError:(OnError)onError {
     CompleteRecoveryRequest *request = [CompleteRecoveryRequest message];
     request.verificationId = verificationId;
     request.code = code;
-    request.key = key;
+    request.key = privilegedKey;
     RpcLogStart(request);
     
     GRPCProtoCall *call = [gateway
@@ -419,28 +513,6 @@
                                        return;
                                    }
                                    onSuccess(response.recoveryEntry);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
-    [rpc execute:call request:request];
-}
-
-- (void)recoverAlias:(NSString *)verificationId
-                code:(NSString *)code
-           onSuccess:(OnSuccess)onSuccess
-             onError:(OnError)onError {
-    VerifyAliasRequest *request = [VerifyAliasRequest message];
-    request.verificationId = verificationId;
-    request.code = code;
-    RpcLogStart(request);
-    
-    GRPCProtoCall *call = [gateway
-                           RPCToVerifyAliasWithRequest: request
-                           handler:^(VerifyAliasResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess();
                                } else {
                                    [self->errorHandler handle:onError withError:error];
                                }
