@@ -154,6 +154,8 @@
 
     NSArray<Key *> *storedKeys = [[client getCrypto] getKeyInfos:reason onError:onError];
     if (!storedKeys) {
+        onError([NSError errorFromErrorCode:kTKErrorNoStoredKeyIsFound
+                                    details:@"No key is found in the current key store. At lease one PRIVILEDGED key is required"]);
         return;
     }
     

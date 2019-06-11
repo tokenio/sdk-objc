@@ -70,7 +70,10 @@ typedef enum {
     kTKErrorSecureEnclaveIsNotSupported = 108,
 
     /* Raised when user specifies an invalid alias realm */
-    kTKErrorInvalidRealm = 109
+    kTKErrorInvalidRealm = 109,
+    
+    /* Raised when no stored key is found in key store. */
+    kTKErrorNoStoredKeyIsFound = 110
 } TKErrorCode;
 
 
