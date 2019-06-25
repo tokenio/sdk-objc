@@ -11,7 +11,6 @@ target 'TokenSdk' do
   pod "OrderedDictionary"
   pod 'Unirest', '~>1.1.4'
 
-
   target 'TokenSdkTests' do
     inherit! :search_paths
   end

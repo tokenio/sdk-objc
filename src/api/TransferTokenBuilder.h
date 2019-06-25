@@ -69,10 +69,13 @@
 @property (readwrite) PurposeOfPayment purposeOfPayment;
 
 /// Destination bank accounts.
-@property (readwrite) NSArray<TransferEndpoint*> *destinations;
+@property (readwrite) NSArray<TransferDestination *> *transferDestinations;
+
+/// Deprecated. Use transferDestinations instead.
+@property (readwrite) NSArray<TransferEndpoint *> *destinations DEPRECATED_ATTRIBUTE;
 
 /// Attachment "files".
-@property (readwrite) NSArray<Attachment*> *attachments;
+@property (readwrite) NSArray<Attachment *> *attachments;
 
 /// Specify reference ID. If not set, the Token system chooses a random one.
 @property (readwrite) NSString *refId;

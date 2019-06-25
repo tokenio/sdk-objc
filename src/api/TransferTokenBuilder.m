@@ -10,12 +10,12 @@
 
 #import "Account.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
-
 #import "TKAccount.h"
 #import "TKClient.h"
 #import "TKError.h"
 #import "TKMember.h"
 #import "TKOauthEngine.h"
+#import "TKLogManager.h"
 #import "TKRpcSyncCall.h"
 #import "TokenClient.h"
 #import "TransferTokenBuilder.h"
@@ -60,6 +60,9 @@
             self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestChargeAmounnt];
         }
         
+        if (tokenRequest.requestPayload.transferBody.hasInstructions) {
+            self.transferDestinations = tokenRequest.requestPayload.transferBody.instructions.transferDestinationsArray;
+        }
         self.destinations = tokenRequest.requestPayload.transferBody.destinationsArray;
         
         if (tokenRequest.requestPayload.hasActingAs && tokenRequest.requestPayload.actingAs.displayName.length > 0) {
@@ -70,25 +73,16 @@
     return self;
 }
 
-- (Token *)execute {
-    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
-    return [call run:^{
-        [self executeAsync:call.onSuccess
-                   onError:call.onError];
-    }];
-}
-
-- (void)executeAsync:(OnSuccessWithToken)onSuccess
-             onError:(OnError)onError {
+- (TokenPayload *) buildPayload {
     if (!self.accountId && !self.authorization) {
         @throw [NSException
-         exceptionWithName:@"InvalidTokenException"
-                    reason:@"No source account found on token"
-                  userInfo:nil];
+                exceptionWithName:@"InvalidTokenException"
+                reason:@"No source account found on token"
+                userInfo:nil];
     }
     
     TokenMember *payer = [TokenMember message];
-
+    
     payer.id_p = [self.member id];
     if (self.fromAlias) {
         payer.alias = self.fromAlias;
@@ -105,6 +99,7 @@
         payload.refId = self.refId;
     }
     else {
+        TKLogWarning(@"refId is not set. A random ID will be used.")
         payload.refId = [TKUtil nonce];
     }
     
@@ -138,7 +133,10 @@
         payload.description_p = self.descr;
     }
     
-    if (self.destinations) {
+    if (self.transferDestinations) {
+        [payload.transfer.instructions.transferDestinationsArray addObjectsFromArray:self.transferDestinations];
+    }
+    else if (self.destinations) {
         [payload.transfer.instructions.destinationsArray addObjectsFromArray:self.destinations];
     }
     
@@ -153,9 +151,26 @@
     if (self.actingAs) {
         payload.actingAs = self.actingAs;
     }
-
-    payload.receiptRequested = self.receiptRequested;
     
+    payload.receiptRequested = self.receiptRequested;
+    if (self.tokenRequestId) {
+        payload.tokenRequestId = self.tokenRequestId;
+    }
+    
+    return payload;
+}
+
+- (Token *)execute {
+    TKRpcSyncCall<Token *> *call = [TKRpcSyncCall create];
+    return [call run:^{
+        [self executeAsync:call.onSuccess
+                   onError:call.onError];
+    }];
+}
+
+- (void)executeAsync:(OnSuccessWithToken)onSuccess
+             onError:(OnError)onError {
+    TokenPayload *payload = [self buildPayload];
     [[self.member getClient]
      createTransferToken:payload
      tokenRequestId:self.tokenRequestId

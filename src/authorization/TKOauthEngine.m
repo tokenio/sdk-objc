@@ -1,5 +1,5 @@
 //
-//  TKOAuthEngine.m
+//  TKOauthEngine.m
 //  TokenSdk
 //
 //  Created by Sibin Lu on 3/29/18.
@@ -35,7 +35,7 @@
         NSString *callbackUrl = [NSString stringWithFormat:@"https://%@/auth/callback",
                                  tokenCluster.webAppUrl];
         
-        url = [NSString stringWithFormat:@"%@&redirect_uri=%@",
+        url = [NSString stringWithFormat:@"%@&redirect_uri=%@&resource=BALANCES&resource=TRANSACTIONS",
                url_,
                [callbackUrl stringByAddingPercentEncodingWithAllowedCharacters:
                 [NSCharacterSet URLHostAllowedCharacterSet]]];
