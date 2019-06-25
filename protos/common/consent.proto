@@ -19,6 +19,9 @@ message Consent {
     Payment payment = 6;
   }
 
+  string initiator_id = 7;                      // ID of the member requesting consent (e.g. merchant)
+  string initiator_ref_id = 8;                  // Reference ID set by the member requesting consent
+
   message InformationAccess {
     repeated ResourceAccess resource_access = 1;
 
@@ -41,7 +44,8 @@ message Consent {
     io.token.proto.common.account.BankAccount account = 1;
     io.token.proto.common.money.Money lifetime_amount = 2;
     io.token.proto.common.money.Money amount = 3;
-    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 4;
+    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 4 [deprecated=true];
+    repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 5;
   }
 
   message Beneficiary {

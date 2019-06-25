@@ -106,12 +106,14 @@ BOOL VerificationStatus_IsValidValue(int32_t value__) {
 @dynamic type;
 @dynamic value;
 @dynamic realm;
+@dynamic realmId;
 
 typedef struct Alias__storage_ {
   uint32_t _has_storage_[1];
   Alias_Type type;
   NSString *value;
   NSString *realm;
+  NSString *realmId;
 } Alias__storage_;
 
 // This method is threadsafe because it is initially called
@@ -144,6 +146,15 @@ typedef struct Alias__storage_ {
         .number = Alias_FieldNumber_Realm,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Alias__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realmId",
+        .dataTypeSpecific.className = NULL,
+        .number = Alias_FieldNumber_RealmId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Alias__storage_, realmId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

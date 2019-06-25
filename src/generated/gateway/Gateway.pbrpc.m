@@ -79,6 +79,8 @@
  * have keys, alias, or anything other than an ID.
  * Used by createMember, https://developer.token.io/sdk/#create-a-member
  * (SDK's createMember also uses UpdateMember rpc).
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateMemberWithRequest:request handler:handler] start];
@@ -89,6 +91,8 @@
  * have keys, alias, or anything other than an ID.
  * Used by createMember, https://developer.token.io/sdk/#create-a-member
  * (SDK's createMember also uses UpdateMember rpc).
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateMemberWithRequest:(CreateMemberRequest *)request handler:(void(^)(CreateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateMember"
@@ -120,6 +124,8 @@
  * https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
  * See how JS SDK's AuthHttpClient._memberUpdate uses it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)updateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUpdateMemberWithRequest:request handler:handler] start];
@@ -132,6 +138,8 @@
  * https://developer.token.io/sdk/javadoc/io/token/rpc/Client.html#updateMember-io.token.proto.common.member.MemberProtos.Member-java.util.List-
  * See how JS SDK's AuthHttpClient._memberUpdate uses it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-_memberUpdate
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToUpdateMemberWithRequest:(UpdateMemberRequest *)request handler:(void(^)(UpdateMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UpdateMember"
@@ -160,6 +168,8 @@
 // Deprecated methods.
 /**
  * Get information about a member
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetMemberWithRequest:request handler:handler] start];
@@ -167,6 +177,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get information about a member
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetMemberWithRequest:(GetMemberRequest *)request handler:(void(^)(GetMemberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetMember"
@@ -192,6 +204,8 @@
  * set profile information (display name)
  * Ignores picture fields; use SetProfilePicture for those.
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)setProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetProfileWithRequest:request handler:handler] start];
@@ -201,6 +215,8 @@
  * set profile information (display name)
  * Ignores picture fields; use SetProfilePicture for those.
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSetProfileWithRequest:(SetProfileRequest *)request handler:(void(^)(SetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetProfile"
@@ -227,6 +243,8 @@
 /**
  * get a member's profile (display information)
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetProfileWithRequest:request handler:handler] start];
@@ -235,6 +253,8 @@
 /**
  * get a member's profile (display information)
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetProfileWithRequest:(GetProfileRequest *)request handler:(void(^)(GetProfileResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetProfile"
@@ -261,6 +281,8 @@
  * upload an image to use as auth'd member's profile picture
  * Automatically creates smaller sizes; this works best with square images.
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)setProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetProfilePictureWithRequest:request handler:handler] start];
@@ -270,6 +292,8 @@
  * upload an image to use as auth'd member's profile picture
  * Automatically creates smaller sizes; this works best with square images.
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSetProfilePictureWithRequest:(SetProfilePictureRequest *)request handler:(void(^)(SetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetProfilePicture"
@@ -296,6 +320,8 @@
 /**
  * Get member's profile picture (can also use GetBlob with a blob ID from profile)
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetProfilePictureWithRequest:request handler:handler] start];
@@ -304,6 +330,8 @@
 /**
  * Get member's profile picture (can also use GetBlob with a blob ID from profile)
  * https://developer.token.io/sdk/#profile
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetProfilePictureWithRequest:(GetProfilePictureRequest *)request handler:(void(^)(GetProfilePictureResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetProfilePicture"
@@ -328,6 +356,8 @@
 // Deprecated methods.
 /**
  * Set a member's contact (e.g. email) for receipt delivery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)setReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetReceiptContactWithRequest:request handler:handler] start];
@@ -335,6 +365,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Set a member's contact (e.g. email) for receipt delivery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSetReceiptContactWithRequest:(SetReceiptContactRequest *)request handler:(void(^)(SetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetReceiptContact"
@@ -358,6 +390,8 @@
 // Deprecated methods.
 /**
  * Get a member's email address for receipts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetReceiptContactWithRequest:request handler:handler] start];
@@ -365,6 +399,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get a member's email address for receipts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetReceiptContactWithRequest:(GetReceiptContactRequest *)request handler:(void(^)(GetReceiptContactResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetReceiptContact"
@@ -389,6 +425,8 @@
 /**
  * Get ID of member that owns an alias, if any.
  * https://developer.token.io/sdk/#aliases
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)resolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToResolveAliasWithRequest:request handler:handler] start];
@@ -397,6 +435,8 @@
 /**
  * Get ID of member that owns an alias, if any.
  * https://developer.token.io/sdk/#aliases
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToResolveAliasWithRequest:(ResolveAliasRequest *)request handler:(void(^)(ResolveAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ResolveAlias"
@@ -422,6 +462,8 @@
 /**
  * Get the auth'd member's aliases.
  * https://developer.token.io/sdk/#aliases
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAliasesWithRequest:request handler:handler] start];
@@ -430,6 +472,8 @@
 /**
  * Get the auth'd member's aliases.
  * https://developer.token.io/sdk/#aliases
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAliasesWithRequest:(GetAliasesRequest *)request handler:(void(^)(GetAliasesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAliases"
@@ -454,6 +498,8 @@
 // Deprecated methods.
 /**
  * Use a verification code
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)completeVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCompleteVerificationWithRequest:request handler:handler] start];
@@ -461,6 +507,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Use a verification code
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCompleteVerificationWithRequest:(CompleteVerificationRequest *)request handler:(void(^)(CompleteVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CompleteVerification"
@@ -485,6 +533,8 @@
 /**
  * Retries verification. For example, if verifying an email alias,
  * re-sends verification-code email to the email address.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)retryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRetryVerificationWithRequest:request handler:handler] start];
@@ -493,6 +543,8 @@
 /**
  * Retries verification. For example, if verifying an email alias,
  * re-sends verification-code email to the email address.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRetryVerificationWithRequest:(RetryVerificationRequest *)request handler:(void(^)(RetryVerificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RetryVerification"
@@ -517,6 +569,8 @@
 // Deprecated methods.
 /**
  * Get auth'd members paired devices (as created by provisionDevice)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetPairedDevicesWithRequest:request handler:handler] start];
@@ -524,6 +578,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get auth'd members paired devices (as created by provisionDevice)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetPairedDevicesWithRequest:(GetPairedDevicesRequest *)request handler:(void(^)(GetPairedDevicesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetPairedDevices"
@@ -637,6 +693,8 @@
  * Begin member recovery. If the member has a "normal consumer" recovery rule,
  * this sends a recovery message to their email address.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)beginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToBeginRecoveryWithRequest:request handler:handler] start];
@@ -650,6 +708,8 @@
  * Begin member recovery. If the member has a "normal consumer" recovery rule,
  * this sends a recovery message to their email address.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToBeginRecoveryWithRequest:(BeginRecoveryRequest *)request handler:(void(^)(BeginRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"BeginRecovery"
@@ -680,6 +740,8 @@
 /**
  * Complete member recovery.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)completeRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCompleteRecoveryWithRequest:request handler:handler] start];
@@ -688,6 +750,8 @@
 /**
  * Complete member recovery.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCompleteRecoveryWithRequest:(CompleteRecoveryRequest *)request handler:(void(^)(CompleteRecoveryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CompleteRecovery"
@@ -712,6 +776,8 @@
 // Deprecated methods.
 /**
  * Verify an alias
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)verifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToVerifyAliasWithRequest:request handler:handler] start];
@@ -719,6 +785,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Verify an alias
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"VerifyAlias"
@@ -743,6 +811,8 @@
 /**
  * Get member ID of "normal consumer" recovery agent.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetDefaultAgentWithRequest:request handler:handler] start];
@@ -751,6 +821,8 @@
 /**
  * Get member ID of "normal consumer" recovery agent.
  * https://developer.token.io/sdk/#recovery
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetDefaultAgentWithRequest:(GetDefaultAgentRequest *)request handler:(void(^)(GetDefaultAgentResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetDefaultAgent"
@@ -780,6 +852,8 @@
  * 
  * Add a shipping address
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)addAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddAddressWithRequest:request handler:handler] start];
@@ -792,6 +866,8 @@
  * 
  * Add a shipping address
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToAddAddressWithRequest:(AddAddressRequest *)request handler:(void(^)(AddAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddAddress"
@@ -821,6 +897,8 @@
 /**
  * Get one of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAddressWithRequest:request handler:handler] start];
@@ -829,6 +907,8 @@
 /**
  * Get one of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAddressWithRequest:(GetAddressRequest *)request handler:(void(^)(GetAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAddress"
@@ -854,6 +934,8 @@
 /**
  * Get all of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAddressesWithRequest:request handler:handler] start];
@@ -862,6 +944,8 @@
 /**
  * Get all of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAddressesWithRequest:(GetAddressesRequest *)request handler:(void(^)(GetAddressesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAddresses"
@@ -887,6 +971,8 @@
 /**
  * Remove one of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)deleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDeleteAddressWithRequest:request handler:handler] start];
@@ -895,6 +981,8 @@
 /**
  * Remove one of the auth'd member's shipping addresses
  * https://developer.token.io/sdk/#address
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToDeleteAddressWithRequest:(DeleteAddressRequest *)request handler:(void(^)(DeleteAddressResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DeleteAddress"
@@ -920,6 +1008,8 @@
 /**
  * Add a trusted beneficiary
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)addTrustedBeneficiaryWithRequest:(AddTrustedBeneficiaryRequest *)request handler:(void(^)(AddTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddTrustedBeneficiaryWithRequest:request handler:handler] start];
@@ -928,6 +1018,8 @@
 /**
  * Add a trusted beneficiary
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToAddTrustedBeneficiaryWithRequest:(AddTrustedBeneficiaryRequest *)request handler:(void(^)(AddTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddTrustedBeneficiary"
@@ -953,6 +1045,8 @@
 /**
  * Remove a trusted beneficiary
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)removeTrustedBeneficiaryWithRequest:(RemoveTrustedBeneficiaryRequest *)request handler:(void(^)(RemoveTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveTrustedBeneficiaryWithRequest:request handler:handler] start];
@@ -961,6 +1055,8 @@
 /**
  * Remove a trusted beneficiary
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRemoveTrustedBeneficiaryWithRequest:(RemoveTrustedBeneficiaryRequest *)request handler:(void(^)(RemoveTrustedBeneficiaryResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveTrustedBeneficiary"
@@ -986,6 +1082,8 @@
 /**
  * Get all trusted beneficiaries
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTrustedBeneficiariesWithRequest:(GetTrustedBeneficiariesRequest *)request handler:(void(^)(GetTrustedBeneficiariesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTrustedBeneficiariesWithRequest:request handler:handler] start];
@@ -994,6 +1092,8 @@
 /**
  * Get all trusted beneficiaries
  * https://developer.token.io/sdk/#trusted-beneficiary
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTrustedBeneficiariesWithRequest:(GetTrustedBeneficiariesRequest *)request handler:(void(^)(GetTrustedBeneficiariesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTrustedBeneficiaries"
@@ -1019,6 +1119,8 @@
 /**
  * Set Customization
  * https://developer.token.io/sdk/#customization
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateCustomizationWithRequest:request handler:handler] start];
@@ -1027,6 +1129,8 @@
 /**
  * Set Customization
  * https://developer.token.io/sdk/#customization
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateCustomizationWithRequest:(CreateCustomizationRequest *)request handler:(void(^)(CreateCustomizationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateCustomization"
@@ -1056,6 +1160,8 @@
  * 
  * subscribe member to notifications
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)subscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSubscribeToNotificationsWithRequest:request handler:handler] start];
@@ -1068,6 +1174,8 @@
  * 
  * subscribe member to notifications
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSubscribeToNotificationsWithRequest:(SubscribeToNotificationsRequest *)request handler:(void(^)(SubscribeToNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SubscribeToNotifications"
@@ -1097,6 +1205,8 @@
 /**
  * get member's notification subscriber[s]
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetSubscribersWithRequest:request handler:handler] start];
@@ -1105,6 +1215,8 @@
 /**
  * get member's notification subscriber[s]
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetSubscribersWithRequest:(GetSubscribersRequest *)request handler:(void(^)(GetSubscribersResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetSubscribers"
@@ -1130,6 +1242,8 @@
 /**
  * get one of a member's notification subscribers
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetSubscriberWithRequest:request handler:handler] start];
@@ -1138,6 +1252,8 @@
 /**
  * get one of a member's notification subscribers
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetSubscriberWithRequest:(GetSubscriberRequest *)request handler:(void(^)(GetSubscriberResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetSubscriber"
@@ -1163,6 +1279,8 @@
 /**
  * unsubscribe one of a member's subscribers from notifications
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)unsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnsubscribeFromNotificationsWithRequest:request handler:handler] start];
@@ -1171,6 +1289,8 @@
 /**
  * unsubscribe one of a member's subscribers from notifications
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToUnsubscribeFromNotificationsWithRequest:(UnsubscribeFromNotificationsRequest *)request handler:(void(^)(UnsubscribeFromNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnsubscribeFromNotifications"
@@ -1196,6 +1316,8 @@
 /**
  * send a notification
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)notifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToNotifyWithRequest:request handler:handler] start];
@@ -1204,6 +1326,8 @@
 /**
  * send a notification
  * https://developer.token.io/sdk/#notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToNotifyWithRequest:(NotifyRequest *)request handler:(void(^)(NotifyResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"Notify"
@@ -1229,6 +1353,8 @@
 /**
  * get notifications
  * https://developer.token.io/sdk/#polling-for-notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getNotificationsWithRequest:(GetNotificationsRequest *)request handler:(void(^)(GetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetNotificationsWithRequest:request handler:handler] start];
@@ -1237,6 +1363,8 @@
 /**
  * get notifications
  * https://developer.token.io/sdk/#polling-for-notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetNotificationsWithRequest:(GetNotificationsRequest *)request handler:(void(^)(GetNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetNotifications"
@@ -1262,6 +1390,8 @@
 /**
  * get one particular notification
  * https://developer.token.io/sdk/#polling-for-notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetNotificationWithRequest:request handler:handler] start];
@@ -1270,6 +1400,8 @@
 /**
  * get one particular notification
  * https://developer.token.io/sdk/#polling-for-notifications
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetNotificationWithRequest:(GetNotificationRequest *)request handler:(void(^)(GetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetNotification"
@@ -1295,6 +1427,8 @@
 /**
  * send transfer-request notification
  * https://developer.token.io/sdk/#request-payment
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)requestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRequestTransferWithRequest:request handler:handler] start];
@@ -1303,6 +1437,8 @@
 /**
  * send transfer-request notification
  * https://developer.token.io/sdk/#request-payment
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRequestTransferWithRequest:(RequestTransferRequest *)request handler:(void(^)(RequestTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RequestTransfer"
@@ -1327,6 +1463,8 @@
 // Deprecated methods.
 /**
  * send step-up (approve with higher-privilege key) request notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)triggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTriggerStepUpNotificationWithRequest:request handler:handler] start];
@@ -1334,6 +1472,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * send step-up (approve with higher-privilege key) request notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToTriggerStepUpNotificationWithRequest:(TriggerStepUpNotificationRequest *)request handler:(void(^)(TriggerStepUpNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TriggerStepUpNotification"
@@ -1357,6 +1497,8 @@
 // Deprecated methods.
 /**
  * send endorse and add key notification (approve with higher-privilege key)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)triggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTriggerEndorseAndAddKeyNotificationWithRequest:request handler:handler] start];
@@ -1364,6 +1506,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * send endorse and add key notification (approve with higher-privilege key)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToTriggerEndorseAndAddKeyNotificationWithRequest:(TriggerEndorseAndAddKeyNotificationRequest *)request handler:(void(^)(TriggerEndorseAndAddKeyNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TriggerEndorseAndAddKeyNotification"
@@ -1387,6 +1531,8 @@
 // Deprecated methods.
 /**
  * send create and endorse token notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)triggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:request handler:handler] start];
@@ -1394,6 +1540,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * send create and endorse token notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:(TriggerCreateAndEndorseTokenNotificationRequest *)request handler:(void(^)(TriggerCreateAndEndorseTokenNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TriggerCreateAndEndorseTokenNotification"
@@ -1417,6 +1565,8 @@
 // Deprecated methods.
 /**
  * send invalidate notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)invalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToInvalidateNotificationWithRequest:request handler:handler] start];
@@ -1424,6 +1574,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * send invalidate notification
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToInvalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"InvalidateNotification"
@@ -1452,6 +1604,8 @@
  * 
  * associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)linkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLinkAccountsWithRequest:request handler:handler] start];
@@ -1464,6 +1618,8 @@
  * 
  * associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToLinkAccountsWithRequest:(LinkAccountsRequest *)request handler:(void(^)(LinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LinkAccounts"
@@ -1493,6 +1649,8 @@
 /**
  * associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)linkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLinkAccountsOauthWithRequest:request handler:handler] start];
@@ -1501,6 +1659,8 @@
 /**
  * associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToLinkAccountsOauthWithRequest:(LinkAccountsOauthRequest *)request handler:(void(^)(LinkAccountsOauthResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LinkAccountsOauth"
@@ -1526,6 +1686,8 @@
 /**
  * un-associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)unlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnlinkAccountsWithRequest:request handler:handler] start];
@@ -1534,6 +1696,8 @@
 /**
  * un-associate bank accounts with member
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToUnlinkAccountsWithRequest:(UnlinkAccountsRequest *)request handler:(void(^)(UnlinkAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnlinkAccounts"
@@ -1559,6 +1723,8 @@
 /**
  * get info about one linked account
  * https://developer.token.io/sdk/#get-accounts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountWithRequest:request handler:handler] start];
@@ -1567,6 +1733,8 @@
 /**
  * get info about one linked account
  * https://developer.token.io/sdk/#get-accounts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountWithRequest:(GetAccountRequest *)request handler:(void(^)(GetAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccount"
@@ -1592,6 +1760,8 @@
 /**
  * get info about linked accounts
  * https://developer.token.io/sdk/#get-accounts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountsWithRequest:request handler:handler] start];
@@ -1600,6 +1770,8 @@
 /**
  * get info about linked accounts
  * https://developer.token.io/sdk/#get-accounts
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountsWithRequest:(GetAccountsRequest *)request handler:(void(^)(GetAccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccounts"
@@ -1625,6 +1797,8 @@
 /**
  * get current and available balance for a linked account
  * https://developer.token.io/sdk/#get-account-balance
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBalanceWithRequest:request handler:handler] start];
@@ -1633,6 +1807,8 @@
 /**
  * get current and available balance for a linked account
  * https://developer.token.io/sdk/#get-account-balance
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetBalanceWithRequest:(GetBalanceRequest *)request handler:(void(^)(GetBalanceResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBalance"
@@ -1679,6 +1855,8 @@
 /**
  * get information about a particular transaction
  * https://developer.token.io/sdk/#get-transactions
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransactionWithRequest:request handler:handler] start];
@@ -1687,6 +1865,8 @@
 /**
  * get information about a particular transaction
  * https://developer.token.io/sdk/#get-transactions
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTransactionWithRequest:(GetTransactionRequest *)request handler:(void(^)(GetTransactionResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransaction"
@@ -1712,6 +1892,8 @@
 /**
  * get information about several transactions
  * https://developer.token.io/sdk/#get-transactions
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransactionsWithRequest:request handler:handler] start];
@@ -1720,6 +1902,8 @@
 /**
  * get information about several transactions
  * https://developer.token.io/sdk/#get-transactions
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransactions"
@@ -1766,6 +1950,8 @@
 /**
  * Get information about the auth'd member's default account.
  * https://developer.token.io/sdk/#default-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetDefaultAccountWithRequest:request handler:handler] start];
@@ -1774,6 +1960,8 @@
 /**
  * Get information about the auth'd member's default account.
  * https://developer.token.io/sdk/#default-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetDefaultAccountWithRequest:(GetDefaultAccountRequest *)request handler:(void(^)(GetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetDefaultAccount"
@@ -1799,6 +1987,8 @@
 /**
  * Set one auth'd member's accounts as its default account.
  * https://developer.token.io/sdk/#default-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)setDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetDefaultAccountWithRequest:request handler:handler] start];
@@ -1807,6 +1997,8 @@
 /**
  * Set one auth'd member's accounts as its default account.
  * https://developer.token.io/sdk/#default-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSetDefaultAccountWithRequest:(SetDefaultAccountRequest *)request handler:(void(^)(SetDefaultAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetDefaultAccount"
@@ -1831,6 +2023,8 @@
 // Deprecated methods.
 /**
  * Get the resolved transfer destinations of the given account.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)resolveTransferDestinationsWithRequest:(ResolveTransferDestinationsRequest *)request handler:(void(^)(ResolveTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToResolveTransferDestinationsWithRequest:request handler:handler] start];
@@ -1838,6 +2032,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get the resolved transfer destinations of the given account.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToResolveTransferDestinationsWithRequest:(ResolveTransferDestinationsRequest *)request handler:(void(^)(ResolveTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ResolveTransferDestinations"
@@ -1861,6 +2057,8 @@
 // Deprecated methods.
 /**
  * Confirm that the given account has sufficient funds to cover the charge.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)confirmFundsWithRequest:(ConfirmFundsRequest *)request handler:(void(^)(ConfirmFundsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToConfirmFundsWithRequest:request handler:handler] start];
@@ -1868,6 +2066,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Confirm that the given account has sufficient funds to cover the charge.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToConfirmFundsWithRequest:(ConfirmFundsRequest *)request handler:(void(^)(ConfirmFundsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ConfirmFunds"
@@ -1896,6 +2096,8 @@
  * 
  * Create a test account at "iron" test bank.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTestBankAccountWithRequest:request handler:handler] start];
@@ -1908,6 +2110,8 @@
  * 
  * Create a test account at "iron" test bank.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateTestBankAccountWithRequest:(CreateTestBankAccountRequest *)request handler:(void(^)(CreateTestBankAccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTestBankAccount"
@@ -1937,6 +2141,8 @@
 /**
  * Get notification from "iron" test bank. Useful for Token when testing its test bank.
  * Normal way to get a notification is GetNotification.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTestBankNotificationWithRequest:request handler:handler] start];
@@ -1945,6 +2151,8 @@
 /**
  * Get notification from "iron" test bank. Useful for Token when testing its test bank.
  * Normal way to get a notification is GetNotification.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTestBankNotificationWithRequest:(GetTestBankNotificationRequest *)request handler:(void(^)(GetTestBankNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTestBankNotification"
@@ -1970,6 +2178,8 @@
 /**
  * Get notifications from "iron" test bank. Useful for Token when testing its test bank.
  * Normal way to get notifications is GetNotifications.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTestBankNotificationsWithRequest:request handler:handler] start];
@@ -1978,6 +2188,8 @@
 /**
  * Get notifications from "iron" test bank. Useful for Token when testing its test bank.
  * Normal way to get notifications is GetNotifications.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTestBankNotificationsWithRequest:(GetTestBankNotificationsRequest *)request handler:(void(^)(GetTestBankNotificationsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTestBankNotifications"
@@ -2007,6 +2219,8 @@
  * 
  * Create a blob.
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateBlobWithRequest:request handler:handler] start];
@@ -2019,6 +2233,8 @@
  * 
  * Create a blob.
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateBlobWithRequest:(CreateBlobRequest *)request handler:(void(^)(CreateBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateBlob"
@@ -2049,6 +2265,8 @@
  * Fetch a blob. Works if the authenticated member is the blob's
  * owner or if the blob is public-access.
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBlobWithRequest:request handler:handler] start];
@@ -2058,6 +2276,8 @@
  * Fetch a blob. Works if the authenticated member is the blob's
  * owner or if the blob is public-access.
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetBlobWithRequest:(GetBlobRequest *)request handler:(void(^)(GetBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBlob"
@@ -2085,6 +2305,8 @@
  * Fetch a blob using a Token's authority. Works if Blob is attached to token
  * and authenticated member is the Token's "from" or "to".
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokenBlobWithRequest:request handler:handler] start];
@@ -2094,6 +2316,8 @@
  * Fetch a blob using a Token's authority. Works if Blob is attached to token
  * and authenticated member is the Token's "from" or "to".
  * https://developer.token.io/sdk/#transfer-token-options
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTokenBlobWithRequest:(GetTokenBlobRequest *)request handler:(void(^)(GetTokenBlobResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTokenBlob"
@@ -2123,6 +2347,8 @@
  * 
  * 
  * Store a Token Request
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)storeTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToStoreTokenRequestWithRequest:request handler:handler] start];
@@ -2134,6 +2360,8 @@
  * 
  * 
  * Store a Token Request
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToStoreTokenRequestWithRequest:(StoreTokenRequestRequest *)request handler:(void(^)(StoreTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"StoreTokenRequest"
@@ -2161,6 +2389,8 @@
 // Deprecated methods.
 /**
  * Retrieve a Token Request
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)retrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRetrieveTokenRequestWithRequest:request handler:handler] start];
@@ -2168,6 +2398,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Retrieve a Token Request
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRetrieveTokenRequestWithRequest:(RetrieveTokenRequestRequest *)request handler:(void(^)(RetrieveTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RetrieveTokenRequest"
@@ -2216,6 +2448,8 @@
  * 
  * 
  * Prepare a token (resolve token payload and determine policy)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)prepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToPrepareTokenWithRequest:request handler:handler] start];
@@ -2227,6 +2461,8 @@
  * 
  * 
  * Prepare a token (resolve token payload and determine policy)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToPrepareTokenWithRequest:(PrepareTokenRequest *)request handler:(void(^)(PrepareTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"PrepareToken"
@@ -2254,6 +2490,8 @@
 // Deprecated methods.
 /**
  * Create a Token.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTokenWithRequest:request handler:handler] start];
@@ -2261,6 +2499,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Create a Token.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateTokenWithRequest:(CreateTokenRequest *)request handler:(void(^)(CreateTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateToken"
@@ -2285,6 +2525,8 @@
 /**
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTransferTokenWithRequest:request handler:handler] start];
@@ -2293,6 +2535,8 @@
 /**
  * Create a Transfer Token.
  * https://developer.token.io/sdk/#create-transfer-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateTransferTokenWithRequest:(CreateTransferTokenRequest *)request handler:(void(^)(CreateTransferTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTransferToken"
@@ -2318,6 +2562,8 @@
 /**
  * Create an Access Token.
  * https://developer.token.io/sdk/#create-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateAccessTokenWithRequest:request handler:handler] start];
@@ -2326,6 +2572,8 @@
 /**
  * Create an Access Token.
  * https://developer.token.io/sdk/#create-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateAccessTokenWithRequest:(CreateAccessTokenRequest *)request handler:(void(^)(CreateAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateAccessToken"
@@ -2351,6 +2599,8 @@
 /**
  * Get information about one token.
  * https://developer.token.io/sdk/#redeem-transfer-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokenWithRequest:request handler:handler] start];
@@ -2359,6 +2609,8 @@
 /**
  * Get information about one token.
  * https://developer.token.io/sdk/#redeem-transfer-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTokenWithRequest:(GetTokenRequest *)request handler:(void(^)(GetTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetToken"
@@ -2384,6 +2636,8 @@
 /**
  * Get existing Access Token where the calling member is the
  * remitter and provided member is the beneficiary.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getActiveAccessTokenWithRequest:(GetActiveAccessTokenRequest *)request handler:(void(^)(GetActiveAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetActiveAccessTokenWithRequest:request handler:handler] start];
@@ -2392,6 +2646,8 @@
 /**
  * Get existing Access Token where the calling member is the
  * remitter and provided member is the beneficiary.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetActiveAccessTokenWithRequest:(GetActiveAccessTokenRequest *)request handler:(void(^)(GetActiveAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetActiveAccessToken"
@@ -2419,6 +2675,8 @@
  * Used by getTransferTokens, getAccessTokens.
  * https://developer.token.io/sdk/#get-tokens
  * https://developer.token.io/sdk/#replace-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokensWithRequest:request handler:handler] start];
@@ -2429,6 +2687,8 @@
  * Used by getTransferTokens, getAccessTokens.
  * https://developer.token.io/sdk/#get-tokens
  * https://developer.token.io/sdk/#replace-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTokensWithRequest:(GetTokensRequest *)request handler:(void(^)(GetTokensResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTokens"
@@ -2457,6 +2717,8 @@
  * Endorse a token
  * https://developer.token.io/sdk/#endorse-transfer-token
  * https://developer.token.io/sdk/#endorse-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)endorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEndorseTokenWithRequest:request handler:handler] start];
@@ -2466,6 +2728,8 @@
  * Endorse a token
  * https://developer.token.io/sdk/#endorse-transfer-token
  * https://developer.token.io/sdk/#endorse-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToEndorseTokenWithRequest:(EndorseTokenRequest *)request handler:(void(^)(EndorseTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EndorseToken"
@@ -2493,6 +2757,8 @@
  * Cancel a token
  * https://developer.token.io/sdk/#cancel-transfer-token
  * https://developer.token.io/sdk/#cancel-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)cancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCancelTokenWithRequest:request handler:handler] start];
@@ -2502,6 +2768,8 @@
  * Cancel a token
  * https://developer.token.io/sdk/#cancel-transfer-token
  * https://developer.token.io/sdk/#cancel-access-token
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCancelTokenWithRequest:(CancelTokenRequest *)request handler:(void(^)(CancelTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CancelToken"
@@ -2531,6 +2799,8 @@
  * 
  * See how replaceAndEndorseToken uses it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)replaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToReplaceTokenWithRequest:request handler:handler] start];
@@ -2542,6 +2812,8 @@
  * 
  * See how replaceAndEndorseToken uses it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-replaceAndEndorseToken
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToReplaceTokenWithRequest:(ReplaceTokenRequest *)request handler:(void(^)(ReplaceTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ReplaceToken"
@@ -2569,6 +2841,8 @@
 // Deprecated methods.
 /**
  * Request a Token signature on a token request state payload (tokenId | state)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)signTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSignTokenRequestStateWithRequest:request handler:handler] start];
@@ -2576,6 +2850,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Request a Token signature on a token request state payload (tokenId | state)
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToSignTokenRequestStateWithRequest:(SignTokenRequestStateRequest *)request handler:(void(^)(SignTokenRequestStateResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SignTokenRequestState"
@@ -2599,6 +2875,8 @@
 // Deprecated methods.
 /**
  * Get the token request result from the token request id
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTokenRequestResultWithRequest:request handler:handler] start];
@@ -2606,6 +2884,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get the token request result from the token request id
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTokenRequestResultWithRequest:(GetTokenRequestResultRequest *)request handler:(void(^)(GetTokenRequestResultResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTokenRequestResult"
@@ -2629,6 +2909,8 @@
 // Deprecated methods.
 /**
  * Gets a payload to sign
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAuthRequestPayloadWithRequest:request handler:handler] start];
@@ -2636,6 +2918,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Gets a payload to sign
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAuthRequestPayloadWithRequest:(GetAuthRequestPayloadRequest *)request handler:(void(^)(GetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAuthRequestPayload"
@@ -2667,6 +2951,8 @@
  * 
  * See how redeemToken calls it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateTransferWithRequest:request handler:handler] start];
@@ -2682,6 +2968,8 @@
  * 
  * See how redeemToken calls it:
  * https://developer.token.io/sdk/esdoc/class/src/http/AuthHttpClient.js~AuthHttpClient.html#instance-method-redeemToken
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateTransfer"
@@ -2714,6 +3002,8 @@
 /**
  * Get information about one transfer.
  * https://developer.token.io/sdk/#get-transfers
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransferWithRequest:request handler:handler] start];
@@ -2722,6 +3012,8 @@
 /**
  * Get information about one transfer.
  * https://developer.token.io/sdk/#get-transfers
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfer"
@@ -2747,6 +3039,8 @@
 /**
  * Get a list of the auth'd member's transfers.
  * https://developer.token.io/sdk/#get-transfers
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetTransfersWithRequest:request handler:handler] start];
@@ -2755,6 +3049,8 @@
 /**
  * Get a list of the auth'd member's transfers.
  * https://developer.token.io/sdk/#get-transfers
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetTransfers"
@@ -2783,6 +3079,8 @@
  * 
  * 
  * Get a list of "link-able" bank countries.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBanksCountriesWithRequest:request handler:handler] start];
@@ -2794,6 +3092,8 @@
  * 
  * 
  * Get a list of "link-able" bank countries.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetBanksCountriesWithRequest:(GetBanksCountriesRequest *)request handler:(void(^)(GetBanksCountriesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBanksCountries"
@@ -2822,6 +3122,8 @@
 /**
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBanksWithRequest:request handler:handler] start];
@@ -2830,6 +3132,8 @@
 /**
  * Get a list of "link-able" banks.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetBanksWithRequest:(GetBanksRequest *)request handler:(void(^)(GetBanksResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBanks"
@@ -2855,6 +3159,8 @@
 /**
  * Get information useful for linking one bank.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetBankInfoWithRequest:request handler:handler] start];
@@ -2863,6 +3169,8 @@
 /**
  * Get information useful for linking one bank.
  * https://developer.token.io/sdk/#link-a-bank-account
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetBankInfoWithRequest:(GetBankInfoRequest *)request handler:(void(^)(GetBankInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetBankInfo"
@@ -2890,6 +3198,8 @@
  * Keychain management.
  * 
  * Create a keychain with a name.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createKeychainWithRequest:(CreateKeychainRequest *)request handler:(void(^)(CreateKeychainResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateKeychainWithRequest:request handler:handler] start];
@@ -2900,6 +3210,8 @@
  * Keychain management.
  * 
  * Create a keychain with a name.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateKeychainWithRequest:(CreateKeychainRequest *)request handler:(void(^)(CreateKeychainResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateKeychain"
@@ -2926,6 +3238,8 @@
 // Deprecated methods.
 /**
  * Update a keychain's info.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)updateKeychainInfoWithRequest:(UpdateKeychainInfoRequest *)request handler:(void(^)(UpdateKeychainInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUpdateKeychainInfoWithRequest:request handler:handler] start];
@@ -2933,6 +3247,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Update a keychain's info.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToUpdateKeychainInfoWithRequest:(UpdateKeychainInfoRequest *)request handler:(void(^)(UpdateKeychainInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UpdateKeychainInfo"
@@ -2956,6 +3272,8 @@
 // Deprecated methods.
 /**
  * Get all the keychains of a member.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getKeychainsWithRequest:(GetKeychainsRequest *)request handler:(void(^)(GetKeychainsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetKeychainsWithRequest:request handler:handler] start];
@@ -2963,6 +3281,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Get all the keychains of a member.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetKeychainsWithRequest:(GetKeychainsRequest *)request handler:(void(^)(GetKeychainsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetKeychains"
@@ -2989,6 +3309,8 @@
  * Bank member only requests.
  * 
  * Get member information about a member who links at least an account from this bank
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getMemberInfoWithRequest:(GetMemberInfoRequest *)request handler:(void(^)(GetMemberInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetMemberInfoWithRequest:request handler:handler] start];
@@ -2999,6 +3321,8 @@
  * Bank member only requests.
  * 
  * Get member information about a member who links at least an account from this bank
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetMemberInfoWithRequest:(GetMemberInfoRequest *)request handler:(void(^)(GetMemberInfoResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetMemberInfo"
@@ -3060,6 +3384,83 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GetConsentsResponse class]];
+}
+
+#pragma mark GetTppPerformanceReport(GetTppPerformanceReportRequest) returns (GetTppPerformanceReportResponse)
+
+// Deprecated methods.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Reports (bank member only requests).
+ * 
+ * Get TPP performance report.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getTppPerformanceReportWithRequest:(GetTppPerformanceReportRequest *)request handler:(void(^)(GetTppPerformanceReportResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetTppPerformanceReportWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Reports (bank member only requests).
+ * 
+ * Get TPP performance report.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetTppPerformanceReportWithRequest:(GetTppPerformanceReportRequest *)request handler:(void(^)(GetTppPerformanceReportResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetTppPerformanceReport"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetTppPerformanceReportResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * //////////////////////////////////////////////////////////////////////////////////////////////////
+ * Reports (bank member only requests).
+ * 
+ * Get TPP performance report.
+ */
+- (GRPCUnaryProtoCall *)getTppPerformanceReportWithMessage:(GetTppPerformanceReportRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetTppPerformanceReport"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetTppPerformanceReportResponse class]];
+}
+
+#pragma mark GetAvailabilityReport(GetAvailabilityReportRequest) returns (GetAvailabilityReportResponse)
+
+// Deprecated methods.
+/**
+ * Get availability report.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getAvailabilityReportWithRequest:(GetAvailabilityReportRequest *)request handler:(void(^)(GetAvailabilityReportResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAvailabilityReportWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get availability report.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetAvailabilityReportWithRequest:(GetAvailabilityReportRequest *)request handler:(void(^)(GetAvailabilityReportResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAvailabilityReport"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetAvailabilityReportResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Get availability report.
+ */
+- (GRPCUnaryProtoCall *)getAvailabilityReportWithMessage:(GetAvailabilityReportRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetAvailabilityReport"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetAvailabilityReportResponse class]];
 }
 
 @end

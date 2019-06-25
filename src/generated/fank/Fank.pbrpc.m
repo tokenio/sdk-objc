@@ -10,6 +10,8 @@
 #import "Money.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Notification.pbobjc.h"
+#import "Security.pbobjc.h"
+#import "Token.pbobjc.h"
 
 @implementation FankFankService
 
@@ -212,6 +214,8 @@
  * 
  * Used by bank-demo to obtain access token.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetOauthAccessTokenWithRequest:request handler:handler] start];
@@ -221,6 +225,8 @@
  * 
  * Used by bank-demo to obtain access token.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetOauthAccessToken"
@@ -250,6 +256,8 @@
  * the fank. This is mainly for testing the flow where a notification is sent through a bank
  * instead of straight to devices.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetNotificationWithRequest:request handler:handler] start];
@@ -261,6 +269,8 @@
  * the fank. This is mainly for testing the flow where a notification is sent through a bank
  * instead of straight to devices.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetNotification"
@@ -312,6 +322,8 @@
  * Used by sdk-java-tests to create members in the fank realms.
  * 
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)verifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToVerifyAliasWithRequest:request handler:handler] start];
@@ -322,6 +334,8 @@
  * Used by sdk-java-tests to create members in the fank realms.
  * 
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"VerifyAlias"
@@ -341,6 +355,67 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[FankVerifyAliasResponse class]];
+}
+
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+// Deprecated methods.
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getAuthRequestPayloadWithRequest:(FankGetAuthRequestPayloadRequest *)request handler:(void(^)(FankGetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAuthRequestPayloadWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetAuthRequestPayloadWithRequest:(FankGetAuthRequestPayloadRequest *)request handler:(void(^)(FankGetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAuthRequestPayload"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetAuthRequestPayloadResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ */
+- (GRPCUnaryProtoCall *)getAuthRequestPayloadWithMessage:(FankGetAuthRequestPayloadRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetAuthRequestPayload"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[FankGetAuthRequestPayloadResponse class]];
+}
+
+#pragma mark GetAuthRequestSignature(GetAuthRequestSignatureRequest) returns (GetAuthRequestSignatureResponse)
+
+// Deprecated methods.
+- (void)getAuthRequestSignatureWithRequest:(FankGetAuthRequestSignatureRequest *)request handler:(void(^)(FankGetAuthRequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetAuthRequestSignatureWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetAuthRequestSignatureWithRequest:(FankGetAuthRequestSignatureRequest *)request handler:(void(^)(FankGetAuthRequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetAuthRequestSignature"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[FankGetAuthRequestSignatureResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)getAuthRequestSignatureWithMessage:(FankGetAuthRequestSignatureRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetAuthRequestSignature"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[FankGetAuthRequestSignatureResponse class]];
 }
 
 @end

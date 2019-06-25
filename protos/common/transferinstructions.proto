@@ -8,6 +8,7 @@ import "account.proto";
 import "address.proto";
 import "banklink.proto";
 import "security.proto";
+import "providerspecific.proto";
 import "extensions/message.proto";
 
 // A bank might require a Purpose of Payment for some transfers.
@@ -44,11 +45,100 @@ message TransferEndpoint {
   CustomerData customer_data = 2;                        // Customer data: name and address
 }
 
+message TransferDestination {
+  // Token account Destination. Useful as source or destination
+  // for a transfer; doesn't make sense for a bank to "link" this.
+  message Token {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  // Custom authorization
+  message Custom {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bank_id = 1;
+    string payload = 2;
+  }
+
+  // SEPA transfer
+  message Sepa {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1; // Optional
+    string iban = 2;
+  }
+
+  message SepaInstant {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
+  // Faster Payments Service transfer (UK)
+  message FasterPayments {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  // ACH transfer
+  message Ach {
+    option (io.token.proto.extensions.message.redact) = true;
+    string routing = 1; // Routing number
+    string account = 2;
+  }
+
+  message Swift {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1;     // BIC code AAAABBCCDD
+    string account = 2;
+  }
+
+  // Polish domestic
+  message Elixir {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message ExpressElixir {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message BlueCash {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message Sorbnet {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  oneof destination {
+    Token token = 1;
+    Sepa sepa = 2;
+    SepaInstant sepa_instant = 3;
+    FasterPayments faster_payments = 4;
+    Ach ach = 5;
+    Swift swift = 6;
+    Elixir elixir = 7;
+    ExpressElixir express_elixir = 8;
+    BlueCash blue_cash = 9;
+    Sorbnet sorbnet = 10;
+    Custom custom = 12;
+  }
+
+  CustomerData customer_data = 11;
+}
+
 // Money transfer instructions.
 message TransferInstructions {
   TransferEndpoint source = 1;                   // Transfer source.
-  repeated TransferEndpoint destinations = 2;    // Transfer destination.
+  repeated TransferEndpoint destinations = 2 [deprecated = true];    // Transfer destinations.
   Metadata metadata = 3;
+  repeated TransferDestination transfer_destinations = 4;
 
   message Metadata {
     PurposeOfPayment transfer_purpose = 1;       // Purpose of payment
@@ -56,5 +146,6 @@ message TransferInstructions {
     string merchant_category_code = 3;           // Optional ISO 18245 Merchant Category Code (MCC)
     string merchant_customer_id = 4;             // Optional Unique merchant customer identifier
     io.token.proto.common.address.Address delivery_address = 5; // Optional delivery address
+    io.token.proto.common.providerspecific.ProviderTransferMetadata provider_transfer_metadata = 6;
   }
 }

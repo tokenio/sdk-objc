@@ -31,6 +31,8 @@ message TransferPayload {
   string ref_id = 1;                                                                      // Client assigned unique request id.
   string token_id = 2;                                                                    // Token id.
   io.token.proto.common.money.Money amount = 3;                                           // Amount and currency.
-  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5;  // Transfer destinations, sorted in priority order.
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5 [deprecated=true];
   string description = 6;                                                                 // Optional
+  repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 7;  // Transfer destinations, sorted in priority order.
+  io.token.proto.common.transferinstructions.TransferInstructions.Metadata metadata = 8;
 }

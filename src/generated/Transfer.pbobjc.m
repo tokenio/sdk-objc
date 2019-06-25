@@ -251,6 +251,8 @@ BOOL Transfer_Method_IsValidValue(int32_t value__) {
 @dynamic hasAmount, amount;
 @dynamic destinationsArray, destinationsArray_Count;
 @dynamic description_p;
+@dynamic transferDestinationsArray, transferDestinationsArray_Count;
+@dynamic hasMetadata, metadata;
 
 typedef struct TransferPayload__storage_ {
   uint32_t _has_storage_[1];
@@ -259,6 +261,8 @@ typedef struct TransferPayload__storage_ {
   Money *amount;
   NSMutableArray *destinationsArray;
   NSString *description_p;
+  NSMutableArray *transferDestinationsArray;
+  TransferInstructions_Metadata *metadata;
 } TransferPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -311,6 +315,24 @@ typedef struct TransferPayload__storage_ {
         .offset = (uint32_t)offsetof(TransferPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transferDestinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = TransferPayload_FieldNumber_TransferDestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(TransferPayload__storage_, transferDestinationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions_Metadata),
+        .number = TransferPayload_FieldNumber_Metadata,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(TransferPayload__storage_, metadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

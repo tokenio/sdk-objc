@@ -30,6 +30,9 @@ CF_EXTERN_C_BEGIN
 @class Address;
 @class Cma9AccountDetails;
 @class Cma9AccountDetails_Cma9Address;
+@class POLISHAPIPolishApiAccountDetails;
+@class POLISHAPIPolishApiTransactionDetails;
+@class POLISHAPIPolishApiTransferMetadata;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -153,11 +156,13 @@ BOOL Cma9AccountDetails_AccountSubtype_IsValidValue(int32_t value);
 
 typedef GPB_ENUM(ProviderAccountDetails_FieldNumber) {
   ProviderAccountDetails_FieldNumber_Cma9AccountDetails = 1,
+  ProviderAccountDetails_FieldNumber_PolishApiAccountDetails = 2,
 };
 
 typedef GPB_ENUM(ProviderAccountDetails_Details_OneOfCase) {
   ProviderAccountDetails_Details_OneOfCase_GPBUnsetOneOfCase = 0,
   ProviderAccountDetails_Details_OneOfCase_Cma9AccountDetails = 1,
+  ProviderAccountDetails_Details_OneOfCase_PolishApiAccountDetails = 2,
 };
 
 @interface ProviderAccountDetails : GPBMessage
@@ -166,12 +171,62 @@ typedef GPB_ENUM(ProviderAccountDetails_Details_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) Cma9AccountDetails *cma9AccountDetails;
 
+@property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiAccountDetails *polishApiAccountDetails;
+
 @end
 
 /**
  * Clears whatever value was set for the oneof 'details'.
  **/
 void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *message);
+
+#pragma mark - ProviderTransactionDetails
+
+typedef GPB_ENUM(ProviderTransactionDetails_FieldNumber) {
+  ProviderTransactionDetails_FieldNumber_PolishApiTransactionDetails = 1,
+};
+
+typedef GPB_ENUM(ProviderTransactionDetails_Details_OneOfCase) {
+  ProviderTransactionDetails_Details_OneOfCase_GPBUnsetOneOfCase = 0,
+  ProviderTransactionDetails_Details_OneOfCase_PolishApiTransactionDetails = 1,
+};
+
+@interface ProviderTransactionDetails : GPBMessage
+
+@property(nonatomic, readonly) ProviderTransactionDetails_Details_OneOfCase detailsOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiTransactionDetails *polishApiTransactionDetails;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'details'.
+ **/
+void ProviderTransactionDetails_ClearDetailsOneOfCase(ProviderTransactionDetails *message);
+
+#pragma mark - ProviderTransferMetadata
+
+typedef GPB_ENUM(ProviderTransferMetadata_FieldNumber) {
+  ProviderTransferMetadata_FieldNumber_PolishApiTransferMetadata = 1,
+};
+
+typedef GPB_ENUM(ProviderTransferMetadata_Metadata_OneOfCase) {
+  ProviderTransferMetadata_Metadata_OneOfCase_GPBUnsetOneOfCase = 0,
+  ProviderTransferMetadata_Metadata_OneOfCase_PolishApiTransferMetadata = 1,
+};
+
+@interface ProviderTransferMetadata : GPBMessage
+
+@property(nonatomic, readonly) ProviderTransferMetadata_Metadata_OneOfCase metadataOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiTransferMetadata *polishApiTransferMetadata;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'metadata'.
+ **/
+void ProviderTransferMetadata_ClearMetadataOneOfCase(ProviderTransferMetadata *message);
 
 #pragma mark - Cma9AccountDetails
 

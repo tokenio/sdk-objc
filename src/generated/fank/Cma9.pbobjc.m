@@ -1182,6 +1182,7 @@ void SetAccountDetails_SchemeName_RawValue(AccountDetails *message, int32_t valu
 @dynamic currency;
 @dynamic nickname;
 @dynamic hasServicer, servicer;
+@dynamic metadata, metadata_Count;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
@@ -1190,6 +1191,7 @@ typedef struct Account__storage_ {
   NSString *currency;
   NSString *nickname;
   Servicer *servicer;
+  NSMutableDictionary *metadata;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1242,6 +1244,15 @@ typedef struct Account__storage_ {
         .offset = (uint32_t)offsetof(Account__storage_, servicer),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = NULL,
+        .number = Account_FieldNumber_Metadata,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Account__storage_, metadata),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1556,6 +1567,7 @@ typedef struct BalanceData__storage_ {
 @dynamic status;
 @dynamic transactionId;
 @dynamic transactionInformation;
+@dynamic metadata, metadata_Count;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -1567,6 +1579,7 @@ typedef struct Transaction__storage_ {
   NSString *bookingDateTime;
   NSString *transactionId;
   NSString *transactionInformation;
+  NSMutableDictionary *metadata;
 } Transaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1645,6 +1658,15 @@ typedef struct Transaction__storage_ {
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Transaction__storage_, transactionInformation),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = NULL,
+        .number = Transaction_FieldNumber_Metadata,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Transaction__storage_, metadata),
+        .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
     };

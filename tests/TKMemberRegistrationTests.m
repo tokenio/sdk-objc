@@ -81,7 +81,7 @@
                                                        useLocalAuthentication:NO]
                                  createEngine:@"Another"];
 
-    NSNumber *futureExpriation = [NSNumber numberWithDouble:([[NSDate date] timeIntervalSince1970] * 1000 + 2000)];
+    NSNumber *futureExpriation = [NSNumber numberWithDouble:([[NSDate date] timeIntervalSince1970] * 1000 + 5000)];
     
     XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
     [member approveKeys:@[[engine generateKey:Key_Level_Privileged],
@@ -94,7 +94,7 @@
     
     [self assertKeysCount:5 for:member];
     // Wait until the key expires
-    sleep(3);
+    sleep(6);
     [self assertKeysCount:4 for:member];
 }
 

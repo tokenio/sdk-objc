@@ -29,6 +29,7 @@ CF_EXTERN_C_BEGIN
 
 @class Balance_TypedBalance;
 @class Money;
+@class ProviderTransactionDetails;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -173,6 +174,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
   Transaction_FieldNumber_TokenTransferId = 7,
   Transaction_FieldNumber_CreatedAtMs = 8,
   Transaction_FieldNumber_Metadata = 9,
+  Transaction_FieldNumber_ProviderTransactionDetails = 10,
 };
 
 @interface Transaction : GPBMessage
@@ -207,6 +209,10 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) ProviderTransactionDetails *providerTransactionDetails;
+/** Test to see if @c providerTransactionDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasProviderTransactionDetails;
 
 @end
 

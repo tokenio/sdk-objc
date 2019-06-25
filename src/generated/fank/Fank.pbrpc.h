@@ -19,6 +19,10 @@
 @class FankGetAccountResponse;
 @class FankGetAccountsRequest;
 @class FankGetAccountsResponse;
+@class FankGetAuthRequestPayloadRequest;
+@class FankGetAuthRequestPayloadResponse;
+@class FankGetAuthRequestSignatureRequest;
+@class FankGetAuthRequestSignatureResponse;
 @class FankGetClientRequest;
 @class FankGetClientResponse;
 @class FankGetNotificationRequest;
@@ -37,6 +41,8 @@
   #import "Money.pbobjc.h"
   #import "Banklink.pbobjc.h"
   #import "Notification.pbobjc.h"
+  #import "Security.pbobjc.h"
+  #import "Token.pbobjc.h"
 #endif
 
 @class GRPCProtoCall;
@@ -112,8 +118,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)verifyAliasWithMessage:(FankVerifyAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ */
+- (GRPCUnaryProtoCall *)getAuthRequestPayloadWithMessage:(FankGetAuthRequestPayloadRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetAuthRequestSignature(GetAuthRequestSignatureRequest) returns (GetAuthRequestSignatureResponse)
+
+- (GRPCUnaryProtoCall *)getAuthRequestSignatureWithMessage:(FankGetAuthRequestSignatureRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 @end
 
+/**
+ * The methods in this protocol belong to a set of old APIs that have been deprecated. They do not
+ * recognize call options provided in the initializer. Using the v2 protocol is recommended.
+ */
 @protocol FankFankService <NSObject>
 
 #pragma mark AddClient(AddClientRequest) returns (AddClientResponse)
@@ -171,6 +194,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * Used by bank-demo to obtain access token.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -178,6 +203,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * Used by bank-demo to obtain access token.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetOauthAccessTokenWithRequest:(FankGetOauthAccessTokenRequest *)request handler:(void(^)(FankGetOauthAccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -190,6 +217,8 @@ NS_ASSUME_NONNULL_BEGIN
  * the fank. This is mainly for testing the flow where a notification is sent through a bank
  * instead of straight to devices.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -199,6 +228,8 @@ NS_ASSUME_NONNULL_BEGIN
  * the fank. This is mainly for testing the flow where a notification is sent through a bank
  * instead of straight to devices.
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetNotificationWithRequest:(FankGetNotificationRequest *)request handler:(void(^)(FankGetNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -217,6 +248,8 @@ NS_ASSUME_NONNULL_BEGIN
  * Used by sdk-java-tests to create members in the fank realms.
  * 
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)verifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
@@ -225,8 +258,38 @@ NS_ASSUME_NONNULL_BEGIN
  * Used by sdk-java-tests to create members in the fank realms.
  * 
  * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(FankVerifyAliasRequest *)request handler:(void(^)(FankVerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetAuthRequestPayload(GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse)
+
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getAuthRequestPayloadWithRequest:(FankGetAuthRequestPayloadRequest *)request handler:(void(^)(FankGetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * 
+ * Used to retrieve the token payload in direct guest checkout flow
+ * 
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetAuthRequestPayloadWithRequest:(FankGetAuthRequestPayloadRequest *)request handler:(void(^)(FankGetAuthRequestPayloadResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetAuthRequestSignature(GetAuthRequestSignatureRequest) returns (GetAuthRequestSignatureResponse)
+
+- (void)getAuthRequestSignatureWithRequest:(FankGetAuthRequestSignatureRequest *)request handler:(void(^)(FankGetAuthRequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetAuthRequestSignatureWithRequest:(FankGetAuthRequestSignatureRequest *)request handler:(void(^)(FankGetAuthRequestSignatureResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end
@@ -239,8 +302,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FankFankService : GRPCProtoService<FankFankService, FankFankService2>
 - (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithHost:(NSString *)host;
 + (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
+// The following methods belong to a set of old APIs that have been deprecated.
+- (instancetype)initWithHost:(NSString *)host;
 + (instancetype)serviceWithHost:(NSString *)host;
 @end
 #endif

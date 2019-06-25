@@ -30,9 +30,10 @@ CF_EXTERN_C_BEGIN
 @class Alias;
 @class FankAccount;
 @class FankClient;
-@class Member;
 @class Money;
 @class Notification;
+@class Signature;
+@class TokenPayload;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -405,15 +406,71 @@ typedef GPB_ENUM(FankVerifyAliasRequest_FieldNumber) {
 
 #pragma mark - FankVerifyAliasResponse
 
-typedef GPB_ENUM(FankVerifyAliasResponse_FieldNumber) {
-  FankVerifyAliasResponse_FieldNumber_Member = 1,
-};
-
 @interface FankVerifyAliasResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Member *member;
-/** Test to see if @c member has been set. */
-@property(nonatomic, readwrite) BOOL hasMember;
+@end
+
+#pragma mark - FankGetAuthRequestPayloadRequest
+
+typedef GPB_ENUM(FankGetAuthRequestPayloadRequest_FieldNumber) {
+  FankGetAuthRequestPayloadRequest_FieldNumber_Bic = 1,
+  FankGetAuthRequestPayloadRequest_FieldNumber_AuthRequestId = 2,
+};
+
+@interface FankGetAuthRequestPayloadRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *authRequestId;
+
+@end
+
+#pragma mark - FankGetAuthRequestPayloadResponse
+
+typedef GPB_ENUM(FankGetAuthRequestPayloadResponse_FieldNumber) {
+  FankGetAuthRequestPayloadResponse_FieldNumber_Payload = 1,
+  FankGetAuthRequestPayloadResponse_FieldNumber_SourceAccountHash = 2,
+};
+
+@interface FankGetAuthRequestPayloadResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountHash;
+
+@end
+
+#pragma mark - FankGetAuthRequestSignatureRequest
+
+typedef GPB_ENUM(FankGetAuthRequestSignatureRequest_FieldNumber) {
+  FankGetAuthRequestSignatureRequest_FieldNumber_Bic = 1,
+  FankGetAuthRequestSignatureRequest_FieldNumber_SourceAccountHash = 2,
+  FankGetAuthRequestSignatureRequest_FieldNumber_AccountNumber = 3,
+};
+
+@interface FankGetAuthRequestSignatureRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountHash;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - FankGetAuthRequestSignatureResponse
+
+typedef GPB_ENUM(FankGetAuthRequestSignatureResponse_FieldNumber) {
+  FankGetAuthRequestSignatureResponse_FieldNumber_BankSignature = 1,
+};
+
+@interface FankGetAuthRequestSignatureResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Signature *bankSignature;
+/** Test to see if @c bankSignature has been set. */
+@property(nonatomic, readwrite) BOOL hasBankSignature;
 
 @end
 

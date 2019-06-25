@@ -72,6 +72,8 @@ static GPBFileDescriptor *ConsentRoot_FileDescriptor(void) {
 @dynamic memberId;
 @dynamic informationAccess;
 @dynamic payment;
+@dynamic initiatorId;
+@dynamic initiatorRefId;
 
 typedef struct Consent__storage_ {
   uint32_t _has_storage_[2];
@@ -80,6 +82,8 @@ typedef struct Consent__storage_ {
   NSString *memberId;
   Consent_InformationAccess *informationAccess;
   Consent_Payment *payment;
+  NSString *initiatorId;
+  NSString *initiatorRefId;
 } Consent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -132,6 +136,24 @@ typedef struct Consent__storage_ {
         .offset = (uint32_t)offsetof(Consent__storage_, payment),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "initiatorId",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_FieldNumber_InitiatorId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Consent__storage_, initiatorId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "initiatorRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_FieldNumber_InitiatorRefId,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Consent__storage_, initiatorRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -319,6 +341,7 @@ BOOL Consent_InformationAccess_ResourceAccess_ResourceType_IsValidValue(int32_t 
 @dynamic hasLifetimeAmount, lifetimeAmount;
 @dynamic hasAmount, amount;
 @dynamic destinationsArray, destinationsArray_Count;
+@dynamic transferDestinationsArray, transferDestinationsArray_Count;
 
 typedef struct Consent_Payment__storage_ {
   uint32_t _has_storage_[1];
@@ -326,6 +349,7 @@ typedef struct Consent_Payment__storage_ {
   Money *lifetimeAmount;
   Money *amount;
   NSMutableArray *destinationsArray;
+  NSMutableArray *transferDestinationsArray;
 } Consent_Payment__storage_;
 
 // This method is threadsafe because it is initially called
@@ -367,6 +391,15 @@ typedef struct Consent_Payment__storage_ {
         .number = Consent_Payment_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, destinationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "transferDestinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = Consent_Payment_FieldNumber_TransferDestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Consent_Payment__storage_, transferDestinationsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

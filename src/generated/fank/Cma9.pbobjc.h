@@ -665,6 +665,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Currency = 3,
   Account_FieldNumber_Nickname = 4,
   Account_FieldNumber_Servicer = 5,
+  Account_FieldNumber_Metadata = 6,
 };
 
 @interface Account : GPBMessage
@@ -682,6 +683,10 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Servicer *servicer;
 /** Test to see if @c servicer has been set. */
 @property(nonatomic, readwrite) BOOL hasServicer;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
 
 @end
 
@@ -774,6 +779,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
   Transaction_FieldNumber_Status = 6,
   Transaction_FieldNumber_TransactionId = 7,
   Transaction_FieldNumber_TransactionInformation = 8,
+  Transaction_FieldNumber_Metadata = 9,
 };
 
 @interface Transaction : GPBMessage
@@ -797,6 +803,10 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionInformation;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
 
 @end
 

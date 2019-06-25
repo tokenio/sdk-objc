@@ -19,6 +19,7 @@
 #import "extensions/Field.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
+#import "Providerspecific.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -217,6 +218,7 @@ BOOL RequestStatus_IsValidValue(int32_t value__) {
 @dynamic tokenTransferId;
 @dynamic createdAtMs;
 @dynamic metadata, metadata_Count;
+@dynamic hasProviderTransactionDetails, providerTransactionDetails;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -228,6 +230,7 @@ typedef struct Transaction__storage_ {
   NSString *tokenId;
   NSString *tokenTransferId;
   NSMutableDictionary *metadata;
+  ProviderTransactionDetails *providerTransactionDetails;
   int64_t createdAtMs;
 } Transaction__storage_;
 
@@ -317,6 +320,15 @@ typedef struct Transaction__storage_ {
         .offset = (uint32_t)offsetof(Transaction__storage_, metadata),
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "providerTransactionDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(ProviderTransactionDetails),
+        .number = Transaction_FieldNumber_ProviderTransactionDetails,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(Transaction__storage_, providerTransactionDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
