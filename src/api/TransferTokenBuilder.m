@@ -48,22 +48,22 @@
         self.descr = tokenRequest.requestPayload.description_p;
         self.receiptRequested = tokenRequest.requestOptions.receiptRequested;
         
-        NSString *requestLifeTimeAmount = tokenRequest.requestPayload.transferBody.lifetimeAmount;
+        TokenRequestPayload_TransferBody *transfer = tokenRequest.requestPayload.transferBody;
+        
+        NSString *requestLifeTimeAmount = transfer.lifetimeAmount;
         if (requestLifeTimeAmount && requestLifeTimeAmount.length > 0) {
             self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestLifeTimeAmount];
         }
-        
-        self.currency = tokenRequest.requestPayload.transferBody.currency;
-        
-        NSString *requestChargeAmounnt = tokenRequest.requestPayload.transferBody.amount;
+        self.currency = transfer.currency;
+        NSString *requestChargeAmounnt = transfer.amount;
         if (requestChargeAmounnt && requestChargeAmounnt.length > 0) {
             self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestChargeAmounnt];
         }
-        
-        if (tokenRequest.requestPayload.transferBody.hasInstructions) {
-            self.transferDestinations = tokenRequest.requestPayload.transferBody.instructions.transferDestinationsArray;
+        if (transfer.hasInstructions && (transfer.instructions.transferDestinationsArray.count > 0)) {
+            self.transferDestinations = transfer.instructions.transferDestinationsArray;
+        } else {
+            self.destinations = transfer.destinationsArray;
         }
-        self.destinations = tokenRequest.requestPayload.transferBody.destinationsArray;
         
         if (tokenRequest.requestPayload.hasActingAs && tokenRequest.requestPayload.actingAs.displayName.length > 0) {
             self.actingAs = tokenRequest.requestPayload.actingAs;
@@ -133,7 +133,7 @@
         payload.description_p = self.descr;
     }
     
-    if (self.transferDestinations) {
+    if (self.transferDestinations && (self.transferDestinations.count > 0)) {
         [payload.transfer.instructions.transferDestinationsArray addObjectsFromArray:self.transferDestinations];
     }
     else if (self.destinations) {
