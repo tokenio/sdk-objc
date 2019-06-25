@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class MemberOperationMetadata_AddKeyMetadata;
 @class MemberOperationResponseMetadata_AddAliasResponseMetadata;
 @class MemberPartnerOperation;
+@class MemberRealmPermissionOperation;
 @class MemberRecoveryOperation;
 @class MemberRecoveryOperation_Authorization;
 @class MemberRecoveryRulesOperation;
@@ -101,6 +102,31 @@ GPBEnumDescriptor *CreateMemberType_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL CreateMemberType_IsValidValue(int32_t value);
+
+#pragma mark - Enum RealmPermission
+
+typedef GPB_ENUM(RealmPermission) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  RealmPermission_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  RealmPermission_InvalidRealmPermission = 0,
+  RealmPermission_VerifyAlias = 1,
+  RealmPermission_AddAlias = 2,
+  RealmPermission_RemoveAlias = 3,
+  RealmPermission_AddKey = 4,
+  RealmPermission_RemoveKey = 5,
+};
+
+GPBEnumDescriptor *RealmPermission_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL RealmPermission_IsValidValue(int32_t value);
 
 #pragma mark - Enum Member_MemberType
 
@@ -201,6 +227,7 @@ typedef GPB_ENUM(MemberRemoveKeyOperation_FieldNumber) {
 typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
   MemberAliasOperation_FieldNumber_AliasHash = 1,
   MemberAliasOperation_FieldNumber_Realm = 2,
+  MemberAliasOperation_FieldNumber_RealmId = 3,
 };
 
 /**
@@ -215,7 +242,9 @@ typedef GPB_ENUM(MemberAliasOperation_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *aliasHash;
 
 /** Realm of alias to add/remove */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm GPB_DEPRECATED_MSG("io.token.proto.common.member.MemberAliasOperation.realm is deprecated (see member.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realmId;
 
 @end
 
@@ -297,6 +326,21 @@ typedef GPB_ENUM(MemberRecoveryOperation_Authorization_FieldNumber) {
 
 @end
 
+#pragma mark - MemberRealmPermissionOperation
+
+typedef GPB_ENUM(MemberRealmPermissionOperation_FieldNumber) {
+  MemberRealmPermissionOperation_FieldNumber_PermissionsArray = 1,
+};
+
+@interface MemberRealmPermissionOperation : GPBMessage
+
+// |permissionsArray| contains |RealmPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
+/** The number of items in @c permissionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger permissionsArray_Count;
+
+@end
+
 #pragma mark - MemberOperation
 
 typedef GPB_ENUM(MemberOperation_FieldNumber) {
@@ -310,6 +354,7 @@ typedef GPB_ENUM(MemberOperation_FieldNumber) {
   MemberOperation_FieldNumber_Delete_p = 9,
   MemberOperation_FieldNumber_VerifyPartner = 10,
   MemberOperation_FieldNumber_UnverifyPartner = 11,
+  MemberOperation_FieldNumber_RealmPermissions = 12,
 };
 
 typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
@@ -324,6 +369,7 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
   MemberOperation_Operation_OneOfCase_Delete_p = 9,
   MemberOperation_Operation_OneOfCase_VerifyPartner = 10,
   MemberOperation_Operation_OneOfCase_UnverifyPartner = 11,
+  MemberOperation_Operation_OneOfCase_RealmPermissions = 12,
 };
 
 @interface MemberOperation : GPBMessage
@@ -349,6 +395,8 @@ typedef GPB_ENUM(MemberOperation_Operation_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) MemberPartnerOperation *verifyPartner;
 
 @property(nonatomic, readwrite, strong, null_resettable) MemberPartnerOperation *unverifyPartner;
+
+@property(nonatomic, readwrite, strong, null_resettable) MemberRealmPermissionOperation *realmPermissions;
 
 @end
 
@@ -520,6 +568,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_Type = 9,
   Member_FieldNumber_PartnerId = 10,
   Member_FieldNumber_IsVerifiedPartner = 11,
+  Member_FieldNumber_RealmId = 12,
+  Member_FieldNumber_RealmPermissionsArray = 13,
 };
 
 /**
@@ -567,6 +617,15 @@ typedef GPB_ENUM(Member_FieldNumber) {
 
 /** indicates if member is verified partner */
 @property(nonatomic, readwrite) BOOL isVerifiedPartner;
+
+/** realm owner member id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realmId;
+
+/** realm permissions assigned; Used to verify MemberOperations that this member can perform as realm owner. */
+// |realmPermissionsArray| contains |RealmPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *realmPermissionsArray;
+/** The number of items in @c realmPermissionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger realmPermissionsArray_Count;
 
 @end
 

@@ -217,12 +217,12 @@ typedef struct Token__storage_ {
 @implementation TokenRequest
 
 @dynamic id_p;
-@dynamic hasRequestPayload, requestPayload;
-@dynamic hasRequestOptions, requestOptions;
 @dynamic hasPayload, payload;
 @dynamic options, options_Count;
 @dynamic userRefId;
 @dynamic customizationId;
+@dynamic hasRequestPayload, requestPayload;
+@dynamic hasRequestOptions, requestOptions;
 
 typedef struct TokenRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -254,7 +254,7 @@ typedef struct TokenRequest__storage_ {
         .name = "payload",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
         .number = TokenRequest_FieldNumber_Payload,
-        .hasIndex = 3,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, payload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -272,7 +272,7 @@ typedef struct TokenRequest__storage_ {
         .name = "userRefId",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequest_FieldNumber_UserRefId,
-        .hasIndex = 4,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, userRefId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -281,7 +281,7 @@ typedef struct TokenRequest__storage_ {
         .name = "customizationId",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequest_FieldNumber_CustomizationId,
-        .hasIndex = 5,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, customizationId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -290,7 +290,7 @@ typedef struct TokenRequest__storage_ {
         .name = "requestPayload",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenRequestPayload),
         .number = TokenRequest_FieldNumber_RequestPayload,
-        .hasIndex = 1,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, requestPayload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -299,7 +299,7 @@ typedef struct TokenRequest__storage_ {
         .name = "requestOptions",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenRequestOptions),
         .number = TokenRequest_FieldNumber_RequestOptions,
-        .hasIndex = 2,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(TokenRequest__storage_, requestOptions),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -408,7 +408,6 @@ typedef struct TokenRequestOptions__storage_ {
 @dynamic userRefId;
 @dynamic customizationId;
 @dynamic redirectURL;
-@dynamic refId;
 @dynamic hasTo, to;
 @dynamic hasActingAs, actingAs;
 @dynamic accessBody;
@@ -416,6 +415,7 @@ typedef struct TokenRequestOptions__storage_ {
 @dynamic description_p;
 @dynamic callbackState;
 @dynamic destinationCountry;
+@dynamic refId;
 
 typedef struct TokenRequestPayload__storage_ {
   uint32_t _has_storage_[2];
@@ -469,7 +469,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "to",
         .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
         .number = TokenRequestPayload_FieldNumber_To,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, to),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -478,7 +478,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "actingAs",
         .dataTypeSpecific.className = GPBStringifySymbol(ActingAs),
         .number = TokenRequestPayload_FieldNumber_ActingAs,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, actingAs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -505,7 +505,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_Description_p,
-        .hasIndex = 6,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -514,7 +514,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "callbackState",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_CallbackState,
-        .hasIndex = 7,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, callbackState),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -523,7 +523,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "destinationCountry",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_DestinationCountry,
-        .hasIndex = 8,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, destinationCountry),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -532,7 +532,7 @@ typedef struct TokenRequestPayload__storage_ {
         .name = "refId",
         .dataTypeSpecific.className = NULL,
         .number = TokenRequestPayload_FieldNumber_RefId,
-        .hasIndex = 3,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, refId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -582,7 +582,7 @@ void TokenRequestPayload_ClearRequestBodyOneOfCase(TokenRequestPayload *message)
 typedef struct TokenRequestPayload_AccessBody__storage_ {
   uint32_t _has_storage_[1];
   GPBEnumArray *typeArray;
-  GPBInt64Array *resourceTypesArray;
+  NSMutableArray *resourceTypesArray;
 } TokenRequestPayload_AccessBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -606,8 +606,8 @@ typedef struct TokenRequestPayload_AccessBody__storage_ {
         .number = TokenRequestPayload_AccessBody_FieldNumber_ResourceTypesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TokenRequestPayload_AccessBody__storage_, resourceTypesArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt64,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -679,8 +679,9 @@ BOOL TokenRequestPayload_AccessBody_ResourceType_IsValidValue(int32_t value__) {
 
 @dynamic currency;
 @dynamic amount;
-@dynamic lifetimeAmount;
 @dynamic destinationsArray, destinationsArray_Count;
+@dynamic lifetimeAmount;
+@dynamic hasInstructions, instructions;
 
 typedef struct TokenRequestPayload_TransferBody__storage_ {
   uint32_t _has_storage_[1];
@@ -688,6 +689,7 @@ typedef struct TokenRequestPayload_TransferBody__storage_ {
   NSString *amount;
   NSMutableArray *destinationsArray;
   NSString *lifetimeAmount;
+  TransferInstructions *instructions;
 } TokenRequestPayload_TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -731,6 +733,15 @@ typedef struct TokenRequestPayload_TransferBody__storage_ {
         .offset = (uint32_t)offsetof(TokenRequestPayload_TransferBody__storage_, lifetimeAmount),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "instructions",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions),
+        .number = TokenRequestPayload_TransferBody_FieldNumber_Instructions,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(TokenRequestPayload_TransferBody__storage_, instructions),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1017,14 +1028,16 @@ typedef struct TokenMember__storage_ {
 @dynamic hasIssuer, issuer;
 @dynamic hasFrom, from;
 @dynamic hasTo, to;
-@dynamic hasActingAs, actingAs;
 @dynamic effectiveAtMs;
 @dynamic expiresAtMs;
-@dynamic endorseUntilMs;
 @dynamic description_p;
 @dynamic transfer;
 @dynamic access;
+@dynamic endorseUntilMs;
+@dynamic hasActingAs, actingAs;
 @dynamic receiptRequested;
+@dynamic tokenRequestId;
+@dynamic initiatorId;
 
 typedef struct TokenPayload__storage_ {
   uint32_t _has_storage_[2];
@@ -1037,6 +1050,8 @@ typedef struct TokenPayload__storage_ {
   TransferBody *transfer;
   AccessBody *access;
   ActingAs *actingAs;
+  NSString *tokenRequestId;
+  NSString *initiatorId;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
   int64_t endorseUntilMs;
@@ -1097,7 +1112,7 @@ typedef struct TokenPayload__storage_ {
         .name = "effectiveAtMs",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_EffectiveAtMs,
-        .hasIndex = 6,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, effectiveAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -1106,7 +1121,7 @@ typedef struct TokenPayload__storage_ {
         .name = "expiresAtMs",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_ExpiresAtMs,
-        .hasIndex = 7,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, expiresAtMs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt64,
@@ -1115,7 +1130,7 @@ typedef struct TokenPayload__storage_ {
         .name = "description_p",
         .dataTypeSpecific.className = NULL,
         .number = TokenPayload_FieldNumber_Description_p,
-        .hasIndex = 9,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, description_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -1151,7 +1166,7 @@ typedef struct TokenPayload__storage_ {
         .name = "actingAs",
         .dataTypeSpecific.className = GPBStringifySymbol(ActingAs),
         .number = TokenPayload_FieldNumber_ActingAs,
-        .hasIndex = 5,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, actingAs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -1164,6 +1179,24 @@ typedef struct TokenPayload__storage_ {
         .offset = 11,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_FieldNumber_TokenRequestId,
+        .hasIndex = 12,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "initiatorId",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenPayload_FieldNumber_InitiatorId,
+        .hasIndex = 13,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, initiatorId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2427,10 +2460,12 @@ typedef struct TokenRequestStatePayload__storage_ {
 
 @dynamic policyOneOfCase;
 @dynamic singleSignature;
+@dynamic allSignatures;
 
 typedef struct Policy__storage_ {
   uint32_t _has_storage_[2];
   Policy_SingleSignature *singleSignature;
+  Policy_AllSignatures *allSignatures;
 } Policy__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2445,6 +2480,15 @@ typedef struct Policy__storage_ {
         .number = Policy_FieldNumber_SingleSignature,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Policy__storage_, singleSignature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "allSignatures",
+        .dataTypeSpecific.className = GPBStringifySymbol(Policy_AllSignatures),
+        .number = Policy_FieldNumber_AllSignatures,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Policy__storage_, allSignatures),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2512,6 +2556,52 @@ typedef struct Policy_SingleSignature__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Policy_SingleSignature__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Policy)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Policy_AllSignatures
+
+@implementation Policy_AllSignatures
+
+@dynamic signersArray, signersArray_Count;
+
+typedef struct Policy_AllSignatures__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *signersArray;
+} Policy_AllSignatures__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "signersArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Policy_Signer),
+        .number = Policy_AllSignatures_FieldNumber_SignersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Policy_AllSignatures__storage_, signersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Policy_AllSignatures class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Policy_AllSignatures__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Policy)];
     #if defined(DEBUG) && DEBUG

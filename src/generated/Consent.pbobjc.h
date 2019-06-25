@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class Consent_Payment;
 @class Money;
 @class TokenMember;
+@class TransferDestination;
 @class TransferEndpoint;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -87,6 +88,8 @@ typedef GPB_ENUM(Consent_FieldNumber) {
   Consent_FieldNumber_MemberId = 3,
   Consent_FieldNumber_InformationAccess = 5,
   Consent_FieldNumber_Payment = 6,
+  Consent_FieldNumber_InitiatorId = 7,
+  Consent_FieldNumber_InitiatorRefId = 8,
 };
 
 typedef GPB_ENUM(Consent_Type_OneOfCase) {
@@ -111,6 +114,12 @@ typedef GPB_ENUM(Consent_Type_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Consent_InformationAccess *informationAccess;
 
 @property(nonatomic, readwrite, strong, null_resettable) Consent_Payment *payment;
+
+/** ID of the member requesting consent (e.g. merchant) */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *initiatorId;
+
+/** Reference ID set by the member requesting consent */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *initiatorRefId;
 
 @end
 
@@ -160,6 +169,7 @@ typedef GPB_ENUM(Consent_Payment_FieldNumber) {
   Consent_Payment_FieldNumber_LifetimeAmount = 2,
   Consent_Payment_FieldNumber_Amount = 3,
   Consent_Payment_FieldNumber_DestinationsArray = 4,
+  Consent_Payment_FieldNumber_TransferDestinationsArray = 5,
 };
 
 @interface Consent_Payment : GPBMessage
@@ -176,9 +186,13 @@ typedef GPB_ENUM(Consent_Payment_FieldNumber) {
 /** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.common.consent.Consent.Payment.destinations is deprecated (see consent.proto).");
 /** The number of items in @c destinationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.consent.Consent.Payment.destinations is deprecated (see consent.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
 
 @end
 

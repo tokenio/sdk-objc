@@ -47,6 +47,7 @@ CF_EXTERN_C_BEGIN
 @class ActingAs;
 @class Alias;
 @class Attachment;
+@class Policy_AllSignatures;
 @class Policy_Signer;
 @class Policy_SingleSignature;
 @class Pricing;
@@ -271,16 +272,6 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 /** request id */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** immutable properties */
-@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload *requestPayload;
-/** Test to see if @c requestPayload has been set. */
-@property(nonatomic, readwrite) BOOL hasRequestPayload;
-
-/** mutable properties */
-@property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
-/** Test to see if @c requestOptions has been set. */
-@property(nonatomic, readwrite) BOOL hasRequestOptions;
-
 /** deprecated fields */
 @property(nonatomic, readwrite, strong, null_resettable) TokenPayload *payload GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.payload is deprecated (see token.proto).");
 /** Test to see if @c payload has been set. */
@@ -293,6 +284,16 @@ typedef GPB_ENUM(TokenRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userRefId GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.user_ref_id is deprecated (see token.proto).");
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customizationId GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequest.customization_id is deprecated (see token.proto).");
+
+/** immutable properties */
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload *requestPayload;
+/** Test to see if @c requestPayload has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestPayload;
+
+/** mutable properties */
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestOptions *requestOptions;
+/** Test to see if @c requestOptions has been set. */
+@property(nonatomic, readwrite) BOOL hasRequestOptions;
 
 @end
 
@@ -313,7 +314,8 @@ typedef GPB_ENUM(TokenRequestOptions_FieldNumber) {
 /** Test to see if @c from has been set. */
 @property(nonatomic, readwrite) BOOL hasFrom;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountId;
+/** Set in TransferInstructions on TokenRequestPayload instead */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceAccountId GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestOptions.source_account_id is deprecated (see token.proto).");
 
 @property(nonatomic, readwrite) BOOL receiptRequested;
 
@@ -349,9 +351,6 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *redirectURL;
 
-/** ref ID that will be transferred to the token payload */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
-
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
 /** Test to see if @c to has been set. */
 @property(nonatomic, readwrite) BOOL hasTo;
@@ -371,6 +370,9 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *callbackState;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *destinationCountry;
+
+/** ref ID that will be transferred to the token payload */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
 
 @end
 
@@ -394,7 +396,7 @@ typedef GPB_ENUM(TokenRequestPayload_AccessBody_FieldNumber) {
 @property(nonatomic, readonly) NSUInteger typeArray_Count;
 
 /** ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved. */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *resourceTypesArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *resourceTypesArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
 /** The number of items in @c resourceTypesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger resourceTypesArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
 
@@ -407,6 +409,7 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
   TokenRequestPayload_TransferBody_FieldNumber_Amount = 2,
   TokenRequestPayload_TransferBody_FieldNumber_DestinationsArray = 3,
   TokenRequestPayload_TransferBody_FieldNumber_LifetimeAmount = 4,
+  TokenRequestPayload_TransferBody_FieldNumber_Instructions = 5,
 };
 
 @interface TokenRequestPayload_TransferBody : GPBMessage
@@ -417,12 +420,16 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
 /** Optional: Single token charge request acceptable range. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
 
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.TransferBody.destinations is deprecated (see token.proto).");
+/** The number of items in @c destinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.TransferBody.destinations is deprecated (see token.proto).");
+
 /** Optional: Token total lifetime amount. Double. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *lifetimeAmount;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
-/** The number of items in @c destinationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
+/** Test to see if @c instructions has been set. */
+@property(nonatomic, readwrite) BOOL hasInstructions;
 
 @end
 
@@ -526,6 +533,8 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_EndorseUntilMs = 11,
   TokenPayload_FieldNumber_ActingAs = 12,
   TokenPayload_FieldNumber_ReceiptRequested = 13,
+  TokenPayload_FieldNumber_TokenRequestId = 14,
+  TokenPayload_FieldNumber_InitiatorId = 15,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -539,27 +548,23 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 /** 1.0 */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *version;
 
-/** random string used to de-dupe tokens, set by client. */
+/** Random string used to de-dupe tokens; must be unique per initiator */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
 
-/** Token issuer, bank. */
+/** Token issuer, bank */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *issuer;
 /** Test to see if @c issuer has been set. */
 @property(nonatomic, readwrite) BOOL hasIssuer;
 
-/** Payer member. */
+/** Payer member */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *from;
 /** Test to see if @c from has been set. */
 @property(nonatomic, readwrite) BOOL hasFrom;
 
-/** Payee member. */
+/** Payee member */
 @property(nonatomic, readwrite, strong, null_resettable) TokenMember *to;
 /** Test to see if @c to has been set. */
 @property(nonatomic, readwrite) BOOL hasTo;
-
-@property(nonatomic, readwrite, strong, null_resettable) ActingAs *actingAs;
-/** Test to see if @c actingAs has been set. */
-@property(nonatomic, readwrite) BOOL hasActingAs;
 
 /** Optional */
 @property(nonatomic, readwrite) int64_t effectiveAtMs;
@@ -571,9 +576,6 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
  **/
 @property(nonatomic, readwrite) int64_t expiresAtMs;
 
-/** Optional, can be endorsed until this time */
-@property(nonatomic, readwrite) int64_t endorseUntilMs;
-
 /** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
@@ -583,7 +585,20 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
 
+/** Optional, can be endorsed until this time */
+@property(nonatomic, readwrite) int64_t endorseUntilMs;
+
+@property(nonatomic, readwrite, strong, null_resettable) ActingAs *actingAs;
+/** Test to see if @c actingAs has been set. */
+@property(nonatomic, readwrite) BOOL hasActingAs;
+
 @property(nonatomic, readwrite) BOOL receiptRequested;
+
+/** Optional; indicates token request flow */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+/** ID of member who requested token creation */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *initiatorId;
 
 @end
 
@@ -1017,11 +1032,13 @@ typedef GPB_ENUM(TokenRequestStatePayload_FieldNumber) {
 
 typedef GPB_ENUM(Policy_FieldNumber) {
   Policy_FieldNumber_SingleSignature = 1,
+  Policy_FieldNumber_AllSignatures = 2,
 };
 
 typedef GPB_ENUM(Policy_Policy_OneOfCase) {
   Policy_Policy_OneOfCase_GPBUnsetOneOfCase = 0,
   Policy_Policy_OneOfCase_SingleSignature = 1,
+  Policy_Policy_OneOfCase_AllSignatures = 2,
 };
 
 @interface Policy : GPBMessage
@@ -1029,6 +1046,8 @@ typedef GPB_ENUM(Policy_Policy_OneOfCase) {
 @property(nonatomic, readonly) Policy_Policy_OneOfCase policyOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) Policy_SingleSignature *singleSignature;
+
+@property(nonatomic, readwrite, strong, null_resettable) Policy_AllSignatures *allSignatures;
 
 @end
 
@@ -1051,6 +1070,23 @@ typedef GPB_ENUM(Policy_SingleSignature_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Policy_Signer *signer;
 /** Test to see if @c signer has been set. */
 @property(nonatomic, readwrite) BOOL hasSigner;
+
+@end
+
+#pragma mark - Policy_AllSignatures
+
+typedef GPB_ENUM(Policy_AllSignatures_FieldNumber) {
+  Policy_AllSignatures_FieldNumber_SignersArray = 1,
+};
+
+/**
+ * require signatures of all listed members
+ **/
+@interface Policy_AllSignatures : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Policy_Signer*> *signersArray;
+/** The number of items in @c signersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger signersArray_Count;
 
 @end
 

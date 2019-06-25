@@ -46,8 +46,10 @@ CF_EXTERN_C_BEGIN
 @class Device;
 @class EndorseAndAddKey;
 @class ExternalAuthorizationDetails;
+@class GetAvailabilityReportResponse_AvailabilitySummary;
 @class GetBalanceResponse;
 @class GetTokensRequest_TokenFilter;
+@class GetTppPerformanceReportResponse_PerformanceSummary;
 @class GetTransfersRequest_TransferFilter;
 @class Key;
 @class Keychain;
@@ -81,10 +83,12 @@ CF_EXTERN_C_BEGIN
 @class Transaction;
 @class TransactionStepUp;
 @class Transfer;
+@class TransferDestination;
 @class TransferEndpoint;
 @class TransferPayload;
 @class TrustedBeneficiary;
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
+GPB_ENUM_FWD_DECLARE(Alias_Type);
 GPB_ENUM_FWD_DECLARE(CreateMemberType);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
@@ -162,6 +166,28 @@ GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void);
  **/
 BOOL GetTransfersRequest_TransferFilter_Role_IsValidValue(int32_t value);
 
+#pragma mark - Enum GetTppPerformanceReportResponse_PerformanceSummary_TppType
+
+typedef GPB_ENUM(GetTppPerformanceReportResponse_PerformanceSummary_TppType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  GetTppPerformanceReportResponse_PerformanceSummary_TppType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GetTppPerformanceReportResponse_PerformanceSummary_TppType_Aisp = 0,
+  GetTppPerformanceReportResponse_PerformanceSummary_TppType_Pisp = 1,
+  GetTppPerformanceReportResponse_PerformanceSummary_TppType_Cbpii = 2,
+};
+
+GPBEnumDescriptor *GetTppPerformanceReportResponse_PerformanceSummary_TppType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL GetTppPerformanceReportResponse_PerformanceSummary_TppType_IsValidValue(int32_t value);
+
 #pragma mark - GatewayRoot
 
 /**
@@ -205,6 +231,7 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
   CreateMemberRequest_FieldNumber_MemberType = 2,
   CreateMemberRequest_FieldNumber_TokenRequestId = 3,
   CreateMemberRequest_FieldNumber_PartnerId = 4,
+  CreateMemberRequest_FieldNumber_RealmId = 5,
 };
 
 @interface CreateMemberRequest : GPBMessage
@@ -218,6 +245,8 @@ typedef GPB_ENUM(CreateMemberRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *partnerId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realmId;
 
 @end
 
@@ -320,6 +349,9 @@ typedef GPB_ENUM(GetMemberResponse_FieldNumber) {
 
 typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
   ResolveAliasRequest_FieldNumber_Alias = 1,
+  ResolveAliasRequest_FieldNumber_Type = 2,
+  ResolveAliasRequest_FieldNumber_Value = 3,
+  ResolveAliasRequest_FieldNumber_Realm = 4,
 };
 
 @interface ResolveAliasRequest : GPBMessage
@@ -329,7 +361,28 @@ typedef GPB_ENUM(ResolveAliasRequest_FieldNumber) {
 /** Test to see if @c alias has been set. */
 @property(nonatomic, readwrite) BOOL hasAlias;
 
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite) enum Alias_Type type GPB_DEPRECATED_MSG("io.token.proto.gateway.ResolveAliasRequest.type is deprecated (see gateway/gateway.proto).");
+
+/** For example, "sandy\@example.com" */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *value GPB_DEPRECATED_MSG("io.token.proto.gateway.ResolveAliasRequest.value is deprecated (see gateway/gateway.proto).");
+
+/** For example, "token" */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm GPB_DEPRECATED_MSG("io.token.proto.gateway.ResolveAliasRequest.realm is deprecated (see gateway/gateway.proto).");
+
 @end
+
+/**
+ * Fetches the raw value of a @c ResolveAliasRequest's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t ResolveAliasRequest_Type_RawValue(ResolveAliasRequest *message);
+/**
+ * Sets the raw value of an @c ResolveAliasRequest's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetResolveAliasRequest_Type_RawValue(ResolveAliasRequest *message, int32_t value);
 
 #pragma mark - ResolveAliasResponse
 
@@ -1203,6 +1256,8 @@ void SetNotifyResponse_Status_RawValue(NotifyResponse *message, int32_t value);
 
 typedef GPB_ENUM(GetNotificationsRequest_FieldNumber) {
   GetNotificationsRequest_FieldNumber_Page = 1,
+  GetNotificationsRequest_FieldNumber_Offset = 2,
+  GetNotificationsRequest_FieldNumber_Limit = 3,
 };
 
 @interface GetNotificationsRequest : GPBMessage
@@ -1211,6 +1266,11 @@ typedef GPB_ENUM(GetNotificationsRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Page *page;
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
+
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset GPB_DEPRECATED_MSG("io.token.proto.gateway.GetNotificationsRequest.offset is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite) int32_t limit GPB_DEPRECATED_MSG("io.token.proto.gateway.GetNotificationsRequest.limit is deprecated (see gateway/gateway.proto).");
 
 @end
 
@@ -1757,6 +1817,8 @@ void SetGetTransactionResponse_Status_RawValue(GetTransactionResponse *message, 
 typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
   GetTransactionsRequest_FieldNumber_AccountId = 1,
   GetTransactionsRequest_FieldNumber_Page = 2,
+  GetTransactionsRequest_FieldNumber_Offset = 3,
+  GetTransactionsRequest_FieldNumber_Limit = 4,
 };
 
 @interface GetTransactionsRequest : GPBMessage
@@ -1767,6 +1829,11 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Page *page;
 /** Test to see if @c page has been set. */
 @property(nonatomic, readwrite) BOOL hasPage;
+
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@property(nonatomic, readwrite) int32_t limit;
 
 @end
 
@@ -1891,13 +1958,18 @@ typedef GPB_ENUM(ResolveTransferDestinationsRequest_FieldNumber) {
 
 typedef GPB_ENUM(ResolveTransferDestinationsResponse_FieldNumber) {
   ResolveTransferDestinationsResponse_FieldNumber_DestinationsArray = 1,
+  ResolveTransferDestinationsResponse_FieldNumber_TransferDestinationsArray = 2,
 };
 
 @interface ResolveTransferDestinationsResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.gateway.ResolveTransferDestinationsResponse.destinations is deprecated (see gateway/gateway.proto).");
 /** The number of items in @c destinationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.gateway.ResolveTransferDestinationsResponse.destinations is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
 
 @end
 
@@ -2085,6 +2157,7 @@ typedef GPB_ENUM(RetrieveTokenRequestRequest_FieldNumber) {
 typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
   RetrieveTokenRequestResponse_FieldNumber_TokenRequest = 1,
   RetrieveTokenRequestResponse_FieldNumber_Customization = 2,
+  RetrieveTokenRequestResponse_FieldNumber_HideConsent = 3,
 };
 
 @interface RetrieveTokenRequestResponse : GPBMessage
@@ -2096,6 +2169,8 @@ typedef GPB_ENUM(RetrieveTokenRequestResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Customization *customization;
 /** Test to see if @c customization has been set. */
 @property(nonatomic, readwrite) BOOL hasCustomization;
+
+@property(nonatomic, readwrite) BOOL hideConsent;
 
 @end
 
@@ -2161,6 +2236,7 @@ typedef GPB_ENUM(CreateTokenRequest_FieldNumber) {
   CreateTokenRequest_FieldNumber_Payload = 1,
   CreateTokenRequest_FieldNumber_SignaturesArray = 2,
   CreateTokenRequest_FieldNumber_TokenRequestId = 3,
+  CreateTokenRequest_FieldNumber_Type = 4,
 };
 
 @interface CreateTokenRequest : GPBMessage
@@ -2176,12 +2252,22 @@ typedef GPB_ENUM(CreateTokenRequest_FieldNumber) {
 /** optional ID of the token request */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
 
+/**
+ * Only useful for HTTP requests
+ * specifying type=access in an HTTP request will call CreateAccessToken instead of this endpoint
+ * specifying type=transfer in an HTTP request will call CreateTransferToken instead of this endpoint
+ * TODO(RD-2738) remove this
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *type GPB_DEPRECATED_MSG("io.token.proto.gateway.CreateTokenRequest.type is deprecated (see gateway/gateway.proto).");
+
 @end
 
 #pragma mark - CreateTokenResponse
 
 typedef GPB_ENUM(CreateTokenResponse_FieldNumber) {
   CreateTokenResponse_FieldNumber_Token = 1,
+  CreateTokenResponse_FieldNumber_Status = 2,
+  CreateTokenResponse_FieldNumber_AuthorizationDetails = 3,
 };
 
 @interface CreateTokenResponse : GPBMessage
@@ -2190,7 +2276,26 @@ typedef GPB_ENUM(CreateTokenResponse_FieldNumber) {
 /** Test to see if @c token has been set. */
 @property(nonatomic, readwrite) BOOL hasToken;
 
+/** deprecated: used as HTTP response for CreateTransferToken TODO(RD-2738) remove */
+@property(nonatomic, readwrite) enum TransferTokenStatus status GPB_DEPRECATED_MSG("io.token.proto.gateway.CreateTokenResponse.status is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) ExternalAuthorizationDetails *authorizationDetails GPB_DEPRECATED_MSG("io.token.proto.gateway.CreateTokenResponse.authorization_details is deprecated (see gateway/gateway.proto).");
+/** Test to see if @c authorizationDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorizationDetails GPB_DEPRECATED_MSG("io.token.proto.gateway.CreateTokenResponse.authorization_details is deprecated (see gateway/gateway.proto).");
+
 @end
+
+/**
+ * Fetches the raw value of a @c CreateTokenResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t CreateTokenResponse_Status_RawValue(CreateTokenResponse *message);
+/**
+ * Sets the raw value of an @c CreateTokenResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetCreateTokenResponse_Status_RawValue(CreateTokenResponse *message, int32_t value);
 
 #pragma mark - CreateTransferTokenRequest
 
@@ -2344,6 +2449,8 @@ typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
   GetTokensRequest_FieldNumber_Type = 1,
   GetTokensRequest_FieldNumber_Page = 2,
   GetTokensRequest_FieldNumber_Filter = 3,
+  GetTokensRequest_FieldNumber_Offset = 4,
+  GetTokensRequest_FieldNumber_Limit = 5,
 };
 
 @interface GetTokensRequest : GPBMessage
@@ -2360,6 +2467,11 @@ typedef GPB_ENUM(GetTokensRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GetTokensRequest_TokenFilter *filter;
 /** Test to see if @c filter has been set. */
 @property(nonatomic, readwrite) BOOL hasFilter;
+
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@property(nonatomic, readwrite) int32_t limit;
 
 @end
 
@@ -2747,6 +2859,8 @@ typedef GPB_ENUM(GetTransfersRequest_FieldNumber) {
   GetTransfersRequest_FieldNumber_TokenId = 1,
   GetTransfersRequest_FieldNumber_Page = 2,
   GetTransfersRequest_FieldNumber_Filter = 3,
+  GetTransfersRequest_FieldNumber_Offset = 4,
+  GetTransfersRequest_FieldNumber_Limit = 5,
 };
 
 @interface GetTransfersRequest : GPBMessage
@@ -2763,6 +2877,11 @@ typedef GPB_ENUM(GetTransfersRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GetTransfersRequest_TransferFilter *filter;
 /** Test to see if @c filter has been set. */
 @property(nonatomic, readwrite) BOOL hasFilter;
+
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset GPB_DEPRECATED_MSG("io.token.proto.gateway.GetTransfersRequest.offset is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite) int32_t limit GPB_DEPRECATED_MSG("io.token.proto.gateway.GetTransfersRequest.limit is deprecated (see gateway/gateway.proto).");
 
 @end
 
@@ -2846,6 +2965,12 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 
 typedef GPB_ENUM(GetBanksCountriesRequest_FieldNumber) {
   GetBanksCountriesRequest_FieldNumber_Filter = 1,
+  GetBanksCountriesRequest_FieldNumber_IdsArray = 2,
+  GetBanksCountriesRequest_FieldNumber_Search = 3,
+  GetBanksCountriesRequest_FieldNumber_Country = 4,
+  GetBanksCountriesRequest_FieldNumber_Provider = 5,
+  GetBanksCountriesRequest_FieldNumber_DestinationCountry = 6,
+  GetBanksCountriesRequest_FieldNumber_TppId = 7,
 };
 
 @interface GetBanksCountriesRequest : GPBMessage
@@ -2854,6 +2979,21 @@ typedef GPB_ENUM(GetBanksCountriesRequest_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) BankFilter *filter;
 /** Test to see if @c filter has been set. */
 @property(nonatomic, readwrite) BOOL hasFilter;
+
+/** for backwards compatibility with older JS clients TODO(RD-2738) remove */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *idsArray GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.ids is deprecated (see gateway/gateway.proto).");
+/** The number of items in @c idsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger idsArray_Count GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.ids is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *search GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.search is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.country is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *provider GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.provider is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *destinationCountry GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.destination_country is deprecated (see gateway/gateway.proto).");
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tppId GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksCountriesRequest.tpp_id is deprecated (see gateway/gateway.proto).");
 
 @end
 
@@ -2883,6 +3023,7 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
   GetBanksRequest_FieldNumber_Provider = 7,
   GetBanksRequest_FieldNumber_TppId = 8,
   GetBanksRequest_FieldNumber_Filter = 9,
+  GetBanksRequest_FieldNumber_DestinationCountry = 10,
 };
 
 @interface GetBanksRequest : GPBMessage
@@ -2917,6 +3058,9 @@ typedef GPB_ENUM(GetBanksRequest_FieldNumber) {
 
 /** DEPRECATED. (Optional) If specified, return banks which are integrated with the TPP */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *tppId GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.tpp_id is deprecated (see gateway/gateway.proto).");
+
+/** DEPRECATED. (Optional) Filter for banks that support sending to the destination country. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *destinationCountry GPB_DEPRECATED_MSG("io.token.proto.gateway.GetBanksRequest.destination_country is deprecated (see gateway/gateway.proto).");
 
 @end
 
@@ -3220,6 +3364,136 @@ typedef GPB_ENUM(GetTestBankNotificationsResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Notification*> *notificationsArray;
 /** The number of items in @c notificationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger notificationsArray_Count;
+
+@end
+
+#pragma mark - GetTppPerformanceReportRequest
+
+typedef GPB_ENUM(GetTppPerformanceReportRequest_FieldNumber) {
+  GetTppPerformanceReportRequest_FieldNumber_BankId = 1,
+  GetTppPerformanceReportRequest_FieldNumber_DaysBack = 2,
+};
+
+@interface GetTppPerformanceReportRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite) int32_t daysBack;
+
+@end
+
+#pragma mark - GetTppPerformanceReportResponse
+
+typedef GPB_ENUM(GetTppPerformanceReportResponse_FieldNumber) {
+  GetTppPerformanceReportResponse_FieldNumber_SummariesArray = 1,
+};
+
+@interface GetTppPerformanceReportResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GetTppPerformanceReportResponse_PerformanceSummary*> *summariesArray;
+/** The number of items in @c summariesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger summariesArray_Count;
+
+@end
+
+#pragma mark - GetTppPerformanceReportResponse_PerformanceSummary
+
+typedef GPB_ENUM(GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber) {
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_Date = 1,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_TppType = 2,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P50Latency = 3,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P75Latency = 4,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P90Latency = 5,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P95Latency = 6,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P99Latency = 7,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_P999Latency = 8,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_ErrorRate = 9,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_ErrorCount = 10,
+  GetTppPerformanceReportResponse_PerformanceSummary_FieldNumber_RequestCount = 11,
+};
+
+@interface GetTppPerformanceReportResponse_PerformanceSummary : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *date;
+
+@property(nonatomic, readwrite) GetTppPerformanceReportResponse_PerformanceSummary_TppType tppType;
+
+@property(nonatomic, readwrite) double p50Latency;
+
+@property(nonatomic, readwrite) double p75Latency;
+
+@property(nonatomic, readwrite) double p90Latency;
+
+@property(nonatomic, readwrite) double p95Latency;
+
+@property(nonatomic, readwrite) double p99Latency;
+
+@property(nonatomic, readwrite) double p999Latency;
+
+@property(nonatomic, readwrite) double errorRate;
+
+@property(nonatomic, readwrite) int64_t errorCount;
+
+@property(nonatomic, readwrite) int64_t requestCount;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetTppPerformanceReportResponse_PerformanceSummary's @c tppType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetTppPerformanceReportResponse_PerformanceSummary_TppType_RawValue(GetTppPerformanceReportResponse_PerformanceSummary *message);
+/**
+ * Sets the raw value of an @c GetTppPerformanceReportResponse_PerformanceSummary's @c tppType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetTppPerformanceReportResponse_PerformanceSummary_TppType_RawValue(GetTppPerformanceReportResponse_PerformanceSummary *message, int32_t value);
+
+#pragma mark - GetAvailabilityReportRequest
+
+typedef GPB_ENUM(GetAvailabilityReportRequest_FieldNumber) {
+  GetAvailabilityReportRequest_FieldNumber_BankId = 1,
+  GetAvailabilityReportRequest_FieldNumber_DaysBack = 2,
+};
+
+@interface GetAvailabilityReportRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite) int32_t daysBack;
+
+@end
+
+#pragma mark - GetAvailabilityReportResponse
+
+typedef GPB_ENUM(GetAvailabilityReportResponse_FieldNumber) {
+  GetAvailabilityReportResponse_FieldNumber_SummariesArray = 1,
+};
+
+@interface GetAvailabilityReportResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GetAvailabilityReportResponse_AvailabilitySummary*> *summariesArray;
+/** The number of items in @c summariesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger summariesArray_Count;
+
+@end
+
+#pragma mark - GetAvailabilityReportResponse_AvailabilitySummary
+
+typedef GPB_ENUM(GetAvailabilityReportResponse_AvailabilitySummary_FieldNumber) {
+  GetAvailabilityReportResponse_AvailabilitySummary_FieldNumber_Date = 1,
+  GetAvailabilityReportResponse_AvailabilitySummary_FieldNumber_TokenUptimePct = 2,
+  GetAvailabilityReportResponse_AvailabilitySummary_FieldNumber_BankUptimePct = 3,
+};
+
+@interface GetAvailabilityReportResponse_AvailabilitySummary : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *date;
+
+@property(nonatomic, readwrite) double tokenUptimePct;
+
+@property(nonatomic, readwrite) double bankUptimePct;
 
 @end
 

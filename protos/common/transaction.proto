@@ -7,6 +7,7 @@ option csharp_namespace = "Tokenio.Proto.Common.TransactionProtos";
 import "extensions/field.proto";
 import "member.proto";
 import "money.proto";
+import "providerspecific.proto";
 import "security.proto";
 
 enum TransactionType {
@@ -46,6 +47,7 @@ message Transaction {
   int64 created_at_ms = 8;                      // Creation time
 
   map<string, string> metadata = 9 [(io.token.proto.extensions.field.redact) = true]; // Additional fields. Optional.
+  io.token.proto.common.providerspecific.ProviderTransactionDetails provider_transaction_details = 10;
 }
 
 message Balance {

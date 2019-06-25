@@ -12,7 +12,8 @@ import "extensions/field.proto";
 message Alias {
   Type type = 1;                                                      // For example, EMAIL.
   string value = 2 [(io.token.proto.extensions.field.redact) = true]; // For example, "sandy@example.com"
-  string realm  = 3;                                                  // For example, "token"
+  string realm  = 3  [deprecated = true];                             // For example, "token"
+  string realm_id = 4;                                                // member_id of existing Member
 
   enum Type {
     INVALID = 0;

@@ -5,10 +5,24 @@ option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific";
 
 import "extensions/message.proto";
 import "address.proto";
+import "polishapi.proto";
 
 message ProviderAccountDetails {
   oneof details {
     Cma9AccountDetails cma9_account_details = 1;
+    io.token.proto.common.providerspecific.polishapi.PolishApiAccountDetails polish_api_account_details = 2;
+  }
+}
+
+message ProviderTransactionDetails {
+  oneof details {
+    io.token.proto.common.providerspecific.polishapi.PolishApiTransactionDetails polish_api_transaction_details = 1;
+  }
+}
+
+message ProviderTransferMetadata {
+  oneof metadata {
+    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata polish_api_transfer_metadata = 1;
   }
 }
 

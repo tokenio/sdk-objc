@@ -127,6 +127,7 @@ typedef GPB_ENUM(Alias_FieldNumber) {
   Alias_FieldNumber_Type = 1,
   Alias_FieldNumber_Value = 2,
   Alias_FieldNumber_Realm = 3,
+  Alias_FieldNumber_RealmId = 4,
 };
 
 /**
@@ -144,7 +145,10 @@ typedef GPB_ENUM(Alias_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 /** For example, "token" */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *realm;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realm GPB_DEPRECATED_MSG("io.token.proto.common.alias.Alias.realm is deprecated (see alias.proto).");
+
+/** member_id of existing Member */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *realmId;
 
 @end
 

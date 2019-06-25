@@ -45,7 +45,7 @@ message AccountDetails {
   AccountType type = 2;                 // Type of account
   string status = 3;                    // Status of account. E.g., "Active/Inactive/Frozen/Dormant"
   map<string, string> metadata = 4 [(io.token.proto.extensions.field.redact) = true]; // Additional account metadata
-  io.token.proto.common.providerspecific.ProviderAccountDetails provider_specific = 5;
+  io.token.proto.common.providerspecific.ProviderAccountDetails provider_account_details = 5;
 }
 
 // Token linked account.
@@ -71,43 +71,23 @@ message BankAccount {
     string account_id = 2;
   }
 
-  // Deprecated; unused
-  message TokenAuthorization {
-    option deprecated = true;
-    io.token.proto.banklink.BankAuthorization authorization = 1;
-  }
-
-  // Source account managed by a co-opt bank
-  message Bank {
-    string bank_id = 1;
-  }
-
-  // SWIFT transfer
   message Swift {
     option (io.token.proto.extensions.message.redact) = true;
     string bic = 1;     // BIC code AAAABBCCDD
     string account = 2;
   }
 
-  // SEPA transfer.
-  message Sepa {
+  message Iban {
     option (io.token.proto.extensions.message.redact) = true;
-    string iban = 1;    // International Bank Account Number
-    string bic = 2;     // Bic code. Optional, except for non EEA countries
+    string bic = 1;   // Optional
+    string iban = 2;
   }
 
-  // ACH transfer
-  message Ach {
+  message Domestic {
     option (io.token.proto.extensions.message.redact) = true;
-    string routing = 1; // Routing number
-    string account = 2;
-  }
-
-  // Faster Payments Service transfer (UK)
-  message FasterPayments {
-    option (io.token.proto.extensions.message.redact) = true;
-    string sort_code = 1;
+    string bank_code = 1;
     string account_number = 2;
+    string country = 3; // 2-letter ISO 3166-1 alpha-2 country code
   }
 
   // Custom authorization
@@ -123,16 +103,53 @@ message BankAccount {
     string nonce = 2;   // optional
   }
 
+  // DEPRECATED ACCOUNT TYPES
+
+  // Source account managed by a co-opt bank
+  message Bank {
+    option deprecated = true; // Use Guest instead
+    string bank_id = 1;
+  }
+
+  // Deprecated; unused
+  message TokenAuthorization {
+    option deprecated = true;
+    io.token.proto.banklink.BankAuthorization authorization = 1;
+  }
+
+  message Sepa {
+    option deprecated = true; // Use Iban
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;    // International Bank Account Number
+    string bic = 2;     // Bic code. Optional, except for non EEA countries
+  }
+
+  message Ach {
+    option deprecated = true; // Use Domestic (US)
+    option (io.token.proto.extensions.message.redact) = true;
+    string routing = 1; // Routing number
+    string account = 2;
+  }
+
+  message FasterPayments {
+    option deprecated = true; // Use Domestic (UK)
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
   oneof account {
     Token token = 1;
     TokenAuthorization token_authorization = 2 [deprecated = true];
-    Swift swift = 3;
-    Sepa sepa = 4;
-    Ach ach = 5;
-    Bank bank = 6;
-    FasterPayments faster_payments = 9;
+    Swift swift = 3 [deprecated = true];
+    Sepa sepa = 4 [deprecated = true];
+    Ach ach = 5 [deprecated = true];
+    Bank bank = 6 [deprecated = true];
+    FasterPayments faster_payments = 9 [deprecated = true];
     Custom custom = 10;
     Guest guest = 11;
+    Iban iban = 12;
+    Domestic domestic = 13;
   }
 
   map<string, string> metadata = 7 [(io.token.proto.extensions.field.redact) = true];

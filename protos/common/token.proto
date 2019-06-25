@@ -27,20 +27,21 @@ message Token {
 
 message TokenRequest {
   string id = 1;                                // request id
-  TokenRequestPayload request_payload = 6;      // immutable properties
-  TokenRequestOptions request_options = 7;      // mutable properties
 
   // deprecated fields
   TokenPayload payload = 2 [deprecated = true];
   map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true, deprecated = true];
   string user_ref_id = 4 [deprecated = true];
   string customization_id = 5 [deprecated = true];
+
+  TokenRequestPayload request_payload = 6;      // immutable properties
+  TokenRequestOptions request_options = 7;      // mutable properties
 }
 
 message TokenRequestOptions {
   string bank_id = 1;
   TokenMember from = 2;
-  string source_account_id = 3;
+  string source_account_id = 3 [deprecated = true]; // Set in TransferInstructions on TokenRequestPayload instead
   bool receipt_requested = 4;
 }
 
@@ -49,7 +50,6 @@ message TokenRequestPayload {
   string customization_id = 2;
   string redirect_url = 3;
 
-  string ref_id = 11;       // ref ID that will be transferred to the token payload
   TokenMember to = 4;
   ActingAs acting_as = 5;
 
@@ -62,11 +62,13 @@ message TokenRequestPayload {
   string callback_state = 9;
   string destination_country = 10;
 
+  string ref_id = 11;       // ref ID that will be transferred to the token payload
+
   message AccessBody {
     repeated ResourceType type = 1;
 
     //ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved.
-    repeated int64 resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
+    repeated string resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
 
     enum ResourceType {
       INVALID = 0;
@@ -81,8 +83,9 @@ message TokenRequestPayload {
   message TransferBody {
     string currency = 1;                                                                    // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
     string amount = 2;                                                                      // Optional: Single token charge request acceptable range. Double.
+    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 3 [deprecated = true];
     string lifetime_amount = 4;                                                             // Optional: Token total lifetime amount. Double.
-    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 3;
+    io.token.proto.common.transferinstructions.TransferInstructions instructions = 5;
   }
 }
 
@@ -119,13 +122,11 @@ message TokenMember {
 
 message TokenPayload {
   string version = 1;                                   // 1.0
-  string ref_id = 2;                                    // random string used to de-dupe tokens, set by client.
+  string ref_id = 2;                                    // Random string used to de-dupe tokens; must be unique per initiator
 
-  TokenMember issuer = 3;                               // Token issuer, bank.
-  TokenMember from = 4;                                 // Payer member.
-
-  TokenMember to = 5;                                   // Payee member.
-  ActingAs acting_as = 12;
+  TokenMember issuer = 3;                               // Token issuer, bank
+  TokenMember from = 4;                                 // Payer member
+  TokenMember to = 5;                                   // Payee member
 
   int64 effective_at_ms = 6;                            // Optional
 
@@ -133,7 +134,6 @@ message TokenPayload {
   // have a 90-day lifespan. For transfer tokens, this is an optional
   // expiration time.
   int64 expires_at_ms = 7;
-  int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
   string description = 8 [(io.token.proto.extensions.field.redact) = true]; // Optional
 
   oneof body {
@@ -141,7 +141,11 @@ message TokenPayload {
     AccessBody access = 10;
   }
 
+  int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
+  ActingAs acting_as = 12;
   bool receipt_requested = 13;
+  string token_request_id = 14;                         // Optional; indicates token request flow
+  string initiator_id = 15;                             // ID of member who requested token creation
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,11 +323,17 @@ message TokenRequestStatePayload {
 message Policy {
   oneof policy {
     SingleSignature single_signature = 1;
+    AllSignatures all_signatures = 2;
   }
 
   // require member signature
   message SingleSignature {
     Signer signer = 1;
+  }
+
+  // require signatures of all listed members
+  message AllSignatures {
+    repeated Signer signers = 1;
   }
 
   // member whose signature is required for the token

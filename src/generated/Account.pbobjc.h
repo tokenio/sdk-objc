@@ -33,8 +33,10 @@ CF_EXTERN_C_BEGIN
 @class BankAccount_Ach;
 @class BankAccount_Bank;
 @class BankAccount_Custom;
+@class BankAccount_Domestic;
 @class BankAccount_FasterPayments;
 @class BankAccount_Guest;
+@class BankAccount_Iban;
 @class BankAccount_Sepa;
 @class BankAccount_Swift;
 @class BankAccount_Token;
@@ -155,7 +157,7 @@ typedef GPB_ENUM(AccountDetails_FieldNumber) {
   AccountDetails_FieldNumber_Type = 2,
   AccountDetails_FieldNumber_Status = 3,
   AccountDetails_FieldNumber_Metadata = 4,
-  AccountDetails_FieldNumber_ProviderSpecific = 5,
+  AccountDetails_FieldNumber_ProviderAccountDetails = 5,
 };
 
 /**
@@ -178,9 +180,9 @@ typedef GPB_ENUM(AccountDetails_FieldNumber) {
 /** The number of items in @c metadata without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadata_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) ProviderAccountDetails *providerSpecific;
-/** Test to see if @c providerSpecific has been set. */
-@property(nonatomic, readwrite) BOOL hasProviderSpecific;
+@property(nonatomic, readwrite, strong, null_resettable) ProviderAccountDetails *providerAccountDetails;
+/** Test to see if @c providerAccountDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasProviderAccountDetails;
 
 @end
 
@@ -258,6 +260,8 @@ typedef GPB_ENUM(BankAccount_FieldNumber) {
   BankAccount_FieldNumber_FasterPayments = 9,
   BankAccount_FieldNumber_Custom = 10,
   BankAccount_FieldNumber_Guest = 11,
+  BankAccount_FieldNumber_Iban = 12,
+  BankAccount_FieldNumber_Domestic = 13,
 };
 
 typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
@@ -271,6 +275,8 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
   BankAccount_Account_OneOfCase_FasterPayments = 9,
   BankAccount_Account_OneOfCase_Custom = 10,
   BankAccount_Account_OneOfCase_Guest = 11,
+  BankAccount_Account_OneOfCase_Iban = 12,
+  BankAccount_Account_OneOfCase_Domestic = 13,
 };
 
 /**
@@ -286,19 +292,23 @@ typedef GPB_ENUM(BankAccount_Account_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_TokenAuthorization *tokenAuthorization GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.token_authorization is deprecated (see account.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Swift *swift;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Swift *swift GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.swift is deprecated (see account.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Sepa *sepa;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Sepa *sepa GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.sepa is deprecated (see account.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Ach *ach GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.ach is deprecated (see account.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Bank *bank GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.bank is deprecated (see account.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) BankAccount_FasterPayments *fasterPayments;
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_FasterPayments *fasterPayments GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.faster_payments is deprecated (see account.proto).");
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Custom *custom;
 
 @property(nonatomic, readwrite, strong, null_resettable) BankAccount_Guest *guest;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Iban *iban;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount_Domestic *domestic;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
@@ -334,39 +344,6 @@ typedef GPB_ENUM(BankAccount_Token_FieldNumber) {
 
 @end
 
-#pragma mark - BankAccount_TokenAuthorization
-
-typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
-  BankAccount_TokenAuthorization_FieldNumber_Authorization = 1,
-};
-
-/**
- * Deprecated; unused
- **/
-GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.TokenAuthorization is deprecated (see account.proto).")
-@interface BankAccount_TokenAuthorization : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;
-/** Test to see if @c authorization has been set. */
-@property(nonatomic, readwrite) BOOL hasAuthorization;
-
-@end
-
-#pragma mark - BankAccount_Bank
-
-typedef GPB_ENUM(BankAccount_Bank_FieldNumber) {
-  BankAccount_Bank_FieldNumber_BankId = 1,
-};
-
-/**
- * Source account managed by a co-opt bank
- **/
-@interface BankAccount_Bank : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
-
-@end
-
 #pragma mark - BankAccount_Swift
 
 typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
@@ -374,9 +351,6 @@ typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
   BankAccount_Swift_FieldNumber_Account = 2,
 };
 
-/**
- * SWIFT transfer
- **/
 @interface BankAccount_Swift : GPBMessage
 
 /** BIC code AAAABBCCDD */
@@ -386,60 +360,38 @@ typedef GPB_ENUM(BankAccount_Swift_FieldNumber) {
 
 @end
 
-#pragma mark - BankAccount_Sepa
+#pragma mark - BankAccount_Iban
 
-typedef GPB_ENUM(BankAccount_Sepa_FieldNumber) {
-  BankAccount_Sepa_FieldNumber_Iban = 1,
-  BankAccount_Sepa_FieldNumber_Bic = 2,
+typedef GPB_ENUM(BankAccount_Iban_FieldNumber) {
+  BankAccount_Iban_FieldNumber_Bic = 1,
+  BankAccount_Iban_FieldNumber_Iban = 2,
 };
 
-/**
- * SEPA transfer.
- **/
-@interface BankAccount_Sepa : GPBMessage
+@interface BankAccount_Iban : GPBMessage
 
-/** International Bank Account Number */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
-
-/** Bic code. Optional, except for non EEA countries */
+/** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
 
-@end
-
-#pragma mark - BankAccount_Ach
-
-typedef GPB_ENUM(BankAccount_Ach_FieldNumber) {
-  BankAccount_Ach_FieldNumber_Routing = 1,
-  BankAccount_Ach_FieldNumber_Account = 2,
-};
-
-/**
- * ACH transfer
- **/
-@interface BankAccount_Ach : GPBMessage
-
-/** Routing number */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
 
 @end
 
-#pragma mark - BankAccount_FasterPayments
+#pragma mark - BankAccount_Domestic
 
-typedef GPB_ENUM(BankAccount_FasterPayments_FieldNumber) {
-  BankAccount_FasterPayments_FieldNumber_SortCode = 1,
-  BankAccount_FasterPayments_FieldNumber_AccountNumber = 2,
+typedef GPB_ENUM(BankAccount_Domestic_FieldNumber) {
+  BankAccount_Domestic_FieldNumber_BankCode = 1,
+  BankAccount_Domestic_FieldNumber_AccountNumber = 2,
+  BankAccount_Domestic_FieldNumber_Country = 3,
 };
 
-/**
- * Faster Payments Service transfer (UK)
- **/
-@interface BankAccount_FasterPayments : GPBMessage
+@interface BankAccount_Domestic : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankCode;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+/** 2-letter ISO 3166-1 alpha-2 country code */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *country;
 
 @end
 
@@ -477,6 +429,91 @@ typedef GPB_ENUM(BankAccount_Guest_FieldNumber) {
 
 /** optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *nonce;
+
+@end
+
+#pragma mark - BankAccount_Bank
+
+typedef GPB_ENUM(BankAccount_Bank_FieldNumber) {
+  BankAccount_Bank_FieldNumber_BankId = 1,
+};
+
+/**
+ * Source account managed by a co-opt bank
+ **/
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.Bank is deprecated (see account.proto).")
+@interface BankAccount_Bank : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@end
+
+#pragma mark - BankAccount_TokenAuthorization
+
+typedef GPB_ENUM(BankAccount_TokenAuthorization_FieldNumber) {
+  BankAccount_TokenAuthorization_FieldNumber_Authorization = 1,
+};
+
+/**
+ * Deprecated; unused
+ **/
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.TokenAuthorization is deprecated (see account.proto).")
+@interface BankAccount_TokenAuthorization : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAuthorization *authorization;
+/** Test to see if @c authorization has been set. */
+@property(nonatomic, readwrite) BOOL hasAuthorization;
+
+@end
+
+#pragma mark - BankAccount_Sepa
+
+typedef GPB_ENUM(BankAccount_Sepa_FieldNumber) {
+  BankAccount_Sepa_FieldNumber_Iban = 1,
+  BankAccount_Sepa_FieldNumber_Bic = 2,
+};
+
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.Sepa is deprecated (see account.proto).")
+@interface BankAccount_Sepa : GPBMessage
+
+/** International Bank Account Number */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+/** Bic code. Optional, except for non EEA countries */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@end
+
+#pragma mark - BankAccount_Ach
+
+typedef GPB_ENUM(BankAccount_Ach_FieldNumber) {
+  BankAccount_Ach_FieldNumber_Routing = 1,
+  BankAccount_Ach_FieldNumber_Account = 2,
+};
+
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.Ach is deprecated (see account.proto).")
+@interface BankAccount_Ach : GPBMessage
+
+/** Routing number */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+
+@end
+
+#pragma mark - BankAccount_FasterPayments
+
+typedef GPB_ENUM(BankAccount_FasterPayments_FieldNumber) {
+  BankAccount_FasterPayments_FieldNumber_SortCode = 1,
+  BankAccount_FasterPayments_FieldNumber_AccountNumber = 2,
+};
+
+GPB_DEPRECATED_MSG("io.token.proto.common.account.BankAccount.FasterPayments is deprecated (see account.proto).")
+@interface BankAccount_FasterPayments : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
 
 @end
 

@@ -8,6 +8,8 @@ import "member.proto";
 import "money.proto";
 import "banklink.proto";
 import "notification.proto";
+import "security.proto";
+import "token.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Common data structures.
@@ -84,7 +86,7 @@ message GetAccountResponse {
 
 message AuthorizeLinkAccountsRequest {
   string bic = 1;
-  string memberId = 2;
+  string member_id = 2;
   string client_id = 3;
   repeated string accounts = 4;
 }
@@ -109,7 +111,7 @@ message GetNotificationsResponse {
 message GetOauthAccessTokenRequest {
   string bic = 1;
   string profile = 2; // optional
-  string memberId = 3;
+  string member_id = 3;
   repeated Account accounts = 4;
   string client_id = 5; // optional
 }
@@ -125,8 +127,26 @@ message VerifyAliasRequest {
   io.token.proto.common.alias.Alias alias = 3;
 }
 
-message VerifyAliasResponse {
-  io.token.proto.common.member.Member member = 1;
+message VerifyAliasResponse {}
+
+message GetAuthRequestPayloadRequest {
+  string bic = 1;
+  string auth_request_id = 2;
+}
+
+message GetAuthRequestPayloadResponse {
+  io.token.proto.common.token.TokenPayload payload = 1;
+  string source_account_hash = 2;
+}
+
+message GetAuthRequestSignatureRequest {
+  string bic = 1;
+  string source_account_hash = 2;
+  string account_number = 3;
+}
+
+message GetAuthRequestSignatureResponse {
+  io.token.proto.common.security.Signature bank_signature = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,6 +156,7 @@ service FankService {
   rpc AddClient (AddClientRequest) returns (AddClientResponse) {
     option (google.api.http) = {
         put: "/banks/{bic}/clients"
+        body: "*"
     };
   }
 
@@ -148,6 +169,7 @@ service FankService {
   rpc AddAccount (AddAccountRequest) returns (AddAccountResponse) {
     option (google.api.http) = {
         put: "/banks/{bic}/clients/{client_id}/accounts"
+        body: "*"
     };
   }
 
@@ -167,13 +189,14 @@ service FankService {
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
         put: "/banks/{bic}/clients/{client_id}/link-accounts"
+        body: "*"
     };
   }
 
   rpc AuthorizeLinkAccountsGet (AuthorizeLinkAccountsRequest)
       returns (io.token.proto.banklink.BankAuthorization) {
     option (google.api.http) = {
-        get: "/banks/{bic}/clients/{client_id}/link-accounts?member-id={memberId}&accounts={accounts}"
+        get: "/banks/{bic}/clients/{client_id}/link-accounts"
     };
   }
 
@@ -183,6 +206,7 @@ service FankService {
   rpc GetOauthAccessToken (GetOauthAccessTokenRequest) returns (GetOauthAccessTokenResponse) {
     option (google.api.http) = {
         put: "/banks/{bic}/token"
+        body: "*"
     };
   }
 
@@ -210,6 +234,22 @@ service FankService {
   rpc VerifyAlias (VerifyAliasRequest) returns (VerifyAliasResponse) {
     option (google.api.http) = {
         post: "/verifyalias"
+        body: "*"
+    };
+  }
+
+  //
+  // Used to retrieve the token payload in direct guest checkout flow
+  //
+  rpc GetAuthRequestPayload (GetAuthRequestPayloadRequest) returns (GetAuthRequestPayloadResponse) {
+    option (google.api.http) = {
+        get: "/banks/{bic}/auth-request-payloads/{auth_request_id}"
+    };
+  }
+
+  rpc GetAuthRequestSignature (GetAuthRequestSignatureRequest) returns (GetAuthRequestSignatureResponse) {
+    option (google.api.http) = {
+        get: "/banks/{bic}/auth-request-signatures"
     };
   }
 }

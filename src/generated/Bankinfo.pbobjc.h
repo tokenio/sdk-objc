@@ -61,6 +61,8 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_Identifier = 13,
   Bank_FieldNumber_RequiresLegacyTransfer = 14,
   Bank_FieldNumber_SupportsGuestCheckout = 15,
+  Bank_FieldNumber_SupportsBalance = 16,
+  Bank_FieldNumber_RequiresOneStepPayment = 17,
 };
 
 @interface Bank : GPBMessage
@@ -93,8 +95,14 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Connection allows for receiving payments */
 @property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
+/** Connection allows for retrieving balances */
+@property(nonatomic, readwrite) BOOL supportsBalance;
+
 /** Connection only supports immediate redemption of transfers */
-@property(nonatomic, readwrite) BOOL requiresLegacyTransfer;
+@property(nonatomic, readwrite) BOOL requiresLegacyTransfer GPB_DEPRECATED_MSG("io.token.proto.common.bank.Bank.requires_legacy_transfer is deprecated (see bankinfo.proto).");
+
+/** Connection only supports immediate redemption of transfers */
+@property(nonatomic, readwrite) BOOL requiresOneStepPayment;
 
 /** Provider of the bank, e.g. Yodlee, FinApi, Token */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
@@ -114,6 +122,7 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
   BankInfo_FieldNumber_RedirectUriRegex = 2,
   BankInfo_FieldNumber_BankLinkingUri = 3,
   BankInfo_FieldNumber_RealmArray = 4,
+  BankInfo_FieldNumber_CustomAliasLabel = 6,
 };
 
 /**
@@ -137,6 +146,9 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *realmArray;
 /** The number of items in @c realmArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger realmArray_Count;
+
+/** (Optional) Label to be displayed if bank supports custom aliases */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *customAliasLabel;
 
 @end
 

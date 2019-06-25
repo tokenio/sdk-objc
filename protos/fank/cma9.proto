@@ -122,6 +122,7 @@ message Account {
   string Currency = 3;
   string Nickname = 4;
   Servicer Servicer = 5;
+  map<string, string> metadata = 6;
 }
 
 message AccountData {
@@ -173,6 +174,7 @@ message Transaction {
   TransactionStatus Status = 6;
   string TransactionId = 7;
   string TransactionInformation = 8;
+  map<string, string> metadata = 9;
 }
 
 message TransactionData {
@@ -455,7 +457,7 @@ service Cma9Service {
   // Used to query information about an account's transactions.
   rpc GetAccountTransactions (AccountTransactionsRequest) returns (AccountTransactionsResponse) {
     option (google.api.http) = {
-      get: "/cma9/accounts/{AccountId}/transactions?page={page}"
+      get: "/cma9/accounts/{AccountId}/transactions"
     };
   }
 

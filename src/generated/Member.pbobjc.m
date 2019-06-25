@@ -142,6 +142,50 @@ BOOL CreateMemberType_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - Enum RealmPermission
+
+GPBEnumDescriptor *RealmPermission_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "InvalidRealmPermission\000VerifyAlias\000AddAl"
+        "ias\000RemoveAlias\000AddKey\000RemoveKey\000";
+    static const int32_t values[] = {
+        RealmPermission_InvalidRealmPermission,
+        RealmPermission_VerifyAlias,
+        RealmPermission_AddAlias,
+        RealmPermission_RemoveAlias,
+        RealmPermission_AddKey,
+        RealmPermission_RemoveKey,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(RealmPermission)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:RealmPermission_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL RealmPermission_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case RealmPermission_InvalidRealmPermission:
+    case RealmPermission_VerifyAlias:
+    case RealmPermission_AddAlias:
+    case RealmPermission_RemoveAlias:
+    case RealmPermission_AddKey:
+    case RealmPermission_RemoveKey:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - MemberAddKeyOperation
 
 @implementation MemberAddKeyOperation
@@ -238,11 +282,13 @@ typedef struct MemberRemoveKeyOperation__storage_ {
 
 @dynamic aliasHash;
 @dynamic realm;
+@dynamic realmId;
 
 typedef struct MemberAliasOperation__storage_ {
   uint32_t _has_storage_[1];
   NSString *aliasHash;
   NSString *realm;
+  NSString *realmId;
 } MemberAliasOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -266,6 +312,15 @@ typedef struct MemberAliasOperation__storage_ {
         .number = MemberAliasOperation_FieldNumber_Realm,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, realm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realmId",
+        .dataTypeSpecific.className = NULL,
+        .number = MemberAliasOperation_FieldNumber_RealmId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, realmId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -521,6 +576,51 @@ typedef struct MemberPartnerOperation__storage_ {
 
 @end
 
+#pragma mark - MemberRealmPermissionOperation
+
+@implementation MemberRealmPermissionOperation
+
+@dynamic permissionsArray, permissionsArray_Count;
+
+typedef struct MemberRealmPermissionOperation__storage_ {
+  uint32_t _has_storage_[1];
+  GPBEnumArray *permissionsArray;
+} MemberRealmPermissionOperation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "permissionsArray",
+        .dataTypeSpecific.enumDescFunc = RealmPermission_EnumDescriptor,
+        .number = MemberRealmPermissionOperation_FieldNumber_PermissionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MemberRealmPermissionOperation__storage_, permissionsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MemberRealmPermissionOperation class]
+                                     rootClass:[MemberRoot class]
+                                          file:MemberRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MemberRealmPermissionOperation__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - MemberOperation
 
 @implementation MemberOperation
@@ -536,6 +636,7 @@ typedef struct MemberPartnerOperation__storage_ {
 @dynamic delete_p;
 @dynamic verifyPartner;
 @dynamic unverifyPartner;
+@dynamic realmPermissions;
 
 typedef struct MemberOperation__storage_ {
   uint32_t _has_storage_[2];
@@ -549,6 +650,7 @@ typedef struct MemberOperation__storage_ {
   MemberDeleteOperation *delete_p;
   MemberPartnerOperation *verifyPartner;
   MemberPartnerOperation *unverifyPartner;
+  MemberRealmPermissionOperation *realmPermissions;
 } MemberOperation__storage_;
 
 // This method is threadsafe because it is initially called
@@ -644,6 +746,15 @@ typedef struct MemberOperation__storage_ {
         .number = MemberOperation_FieldNumber_UnverifyPartner,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, unverifyPartner),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "realmPermissions",
+        .dataTypeSpecific.className = GPBStringifySymbol(MemberRealmPermissionOperation),
+        .number = MemberOperation_FieldNumber_RealmPermissions,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MemberOperation__storage_, realmPermissions),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1100,6 +1211,8 @@ typedef struct RecoveryRule__storage_ {
 @dynamic type;
 @dynamic partnerId;
 @dynamic isVerifiedPartner;
+@dynamic realmId;
+@dynamic realmPermissionsArray, realmPermissionsArray_Count;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
@@ -1113,6 +1226,8 @@ typedef struct Member__storage_ {
   NSMutableArray *unverifiedAliasHashesArray;
   RecoveryRule *recoveryRule;
   NSString *partnerId;
+  NSString *realmId;
+  GPBEnumArray *realmPermissionsArray;
 } Member__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1219,6 +1334,24 @@ typedef struct Member__storage_ {
         .offset = 8,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "realmId",
+        .dataTypeSpecific.className = NULL,
+        .number = Member_FieldNumber_RealmId,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(Member__storage_, realmId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "realmPermissionsArray",
+        .dataTypeSpecific.enumDescFunc = RealmPermission_EnumDescriptor,
+        .number = Member_FieldNumber_RealmPermissionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Member__storage_, realmPermissionsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -58,6 +58,8 @@
 // Deprecated methods.
 /**
  * Used to request information about accounts and transactions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createAccountRequestWithRequest:(AccountRequestsRequest *)request handler:(void(^)(AccountRequestsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateAccountRequestWithRequest:request handler:handler] start];
@@ -65,6 +67,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to request information about accounts and transactions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreateAccountRequestWithRequest:(AccountRequestsRequest *)request handler:(void(^)(AccountRequestsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateAccountRequest"
@@ -88,6 +92,8 @@
 // Deprecated methods.
 /**
  * Used to delete a request for account/transaction information.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)removeAccountRequestWithRequest:(DeleteAccountRequestsRequest *)request handler:(void(^)(DeleteAccountRequestsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveAccountRequestWithRequest:request handler:handler] start];
@@ -95,6 +101,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to delete a request for account/transaction information.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRemoveAccountRequestWithRequest:(DeleteAccountRequestsRequest *)request handler:(void(^)(DeleteAccountRequestsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveAccountRequest"
@@ -118,6 +126,8 @@
 // Deprecated methods.
 /**
  * Used to retrieve a list of accounts the AISP is authorized to access
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountsWithRequest:(AccountsRequest *)request handler:(void(^)(AccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountsWithRequest:request handler:handler] start];
@@ -125,6 +135,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to retrieve a list of accounts the AISP is authorized to access
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountsWithRequest:(AccountsRequest *)request handler:(void(^)(AccountsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccounts"
@@ -148,6 +160,8 @@
 // Deprecated methods.
 /**
  * Used to query information about a particular account.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountWithRequest:(AccountRequest *)request handler:(void(^)(AccountResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountWithRequest:request handler:handler] start];
@@ -155,6 +169,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to query information about a particular account.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountWithRequest:(AccountRequest *)request handler:(void(^)(AccountResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccount"
@@ -178,6 +194,8 @@
 // Deprecated methods.
 /**
  * Used to query account balances.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountBalancesWithRequest:(AccountBalancesRequest *)request handler:(void(^)(AccountBalancesResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountBalancesWithRequest:request handler:handler] start];
@@ -185,6 +203,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to query account balances.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountBalancesWithRequest:(AccountBalancesRequest *)request handler:(void(^)(AccountBalancesResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccountBalances"
@@ -208,6 +228,8 @@
 // Deprecated methods.
 /**
  * Used to query information about an account's transactions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAccountTransactionsWithRequest:(AccountTransactionsRequest *)request handler:(void(^)(AccountTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAccountTransactionsWithRequest:request handler:handler] start];
@@ -215,6 +237,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to query information about an account's transactions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetAccountTransactionsWithRequest:(AccountTransactionsRequest *)request handler:(void(^)(AccountTransactionsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetAccountTransactions"
@@ -238,6 +262,8 @@
 // Deprecated methods.
 /**
  * Used to create a payment object, later to be redeemed.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createPaymentWithRequest:(PaymentsRequest *)request handler:(void(^)(PaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreatePaymentWithRequest:request handler:handler] start];
@@ -245,6 +271,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to create a payment object, later to be redeemed.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreatePaymentWithRequest:(PaymentsRequest *)request handler:(void(^)(PaymentsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreatePayment"
@@ -268,6 +296,8 @@
 // Deprecated methods.
 /**
  * Used to submit/redeem an existing payment object.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)createPaymentSubmissionWithRequest:(PaymentSubmissionsRequest *)request handler:(void(^)(PaymentSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreatePaymentSubmissionWithRequest:request handler:handler] start];
@@ -275,6 +305,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to submit/redeem an existing payment object.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToCreatePaymentSubmissionWithRequest:(PaymentSubmissionsRequest *)request handler:(void(^)(PaymentSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreatePaymentSubmission"
@@ -298,6 +330,8 @@
 // Deprecated methods.
 /**
  * Used to get account details
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetPartyWithRequest:request handler:handler] start];
@@ -305,6 +339,8 @@
 // Returns a not-yet-started RPC object.
 /**
  * Used to get account details
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetPartyWithRequest:(PartyRequest *)request handler:(void(^)(PartyResponse *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetParty"

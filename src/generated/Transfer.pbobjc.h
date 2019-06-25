@@ -29,7 +29,9 @@ CF_EXTERN_C_BEGIN
 
 @class Money;
 @class Signature;
+@class TransferDestination;
 @class TransferEndpoint;
+@class TransferInstructions_Metadata;
 @class TransferPayload;
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 
@@ -150,6 +152,8 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
   TransferPayload_FieldNumber_Amount = 3,
   TransferPayload_FieldNumber_DestinationsArray = 5,
   TransferPayload_FieldNumber_Description_p = 6,
+  TransferPayload_FieldNumber_TransferDestinationsArray = 7,
+  TransferPayload_FieldNumber_Metadata = 8,
 };
 
 /**
@@ -168,13 +172,21 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 /** Test to see if @c amount has been set. */
 @property(nonatomic, readwrite) BOOL hasAmount;
 
-/** Transfer destinations, sorted in priority order. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.common.transfer.TransferPayload.destinations is deprecated (see transfer.proto).");
 /** The number of items in @c destinationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.transfer.TransferPayload.destinations is deprecated (see transfer.proto).");
 
 /** Optional */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+/** Transfer destinations, sorted in priority order. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions_Metadata *metadata;
+/** Test to see if @c metadata has been set. */
+@property(nonatomic, readwrite) BOOL hasMetadata;
 
 @end
 

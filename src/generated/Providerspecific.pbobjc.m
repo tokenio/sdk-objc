@@ -18,6 +18,7 @@
 #import "Providerspecific.pbobjc.h"
 #import "extensions/Message.pbobjc.h"
 #import "Address.pbobjc.h"
+#import "Polishapi.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -63,10 +64,12 @@ static GPBFileDescriptor *ProviderspecificRoot_FileDescriptor(void) {
 
 @dynamic detailsOneOfCase;
 @dynamic cma9AccountDetails;
+@dynamic polishApiAccountDetails;
 
 typedef struct ProviderAccountDetails__storage_ {
   uint32_t _has_storage_[2];
   Cma9AccountDetails *cma9AccountDetails;
+  POLISHAPIPolishApiAccountDetails *polishApiAccountDetails;
 } ProviderAccountDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -81,6 +84,15 @@ typedef struct ProviderAccountDetails__storage_ {
         .number = ProviderAccountDetails_FieldNumber_Cma9AccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, cma9AccountDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "polishApiAccountDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiAccountDetails),
+        .number = ProviderAccountDetails_FieldNumber_PolishApiAccountDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, polishApiAccountDetails),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -110,6 +122,120 @@ typedef struct ProviderAccountDetails__storage_ {
 @end
 
 void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - ProviderTransactionDetails
+
+@implementation ProviderTransactionDetails
+
+@dynamic detailsOneOfCase;
+@dynamic polishApiTransactionDetails;
+
+typedef struct ProviderTransactionDetails__storage_ {
+  uint32_t _has_storage_[2];
+  POLISHAPIPolishApiTransactionDetails *polishApiTransactionDetails;
+} ProviderTransactionDetails__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "polishApiTransactionDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiTransactionDetails),
+        .number = ProviderTransactionDetails_FieldNumber_PolishApiTransactionDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, polishApiTransactionDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ProviderTransactionDetails class]
+                                     rootClass:[ProviderspecificRoot class]
+                                          file:ProviderspecificRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ProviderTransactionDetails__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "details",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void ProviderTransactionDetails_ClearDetailsOneOfCase(ProviderTransactionDetails *message) {
+  GPBDescriptor *descriptor = [message descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBMaybeClearOneof(message, oneof, -1, 0);
+}
+#pragma mark - ProviderTransferMetadata
+
+@implementation ProviderTransferMetadata
+
+@dynamic metadataOneOfCase;
+@dynamic polishApiTransferMetadata;
+
+typedef struct ProviderTransferMetadata__storage_ {
+  uint32_t _has_storage_[2];
+  POLISHAPIPolishApiTransferMetadata *polishApiTransferMetadata;
+} ProviderTransferMetadata__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "polishApiTransferMetadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiTransferMetadata),
+        .number = ProviderTransferMetadata_FieldNumber_PolishApiTransferMetadata,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, polishApiTransferMetadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ProviderTransferMetadata class]
+                                     rootClass:[ProviderspecificRoot class]
+                                          file:ProviderspecificRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ProviderTransferMetadata__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    static const char *oneofs[] = {
+      "metadata",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void ProviderTransferMetadata_ClearMetadataOneOfCase(ProviderTransferMetadata *message) {
   GPBDescriptor *descriptor = [message descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBMaybeClearOneof(message, oneof, -1, 0);

@@ -25,7 +25,8 @@ message MemberAliasOperation {
   // Hash of alias to add/remove
   // https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
   string alias_hash = 1;
-  string realm = 2; // Realm of alias to add/remove
+  string realm = 2  [deprecated = true]; // Realm of alias to add/remove
+  string realm_id = 3;
 }
 
 // Sets recovery rules for member. Overrides all previously set rules.
@@ -54,6 +55,10 @@ message MemberDeleteOperation {}
 
 message MemberPartnerOperation {}
 
+message MemberRealmPermissionOperation {
+  repeated RealmPermission permissions = 1;
+}
+
 message MemberOperation {
    oneof operation {
      MemberAddKeyOperation add_key = 1;
@@ -66,6 +71,7 @@ message MemberOperation {
      MemberDeleteOperation delete = 9;
      MemberPartnerOperation verify_partner = 10;
      MemberPartnerOperation unverify_partner = 11;
+     MemberRealmPermissionOperation realm_permissions = 12;
    }
 }
 
@@ -126,6 +132,8 @@ message Member {
   MemberType type = 9;                                  // type of member
   string partner_id = 10;                               // affiliated partner id
   bool is_verified_partner = 11;                        // indicates if member is verified partner
+  string realm_id = 12;                                 // realm owner member id
+  repeated RealmPermission realm_permissions = 13;      // realm permissions assigned; Used to verify MemberOperations that this member can perform as realm owner.
 
   enum MemberType {
     INVALID_MEMBER_TYPE = 0;
@@ -185,6 +193,15 @@ enum CreateMemberType {
   PERSONAL = 1;
   BUSINESS = 2;
   TRANSIENT = 3;
+}
+
+enum RealmPermission {
+  INVALID_REALM_PERMISSION = 0;
+  VERIFY_ALIAS = 1;
+  ADD_ALIAS = 2;
+  REMOVE_ALIAS = 3;
+  ADD_KEY = 4;
+  REMOVE_KEY = 5;
 }
 
 message TrustedBeneficiary {

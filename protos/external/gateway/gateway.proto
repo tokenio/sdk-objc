@@ -40,6 +40,7 @@ message CreateMemberRequest {
   io.token.proto.common.member.CreateMemberType member_type = 2;
   string token_request_id = 3; // Optional token request ID, if set the member will be claimed by the TPP initiating the token request.
   string partner_id = 4;
+  string realm_id = 5;
 }
 
 message CreateMemberResponse {
@@ -66,6 +67,11 @@ message GetMemberResponse {
 
 message ResolveAliasRequest {
   io.token.proto.common.alias.Alias alias = 1; // alias to resolve
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  io.token.proto.common.alias.Alias.Type type = 2 [deprecated = true];                    // For example, EMAIL.
+  string value = 3 [(io.token.proto.extensions.field.redact) = true, deprecated = true]; // For example, "sandy@example.com"
+  string realm  = 4 [deprecated = true];                              // For example, "token"
 }
 
 message ResolveAliasResponse {
@@ -323,6 +329,10 @@ message NotifyResponse {
 
 message GetNotificationsRequest {
   Page page = 1; // offset and limit
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  string offset = 2 [deprecated = true];
+  int32 limit = 3 [deprecated = true];
 }
 
 message GetNotificationsResponse {
@@ -464,6 +474,10 @@ message GetTransactionResponse {
 message GetTransactionsRequest {
   string account_id = 1;
   Page page = 2; // Optional paging settings.
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  string offset = 3;
+  int32 limit = 4;
 }
 
 message GetTransactionsResponse {
@@ -499,7 +513,8 @@ message ResolveTransferDestinationsRequest {
 }
 
 message ResolveTransferDestinationsResponse {
-  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 1;
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 1 [deprecated=true];
+  repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 2;
 }
 
 message ConfirmFundsRequest {
@@ -566,6 +581,7 @@ message RetrieveTokenRequestRequest {
 message RetrieveTokenRequestResponse {
   io.token.proto.common.token.TokenRequest token_request = 1;
   io.token.proto.common.member.Customization customization = 2;
+  bool hide_consent = 3;
 }
 
 message UpdateTokenRequestRequest {
@@ -593,10 +609,20 @@ message CreateTokenRequest {
   io.token.proto.common.token.TokenPayload payload = 1;
   repeated io.token.proto.common.security.Signature signatures = 2;
   string token_request_id = 3; // optional ID of the token request
+
+  // Only useful for HTTP requests
+  // specifying type=access in an HTTP request will call CreateAccessToken instead of this endpoint
+  // specifying type=transfer in an HTTP request will call CreateTransferToken instead of this endpoint
+  // TODO(RD-2738) remove this
+  string type = 4 [deprecated = true];
 }
 
 message CreateTokenResponse {
   io.token.proto.common.token.Token token = 1;
+
+  // deprecated: used as HTTP response for CreateTransferToken TODO(RD-2738) remove
+  io.token.proto.common.token.TransferTokenStatus status = 2 [deprecated = true];
+  io.token.proto.common.token.ExternalAuthorizationDetails authorization_details = 3 [deprecated = true];
 }
 
 message CreateTransferTokenRequest {
@@ -662,6 +688,10 @@ message GetTokensRequest {
       ISSUER = 3;
     }
   }
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  string offset = 4;
+  int32 limit = 5;
 }
 
 message GetTokensResponse {
@@ -774,6 +804,10 @@ message GetTransfersRequest {
       PAYEE = 2;
     }
   }
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  string offset = 4 [deprecated = true];
+  int32 limit = 5 [deprecated = true];
 }
 
 message GetTransfersResponse {
@@ -787,6 +821,14 @@ message GetTransfersResponse {
 
 message GetBanksCountriesRequest {
   io.token.proto.common.bank.BankFilter filter = 1;     // (Optional) Filter by criteria in bank filter. Results must match all filter criteria.
+
+  // for backwards compatibility with older JS clients TODO(RD-2738) remove
+  repeated string ids = 2 [deprecated = true];
+  string search = 3 [deprecated = true];
+  string country = 4 [deprecated = true];
+  string provider = 5 [deprecated = true];
+  string destination_country = 6 [deprecated = true];
+  string tpp_id = 7 [deprecated = true];
 }
 
 message GetBanksCountriesResponse {
@@ -807,6 +849,7 @@ message GetBanksRequest {
   string search = 2 [deprecated = true];           // DEPRECATED. If specified, return banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
   string provider = 7 [deprecated = true];         // DEPRECATED. (Optional) If specified, return banks whose 'provider' matches the provider (case-insensitive)
   string tpp_id = 8 [deprecated = true];           // DEPRECATED. (Optional) If specified, return banks which are integrated with the TPP
+  string destination_country = 10 [deprecated = true]; // DEPRECATED. (Optional) Filter for banks that support sending to the destination country.
 }
 
 message GetBanksResponse {
@@ -908,6 +951,54 @@ message GetTestBankNotificationsResponse {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Report
+//
+
+message GetTppPerformanceReportRequest {
+  string bank_id = 1;
+  int32 days_back = 2;
+}
+
+message GetTppPerformanceReportResponse {
+  repeated PerformanceSummary summaries = 1;
+
+  message PerformanceSummary {
+    string date = 1;
+    TppType tpp_type = 2;
+    double p50_latency = 3;
+    double p75_latency = 4;
+    double p90_latency = 5;
+    double p95_latency = 6;
+    double p99_latency = 7;
+    double p999_latency = 8;
+    double error_rate = 9;
+    int64 error_count = 10;
+    int64 request_count = 11;
+
+    enum TppType {
+      AISP = 0;
+      PISP = 1;
+      CBPII = 2;
+    }
+  }
+}
+
+message GetAvailabilityReportRequest {
+  string bank_id = 1;
+  int32 days_back = 2;
+}
+
+message GetAvailabilityReportResponse {
+  repeated AvailabilitySummary summaries = 1;
+
+  message AvailabilitySummary {
+    string date = 1;
+    double token_uptime_pct = 2;
+    double bank_uptime_pct = 3;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gateway Service.
 //
 service GatewayService {
@@ -922,6 +1013,7 @@ service GatewayService {
   rpc CreateMember (CreateMemberRequest) returns (CreateMemberResponse) {
     option (google.api.http) = {
         post: "/members"
+        body: "*"
     };
   }
 
@@ -934,6 +1026,7 @@ service GatewayService {
   rpc UpdateMember (UpdateMemberRequest) returns (UpdateMemberResponse) {
     option (google.api.http) = {
         post: "/members/{update.member_id}/updates"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -956,6 +1049,7 @@ service GatewayService {
   rpc SetProfile (SetProfileRequest) returns (SetProfileResponse) {
     option (google.api.http) = {
         put: "/profile"
+        body: "*"
     };
   }
 
@@ -973,6 +1067,7 @@ service GatewayService {
   rpc SetProfilePicture (SetProfilePictureRequest) returns (SetProfilePictureResponse) {
     option (google.api.http) = {
         put: "/profilepicture"
+        body: "*"
     };
   }
 
@@ -988,6 +1083,7 @@ service GatewayService {
   rpc SetReceiptContact (SetReceiptContactRequest) returns (SetReceiptContactResponse) {
     option (google.api.http) = {
         put: "/receipt-contact"
+        body: "*"
     };
   }
 
@@ -1002,7 +1098,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#aliases
   rpc ResolveAlias (ResolveAliasRequest) returns (ResolveAliasResponse) {
     option (google.api.http) = {
-      get: "/resolve-alias?value={alias.value}&type={alias.type}&realm={alias.realm}"
+      get: "/resolve-alias"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1032,6 +1128,7 @@ service GatewayService {
   rpc RetryVerification (RetryVerificationRequest) returns (RetryVerificationResponse) {
     option (google.api.http) = {
       post: "/verifications"
+      body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1063,12 +1160,14 @@ service GatewayService {
   rpc VerifyAffiliate (VerifyAffiliateRequest) returns (VerifyAffiliateResponse) {
     option (google.api.http) = {
         put: "/members/affiliates/verify"
+        body: "*"
     };
   }
 
   rpc SetAppCallbackUrl (SetAppCallbackUrlRequest) returns (SetAppCallbackUrlResponse) {
-  option (google.api.http) = {
+    option (google.api.http) = {
         put: "/members/app-callback-url"
+        body: "*"
     };
   }
 
@@ -1082,6 +1181,7 @@ service GatewayService {
   rpc BeginRecovery (BeginRecoveryRequest) returns (BeginRecoveryResponse) {
     option (google.api.http) = {
       post: "/recovery/verifications"
+      body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1096,6 +1196,7 @@ service GatewayService {
   rpc CompleteRecovery (CompleteRecoveryRequest) returns (CompleteRecoveryResponse) {
     option (google.api.http) = {
       post: "/recovery/verifications/{verification_id}/complete/{code}"
+      body: "*"
     };
   }
 
@@ -1103,6 +1204,7 @@ service GatewayService {
   rpc VerifyAlias (VerifyAliasRequest) returns (VerifyAliasResponse) {
     option (google.api.http) = {
       put: "/verifications/{verification_id}/complete/{code}"
+      body: "*"
     };
   }
 
@@ -1123,6 +1225,7 @@ service GatewayService {
   rpc AddAddress (AddAddressRequest) returns (AddAddressResponse) {
     option (google.api.http) = {
         post: "/addresses"
+        body: "*"
     };
   }
 
@@ -1155,6 +1258,7 @@ service GatewayService {
   rpc AddTrustedBeneficiary (AddTrustedBeneficiaryRequest) returns (AddTrustedBeneficiaryResponse) {
     option (google.api.http) = {
         post: "/trusted-beneficiaries"
+        body: "*"
     };
   }
 
@@ -1179,6 +1283,7 @@ service GatewayService {
   rpc CreateCustomization (CreateCustomizationRequest) returns (CreateCustomizationResponse) {
   option (google.api.http) = {
         post: "/customization"
+        body: "*"
     };
   }
 
@@ -1191,6 +1296,7 @@ service GatewayService {
   rpc SubscribeToNotifications (SubscribeToNotificationsRequest) returns (SubscribeToNotificationsResponse) {
     option (google.api.http) = {
         post: "/subscribers"
+        body: "*"
     };
   }
 
@@ -1223,6 +1329,7 @@ service GatewayService {
   rpc Notify (NotifyRequest) returns (NotifyResponse) {
     option (google.api.http) = {
         post: "/notify"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1236,7 +1343,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#polling-for-notifications
   rpc GetNotifications (GetNotificationsRequest) returns (GetNotificationsResponse) {
     option (google.api.http) = {
-        get: "/notifications?offset={page.offset}&limit={page.limit}"
+        get: "/notifications"
     };
   }
 
@@ -1253,6 +1360,7 @@ service GatewayService {
   rpc RequestTransfer (RequestTransferRequest) returns (RequestTransferResponse) {
     option (google.api.http) = {
         post: "/request-transfer"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1266,6 +1374,7 @@ service GatewayService {
   rpc TriggerStepUpNotification (TriggerStepUpNotificationRequest) returns (TriggerStepUpNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/stepup"
+        body: "*"
     };
   }
 
@@ -1274,6 +1383,7 @@ service GatewayService {
     option deprecated = true;         // Use CreateAndEndorseToken instead
     option (google.api.http) = {
         post: "/notify/endorse-and-add-key"
+        body: "*"
     };
   }
 
@@ -1281,6 +1391,7 @@ service GatewayService {
   rpc TriggerCreateAndEndorseTokenNotification (TriggerCreateAndEndorseTokenNotificationRequest) returns (TriggerCreateAndEndorseTokenNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/create-and-endorse-token"
+        body: "*"
     };
   }
 
@@ -1288,6 +1399,7 @@ service GatewayService {
   rpc InvalidateNotification (InvalidateNotificationRequest) returns (InvalidateNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/invalidate-notification"
+        body: "*"
     };
   }
 
@@ -1300,6 +1412,7 @@ service GatewayService {
   rpc LinkAccounts (LinkAccountsRequest) returns (LinkAccountsResponse) {
     option (google.api.http) = {
         post: "/accounts"
+        body: "*"
     };
   }
 
@@ -1308,6 +1421,7 @@ service GatewayService {
   rpc LinkAccountsOauth (LinkAccountsOauthRequest) returns (LinkAccountsOauthResponse) {
     option (google.api.http) = {
         post: "/bank-accounts"
+        body: "*"
     };
   }
 
@@ -1316,6 +1430,7 @@ service GatewayService {
   rpc UnlinkAccounts (UnlinkAccountsRequest) returns (UnlinkAccountsResponse) {
     option (google.api.http) = {
         delete: "/accounts"
+        body: "*"
     };
   }
 
@@ -1345,7 +1460,7 @@ service GatewayService {
 
   rpc GetBalances (GetBalancesRequest) returns (GetBalancesResponse) {
     option (google.api.http) = {
-        get: "/accounts/balance?account_id={account_id}"
+        get: "/accounts/balance"
     };
   }
 
@@ -1361,13 +1476,14 @@ service GatewayService {
   // https://developer.token.io/sdk/#get-transactions
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
-        get: "/accounts/{account_id}/transactions?offset={page.offset}&limit={page.limit}"
+        get: "/accounts/{account_id}/transactions"
     };
   }
 
   rpc ApplySca (ApplyScaRequest) returns (ApplyScaResponse) {
     option (google.api.http) = {
-        put: "/accounts/sca?account_id={account_id}"
+        put: "/accounts/sca"
+        body: "*"
     };
   }
 
@@ -1384,6 +1500,7 @@ service GatewayService {
   rpc SetDefaultAccount (SetDefaultAccountRequest) returns (SetDefaultAccountResponse) {
     option (google.api.http) = {
       put: "/members/{member_id}/default-account"
+      body: "*"
     };
   }
 
@@ -1398,6 +1515,7 @@ service GatewayService {
   rpc ConfirmFunds (ConfirmFundsRequest) returns (ConfirmFundsResponse) {
     option (google.api.http) = {
       put: "/accounts/{account_id}/funds-confirmation"
+      body: "*"
     };
   }
 
@@ -1410,6 +1528,7 @@ service GatewayService {
   rpc CreateTestBankAccount (CreateTestBankAccountRequest) returns (CreateTestBankAccountResponse) {
     option (google.api.http) = {
         post: "/test/create-account"
+        body: "*"
     };
   }
 
@@ -1438,6 +1557,7 @@ service GatewayService {
   rpc CreateBlob (CreateBlobRequest) returns (CreateBlobResponse) {
     option (google.api.http) = {
         post: "/blobs"
+        body: "*"
     };
   }
 
@@ -1467,6 +1587,7 @@ service GatewayService {
   rpc StoreTokenRequest (StoreTokenRequestRequest) returns (StoreTokenRequestResponse) {
     option (google.api.http) = {
         post: "/token-requests"
+        body: "*"
     };
   }
 
@@ -1480,6 +1601,7 @@ service GatewayService {
   rpc UpdateTokenRequest (UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse) {
     option (google.api.http) = {
         put: "/token-requests/{request_id}"
+        body: "*"
     };
   }
 
@@ -1491,6 +1613,7 @@ service GatewayService {
   rpc PrepareToken (PrepareTokenRequest) returns (PrepareTokenResponse) {
     option (google.api.http) = {
         post: "/tokens/prepare"
+        body: "*"
     };
   }
 
@@ -1498,6 +1621,7 @@ service GatewayService {
   rpc CreateToken (CreateTokenRequest) returns (CreateTokenResponse) {
     option (google.api.http) = {
         post: "/tokens"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1511,7 +1635,9 @@ service GatewayService {
   // https://developer.token.io/sdk/#create-transfer-token
   rpc CreateTransferToken (CreateTransferTokenRequest) returns (CreateTransferTokenResponse) {
     option (google.api.http) = {
-        post: "/tokens?type=transfer"
+        // unused: use /tokens?type=transfer to reach this endpoint
+        post: "/transfer-tokens"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1526,7 +1652,9 @@ service GatewayService {
   // https://developer.token.io/sdk/#create-access-token
   rpc CreateAccessToken (CreateAccessTokenRequest) returns (CreateAccessTokenResponse) {
     option (google.api.http) = {
-        post: "/tokens?type=access"
+        // unused: use /tokens?type=access to reach this endpoint
+        post: "/access-tokens"
+        body: "*"
     };
     option (io.token.proto.extensions.service.rate_limit) = {
       selector: [
@@ -1558,7 +1686,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#replace-access-token
   rpc GetTokens (GetTokensRequest) returns (GetTokensResponse) {
     option (google.api.http) = {
-        get: "/tokens?type={type}&offset={page.offset}&limit={page.limit}"
+        get: "/tokens"
     };
   }
 
@@ -1568,6 +1696,7 @@ service GatewayService {
   rpc EndorseToken (EndorseTokenRequest) returns (EndorseTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/endorse"
+        body: "*"
     };
   }
 
@@ -1577,6 +1706,7 @@ service GatewayService {
   rpc CancelToken (CancelTokenRequest) returns (CancelTokenResponse) {
     option (google.api.http) = {
         put: "/tokens/{token_id}/cancel"
+        body: "*"
     };
   }
 
@@ -1588,6 +1718,7 @@ service GatewayService {
   rpc ReplaceToken (ReplaceTokenRequest) returns (ReplaceTokenResponse) {
     option (google.api.http) = {
         post: "/tokens/{cancel_token.token_id}/replace"
+        body: "*"
     };
   }
 
@@ -1595,6 +1726,7 @@ service GatewayService {
   rpc SignTokenRequestState (SignTokenRequestStateRequest) returns (SignTokenRequestStateResponse) {
     option (google.api.http) = {
         put: "/sign-token-request-state"
+        body: "*"
     };
   }
 
@@ -1624,6 +1756,7 @@ service GatewayService {
   rpc CreateTransfer (CreateTransferRequest) returns (CreateTransferResponse) {
     option (google.api.http) = {
         post: "/transfers"
+        body: "*"
     };
   }
 
@@ -1639,7 +1772,7 @@ service GatewayService {
   // https://developer.token.io/sdk/#get-transfers
   rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
-        get: "/transfers?tokenId={filter.token_id}&offset={page.offset}&limit={page.limit}"
+        get: "/transfers"
     };
   }
 
@@ -1649,16 +1782,16 @@ service GatewayService {
 
   // Get a list of "link-able" bank countries.
   rpc GetBanksCountries (GetBanksCountriesRequest) returns (GetBanksCountriesResponse) {
-  option (google.api.http) = {
-          get: "/banks/countries?ids={filter.ids}&search={filter.search}&country={filter.country}&provider={filter.provider}&destinationCountry={filter.destination_country}"
-      };
+    option (google.api.http) = {
+        get: "/banks/countries"
+    };
   }
 
   // Get a list of "link-able" banks.
   // https://developer.token.io/sdk/#link-a-bank-account
   rpc GetBanks (GetBanksRequest) returns (GetBanksResponse) {
     option (google.api.http) = {
-        get: "/banks?ids={filter.ids}&search={filter.search}&country={filter.country}&page={page}&perPage={per_page}&sort={sort}&provider={filter.provider}&destinationCountry={filter.destination_country}"
+        get: "/banks"
     };
   }
 
@@ -1677,6 +1810,7 @@ service GatewayService {
   rpc CreateKeychain (CreateKeychainRequest) returns (CreateKeychainResponse) {
     option (google.api.http) = {
         post: "/keychain"
+        body: "*"
     };
   }
 
@@ -1684,6 +1818,7 @@ service GatewayService {
   rpc UpdateKeychainInfo (UpdateKeychainInfoRequest) returns (UpdateKeychainInfoResponse) {
     option (google.api.http) = {
         put: "/keychain/id/info"
+        body: "*"
     };
   }
 
@@ -1705,14 +1840,31 @@ service GatewayService {
   }
 
   rpc GetConsent (GetConsentRequest) returns (GetConsentResponse) {
-  option (google.api.http) = {
+    option (google.api.http) = {
         get: "/banks/{bank_id}/consents/{consent_id}"
     };
   }
 
   rpc GetConsents (GetConsentsRequest) returns (GetConsentsResponse) {
-  option (google.api.http) = {
-        get: "/consents?bank-id={bank_id}&offset={page.offset}&limit={page.limit}&account-swift-bic={account.swift.bic}&account-swift-account={account.swift.account}&account-sepa-iban={account.sepa.iban}&account-sepa-bic={account.sepa.bic}&account-ach-routing={account.ach.routing}&account-ach-account={account.ach.account}&account-faster-payments-sort-code={account.faster_payments.sort_code}&account-faster-payments-account-number={account.faster_payments.account_number}&account-custom-bank-id={account.custom.bank_id}&account-custom-payload={account.custom.payload}"
+    option (google.api.http) = {
+        get: "/consents"
+    };
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Reports (bank member only requests).
+  //
+  // Get TPP performance report.
+  rpc GetTppPerformanceReport (GetTppPerformanceReportRequest) returns (GetTppPerformanceReportResponse) {
+    option (google.api.http) = {
+        get: "/reports/{bank_id}/tpp_performance_report"
+    };
+  }
+
+  //Get availability report.
+  rpc GetAvailabilityReport (GetAvailabilityReportRequest) returns (GetAvailabilityReportResponse) {
+    option (google.api.http) = {
+        get: "/reports/{bank_id}/availability_report"
     };
   }
 }

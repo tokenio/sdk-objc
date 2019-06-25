@@ -30,6 +30,19 @@ CF_EXTERN_C_BEGIN
 @class Address;
 @class BankAccount;
 @class CustomerData;
+@class ProviderTransferMetadata;
+@class TransferDestination;
+@class TransferDestination_Ach;
+@class TransferDestination_BlueCash;
+@class TransferDestination_Custom;
+@class TransferDestination_Elixir;
+@class TransferDestination_ExpressElixir;
+@class TransferDestination_FasterPayments;
+@class TransferDestination_Sepa;
+@class TransferDestination_SepaInstant;
+@class TransferDestination_Sorbnet;
+@class TransferDestination_Swift;
+@class TransferDestination_Token;
 @class TransferEndpoint;
 @class TransferInstructions_Metadata;
 
@@ -149,12 +162,263 @@ typedef GPB_ENUM(TransferEndpoint_FieldNumber) {
 
 @end
 
+#pragma mark - TransferDestination
+
+typedef GPB_ENUM(TransferDestination_FieldNumber) {
+  TransferDestination_FieldNumber_Token = 1,
+  TransferDestination_FieldNumber_Sepa = 2,
+  TransferDestination_FieldNumber_SepaInstant = 3,
+  TransferDestination_FieldNumber_FasterPayments = 4,
+  TransferDestination_FieldNumber_Ach = 5,
+  TransferDestination_FieldNumber_Swift = 6,
+  TransferDestination_FieldNumber_Elixir = 7,
+  TransferDestination_FieldNumber_ExpressElixir = 8,
+  TransferDestination_FieldNumber_BlueCash = 9,
+  TransferDestination_FieldNumber_Sorbnet = 10,
+  TransferDestination_FieldNumber_CustomerData = 11,
+  TransferDestination_FieldNumber_Custom = 12,
+};
+
+typedef GPB_ENUM(TransferDestination_Destination_OneOfCase) {
+  TransferDestination_Destination_OneOfCase_GPBUnsetOneOfCase = 0,
+  TransferDestination_Destination_OneOfCase_Token = 1,
+  TransferDestination_Destination_OneOfCase_Sepa = 2,
+  TransferDestination_Destination_OneOfCase_SepaInstant = 3,
+  TransferDestination_Destination_OneOfCase_FasterPayments = 4,
+  TransferDestination_Destination_OneOfCase_Ach = 5,
+  TransferDestination_Destination_OneOfCase_Swift = 6,
+  TransferDestination_Destination_OneOfCase_Elixir = 7,
+  TransferDestination_Destination_OneOfCase_ExpressElixir = 8,
+  TransferDestination_Destination_OneOfCase_BlueCash = 9,
+  TransferDestination_Destination_OneOfCase_Sorbnet = 10,
+  TransferDestination_Destination_OneOfCase_Custom = 12,
+};
+
+@interface TransferDestination : GPBMessage
+
+@property(nonatomic, readonly) TransferDestination_Destination_OneOfCase destinationOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Token *token;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Sepa *sepa;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_SepaInstant *sepaInstant;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_FasterPayments *fasterPayments;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Ach *ach;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Swift *swift;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Elixir *elixir;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_ExpressElixir *expressElixir;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_BlueCash *blueCash;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Sorbnet *sorbnet;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Custom *custom;
+
+@property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
+/** Test to see if @c customerData has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomerData;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'destination'.
+ **/
+void TransferDestination_ClearDestinationOneOfCase(TransferDestination *message);
+
+#pragma mark - TransferDestination_Token
+
+typedef GPB_ENUM(TransferDestination_Token_FieldNumber) {
+  TransferDestination_Token_FieldNumber_MemberId = 1,
+  TransferDestination_Token_FieldNumber_AccountId = 2,
+};
+
+/**
+ * Token account Destination. Useful as source or destination
+ * for a transfer; doesn't make sense for a bank to "link" this.
+ **/
+@interface TransferDestination_Token : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - TransferDestination_Custom
+
+typedef GPB_ENUM(TransferDestination_Custom_FieldNumber) {
+  TransferDestination_Custom_FieldNumber_BankId = 1,
+  TransferDestination_Custom_FieldNumber_Payload = 2,
+};
+
+/**
+ * Custom authorization
+ **/
+@interface TransferDestination_Custom : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
+
+@end
+
+#pragma mark - TransferDestination_Sepa
+
+typedef GPB_ENUM(TransferDestination_Sepa_FieldNumber) {
+  TransferDestination_Sepa_FieldNumber_Bic = 1,
+  TransferDestination_Sepa_FieldNumber_Iban = 2,
+};
+
+/**
+ * SEPA transfer
+ **/
+@interface TransferDestination_Sepa : GPBMessage
+
+/** Optional */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@end
+
+#pragma mark - TransferDestination_SepaInstant
+
+typedef GPB_ENUM(TransferDestination_SepaInstant_FieldNumber) {
+  TransferDestination_SepaInstant_FieldNumber_Iban = 1,
+};
+
+@interface TransferDestination_SepaInstant : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@end
+
+#pragma mark - TransferDestination_FasterPayments
+
+typedef GPB_ENUM(TransferDestination_FasterPayments_FieldNumber) {
+  TransferDestination_FasterPayments_FieldNumber_SortCode = 1,
+  TransferDestination_FasterPayments_FieldNumber_AccountNumber = 2,
+};
+
+/**
+ * Faster Payments Service transfer (UK)
+ **/
+@interface TransferDestination_FasterPayments : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_Ach
+
+typedef GPB_ENUM(TransferDestination_Ach_FieldNumber) {
+  TransferDestination_Ach_FieldNumber_Routing = 1,
+  TransferDestination_Ach_FieldNumber_Account = 2,
+};
+
+/**
+ * ACH transfer
+ **/
+@interface TransferDestination_Ach : GPBMessage
+
+/** Routing number */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *routing;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+
+@end
+
+#pragma mark - TransferDestination_Swift
+
+typedef GPB_ENUM(TransferDestination_Swift_FieldNumber) {
+  TransferDestination_Swift_FieldNumber_Bic = 1,
+  TransferDestination_Swift_FieldNumber_Account = 2,
+};
+
+@interface TransferDestination_Swift : GPBMessage
+
+/** BIC code AAAABBCCDD */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *account;
+
+@end
+
+#pragma mark - TransferDestination_Elixir
+
+typedef GPB_ENUM(TransferDestination_Elixir_FieldNumber) {
+  TransferDestination_Elixir_FieldNumber_AccountNumber = 1,
+};
+
+/**
+ * Polish domestic
+ **/
+@interface TransferDestination_Elixir : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_ExpressElixir
+
+typedef GPB_ENUM(TransferDestination_ExpressElixir_FieldNumber) {
+  TransferDestination_ExpressElixir_FieldNumber_AccountNumber = 1,
+};
+
+/**
+ * Polish domestic
+ **/
+@interface TransferDestination_ExpressElixir : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_BlueCash
+
+typedef GPB_ENUM(TransferDestination_BlueCash_FieldNumber) {
+  TransferDestination_BlueCash_FieldNumber_AccountNumber = 1,
+};
+
+/**
+ * Polish domestic
+ **/
+@interface TransferDestination_BlueCash : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_Sorbnet
+
+typedef GPB_ENUM(TransferDestination_Sorbnet_FieldNumber) {
+  TransferDestination_Sorbnet_FieldNumber_AccountNumber = 1,
+};
+
+/**
+ * Polish domestic
+ **/
+@interface TransferDestination_Sorbnet : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
 #pragma mark - TransferInstructions
 
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
   TransferInstructions_FieldNumber_Source = 1,
   TransferInstructions_FieldNumber_DestinationsArray = 2,
   TransferInstructions_FieldNumber_Metadata = 3,
+  TransferInstructions_FieldNumber_TransferDestinationsArray = 4,
 };
 
 /**
@@ -167,14 +431,18 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 
-/** Transfer destination. */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray;
+/** Transfer destinations. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.common.transferinstructions.TransferInstructions.destinations is deprecated (see transferinstructions.proto).");
 /** The number of items in @c destinationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger destinationsArray_Count;
+@property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.transferinstructions.TransferInstructions.destinations is deprecated (see transferinstructions.proto).");
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions_Metadata *metadata;
 /** Test to see if @c metadata has been set. */
 @property(nonatomic, readwrite) BOOL hasMetadata;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
 
 @end
 
@@ -186,6 +454,7 @@ typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
   TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode = 3,
   TransferInstructions_Metadata_FieldNumber_MerchantCustomerId = 4,
   TransferInstructions_Metadata_FieldNumber_DeliveryAddress = 5,
+  TransferInstructions_Metadata_FieldNumber_ProviderTransferMetadata = 6,
 };
 
 @interface TransferInstructions_Metadata : GPBMessage
@@ -206,6 +475,10 @@ typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Address *deliveryAddress;
 /** Test to see if @c deliveryAddress has been set. */
 @property(nonatomic, readwrite) BOOL hasDeliveryAddress;
+
+@property(nonatomic, readwrite, strong, null_resettable) ProviderTransferMetadata *providerTransferMetadata;
+/** Test to see if @c providerTransferMetadata has been set. */
+@property(nonatomic, readwrite) BOOL hasProviderTransferMetadata;
 
 @end
 
