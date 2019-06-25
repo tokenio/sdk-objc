@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "TokenClient.h"
 
-
 @interface TokenClientTests : XCTestCase
 
 @end

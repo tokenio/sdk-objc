@@ -52,6 +52,7 @@ static NSString *kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         
         NSData *publicKeyData = [self savePublicKeyWith:privateKeyRef expiration:expiresAtMs];
         if (publicKeyData == nil) {
+            CFRelease(privateKeyRef);
             TKLogError(@"Error saving public key");
             return nil;
         }
@@ -124,6 +125,7 @@ static NSString *kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
         TKSignature* tkSignature =  [TKSignature
                                      signature:signatureString
                                      signedWith:[self getPublicKeyInfoWith:privateKeyRef level:keyLevel]];
+        CFRelease(signRef);
         CFRelease(privateKeyRef);
         
         return tkSignature;
@@ -232,6 +234,7 @@ static NSString *kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFTypeRef result;
     OSStatus status = SecItemAdd(queryRef, &result);
     if (status != errSecSuccess) {
+        CFRelease(publicKeyRef);
         TKLogError(@"Error adding public key: %@\n", @(status));
         return nil;
     }
@@ -349,6 +352,7 @@ static NSString *kKeyHeader = @"3059301306072a8648ce3d020106082a8648ce3d03010703
     CFTypeRef result;
     OSStatus status = SecItemCopyMatching(publicKeyQuery, &result);
     if (status != errSecSuccess) {
+        CFRelease(publicKeyRef);
         TKLogError(@"Error retrieving public key: %@\n", @(status));
         return nil;
     }
