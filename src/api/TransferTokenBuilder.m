@@ -25,9 +25,9 @@
 - (id)init:(TKMember *)member lifetimeAmount:(NSDecimalNumber *)lifetimeAmount currency:(NSString*)currency {
     self = [super init];
     if (self) {
-        self.member = member;
-        self.lifetimeAmount = lifetimeAmount;
-        self.currency = currency;
+        _member = member;
+        _lifetimeAmount = lifetimeAmount;
+        _currency = currency;
     }
     return self;
 }
@@ -35,45 +35,87 @@
 - (id)init:(TKMember *)member tokenRequest:(TokenRequest *)tokenRequest {
     self = [super init];
     if (self) {
-        self.member = member;
-        self.refId = tokenRequest.requestPayload.refId;
+        _member = member;
+        _refId = tokenRequest.requestPayload.refId;
         if (tokenRequest.requestOptions.from.hasAlias) {
-            self.fromAlias = tokenRequest.requestOptions.from.alias;
+            _fromAlias = tokenRequest.requestOptions.from.alias;
         }
         self.fromMemberId = tokenRequest.requestOptions.from.id_p;
         if (tokenRequest.requestPayload.to.hasAlias) {
-            self.toAlias = tokenRequest.requestPayload.to.alias;
+            _toAlias = tokenRequest.requestPayload.to.alias;
         }
-        self.toMemberId = tokenRequest.requestPayload.to.id_p;
-        self.descr = tokenRequest.requestPayload.description_p;
-        self.receiptRequested = tokenRequest.requestOptions.receiptRequested;
+        _toMemberId = tokenRequest.requestPayload.to.id_p;
+        _descr = tokenRequest.requestPayload.description_p;
+        _receiptRequested = tokenRequest.requestOptions.receiptRequested;
         
         TokenRequestPayload_TransferBody *transfer = tokenRequest.requestPayload.transferBody;
         
         NSString *requestLifeTimeAmount = transfer.lifetimeAmount;
         if (requestLifeTimeAmount && requestLifeTimeAmount.length > 0) {
-            self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestLifeTimeAmount];
+            _lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestLifeTimeAmount];
         }
-        self.currency = transfer.currency;
+        _currency = transfer.currency;
         NSString *requestChargeAmounnt = transfer.amount;
         if (requestChargeAmounnt && requestChargeAmounnt.length > 0) {
-            self.lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestChargeAmounnt];
+            _lifetimeAmount = [NSDecimalNumber decimalNumberWithString:requestChargeAmounnt];
         }
         if (transfer.hasInstructions && (transfer.instructions.transferDestinationsArray.count > 0)) {
-            self.transferDestinations = transfer.instructions.transferDestinationsArray;
+            _transferDestinations = transfer.instructions.transferDestinationsArray;
         } else {
-            self.destinations = transfer.destinationsArray;
+            _destinations = transfer.destinationsArray;
         }
         
         if (tokenRequest.requestPayload.hasActingAs && tokenRequest.requestPayload.actingAs.displayName.length > 0) {
-            self.actingAs = tokenRequest.requestPayload.actingAs;
+            _actingAs = tokenRequest.requestPayload.actingAs;
         }
-        self.tokenRequestId = tokenRequest.id_p;
+        _tokenRequestId = tokenRequest.id_p;
     }
     return self;
 }
 
-- (TokenPayload *) buildPayload {
+- (id)init:(TKMember *)member tokenPayload:(TokenPayload *)tokenPayload {
+    self = [super init];
+    if (self) {
+        _member = member;
+        _lifetimeAmount = [NSDecimalNumber decimalNumberWithString:tokenPayload.transfer.lifetimeAmount];
+        _chargeAmount = [NSDecimalNumber decimalNumberWithString:tokenPayload.transfer.amount];
+        _currency = tokenPayload.transfer.currency;
+        
+        _fromMemberId = member.id;
+        if ([tokenPayload.from.id_p isEqualToString:member.id]
+            && tokenPayload.from.hasAlias
+            && ![tokenPayload.from.alias.value isEqualToString:@""]) {
+            _fromAlias = tokenPayload.from.alias;
+        }
+        _toMemberId = tokenPayload.to.id_p;
+        _toAlias = tokenPayload.to.alias;
+        
+        _refId = tokenPayload.refId;
+        _accountId = tokenPayload.transfer.instructions.source.account.token.accountId;
+        _expiresAtMs = tokenPayload.expiresAtMs;
+        _effectiveAtMs = tokenPayload.expiresAtMs;
+        _descr = tokenPayload.description_p;
+        
+        if (tokenPayload.transfer.instructions.transferDestinationsArray.count > 0) {
+            _transferDestinations = tokenPayload.transfer.instructions.transferDestinationsArray;
+        }
+        if (tokenPayload.transfer.instructions.destinationsArray.count > 0) {
+            _destinations = tokenPayload.transfer.instructions.destinationsArray;
+        }
+        
+        if (tokenPayload.hasActingAs) {
+            _actingAs = tokenPayload.actingAs;
+        }
+        _receiptRequested = tokenPayload.receiptRequested;
+        
+        if (tokenPayload.tokenRequestId && ![tokenPayload.tokenRequestId isEqualToString:@""]) {
+            _tokenRequestId = tokenPayload.tokenRequestId;
+        }
+    }
+    return self;
+}
+
+- (TokenPayload *)buildPayload {
     if (!self.accountId && !self.authorization) {
         @throw [NSException
                 exceptionWithName:@"InvalidTokenException"
@@ -97,8 +139,7 @@
     
     if (self.refId) {
         payload.refId = self.refId;
-    }
-    else {
+    } else {
         TKLogWarning(@"refId is not set. A random ID will be used.")
         payload.refId = [TKUtil nonce];
     }

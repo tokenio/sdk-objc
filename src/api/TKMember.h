@@ -406,7 +406,7 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency;
+- (TransferTokenBuilder *)createTransferTokenBuilder:(NSDecimalNumber *)amount currency:(NSString *)currency;
 
 /**
  * Creates a new transfer token builder from token request.
@@ -414,7 +414,80 @@
  * @param tokenRequest token request
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest;
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest;
+
+/**
+ * Creates a new transfer token builder from token payload.
+ *
+ * @param tokenPayload token payload
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenPayload:(TokenPayload *)tokenPayload;
+
+/**
+ * Creates a new transfer token builder.
+ *
+ * @param amount lifetime amount of the token
+ * @param currency currency code, e.g. "USD"
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency
+__deprecated_msg("Use createTransferTokenBuilder instead");
+
+/**
+ * Creates a new transfer token builder from token request.
+ *
+ * @param tokenRequest token request
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest
+__deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
+
+/**
+ * Prepares a transfer token, returning the resolved token payload and policy.
+ *
+ * @param builder transfer token builder
+ */
+- (void)prepareTransferToken:(TransferTokenBuilder *)builder
+                   onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                     onError:(OnError)onError;
+
+/**
+ * Signs a token payload.
+ *
+ * @param tokenPayload token payload
+ * @param keyLevel key level
+ * @return token payload signature
+ */
+- (Signature *)signTokenPayload:(TokenPayload *)tokenPayload
+                       keyLevel:(Key_Level)keyLevel
+                        onError:(OnError)onError;
+
+/**
+ * Creates a token directly from a resolved token payload and list of token signatures.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param signatures list of signatures
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString *)tokenRequestId
+         signatures:(NSArray<Signature *> *)signatures
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
+
+/**
+ * Creates a token directly from a resolved token payload and list of token signatures.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param keyLevel the key level
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString *)tokenRequestId
+           keyLevel:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Creates a new access token for a list of resources.
@@ -541,6 +614,26 @@
            currency:(NSString *)currency
         description:(NSString *)description
         destination:(TransferEndpoint *)destination
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError
+__deprecated_msg("Use redeemToken:amount:currency:description:transferDestination:onSuccess:onError: instead");;
+
+/**
+ * Redeems a transfer token.
+ *
+ * @param token transfer token to redeem
+ * @param amount transfer amount
+ * @param currency transfer currency code, e.g. "EUR"
+ * @param description transfer description
+ * @param transferDestination transfer destination
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)redeemToken:(Token *)token
+             amount:(NSDecimalNumber *)amount
+           currency:(NSString *)currency
+        description:(NSString *)description
+transferDestination:(TransferDestination *)destination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
 

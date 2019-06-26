@@ -504,12 +504,91 @@
                       onError:onError];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency {
+- (TransferTokenBuilder *)createTransferTokenBuilder:(NSDecimalNumber *)amount currency:(NSString *)currency {
     return [[TransferTokenBuilder alloc] init:self lifetimeAmount:amount currency:currency];
 }
 
-- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest {
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest {
     return [[TransferTokenBuilder alloc] init:self tokenRequest:tokenRequest];
+}
+
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenPayload:(TokenPayload *)tokenPayload {
+    return [[TransferTokenBuilder alloc] init:self tokenPayload:tokenPayload];
+}
+
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency {
+    return [self createTransferTokenBuilder:amount currency:currency];
+}
+
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest {
+    return [self createTransferTokenBuilderWithTokenRequest:tokenRequest];
+}
+
+- (void)prepareTransferToken:(TransferTokenBuilder *)builder
+                   onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                     onError:(OnError)onError {
+    [client prepareToken:[builder buildPayload] onSuccess:onSuccess onError:onError];
+}
+
+/**
+ * Signs a token payload.
+ *
+ * @param tokenPayload token payload
+ * @param keyLevel key level
+ * @return token payload signature
+ */
+- (Signature *)signTokenPayload:(TokenPayload *)tokenPayload
+                       keyLevel:(Key_Level)keyLevel
+                        onError:(OnError)onError {
+    return [client signTokenPayload:tokenPayload keyLevel:keyLevel onError:onError];
+}
+
+/**
+ * Creates a token directly from a resolved token payload and list of token signatures.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param signatures list of signatures
+ * @return token returned by the server
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString *)tokenRequestId
+         signatures:(NSArray<Signature *> *)signatures
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+    [client createToken:tokenPayload
+         tokenRequestId:tokenRequestId
+             signatures:signatures
+              onSuccess:onSuccess
+                onError:onError];
+}
+
+/**
+ * Creates a token directly from a resolved token payload and a key level.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param keyLevel the key level
+ * @return token returned by the server
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString *)tokenRequestId
+           keyLevel:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+    Signature *signature = [self signTokenPayload:tokenPayload
+                                         keyLevel:keyLevel
+                                          onError:onError];
+    
+    if (!signature) {
+        return;
+    }
+    
+    [client createToken:tokenPayload
+         tokenRequestId:tokenRequestId
+             signatures:@[signature]
+              onSuccess:onSuccess
+                onError:onError];
 }
 
 - (void)createAccessToken:(AccessTokenBuilder *)accessTokenBuilder
@@ -623,6 +702,35 @@
     }
     if (destination) {
         [payload.destinationsArray addObject:destination];
+    }
+    
+    [client redeemToken:payload
+              onSuccess:onSuccess
+                onError:onError];
+}
+
+- (void)redeemToken:(Token *)token
+             amount:(NSDecimalNumber *)amount
+           currency:(NSString *)currency
+        description:(NSString *)description
+transferDestination:(TransferDestination *)destination
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError {
+    TransferPayload *payload = [TransferPayload message];
+    payload.tokenId = token.id_p;
+    payload.refId = [TKUtil nonce];
+    
+    if (amount) {
+        payload.amount.value = [amount stringValue];
+    }
+    if (currency) {
+        payload.amount.currency = currency;
+    }
+    if (description) {
+        payload.description_p = description;
+    }
+    if (destination) {
+        [payload.transferDestinationsArray addObject:destination];
     }
     
     [client redeemToken:payload

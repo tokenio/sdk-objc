@@ -7,13 +7,7 @@
 
 #import "Alias.pbobjc.h"
 #import "TKTestExpectation.h"
-
-@class TokenClient;
-@class TokenClientBuilder;
-@class OauthBankAuthorization;
-@class TKMember;
-@class Notification;
-@class TKAccount;
+#import "TokenSdk.h"
 @class TKBankClient;
 @class HostAndPort;
 
@@ -168,5 +162,12 @@ typedef id (^AsyncTestBlockWithResult)(TokenClient *);
  * @param member member
  */
 - (Notification *)runUntilNotificationReceived:(TKMember *)member;
+
+/**
+ * Creates a transfer token with a transfer token builder.
+ *
+ * @param builder transer token builder
+ */
+- (Token *)createToken:(TransferTokenBuilder *)builder;
 
 @end

@@ -109,11 +109,26 @@
 - (id)init:(TKMember *)member tokenRequest:(TokenRequest *)tokenRequest;
 
 /**
+ * Initializes the transfer token builder.
+ *
+ * @param member the payer of the token
+ * @param tokenPayload token payload
+ * @return transfer token builder
+ */
+- (id)init:(TKMember *)member tokenPayload:(TokenPayload *)tokenPayload;
+
+/**
+ * Builds the token payload.
+ *
+ */
+- (TokenPayload *)buildPayload;
+
+/**
  * Executes the request, creating the token. Throws error if external authorization is required.
  *
  * @return transfer token
  */
-- (Token *)execute;
+- (Token *)execute __deprecated_msg("Use the new token flow instead. see PrepareToken methods in Member");
 
 /**
  * Executes the request, creating the token, async.
@@ -121,7 +136,6 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)executeAsync:(OnSuccessWithToken)onSuccess
-             onError:(OnError)onError;
-
+- (void)executeAsync:(OnSuccessWithToken)onSuccess onError:(OnError)onError
+__deprecated_msg("Use the new token flow instead. see PrepareToken methods in Member");
 @end

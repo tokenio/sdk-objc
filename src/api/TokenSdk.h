@@ -22,5 +22,6 @@
 #import "TokenClient.h"
 #import "TokenClientBuilder.h"
 #import "TokenProto.h"
+#import "PrepareTokenResult.h"
 
 #endif /* TokenSdk_h */
