@@ -552,7 +552,7 @@
  * @return token returned by the server
  */
 - (void)createToken:(TokenPayload *)tokenPayload
-     tokenRequestId:(NSString *)tokenRequestId
+     tokenRequestId:(NSString * _Nullable)tokenRequestId
          signatures:(NSArray<Signature *> *)signatures
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
@@ -572,7 +572,7 @@
  * @return token returned by the server
  */
 - (void)createToken:(TokenPayload *)tokenPayload
-     tokenRequestId:(NSString *)tokenRequestId
+     tokenRequestId:(NSString * _Nullable)tokenRequestId
            keyLevel:(Key_Level)keyLevel
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError {
