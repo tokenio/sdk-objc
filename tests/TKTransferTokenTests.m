@@ -131,41 +131,14 @@
     
 }
 
-- (void)testEndorseToken {
-    Token *token = [self createToken:[self preparedBuilder]];
-
-    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
-    [payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
-        Token* endorsed = [result token];
-        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
-        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-        XCTAssertEqualObjects(@"100.11", endorsed.payload.transfer.lifetimeAmount);
-        XCTAssertEqualObjects(@"USD", endorsed.payload.transfer.currency);
-        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
-        [expectation fulfill];
-    } onError:THROWERROR];
-    [self waitForExpectations:@[expectation] timeout:10];
-}
-
-- (void)testEndorseToken_Unicode {
+- (void)testCreateToken_Unicode {
     TransferTokenBuilder *builder = [self preparedBuilder];
     builder.descr = @"e\u0301\U0001F30D\U0001F340🇧🇭👰🏿👩‍👩‍👧‍👧我"; // decomposed é, globe, leaf; real unicode symbols
 
     Token *token = [self createToken:builder];
-
-    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
-    [payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
-        Token* endorsed = [result token];
-        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
-        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-        
-        XCTAssertEqualObjects(builder.descr, endorsed.payload.description_p);
-        XCTAssertEqual(2, endorsed.payloadSignaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Endorsed, endorsed.payloadSignaturesArray[0].action);
-        [expectation fulfill];
-    } onError:THROWERROR];
-    [self waitForExpectations:@[expectation] timeout:10];
+    XCTAssertEqualObjects(builder.descr, token.payload.description_p);
+    XCTAssertEqual(2, token.payloadSignaturesArray_Count);
+    XCTAssertEqual(TokenSignature_Action_Endorsed, token.payloadSignaturesArray[0].action);
 }
 
 - (void)testCancelToken {
@@ -174,12 +147,9 @@
     XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
     [payer cancelToken:token onSuccess:^(TokenOperationResult *result) {
         Token* cancelled = [result token];
-        XCTAssertEqual([result status], TokenOperationResult_Status_Success);
-        XCTAssertEqual(0, token.payloadSignaturesArray_Count);
-        XCTAssertEqualObjects(@"100.11", cancelled.payload.transfer.lifetimeAmount);
-        XCTAssertEqualObjects(@"USD", cancelled.payload.transfer.currency);
-        XCTAssertEqual(2, cancelled.payloadSignaturesArray_Count);
-        XCTAssertEqual(TokenSignature_Action_Cancelled, cancelled.payloadSignaturesArray[0].action);
+        XCTAssertEqualObjects(@"100.99", cancelled.payload.transfer.lifetimeAmount);
+        XCTAssertEqualObjects(@"EUR", cancelled.payload.transfer.currency);
+        XCTAssertEqual(4, cancelled.payloadSignaturesArray_Count);
         [expectation fulfill];
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
@@ -235,7 +205,7 @@
 }
 
 - (TransferTokenBuilder *)preparedBuilder:(NSString *)amount {
-    return [self preparedBuilder:@"100.99" currency:@"EUR"];
+    return [self preparedBuilder:amount currency:@"EUR"];
 }
 
 - (TransferTokenBuilder *)preparedBuilder:(NSString *)amount currency:(NSString *)currency {
