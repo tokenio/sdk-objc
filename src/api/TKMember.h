@@ -20,6 +20,7 @@
 #import "TokenCluster.h"
 #import "TransferTokenBuilder.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @class Member;
 @class TKClient;
 @class TKCrypto;
@@ -36,40 +37,40 @@
 @interface TKMember : NSObject <TKRepresentable>
 
 /// Member ID.
-@property (readonly, retain) NSString * _Nonnull id;
+@property (readonly, retain) NSString * id;
 
 /// Convenience access to aliases[0].
-@property (readonly, retain) Alias * _Nonnull firstAlias ;
+@property (readonly, retain) Alias * _Nullable firstAlias ;
 
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
-@property (readonly, retain) NSArray<Alias *> * _Nonnull aliases;
+@property (readonly, retain) NSArray<Alias *> * _Nullable aliases;
 
 
 /// Customized authorization browser creation block.
-@property (readonly, retain) TKBrowserFactory _Nonnull browserFactory;
+@property (readonly, retain) TKBrowserFactory _Nullable browserFactory;
 
 /// Current token cluster
-@property (readonly, retain) TokenCluster * _Nonnull tokenCluster;
+@property (readonly, retain) TokenCluster * tokenCluster;
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
  * Use `TokenClient` to obtain an instance of this class.
  */
-+ (TKMember * _Nonnull)member:(Member * _Nonnull)member
-        tokenCluster:(TokenCluster * _Nonnull)tokenCluster
-           useClient:(TKClient * _Nonnull)client
-   useBrowserFactory:(TKBrowserFactory _Nonnull)browserFactory
-             aliases:(NSMutableArray<Alias *> * _Nonnull) aliases;
++ (TKMember *)member:(Member *)member
+        tokenCluster:(TokenCluster *)tokenCluster
+           useClient:(TKClient *)client
+   useBrowserFactory:(TKBrowserFactory)browserFactory
+             aliases:(NSMutableArray<Alias *> *) aliases;
 
 
-- (TKClient * _Nonnull)getClient;
+- (TKClient *)getClient;
 
 /**
  * Creates a representable that acts as another member using an access token.
  *
  * @param accessTokenId the access token id
  */
-- (id<TKRepresentable> _Nonnull)forAccessToken:(NSString * _Nonnull)accessTokenId;
+- (id<TKRepresentable>)forAccessToken:(NSString *)accessTokenId;
 
 /**
  * Gets public keys Array for the member.
@@ -88,7 +89,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)approveKey:(Key * _Nonnull)key
+- (void)approveKey:(Key *)key
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 
@@ -100,7 +101,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)approveKeys:(NSArray<Key *> * _Nonnull)keys
+- (void)approveKeys:(NSArray<Key *> *)keys
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
@@ -111,7 +112,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeKey:(NSString * _Nonnull)keyId
+- (void)removeKey:(NSString *)keyId
         onSuccess:(OnSuccess)onSuccess
           onError:(OnError)onError;
 
@@ -122,7 +123,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeKeys:(NSArray<NSString *> * _Nonnull)keyIds
+- (void)removeKeys:(NSArray<NSString *> *)keyIds
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 
@@ -140,7 +141,7 @@
  * @param alias resend verification message for this alias
  * @param onSuccess invoked on success with verification ID
  */
-- (void)resendAliasVerification:(Alias * _Nonnull)alias
+- (void)resendAliasVerification:(Alias *)alias
                       onSuccess:(OnSuccessWithString)onSuccess
                         onError:(OnError)onError;
 
@@ -160,7 +161,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addAlias:(Alias * _Nonnull)alias
+- (void)addAlias:(Alias *)alias
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
 
@@ -171,7 +172,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addAliases:(NSArray<Alias *> * _Nonnull)aliases
+- (void)addAliases:(NSArray<Alias *> *)aliases
          onSuccess:(OnSuccess)onSuccess
            onError:(OnError)onError;
 
@@ -182,7 +183,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeAlias:(Alias * _Nonnull)alias
+- (void)removeAlias:(Alias *)alias
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
@@ -193,7 +194,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)removeAliases:(NSArray<Alias *> * _Nonnull)aliases
+- (void)removeAliases:(NSArray<Alias *> *)aliases
             onSuccess:(OnSuccess)onSuccess
               onError:(OnError)onError;
 
@@ -203,8 +204,8 @@
  * @param verificationId the verification id
  * @param code the code
  */
-- (void)verifyAlias:(NSString * _Nonnull)verificationId
-               code:(NSString * _Nonnull)code
+- (void)verifyAlias:(NSString *)verificationId
+               code:(NSString *)code
           onSuccess:(OnSuccess)onSuccess
             onError:(OnError)onError;
 
@@ -220,8 +221,8 @@
  * @param handler handler that will send the notifications to this subscriber
  * @param handlerInstructions instructions on how to send the notification
  */
-- (void)subscribeToNotifications:(NSString * _Nonnull)handler
-             handlerInstructions:(NSMutableDictionary<NSString *, NSString *> * _Nonnull)handlerInstructions
+- (void)subscribeToNotifications:(NSString *)handler
+             handlerInstructions:(NSMutableDictionary<NSString *, NSString *> *)handlerInstructions
                        onSuccess:(OnSuccessWithSubscriber)onSuccess
                          onError:(OnError)onError;
 
@@ -237,7 +238,7 @@
  *
  * @param subscriberId id of subscriber to get
  */
-- (void)getSubscriber:(NSString * _Nonnull)subscriberId
+- (void)getSubscriber:(NSString *)subscriberId
             onSuccess:(OnSuccessWithSubscriber)onSuccess
               onError:(OnError)onError;
 
@@ -257,7 +258,7 @@
  *
  * @param notificationId id of notification to get
  */
-- (void)getNotification:(NSString * _Nonnull)notificationId
+- (void)getNotification:(NSString *)notificationId
               onSuccess:(OnSuccessWithNotification)onSuccess
                 onError:(OnError)onError;
 
@@ -267,7 +268,7 @@
  *
  * @param subscriberId if of subscriber to remove
  */
-- (void)unsubscribeFromNotifications:(NSString * _Nonnull)subscriberId
+- (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError;
 
@@ -279,7 +280,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)initiateAccountLinking:(NSString * _Nonnull)bankId
+- (void)initiateAccountLinking:(NSString *)bankId
                      onSuccess:(OnSuccessWithTKAccounts)onSuccess
                        onError:(OnError)onError;
 
@@ -291,8 +292,8 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)linkAccounts:(NSString * _Nonnull)bankId
-         accessToken:(NSString * _Nonnull)accessToken
+- (void)linkAccounts:(NSString *)bankId
+         accessToken:(NSString *)accessToken
            onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError;
 
@@ -303,7 +304,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)linkAccounts:(BankAuthorization * _Nonnull)bankAuthorization
+- (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithTKAccounts)onSuccess
              onError:(OnError)onError;
 
@@ -314,7 +315,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)unlinkAccounts:(NSArray<NSString *> * _Nonnull)accountIds
+- (void)unlinkAccounts:(NSArray<NSString *> *)accountIds
              onSuccess:(OnSuccess)onSuccess
                onError:(OnError)onError;
 
@@ -332,7 +333,7 @@
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)setDefaultAccount:(NSString * _Nonnull)accountId
+- (void)setDefaultAccount:(NSString *)accountId
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
 
@@ -343,7 +344,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransfer:(NSString * _Nonnull)transferId
+- (void)getTransfer:(NSString *)transferId
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
 
@@ -371,7 +372,7 @@
  */
 - (void)getTransfersOffset:(NSString * _Nullable)offset
                      limit:(int)limit
-                   tokenId:(NSString * _Nonnull)tokenId
+                   tokenId:(NSString * _Nullable)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError;
 
@@ -383,8 +384,8 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)addAddress:(Address * _Nonnull)address
-          withName:(NSString * _Nonnull)name
+- (void)addAddress:(Address *)address
+          withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess
            onError:(OnError)onError;
 
@@ -395,7 +396,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)deleteAddressWithId:(NSString * _Nonnull)addressId
+- (void)deleteAddressWithId:(NSString *)addressId
                   onSuccess:(OnSuccess)onSuccess
                     onError:(OnError)onError;
 
@@ -406,8 +407,8 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder * _Nonnull)createTransferTokenBuilder:(NSDecimalNumber * _Nonnull)amount
-                                                     currency:(NSString * _Nonnull)currency;
+- (TransferTokenBuilder *)createTransferTokenBuilder:(NSDecimalNumber *)amount
+                                                     currency:(NSString *)currency;
 
 /**
  * Creates a new transfer token builder from token request.
@@ -415,7 +416,7 @@
  * @param tokenRequest token request
  * @return the transfer token builder
  */
-- (TransferTokenBuilder * _Nonnull)createTransferTokenBuilderWithTokenRequest:(TokenRequest * _Nonnull)tokenRequest;
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest;
 
 /**
  * Creates a new transfer token builder from token payload.
@@ -423,7 +424,7 @@
  * @param tokenPayload token payload
  * @return the transfer token builder
  */
-- (TransferTokenBuilder * _Nonnull)createTransferTokenBuilderWithTokenPayload:(TokenPayload * _Nonnull)tokenPayload;
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenPayload:(TokenPayload *)tokenPayload;
 
 /**
  * Creates a new transfer token builder.
@@ -432,7 +433,7 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder * _Nonnull)createTransferToken:(NSDecimalNumber * _Nonnull)amount currency:(NSString * _Nonnull)currency
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency
 __deprecated_msg("Use createTransferTokenBuilder instead");
 
 /**
@@ -441,7 +442,7 @@ __deprecated_msg("Use createTransferTokenBuilder instead");
  * @param tokenRequest token request
  * @return the transfer token builder
  */
-- (TransferTokenBuilder * _Nonnull)createTransferToken:(TokenRequest * _Nonnull)tokenRequest
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest
 __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
 
 /**
@@ -449,7 +450,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  *
  * @param builder transfer token builder
  */
-- (void)prepareTransferToken:(TransferTokenBuilder * _Nonnull)builder
+- (void)prepareTransferToken:(TransferTokenBuilder *)builder
                    onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                      onError:(OnError)onError;
 
@@ -460,7 +461,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param keyLevel key level
  * @return token payload signature
  */
-- (Signature * _Nullable)signTokenPayload:(TokenPayload * _Nonnull)tokenPayload
+- (Signature * _Nullable)signTokenPayload:(TokenPayload *)tokenPayload
                        keyLevel:(Key_Level)keyLevel
                         onError:(OnError)onError;
 
@@ -471,9 +472,9 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param tokenRequestId the token request id
  * @param signatures list of signatures
  */
-- (void)createToken:(TokenPayload * _Nonnull)tokenPayload
+- (void)createToken:(TokenPayload *)tokenPayload
      tokenRequestId:(NSString * _Nullable)tokenRequestId
-         signatures:(NSArray<Signature *> * _Nonnull)signatures
+         signatures:(NSArray<Signature *> *)signatures
           onSuccess:(OnSuccessWithToken)onSuccess
             onError:(OnError)onError;
 
@@ -484,7 +485,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param tokenRequestId the token request id
  * @param keyLevel the key level
  */
-- (void)createToken:(TokenPayload * _Nonnull)tokenPayload
+- (void)createToken:(TokenPayload *)tokenPayload
      tokenRequestId:(NSString * _Nullable)tokenRequestId
            keyLevel:(Key_Level)keyLevel
           onSuccess:(OnSuccessWithToken)onSuccess
@@ -497,7 +498,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)createAccessToken:(AccessTokenBuilder * _Nonnull)accessTokenBuilder
+- (void)createAccessToken:(AccessTokenBuilder *)accessTokenBuilder
                 onSuccess:(OnSuccessWithToken)onSuccess
                   onError:(OnError)onError;
 
@@ -507,8 +508,8 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param tokenToCancel old token to cancel
  * @param accessTokenBuilder access token configuration to create a new token from
  */
-- (void)replaceAccessToken:(Token * _Nonnull)tokenToCancel
-        accessTokenBuilder:(AccessTokenBuilder * _Nonnull)accessTokenBuilder
+- (void)replaceAccessToken:(Token *)tokenToCancel
+        accessTokenBuilder:(AccessTokenBuilder *)accessTokenBuilder
                  onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
                    onError:(OnError)onError;
 
@@ -519,7 +520,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getToken:(NSString * _Nonnull)tokenId
+- (void)getToken:(NSString *)tokenId
        onSuccess:(OnSuccessWithToken)onSuccess
          onError:(OnError)onError;
 
@@ -529,7 +530,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  *
  * @param toMemberId grantee of the active access token
  */
-- (void)getActiveAccessToken:(NSString * _Nonnull)toMemberId
+- (void)getActiveAccessToken:(NSString *)toMemberId
                    onSuccess:(OnSuccessWithToken)onSuccess
                      onError:(OnError)onError;
 
@@ -571,7 +572,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)endorseToken:(Token * _Nonnull)token
+- (void)endorseToken:(Token *)token
              withKey:(Key_Level)keyLevel
            onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
              onError:(OnError)onError;
@@ -584,7 +585,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)cancelToken:(Token * _Nonnull)token
+- (void)cancelToken:(Token *)token
           onSuccess:(OnSuccessWithTokenOperationResult)onSuccess
             onError:(OnError)onError;
 
@@ -595,7 +596,7 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemToken:(Token * _Nonnull)token
+- (void)redeemToken:(Token *)token
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
 
@@ -610,11 +611,11 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemToken:(Token * _Nonnull)token
-             amount:(NSDecimalNumber * _Nonnull)amount
-           currency:(NSString * _Nonnull)currency
-        description:(NSString * _Nonnull)description
-        destination:(TransferEndpoint * _Nonnull)destination
+- (void)redeemToken:(Token *)token
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+        destination:(TransferEndpoint * _Nullable)destination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError
 __deprecated_msg("Use redeemToken:amount:currency:description:transferDestination:onSuccess:onError: instead");;
@@ -630,11 +631,11 @@ __deprecated_msg("Use redeemToken:amount:currency:description:transferDestinatio
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)redeemToken:(Token * _Nonnull)token
-             amount:(NSDecimalNumber * _Nonnull)amount
-           currency:(NSString * _Nonnull)currency
-        description:(NSString * _Nonnull)description
-transferDestination:(TransferDestination * _Nonnull)destination
+- (void)redeemToken:(Token *)token
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+transferDestination:(TransferDestination * _Nullable)transferDestination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
 
@@ -648,10 +649,10 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)createBlob:(NSString * _Nonnull)ownerId
-          withType:(NSString * _Nonnull)type
-          withName:(NSString * _Nonnull)name
-          withData:(NSData * _Nonnull)data
+- (void)createBlob:(NSString *)ownerId
+          withType:(NSString *)type
+          withName:(NSString *)name
+          withData:(NSData *)data
          onSuccess:(OnSuccessWithAttachment)onSuccess
            onError:(OnError)onError;
 
@@ -662,7 +663,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getBlob:(NSString * _Nonnull)blobId
+- (void)getBlob:(NSString *)blobId
       onSuccess:(OnSuccessWithBlob)onSuccess
         onError:(OnError)onError;
 
@@ -674,8 +675,8 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getTokenBlob:(NSString * _Nonnull)tokenId
-          withBlobId:(NSString * _Nonnull)blobId
+- (void)getTokenBlob:(NSString *)tokenId
+          withBlobId:(NSString *)blobId
            onSuccess:(OnSuccessWithBlob)onSuccess
              onError:(OnError)onError;
 
@@ -686,7 +687,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getBankInfo:(NSString * _Nonnull)bankId
+- (void)getBankInfo:(NSString *)bankId
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError;
 
@@ -698,7 +699,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)createTestBankAccount:(Money * _Nonnull)balance
+- (void)createTestBankAccount:(Money *)balance
                     onSuccess:(OnSuccessWithOauthBankAuthorization)onSuccess
                       onError:(OnError)onError;
 
@@ -709,7 +710,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getProfile:(NSString * _Nonnull) ownerId
+- (void)getProfile:(NSString *) ownerId
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
 
@@ -721,7 +722,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)setProfile:(Profile * _Nonnull)profile
+- (void)setProfile:(Profile *)profile
          onSuccess:(OnSuccessWithProfile)onSuccess
            onError:(OnError)onError;
 
@@ -733,7 +734,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getProfilePicture:(NSString * _Nonnull)ownerId
+- (void)getProfilePicture:(NSString *)ownerId
                      size:(ProfilePictureSize) size
                 onSuccess:(OnSuccessWithBlob)onSuccess
                   onError:(OnError)onError;
@@ -747,10 +748,10 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)setProfilePicture:(NSString * _Nonnull)ownerId
-                 withType:(NSString * _Nonnull)type
-                 withName:(NSString * _Nonnull)name
-                 withData:(NSData * _Nonnull)data
+- (void)setProfilePicture:(NSString *)ownerId
+                 withType:(NSString *)type
+                 withName:(NSString *)name
+                 withData:(NSData *)data
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
 
@@ -770,7 +771,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param tokenId id of the token to endorse
  * @param onSuccess invoked on success with notify status
  */
-- (void)triggerStepUpNotification:(NSString * _Nonnull)tokenId
+- (void)triggerStepUpNotification:(NSString *)tokenId
                         onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                           onError:(OnError)onError;
     
@@ -782,7 +783,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param accountIds ids of the accounts to get balances
  * @param onSuccess invoked on success with notify status
  */
-- (void)triggerBalanceStepUpNotification:(NSArray<NSString *> * _Nonnull)accountIds
+- (void)triggerBalanceStepUpNotification:(NSArray<NSString *> *)accountIds
                                onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                                  onError:(OnError)onError;
     
@@ -795,8 +796,8 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param accountId the account id of transaction to get transaction
  * @param onSuccess invoked on success with notify status
  */
-- (void)triggerTransactionStepUpNotification:(NSString * _Nonnull)transactionId
-                                   accountID:(NSString * _Nonnull)accountId
+- (void)triggerTransactionStepUpNotification:(NSString *)transactionId
+                                   accountID:(NSString *)accountId
                                    onSuccess:(OnSuccessWithNotifyStatus)onSuccess
                                      onError:(OnError)onError;
 
@@ -805,7 +806,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  *
  * @param accountIds account ids for applying SCA
  */
-- (void)ApplySca:(NSArray<NSString *> * _Nonnull)accountIds
+- (void)ApplySca:(NSArray<NSString *> *)accountIds
        onSuccess:(OnSuccess)onSuccess
          onError:(OnError)onError;
 
@@ -816,9 +817,9 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param tokenId token id
  * @param state state
  */
-- (void)signTokenRequestState:(NSString * _Nonnull)tokenRequestId
-                      tokenId:(NSString * _Nonnull)tokenId
-                        state:(NSString * _Nonnull)state
+- (void)signTokenRequestState:(NSString *)tokenRequestId
+                      tokenId:(NSString *)tokenId
+                        state:(NSString *)state
                     onSuccess:(OnSuccessWithSignature)onSuccess
                       onError:(OnError)onError;
 
@@ -828,8 +829,8 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param requestPayload token request payload
  * @param requestOptions token request options
  */
-- (void)storeTokenRequest:(TokenRequestPayload * _Nonnull)requestPayload
-           requestOptions:(TokenRequestOptions * _Nonnull)requestOptions
+- (void)storeTokenRequest:(TokenRequestPayload *)requestPayload
+           requestOptions:(TokenRequestOptions *)requestOptions
                 onSuccess:(OnSuccessWithString)onSuccess
                   onError:(OnError)onError;
 
@@ -839,8 +840,8 @@ transferDestination:(TransferDestination * _Nonnull)destination
  * @param requestId token request ID
  * @param options new token request options
  */
-- (void)updateTokenRequest:(NSString * _Nonnull)requestId
-                   options:(TokenRequestOptions * _Nonnull)options
+- (void)updateTokenRequest:(NSString *)requestId
+                   options:(TokenRequestOptions *)options
                  onSuccess:(OnSuccess)onSuccess
                    onError:(OnError)onError;
 
@@ -849,7 +850,7 @@ transferDestination:(TransferDestination * _Nonnull)destination
  *
  * @param receiptContact receipt contact to set
  */
-- (void)setReceiptContact:(ReceiptContact * _Nonnull)receiptContact
+- (void)setReceiptContact:(ReceiptContact *)receiptContact
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
 
@@ -862,14 +863,14 @@ transferDestination:(TransferDestination * _Nonnull)destination
 /**
  * Marks a member as a trusted beneficiary.
  */
-- (void)addTrustedBeneficiary:(NSString * _Nonnull)memberId
+- (void)addTrustedBeneficiary:(NSString *)memberId
                     onSuccess:(OnSuccess)onSuccess
                       onError:(OnError)onError;
 
 /**
  * Removes a trusted beneficiary.
  */
-- (void)removeTrustedBeneficiary:(NSString * _Nonnull)memberId
+- (void)removeTrustedBeneficiary:(NSString *)memberId
                        onSuccess:(OnSuccess)onSuccess
                          onError:(OnError)onError;
 
@@ -884,21 +885,22 @@ transferDestination:(TransferDestination * _Nonnull)destination
  *
  * @param securityMetadata the security metadata
  */
--(void)setSecurityMetadata:(SecurityMetadata * _Nonnull)securityMetadata;
+-(void)setSecurityMetadata:(SecurityMetadata *)securityMetadata;
 
 /**
  * Sets the app callback url of a member.
  *
  * @param appCallbackUrl the app callback url
  */
--(void)setAppCallbackUrl:(NSString * _Nonnull)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError;
+-(void)setAppCallbackUrl:(NSString *)appCallbackUrl onSuccess:(OnSuccess)onSuccess onError:(OnError)onError;
 
 /**
  * Resolves transfer destinations for the given account ID.
  *
  * @param accountId account ID
  */
--(void)resolveTransferDestinations:(NSString * _Nonnull)accountId
+-(void)resolveTransferDestinations:(NSString *)accountId
                          onSuccess:(OnSuccessWithTransferEndpoints)onSuccess
                            onError:(OnError)onError;
 @end
+NS_ASSUME_NONNULL_END

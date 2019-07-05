@@ -16,6 +16,7 @@
 #import "TKOauthEngine.h"
 #import "Transferinstructions.pbobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @implementation TKMember {
     TKClient *client;
     Member *member;
@@ -60,11 +61,11 @@
     return client;
 }
 
-- (Alias *)firstAlias {
+- (Alias * _Nullable)firstAlias {
     return aliases.count > 0 ? aliases[0] : nil;
 }
 
-- (NSArray<Alias *> *)aliases {
+- (NSArray<Alias *> * _Nullable)aliases {
     return [NSArray arrayWithArray:aliases];
 }
 
@@ -320,7 +321,7 @@
                   onError:onError];
 }
 
-- (void)getNotificationsOffset:(NSString *)offset
+- (void)getNotificationsOffset:(NSString * _Nullable)offset
                          limit:(int)limit
                      onSuccess:(OnSuccessWithNotifications)onSuccess
                        onError:(OnError)onError {
@@ -449,7 +450,7 @@
                 onError:onError];
 }
 
-- (void)getTransfersOffset:(NSString *)offset
+- (void)getTransfersOffset:(NSString * _Nullable)offset
                      limit:(int)limit
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError {
@@ -460,9 +461,9 @@
                      onError:onError];
 }
 
-- (void)getTransfersOffset:(NSString *)offset
+- (void)getTransfersOffset:(NSString * _Nullable)offset
                      limit:(int)limit
-                   tokenId:(NSString *)tokenId
+                   tokenId:(NSString * _Nullable)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError {
     [client getTransfersOffset:offset
@@ -537,7 +538,7 @@
  * @param keyLevel key level
  * @return token payload signature
  */
-- (Signature *)signTokenPayload:(TokenPayload *)tokenPayload
+- (Signature * _Nullable)signTokenPayload:(TokenPayload *)tokenPayload
                        keyLevel:(Key_Level)keyLevel
                         onError:(OnError)onError {
     return [client signTokenPayload:tokenPayload keyLevel:keyLevel onError:onError];
@@ -628,7 +629,7 @@
                          onError:onError];
 }
 
-- (void)getTransferTokensOffset:(NSString *)offset
+- (void)getTransferTokensOffset:(NSString * _Nullable)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError {
@@ -639,7 +640,7 @@
                     onError:onError];
 }
 
-- (void)getAccessTokensOffset:(NSString *)offset
+- (void)getAccessTokensOffset:(NSString * _Nullable)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTokens)onSuccess
                       onError:(OnError)onError {
@@ -675,16 +676,16 @@
                amount:nil
              currency:nil
           description:nil
-          destination:nil
+  transferDestination:nil
             onSuccess:onSuccess
               onError:onError];
 }
 
 - (void)redeemToken:(Token *)token
-             amount:(NSDecimalNumber *)amount
-           currency:(NSString *)currency
-        description:(NSString *)description
-        destination:(TransferEndpoint *)destination
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+        destination:(TransferEndpoint * _Nullable)destination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
@@ -710,10 +711,10 @@
 }
 
 - (void)redeemToken:(Token *)token
-             amount:(NSDecimalNumber *)amount
-           currency:(NSString *)currency
-        description:(NSString *)description
-transferDestination:(TransferDestination *)destination
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+transferDestination:(TransferDestination * _Nullable)transferDestination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
@@ -729,8 +730,8 @@ transferDestination:(TransferDestination *)destination
     if (description) {
         payload.description_p = description;
     }
-    if (destination) {
-        [payload.transferDestinationsArray addObject:destination];
+    if (transferDestination) {
+        [payload.transferDestinationsArray addObject:transferDestination];
     }
     
     [client redeemToken:payload
@@ -1071,3 +1072,4 @@ transferDestination:(TransferDestination *)destination
     return [TKAccount account:account of:self useClient:client];
 }
 @end
+NS_ASSUME_NONNULL_END

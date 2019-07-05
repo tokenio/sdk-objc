@@ -112,7 +112,7 @@
     destination.token.accountId = payeeAccount.id;
     destination.token.memberId = payee.id;
     
-    Token *endorsed = [self createToken:[self preparedBuilder]];
+    Token * _Nonnull endorsed = [self createToken:[self preparedBuilder]];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
     [self->payee

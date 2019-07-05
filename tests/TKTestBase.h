@@ -8,11 +8,13 @@
 #import "Alias.pbobjc.h"
 #import "TKTestExpectation.h"
 #import "TokenSdk.h"
+
+NS_ASSUME_NONNULL_BEGIN
 @class TKBankClient;
 @class HostAndPort;
 
 typedef void (^AsyncTestBlock)(TokenClient *);
-typedef id (^AsyncTestBlockWithResult)(TokenClient *);
+typedef id _Nonnull (^AsyncTestBlockWithResult)(TokenClient *);
 
 #define THROWERROR ^(NSError *error) { @throw error; }
 #define IGNOREERROR ^(NSError *error) { @throw error; }
@@ -169,5 +171,5 @@ typedef id (^AsyncTestBlockWithResult)(TokenClient *);
  * @param builder transer token builder
  */
 - (Token *)createToken:(TransferTokenBuilder *)builder;
-
 @end
+NS_ASSUME_NONNULL_END
