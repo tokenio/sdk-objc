@@ -17,6 +17,7 @@
 #import "TKTokenCryptoEngineFactory.h"
 #import "TKRpcSyncCall.h"
 #import "PagedArray.h"
+#import "PrepareTokenResult.h"
 
 @implementation TKTestBase {
     TokenClient *tokenClient;
@@ -268,5 +269,22 @@
          backOffTimeMs:2
          waitingTimeMs:60000];
     return result;
+}
+
+- (Token *)createToken:(TransferTokenBuilder *)builder {
+    __block Token *ret = nil;
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+    [builder.member prepareTransferToken:builder onSuccess:^(PrepareTokenResult *result) {
+        [builder.member createToken:result.tokenPayload
+                  tokenRequestId:nil
+                        keyLevel:result.policy.singleSignature.signer.keyLevel
+                       onSuccess:^ (Token *token) {
+                           ret = token;
+                           [expectation fulfill];
+                       } onError:THROWERROR];
+    } onError:THROWERROR];
+    
+    [self waitForExpectations:@[expectation] timeout:10];
+    return ret;
 }
 @end

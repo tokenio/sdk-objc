@@ -98,5 +98,4 @@
      } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
 }
-
 @end

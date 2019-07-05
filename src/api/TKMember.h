@@ -20,6 +20,7 @@
 #import "TokenCluster.h"
 #import "TransferTokenBuilder.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @class Member;
 @class TKClient;
 @class TKCrypto;
@@ -36,20 +37,20 @@
 @interface TKMember : NSObject <TKRepresentable>
 
 /// Member ID.
-@property (readonly, retain) NSString *id;
+@property (readonly, retain) NSString * id;
 
 /// Convenience access to aliases[0].
-@property (readonly, retain) Alias *firstAlias;
+@property (readonly, retain) Alias * _Nullable firstAlias ;
 
 /// Member's aliases: emails, etc. In UI, user normally refers to member by alias.
-@property (readonly, retain) NSArray<Alias *> *aliases;
+@property (readonly, retain) NSArray<Alias *> * _Nullable aliases;
 
 
 /// Customized authorization browser creation block.
-@property (readonly, retain) TKBrowserFactory browserFactory;
+@property (readonly, retain) TKBrowserFactory _Nullable browserFactory;
 
 /// Current token cluster
-@property (readonly, retain) TokenCluster *tokenCluster;
+@property (readonly, retain) TokenCluster * tokenCluster;
 
 /**
  * Creates new member instance. The method is not meant to be invoked directly.
@@ -247,7 +248,7 @@
  * @param offset offset to start at (NULL for none)
  * @param limit max number of records to return
  */
-- (void)getNotificationsOffset:(NSString *)offset
+- (void)getNotificationsOffset:(NSString * _Nullable)offset
                          limit:(int)limit
                      onSuccess:(OnSuccessWithNotifications)onSuccess
                        onError:(OnError)onError;
@@ -355,7 +356,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransfersOffset:(NSString *)offset
+- (void)getTransfersOffset:(NSString * _Nullable)offset
                      limit:(int)limit
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError;
@@ -369,9 +370,9 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransfersOffset:(NSString *)offset
+- (void)getTransfersOffset:(NSString * _Nullable)offset
                      limit:(int)limit
-                   tokenId:(NSString *)tokenId
+                   tokenId:(NSString * _Nullable)tokenId
                  onSuccess:(OnSuccessWithTransfers)onSuccess
                    onError:(OnError)onError;
 
@@ -406,7 +407,8 @@
  * @param currency currency code, e.g. "USD"
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency;
+- (TransferTokenBuilder *)createTransferTokenBuilder:(NSDecimalNumber *)amount
+                                                     currency:(NSString *)currency;
 
 /**
  * Creates a new transfer token builder from token request.
@@ -414,7 +416,80 @@
  * @param tokenRequest token request
  * @return the transfer token builder
  */
-- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest;
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest;
+
+/**
+ * Creates a new transfer token builder from token payload.
+ *
+ * @param tokenPayload token payload
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferTokenBuilderWithTokenPayload:(TokenPayload *)tokenPayload;
+
+/**
+ * Creates a new transfer token builder.
+ *
+ * @param amount lifetime amount of the token
+ * @param currency currency code, e.g. "USD"
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferToken:(NSDecimalNumber *)amount currency:(NSString *)currency
+__deprecated_msg("Use createTransferTokenBuilder instead");
+
+/**
+ * Creates a new transfer token builder from token request.
+ *
+ * @param tokenRequest token request
+ * @return the transfer token builder
+ */
+- (TransferTokenBuilder *)createTransferToken:(TokenRequest *)tokenRequest
+__deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
+
+/**
+ * Prepares a transfer token, returning the resolved token payload and policy.
+ *
+ * @param builder transfer token builder
+ */
+- (void)prepareTransferToken:(TransferTokenBuilder *)builder
+                   onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                     onError:(OnError)onError;
+
+/**
+ * Signs a token payload.
+ *
+ * @param tokenPayload token payload
+ * @param keyLevel key level
+ * @return token payload signature
+ */
+- (Signature * _Nullable)signTokenPayload:(TokenPayload *)tokenPayload
+                       keyLevel:(Key_Level)keyLevel
+                        onError:(OnError)onError;
+
+/**
+ * Creates a token directly from a resolved token payload and list of token signatures.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param signatures list of signatures
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString * _Nullable)tokenRequestId
+         signatures:(NSArray<Signature *> *)signatures
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
+
+/**
+ * Creates a token directly from a resolved token payload and list of token signatures.
+ *
+ * @param tokenPayload token payload
+ * @param tokenRequestId the token request id
+ * @param keyLevel the key level
+ */
+- (void)createToken:(TokenPayload *)tokenPayload
+     tokenRequestId:(NSString * _Nullable)tokenRequestId
+           keyLevel:(Key_Level)keyLevel
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Creates a new access token for a list of resources.
@@ -467,7 +542,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getTransferTokensOffset:(NSString *)offset
+- (void)getTransferTokensOffset:(NSString * _Nullable)offset
                           limit:(int)limit
                       onSuccess:(OnSuccessWithTokens)onSuccess
                         onError:(OnError)onError;
@@ -480,7 +555,7 @@
  * @param onSuccess callback invoked on success
  * @param onError callback invoked on error
  */
-- (void)getAccessTokensOffset:(NSString *)offset
+- (void)getAccessTokensOffset:(NSString * _Nullable)offset
                         limit:(int)limit
                     onSuccess:(OnSuccessWithTokens)onSuccess
                       onError:(OnError)onError;
@@ -537,10 +612,30 @@
  * @param onError callback invoked on error
  */
 - (void)redeemToken:(Token *)token
-             amount:(NSDecimalNumber *)amount
-           currency:(NSString *)currency
-        description:(NSString *)description
-        destination:(TransferEndpoint *)destination
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+        destination:(TransferEndpoint * _Nullable)destination
+          onSuccess:(OnSuccessWithTransfer)onSuccess
+            onError:(OnError)onError
+__deprecated_msg("Use redeemToken:amount:currency:description:transferDestination:onSuccess:onError: instead");;
+
+/**
+ * Redeems a transfer token.
+ *
+ * @param token transfer token to redeem
+ * @param amount transfer amount
+ * @param currency transfer currency code, e.g. "EUR"
+ * @param description transfer description
+ * @param transferDestination transfer destination
+ * @param onSuccess callback invoked on success
+ * @param onError callback invoked on error
+ */
+- (void)redeemToken:(Token *)token
+             amount:(NSDecimalNumber * _Nullable)amount
+           currency:(NSString * _Nullable)currency
+        description:(NSString * _Nullable)description
+transferDestination:(TransferDestination * _Nullable)transferDestination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
 
@@ -557,7 +652,7 @@
 - (void)createBlob:(NSString *)ownerId
           withType:(NSString *)type
           withName:(NSString *)name
-          withData:(NSData * )data
+          withData:(NSData *)data
          onSuccess:(OnSuccessWithAttachment)onSuccess
            onError:(OnError)onError;
 
@@ -808,3 +903,4 @@
                          onSuccess:(OnSuccessWithTransferEndpoints)onSuccess
                            onError:(OnError)onError;
 @end
+NS_ASSUME_NONNULL_END

@@ -9,7 +9,7 @@
 
 #import "TKTypedef.h"
 #import "TKCrypto.h"
-
+#import "PrepareTokenResult.h"
 
 @class Member;
 @class GatewayService;
@@ -260,6 +260,30 @@
 - (void)setDefaultAccount:(NSString *)accountId
                 onSuccess:(OnSuccess)onSuccess
                   onError:(OnError)onError;
+
+/**
+ * Prepares a token, resolving the payload and determining the policy.
+ *
+ * @param payload token payload
+ * @return resolved payload and policy
+ */
+- (void)prepareToken:(TokenPayload *)payload
+           onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Creates a new token.
+ *
+ * @param payload token payload
+ * @param tokenRequestId token request ID
+ * @param signatures list of token payload signatures
+ * @return token returned by server
+ */
+- (void)createToken:(TokenPayload *)payload
+     tokenRequestId:(NSString *)tokenRequestId
+         signatures:(NSArray<Signature *> *)signatures
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError;
 
 /**
  * Creates a new transfer token.
@@ -715,4 +739,15 @@
 -(void)resolveTransferDestinations:(NSString *)accountId
                          onSuccess:(OnSuccessWithTransferEndpoints)onSuccess
                            onError:(OnError)onError;
+
+/**
+ * Signs a token payload.
+ *
+ * @param tokenPayload token payload
+ * @param keyLevel key level
+ * @return token payload signature
+ */
+- (Signature *)signTokenPayload:(TokenPayload *)tokenPayload
+                       keyLevel:(Key_Level)level
+                        onError:(OnError)onError;
 @end

@@ -16,6 +16,7 @@
 #import "TKError.h"
 #import "TKUnauthenticatedClient.h"
 #import "PagedArray.h"
+#import "TKLogManager.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -535,6 +536,62 @@
                                    RpcLogCompleted(response);
                                    onSuccess();
                                } else { 
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)prepareToken:(TokenPayload *)payload
+           onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+             onError:(OnError)onError {
+    PrepareTokenRequest *request = [PrepareTokenRequest message];
+    request.payload = payload;
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToPrepareTokenWithRequest:request
+                           handler:^(PrepareTokenResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess([PrepareTokenResult create:response.resolvedPayload
+                                                                 policy:response.policy]);
+                               } else {
+                                   [self->errorHandler handle:onError withError:error];
+                               }
+                           }];
+    
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+
+- (void)createToken:(TokenPayload *)payload
+     tokenRequestId:(NSString *)tokenRequestId
+         signatures:(NSArray<Signature *> *)signatures
+          onSuccess:(OnSuccessWithToken)onSuccess
+            onError:(OnError)onError {
+    CreateTokenRequest *request = [CreateTokenRequest message];
+    request.payload = payload;
+    if (tokenRequestId) {
+        request.tokenRequestId = tokenRequestId;
+    }
+    if (signatures && signatures.count > 0) {
+        request.signaturesArray = [NSMutableArray arrayWithArray:signatures];
+    }
+    RpcLogStart(request);
+    
+    GRPCProtoCall *call = [gateway
+                           RPCToCreateTokenWithRequest:request
+                           handler:^(CreateTokenResponse *response, NSError *error) {
+                               if (response) {
+                                   RpcLogCompleted(response);
+                                   onSuccess(response.token);
+                               } else {
                                    [self->errorHandler handle:onError withError:error];
                                }
                            }];
@@ -1835,4 +1892,25 @@ securityMetadata:securityMetadata
                             errorHandler:errorHandler];
 }
 
+- (Signature *)signTokenPayload:(TokenPayload *)tokenPayload
+                       keyLevel:(Key_Level)keyLevel
+                        onError:(OnError)onError {
+    NSString *reason = (tokenPayload.bodyOneOfCase == TokenPayload_Body_OneOfCase_Access)
+    ? @"Signature_Reason_EndorseAccessToken"
+    : @"Signature_Reason_EndorseTransferToken";
+    TKSignature *signature = [crypto
+                             signPayload:tokenPayload
+                             action:TokenSignature_Action_Endorsed
+                             usingKey:keyLevel
+                             reason:TKLocalizedString(reason, @"Approve endorsing token")
+                             onError:onError];
+    if (signature) {
+        Signature *result = [Signature message];
+        result.memberId = memberId;
+        result.keyId = signature.key.id_p;
+        result.signature = signature.value;
+        return result;
+    }
+    return nil;
+}
 @end

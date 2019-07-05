@@ -113,7 +113,7 @@
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.sepa.iban = @"123";
     [payee getToken:transferToken.id_p
-          onSuccess:^(Token *token) {
+          onSuccess:^(Token * token) {
               [payee redeemToken:token
                           amount:nil // use default
                         currency:nil // use default

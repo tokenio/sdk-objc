@@ -44,6 +44,7 @@ DEPENDENCIES:
   - "!ProtoCompiler"
   - "!ProtoCompiler-gRPCPlugin"
   - OrderedDictionary
+  - Protobuf
   - Unirest (~> 1.1.4)
 
 SPEC REPOS:
@@ -73,6 +74,6 @@ SPEC CHECKSUMS:
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
-PODFILE CHECKSUM: 0b765c61c8e9ac23e0110116af858601977444cb
+PODFILE CHECKSUM: dc0085635a30c93626b01b588f2913d8557f3a64
 
 COCOAPODS: 1.6.2

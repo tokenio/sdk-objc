@@ -10,9 +10,12 @@ target 'TokenSdk' do
   pod '!ProtoCompiler-gRPCPlugin'
   pod "OrderedDictionary"
   pod 'Unirest', '~>1.1.4'
+  # A workaround for issue https://github.com/firebase/firebase-ios-sdk/issues/2665
+  pod 'Protobuf', :inhibit_warnings => true
 
   target 'TokenSdkTests' do
     inherit! :search_paths
+    pod 'Protobuf', :inhibit_warnings => true
   end
 end
 
