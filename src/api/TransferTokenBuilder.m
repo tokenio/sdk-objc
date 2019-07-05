@@ -81,14 +81,19 @@
         _chargeAmount = [NSDecimalNumber decimalNumberWithString:tokenPayload.transfer.amount];
         _currency = tokenPayload.transfer.currency;
         
-        _fromMemberId = member.id;
-        if ([tokenPayload.from.id_p isEqualToString:member.id]
-            && tokenPayload.from.hasAlias
-            && ![tokenPayload.from.alias.value isEqualToString:@""]) {
+        if (![tokenPayload.from.id_p isEqual:@""]) {
+            _fromMemberId = tokenPayload.from.id_p;
+        }
+        if (tokenPayload.from.hasAlias && ![tokenPayload.from.alias.value isEqual:@""]) {
             _fromAlias = tokenPayload.from.alias;
         }
-        _toMemberId = tokenPayload.to.id_p;
-        _toAlias = tokenPayload.to.alias;
+        
+        if (![tokenPayload.to.id_p isEqual:@""]) {
+            _toMemberId = tokenPayload.to.id_p;
+        }
+        if (tokenPayload.to.hasAlias & ![tokenPayload.to.alias.value isEqual:@""]) {
+            _toAlias = tokenPayload.to.alias;
+        }
         
         _refId = tokenPayload.refId;
         _accountId = tokenPayload.transfer.instructions.source.account.token.accountId;
@@ -116,25 +121,23 @@
 }
 
 - (TokenPayload *)buildPayload {
-    if (!self.accountId && !self.authorization) {
-        @throw [NSException
-                exceptionWithName:@"InvalidTokenException"
-                reason:@"No source account found on token"
-                userInfo:nil];
-    }
-    
     TokenMember *payer = [TokenMember message];
-    
-    payer.id_p = [self.member id];
-    if (self.fromAlias) {
-        payer.alias = self.fromAlias;
+    if (self.fromMemberId && ![self.fromMemberId isEqualToString:@""]) {
+        payer.id_p = self.fromMemberId;
+        if (self.fromAlias && ![self.fromAlias.value isEqual:@""]) {
+            payer.alias = self.fromAlias;
+        }
+    } else {
+        payer.id_p = self.member.id;
     }
     
     TokenPayload *payload = [TokenPayload message];
     payload.version = @"1.0";
     payload.from = payer;
     payload.transfer.lifetimeAmount = [self.lifetimeAmount stringValue];
-    payload.transfer.amount = [self.chargeAmount stringValue];
+    if (self.chargeAmount && ![self.chargeAmount isEqual:NSDecimalNumber.notANumber]) {
+        payload.transfer.amount = [self.chargeAmount stringValue];
+    }
     payload.transfer.currency = self.currency;
     
     if (self.refId) {
@@ -145,7 +148,7 @@
     }
     
     if (self.accountId) {
-        payload.transfer.instructions.source.account.token.memberId = [self.member id];
+        payload.transfer.instructions.source.account.token.memberId = payer.id_p;
         payload.transfer.instructions.source.account.token.accountId = self.accountId;
     }
     
@@ -154,11 +157,11 @@
         payload.transfer.instructions.source.account.custom.payload = self.authorization.accessToken;
     }
     
-    if (self.toAlias) {
+    if (self.toAlias && ![self.toAlias.value isEqual:@""]) {
         payload.to.alias = self.toAlias;
     }
     
-    if (self.toMemberId) {
+    if (self.toMemberId  && ![self.toMemberId isEqual:@""]) {
         payload.to.id_p = self.toMemberId;
     }
     
@@ -211,6 +214,13 @@
 
 - (void)executeAsync:(OnSuccessWithToken)onSuccess
              onError:(OnError)onError {
+    if (!self.accountId && !self.authorization) {
+        @throw [NSException
+                exceptionWithName:@"InvalidTokenException"
+                reason:@"No source account found on token"
+                userInfo:nil];
+    }
+    
     TokenPayload *payload = [self buildPayload];
     [[self.member getClient]
      createTransferToken:payload
