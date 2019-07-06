@@ -11,7 +11,7 @@
 @implementation TKUtil
 
 + (NSString *)tokenSdkVersion {
-    return @"2.0.8";
+    return @"2.0.9";
 }
 
 + (NSString *)nonce {
