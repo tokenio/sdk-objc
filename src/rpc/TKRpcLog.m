@@ -4,7 +4,7 @@
 //
 
 #import <Protobuf/GPBMessage.h>
-
+#import <ProtoRPC/ProtoRPC.h>
 #import "TKRpcLog.h"
 #import "TKLogManager.h"
 
@@ -22,4 +22,8 @@ void RpcLogErrorDetails(NSString *message) {
 
 void RpcLogCompleted(GPBMessage *response) {
     TKLogDebug(@"RPC >> %@", response)
+}
+
+void RpcLogCompletedWithMetaData(GPBMessage *response, GRPCProtoCall *call) {
+    TKLogDebug(@"RPC >> %@ \nmetadata: %@", response, call.responseTrailers)
 }
