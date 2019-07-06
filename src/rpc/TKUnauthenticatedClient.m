@@ -30,7 +30,7 @@
          languageCode:(NSString *)languageCode_
          errorHandler:(TKRpcErrorHandler *) errorHandler_ {
     self = [super init];
-
+    
     if (self) {
         gateway = gateway_;
         errorHandler = errorHandler_;
@@ -38,7 +38,7 @@
                                   developerKey:developerKey_
                                   languageCode:languageCode_];
     }
-
+    
     return self;
 }
 
@@ -47,17 +47,17 @@
     CreateMemberRequest *request = [CreateMemberRequest message];
     request.nonce = [TKUtil nonce];
     RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToCreateMemberWithRequest:request
-                                 handler:^(CreateMemberResponse *response, NSError *error) {
-                                     if (response) {
-                                         RpcLogCompleted(response);
-                                         onSuccess(response.memberId);
-                                     } else {
-                                         [self->errorHandler handle:onError withError:error];
-                                     }
-                                 }];
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToCreateMemberWithRequest:request
+                                   handler:^(CreateMemberResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.memberId);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -67,12 +67,12 @@
     ResolveAliasRequest *request = [ResolveAliasRequest message];
     request.alias = alias;
     RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToResolveAliasWithRequest:request
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToResolveAliasWithRequest:request
                                    handler:^(ResolveAliasResponse *response, NSError *error) {
                                        if (response) {
-                                           RpcLogCompleted(response);
+                                           RpcLogCompletedWithMetaData(response, call);
                                            if (response.hasMember) {
                                                onSuccess(response.member.id_p);
                                            }
@@ -87,27 +87,27 @@
 }
 
 - (void)getTokenMember:(Alias *)alias
-          onSuccess:(OnSuccessWithTokenMember)onSuccess
-            onError:(OnError)onError {
+             onSuccess:(OnSuccessWithTokenMember)onSuccess
+               onError:(OnError)onError {
     ResolveAliasRequest *request = [ResolveAliasRequest message];
     request.alias = alias;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToResolveAliasWithRequest:request
-                           handler:^(ResolveAliasResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   if (response.hasMember) {
-                                       onSuccess(response.member);
-                                   }
-                                   else {
-                                       onSuccess(nil);
-                                   }
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToResolveAliasWithRequest:request
+                                   handler:^(ResolveAliasResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           if (response.hasMember) {
+                                               onSuccess(response.member);
+                                           }
+                                           else {
+                                               onSuccess(nil);
+                                           }
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -117,19 +117,19 @@
     GetMemberRequest *request = [GetMemberRequest message];
     request.memberId = memberId;
     RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToGetMemberWithRequest:request
-                              handler:^(GetMemberResponse *response, NSError *error) {
-                                  if (response) {
-                                      RpcLogCompleted(response);
-                                      onSuccess(response.member);
-                                  } else {
-                                      [self->errorHandler handle:onError withError:error];
-                                  }
-                              }
-    ];
-
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetMemberWithRequest:request
+                                   handler:^(GetMemberResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.member);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }
+                                   ];
+    
     [rpc execute:call request:request];
 }
 
@@ -149,18 +149,17 @@
 - (void)createMember:(NSString *)memberId
               crypto:(TKCrypto *)crypto
           operations:(NSArray<MemberOperation *> *)operations
-           metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
+       metadataArray:(NSArray<MemberOperationMetadata *> *)metadataArray
            onSuccess:(OnSuccessWithMember)onSuccess
              onError:(OnError)onError {
-    
     [self updateMember:memberId
                 crypto:crypto
               prevHash:nil
             operations:operations
          metadataArray:metadataArray
                 reason:TKLocalizedString(
-                         @"Signature_Reason_CreateMember",
-                         @"Approve create a new Token member account")
+                                         @"Signature_Reason_CreateMember",
+                                         @"Approve create a new Token member account")
              onSuccess:onSuccess
                onError:onError];
 }
@@ -194,16 +193,16 @@
     request.updateSignature.signature = signature.value;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToUpdateMemberWithRequest:request
-                           handler:^(UpdateMemberResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.member);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToUpdateMemberWithRequest:request
+                                   handler:^(UpdateMemberResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.member);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -226,17 +225,17 @@
     request.filter.provider = provider;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToGetBanksWithRequest:request
-                           handler:
-                           ^(GetBanksResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.banksArray);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetBanksWithRequest:request
+                                   handler:
+                                   ^(GetBanksResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.banksArray);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     
     [rpc execute:call request:request];
 }
@@ -246,19 +245,19 @@
                   onError:(OnError)onError {
     GetBanksCountriesRequest *request = [GetBanksCountriesRequest message];
     request.filter.provider = provider;
-    
     RpcLogStart(request);
-    GRPCProtoCall *call = [gateway
-                           RPCToGetBanksCountriesWithRequest:request
-                           handler:
-                           ^(GetBanksCountriesResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.countriesArray);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetBanksCountriesWithRequest:request
+                                   handler:
+                                   ^(GetBanksCountriesResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.countriesArray);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     
     [rpc execute:call request:request];
 }
@@ -269,17 +268,17 @@
     RequestTransferRequest *request = [RequestTransferRequest message];
     request.tokenPayload = token;
     RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToRequestTransferWithRequest:request
-                           handler:^(RequestTransferResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess();
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToRequestTransferWithRequest:request
+                                   handler:^(RequestTransferResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess();
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -294,17 +293,17 @@
     request.body.addKey.deviceMetadata = deviceMetadata;
     
     RpcLogStart(request);
-
-    GRPCProtoCall *call = [gateway
-            RPCToNotifyWithRequest:request
-                           handler:^(NotifyResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess();
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToNotifyWithRequest:request
+                                   handler:^(NotifyResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess();
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -319,17 +318,17 @@
     request.contact = contact;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:request
-                           handler:^(TriggerCreateAndEndorseTokenNotificationResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess([NotifyResult createWithNotifyStatus:response.status
-                                                                   notificationId:response.notificationId]);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToTriggerCreateAndEndorseTokenNotificationWithRequest:request
+                                   handler:^(TriggerCreateAndEndorseTokenNotificationResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess([NotifyResult createWithNotifyStatus:response.status
+                                                                           notificationId:response.notificationId]);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -340,16 +339,16 @@
     request.notificationId = notificationId;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToInvalidateNotificationWithRequest:request
-                           handler:^(InvalidateNotificationResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.status);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToInvalidateNotificationWithRequest:request
+                                   handler:^(InvalidateNotificationResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.status);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -360,17 +359,17 @@
     request.tokenRequestId = tokenRequestId;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToGetTokenRequestResultWithRequest:request
-                           handler:^(GetTokenRequestResultResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess([TokenRequestResult createWithTokenId:response.tokenId
-                                                                         signature:response.signature]);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetTokenRequestResultWithRequest:request
+                                   handler:^(GetTokenRequestResultResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess([TokenRequestResult createWithTokenId:response.tokenId
+                                                                                 signature:response.signature]);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -383,16 +382,16 @@
     request.alias = alias;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToBeginRecoveryWithRequest: request
-                           handler:^(BeginRecoveryResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   onSuccess(response.verificationId);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToBeginRecoveryWithRequest: request
+                                   handler:^(BeginRecoveryResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.verificationId);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 
@@ -501,22 +500,22 @@
     request.key = privilegedKey;
     RpcLogStart(request);
     
-    GRPCProtoCall *call = [gateway
-                           RPCToCompleteRecoveryWithRequest: request
-                           handler:^(CompleteRecoveryResponse *response, NSError *error) {
-                               if (response) {
-                                   RpcLogCompleted(response);
-                                   if (response.status != VerificationStatus_Success) {
-                                       onError([NSError
-                                                errorFromVerificationStatus:response.status
-                                                userInfo:nil]);
-                                       return;
-                                   }
-                                   onSuccess(response.recoveryEntry);
-                               } else {
-                                   [self->errorHandler handle:onError withError:error];
-                               }
-                           }];
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToCompleteRecoveryWithRequest: request
+                                   handler:^(CompleteRecoveryResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           if (response.status != VerificationStatus_Success) {
+                                               onError([NSError
+                                                        errorFromVerificationStatus:response.status
+                                                        userInfo:nil]);
+                                               return;
+                                           }
+                                           onSuccess(response.recoveryEntry);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
     [rpc execute:call request:request];
 }
 @end
