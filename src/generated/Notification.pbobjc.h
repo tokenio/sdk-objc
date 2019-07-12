@@ -90,14 +90,22 @@ typedef GPB_ENUM(Notification_Status) {
    **/
   Notification_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Notification_Status_Invalid = 0,
+
+  /** Actions of the member are pending */
   Notification_Status_Pending = 1,
-  Notification_Status_Delivered = 2,
+  Notification_Status_Delivered GPB_DEPRECATED_MSG("io.token.proto.common.notification.Notification.DELIVERED is deprecated (see notification.proto).") = 2,
 
   /** The member has completed the notification */
   Notification_Status_Completed = 3,
 
-  /** the notification has been invalidated */
+  /** The notification has been invalidated */
   Notification_Status_Invalidated = 4,
+
+  /** No action required for the member */
+  Notification_Status_NoActionRequired = 5,
+
+  /** The member has declined the notification */
+  Notification_Status_Declined = 6,
 };
 
 GPBEnumDescriptor *Notification_Status_EnumDescriptor(void);

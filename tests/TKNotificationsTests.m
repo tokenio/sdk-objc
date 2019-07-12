@@ -82,7 +82,7 @@ void check(NSString *message, BOOL condition) {
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
 
-    [self waitForNotification:@"PAYER_TRANSFER_PROCESSED"];
+    [self waitForNotification:@"PAYER_TRANSFER_PROCESSED" member:payer status:(Notification_Status)Notification_Status_NoActionRequired];
 }
 
 - (void)testNotifyPayeeTransfer {
@@ -114,7 +114,7 @@ void check(NSString *message, BOOL condition) {
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
 
-    [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee];
+    [self waitForNotification:@"PAYEE_TRANSFER_PROCESSED" member:payee status:Notification_Status_NoActionRequired];
 }
 
 - (void)testNotifyAddKey {
@@ -190,8 +190,6 @@ void check(NSString *message, BOOL condition) {
 
 - (void)testTransferNotification {
     [self subscribeNotificationsFor:payer];
-//    NSMutableDictionary * instructionsEmpty = [NSMutableDictionary dictionaryWithDictionary:@{}];
-//    [payer subscribeToNotifications:@"iron" handlerInstructions:instructionsEmpty];
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     TransferTokenBuilder *builder = [payer createTransferToken:amount
                                                       currency:@"USD"];
@@ -233,7 +231,7 @@ void check(NSString *message, BOOL condition) {
         [self->payer getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
             if (notifications.items.count >= 1) {
                 Notification* notification = [notifications.items objectAtIndex:0];
-                if ((notification.status == Notification_Status_Delivered)
+                if ((notification.status == Notification_Status_Pending)
                     && ([notification.content.type isEqualToString:@"BALANCE_STEP_UP"])) {
                     BalanceStepUp *balanceStepUp = [TKJson
                                                     deserializeMessageOfClass:[BalanceStepUp class]
@@ -292,7 +290,7 @@ void check(NSString *message, BOOL condition) {
             if (notifications.items.count >= 1) {
                 Notification* notification = [notifications.items objectAtIndex:0];
                 
-                if ((notification.status == Notification_Status_Delivered)
+                if ((notification.status == Notification_Status_Pending)
                     && ([notification.content.type isEqualToString:@"TRANSACTION_STEP_UP"])) {
                     TransactionStepUp *transactionStepup = [TKJson
                                                             deserializeMessageOfClass:[TransactionStepUp class]
@@ -309,6 +307,34 @@ void check(NSString *message, BOOL condition) {
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
+- (void)testUpdateNotificationStatus {
+    [self subscribeNotificationsFor:payer];
+    TokenPayload *tokenPayload = [TokenPayload message];
+    tokenPayload.description_p = @"Description: 🍷🌺🌹";
+    tokenPayload.from.alias = payer.firstAlias;
+    tokenPayload.to.alias = payee.firstAlias;
+    tokenPayload.transfer.amount = @"50";
+    tokenPayload.transfer.lifetimeAmount = @"100";
+    tokenPayload.transfer.currency = @"EUR";
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    [[self client] notifyPaymentRequest:tokenPayload onSuccess:^ {
+        [expectation fulfill];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+
+    NSString *notificationId = [self waitForNotification:@"PAYMENT_REQUEST"];
+
+    TKTestExpectation *expectation2 = [[TKTestExpectation alloc] init];
+    [payer updateNotificationStatus:notificationId
+                             status:Notification_Status_Declined
+                          onSuccess:^ {
+                              [expectation2 fulfill];
+                          } onError:THROWERROR];
+    [self waitForExpectations:@[expectation2] timeout:10];
+
+    [self waitForNotification:@"PAYMENT_REQUEST" member:payer status:Notification_Status_Declined];
+}
+
 - (void)subscribeNotificationsFor:(TKMember *)member {
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [member subscribeToNotifications:@"token" handlerInstructions:instructions onSuccess:^(Subscriber *subscriber) {
@@ -316,21 +342,27 @@ void check(NSString *message, BOOL condition) {
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
 }
+
 /**
  * Wait for the delivered notification of the specified type.
  *
  * @param type notification type
  * @param member user to check notifications for
+ * @param status expected notification status
+ * @return notificaiton id
  */
-- (void)waitForNotification:(NSString *)type
-                     member:(TKMember *)member {
+- (NSString *)waitForNotification:(NSString *)type
+                           member:(TKMember *)member
+                           status:(Notification_Status)status {
+    __block NSString *notificationId;
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [self runUntilTrue:^{
         [member getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
             if (notifications.items.count == 1) {
                 Notification* notification = [notifications.items objectAtIndex:0];
-                if ((notification.status == Notification_Status_Delivered)
+                if ((notification.status == status)
                     && ([notification.content.type isEqualToString:type])) {
+                    notificationId = notification.id_p;
                     [expectation fulfill];
                 }
             }
@@ -338,15 +370,29 @@ void check(NSString *message, BOOL condition) {
         return (int) expectation.isFulfilled;
     }];
     [self waitForExpectations:@[expectation] timeout:10];
+    return notificationId;
 }
 
 /**
  * Wait for the delivered notification of the specified type.
  *
  * @param type notification type
+ * @param member user to check notifications for
+ * @return notificaiton id
  */
-- (void)waitForNotification:(NSString *)type {
-    [self waitForNotification:type member:payer];
+- (NSString *)waitForNotification:(NSString *)type
+                           member:(TKMember *)member {
+    return [self waitForNotification:type member:member status:Notification_Status_Pending];
+}
+
+/**
+ * Wait for the delivered notification of the specified type.
+ *
+ * @param type notification type
+ * @return notificaiton id
+ */
+- (NSString *)waitForNotification:(NSString *)type {
+    return [self waitForNotification:type member:payer];
 }
 
 @end

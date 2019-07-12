@@ -262,6 +262,16 @@ NS_ASSUME_NONNULL_BEGIN
               onSuccess:(OnSuccessWithNotification)onSuccess
                 onError:(OnError)onError;
 
+/**
+ * Updates the status of a notification.
+ *
+ * @param notificationId the notification id to update
+ * @param status the status to update
+ */
+- (void)updateNotificationStatus:(NSString *)notificationId
+                          status:(Notification_Status)status
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Unsubscribes a device from push notifications

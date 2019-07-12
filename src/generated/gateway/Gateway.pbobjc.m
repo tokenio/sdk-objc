@@ -23,6 +23,8 @@
 #import "Banklink.pbobjc.h"
 #import "Blob.pbobjc.h"
 #import "Consent.pbobjc.h"
+#import "Eidas.pbobjc.h"
+#import "Alias.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
@@ -31,7 +33,6 @@
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
-#import "Alias.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "extensions/Field.pbobjc.h"
 #import "extensions/Service.pbobjc.h"
@@ -1611,6 +1612,94 @@ typedef struct VerifyAliasResponse__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(VerifyAliasResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyEidasRequest
+
+@implementation VerifyEidasRequest
+
+@dynamic hasPayload, payload;
+@dynamic signature;
+
+typedef struct VerifyEidasRequest__storage_ {
+  uint32_t _has_storage_[1];
+  VerifyEidasPayload *payload;
+  NSString *signature;
+} VerifyEidasRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "payload",
+        .dataTypeSpecific.className = GPBStringifySymbol(VerifyEidasPayload),
+        .number = VerifyEidasRequest_FieldNumber_Payload,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VerifyEidasRequest__storage_, payload),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "signature",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyEidasRequest_FieldNumber_Signature,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(VerifyEidasRequest__storage_, signature),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyEidasRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VerifyEidasRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VerifyEidasResponse
+
+@implementation VerifyEidasResponse
+
+
+typedef struct VerifyEidasResponse__storage_ {
+  uint32_t _has_storage_[1];
+} VerifyEidasResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VerifyEidasResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(VerifyEidasResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -4247,6 +4336,106 @@ void SetInvalidateNotificationResponse_Status_RawValue(InvalidateNotificationRes
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:InvalidateNotificationResponse_FieldNumber_Status];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
+
+#pragma mark - UpdateNotificationStatusRequest
+
+@implementation UpdateNotificationStatusRequest
+
+@dynamic notificationId;
+@dynamic status;
+
+typedef struct UpdateNotificationStatusRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Notification_Status status;
+  NSString *notificationId;
+} UpdateNotificationStatusRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notificationId",
+        .dataTypeSpecific.className = NULL,
+        .number = UpdateNotificationStatusRequest_FieldNumber_NotificationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateNotificationStatusRequest__storage_, notificationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = Notification_Status_EnumDescriptor,
+        .number = UpdateNotificationStatusRequest_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(UpdateNotificationStatusRequest__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateNotificationStatusRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateNotificationStatusRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t UpdateNotificationStatusRequest_Status_RawValue(UpdateNotificationStatusRequest *message) {
+  GPBDescriptor *descriptor = [UpdateNotificationStatusRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateNotificationStatusRequest_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetUpdateNotificationStatusRequest_Status_RawValue(UpdateNotificationStatusRequest *message, int32_t value) {
+  GPBDescriptor *descriptor = [UpdateNotificationStatusRequest descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateNotificationStatusRequest_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - UpdateNotificationStatusResponse
+
+@implementation UpdateNotificationStatusResponse
+
+
+typedef struct UpdateNotificationStatusResponse__storage_ {
+  uint32_t _has_storage_[1];
+} UpdateNotificationStatusResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateNotificationStatusResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(UpdateNotificationStatusResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 #pragma mark - LinkAccountsRequest
 

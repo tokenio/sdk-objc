@@ -178,6 +178,7 @@
            onSuccess:(OnSuccess)onSuccess
              onError:(OnError)onError {
     DeleteMemberRequest *request = [DeleteMemberRequest message];
+    RpcLogStart(request);
     
     __block GRPCProtoCall *call = [gateway
                                    RPCToDeleteMemberWithRequest:request
@@ -199,6 +200,7 @@
 - (void)getAliases:(OnSuccessWithAliases)onSuccess
            onError:(OnError)onError {
     GetAliasesRequest *request = [GetAliasesRequest message];
+    RpcLogStart(request);
     
     __block GRPCProtoCall *call = [gateway
                                    RPCToGetAliasesWithRequest:request
@@ -223,6 +225,7 @@
     RetryVerificationRequest *request = [RetryVerificationRequest message];
     request.memberId = memberId;
     request.alias = alias;
+    RpcLogStart(request);
     
     __block GRPCProtoCall *call = [gateway
                                    RPCToRetryVerificationWithRequest:request
@@ -247,6 +250,8 @@
     SubscribeToNotificationsRequest *request = [SubscribeToNotificationsRequest message];
     request.handler = handler;
     request.handlerInstructions = handlerInstructions;
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToSubscribeToNotificationsWithRequest:request
                                    handler:^(SubscribeToNotificationsResponse *response, NSError *error) {
@@ -266,6 +271,8 @@
 - (void)getSubscribers:(OnSuccessWithSubscribers)onSuccess
                onError:(OnError)onError {
     GetSubscribersRequest *request = [GetSubscribersRequest message];
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToGetSubscribersWithRequest:request
                                    handler:^(GetSubscribersResponse *response, NSError *error) {
@@ -288,6 +295,8 @@
               onError:(OnError)onError {
     GetSubscriberRequest *request = [GetSubscriberRequest message];
     request.subscriberId = subscriberId;
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToGetSubscriberWithRequest:request
                                    handler:^(GetSubscriberResponse *response, NSError *error) {
@@ -311,6 +320,8 @@
     GetNotificationsRequest *request = [GetNotificationsRequest message];
     request.page.offset = offset;
     request.page.limit = limit;
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToGetNotificationsWithRequest:request
                                    handler:^(GetNotificationsResponse *response, NSError *error) {
@@ -337,6 +348,8 @@
                 onError:(OnError)onError {
     GetNotificationRequest *request = [GetNotificationRequest message];
     request.notificationId = notificationId;
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToGetNotificationWithRequest:request
                                    handler:^(GetNotificationResponse *response, NSError *error) {
@@ -353,12 +366,38 @@
              onError:onError];
 }
 
+- (void)updateNotificationStatus:(NSString *)notificationId
+                          status:(Notification_Status)status
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError {
+    UpdateNotificationStatusRequest *request = [UpdateNotificationStatusRequest message];
+    request.notificationId = notificationId;
+    request.status = status;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToUpdateNotificationStatusWithRequest:request
+                                   handler:^(UpdateNotificationStatusResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess();
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
 
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError {
     UnsubscribeFromNotificationsRequest *request = [UnsubscribeFromNotificationsRequest message];
     request.subscriberId = subscriberId;
+    RpcLogStart(request);
+
     __block GRPCProtoCall *call = [gateway
                                    RPCToUnsubscribeFromNotificationsWithRequest:request
                                    handler:^(UnsubscribeFromNotificationsResponse *response,

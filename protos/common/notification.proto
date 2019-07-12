@@ -160,10 +160,12 @@ message Notification {
 
   enum Status {
     INVALID = 0;
-    PENDING = 1;
-    DELIVERED = 2;
-    COMPLETED = 3;      // The member has completed the notification
-    INVALIDATED = 4;    // the notification has been invalidated
+    PENDING = 1;                // Actions of the member are pending
+    DELIVERED = 2 [deprecated = true];
+    COMPLETED = 3;              // The member has completed the notification
+    INVALIDATED = 4;            // The notification has been invalidated
+    NO_ACTION_REQUIRED = 5;     // No action required for the member
+    DECLINED = 6;               // The member has declined the notification
   }
   Status status = 4;
 }

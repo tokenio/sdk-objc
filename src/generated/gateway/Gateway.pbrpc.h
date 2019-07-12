@@ -187,12 +187,16 @@
 @class UpdateKeychainInfoResponse;
 @class UpdateMemberRequest;
 @class UpdateMemberResponse;
+@class UpdateNotificationStatusRequest;
+@class UpdateNotificationStatusResponse;
 @class UpdateTokenRequestRequest;
 @class UpdateTokenRequestResponse;
 @class VerifyAffiliateRequest;
 @class VerifyAffiliateResponse;
 @class VerifyAliasRequest;
 @class VerifyAliasResponse;
+@class VerifyEidasRequest;
+@class VerifyEidasResponse;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "google/api/Annotations.pbobjc.h"
@@ -202,6 +206,8 @@
   #import "Banklink.pbobjc.h"
   #import "Blob.pbobjc.h"
   #import "Consent.pbobjc.h"
+  #import "Eidas.pbobjc.h"
+  #import "Alias.pbobjc.h"
   #import "Member.pbobjc.h"
   #import "Money.pbobjc.h"
   #import "Notification.pbobjc.h"
@@ -210,7 +216,6 @@
   #import "Token.pbobjc.h"
   #import "Transaction.pbobjc.h"
   #import "Transfer.pbobjc.h"
-  #import "Alias.pbobjc.h"
   #import "Transferinstructions.pbobjc.h"
   #import "extensions/Field.pbobjc.h"
   #import "extensions/Service.pbobjc.h"
@@ -386,6 +391,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)verifyAliasWithMessage:(VerifyAliasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark VerifyEidas(VerifyEidasRequest) returns (VerifyEidasResponse)
+
+/**
+ * Verify an eidas
+ */
+- (GRPCUnaryProtoCall *)verifyEidasWithMessage:(VerifyEidasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
 
 /**
@@ -557,6 +569,13 @@ NS_ASSUME_NONNULL_BEGIN
  * send invalidate notification
  */
 - (GRPCUnaryProtoCall *)invalidateNotificationWithMessage:(InvalidateNotificationRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UpdateNotificationStatus(UpdateNotificationStatusRequest) returns (UpdateNotificationStatusResponse)
+
+/**
+ * update notification status
+ */
+- (GRPCUnaryProtoCall *)updateNotificationStatusWithMessage:(UpdateNotificationStatusRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
 
@@ -1344,6 +1363,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToVerifyAliasWithRequest:(VerifyAliasRequest *)request handler:(void(^)(VerifyAliasResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark VerifyEidas(VerifyEidasRequest) returns (VerifyEidasResponse)
+
+/**
+ * Verify an eidas
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)verifyEidasWithRequest:(VerifyEidasRequest *)request handler:(void(^)(VerifyEidasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Verify an eidas
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToVerifyEidasWithRequest:(VerifyEidasRequest *)request handler:(void(^)(VerifyEidasResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
 
 /**
@@ -1749,6 +1785,23 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToInvalidateNotificationWithRequest:(InvalidateNotificationRequest *)request handler:(void(^)(InvalidateNotificationResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UpdateNotificationStatus(UpdateNotificationStatusRequest) returns (UpdateNotificationStatusResponse)
+
+/**
+ * update notification status
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)updateNotificationStatusWithRequest:(UpdateNotificationStatusRequest *)request handler:(void(^)(UpdateNotificationStatusResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * update notification status
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToUpdateNotificationStatusWithRequest:(UpdateNotificationStatusRequest *)request handler:(void(^)(UpdateNotificationStatusResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)

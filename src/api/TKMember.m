@@ -339,6 +339,16 @@ NS_ASSUME_NONNULL_BEGIN
                     onError:onError];
 }
 
+- (void)updateNotificationStatus:(NSString *)notificationId
+                          status:(Notification_Status)status
+                       onSuccess:(OnSuccess)onSuccess
+                         onError:(OnError)onError {
+    [client updateNotificationStatus:notificationId
+                              status:status
+                           onSuccess:onSuccess
+                             onError:onError];
+}
+
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError {

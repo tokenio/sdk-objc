@@ -87,9 +87,11 @@ CF_EXTERN_C_BEGIN
 @class TransferEndpoint;
 @class TransferPayload;
 @class TrustedBeneficiary;
+@class VerifyEidasPayload;
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
 GPB_ENUM_FWD_DECLARE(Alias_Type);
 GPB_ENUM_FWD_DECLARE(CreateMemberType);
+GPB_ENUM_FWD_DECLARE(Notification_Status);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(RequestStatus);
@@ -698,6 +700,31 @@ typedef GPB_ENUM(VerifyAliasRequest_FieldNumber) {
 #pragma mark - VerifyAliasResponse
 
 @interface VerifyAliasResponse : GPBMessage
+
+@end
+
+#pragma mark - VerifyEidasRequest
+
+typedef GPB_ENUM(VerifyEidasRequest_FieldNumber) {
+  VerifyEidasRequest_FieldNumber_Payload = 1,
+  VerifyEidasRequest_FieldNumber_Signature = 2,
+};
+
+@interface VerifyEidasRequest : GPBMessage
+
+/** payload with certificate */
+@property(nonatomic, readwrite, strong, null_resettable) VerifyEidasPayload *payload;
+/** Test to see if @c payload has been set. */
+@property(nonatomic, readwrite) BOOL hasPayload;
+
+/** signature of payload signed with the private key of the certificate */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *signature;
+
+@end
+
+#pragma mark - VerifyEidasResponse
+
+@interface VerifyEidasResponse : GPBMessage
 
 @end
 
@@ -1553,6 +1580,39 @@ int32_t InvalidateNotificationResponse_Status_RawValue(InvalidateNotificationRes
  * was generated.
  **/
 void SetInvalidateNotificationResponse_Status_RawValue(InvalidateNotificationResponse *message, int32_t value);
+
+#pragma mark - UpdateNotificationStatusRequest
+
+typedef GPB_ENUM(UpdateNotificationStatusRequest_FieldNumber) {
+  UpdateNotificationStatusRequest_FieldNumber_NotificationId = 1,
+  UpdateNotificationStatusRequest_FieldNumber_Status = 2,
+};
+
+@interface UpdateNotificationStatusRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *notificationId;
+
+@property(nonatomic, readwrite) enum Notification_Status status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c UpdateNotificationStatusRequest's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t UpdateNotificationStatusRequest_Status_RawValue(UpdateNotificationStatusRequest *message);
+/**
+ * Sets the raw value of an @c UpdateNotificationStatusRequest's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetUpdateNotificationStatusRequest_Status_RawValue(UpdateNotificationStatusRequest *message, int32_t value);
+
+#pragma mark - UpdateNotificationStatusResponse
+
+@interface UpdateNotificationStatusResponse : GPBMessage
+
+@end
 
 #pragma mark - LinkAccountsRequest
 

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package io.token.proto.common.eidas;
+option java_outer_classname = "EidasProtos";
+option csharp_namespace = "Tokenio.Proto.Common.EidasProtos";
+
+import "alias.proto";
+import "security.proto";
+
+message VerifyEidasPayload {
+  string member_id = 1; // member ID of the TPP
+  string fi_reference_id = 2; // reference ID of the TPP as registered in the open banking directory
+  string certificate = 3; // serialized eIDAS certificate
+  io.token.proto.common.security.Key.Algorithm algorithm = 4; // signing algorithm of the eIDAS certificate
+}

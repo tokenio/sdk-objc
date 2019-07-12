@@ -10,6 +10,8 @@ import "bankinfo.proto";
 import "banklink.proto";
 import "blob.proto";
 import "consent.proto";
+import "eidas.proto";
+import "alias.proto";
 import "member.proto";
 import "money.proto";
 import "notification.proto";
@@ -18,7 +20,6 @@ import "subscriber.proto";
 import "token.proto";
 import "transaction.proto";
 import "transfer.proto";
-import "alias.proto";
 import "transferinstructions.proto";
 import "extensions/field.proto";
 import "extensions/service.proto";
@@ -162,6 +163,13 @@ message VerifyAliasRequest {
 }
 
 message VerifyAliasResponse {}
+
+message VerifyEidasRequest {
+  io.token.proto.common.eidas.VerifyEidasPayload payload = 1; // payload with certificate
+  string signature = 2; // signature of payload signed with the private key of the certificate
+}
+
+message VerifyEidasResponse {}
 
 message GetDefaultAgentRequest {}
 
@@ -391,12 +399,20 @@ message TriggerEndorseAndAddKeyNotificationResponse {
 }
 
 message InvalidateNotificationRequest {
-  string notification_id= 1;
+  string notification_id = 1;
 }
 
 message InvalidateNotificationResponse {
   io.token.proto.common.notification.NotifyStatus status = 1; // was notification accepted?
 }
+
+message UpdateNotificationStatusRequest {
+  string notification_id = 1;
+  io.token.proto.common.notification.Notification.Status status = 2;
+}
+
+message UpdateNotificationStatusResponse {}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Bank account management and information access.
 //
@@ -1208,6 +1224,14 @@ service GatewayService {
     };
   }
 
+  // Verify an eidas
+  rpc VerifyEidas (VerifyEidasRequest) returns (VerifyEidasResponse) {
+    option (google.api.http) = {
+      put: "/verifications/eidas"
+      body: "*"
+    };
+  }
+
   // Get member ID of "normal consumer" recovery agent.
   // https://developer.token.io/sdk/#recovery
   rpc GetDefaultAgent (GetDefaultAgentRequest) returns (GetDefaultAgentResponse) {
@@ -1399,6 +1423,14 @@ service GatewayService {
   rpc InvalidateNotification (InvalidateNotificationRequest) returns (InvalidateNotificationResponse) {
     option (google.api.http) = {
         post: "/notify/invalidate-notification"
+        body: "*"
+    };
+  }
+
+  // update notification status
+  rpc UpdateNotificationStatus (UpdateNotificationStatusRequest) returns (UpdateNotificationStatusResponse) {
+  option (google.api.http) = {
+        put: "/notifications/{notification_id}/status"
         body: "*"
     };
   }
