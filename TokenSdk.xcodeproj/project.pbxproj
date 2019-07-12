@@ -186,6 +186,8 @@
 		D09E3BCD20191BDC00CA0405 /* TKTokenBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */; };
 		D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BCA20191BDC00CA0405 /* TKTokenBrowserViewController.h */; };
 		D09E3BCF20191BDC00CA0405 /* TKTokenBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BCB20191BDC00CA0405 /* TKTokenBrowser.m */; };
+		D0B29B8A22D901C1007400A2 /* Eidas.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D0B29B8822D901C1007400A2 /* Eidas.pbobjc.h */; };
+		D0B29B8B22D901C1007400A2 /* Eidas.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */; };
 		D0DECB2F220AC99B00A73BD5 /* TKTestExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DECB2E220AC99A00A73BD5 /* TKTestExpectation.m */; };
 		D0EFF96F213766510048636D /* TokenRequestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EFF96D213766510048636D /* TokenRequestResult.h */; };
 		D0EFF970213766510048636D /* TokenRequestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EFF96E213766510048636D /* TokenRequestResult.m */; };
@@ -448,6 +450,8 @@
 		D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowser.h; sourceTree = "<group>"; };
 		D09E3BCA20191BDC00CA0405 /* TKTokenBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowserViewController.h; sourceTree = "<group>"; };
 		D09E3BCB20191BDC00CA0405 /* TKTokenBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowser.m; sourceTree = "<group>"; };
+		D0B29B8822D901C1007400A2 /* Eidas.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Eidas.pbobjc.h; sourceTree = "<group>"; };
+		D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Eidas.pbobjc.m; sourceTree = "<group>"; };
 		D0B9C52E219CF37F00B55101 /* TokenProto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenProto.h; sourceTree = "<group>"; };
 		D0DECB2D220AC99A00A73BD5 /* TKTestExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTestExpectation.h; sourceTree = "<group>"; };
 		D0DECB2E220AC99A00A73BD5 /* TKTestExpectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTestExpectation.m; sourceTree = "<group>"; };
@@ -536,6 +540,8 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				D0B29B8822D901C1007400A2 /* Eidas.pbobjc.h */,
+				D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */,
 				D02EF67022C19313000B61D9 /* Polishapi.pbobjc.h */,
 				D02EF67122C19313000B61D9 /* Polishapi.pbobjc.m */,
 				D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */,
@@ -1068,6 +1074,7 @@
 				D0FFEA5922C2D31D001223F1 /* PrepareTokenResult.h in Headers */,
 				1B7C72261DAF128600E9FC84 /* Subscriber.pbobjc.h in Headers */,
 				ABA7B6829AA83D345926CCE6 /* precomp_data.h in Headers */,
+				D0B29B8A22D901C1007400A2 /* Eidas.pbobjc.h in Headers */,
 				ABA7BAC58B65F8234911D47C /* TKTypedef.h in Headers */,
 				FAE918CD1F17E70B001692CF /* Fank.pbrpc.h in Headers */,
 				D03A56021FE07368008342E0 /* TKAuthorizationEngine.h in Headers */,
@@ -1404,6 +1411,7 @@
 				ABA7B40904F1C32FD2F49C88 /* sign.c in Sources */,
 				ABA7BFC5F675615FA58A5EE1 /* sha512.c in Sources */,
 				D0EFF970213766510048636D /* TokenRequestResult.m in Sources */,
+				D0B29B8B22D901C1007400A2 /* Eidas.pbobjc.m in Sources */,
 				37637B711D989A930043345F /* Transfer.pbobjc.m in Sources */,
 				37637B6F1D989A930043345F /* Transaction.pbobjc.m in Sources */,
 				37637B611D989A930043345F /* Descriptor.pbobjc.m in Sources */,

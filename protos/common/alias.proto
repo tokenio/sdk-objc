@@ -26,6 +26,7 @@ message Alias {
     USERNAME = 5; // deprecated
     BANK = 6;     // for banks only
     CUSTOM = 7;   // Custom type, for instance a bank specific customer ID.
+    EIDAS = 8;   // The unique PSD2 auth number of the company that provides eIDAS certificate
   }
 }
 

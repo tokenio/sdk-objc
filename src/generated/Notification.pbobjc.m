@@ -1396,13 +1396,15 @@ GPBEnumDescriptor *Notification_Status_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "Invalid\000Pending\000Delivered\000Completed\000Inva"
-        "lidated\000";
+        "lidated\000NoActionRequired\000Declined\000";
     static const int32_t values[] = {
         Notification_Status_Invalid,
         Notification_Status_Pending,
         Notification_Status_Delivered,
         Notification_Status_Completed,
         Notification_Status_Invalidated,
+        Notification_Status_NoActionRequired,
+        Notification_Status_Declined,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Notification_Status)
@@ -1425,6 +1427,8 @@ BOOL Notification_Status_IsValidValue(int32_t value__) {
     case Notification_Status_Delivered:
     case Notification_Status_Completed:
     case Notification_Status_Invalidated:
+    case Notification_Status_NoActionRequired:
+    case Notification_Status_Declined:
       return YES;
     default:
       return NO;

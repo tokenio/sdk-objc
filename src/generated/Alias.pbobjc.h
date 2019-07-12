@@ -96,6 +96,9 @@ typedef GPB_ENUM(Alias_Type) {
 
   /** Custom type, for instance a bank specific customer ID. */
   Alias_Type_Custom = 7,
+
+  /** The unique PSD2 auth number of the company that provides eIDAS certificate */
+  Alias_Type_Eidas = 8,
 };
 
 GPBEnumDescriptor *Alias_Type_EnumDescriptor(void);

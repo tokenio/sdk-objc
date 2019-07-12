@@ -11,6 +11,8 @@
 #import "Banklink.pbobjc.h"
 #import "Blob.pbobjc.h"
 #import "Consent.pbobjc.h"
+#import "Eidas.pbobjc.h"
+#import "Alias.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
@@ -19,7 +21,6 @@
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
-#import "Alias.pbobjc.h"
 #import "Transferinstructions.pbobjc.h"
 #import "extensions/Field.pbobjc.h"
 #import "extensions/Service.pbobjc.h"
@@ -803,6 +804,40 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[VerifyAliasResponse class]];
+}
+
+#pragma mark VerifyEidas(VerifyEidasRequest) returns (VerifyEidasResponse)
+
+// Deprecated methods.
+/**
+ * Verify an eidas
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)verifyEidasWithRequest:(VerifyEidasRequest *)request handler:(void(^)(VerifyEidasResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToVerifyEidasWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Verify an eidas
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToVerifyEidasWithRequest:(VerifyEidasRequest *)request handler:(void(^)(VerifyEidasResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"VerifyEidas"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[VerifyEidasResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Verify an eidas
+ */
+- (GRPCUnaryProtoCall *)verifyEidasWithMessage:(VerifyEidasRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"VerifyEidas"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[VerifyEidasResponse class]];
 }
 
 #pragma mark GetDefaultAgent(GetDefaultAgentRequest) returns (GetDefaultAgentResponse)
@@ -1592,6 +1627,40 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[InvalidateNotificationResponse class]];
+}
+
+#pragma mark UpdateNotificationStatus(UpdateNotificationStatusRequest) returns (UpdateNotificationStatusResponse)
+
+// Deprecated methods.
+/**
+ * update notification status
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)updateNotificationStatusWithRequest:(UpdateNotificationStatusRequest *)request handler:(void(^)(UpdateNotificationStatusResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUpdateNotificationStatusWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * update notification status
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToUpdateNotificationStatusWithRequest:(UpdateNotificationStatusRequest *)request handler:(void(^)(UpdateNotificationStatusResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UpdateNotificationStatus"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[UpdateNotificationStatusResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * update notification status
+ */
+- (GRPCUnaryProtoCall *)updateNotificationStatusWithMessage:(UpdateNotificationStatusRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"UpdateNotificationStatus"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[UpdateNotificationStatusResponse class]];
 }
 
 #pragma mark LinkAccounts(LinkAccountsRequest) returns (LinkAccountsResponse)
