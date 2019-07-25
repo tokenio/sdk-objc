@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSMutableSet<NSString *> * storedKeyIds = block(storedKeys);
     
-    __weak typeof(TKMember *) weakSelf = self;
+    __strong typeof(TKMember *) strongSelf = self;
     [client getMember:self.id
             onSuccess:^(Member * _Nonnull member) {
                 NSMutableSet<NSString *> *keyIds = block([member keysArray]);
@@ -179,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
                     onSuccess();
                 }
                 else {
-                    [weakSelf removeKeys:[keyIds allObjects] onSuccess:onSuccess onError:onError];
+                    [strongSelf removeKeys:[keyIds allObjects] onSuccess:onSuccess onError:onError];
                 }
                 
             } onError:onError];
