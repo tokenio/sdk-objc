@@ -1,11 +1,9 @@
 #!/bin/bash
 
-destination=$(instruments -s devices | grep iPhone | tail -1 \
-     | sed 's/\(iPhone[^\(]*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
+set -o errexit
+set -o nounset
 
-xcodebuild \
-    -workspace TokenSdk.xcworkspace \
-    -scheme "All Tests - AWS Sandbox" \
-    -sdk iphonesimulator \
-    -destination "${destination}" \
-    test
+dir=$(dirname $0)
+
+${dir}/run-tests "All Tests - AWS Sandbox"
+#!/bin/bash

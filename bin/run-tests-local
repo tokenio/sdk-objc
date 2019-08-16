@@ -5,4 +5,4 @@ set -o nounset
 
 dir=$(dirname $0)
 
-${dir}/run-tests "All Tests - AWS Development"
+${dir}/run-tests "All Tests"
