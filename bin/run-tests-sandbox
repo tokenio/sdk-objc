@@ -6,4 +6,3 @@ set -o nounset
 dir=$(dirname $0)
 
 ${dir}/run-tests "All Tests - AWS Sandbox"
-#!/bin/bash
