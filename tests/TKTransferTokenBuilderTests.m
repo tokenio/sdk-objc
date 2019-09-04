@@ -71,7 +71,7 @@
     builder.destinations = destinations;
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
     builder.expiresAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0 + 100000;
-    builder.purposeOfPayment = PurposeOfPayment_Other;
+    builder.purposeCode = @"Test Purpose";
     builder.descr = @"Test token";
     builder.chargeAmount = [NSDecimalNumber decimalNumberWithString:@"20"];
     
@@ -79,7 +79,7 @@
     
     XCTAssertEqualObjects(@"USD", token.payload.transfer.currency);
     XCTAssertEqualObjects(payee.id, token.payload.to.id_p);
-    XCTAssertEqual(PurposeOfPayment_Other, token.payload.transfer.instructions.metadata.transferPurpose);
+    XCTAssertEqualObjects(@"Test Purpose", token.payload.transfer.instructions.metadata.purposeCode);
 }
 
 @end

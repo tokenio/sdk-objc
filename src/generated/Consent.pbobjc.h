@@ -33,6 +33,7 @@ CF_EXTERN_C_BEGIN
 @class Consent_InformationAccess;
 @class Consent_InformationAccess_ResourceAccess;
 @class Consent_Payment;
+@class Consent_StandingOrder;
 @class Money;
 @class TokenMember;
 @class TransferDestination;
@@ -90,12 +91,14 @@ typedef GPB_ENUM(Consent_FieldNumber) {
   Consent_FieldNumber_Payment = 6,
   Consent_FieldNumber_InitiatorId = 7,
   Consent_FieldNumber_InitiatorRefId = 8,
+  Consent_FieldNumber_StandingOrder = 9,
 };
 
 typedef GPB_ENUM(Consent_Type_OneOfCase) {
   Consent_Type_OneOfCase_GPBUnsetOneOfCase = 0,
   Consent_Type_OneOfCase_InformationAccess = 5,
   Consent_Type_OneOfCase_Payment = 6,
+  Consent_Type_OneOfCase_StandingOrder = 9,
 };
 
 @interface Consent : GPBMessage
@@ -114,6 +117,8 @@ typedef GPB_ENUM(Consent_Type_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Consent_InformationAccess *informationAccess;
 
 @property(nonatomic, readwrite, strong, null_resettable) Consent_Payment *payment;
+
+@property(nonatomic, readwrite, strong, null_resettable) Consent_StandingOrder *standingOrder;
 
 /** ID of the member requesting consent (e.g. merchant) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *initiatorId;
@@ -189,6 +194,35 @@ typedef GPB_ENUM(Consent_Payment_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferEndpoint*> *destinationsArray GPB_DEPRECATED_MSG("io.token.proto.common.consent.Consent.Payment.destinations is deprecated (see consent.proto).");
 /** The number of items in @c destinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger destinationsArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.consent.Consent.Payment.destinations is deprecated (see consent.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
+
+@end
+
+#pragma mark - Consent_StandingOrder
+
+typedef GPB_ENUM(Consent_StandingOrder_FieldNumber) {
+  Consent_StandingOrder_FieldNumber_Account = 1,
+  Consent_StandingOrder_FieldNumber_Amount = 2,
+  Consent_StandingOrder_FieldNumber_Frequency = 3,
+  Consent_StandingOrder_FieldNumber_TransferDestinationsArray = 4,
+};
+
+@interface Consent_StandingOrder : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
+/** Test to see if @c account has been set. */
+@property(nonatomic, readwrite) BOOL hasAccount;
+
+/** amount per charge */
+@property(nonatomic, readwrite, strong, null_resettable) Money *amount;
+/** Test to see if @c amount has been set. */
+@property(nonatomic, readwrite) BOOL hasAmount;
+
+/** ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *frequency;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
 /** The number of items in @c transferDestinationsArray without causing the array to be created. */

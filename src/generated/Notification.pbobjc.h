@@ -640,18 +640,25 @@ typedef GPB_ENUM(NotificationContent_FieldNumber) {
  **/
 @interface NotificationContent : GPBMessage
 
+/** Notification type */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *type;
 
+/** Optional notification message title */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
+/** Optional notification message body */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *body;
 
+/** Notification payload */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *payload;
 
+/** Time of creation */
 @property(nonatomic, readwrite) int64_t createdAtMs;
 
+/** Notification message localization key */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *locKey;
 
+/** Notification message localization arguments */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *locArgsArray;
 /** The number of items in @c locArgsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger locArgsArray_Count;

@@ -17,7 +17,7 @@ message PlaintextBankAuthorization {
   string member_id = 1;    // Token member id
   string account_name = 2 [(io.token.proto.extensions.field.redact) = true]; // e.g., "Checking account with # ending 5678"
   BankAccount account = 3 [(io.token.proto.extensions.field.redact) = true]; // Account info by some method, e.g., SEPA
-  int64 expiration_ms = 4; // Expiration time
+  int64 expiration_ms = 4; // Expiration timestamp in ms
 }
 
 // Not all accounts support all Token features.

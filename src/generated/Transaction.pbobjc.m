@@ -530,6 +530,160 @@ typedef struct Balance_TypedBalance__storage_ {
 
 @end
 
+#pragma mark - StandingOrder
+
+@implementation StandingOrder
+
+@dynamic id_p;
+@dynamic status;
+@dynamic tokenId;
+@dynamic tokenSubmissionId;
+@dynamic createdAtMs;
+@dynamic hasProviderStandingOrderDetails, providerStandingOrderDetails;
+
+typedef struct StandingOrder__storage_ {
+  uint32_t _has_storage_[1];
+  StandingOrder_Status status;
+  NSString *id_p;
+  NSString *tokenId;
+  NSString *tokenSubmissionId;
+  ProviderStandingOrderDetails *providerStandingOrderDetails;
+  int64_t createdAtMs;
+} StandingOrder__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = StandingOrder_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = StandingOrder_Status_EnumDescriptor,
+        .number = StandingOrder_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = StandingOrder_FieldNumber_TokenId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "tokenSubmissionId",
+        .dataTypeSpecific.className = NULL,
+        .number = StandingOrder_FieldNumber_TokenSubmissionId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, tokenSubmissionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "createdAtMs",
+        .dataTypeSpecific.className = NULL,
+        .number = StandingOrder_FieldNumber_CreatedAtMs,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, createdAtMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "providerStandingOrderDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(ProviderStandingOrderDetails),
+        .number = StandingOrder_FieldNumber_ProviderStandingOrderDetails,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(StandingOrder__storage_, providerStandingOrderDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[StandingOrder class]
+                                     rootClass:[TransactionRoot class]
+                                          file:TransactionRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(StandingOrder__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t StandingOrder_Status_RawValue(StandingOrder *message) {
+  GPBDescriptor *descriptor = [StandingOrder descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:StandingOrder_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetStandingOrder_Status_RawValue(StandingOrder *message, int32_t value) {
+  GPBDescriptor *descriptor = [StandingOrder descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:StandingOrder_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum StandingOrder_Status
+
+GPBEnumDescriptor *StandingOrder_Status_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Active\000Inactive\000Processing\000Faile"
+        "d\000";
+    static const int32_t values[] = {
+        StandingOrder_Status_Invalid,
+        StandingOrder_Status_Active,
+        StandingOrder_Status_Inactive,
+        StandingOrder_Status_Processing,
+        StandingOrder_Status_Failed,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(StandingOrder_Status)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:StandingOrder_Status_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL StandingOrder_Status_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case StandingOrder_Status_Invalid:
+    case StandingOrder_Status_Active:
+    case StandingOrder_Status_Inactive:
+    case StandingOrder_Status_Processing:
+    case StandingOrder_Status_Failed:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 
 #pragma clang diagnostic pop
 

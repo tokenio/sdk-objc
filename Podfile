@@ -1,5 +1,5 @@
-TOKEN_PROTOS_VER = "1.1.120"
-FANK_PROTOS_VER = "1.2.0"
+TOKEN_PROTOS_VER = "1.2.18"
+FANK_PROTOS_VER = "1.2.2"
 RPC_PROTOS_VER = "1.0.124"
 
 platform :ios, '9.0'
@@ -105,6 +105,7 @@ post_install do |installer|
 
     gencommand = 
         generate_protos_cmd("common", dir) +
+        generate_protos_cmd("common/provider", dir) +
         generate_protos_cmd("common/google/api", dir) + 
         generate_protos_cmd("common/google/protobuf", dir) +
         generate_protos_cmd("external/gateway", dir) +

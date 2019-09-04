@@ -17,6 +17,7 @@
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Submission.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
@@ -1992,6 +1993,74 @@
              responseClass:[GetTransactionsResponse class]];
 }
 
+#pragma mark GetStandingOrder(GetStandingOrderRequest) returns (GetStandingOrderResponse)
+
+// Deprecated methods.
+/**
+ * get information about a particular standing order
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderWithRequest:(GetStandingOrderRequest *)request handler:(void(^)(GetStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetStandingOrderWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * get information about a particular standing order
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderWithRequest:(GetStandingOrderRequest *)request handler:(void(^)(GetStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetStandingOrder"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetStandingOrderResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * get information about a particular standing order
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderWithMessage:(GetStandingOrderRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetStandingOrder"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetStandingOrderResponse class]];
+}
+
+#pragma mark GetStandingOrders(GetStandingOrdersRequest) returns (GetStandingOrdersResponse)
+
+// Deprecated methods.
+/**
+ * get information about several standing orders
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrdersWithRequest:(GetStandingOrdersRequest *)request handler:(void(^)(GetStandingOrdersResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetStandingOrdersWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * get information about several standing orders
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrdersWithRequest:(GetStandingOrdersRequest *)request handler:(void(^)(GetStandingOrdersResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetStandingOrders"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetStandingOrdersResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * get information about several standing orders
+ */
+- (GRPCUnaryProtoCall *)getStandingOrdersWithMessage:(GetStandingOrdersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetStandingOrders"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetStandingOrdersResponse class]];
+}
+
 #pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
 
 // Deprecated methods.
@@ -2506,6 +2575,27 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[UpdateTokenRequestResponse class]];
+}
+
+#pragma mark SetTokenRequestTransferDestinations(SetTokenRequestTransferDestinationsRequest) returns (SetTokenRequestTransferDestinationsResponse)
+
+// Deprecated methods.
+- (void)setTokenRequestTransferDestinationsWithRequest:(SetTokenRequestTransferDestinationsRequest *)request handler:(void(^)(SetTokenRequestTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSetTokenRequestTransferDestinationsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSetTokenRequestTransferDestinationsWithRequest:(SetTokenRequestTransferDestinationsRequest *)request handler:(void(^)(SetTokenRequestTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SetTokenRequestTransferDestinations"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[SetTokenRequestTransferDestinationsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)setTokenRequestTransferDestinationsWithMessage:(SetTokenRequestTransferDestinationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"SetTokenRequestTransferDestinations"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[SetTokenRequestTransferDestinationsResponse class]];
 }
 
 #pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
@@ -3065,6 +3155,40 @@
              responseClass:[CreateTransferResponse class]];
 }
 
+#pragma mark CreateStandingOrder(CreateStandingOrderRequest) returns (CreateStandingOrderResponse)
+
+// Deprecated methods.
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)createStandingOrderWithRequest:(CreateStandingOrderRequest *)request handler:(void(^)(CreateStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateStandingOrderWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToCreateStandingOrderWithRequest:(CreateStandingOrderRequest *)request handler:(void(^)(CreateStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateStandingOrder"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateStandingOrderResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ */
+- (GRPCUnaryProtoCall *)createStandingOrderWithMessage:(CreateStandingOrderRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"CreateStandingOrder"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[CreateStandingOrderResponse class]];
+}
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 // Deprecated methods.
@@ -3102,12 +3226,46 @@
              responseClass:[GetTransferResponse class]];
 }
 
+#pragma mark GetStandingOrderSubmission(GetStandingOrderSubmissionRequest) returns (GetStandingOrderSubmissionResponse)
+
+// Deprecated methods.
+/**
+ * Get information about one standing order submission
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderSubmissionWithRequest:(GetStandingOrderSubmissionRequest *)request handler:(void(^)(GetStandingOrderSubmissionResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetStandingOrderSubmissionWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get information about one standing order submission
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderSubmissionWithRequest:(GetStandingOrderSubmissionRequest *)request handler:(void(^)(GetStandingOrderSubmissionResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetStandingOrderSubmission"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetStandingOrderSubmissionResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Get information about one standing order submission
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderSubmissionWithMessage:(GetStandingOrderSubmissionRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetStandingOrderSubmission"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetStandingOrderSubmissionResponse class]];
+}
+
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
 // Deprecated methods.
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -3116,8 +3274,8 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -3128,8 +3286,8 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  */
 - (GRPCUnaryProtoCall *)getTransfersWithMessage:(GetTransfersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetTransfers"
@@ -3137,6 +3295,40 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GetTransfersResponse class]];
+}
+
+#pragma mark GetStandingOrderSubmissions(GetStandingOrderSubmissionsRequest) returns (GetStandingOrderSubmissionsResponse)
+
+// Deprecated methods.
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderSubmissionsWithRequest:(GetStandingOrderSubmissionsRequest *)request handler:(void(^)(GetStandingOrderSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetStandingOrderSubmissionsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderSubmissionsWithRequest:(GetStandingOrderSubmissionsRequest *)request handler:(void(^)(GetStandingOrderSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetStandingOrderSubmissions"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetStandingOrderSubmissionsResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderSubmissionsWithMessage:(GetStandingOrderSubmissionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetStandingOrderSubmissions"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetStandingOrderSubmissionsResponse class]];
 }
 
 #pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)

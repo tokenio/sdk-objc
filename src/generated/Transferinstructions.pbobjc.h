@@ -33,48 +33,24 @@ CF_EXTERN_C_BEGIN
 @class ProviderTransferMetadata;
 @class TransferDestination;
 @class TransferDestination_Ach;
+@class TransferDestination_Bacs;
 @class TransferDestination_BlueCash;
+@class TransferDestination_Chaps;
 @class TransferDestination_Custom;
 @class TransferDestination_Elixir;
 @class TransferDestination_ExpressElixir;
 @class TransferDestination_FasterPayments;
+@class TransferDestination_Hsvp;
 @class TransferDestination_Sepa;
 @class TransferDestination_SepaInstant;
 @class TransferDestination_Sorbnet;
 @class TransferDestination_Swift;
+@class TransferDestination_Target2;
 @class TransferDestination_Token;
 @class TransferEndpoint;
 @class TransferInstructions_Metadata;
 
 NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark - Enum PurposeOfPayment
-
-/** A bank might require a Purpose of Payment for some transfers. */
-typedef GPB_ENUM(PurposeOfPayment) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  PurposeOfPayment_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  PurposeOfPayment_Invalid = 0,
-  PurposeOfPayment_Other = 1,
-  PurposeOfPayment_PersonalExpenses = 2,
-  PurposeOfPayment_PurchaseOfShares = 3,
-  PurposeOfPayment_TransferToYourOwnAccount = 4,
-  PurposeOfPayment_PurchaseOfProperty = 5,
-  PurposeOfPayment_FamilyMaintenance = 6,
-  PurposeOfPayment_Savings = 7,
-};
-
-GPBEnumDescriptor *PurposeOfPayment_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL PurposeOfPayment_IsValidValue(int32_t value);
 
 #pragma mark - Enum PaymentContext
 
@@ -101,6 +77,39 @@ GPBEnumDescriptor *PaymentContext_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL PaymentContext_IsValidValue(int32_t value);
+
+#pragma mark - Enum ChargeBearer
+
+/** A bank might require the bearer of the charges, if any, for international transfers. */
+typedef GPB_ENUM(ChargeBearer) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  ChargeBearer_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  ChargeBearer_InvalidChargeBearer = 0,
+
+  /** All transaction charges are to be borne by the creditor. */
+  ChargeBearer_Cred = 1,
+
+  /** All transaction charges are to be borne by the debtor. */
+  ChargeBearer_Debt = 2,
+
+  /** Both parties bear their own charges */
+  ChargeBearer_Shar = 3,
+
+  /** Both parties bear their own charges. (recommended on SEPA payments) */
+  ChargeBearer_Slev = 4,
+};
+
+GPBEnumDescriptor *ChargeBearer_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL ChargeBearer_IsValidValue(int32_t value);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -177,6 +186,10 @@ typedef GPB_ENUM(TransferDestination_FieldNumber) {
   TransferDestination_FieldNumber_Sorbnet = 10,
   TransferDestination_FieldNumber_CustomerData = 11,
   TransferDestination_FieldNumber_Custom = 12,
+  TransferDestination_FieldNumber_Chaps = 13,
+  TransferDestination_FieldNumber_Bacs = 14,
+  TransferDestination_FieldNumber_Target2 = 15,
+  TransferDestination_FieldNumber_Hsvp = 16,
 };
 
 typedef GPB_ENUM(TransferDestination_Destination_OneOfCase) {
@@ -192,6 +205,10 @@ typedef GPB_ENUM(TransferDestination_Destination_OneOfCase) {
   TransferDestination_Destination_OneOfCase_BlueCash = 9,
   TransferDestination_Destination_OneOfCase_Sorbnet = 10,
   TransferDestination_Destination_OneOfCase_Custom = 12,
+  TransferDestination_Destination_OneOfCase_Chaps = 13,
+  TransferDestination_Destination_OneOfCase_Bacs = 14,
+  TransferDestination_Destination_OneOfCase_Target2 = 15,
+  TransferDestination_Destination_OneOfCase_Hsvp = 16,
 };
 
 @interface TransferDestination : GPBMessage
@@ -219,6 +236,14 @@ typedef GPB_ENUM(TransferDestination_Destination_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Sorbnet *sorbnet;
 
 @property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Custom *custom;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Chaps *chaps;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Bacs *bacs;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Target2 *target2;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination_Hsvp *hsvp;
 
 @property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
 /** Test to see if @c customerData has been set. */
@@ -310,6 +335,42 @@ typedef GPB_ENUM(TransferDestination_FasterPayments_FieldNumber) {
  * Faster Payments Service transfer (UK)
  **/
 @interface TransferDestination_FasterPayments : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_Chaps
+
+typedef GPB_ENUM(TransferDestination_Chaps_FieldNumber) {
+  TransferDestination_Chaps_FieldNumber_SortCode = 1,
+  TransferDestination_Chaps_FieldNumber_AccountNumber = 2,
+};
+
+/**
+ * Clearing House Automated Payment System (UK)
+ **/
+@interface TransferDestination_Chaps : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountNumber;
+
+@end
+
+#pragma mark - TransferDestination_Bacs
+
+typedef GPB_ENUM(TransferDestination_Bacs_FieldNumber) {
+  TransferDestination_Bacs_FieldNumber_SortCode = 1,
+  TransferDestination_Bacs_FieldNumber_AccountNumber = 2,
+};
+
+/**
+ * Banker’s Automated Clearing Services (UK)
+ **/
+@interface TransferDestination_Bacs : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sortCode;
 
@@ -412,6 +473,36 @@ typedef GPB_ENUM(TransferDestination_Sorbnet_FieldNumber) {
 
 @end
 
+#pragma mark - TransferDestination_Target2
+
+typedef GPB_ENUM(TransferDestination_Target2_FieldNumber) {
+  TransferDestination_Target2_FieldNumber_Iban = 1,
+};
+
+/**
+ * Trans-European Automated Real-time Gross Settlement Express Transfer System
+ **/
+@interface TransferDestination_Target2 : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@end
+
+#pragma mark - TransferDestination_Hsvp
+
+typedef GPB_ENUM(TransferDestination_Hsvp_FieldNumber) {
+  TransferDestination_Hsvp_FieldNumber_Iban = 1,
+};
+
+/**
+ * Croatian High Payments System
+ **/
+@interface TransferDestination_Hsvp : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@end
+
 #pragma mark - TransferInstructions
 
 typedef GPB_ENUM(TransferInstructions_FieldNumber) {
@@ -449,18 +540,18 @@ typedef GPB_ENUM(TransferInstructions_FieldNumber) {
 #pragma mark - TransferInstructions_Metadata
 
 typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
-  TransferInstructions_Metadata_FieldNumber_TransferPurpose = 1,
   TransferInstructions_Metadata_FieldNumber_PaymentContext = 2,
   TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode = 3,
   TransferInstructions_Metadata_FieldNumber_MerchantCustomerId = 4,
   TransferInstructions_Metadata_FieldNumber_DeliveryAddress = 5,
   TransferInstructions_Metadata_FieldNumber_ProviderTransferMetadata = 6,
+  TransferInstructions_Metadata_FieldNumber_ChargeBearer = 7,
+  TransferInstructions_Metadata_FieldNumber_UltimateCreditor = 8,
+  TransferInstructions_Metadata_FieldNumber_UltimateDebtor = 9,
+  TransferInstructions_Metadata_FieldNumber_PurposeCode = 10,
 };
 
 @interface TransferInstructions_Metadata : GPBMessage
-
-/** Purpose of payment */
-@property(nonatomic, readwrite) PurposeOfPayment transferPurpose;
 
 /** Optional payment context */
 @property(nonatomic, readwrite) PaymentContext paymentContext;
@@ -480,19 +571,19 @@ typedef GPB_ENUM(TransferInstructions_Metadata_FieldNumber) {
 /** Test to see if @c providerTransferMetadata has been set. */
 @property(nonatomic, readwrite) BOOL hasProviderTransferMetadata;
 
-@end
+/** Optional Foreign Exchange charges bearer. */
+@property(nonatomic, readwrite) ChargeBearer chargeBearer;
 
-/**
- * Fetches the raw value of a @c TransferInstructions_Metadata's @c transferPurpose property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t TransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message);
-/**
- * Sets the raw value of an @c TransferInstructions_Metadata's @c transferPurpose property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetTransferInstructions_Metadata_TransferPurpose_RawValue(TransferInstructions_Metadata *message, int32_t value);
+/** Ultimate party to which an amount of money is due. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ultimateCreditor;
+
+/** Ultimate party that owes an amount of money to the (ultimate) creditor. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ultimateDebtor;
+
+/** Optional purpose code, ISO 20022 */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *purposeCode;
+
+@end
 
 /**
  * Fetches the raw value of a @c TransferInstructions_Metadata's @c paymentContext property, even
@@ -505,6 +596,18 @@ int32_t TransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructio
  * was generated.
  **/
 void SetTransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c TransferInstructions_Metadata's @c chargeBearer property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TransferInstructions_Metadata_ChargeBearer_RawValue(TransferInstructions_Metadata *message);
+/**
+ * Sets the raw value of an @c TransferInstructions_Metadata's @c chargeBearer property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTransferInstructions_Metadata_ChargeBearer_RawValue(TransferInstructions_Metadata *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

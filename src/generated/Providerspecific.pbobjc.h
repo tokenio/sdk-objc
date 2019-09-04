@@ -27,115 +27,14 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Address;
 @class Cma9AccountDetails;
-@class Cma9AccountDetails_Cma9Address;
+@class Cma9StandingOrderDetails;
+@class NextGenPsd2TransferMetadata;
 @class POLISHAPIPolishApiAccountDetails;
 @class POLISHAPIPolishApiTransactionDetails;
 @class POLISHAPIPolishApiTransferMetadata;
 
 NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark - Enum Cma9AccountDetails_PartyType
-
-typedef GPB_ENUM(Cma9AccountDetails_PartyType) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Cma9AccountDetails_PartyType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Cma9AccountDetails_PartyType_InvalidPartyType = 0,
-  Cma9AccountDetails_PartyType_Delegate = 1,
-  Cma9AccountDetails_PartyType_Joint = 2,
-  Cma9AccountDetails_PartyType_Sole = 3,
-};
-
-GPBEnumDescriptor *Cma9AccountDetails_PartyType_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL Cma9AccountDetails_PartyType_IsValidValue(int32_t value);
-
-#pragma mark - Enum Cma9AccountDetails_AddressType
-
-typedef GPB_ENUM(Cma9AccountDetails_AddressType) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Cma9AccountDetails_AddressType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Cma9AccountDetails_AddressType_InvalidAddressType = 0,
-  Cma9AccountDetails_AddressType_Business = 1,
-  Cma9AccountDetails_AddressType_Correspondence = 2,
-  Cma9AccountDetails_AddressType_Deliveryto = 3,
-  Cma9AccountDetails_AddressType_Mailto = 4,
-  Cma9AccountDetails_AddressType_Pobox = 5,
-  Cma9AccountDetails_AddressType_Postal = 6,
-  Cma9AccountDetails_AddressType_Residential = 7,
-  Cma9AccountDetails_AddressType_Statement = 8,
-};
-
-GPBEnumDescriptor *Cma9AccountDetails_AddressType_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL Cma9AccountDetails_AddressType_IsValidValue(int32_t value);
-
-#pragma mark - Enum Cma9AccountDetails_AccountType
-
-typedef GPB_ENUM(Cma9AccountDetails_AccountType) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Cma9AccountDetails_AccountType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Cma9AccountDetails_AccountType_InvalidAccountType = 0,
-  Cma9AccountDetails_AccountType_BusinessAccount = 1,
-  Cma9AccountDetails_AccountType_PersonalAccount = 2,
-};
-
-GPBEnumDescriptor *Cma9AccountDetails_AccountType_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL Cma9AccountDetails_AccountType_IsValidValue(int32_t value);
-
-#pragma mark - Enum Cma9AccountDetails_AccountSubtype
-
-typedef GPB_ENUM(Cma9AccountDetails_AccountSubtype) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  Cma9AccountDetails_AccountSubtype_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  Cma9AccountDetails_AccountSubtype_InvalidAccountSubtype = 0,
-  Cma9AccountDetails_AccountSubtype_ChargeCard = 1,
-  Cma9AccountDetails_AccountSubtype_CreditCard = 2,
-  Cma9AccountDetails_AccountSubtype_CurrentAccount = 3,
-  Cma9AccountDetails_AccountSubtype_Emoney = 4,
-  Cma9AccountDetails_AccountSubtype_Loan = 5,
-  Cma9AccountDetails_AccountSubtype_Mortgage = 6,
-  Cma9AccountDetails_AccountSubtype_PrepaidCard = 7,
-  Cma9AccountDetails_AccountSubtype_Savings = 8,
-};
-
-GPBEnumDescriptor *Cma9AccountDetails_AccountSubtype_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL Cma9AccountDetails_AccountSubtype_IsValidValue(int32_t value);
 
 #pragma mark - ProviderspecificRoot
 
@@ -204,15 +103,41 @@ typedef GPB_ENUM(ProviderTransactionDetails_Details_OneOfCase) {
  **/
 void ProviderTransactionDetails_ClearDetailsOneOfCase(ProviderTransactionDetails *message);
 
+#pragma mark - ProviderStandingOrderDetails
+
+typedef GPB_ENUM(ProviderStandingOrderDetails_FieldNumber) {
+  ProviderStandingOrderDetails_FieldNumber_Cma9StandingOrderDetails = 1,
+};
+
+typedef GPB_ENUM(ProviderStandingOrderDetails_Details_OneOfCase) {
+  ProviderStandingOrderDetails_Details_OneOfCase_GPBUnsetOneOfCase = 0,
+  ProviderStandingOrderDetails_Details_OneOfCase_Cma9StandingOrderDetails = 1,
+};
+
+@interface ProviderStandingOrderDetails : GPBMessage
+
+@property(nonatomic, readonly) ProviderStandingOrderDetails_Details_OneOfCase detailsOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) Cma9StandingOrderDetails *cma9StandingOrderDetails;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'details'.
+ **/
+void ProviderStandingOrderDetails_ClearDetailsOneOfCase(ProviderStandingOrderDetails *message);
+
 #pragma mark - ProviderTransferMetadata
 
 typedef GPB_ENUM(ProviderTransferMetadata_FieldNumber) {
   ProviderTransferMetadata_FieldNumber_PolishApiTransferMetadata = 1,
+  ProviderTransferMetadata_FieldNumber_NextGenPsd2TransferMetadata = 2,
 };
 
 typedef GPB_ENUM(ProviderTransferMetadata_Metadata_OneOfCase) {
   ProviderTransferMetadata_Metadata_OneOfCase_GPBUnsetOneOfCase = 0,
   ProviderTransferMetadata_Metadata_OneOfCase_PolishApiTransferMetadata = 1,
+  ProviderTransferMetadata_Metadata_OneOfCase_NextGenPsd2TransferMetadata = 2,
 };
 
 @interface ProviderTransferMetadata : GPBMessage
@@ -221,121 +146,14 @@ typedef GPB_ENUM(ProviderTransferMetadata_Metadata_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiTransferMetadata *polishApiTransferMetadata;
 
+@property(nonatomic, readwrite, strong, null_resettable) NextGenPsd2TransferMetadata *nextGenPsd2TransferMetadata;
+
 @end
 
 /**
  * Clears whatever value was set for the oneof 'metadata'.
  **/
 void ProviderTransferMetadata_ClearMetadataOneOfCase(ProviderTransferMetadata *message);
-
-#pragma mark - Cma9AccountDetails
-
-typedef GPB_ENUM(Cma9AccountDetails_FieldNumber) {
-  Cma9AccountDetails_FieldNumber_PartyId = 1,
-  Cma9AccountDetails_FieldNumber_PartyNumber = 2,
-  Cma9AccountDetails_FieldNumber_PartyType = 3,
-  Cma9AccountDetails_FieldNumber_Name = 4,
-  Cma9AccountDetails_FieldNumber_EmailAddress = 5,
-  Cma9AccountDetails_FieldNumber_Phone = 6,
-  Cma9AccountDetails_FieldNumber_Mobile = 7,
-  Cma9AccountDetails_FieldNumber_AddressArray = 8,
-  Cma9AccountDetails_FieldNumber_AccountType = 9,
-  Cma9AccountDetails_FieldNumber_AccountSubtype = 10,
-  Cma9AccountDetails_FieldNumber_Description_p = 11,
-};
-
-@interface Cma9AccountDetails : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *partyId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *partyNumber;
-
-@property(nonatomic, readwrite) Cma9AccountDetails_PartyType partyType;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *emailAddress;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *phone;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *mobile;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Cma9AccountDetails_Cma9Address*> *addressArray;
-/** The number of items in @c addressArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger addressArray_Count;
-
-@property(nonatomic, readwrite) Cma9AccountDetails_AccountType accountType;
-
-@property(nonatomic, readwrite) Cma9AccountDetails_AccountSubtype accountSubtype;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
-
-@end
-
-/**
- * Fetches the raw value of a @c Cma9AccountDetails's @c partyType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Cma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message);
-/**
- * Sets the raw value of an @c Cma9AccountDetails's @c partyType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetCma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message, int32_t value);
-
-/**
- * Fetches the raw value of a @c Cma9AccountDetails's @c accountType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Cma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message);
-/**
- * Sets the raw value of an @c Cma9AccountDetails's @c accountType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetCma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message, int32_t value);
-
-/**
- * Fetches the raw value of a @c Cma9AccountDetails's @c accountSubtype property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Cma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message);
-/**
- * Sets the raw value of an @c Cma9AccountDetails's @c accountSubtype property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetCma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message, int32_t value);
-
-#pragma mark - Cma9AccountDetails_Cma9Address
-
-typedef GPB_ENUM(Cma9AccountDetails_Cma9Address_FieldNumber) {
-  Cma9AccountDetails_Cma9Address_FieldNumber_AddressType = 1,
-  Cma9AccountDetails_Cma9Address_FieldNumber_Address = 2,
-};
-
-@interface Cma9AccountDetails_Cma9Address : GPBMessage
-
-@property(nonatomic, readwrite) Cma9AccountDetails_AddressType addressType;
-
-@property(nonatomic, readwrite, strong, null_resettable) Address *address;
-/** Test to see if @c address has been set. */
-@property(nonatomic, readwrite) BOOL hasAddress;
-
-@end
-
-/**
- * Fetches the raw value of a @c Cma9AccountDetails_Cma9Address's @c addressType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Cma9AccountDetails_Cma9Address_AddressType_RawValue(Cma9AccountDetails_Cma9Address *message);
-/**
- * Sets the raw value of an @c Cma9AccountDetails_Cma9Address's @c addressType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetCma9AccountDetails_Cma9Address_AddressType_RawValue(Cma9AccountDetails_Cma9Address *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

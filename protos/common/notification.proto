@@ -172,11 +172,11 @@ message Notification {
 
 // The contents of a notification that was sent or will be sent
 message NotificationContent {
-  string type = 1;
-  string title = 2;
-  string body = 3;
-  string payload = 4;
-  int64 created_at_ms = 5;
-  string loc_key = 6;
-  repeated string loc_args = 7;
+  string type = 1;                  // Notification type
+  string title = 2;                 // Optional notification message title
+  string body = 3;                  // Optional notification message body
+  string payload = 4;               // Notification payload
+  int64 created_at_ms = 5;          // Time of creation
+  string loc_key = 6;               // Notification message localization key
+  repeated string loc_args = 7;     // Notification message localization arguments
 }

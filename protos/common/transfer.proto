@@ -19,6 +19,7 @@ message Transfer {
   io.token.proto.common.transaction.TransactionStatus status = 6;
   string order_id = 7;                         // Currency Ledger order id.
   Method method = 8;                           // Instant (currency ledger) or default
+  string execution_date = 9;                   // Execution date. Same as the value on the transfer token payload.
 
   enum Method {
     DEFAULT = 0;
@@ -35,4 +36,5 @@ message TransferPayload {
   string description = 6;                                                                 // Optional
   repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 7;  // Transfer destinations, sorted in priority order.
   io.token.proto.common.transferinstructions.TransferInstructions.Metadata metadata = 8;
+  bool confirm_funds = 9;
 }

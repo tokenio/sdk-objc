@@ -5,6 +5,7 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "google/api/Annotations.pbobjc.h"
+#import "Providerspecific.pbobjc.h"
 
 @implementation Cma9Service
 

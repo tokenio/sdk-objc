@@ -29,6 +29,7 @@
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
 #import "Security.pbobjc.h"
+#import "Submission.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
@@ -5373,6 +5374,265 @@ void SetGetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
+#pragma mark - GetStandingOrderRequest
+
+@implementation GetStandingOrderRequest
+
+@dynamic accountId;
+@dynamic standingOrderId;
+
+typedef struct GetStandingOrderRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+  NSString *standingOrderId;
+} GetStandingOrderRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderRequest_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderRequest__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "standingOrderId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderRequest_FieldNumber_StandingOrderId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrderRequest__storage_, standingOrderId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrderResponse
+
+@implementation GetStandingOrderResponse
+
+@dynamic hasStandingOrder, standingOrder;
+@dynamic status;
+
+typedef struct GetStandingOrderResponse__storage_ {
+  uint32_t _has_storage_[1];
+  RequestStatus status;
+  StandingOrder *standingOrder;
+} GetStandingOrderResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "standingOrder",
+        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrder),
+        .number = GetStandingOrderResponse_FieldNumber_StandingOrder,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderResponse__storage_, standingOrder),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
+        .number = GetStandingOrderResponse_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrderResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetStandingOrderResponse_Status_RawValue(GetStandingOrderResponse *message) {
+  GPBDescriptor *descriptor = [GetStandingOrderResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetStandingOrderResponse_Status_RawValue(GetStandingOrderResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetStandingOrderResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - GetStandingOrdersRequest
+
+@implementation GetStandingOrdersRequest
+
+@dynamic accountId;
+@dynamic hasPage, page;
+
+typedef struct GetStandingOrdersRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *accountId;
+  Page *page;
+} GetStandingOrdersRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "accountId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrdersRequest_FieldNumber_AccountId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrdersRequest__storage_, accountId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetStandingOrdersRequest_FieldNumber_Page,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrdersRequest__storage_, page),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrdersRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrdersRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrdersResponse
+
+@implementation GetStandingOrdersResponse
+
+@dynamic standingOrdersArray, standingOrdersArray_Count;
+@dynamic offset;
+@dynamic status;
+
+typedef struct GetStandingOrdersResponse__storage_ {
+  uint32_t _has_storage_[1];
+  RequestStatus status;
+  NSMutableArray *standingOrdersArray;
+  NSString *offset;
+} GetStandingOrdersResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "standingOrdersArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrder),
+        .number = GetStandingOrdersResponse_FieldNumber_StandingOrdersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetStandingOrdersResponse__storage_, standingOrdersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrdersResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrdersResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = RequestStatus_EnumDescriptor,
+        .number = GetStandingOrdersResponse_FieldNumber_Status,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrdersResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrdersResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrdersResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetStandingOrdersResponse_Status_RawValue(GetStandingOrdersResponse *message) {
+  GPBDescriptor *descriptor = [GetStandingOrdersResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrdersResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetStandingOrdersResponse_Status_RawValue(GetStandingOrdersResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetStandingOrdersResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrdersResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - ApplyScaRequest
 
 @implementation ApplyScaRequest
@@ -8199,6 +8459,94 @@ typedef struct GetAuthRequestPayloadResponse__storage_ {
 
 @end
 
+#pragma mark - SetTokenRequestTransferDestinationsRequest
+
+@implementation SetTokenRequestTransferDestinationsRequest
+
+@dynamic tokenRequestId;
+@dynamic transferDestinationsArray, transferDestinationsArray_Count;
+
+typedef struct SetTokenRequestTransferDestinationsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenRequestId;
+  NSMutableArray *transferDestinationsArray;
+} SetTokenRequestTransferDestinationsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenRequestId",
+        .dataTypeSpecific.className = NULL,
+        .number = SetTokenRequestTransferDestinationsRequest_FieldNumber_TokenRequestId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(SetTokenRequestTransferDestinationsRequest__storage_, tokenRequestId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transferDestinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = SetTokenRequestTransferDestinationsRequest_FieldNumber_TransferDestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(SetTokenRequestTransferDestinationsRequest__storage_, transferDestinationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetTokenRequestTransferDestinationsRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(SetTokenRequestTransferDestinationsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - SetTokenRequestTransferDestinationsResponse
+
+@implementation SetTokenRequestTransferDestinationsResponse
+
+
+typedef struct SetTokenRequestTransferDestinationsResponse__storage_ {
+  uint32_t _has_storage_[1];
+} SetTokenRequestTransferDestinationsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[SetTokenRequestTransferDestinationsResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(SetTokenRequestTransferDestinationsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - CreateTransferRequest
 
 @implementation CreateTransferRequest
@@ -8311,6 +8659,96 @@ typedef struct CreateTransferResponse__storage_ {
 
 @end
 
+#pragma mark - CreateStandingOrderRequest
+
+@implementation CreateStandingOrderRequest
+
+@dynamic tokenId;
+
+typedef struct CreateStandingOrderRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
+} CreateStandingOrderRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateStandingOrderRequest_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateStandingOrderRequest__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateStandingOrderRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateStandingOrderRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CreateStandingOrderResponse
+
+@implementation CreateStandingOrderResponse
+
+@dynamic hasSubmission, submission;
+
+typedef struct CreateStandingOrderResponse__storage_ {
+  uint32_t _has_storage_[1];
+  StandingOrderSubmission *submission;
+} CreateStandingOrderResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "submission",
+        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrderSubmission),
+        .number = CreateStandingOrderResponse_FieldNumber_Submission,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateStandingOrderResponse__storage_, submission),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateStandingOrderResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateStandingOrderResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - GetTransferRequest
 
 @implementation GetTransferRequest
@@ -8390,6 +8828,96 @@ typedef struct GetTransferResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetTransferResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionRequest
+
+@implementation GetStandingOrderSubmissionRequest
+
+@dynamic submissionId;
+
+typedef struct GetStandingOrderSubmissionRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *submissionId;
+} GetStandingOrderSubmissionRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "submissionId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderSubmissionRequest_FieldNumber_SubmissionId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionRequest__storage_, submissionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderSubmissionRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderSubmissionRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionResponse
+
+@implementation GetStandingOrderSubmissionResponse
+
+@dynamic hasSubmission, submission;
+
+typedef struct GetStandingOrderSubmissionResponse__storage_ {
+  uint32_t _has_storage_[1];
+  StandingOrderSubmission *submission;
+} GetStandingOrderSubmissionResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "submission",
+        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrderSubmission),
+        .number = GetStandingOrderSubmissionResponse_FieldNumber_Submission,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionResponse__storage_, submission),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderSubmissionResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderSubmissionResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -8697,6 +9225,269 @@ typedef struct GetTransfersResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetTransfersResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionsRequest
+
+@implementation GetStandingOrderSubmissionsRequest
+
+@dynamic hasPage, page;
+@dynamic hasFilter, filter;
+
+typedef struct GetStandingOrderSubmissionsRequest__storage_ {
+  uint32_t _has_storage_[1];
+  Page *page;
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *filter;
+} GetStandingOrderSubmissionsRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "page",
+        .dataTypeSpecific.className = GPBStringifySymbol(Page),
+        .number = GetStandingOrderSubmissionsRequest_FieldNumber_Page,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest__storage_, page),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "filter",
+        .dataTypeSpecific.className = GPBStringifySymbol(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter),
+        .number = GetStandingOrderSubmissionsRequest_FieldNumber_Filter,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest__storage_, filter),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderSubmissionsRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderSubmissionsRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter
+
+@implementation GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter
+
+@dynamic startTimeMs;
+@dynamic endTimeMs;
+@dynamic submissionStatus;
+@dynamic role;
+@dynamic actingAsRefId;
+
+typedef struct GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_ {
+  uint32_t _has_storage_[1];
+  SubmissionStatus submissionStatus;
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role role;
+  NSString *actingAsRefId;
+  int64_t startTimeMs;
+  int64_t endTimeMs;
+} GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "startTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_StartTimeMs,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_, startTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "endTimeMs",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_EndTimeMs,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_, endTimeMs),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "submissionStatus",
+        .dataTypeSpecific.enumDescFunc = SubmissionStatus_EnumDescriptor,
+        .number = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_SubmissionStatus,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_, submissionStatus),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "role",
+        .dataTypeSpecific.enumDescFunc = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_EnumDescriptor,
+        .number = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_Role,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_, role),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "actingAsRefId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_ActingAsRefId,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_, actingAsRefId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(GetStandingOrderSubmissionsRequest)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_SubmissionStatus_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message) {
+  GPBDescriptor *descriptor = [GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_SubmissionStatus];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_SubmissionStatus_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_SubmissionStatus];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message) {
+  GPBDescriptor *descriptor = [GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_Role];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_Role];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - Enum GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role
+
+GPBEnumDescriptor *GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Any\000Payer\000Payee\000";
+    static const int32_t values[] = {
+        GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Any,
+        GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payer,
+        GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payee,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Any:
+    case GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payer:
+    case GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payee:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - GetStandingOrderSubmissionsResponse
+
+@implementation GetStandingOrderSubmissionsResponse
+
+@dynamic submissionsArray, submissionsArray_Count;
+@dynamic offset;
+
+typedef struct GetStandingOrderSubmissionsResponse__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *submissionsArray;
+  NSString *offset;
+} GetStandingOrderSubmissionsResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "submissionsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrderSubmission),
+        .number = GetStandingOrderSubmissionsResponse_FieldNumber_SubmissionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsResponse__storage_, submissionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "offset",
+        .dataTypeSpecific.className = NULL,
+        .number = GetStandingOrderSubmissionsResponse_FieldNumber_Offset,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetStandingOrderSubmissionsResponse__storage_, offset),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetStandingOrderSubmissionsResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetStandingOrderSubmissionsResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

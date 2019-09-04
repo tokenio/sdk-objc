@@ -48,6 +48,7 @@ CF_EXTERN_C_BEGIN
 @class ExternalAuthorizationDetails;
 @class GetAvailabilityReportResponse_AvailabilitySummary;
 @class GetBalanceResponse;
+@class GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter;
 @class GetTokensRequest_TokenFilter;
 @class GetTppPerformanceReportResponse_PerformanceSummary;
 @class GetTransfersRequest_TransferFilter;
@@ -70,6 +71,8 @@ CF_EXTERN_C_BEGIN
 @class ReplaceTokenRequest_CancelToken;
 @class ReplaceTokenRequest_CreateToken;
 @class Signature;
+@class StandingOrder;
+@class StandingOrderSubmission;
 @class StepUp;
 @class Subscriber;
 @class Token;
@@ -95,6 +98,7 @@ GPB_ENUM_FWD_DECLARE(Notification_Status);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
 GPB_ENUM_FWD_DECLARE(RequestStatus);
+GPB_ENUM_FWD_DECLARE(SubmissionStatus);
 GPB_ENUM_FWD_DECLARE(TransactionStatus);
 GPB_ENUM_FWD_DECLARE(TransferTokenStatus);
 GPB_ENUM_FWD_DECLARE(VerificationStatus);
@@ -167,6 +171,28 @@ GPBEnumDescriptor *GetTransfersRequest_TransferFilter_Role_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL GetTransfersRequest_TransferFilter_Role_IsValidValue(int32_t value);
+
+#pragma mark - Enum GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role
+
+typedef GPB_ENUM(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Any = 0,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payer = 1,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_Payee = 2,
+};
+
+GPBEnumDescriptor *GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_IsValidValue(int32_t value);
 
 #pragma mark - Enum GetTppPerformanceReportResponse_PerformanceSummary_TppType
 
@@ -1931,6 +1957,101 @@ int32_t GetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message
  **/
 void SetGetTransactionsResponse_Status_RawValue(GetTransactionsResponse *message, int32_t value);
 
+#pragma mark - GetStandingOrderRequest
+
+typedef GPB_ENUM(GetStandingOrderRequest_FieldNumber) {
+  GetStandingOrderRequest_FieldNumber_AccountId = 1,
+  GetStandingOrderRequest_FieldNumber_StandingOrderId = 2,
+};
+
+@interface GetStandingOrderRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *standingOrderId;
+
+@end
+
+#pragma mark - GetStandingOrderResponse
+
+typedef GPB_ENUM(GetStandingOrderResponse_FieldNumber) {
+  GetStandingOrderResponse_FieldNumber_StandingOrder = 1,
+  GetStandingOrderResponse_FieldNumber_Status = 2,
+};
+
+@interface GetStandingOrderResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) StandingOrder *standingOrder;
+/** Test to see if @c standingOrder has been set. */
+@property(nonatomic, readwrite) BOOL hasStandingOrder;
+
+@property(nonatomic, readwrite) enum RequestStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetStandingOrderResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetStandingOrderResponse_Status_RawValue(GetStandingOrderResponse *message);
+/**
+ * Sets the raw value of an @c GetStandingOrderResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetStandingOrderResponse_Status_RawValue(GetStandingOrderResponse *message, int32_t value);
+
+#pragma mark - GetStandingOrdersRequest
+
+typedef GPB_ENUM(GetStandingOrdersRequest_FieldNumber) {
+  GetStandingOrdersRequest_FieldNumber_AccountId = 1,
+  GetStandingOrdersRequest_FieldNumber_Page = 2,
+};
+
+@interface GetStandingOrdersRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+/** Optional paging settings. */
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/** Test to see if @c page has been set. */
+@property(nonatomic, readwrite) BOOL hasPage;
+
+@end
+
+#pragma mark - GetStandingOrdersResponse
+
+typedef GPB_ENUM(GetStandingOrdersResponse_FieldNumber) {
+  GetStandingOrdersResponse_FieldNumber_StandingOrdersArray = 1,
+  GetStandingOrdersResponse_FieldNumber_Offset = 2,
+  GetStandingOrdersResponse_FieldNumber_Status = 3,
+};
+
+@interface GetStandingOrdersResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<StandingOrder*> *standingOrdersArray;
+/** The number of items in @c standingOrdersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger standingOrdersArray_Count;
+
+/** Optional offset state for the client to roundtrip. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@property(nonatomic, readwrite) enum RequestStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetStandingOrdersResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetStandingOrdersResponse_Status_RawValue(GetStandingOrdersResponse *message);
+/**
+ * Sets the raw value of an @c GetStandingOrdersResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetStandingOrdersResponse_Status_RawValue(GetStandingOrdersResponse *message, int32_t value);
+
 #pragma mark - ApplyScaRequest
 
 typedef GPB_ENUM(ApplyScaRequest_FieldNumber) {
@@ -2843,6 +2964,29 @@ typedef GPB_ENUM(GetAuthRequestPayloadResponse_FieldNumber) {
 
 @end
 
+#pragma mark - SetTokenRequestTransferDestinationsRequest
+
+typedef GPB_ENUM(SetTokenRequestTransferDestinationsRequest_FieldNumber) {
+  SetTokenRequestTransferDestinationsRequest_FieldNumber_TokenRequestId = 1,
+  SetTokenRequestTransferDestinationsRequest_FieldNumber_TransferDestinationsArray = 2,
+};
+
+@interface SetTokenRequestTransferDestinationsRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenRequestId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
+/** The number of items in @c transferDestinationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
+
+@end
+
+#pragma mark - SetTokenRequestTransferDestinationsResponse
+
+@interface SetTokenRequestTransferDestinationsResponse : GPBMessage
+
+@end
+
 #pragma mark - CreateTransferRequest
 
 typedef GPB_ENUM(CreateTransferRequest_FieldNumber) {
@@ -2885,6 +3029,33 @@ typedef GPB_ENUM(CreateTransferResponse_FieldNumber) {
 
 @end
 
+#pragma mark - CreateStandingOrderRequest
+
+typedef GPB_ENUM(CreateStandingOrderRequest_FieldNumber) {
+  CreateStandingOrderRequest_FieldNumber_TokenId = 1,
+};
+
+@interface CreateStandingOrderRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@end
+
+#pragma mark - CreateStandingOrderResponse
+
+typedef GPB_ENUM(CreateStandingOrderResponse_FieldNumber) {
+  CreateStandingOrderResponse_FieldNumber_Submission = 1,
+};
+
+@interface CreateStandingOrderResponse : GPBMessage
+
+/** Resulting standing order submission */
+@property(nonatomic, readwrite, strong, null_resettable) StandingOrderSubmission *submission;
+/** Test to see if @c submission has been set. */
+@property(nonatomic, readwrite) BOOL hasSubmission;
+
+@end
+
 #pragma mark - GetTransferRequest
 
 typedef GPB_ENUM(GetTransferRequest_FieldNumber) {
@@ -2910,6 +3081,32 @@ typedef GPB_ENUM(GetTransferResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Transfer *transfer;
 /** Test to see if @c transfer has been set. */
 @property(nonatomic, readwrite) BOOL hasTransfer;
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionRequest
+
+typedef GPB_ENUM(GetStandingOrderSubmissionRequest_FieldNumber) {
+  GetStandingOrderSubmissionRequest_FieldNumber_SubmissionId = 1,
+};
+
+@interface GetStandingOrderSubmissionRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *submissionId;
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionResponse
+
+typedef GPB_ENUM(GetStandingOrderSubmissionResponse_FieldNumber) {
+  GetStandingOrderSubmissionResponse_FieldNumber_Submission = 1,
+};
+
+@interface GetStandingOrderSubmissionResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) StandingOrderSubmission *submission;
+/** Test to see if @c submission has been set. */
+@property(nonatomic, readwrite) BOOL hasSubmission;
 
 @end
 
@@ -3015,6 +3212,98 @@ typedef GPB_ENUM(GetTransfersResponse_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Transfer*> *transfersArray;
 /** The number of items in @c transfersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger transfersArray_Count;
+
+/** Optional offset state for the client to roundtrip. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionsRequest
+
+typedef GPB_ENUM(GetStandingOrderSubmissionsRequest_FieldNumber) {
+  GetStandingOrderSubmissionsRequest_FieldNumber_Page = 1,
+  GetStandingOrderSubmissionsRequest_FieldNumber_Filter = 2,
+};
+
+@interface GetStandingOrderSubmissionsRequest : GPBMessage
+
+/** Optional paging settings */
+@property(nonatomic, readwrite, strong, null_resettable) Page *page;
+/** Test to see if @c page has been set. */
+@property(nonatomic, readwrite) BOOL hasPage;
+
+/** Filter to restrict query */
+@property(nonatomic, readwrite, strong, null_resettable) GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
+
+@end
+
+#pragma mark - GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter
+
+typedef GPB_ENUM(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber) {
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_StartTimeMs = 1,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_EndTimeMs = 2,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_SubmissionStatus = 3,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_Role = 4,
+  GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_FieldNumber_ActingAsRefId = 5,
+};
+
+@interface GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter : GPBMessage
+
+/** Optional time range */
+@property(nonatomic, readwrite) int64_t startTimeMs;
+
+/** Optional time range */
+@property(nonatomic, readwrite) int64_t endTimeMs;
+
+/** Optional status */
+@property(nonatomic, readwrite) enum SubmissionStatus submissionStatus;
+
+/** Role. Default: ANY */
+@property(nonatomic, readwrite) GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role role;
+
+/** Optional ref_id of TokenPayload.acting_as */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *actingAsRefId;
+
+@end
+
+/**
+ * Fetches the raw value of a @c GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter's @c submissionStatus property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_SubmissionStatus_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message);
+/**
+ * Sets the raw value of an @c GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter's @c submissionStatus property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_SubmissionStatus_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter's @c role property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message);
+/**
+ * Sets the raw value of an @c GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter's @c role property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter_Role_RawValue(GetStandingOrderSubmissionsRequest_StandingOrderSubmissionFilter *message, int32_t value);
+
+#pragma mark - GetStandingOrderSubmissionsResponse
+
+typedef GPB_ENUM(GetStandingOrderSubmissionsResponse_FieldNumber) {
+  GetStandingOrderSubmissionsResponse_FieldNumber_SubmissionsArray = 1,
+  GetStandingOrderSubmissionsResponse_FieldNumber_Offset = 2,
+};
+
+@interface GetStandingOrderSubmissionsResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<StandingOrderSubmission*> *submissionsArray;
+/** The number of items in @c submissionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger submissionsArray_Count;
 
 /** Optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;

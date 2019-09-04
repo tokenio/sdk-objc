@@ -86,6 +86,7 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
   Transfer_FieldNumber_Status = 6,
   Transfer_FieldNumber_OrderId = 7,
   Transfer_FieldNumber_Method = 8,
+  Transfer_FieldNumber_ExecutionDate = 9,
 };
 
 /**
@@ -117,6 +118,9 @@ typedef GPB_ENUM(Transfer_FieldNumber) {
 
 /** Instant (currency ledger) or default */
 @property(nonatomic, readwrite) Transfer_Method method;
+
+/** Execution date. Same as the value on the transfer token payload. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *executionDate;
 
 @end
 
@@ -154,6 +158,7 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
   TransferPayload_FieldNumber_Description_p = 6,
   TransferPayload_FieldNumber_TransferDestinationsArray = 7,
   TransferPayload_FieldNumber_Metadata = 8,
+  TransferPayload_FieldNumber_ConfirmFunds = 9,
 };
 
 /**
@@ -187,6 +192,8 @@ typedef GPB_ENUM(TransferPayload_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions_Metadata *metadata;
 /** Test to see if @c metadata has been set. */
 @property(nonatomic, readwrite) BOOL hasMetadata;
+
+@property(nonatomic, readwrite) BOOL confirmFunds;
 
 @end
 

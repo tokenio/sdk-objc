@@ -4,81 +4,32 @@ option java_outer_classname = "ProviderSpecific";
 option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific";
 
 import "extensions/message.proto";
-import "address.proto";
-import "polishapi.proto";
+import "provider/cma9.proto";
+import "provider/polishapi.proto";
+import "provider/nextgenpsd2.proto";
 
 message ProviderAccountDetails {
   oneof details {
-    Cma9AccountDetails cma9_account_details = 1;
-    io.token.proto.common.providerspecific.polishapi.PolishApiAccountDetails polish_api_account_details = 2;
+    cma9.Cma9AccountDetails cma9_account_details = 1;
+    polishapi.PolishApiAccountDetails polish_api_account_details = 2;
   }
 }
 
 message ProviderTransactionDetails {
   oneof details {
-    io.token.proto.common.providerspecific.polishapi.PolishApiTransactionDetails polish_api_transaction_details = 1;
+    polishapi.PolishApiTransactionDetails polish_api_transaction_details = 1;
+  }
+}
+
+message ProviderStandingOrderDetails {
+  oneof details {
+    cma9.Cma9StandingOrderDetails cma9_standing_order_details = 1;
   }
 }
 
 message ProviderTransferMetadata {
   oneof metadata {
-    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata polish_api_transfer_metadata = 1;
-  }
-}
-
-message Cma9AccountDetails {
-  option (io.token.proto.extensions.message.redact) = true;
-  string party_id = 1;
-  string party_number = 2;
-  PartyType party_type = 3;
-  string name = 4;
-  string email_address = 5;
-  string phone = 6;
-  string mobile = 7;
-  repeated Cma9Address address = 8;
-  AccountType account_type = 9;
-  AccountSubtype account_subtype = 10;
-  string description = 11;
-
-  message Cma9Address {
-    AddressType address_type = 1;
-    io.token.proto.common.address.Address address = 2;
-  }
-
-  enum PartyType {
-    INVALID_PARTY_TYPE = 0;
-    DELEGATE = 1;
-    JOINT = 2;
-    SOLE = 3;
-  }
-
-  enum AddressType {
-    INVALID_ADDRESS_TYPE = 0;
-    BUSINESS = 1;
-    CORRESPONDENCE = 2;
-    DELIVERYTO = 3;
-    MAILTO = 4;
-    POBOX = 5;
-    POSTAL = 6;
-    RESIDENTIAL = 7;
-    STATEMENT = 8;
-  }
-
-  enum AccountType {
-    INVALID_ACCOUNT_TYPE = 0;
-    BUSINESS_ACCOUNT = 1;
-    PERSONAL_ACCOUNT = 2;
-  }
-
-  enum AccountSubtype {
-    INVALID_ACCOUNT_SUBTYPE = 0;
-    CHARGE_CARD = 1;
-    CREDIT_CARD = 2;
-    CURRENT_ACCOUNT = 3;
-    EMONEY = 4;
-    LOAN = 5;
-    MORTGAGE = 6;
-    PREPAID_CARD = 7;
-    SAVINGS = 8;
+    polishapi.PolishApiTransferMetadata polish_api_transfer_metadata = 1;
+    nextgenpsd2.NextGenPsd2TransferMetadata next_gen_psd2_transfer_metadata = 2;
   }
 }

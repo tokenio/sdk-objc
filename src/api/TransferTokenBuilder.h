@@ -65,8 +65,8 @@
 /// Description.
 @property (readwrite) NSString *descr;
 
-/// Purpose of payment.
-@property (readwrite) PurposeOfPayment purposeOfPayment;
+/// Purpose code. Refer to ISO 20022 external code sets.
+@property (readwrite) NSString *purposeCode;
 
 /// Destination bank accounts.
 @property (readwrite) NSArray<TransferDestination *> *transferDestinations;

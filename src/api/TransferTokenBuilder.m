@@ -188,8 +188,8 @@
         [payload.transfer.attachmentsArray addObjectsFromArray:self.attachments];
     }
     
-    if (self.purposeOfPayment) {
-        payload.transfer.instructions.metadata.transferPurpose = self.purposeOfPayment;
+    if (self.purposeCode) {
+        payload.transfer.instructions.metadata.purposeCode = self.purposeCode;
     }
     
     if (self.actingAs) {

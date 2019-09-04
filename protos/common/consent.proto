@@ -17,6 +17,7 @@ message Consent {
   oneof type {
     InformationAccess information_access = 5;
     Payment payment = 6;
+    StandingOrder standing_order = 9;
   }
 
   string initiator_id = 7;                      // ID of the member requesting consent (e.g. merchant)
@@ -46,6 +47,13 @@ message Consent {
     io.token.proto.common.money.Money amount = 3;
     repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 4 [deprecated=true];
     repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 5;
+  }
+
+  message StandingOrder {
+    io.token.proto.common.account.BankAccount account = 1;
+    io.token.proto.common.money.Money amount = 2; // amount per charge
+    string frequency = 3; // ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
+    repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 4;
   }
 
   message Beneficiary {

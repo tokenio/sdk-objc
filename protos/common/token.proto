@@ -4,11 +4,11 @@ package io.token.proto.common.token;
 option java_outer_classname = "TokenProtos";
 option csharp_namespace = "Tokenio.Proto.Common.TokenProtos";
 
+import "account.proto";
 import "blob.proto";
 import "money.proto";
 import "pricing.proto";
 import "security.proto";
-import "transfer.proto";
 import "transferinstructions.proto";
 import "alias.proto";
 import "extensions/field.proto";
@@ -56,27 +56,59 @@ message TokenRequestPayload {
   oneof request_body {
     AccessBody access_body = 6;
     TransferBody transfer_body = 7;
+    StandingOrderBody standing_order_body = 12;
   }
 
   string description = 8 [(io.token.proto.extensions.field.redact) = true];
   string callback_state = 9;
   string destination_country = 10;
 
-  string ref_id = 11;       // ref ID that will be transferred to the token payload
+  string ref_id = 11; // ref ID that will be transferred to the token payload
 
   message AccessBody {
-    repeated ResourceType type = 1;
-
-    //ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved.
-    repeated string resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
-
     enum ResourceType {
       INVALID = 0;
       ACCOUNTS = 1;
       BALANCES = 2;
       TRANSACTIONS = 3;
       TRANSFER_DESTINATIONS = 4;
-      FUNDS_CONFIRMATIONS = 5;
+      FUNDS_CONFIRMATIONS = 5 [deprecated = true];
+      STANDING_ORDERS = 6;
+    }
+
+    enum AccountResourceType {
+      ACCOUNT_INVALID = 0;
+      ACCOUNT_INFO = 1;
+      ACCOUNT_BALANCE = 2;
+      ACCOUNT_TRANSACTIONS = 3;
+      ACCOUNT_TRANSFER_DESTINATIONS = 4;
+      ACCOUNT_FUNDS_CONFIRMATION = 5;
+      ACCOUNT_STANDING_ORDERS = 6;
+    }
+
+    // Used if the TPP does not wish to specify accounts
+    message ResourceTypeList {
+      repeated ResourceType resources = 1;
+    }
+
+    // Used if the TPP wish to specify accounts
+    message AccountResourceList {
+      repeated AccountResource resources = 1;
+
+      message AccountResource {
+        AccountResourceType type = 1;
+        io.token.proto.common.account.BankAccount bank_account = 2;
+        io.token.proto.common.transferinstructions.CustomerData customer_data = 3;
+      }
+    }
+
+    repeated ResourceType type = 1 [deprecated = true];
+    //ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved.
+    repeated string resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
+
+    oneof resource_list {
+      ResourceTypeList resource_type_list  = 3;
+      AccountResourceList account_resource_list = 4;
     }
   }
 
@@ -86,6 +118,8 @@ message TokenRequestPayload {
     repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 3 [deprecated = true];
     string lifetime_amount = 4;                                                             // Optional: Token total lifetime amount. Double.
     io.token.proto.common.transferinstructions.TransferInstructions instructions = 5;
+    string execution_date = 6;                                                              // Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD.
+    bool confirm_funds = 7;
   }
 }
 
@@ -115,8 +149,7 @@ message TokenSignature {
 // Refers to a Token member by ID and/or by alias.
 message TokenMember {
   string id = 1;                               // optional member ID
-  // TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames
-  string username = 2;
+  string username = 2 [deprecated = true];
   io.token.proto.common.alias.Alias alias = 3; // optional alias, such as an email address
 }
 
@@ -139,6 +172,7 @@ message TokenPayload {
   oneof body {
     TransferBody transfer = 9;
     AccessBody access = 10;
+    StandingOrderBody standing_order = 16;
   }
 
   int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
@@ -183,8 +217,20 @@ message TransferBody {
   string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
   repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
   io.token.proto.common.pricing.Pricing pricing = 9 [deprecated = true];             // Deprecated; unused.
+  string execution_date = 10;                                                        // Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD.
+  bool confirm_funds = 11;
 }
 
+// Schedule a series of payments from 'start_date' to 'end_date'
+// at the given frequency. Each payment will be for 'amount'.
+message StandingOrderBody {
+  transferinstructions.TransferInstructions instructions = 1;  // Transfer instructions.
+  string start_date = 2;                                                             // ISO 8601: YYYY-MM-DD or	YYYYMMDD
+  string end_date = 3;                                                               // Optional. ISO 8601: YYYY-MM-DD or	YYYYMMDD
+  string frequency = 4;                                                              // ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
+  string amount = 5;                                                                 // Amount of each individual payment
+  string currency = 6;                                                               // ISO 4217, 3 letter currency code such as "USD" or "EUR".
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Access Token
@@ -198,6 +244,7 @@ message AccessBody {
       // access to account data
       Account account = 6;
       AccountTransactions transactions = 7;
+      AccountStandingOrders standing_orders = 16;
       AccountBalance balance = 8;
       TransferDestinations transfer_destinations = 12;
 
@@ -230,6 +277,11 @@ message AccessBody {
 
     // Provides access to a specific account transactions
     message AccountTransactions {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account's standing orders
+    message AccountStandingOrders {
       string account_id = 1; // ID of account
     }
 

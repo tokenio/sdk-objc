@@ -175,8 +175,6 @@
     builder.accountId = payerAccount.id;
     builder.refId = payload.refId;
     builder.effectiveAtMs = [[NSDate date] timeIntervalSince1970] * 1000.0;
-    // Optional settings
-    builder.purposeOfPayment = PurposeOfPayment_PersonalExpenses;
     
     NSString *state = [TKUtil nonce];
     

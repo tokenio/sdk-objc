@@ -4,6 +4,8 @@ package io.token.proto.common.bank;
 option java_outer_classname = "BankProtos";
 option csharp_namespace = "Tokenio.Proto.Common.BankProtos";
 
+import "alias.proto";
+
 message Bank {
   string id = 1;
   string name = 2;
@@ -16,6 +18,9 @@ message Bank {
   bool supports_send_payment = 9;       // Connection allows for payment initiation
   bool supports_receive_payment = 10;   // Connection allows for receiving payments
   bool supports_balance = 16;           // Connection allows for retrieving balances
+  bool supports_scheduled_payment = 18;
+  bool supports_standing_order = 19;
+  bool supports_bulk_transfer = 20;
   bool requires_legacy_transfer = 14  [deprecated = true];   // Connection only supports immediate redemption of transfers
   bool requires_one_step_payment = 17;   // Connection only supports immediate redemption of transfers
   string provider = 11;                 // Provider of the bank, e.g. Yodlee, FinApi, Token
@@ -33,6 +38,7 @@ message BankInfo {
   string bank_linking_uri = 3;   // OAuth starting URI
   repeated string realm = 4;     // (Optional) Realms of the bank
   string custom_alias_label = 6; // (Optional) Label to be displayed if bank supports custom aliases
+  repeated io.token.proto.common.alias.Alias.Type alias_types = 7; // Alias type for users to login with in web app, PHONE, EMAIL, CUSTOM
 }
 
 message Paging {
