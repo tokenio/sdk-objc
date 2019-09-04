@@ -1,0 +1,9 @@
+syntax = "proto3";
+package io.token.proto.common.providerspecific.nextgenpsd2;
+option java_outer_classname = "NextGenPsd2";
+option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific.NextGenPsd2";
+
+message NextGenPsd2TransferMetadata {
+  string end_to_end_identification = 1;
+  string remittance_information_structured = 2;
+}

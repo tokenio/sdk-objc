@@ -1,0 +1,30 @@
+syntax = "proto3";
+package io.token.proto.common.submission;
+
+option java_outer_classname = "SubmissionProtos";
+option csharp_namespace = "Tokenio.Proto.Common.SubmissionProtos";
+
+import "money.proto";
+import "security.proto";
+import "token.proto";
+import "transferinstructions.proto";
+
+// Status of an instruction sent to the bank, e.g. of a payment or standing order.
+enum SubmissionStatus {
+  INVALID = 0;                                 // Invalid status
+  PENDING = 1;                                 // Pending submission by Token.
+  PROCESSING = 2;                              // Submitted by Token; pending submission by the bank.
+  SUCCESS = 3;                                 // Submission successful.
+  FAILED = 4;                                  // Submission failed.
+  INITIATED = 5;                               // Submitted by token; unable to retrieve status from bank.
+  CANCELED = 6;
+}
+
+message StandingOrderSubmission {
+  string id = 1;                            // ID of the submission. Can be used in GetStandingOrderSubmissionRequest to fetch status.
+  string standing_order_id = 2;             // Bank standing order reference id: Can be used to look up StandingOrder
+  string token_id = 3;
+  int64 created_at_ms = 4;
+  io.token.proto.common.token.StandingOrderBody payload = 5;
+  SubmissionStatus status = 6;
+}

@@ -1,0 +1,84 @@
+syntax = "proto3";
+package io.token.proto.common.providerspecific.cma9;
+option java_outer_classname = "Cma9";
+option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific.Cma9";
+
+import "extensions/message.proto";
+import "address.proto";
+import "money.proto";
+
+message Cma9AccountDetails {
+  option (io.token.proto.extensions.message.redact) = true;
+  string party_id = 1;
+  string party_number = 2;
+  PartyType party_type = 3;
+  string name = 4;
+  string email_address = 5;
+  string phone = 6;
+  string mobile = 7;
+  repeated Cma9Address address = 8;
+  AccountType account_type = 9;
+  AccountSubtype account_subtype = 10;
+  string description = 11;
+
+  message Cma9Address {
+    AddressType address_type = 1;
+    io.token.proto.common.address.Address address = 2;
+  }
+
+  enum PartyType {
+    INVALID_PARTY_TYPE = 0;
+    DELEGATE = 1;
+    JOINT = 2;
+    SOLE = 3;
+  }
+
+  enum AddressType {
+    INVALID_ADDRESS_TYPE = 0;
+    BUSINESS = 1;
+    CORRESPONDENCE = 2;
+    DELIVERYTO = 3;
+    MAILTO = 4;
+    POBOX = 5;
+    POSTAL = 6;
+    RESIDENTIAL = 7;
+    STATEMENT = 8;
+  }
+
+  enum AccountType {
+    INVALID_ACCOUNT_TYPE = 0;
+    BUSINESS_ACCOUNT = 1;
+    PERSONAL_ACCOUNT = 2;
+  }
+
+  enum AccountSubtype {
+    INVALID_ACCOUNT_SUBTYPE = 0;
+    CHARGE_CARD = 1;
+    CREDIT_CARD = 2;
+    CURRENT_ACCOUNT = 3;
+    EMONEY = 4;
+    LOAN = 5;
+    MORTGAGE = 6;
+    PREPAID_CARD = 7;
+    SAVINGS = 8;
+  }
+}
+
+// See field definitions at https://openbanking.atlassian.net/wiki/spaces/DZ/pages/641959800/Standing+Orders+v3.0.
+message Cma9StandingOrderDetails {
+  option (io.token.proto.extensions.message.redact) = true;
+  string frequency = 1;
+  io.token.proto.common.money.Money first_payment = 2;
+  string first_payment_date_time = 3;
+  io.token.proto.common.money.Money next_payment = 4;
+  string next_payment_date_time = 5;
+  io.token.proto.common.money.Money final_payment = 6;
+  string final_payment_date_time = 7;
+  Cma9Account creditor_account = 8;
+}
+
+message Cma9Account {
+  string scheme_name = 1;
+  string identification = 2;
+  string name = 3;
+}
