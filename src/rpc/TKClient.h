@@ -393,6 +393,15 @@
             onError:(OnError)onError;
 
 /**
+ * Redeems a standing order token.
+ *
+ * @param tokenId ID of token to redeem
+ */
+- (void)createStandingOrder:(NSString *)tokenId
+                  onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                    onError:(OnError)onError;
+
+/**
  * Looks up a token transfer by id.
  *
  * @param transferId transfer id
@@ -464,10 +473,66 @@
  */
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
-                   forAccount:accountId
+                   forAccount:(NSString *)accountId
                       withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
+
+/**
+ * Looks up an existing standing order and return the response.
+ *ØØ
+ * @param accountId account ID
+ * @param standingOrderId standing order ID
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with the standing order
+ * @param onError invoked on error
+ */
+- (void)getStandingOrder:(NSString *)standingOrderId
+              forAccount:(NSString *)accountId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError;
+
+/**
+ * Looks up standing orders and return response.
+ *
+ * @param accountId account ID
+ * @param offset offset
+ * @param limit limit
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with standing orders
+ * @param onError invoked on error
+ */
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError;
+
+/**
+ * Looks up an existing Token standing order submission.
+ *
+ * @param submissionId submission ID
+ * @param onSuccess invoked on success with the standing order submission
+ * @param onError invoked on error
+ */
+- (void)getStandingOrderSubmission:(NSString *)submissionId
+                         onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                           onError:(OnError)onError;
+
+/**
+ * Looks up a list of existing standing order submissions.
+ *
+ * @param offset offset
+ * @param limit limit
+ * @param onSuccess invoked on success with standing order submissions
+ * @param onError invoked on error
+ */
+- (void)getStandingOrderSubmissionsOffset:(NSString *)offset
+                                    limit:(int)limit
+                                onSuccess:(OnSuccessWithStandingOrderSubmissions)onSuccess
+                                  onError:(OnError)onError;
 
 /**
  * Uploads a blob to the server.

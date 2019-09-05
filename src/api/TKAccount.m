@@ -71,34 +71,61 @@
     return account.accountFeatures;
 }
 
-- (void)getBalance:(OnSuccessWithTKBalance)onSuccess
+- (void)getBalance:(Key_Level)keyLevel
+         onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError {
     [self.member getBalance:account.id_p
-                    withKey:Key_Level_Low
+                    withKey:keyLevel
                   onSuccess:onSuccess
                     onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
+               withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError {
     [self.member getTransaction:transactionId
                      forAccount:account.id_p
-                        withKey:Key_Level_Low
+                        withKey:keyLevel
                       onSuccess:onSuccess
                         onError:onError];
 }
 
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
+                      withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError {
     [self.member getTransactionsOffset:offset
                                  limit:limit
                             forAccount:account.id_p
-                               withKey:Key_Level_Low
+                               withKey:keyLevel
                              onSuccess:onSuccess
                                onError:onError];
+}
+
+- (void)getStandingOrder:(NSString *)standingOrderId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError {
+    [self.member getStandingOrder:standingOrderId
+                       forAccount:account.id_p
+                          withKey:keyLevel
+                        onSuccess:onSuccess
+                          onError:onError];
+}
+
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError {
+    [self.member getStandingOrdersOffset:offset
+                                   limit:limit
+                              forAccount:account.id_p
+                                 withKey:keyLevel
+                               onSuccess:onSuccess
+                                 onError:onError];
 }
 
 @end

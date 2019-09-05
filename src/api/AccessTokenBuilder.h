@@ -113,6 +113,13 @@
  * @param accountId account id
  */
 - (void)forFundsConfirmation:(NSString *)accountId;
+
+/**
+ * Grants access to a given account standing orders.
+ *
+ * @param accountId account ID to grant access to standing orders
+ */
+- (void)forAccountStandingOrders:(NSString *)accountId;
     
 /**
  * Set entity redeemer is acting on behalf of.

@@ -187,6 +187,8 @@
 		D093A36C219F448500947EC4 /* TKEndorseSample.m in Sources */ = {isa = PBXBuildFile; fileRef = D093A36B219F448500947EC4 /* TKEndorseSample.m */; };
 		D093A36F219F464E00947EC4 /* TKSampleModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D093A36D219F464E00947EC4 /* TKSampleModel.h */; };
 		D093A370219F464E00947EC4 /* TKSampleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D093A36E219F464E00947EC4 /* TKSampleModel.m */; };
+		D096878823209440006A78DE /* StandingOrderTokenBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D096878623209440006A78DE /* StandingOrderTokenBuilder.h */; };
+		D096878923209440006A78DE /* StandingOrderTokenBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D096878723209440006A78DE /* StandingOrderTokenBuilder.m */; };
 		D09E3BC62017EB2900CA0405 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */; };
 		D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */; };
 		D09E3BCD20191BDC00CA0405 /* TKTokenBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */; };
@@ -455,6 +457,8 @@
 		D093A36B219F448500947EC4 /* TKEndorseSample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEndorseSample.m; sourceTree = "<group>"; };
 		D093A36D219F464E00947EC4 /* TKSampleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKSampleModel.h; sourceTree = "<group>"; };
 		D093A36E219F464E00947EC4 /* TKSampleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSampleModel.m; sourceTree = "<group>"; };
+		D096878623209440006A78DE /* StandingOrderTokenBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StandingOrderTokenBuilder.h; sourceTree = "<group>"; };
+		D096878723209440006A78DE /* StandingOrderTokenBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StandingOrderTokenBuilder.m; sourceTree = "<group>"; };
 		D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
 		D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
 		D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowser.h; sourceTree = "<group>"; };
@@ -751,6 +755,8 @@
 				1B3329211EE4455B00E3F145 /* TransferTokenBuilder.m */,
 				94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */,
 				94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */,
+				D096878623209440006A78DE /* StandingOrderTokenBuilder.h */,
+				D096878723209440006A78DE /* StandingOrderTokenBuilder.m */,
 				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
 				D0B9C52E219CF37F00B55101 /* TokenProto.h */,
 				3777163D1D99BF6800287239 /* TokenSdk.h */,
@@ -1069,6 +1075,7 @@
 				37637B661D989A930043345F /* Notification.pbobjc.h in Headers */,
 				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
 				94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */,
+				D096878823209440006A78DE /* StandingOrderTokenBuilder.h in Headers */,
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
 				DD0A77671E42AC040058FB8A /* TKError.h in Headers */,
 				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
@@ -1209,6 +1216,7 @@
 					8A99090D1D890E820096A7FA = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 734Q44J6QX;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Manual;
 					};
 					8A9909171D890E820096A7FA = {
@@ -1417,6 +1425,7 @@
 				DDF54B041E31797900BE739B /* QHex.m in Sources */,
 				D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */,
 				22EBBA4520F5680900E6A4DB /* Service.pbobjc.m in Sources */,
+				D096878923209440006A78DE /* StandingOrderTokenBuilder.m in Sources */,
 				4B240F851F28096300497B2D /* TKHasher.m in Sources */,
 				FAE918CC1F17E70B001692CF /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
@@ -1691,8 +1700,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1737,6 +1748,8 @@
 				PRODUCT_NAME = TokenSdk;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WARNING_LDFLAGS = "";
 			};
 			name = Debug;
@@ -1745,8 +1758,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1791,6 +1806,7 @@
 				PRODUCT_NAME = TokenSdk;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				WARNING_LDFLAGS = "";
 			};
 			name = Release;

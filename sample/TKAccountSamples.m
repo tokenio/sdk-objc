@@ -255,7 +255,7 @@
     // account loop begin snippet to include in docs
     [member getAccounts:^(NSArray<TKAccount *> *accounts) {
         for (TKAccount *a in accounts) {
-            [a getBalance:^(TKBalance *b) {
+            [a getBalance:Key_Level_Low onSuccess:^(TKBalance *b) {
                 sums[b.available.currency] = @([sums[b.available.currency] floatValue] + [b.available.value floatValue]);
             } onError:^(NSError *e) {
                 // Something went wrong.

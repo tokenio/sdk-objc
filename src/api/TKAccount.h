@@ -6,12 +6,10 @@
 #import <Foundation/Foundation.h>
 
 #import "TKTypedef.h"
+#import "TokenProto.h"
 
-@class Account;
-@class AccountDetails;
-@class AccountFeatures;
 @class TKClient;
-@class Token;
+@class TKMember;
 
 /**
  * Represents a funding account in the Token system.
@@ -62,20 +60,24 @@
 /**
  * Looks up account balance.
  *
+ * @param keyLevel key level
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
-- (void)getBalance:(OnSuccessWithTKBalance)onSuccess
+- (void)getBalance:(Key_Level)keyLevel
+         onSuccess:(OnSuccessWithTKBalance)onSuccess
            onError:(OnError)onError;
 
 /**
  * Looks up an existing transaction. Doesn't have to be a transaction for a token transfer.
  *
  * @param transactionId ID of the transaction
+ * @param keyLevel key level
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
 - (void)getTransaction:(NSString *)transactionId
+               withKey:(Key_Level)keyLevel
              onSuccess:(OnSuccessWithTransaction)onSuccess
                onError:(OnError)onError;
 
@@ -85,12 +87,42 @@
  *
  * @param offset offset to start at (NULL for none)
  * @param limit max number of records to return
+ * @param keyLevel key level
  * @param onSuccess invoked on success
  * @param onError invoked on error
  */
 - (void)getTransactionsOffset:(NSString *)offset
                         limit:(int)limit
+                      withKey:(Key_Level)keyLevel
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
+
+/**
+ * Looks up an existing standing order and return the response.
+ *
+ * @param standingOrderId standing order ID
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with the standing order
+ * @param onError invoked on error
+ */
+- (void)getStandingOrder:(NSString *)standingOrderId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError;
+
+/**
+ * Looks up standing orders and return response.
+ *
+ * @param offset offset
+ * @param limit limit
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with standing orders
+ * @param onError invoked on error
+ */
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError;
 
 @end

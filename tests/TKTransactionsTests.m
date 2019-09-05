@@ -36,15 +36,16 @@
 
 - (void)testGetBalance {
     TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
-    [payerAccount getBalance:^(TKBalance *balance) {
-        Money *currentBalance = balance.current;
-        XCTAssert([currentBalance.value intValue] > 0);
-        XCTAssertEqualObjects(@"USD", currentBalance.currency);
-        Money *availableBalance = balance.available;
-        XCTAssert([availableBalance.value intValue] > 0);
-        XCTAssertEqualObjects(@"USD", availableBalance.currency);
-        [expactation fulfill];
-    } onError:THROWERROR];
+    [payerAccount getBalance:Key_Level_Low
+                   onSuccess:^(TKBalance *balance) {
+                       Money *currentBalance = balance.current;
+                       XCTAssert([currentBalance.value intValue] > 0);
+                       XCTAssertEqualObjects(@"USD", currentBalance.currency);
+                       Money *availableBalance = balance.available;
+                       XCTAssert([availableBalance.value intValue] > 0);
+                       XCTAssertEqualObjects(@"USD", availableBalance.currency);
+                       [expactation fulfill];
+                   } onError:THROWERROR];
     [self waitForExpectations:@[expactation] timeout:10];
 }
 
@@ -89,14 +90,17 @@
              currency:@"USD"
              description:@"full amount"
              destination:destination onSuccess:^(Transfer *transfer) {
-                 [self->payerAccount getTransaction:transfer.transactionId onSuccess:^(Transaction *transaction) {
-                     XCTAssertEqualObjects(amount, [NSDecimalNumber decimalNumberWithString:transaction.amount.value]);
-                     XCTAssertEqualObjects(@"USD", transaction.amount.currency);
-                     XCTAssertEqualObjects(created.id_p, transaction.tokenId);
-                     XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
-                     XCTAssertTrue([transaction.description containsString:@"full amount"]);
-                     [expactation fulfill];
-                 } onError:THROWERROR];
+                 [self->payerAccount
+                  getTransaction:transfer.transactionId
+                  withKey:Key_Level_Low
+                  onSuccess:^(Transaction *transaction) {
+                      XCTAssertEqualObjects(amount, [NSDecimalNumber decimalNumberWithString:transaction.amount.value]);
+                      XCTAssertEqualObjects(@"USD", transaction.amount.currency);
+                      XCTAssertEqualObjects(created.id_p, transaction.tokenId);
+                      XCTAssertEqualObjects(transfer.id_p, transaction.tokenTransferId);
+                      XCTAssertTrue([transaction.description containsString:@"full amount"]);
+                      [expactation fulfill];
+                  } onError:THROWERROR];
              } onError:THROWERROR];
         } onError:THROWERROR];
     } onError:THROWERROR];
@@ -140,7 +144,11 @@
     }
     
     TKTestExpectation *lookedUpExpectation = [[TKTestExpectation alloc] init];
-    [payerAccount getTransactionsOffset:NULL limit:3 onSuccess:^(PagedArray<Transaction *> *lookedUp) {
+    [payerAccount
+     getTransactionsOffset:NULL
+     limit:3
+     withKey:Key_Level_Low
+     onSuccess:^(PagedArray<Transaction *> *lookedUp) {
         XCTAssertEqual(3, lookedUp.items.count);
         XCTAssertNotNil(lookedUp.offset);
         [lookedUpExpectation fulfill];

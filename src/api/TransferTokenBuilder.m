@@ -69,6 +69,11 @@
             _actingAs = tokenRequest.requestPayload.actingAs;
         }
         _tokenRequestId = tokenRequest.id_p;
+
+        if (tokenRequest.requestPayload.transferBody.executionDate
+            && [tokenRequest.requestPayload.transferBody.executionDate isEqualToString:@""]) {
+            _executionDate = tokenRequest.requestPayload.transferBody.executionDate;
+        }
     }
     return self;
 }
@@ -115,6 +120,9 @@
         
         if (tokenPayload.tokenRequestId && ![tokenPayload.tokenRequestId isEqualToString:@""]) {
             _tokenRequestId = tokenPayload.tokenRequestId;
+        }
+        if (tokenPayload.transfer.executionDate && ![tokenPayload.transfer.executionDate isEqualToString:@""]) {
+            _executionDate = tokenPayload.transfer.executionDate;
         }
     }
     return self;
@@ -200,6 +208,10 @@
     if (self.tokenRequestId) {
         payload.tokenRequestId = self.tokenRequestId;
     }
+
+    if (self.executionDate && ![self.executionDate isEqualToString:@""]) {
+        payload.transfer.executionDate = self.executionDate;
+    }
     
     return payload;
 }
@@ -220,7 +232,7 @@
                 reason:@"No source account found on token"
                 userInfo:nil];
     }
-    
+
     TokenPayload *payload = [self buildPayload];
     [[self.member getClient]
      createTransferToken:payload

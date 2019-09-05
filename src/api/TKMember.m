@@ -483,6 +483,20 @@ NS_ASSUME_NONNULL_BEGIN
                        onError:onError];
 }
 
+- (void)getStandingOrderSubmission:(NSString *)submissionId
+                         onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                           onError:(OnError)onError {
+    [client getStandingOrderSubmission:submissionId onSuccess:onSuccess onError:onError];
+}
+
+
+- (void)getStandingOrderSubmissionsOffset:(NSString * _Nullable)offset
+                                    limit:(int)limit
+                                onSuccess:(OnSuccessWithStandingOrderSubmissions)onSuccess
+                                  onError:(OnError)onError {
+    [client getStandingOrderSubmissionsOffset:offset limit:limit onSuccess:onSuccess onError:onError];
+}
+
 - (void)addAddress:(Address *)address
           withName:(NSString *)name
          onSuccess:(OnSuccessWithAddress)onSuccess
@@ -535,33 +549,52 @@ NS_ASSUME_NONNULL_BEGIN
     return [self createTransferTokenBuilderWithTokenRequest:tokenRequest];
 }
 
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilder:(NSDecimalNumber *)amount
+                                                      currency:(NSString *)currency
+                                                     frequency:(NSString *)frequency
+                                                     startDate:(NSString *)startDate
+                                                       endDate:(NSString * _Nullable)endDate {
+    return [[StandingOrderTokenBuilder alloc] init:self
+                                            amount:amount
+                                          currency:currency
+                                         frequency:frequency
+                                         startDate:startDate
+                                           endDate:endDate];
+}
+
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilder:(NSDecimalNumber *)amount
+                                                      currency:(NSString *)currency
+                                                     frequency:(NSString *)frequency
+                                                     startDate:(NSString *)startDate {
+    return [self createStandingOrderTokenBuilder:amount
+                                        currency:currency
+                                       frequency:frequency
+                                       startDate:startDate
+                                         endDate:nil];
+}
+
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest {
+    return [[StandingOrderTokenBuilder alloc] init:self tokenRequest:tokenRequest];
+}
+
 - (void)prepareTransferToken:(TransferTokenBuilder *)builder
                    onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                      onError:(OnError)onError {
     [client prepareToken:[builder buildPayload] onSuccess:onSuccess onError:onError];
 }
 
-/**
- * Signs a token payload.
- *
- * @param tokenPayload token payload
- * @param keyLevel key level
- * @return token payload signature
- */
+- (void)prepareStandingOrderToken:(StandingOrderTokenBuilder *)builder
+                        onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                          onError:(OnError)onError {
+    [client prepareToken:[builder buildPayload] onSuccess:onSuccess onError:onError];
+}
+
 - (Signature * _Nullable)signTokenPayload:(TokenPayload *)tokenPayload
                        keyLevel:(Key_Level)keyLevel
                         onError:(OnError)onError {
     return [client signTokenPayload:tokenPayload keyLevel:keyLevel onError:onError];
 }
 
-/**
- * Creates a token directly from a resolved token payload and list of token signatures.
- *
- * @param tokenPayload token payload
- * @param tokenRequestId the token request id
- * @param signatures list of signatures
- * @return token returned by the server
- */
 - (void)createToken:(TokenPayload *)tokenPayload
      tokenRequestId:(NSString * _Nullable)tokenRequestId
          signatures:(NSArray<Signature *> *)signatures
@@ -574,14 +607,6 @@ NS_ASSUME_NONNULL_BEGIN
                 onError:onError];
 }
 
-/**
- * Creates a token directly from a resolved token payload and a key level.
- *
- * @param tokenPayload token payload
- * @param tokenRequestId the token request id
- * @param keyLevel the key level
- * @return token returned by the server
- */
 - (void)createToken:(TokenPayload *)tokenPayload
      tokenRequestId:(NSString * _Nullable)tokenRequestId
            keyLevel:(Key_Level)keyLevel
@@ -700,6 +725,7 @@ NS_ASSUME_NONNULL_BEGIN
             onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
     payload.tokenId = token.id_p;
+    payload.description_p = token.payload.description_p;
     payload.refId = [TKUtil nonce];
     
     if (amount) {
@@ -747,6 +773,17 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
     [client redeemToken:payload
               onSuccess:onSuccess
                 onError:onError];
+}
+
+/**
+ * Redeems a standing order token.
+ *
+ * @param tokenId ID of token to redeem
+ */
+- (void)redeemStandingOrderToken:(NSString *)tokenId
+                       onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                         onError:(OnError)onError {
+    [client createStandingOrder:tokenId onSuccess:onSuccess onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
@@ -806,6 +843,65 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
             onError(error);
         }
     }];
+}
+
+- (void)getStandingOrder:(NSString *)standingOrderId
+              forAccount:(NSString *)accountId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError {
+    [client
+     getStandingOrder:standingOrderId
+     forAccount:accountId
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [self->client
+              getStandingOrder:standingOrderId
+              forAccount:accountId
+              withKey:Key_Level_Standard
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
+}
+
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError {
+    [client
+     getStandingOrdersOffset:offset
+     limit:limit
+     forAccount:accountId
+     withKey:keyLevel
+     onSuccess:onSuccess
+     onError:^(NSError *error){
+         if ([error.domain isEqualToString:kTokenRequestErrorDomain]
+             && error.code == RequestStatus_MoreSignaturesNeeded
+             && keyLevel == Key_Level_Low) {
+             // Request again with Key_Level_Standard if more signatures are needed
+             [self->client
+              getStandingOrdersOffset:offset
+              limit:limit
+              forAccount:accountId
+              withKey:Key_Level_Standard
+              onSuccess:onSuccess
+              onError:onError];
+         }
+         else {
+             onError(error);
+         }
+     }];
 }
 
 - (void)createBlob:(NSString *)ownerId

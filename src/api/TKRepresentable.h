@@ -114,4 +114,35 @@
                     onSuccess:(OnSuccessWithTransactions)onSuccess
                       onError:(OnError)onError;
 
+/**
+ * Looks up an existing standing order and return the response.
+ *
+ * @param accountId account ID
+ * @param standingOrderId standing order ID
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with the standing order
+ * @param onError invoked on error
+ */
+- (void)getStandingOrder:(NSString *)standingOrderId
+              forAccount:(NSString *)accountId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError;
+
+/**
+ * Looks up standing orders and return response.
+ *
+ * @param accountId account ID
+ * @param offset offset
+ * @param limit limit
+ * @param keyLevel key level
+ * @param onSuccess invoked on success with standing orders
+ * @param onError invoked on error
+ */
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError;
 @end

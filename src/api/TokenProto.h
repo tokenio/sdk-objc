@@ -15,6 +15,7 @@
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
 #import "Notification.pbobjc.h"
+#import "Providerspecific.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Subscriber.pbobjc.h"
 #import "Token.pbobjc.h"
