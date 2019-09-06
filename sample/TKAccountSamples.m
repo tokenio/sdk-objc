@@ -117,7 +117,7 @@
 }
 
 // manual testing only
-- (void)testInitiateAccountLinking {
+- (void)manualTestInitiateAccountLinking {
     TKMember *member = self.payer;
     __block NSArray<TKAccount *> * accounts;
     
@@ -153,7 +153,7 @@
 }
 
 // manual testing only
--(void)testBankAuthorizationNotification {
+-(void)manualTestBankAuthorizationNotification {
     TKMember *member = self.payer;
     __block int finish = false;
     __block Notification *notification;

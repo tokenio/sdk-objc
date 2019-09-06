@@ -53,6 +53,7 @@
                       [expectation fulfill];
                   }
                     onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 
     TKTestExpectation *expectation2 = [[TKTestExpectation alloc] init];
     [payer getStandingOrderSubmission:submission.id_p
@@ -65,7 +66,7 @@
                                 XCTAssertEqualObjects([self nextWeek], standingOrderSubmission.payload.endDate);
                                 [expectation2 fulfill];
                             } onError:THROWERROR];
-    [self waitForExpectations:@[expectation, expectation2] timeout:10];
+    [self waitForExpectations:@[expectation2] timeout:10];
 }
 
 - (void)testGetStandingOrders {
@@ -80,23 +81,29 @@
                            withKey:Key_Level_Low
                          onSuccess:^(PagedArray<StandingOrder *> *pagedArray) {
                              XCTAssertEqual(pagedArray.items.count, 3);
-                             XCTAssertEqualObjects(pagedArray.items[0].tokenSubmissionId, submission0.id_p);
+                             XCTAssertEqualObjects(pagedArray.items[0].tokenSubmissionId, submission2.id_p);
                              XCTAssertEqualObjects(pagedArray.items[1].tokenSubmissionId, submission1.id_p);
-                             XCTAssertEqualObjects(pagedArray.items[2].tokenSubmissionId, submission2.id_p);
+                             XCTAssertEqualObjects(pagedArray.items[2].tokenSubmissionId, submission0.id_p);
                              [expectation fulfill];
                          } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
 
     TKTestExpectation *expectation2 = [[TKTestExpectation alloc] init];
-    [payer getStandingOrderSubmissionsOffset:nil
-                                       limit:10
-                                   onSuccess:^(PagedArray<StandingOrderSubmission *> *pagedArray) {
-                                       XCTAssertEqual(pagedArray.items.count, 3);
-                                       XCTAssertEqualObjects(pagedArray.items[0].id_p, submission0.id_p);
-                                       XCTAssertEqualObjects(pagedArray.items[1].id_p, submission1.id_p);
-                                       XCTAssertEqualObjects(pagedArray.items[2].id_p, submission2.id_p);
-                                       [expectation2 fulfill];
-                                   } onError:THROWERROR];
-    [self waitForExpectations:@[expectation, expectation2] timeout:10];
+    [self runUntilTrue:^{
+        [self->payer getStandingOrderSubmissionsOffset:nil
+                                                 limit:10
+                                             onSuccess:^(PagedArray<StandingOrderSubmission *> *pagedArray) {
+                                                 if (pagedArray.items.count == 3) {
+                                                     XCTAssertEqualObjects(pagedArray.items[0].id_p, submission2.id_p);
+                                                     XCTAssertEqualObjects(pagedArray.items[1].id_p, submission1.id_p);
+                                                     XCTAssertEqualObjects(pagedArray.items[2].id_p, submission0.id_p);
+                                                     [expectation2 fulfill];
+                                                 }
+                                             } onError:THROWERROR];
+        return (int) expectation2.isFulfilled ;
+    }];
+
+    [self waitForExpectations:@[expectation2] timeout:10];
 }
 
 - (StandingOrderSubmission *)standingOrderSubmission:(NSString *)amount {
