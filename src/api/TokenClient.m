@@ -55,11 +55,6 @@
                     useSsl:(BOOL)useSsl
                  certsPath:(NSString *)certsPath
     globalRpcErrorCallback:(OnError)globalRpcErrorCallback_ {
-    if (!developerKey_) {
-        @throw [NSException exceptionWithName:@"NoDeveloperKeyException"
-                                       reason:@"Please provide a developer key. Contact Token for more details."
-                                     userInfo:nil];
-    }
     self = [super init];
     
     if (self) {
@@ -84,16 +79,18 @@
                 @throw error;
             }
         }
-        if (!developerKey_) {
-            developerKey_ = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
-        }
+
         [GRPCCall setUserAgentPrefix:@"Token-iOS/1.0" forHost:address];
 
         gateway = [GatewayService serviceWithHost:address];
         errorHandler = [[TKRpcErrorHandler alloc] initWithGlobalRpcErrorCallback:globalRpcErrorCallback_];
         cryptoEngineFactory = cryptoEngineFactory_;
         timeoutMs = timeout;
-        developerKey = [developerKey_ copy];
+        if (developerKey_) {
+            developerKey = [developerKey_ copy];
+        } else {
+            developerKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
+        }
         browserFactory = browserFactory_;
         languageCode = [languageCode_ copy];
         unauthenticatedClient = [[TKUnauthenticatedClient alloc]
