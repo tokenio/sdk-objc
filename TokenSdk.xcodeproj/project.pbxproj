@@ -189,6 +189,7 @@
 		D093A370219F464E00947EC4 /* TKSampleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D093A36E219F464E00947EC4 /* TKSampleModel.m */; };
 		D096878823209440006A78DE /* StandingOrderTokenBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D096878623209440006A78DE /* StandingOrderTokenBuilder.h */; };
 		D096878923209440006A78DE /* StandingOrderTokenBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D096878723209440006A78DE /* StandingOrderTokenBuilder.m */; };
+		D096878B2321D261006A78DE /* StandingOrderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D096878A2321D261006A78DE /* StandingOrderTests.m */; };
 		D09E3BC62017EB2900CA0405 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */; };
 		D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */; };
 		D09E3BCD20191BDC00CA0405 /* TKTokenBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */; };
@@ -459,6 +460,7 @@
 		D093A36E219F464E00947EC4 /* TKSampleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSampleModel.m; sourceTree = "<group>"; };
 		D096878623209440006A78DE /* StandingOrderTokenBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StandingOrderTokenBuilder.h; sourceTree = "<group>"; };
 		D096878723209440006A78DE /* StandingOrderTokenBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StandingOrderTokenBuilder.m; sourceTree = "<group>"; };
+		D096878A2321D261006A78DE /* StandingOrderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StandingOrderTests.m; sourceTree = "<group>"; };
 		D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
 		D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
 		D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowser.h; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */,
+				D096878A2321D261006A78DE /* StandingOrderTests.m */,
 				6ACF46D21F94540F00D36A7B /* TokenClientTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
@@ -1516,6 +1519,7 @@
 				DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
+				D096878B2321D261006A78DE /* StandingOrderTests.m in Sources */,
 				D093A36C219F448500947EC4 /* TKEndorseSample.m in Sources */,
 				1B7089581EC3AA3500438CA1 /* TKBlobstoreTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKTransferTokenTests.m in Sources */,

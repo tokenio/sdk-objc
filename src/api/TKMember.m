@@ -725,7 +725,11 @@ NS_ASSUME_NONNULL_BEGIN
             onError:(OnError)onError {
     TransferPayload *payload = [TransferPayload message];
     payload.tokenId = token.id_p;
-    payload.description_p = token.payload.description_p;
+    if (description) {
+        payload.description_p = description;
+    } else {
+        payload.description_p = token.payload.description_p;
+    }
     payload.refId = [TKUtil nonce];
     
     if (amount) {

@@ -22,6 +22,7 @@
         _member = member;
         _amount = amount;
         _frequency = frequency;
+        _currency = currency;
         _startDate = startDate;
         _endDate = endDate;
     }

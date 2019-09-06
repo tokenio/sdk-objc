@@ -287,4 +287,22 @@
     [self waitForExpectations:@[expectation] timeout:10];
     return ret;
 }
+
+- (NSString *)tomorrow {
+    NSDateComponents* deltaComps = [[NSDateComponents alloc] init];
+    [deltaComps setDay:1];
+    NSDate* tomorrow = [[NSCalendar currentCalendar] dateByAddingComponents:deltaComps toDate:[NSDate date] options:0];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    return [formatter stringFromDate:tomorrow];
+}
+
+- (NSString *)nextWeek {
+    NSDateComponents* deltaComps = [[NSDateComponents alloc] init];
+    [deltaComps setDay:7];
+    NSDate* nextWeek = [[NSCalendar currentCalendar] dateByAddingComponents:deltaComps toDate:[NSDate date] options:0];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    return [formatter stringFromDate:nextWeek];
+}
 @end

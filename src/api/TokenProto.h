@@ -18,6 +18,7 @@
 #import "Providerspecific.pbobjc.h"
 #import "Security.pbobjc.h"
 #import "Subscriber.pbobjc.h"
+#import "Submission.pbobjc.h"
 #import "Token.pbobjc.h"
 #import "Transaction.pbobjc.h"
 #import "Transfer.pbobjc.h"
