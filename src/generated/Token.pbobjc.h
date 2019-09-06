@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class AccessBody_Resource;
 @class AccessBody_Resource_Account;
 @class AccessBody_Resource_AccountBalance;
+@class AccessBody_Resource_AccountStandingOrders;
 @class AccessBody_Resource_AccountTransactions;
 @class AccessBody_Resource_Address;
 @class AccessBody_Resource_AllAccountBalances;
@@ -47,17 +48,23 @@ CF_EXTERN_C_BEGIN
 @class ActingAs;
 @class Alias;
 @class Attachment;
+@class BankAccount;
+@class CustomerData;
 @class Policy_AllSignatures;
 @class Policy_Signer;
 @class Policy_SingleSignature;
 @class Pricing;
 @class Signature;
+@class StandingOrderBody;
 @class Token;
 @class TokenMember;
 @class TokenPayload;
 @class TokenRequestOptions;
 @class TokenRequestPayload;
 @class TokenRequestPayload_AccessBody;
+@class TokenRequestPayload_AccessBody_AccountResourceList;
+@class TokenRequestPayload_AccessBody_AccountResourceList_AccountResource;
+@class TokenRequestPayload_AccessBody_ResourceTypeList;
 @class TokenRequestPayload_TransferBody;
 @class TokenSignature;
 @class TransferBody;
@@ -133,7 +140,8 @@ typedef GPB_ENUM(TokenRequestPayload_AccessBody_ResourceType) {
   TokenRequestPayload_AccessBody_ResourceType_Balances = 2,
   TokenRequestPayload_AccessBody_ResourceType_Transactions = 3,
   TokenRequestPayload_AccessBody_ResourceType_TransferDestinations = 4,
-  TokenRequestPayload_AccessBody_ResourceType_FundsConfirmations = 5,
+  TokenRequestPayload_AccessBody_ResourceType_FundsConfirmations GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.FUNDS_CONFIRMATIONS is deprecated (see token.proto).") = 5,
+  TokenRequestPayload_AccessBody_ResourceType_StandingOrders = 6,
 };
 
 GPBEnumDescriptor *TokenRequestPayload_AccessBody_ResourceType_EnumDescriptor(void);
@@ -143,6 +151,32 @@ GPBEnumDescriptor *TokenRequestPayload_AccessBody_ResourceType_EnumDescriptor(vo
  * the time this source was generated.
  **/
 BOOL TokenRequestPayload_AccessBody_ResourceType_IsValidValue(int32_t value);
+
+#pragma mark - Enum TokenRequestPayload_AccessBody_AccountResourceType
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_AccountResourceType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  TokenRequestPayload_AccessBody_AccountResourceType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountInvalid = 0,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountInfo = 1,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountBalance = 2,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountTransactions = 3,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountTransferDestinations = 4,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountFundsConfirmation = 5,
+  TokenRequestPayload_AccessBody_AccountResourceType_AccountStandingOrders = 6,
+};
+
+GPBEnumDescriptor *TokenRequestPayload_AccessBody_AccountResourceType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL TokenRequestPayload_AccessBody_AccountResourceType_IsValidValue(int32_t value);
 
 #pragma mark - Enum TokenSignature_Action
 
@@ -335,12 +369,14 @@ typedef GPB_ENUM(TokenRequestPayload_FieldNumber) {
   TokenRequestPayload_FieldNumber_CallbackState = 9,
   TokenRequestPayload_FieldNumber_DestinationCountry = 10,
   TokenRequestPayload_FieldNumber_RefId = 11,
+  TokenRequestPayload_FieldNumber_StandingOrderBody = 12,
 };
 
 typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
   TokenRequestPayload_RequestBody_OneOfCase_GPBUnsetOneOfCase = 0,
   TokenRequestPayload_RequestBody_OneOfCase_AccessBody = 6,
   TokenRequestPayload_RequestBody_OneOfCase_TransferBody = 7,
+  TokenRequestPayload_RequestBody_OneOfCase_StandingOrderBody = 12,
 };
 
 @interface TokenRequestPayload : GPBMessage
@@ -365,6 +401,8 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
 
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_TransferBody *transferBody;
 
+@property(nonatomic, readwrite, strong, null_resettable) StandingOrderBody *standingOrderBody;
+
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *callbackState;
@@ -386,21 +424,109 @@ void TokenRequestPayload_ClearRequestBodyOneOfCase(TokenRequestPayload *message)
 typedef GPB_ENUM(TokenRequestPayload_AccessBody_FieldNumber) {
   TokenRequestPayload_AccessBody_FieldNumber_TypeArray = 1,
   TokenRequestPayload_AccessBody_FieldNumber_ResourceTypesArray = 2,
+  TokenRequestPayload_AccessBody_FieldNumber_ResourceTypeList = 3,
+  TokenRequestPayload_AccessBody_FieldNumber_AccountResourceList = 4,
+};
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_ResourceList_OneOfCase) {
+  TokenRequestPayload_AccessBody_ResourceList_OneOfCase_GPBUnsetOneOfCase = 0,
+  TokenRequestPayload_AccessBody_ResourceList_OneOfCase_ResourceTypeList = 3,
+  TokenRequestPayload_AccessBody_ResourceList_OneOfCase_AccountResourceList = 4,
 };
 
 @interface TokenRequestPayload_AccessBody : GPBMessage
 
 // |typeArray| contains |TokenRequestPayload_AccessBody_ResourceType|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *typeArray;
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *typeArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.type is deprecated (see token.proto).");
 /** The number of items in @c typeArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger typeArray_Count;
+@property(nonatomic, readonly) NSUInteger typeArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.type is deprecated (see token.proto).");
 
 /** ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *resourceTypesArray GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
 /** The number of items in @c resourceTypesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger resourceTypesArray_Count GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenRequestPayload.AccessBody.resource_types is deprecated (see token.proto).");
 
+@property(nonatomic, readonly) TokenRequestPayload_AccessBody_ResourceList_OneOfCase resourceListOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_AccessBody_ResourceTypeList *resourceTypeList;
+
+@property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_AccessBody_AccountResourceList *accountResourceList;
+
 @end
+
+/**
+ * Clears whatever value was set for the oneof 'resourceList'.
+ **/
+void TokenRequestPayload_AccessBody_ClearResourceListOneOfCase(TokenRequestPayload_AccessBody *message);
+
+#pragma mark - TokenRequestPayload_AccessBody_ResourceTypeList
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_ResourceTypeList_FieldNumber) {
+  TokenRequestPayload_AccessBody_ResourceTypeList_FieldNumber_ResourcesArray = 1,
+};
+
+/**
+ * Used if the TPP does not wish to specify accounts
+ **/
+@interface TokenRequestPayload_AccessBody_ResourceTypeList : GPBMessage
+
+// |resourcesArray| contains |TokenRequestPayload_AccessBody_ResourceType|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *resourcesArray;
+/** The number of items in @c resourcesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger resourcesArray_Count;
+
+@end
+
+#pragma mark - TokenRequestPayload_AccessBody_AccountResourceList
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_AccountResourceList_FieldNumber) {
+  TokenRequestPayload_AccessBody_AccountResourceList_FieldNumber_ResourcesArray = 1,
+};
+
+/**
+ * Used if the TPP wish to specify accounts
+ **/
+@interface TokenRequestPayload_AccessBody_AccountResourceList : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TokenRequestPayload_AccessBody_AccountResourceList_AccountResource*> *resourcesArray;
+/** The number of items in @c resourcesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger resourcesArray_Count;
+
+@end
+
+#pragma mark - TokenRequestPayload_AccessBody_AccountResourceList_AccountResource
+
+typedef GPB_ENUM(TokenRequestPayload_AccessBody_AccountResourceList_AccountResource_FieldNumber) {
+  TokenRequestPayload_AccessBody_AccountResourceList_AccountResource_FieldNumber_Type = 1,
+  TokenRequestPayload_AccessBody_AccountResourceList_AccountResource_FieldNumber_BankAccount = 2,
+  TokenRequestPayload_AccessBody_AccountResourceList_AccountResource_FieldNumber_CustomerData = 3,
+};
+
+@interface TokenRequestPayload_AccessBody_AccountResourceList_AccountResource : GPBMessage
+
+@property(nonatomic, readwrite) TokenRequestPayload_AccessBody_AccountResourceType type;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount *bankAccount;
+/** Test to see if @c bankAccount has been set. */
+@property(nonatomic, readwrite) BOOL hasBankAccount;
+
+@property(nonatomic, readwrite, strong, null_resettable) CustomerData *customerData;
+/** Test to see if @c customerData has been set. */
+@property(nonatomic, readwrite) BOOL hasCustomerData;
+
+@end
+
+/**
+ * Fetches the raw value of a @c TokenRequestPayload_AccessBody_AccountResourceList_AccountResource's @c type property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t TokenRequestPayload_AccessBody_AccountResourceList_AccountResource_Type_RawValue(TokenRequestPayload_AccessBody_AccountResourceList_AccountResource *message);
+/**
+ * Sets the raw value of an @c TokenRequestPayload_AccessBody_AccountResourceList_AccountResource's @c type property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetTokenRequestPayload_AccessBody_AccountResourceList_AccountResource_Type_RawValue(TokenRequestPayload_AccessBody_AccountResourceList_AccountResource *message, int32_t value);
 
 #pragma mark - TokenRequestPayload_TransferBody
 
@@ -410,6 +536,8 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
   TokenRequestPayload_TransferBody_FieldNumber_DestinationsArray = 3,
   TokenRequestPayload_TransferBody_FieldNumber_LifetimeAmount = 4,
   TokenRequestPayload_TransferBody_FieldNumber_Instructions = 5,
+  TokenRequestPayload_TransferBody_FieldNumber_ExecutionDate = 6,
+  TokenRequestPayload_TransferBody_FieldNumber_ConfirmFunds = 7,
 };
 
 @interface TokenRequestPayload_TransferBody : GPBMessage
@@ -430,6 +558,11 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
 /** Test to see if @c instructions has been set. */
 @property(nonatomic, readwrite) BOOL hasInstructions;
+
+/** Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *executionDate;
+
+@property(nonatomic, readwrite) BOOL confirmFunds;
 
 @end
 
@@ -507,8 +640,7 @@ typedef GPB_ENUM(TokenMember_FieldNumber) {
 /** optional member ID */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** TODO(PR-1161): Rename this when we no longer require backwards compatibility with usernames */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *username;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *username GPB_DEPRECATED_MSG("io.token.proto.common.token.TokenMember.username is deprecated (see token.proto).");
 
 /** optional alias, such as an email address */
 @property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
@@ -535,12 +667,14 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_ReceiptRequested = 13,
   TokenPayload_FieldNumber_TokenRequestId = 14,
   TokenPayload_FieldNumber_InitiatorId = 15,
+  TokenPayload_FieldNumber_StandingOrder = 16,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
   TokenPayload_Body_OneOfCase_GPBUnsetOneOfCase = 0,
   TokenPayload_Body_OneOfCase_Transfer = 9,
   TokenPayload_Body_OneOfCase_Access = 10,
+  TokenPayload_Body_OneOfCase_StandingOrder = 16,
 };
 
 @interface TokenPayload : GPBMessage
@@ -584,6 +718,8 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) TransferBody *transfer;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
+
+@property(nonatomic, readwrite, strong, null_resettable) StandingOrderBody *standingOrder;
 
 /** Optional, can be endorsed until this time */
 @property(nonatomic, readwrite) int64_t endorseUntilMs;
@@ -638,6 +774,8 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
   TransferBody_FieldNumber_Amount = 6,
   TransferBody_FieldNumber_AttachmentsArray = 8,
   TransferBody_FieldNumber_Pricing = 9,
+  TransferBody_FieldNumber_ExecutionDate = 10,
+  TransferBody_FieldNumber_ConfirmFunds = 11,
 };
 
 @interface TransferBody : GPBMessage
@@ -670,6 +808,50 @@ typedef GPB_ENUM(TransferBody_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) Pricing *pricing GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.pricing is deprecated (see token.proto).");
 /** Test to see if @c pricing has been set. */
 @property(nonatomic, readwrite) BOOL hasPricing GPB_DEPRECATED_MSG("io.token.proto.common.token.TransferBody.pricing is deprecated (see token.proto).");
+
+/** Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *executionDate;
+
+@property(nonatomic, readwrite) BOOL confirmFunds;
+
+@end
+
+#pragma mark - StandingOrderBody
+
+typedef GPB_ENUM(StandingOrderBody_FieldNumber) {
+  StandingOrderBody_FieldNumber_Instructions = 1,
+  StandingOrderBody_FieldNumber_StartDate = 2,
+  StandingOrderBody_FieldNumber_EndDate = 3,
+  StandingOrderBody_FieldNumber_Frequency = 4,
+  StandingOrderBody_FieldNumber_Amount = 5,
+  StandingOrderBody_FieldNumber_Currency = 6,
+};
+
+/**
+ * Schedule a series of payments from 'start_date' to 'end_date'
+ * at the given frequency. Each payment will be for 'amount'.
+ **/
+@interface StandingOrderBody : GPBMessage
+
+/** Transfer instructions. */
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions *instructions;
+/** Test to see if @c instructions has been set. */
+@property(nonatomic, readwrite) BOOL hasInstructions;
+
+/** ISO 8601: YYYY-MM-DD or	YYYYMMDD */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *startDate;
+
+/** Optional. ISO 8601: YYYY-MM-DD or	YYYYMMDD */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *endDate;
+
+/** ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *frequency;
+
+/** Amount of each individual payment */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+/** ISO 4217, 3 letter currency code such as "USD" or "EUR". */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
 
 @end
 
@@ -706,12 +888,14 @@ typedef GPB_ENUM(AccessBody_Resource_FieldNumber) {
   AccessBody_Resource_FieldNumber_AllTransferDestinations = 13,
   AccessBody_Resource_FieldNumber_AllTransferDestinationsAtBank = 14,
   AccessBody_Resource_FieldNumber_FundsConfirmation = 15,
+  AccessBody_Resource_FieldNumber_StandingOrders = 16,
 };
 
 typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
   AccessBody_Resource_Resource_OneOfCase_GPBUnsetOneOfCase = 0,
   AccessBody_Resource_Resource_OneOfCase_Account = 6,
   AccessBody_Resource_Resource_OneOfCase_Transactions = 7,
+  AccessBody_Resource_Resource_OneOfCase_StandingOrders = 16,
   AccessBody_Resource_Resource_OneOfCase_Balance = 8,
   AccessBody_Resource_Resource_OneOfCase_TransferDestinations = 12,
   AccessBody_Resource_Resource_OneOfCase_FundsConfirmation = 15,
@@ -735,6 +919,8 @@ typedef GPB_ENUM(AccessBody_Resource_Resource_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_Account *account;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountTransactions *transactions;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountStandingOrders *standingOrders;
 
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody_Resource_AccountBalance *balance;
 
@@ -814,6 +1000,22 @@ typedef GPB_ENUM(AccessBody_Resource_AccountTransactions_FieldNumber) {
  * Provides access to a specific account transactions
  **/
 @interface AccessBody_Resource_AccountTransactions : GPBMessage
+
+/** ID of account */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;
+
+@end
+
+#pragma mark - AccessBody_Resource_AccountStandingOrders
+
+typedef GPB_ENUM(AccessBody_Resource_AccountStandingOrders_FieldNumber) {
+  AccessBody_Resource_AccountStandingOrders_FieldNumber_AccountId = 1,
+};
+
+/**
+ * Provides access to a specific account's standing orders
+ **/
+@interface AccessBody_Resource_AccountStandingOrders : GPBMessage
 
 /** ID of account */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accountId;

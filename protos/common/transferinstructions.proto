@@ -11,18 +11,6 @@ import "security.proto";
 import "providerspecific.proto";
 import "extensions/message.proto";
 
-// A bank might require a Purpose of Payment for some transfers.
-enum PurposeOfPayment {
-  INVALID = 0;
-  OTHER = 1;
-  PERSONAL_EXPENSES = 2;
-  PURCHASE_OF_SHARES = 3;
-  TRANSFER_TO_YOUR_OWN_ACCOUNT = 4;
-  PURCHASE_OF_PROPERTY = 5;
-  FAMILY_MAINTENANCE = 6;
-  SAVINGS = 7;
-}
-
 // A bank might require a context code for some transfers.
 enum PaymentContext {
   INVALID_CONTEXT = 0;
@@ -31,6 +19,15 @@ enum PaymentContext {
   ECOMMERCE_GOODS = 3;
   ECOMMERCE_SERVICES = 4;
   PERSON_TO_PERSON = 5;
+}
+
+// A bank might require the bearer of the charges, if any, for international transfers.
+enum ChargeBearer {
+  INVALID_CHARGE_BEARER = 0;
+  CRED = 1;                                         // All transaction charges are to be borne by the creditor.
+  DEBT = 2;                                         // All transaction charges are to be borne by the debtor.
+  SHAR = 3;                                         // Both parties bear their own charges
+  SLEV = 4;                                         // Both parties bear their own charges. (recommended on SEPA payments)
 }
 
 message CustomerData {
@@ -79,6 +76,20 @@ message TransferDestination {
     string account_number = 2;
   }
 
+  // Clearing House Automated Payment System (UK)
+  message Chaps {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  // Banker’s Automated Clearing Services (UK)
+  message Bacs {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
   // ACH transfer
   message Ach {
     option (io.token.proto.extensions.message.redact) = true;
@@ -116,6 +127,18 @@ message TransferDestination {
     string account_number = 1;
   }
 
+  // Trans-European Automated Real-time Gross Settlement Express Transfer System
+  message Target2 {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
+  // Croatian High Payments System
+  message Hsvp {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
   oneof destination {
     Token token = 1;
     Sepa sepa = 2;
@@ -128,6 +151,10 @@ message TransferDestination {
     BlueCash blue_cash = 9;
     Sorbnet sorbnet = 10;
     Custom custom = 12;
+    Chaps chaps = 13;
+    Bacs bacs = 14;
+    Target2 target2 = 15;
+    Hsvp hsvp = 16;
   }
 
   CustomerData customer_data = 11;
@@ -141,11 +168,14 @@ message TransferInstructions {
   repeated TransferDestination transfer_destinations = 4;
 
   message Metadata {
-    PurposeOfPayment transfer_purpose = 1;       // Purpose of payment
     PaymentContext payment_context = 2;          // Optional payment context
     string merchant_category_code = 3;           // Optional ISO 18245 Merchant Category Code (MCC)
     string merchant_customer_id = 4;             // Optional Unique merchant customer identifier
     io.token.proto.common.address.Address delivery_address = 5; // Optional delivery address
     io.token.proto.common.providerspecific.ProviderTransferMetadata provider_transfer_metadata = 6;
+    ChargeBearer chargeBearer = 7;               // Optional Foreign Exchange charges bearer.
+    string ultimate_creditor = 8;                // Ultimate party to which an amount of money is due.
+    string ultimate_debtor = 9;                  // Ultimate party that owes an amount of money to the (ultimate) creditor.
+    string purpose_code = 10;                    // Optional purpose code, ISO 20022
   }
 }

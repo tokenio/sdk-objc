@@ -46,7 +46,7 @@
             id<TKRepresentable> representable = [self->grantee forAccessToken:[result token].id_p];
             
             [representable getBalance:self->grantorAccount.id withKey:Key_Level_Low onSuccess:^(TKBalance *lookedUpBalance) {
-                [self->grantorAccount getBalance:^(TKBalance *balance) {
+                [self->grantorAccount getBalance:Key_Level_Low onSuccess:^(TKBalance *balance) {
                     XCTAssertEqualObjects(lookedUpBalance.current, balance.current);
                     XCTAssertEqualObjects(lookedUpBalance.available, balance.available);
                     [expectation fulfill];

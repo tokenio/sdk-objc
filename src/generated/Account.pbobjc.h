@@ -114,7 +114,7 @@ typedef GPB_ENUM(PlaintextBankAuthorization_FieldNumber) {
 /** Test to see if @c account has been set. */
 @property(nonatomic, readwrite) BOOL hasAccount;
 
-/** Expiration time */
+/** Expiration timestamp in ms */
 @property(nonatomic, readwrite) int64_t expirationMs;
 
 @end

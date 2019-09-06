@@ -29,14 +29,14 @@ enum TransactionStatus {
   FAILURE_QUOTE_EXPIRED = 11;           // the transaction has failed because the quote has expired
   FAILURE_INVALID_AMOUNT = 12;          // the transaction has failed due to invalid amount
   FAILURE_INVALID_QUOTE = 13;           // the transaction has failed due to invalid quote (wrong fx rate)
-  FAILURE_EXPIRED = 14;                 // the transaction has failed to complete within alotted time
+  FAILURE_EXPIRED = 14;                 // the transaction has failed to complete within allotted time
   FAILURE_GENERIC = 5;                  // the transaction has failed due to other reasons
   SENT = 16;                            // legacy transfers only: the transaction has been sent but has not been acknowledged by the bank
   INITIATED = 17;                       // the transaction has been initiated but the result is unknown, this may be the final status and may not get updated later
 }
 
 message Transaction {
-  string id = 1;                                // Transaction ID
+  string id = 1;                                // Transaction ID.
   TransactionType type = 2;                     // Debit or credit
   TransactionStatus status = 3;                 // Status. For example, SUCCESS or FAILURE_CANCELED
   io.token.proto.common.money.Money amount = 4; // Transaction amount.
@@ -47,7 +47,7 @@ message Transaction {
   int64 created_at_ms = 8;                      // Creation time
 
   map<string, string> metadata = 9 [(io.token.proto.extensions.field.redact) = true]; // Additional fields. Optional.
-  io.token.proto.common.providerspecific.ProviderTransactionDetails provider_transaction_details = 10;
+  providerspecific.ProviderTransactionDetails provider_transaction_details = 10;
 }
 
 message Balance {
@@ -68,4 +68,22 @@ enum RequestStatus {
   INVALID_REQUEST = 0;
   SUCCESSFUL_REQUEST = 1;     // success
   MORE_SIGNATURES_NEEDED = 2; // failed, needed to use a PRIVILEGED key
+}
+
+// Represents a standing order as defined by the bank.
+message StandingOrder {
+  string id = 1;                                // Standing order ID defined by the bank
+  Status status = 2;
+  string token_id = 3;                          // Points to the token, only set for Token standing orders.
+  string token_submission_id = 4;               // Points to the token submission, only set for Token standing orders.
+  int64 created_at_ms = 5;                      // CreationTime
+  providerspecific.ProviderStandingOrderDetails provider_standing_order_details = 6;
+
+  enum Status {
+    INVALID = 0;
+    ACTIVE = 1;
+    INACTIVE = 2;
+    PROCESSING = 3;
+    FAILED = 4;
+  }
 }

@@ -14,6 +14,7 @@
 #import "Subscriber.pbobjc.h"
 
 #import "AccessTokenBuilder.h"
+#import "StandingOrderTokenBuilder.h"
 #import "TKBrowser.h"
 #import "TKRepresentable.h"
 #import "TKTypedef.h"
@@ -387,6 +388,30 @@ NS_ASSUME_NONNULL_BEGIN
                    onError:(OnError)onError;
 
 /**
+ * Looks up an existing Token standing order submission.
+ *
+ * @param submissionId submission ID
+ * @param onSuccess invoked on success with the standing order submission
+ * @param onError invoked on error
+ */
+- (void)getStandingOrderSubmission:(NSString *)submissionId
+                         onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                           onError:(OnError)onError;
+
+/**
+ * Looks up a list of existing standing order submissions.
+ *
+ * @param offset offset
+ * @param limit limit
+ * @param onSuccess invoked on success with standing order submissions
+ * @param onError invoked on error
+ */
+- (void)getStandingOrderSubmissionsOffset:(NSString * _Nullable)offset
+                                    limit:(int)limit
+                                onSuccess:(OnSuccessWithStandingOrderSubmissions)onSuccess
+                                  onError:(OnError)onError;
+
+/**
  * Creates a new member address.
  *
  * @param name the name of the address
@@ -456,6 +481,47 @@ __deprecated_msg("Use createTransferTokenBuilder instead");
 __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
 
 /**
+ * Creates a new standing order token builder. Defines a standing order
+ * for a fixed time span.
+ *
+ * @param amount individual transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param frequency ISO 20022 code for the frequency of the standing order:
+ *                  DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
+ * @param startDate start date of the standing order: ISO 8601 YYYY-MM-DD or YYYYMMDD
+ * @param endDate end date of the standing order: ISO 8601 YYYY-MM-DD or YYYYMMDD
+ * @return standing order token builder
+ */
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilder:(NSDecimalNumber *)amount
+                                                      currency:(NSString *)currency
+                                                     frequency:(NSString *)frequency
+                                                     startDate:(NSString *)startDate
+                                                       endDate:(NSString * _Nullable)endDate;
+
+/**
+ * Creates a new indefinite standing order token builder.
+ *
+ * @param amount individual transfer amount
+ * @param currency currency code, e.g. "USD"
+ * @param frequency ISO 20022 code for the frequency of the standing order:
+ *                  DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
+ * @param startDate start date of the standing order: ISO 8601 YYYY-MM-DD or YYYYMMDD
+ * @return standing order token builder
+ */
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilder:(NSDecimalNumber *)amount
+                                                      currency:(NSString *)currency
+                                                     frequency:(NSString *)frequency
+                                                     startDate:(NSString *)startDate;
+
+/**
+ * Creates a new standing order token builder from a token request.
+ *
+ * @param tokenRequest token request
+ * @return standing order token builder
+ */
+- (StandingOrderTokenBuilder *)createStandingOrderTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest;
+
+/**
  * Prepares a transfer token, returning the resolved token payload and policy.
  *
  * @param builder transfer token builder
@@ -463,6 +529,16 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
 - (void)prepareTransferToken:(TransferTokenBuilder *)builder
                    onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                      onError:(OnError)onError;
+
+/**
+ * Prepares a standing order token, returning the resolved token payload
+ * and policy.
+ *
+ * @param builder standing order token builder
+ */
+- (void)prepareStandingOrderToken:(StandingOrderTokenBuilder *)builder
+                        onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                          onError:(OnError)onError;
 
 /**
  * Signs a token payload.
@@ -648,6 +724,15 @@ __deprecated_msg("Use redeemToken:amount:currency:description:transferDestinatio
 transferDestination:(TransferDestination * _Nullable)transferDestination
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError;
+
+/**
+ * Redeems a standing order token.
+ *
+ * @param tokenId ID of token to redeem
+ */
+- (void)redeemStandingOrderToken:(NSString *)tokenId
+                       onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Uploads a blob to the server.

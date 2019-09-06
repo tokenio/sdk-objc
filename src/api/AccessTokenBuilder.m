@@ -120,7 +120,7 @@
 }
 
 - (void)forTransferDestinations:(NSString *)accountId {
-    AccessBody_Resource_TransferDestinations *transferDestinations =[AccessBody_Resource_TransferDestinations message];
+    AccessBody_Resource_TransferDestinations *transferDestinations = [AccessBody_Resource_TransferDestinations message];
     transferDestinations.accountId = accountId;
     AccessBody_Resource *resource = [AccessBody_Resource message];
     resource.transferDestinations = transferDestinations;
@@ -128,10 +128,19 @@
 }
 
 - (void)forFundsConfirmation:(NSString *)accountId {
-    AccessBody_Resource_FundsConfirmation *fundsConfirmation =[AccessBody_Resource_FundsConfirmation message];
+    AccessBody_Resource_FundsConfirmation *fundsConfirmation = [AccessBody_Resource_FundsConfirmation message];
     fundsConfirmation.accountId = accountId;
     AccessBody_Resource *resource = [AccessBody_Resource message];
     resource.fundsConfirmation = fundsConfirmation;
+    [resources addObject:resource];
+}
+
+- (void)forAccountStandingOrders:(NSString *)accountId {
+    AccessBody_Resource_AccountStandingOrders *accountStandingOrders =
+    [AccessBody_Resource_AccountStandingOrders message];
+    accountStandingOrders.accountId = accountId;
+    AccessBody_Resource *resource = [AccessBody_Resource message];
+    resource.standingOrders = accountStandingOrders;
     [resources addObject:resource];
 }
 

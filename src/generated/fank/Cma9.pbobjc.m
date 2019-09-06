@@ -17,6 +17,8 @@
 
 #import "fank/Cma9.pbobjc.h"
 #import "google/api/Annotations.pbobjc.h"
+#import "Providerspecific.pbobjc.h"
+#import "extensions/Message.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -35,6 +37,7 @@
     registry = [[GPBExtensionRegistry alloc] init];
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[AnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[MessageRoot extensionRegistry]];
   }
   return registry;
 }
@@ -1183,6 +1186,7 @@ void SetAccountDetails_SchemeName_RawValue(AccountDetails *message, int32_t valu
 @dynamic nickname;
 @dynamic hasServicer, servicer;
 @dynamic metadata, metadata_Count;
+@dynamic providerDetails;
 
 typedef struct Account__storage_ {
   uint32_t _has_storage_[1];
@@ -1192,6 +1196,7 @@ typedef struct Account__storage_ {
   NSString *nickname;
   Servicer *servicer;
   NSMutableDictionary *metadata;
+  NSString *providerDetails;
 } Account__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1254,6 +1259,15 @@ typedef struct Account__storage_ {
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "providerDetails",
+        .dataTypeSpecific.className = NULL,
+        .number = Account_FieldNumber_ProviderDetails,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(Account__storage_, providerDetails),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Account class]
@@ -1265,7 +1279,7 @@ typedef struct Account__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\005\001G\000\002I\000\003H\000\004H\000\005H\000";
+        "\006\001G\000\002I\000\003H\000\004H\000\005H\000\007O\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
@@ -1568,6 +1582,7 @@ typedef struct BalanceData__storage_ {
 @dynamic transactionId;
 @dynamic transactionInformation;
 @dynamic metadata, metadata_Count;
+@dynamic providerDetails;
 
 typedef struct Transaction__storage_ {
   uint32_t _has_storage_[1];
@@ -1580,6 +1595,7 @@ typedef struct Transaction__storage_ {
   NSString *transactionId;
   NSString *transactionInformation;
   NSMutableDictionary *metadata;
+  NSString *providerDetails;
 } Transaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1669,6 +1685,15 @@ typedef struct Transaction__storage_ {
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "providerDetails",
+        .dataTypeSpecific.className = NULL,
+        .number = Transaction_FieldNumber_ProviderDetails,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(Transaction__storage_, providerDetails),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Transaction class]
@@ -1680,7 +1705,7 @@ typedef struct Transaction__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\010\001I\000\002F\000\003G\000\004O\000\005T\000\006F\000\007M\000\010V\000";
+        "\t\001I\000\002F\000\003G\000\004O\000\005T\000\006F\000\007M\000\010V\000\nO\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG

@@ -35,6 +35,8 @@
 @class CreateKeychainResponse;
 @class CreateMemberRequest;
 @class CreateMemberResponse;
+@class CreateStandingOrderRequest;
+@class CreateStandingOrderResponse;
 @class CreateTestBankAccountRequest;
 @class CreateTestBankAccountResponse;
 @class CreateTokenRequest;
@@ -103,6 +105,14 @@
 @class GetProfileResponse;
 @class GetReceiptContactRequest;
 @class GetReceiptContactResponse;
+@class GetStandingOrderRequest;
+@class GetStandingOrderResponse;
+@class GetStandingOrderSubmissionRequest;
+@class GetStandingOrderSubmissionResponse;
+@class GetStandingOrderSubmissionsRequest;
+@class GetStandingOrderSubmissionsResponse;
+@class GetStandingOrdersRequest;
+@class GetStandingOrdersResponse;
 @class GetSubscriberRequest;
 @class GetSubscriberResponse;
 @class GetSubscribersRequest;
@@ -167,6 +177,8 @@
 @class SetProfileResponse;
 @class SetReceiptContactRequest;
 @class SetReceiptContactResponse;
+@class SetTokenRequestTransferDestinationsRequest;
+@class SetTokenRequestTransferDestinationsResponse;
 @class SignTokenRequestStateRequest;
 @class SignTokenRequestStateResponse;
 @class StoreTokenRequestRequest;
@@ -212,6 +224,7 @@
   #import "Money.pbobjc.h"
   #import "Notification.pbobjc.h"
   #import "Security.pbobjc.h"
+  #import "Submission.pbobjc.h"
   #import "Subscriber.pbobjc.h"
   #import "Token.pbobjc.h"
   #import "Transaction.pbobjc.h"
@@ -649,6 +662,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)getTransactionsWithMessage:(GetTransactionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark GetStandingOrder(GetStandingOrderRequest) returns (GetStandingOrderResponse)
+
+/**
+ * get information about a particular standing order
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderWithMessage:(GetStandingOrderRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetStandingOrders(GetStandingOrdersRequest) returns (GetStandingOrdersResponse)
+
+/**
+ * get information about several standing orders
+ */
+- (GRPCUnaryProtoCall *)getStandingOrdersWithMessage:(GetStandingOrdersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
 
 - (GRPCUnaryProtoCall *)applyScaWithMessage:(ApplyScaRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
@@ -762,6 +789,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark UpdateTokenRequest(UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse)
 
 - (GRPCUnaryProtoCall *)updateTokenRequestWithMessage:(UpdateTokenRequestRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetTokenRequestTransferDestinations(SetTokenRequestTransferDestinationsRequest) returns (SetTokenRequestTransferDestinationsResponse)
+
+- (GRPCUnaryProtoCall *)setTokenRequestTransferDestinationsWithMessage:(SetTokenRequestTransferDestinationsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
 
@@ -888,6 +919,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)createTransferWithMessage:(CreateTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark CreateStandingOrder(CreateStandingOrderRequest) returns (CreateStandingOrderResponse)
+
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ */
+- (GRPCUnaryProtoCall *)createStandingOrderWithMessage:(CreateStandingOrderRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 /**
@@ -896,13 +934,27 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)getTransferWithMessage:(GetTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark GetStandingOrderSubmission(GetStandingOrderSubmissionRequest) returns (GetStandingOrderSubmissionResponse)
+
+/**
+ * Get information about one standing order submission
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderSubmissionWithMessage:(GetStandingOrderSubmissionRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  */
 - (GRPCUnaryProtoCall *)getTransfersWithMessage:(GetTransfersRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetStandingOrderSubmissions(GetStandingOrderSubmissionsRequest) returns (GetStandingOrderSubmissionsResponse)
+
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ */
+- (GRPCUnaryProtoCall *)getStandingOrderSubmissionsWithMessage:(GetStandingOrderSubmissionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)
 
@@ -1971,6 +2023,40 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransactionsWithRequest:(GetTransactionsRequest *)request handler:(void(^)(GetTransactionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetStandingOrder(GetStandingOrderRequest) returns (GetStandingOrderResponse)
+
+/**
+ * get information about a particular standing order
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderWithRequest:(GetStandingOrderRequest *)request handler:(void(^)(GetStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * get information about a particular standing order
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderWithRequest:(GetStandingOrderRequest *)request handler:(void(^)(GetStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetStandingOrders(GetStandingOrdersRequest) returns (GetStandingOrdersResponse)
+
+/**
+ * get information about several standing orders
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrdersWithRequest:(GetStandingOrdersRequest *)request handler:(void(^)(GetStandingOrdersResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * get information about several standing orders
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrdersWithRequest:(GetStandingOrdersRequest *)request handler:(void(^)(GetStandingOrdersResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark ApplySca(ApplyScaRequest) returns (ApplyScaResponse)
 
 - (void)applyScaWithRequest:(ApplyScaRequest *)request handler:(void(^)(ApplyScaResponse *_Nullable response, NSError *_Nullable error))handler;
@@ -2231,6 +2317,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToUpdateTokenRequestWithRequest:(UpdateTokenRequestRequest *)request handler:(void(^)(UpdateTokenRequestResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetTokenRequestTransferDestinations(SetTokenRequestTransferDestinationsRequest) returns (SetTokenRequestTransferDestinationsResponse)
+
+- (void)setTokenRequestTransferDestinationsWithRequest:(SetTokenRequestTransferDestinationsRequest *)request handler:(void(^)(SetTokenRequestTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetTokenRequestTransferDestinationsWithRequest:(SetTokenRequestTransferDestinationsRequest *)request handler:(void(^)(SetTokenRequestTransferDestinationsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark PrepareToken(PrepareTokenRequest) returns (PrepareTokenResponse)
@@ -2525,6 +2618,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToCreateTransferWithRequest:(CreateTransferRequest *)request handler:(void(^)(CreateTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark CreateStandingOrder(CreateStandingOrderRequest) returns (CreateStandingOrderResponse)
+
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)createStandingOrderWithRequest:(CreateStandingOrderRequest *)request handler:(void(^)(CreateStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Redeem a standing order token, creating a standing order submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToCreateStandingOrderWithRequest:(CreateStandingOrderRequest *)request handler:(void(^)(CreateStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 /**
@@ -2544,23 +2654,57 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetTransferWithRequest:(GetTransferRequest *)request handler:(void(^)(GetTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark GetStandingOrderSubmission(GetStandingOrderSubmissionRequest) returns (GetStandingOrderSubmissionResponse)
+
+/**
+ * Get information about one standing order submission
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderSubmissionWithRequest:(GetStandingOrderSubmissionRequest *)request handler:(void(^)(GetStandingOrderSubmissionResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get information about one standing order submission
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderSubmissionWithRequest:(GetStandingOrderSubmissionRequest *)request handler:(void(^)(GetStandingOrderSubmissionResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Get a list of the auth'd member's transfers.
- * https://developer.token.io/sdk/#get-transfers
+ * Get a list of the auth'd member's submissions.
+ * https://developer.token.io/sdk/#get-submissions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetTransfersWithRequest:(GetTransfersRequest *)request handler:(void(^)(GetTransfersResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetStandingOrderSubmissions(GetStandingOrderSubmissionsRequest) returns (GetStandingOrderSubmissionsResponse)
+
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getStandingOrderSubmissionsWithRequest:(GetStandingOrderSubmissionsRequest *)request handler:(void(^)(GetStandingOrderSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get a list of the auth'd member's recurring submissions.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetStandingOrderSubmissionsWithRequest:(GetStandingOrderSubmissionsRequest *)request handler:(void(^)(GetStandingOrderSubmissionsResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetBanksCountries(GetBanksCountriesRequest) returns (GetBanksCountriesResponse)

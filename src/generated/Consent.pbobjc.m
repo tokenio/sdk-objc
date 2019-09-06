@@ -72,6 +72,7 @@ static GPBFileDescriptor *ConsentRoot_FileDescriptor(void) {
 @dynamic memberId;
 @dynamic informationAccess;
 @dynamic payment;
+@dynamic standingOrder;
 @dynamic initiatorId;
 @dynamic initiatorRefId;
 
@@ -84,6 +85,7 @@ typedef struct Consent__storage_ {
   Consent_Payment *payment;
   NSString *initiatorId;
   NSString *initiatorRefId;
+  Consent_StandingOrder *standingOrder;
 } Consent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -154,6 +156,15 @@ typedef struct Consent__storage_ {
         .offset = (uint32_t)offsetof(Consent__storage_, initiatorRefId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "standingOrder",
+        .dataTypeSpecific.className = GPBStringifySymbol(Consent_StandingOrder),
+        .number = Consent_FieldNumber_StandingOrder,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Consent__storage_, standingOrder),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -411,6 +422,85 @@ typedef struct Consent_Payment__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_Payment__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Consent_StandingOrder
+
+@implementation Consent_StandingOrder
+
+@dynamic hasAccount, account;
+@dynamic hasAmount, amount;
+@dynamic frequency;
+@dynamic transferDestinationsArray, transferDestinationsArray_Count;
+
+typedef struct Consent_StandingOrder__storage_ {
+  uint32_t _has_storage_[1];
+  BankAccount *account;
+  Money *amount;
+  NSString *frequency;
+  NSMutableArray *transferDestinationsArray;
+} Consent_StandingOrder__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "account",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .number = Consent_StandingOrder_FieldNumber_Account,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, account),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .number = Consent_StandingOrder_FieldNumber_Amount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "frequency",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_StandingOrder_FieldNumber_Frequency,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, frequency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transferDestinationsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = Consent_StandingOrder_FieldNumber_TransferDestinationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, transferDestinationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Consent_StandingOrder class]
+                                     rootClass:[ConsentRoot class]
+                                          file:ConsentRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Consent_StandingOrder__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
     #if defined(DEBUG) && DEBUG

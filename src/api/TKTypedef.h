@@ -17,6 +17,8 @@
 @class AddressRecord;
 @class Subscriber;
 @class Notification;
+@class PagedArray<StandingOrder>;
+@class PagedArray<StandingOrderSubmission>;
 @class PagedArray<Token>;
 @class PagedArray<Transaction>;
 @class PagedArray<Transfer>;
@@ -34,6 +36,8 @@
 @class TokenRequestResult;
 @class NotifyResult;
 @class Signature;
+@class StandingOrder;
+@class StandingOrderSubmission;
 @class ReceiptContact;
 @class TrustedBeneficiary;
 @class TransferEndpoint;
@@ -78,6 +82,12 @@ typedef void (^ _Nonnull OnSuccessWithTKBalances)(NSDictionary<NSString *,TKBala
 
 typedef void (^ _Nonnull OnSuccessWithTransaction)(Transaction * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithTransactions)(PagedArray<Transaction *> * _Nonnull);
+
+typedef void (^ _Nonnull OnSuccessWithStandingOrder)(StandingOrder * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithStandingOrders)(PagedArray<StandingOrder *> * _Nonnull);
+
+typedef void (^ _Nonnull OnSuccessWithStandingOrderSubmission)(StandingOrderSubmission * _Nonnull);
+typedef void (^ _Nonnull OnSuccessWithStandingOrderSubmissions)(PagedArray<StandingOrderSubmission *> * _Nonnull);
 
 typedef void (^ _Nonnull OnSuccessWithAddress)(AddressRecord * _Nonnull);
 typedef void (^ _Nonnull OnSuccessWithAddresses)(NSArray<AddressRecord *> * _Nonnull);

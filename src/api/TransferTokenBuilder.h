@@ -17,77 +17,80 @@
 @interface TransferTokenBuilder : NSObject
 
 /// Member, normally set by `create`.
-@property (readwrite) TKMember *member;
+@property (nonatomic) TKMember *member;
 
 /// Specify member ID of payer account.
-@property (readwrite) NSString *fromMemberId;
+@property (nonatomic) NSString *fromMemberId;
 
 /// Currency string, normally set by `create`.
-@property (readwrite) NSString *currency;
+@property (nonatomic) NSString *currency;
 
 /// Transfer amount, normally set by `create`.
-@property (readwrite) NSDecimalNumber *lifetimeAmount;
+@property (nonatomic) NSDecimalNumber *lifetimeAmount;
 
 /**
  * Specify how much redeemer can redeem each time.
  * For example, to enable 12x 10€ payments, set lifetimeAmount to 120,
  * chargeAmount to 10.
  */
-@property (readwrite) NSDecimalNumber *chargeAmount;
+@property (nonatomic) NSDecimalNumber *chargeAmount;
 
 /// Account ID from which to pay.
-@property (readwrite) NSString *accountId;
+@property (nonatomic) NSString *accountId;
 
 /// One-time authorization for payment.
-@property (readwrite) OauthBankAuthorization *authorization;
+@property (nonatomic) OauthBankAuthorization *authorization;
 
 /// Expiration time in ms since 1970.
-@property (readwrite) int64_t expiresAtMs;
+@property (nonatomic) int64_t expiresAtMs;
 
 /// Effective-at time in ms since 1970.
-@property (readwrite) int64_t effectiveAtMs;
+@property (nonatomic) int64_t effectiveAtMs;
 
 /// Redeemer, specified by alias.
-@property (readwrite) Alias *redeemerAlias DEPRECATED_ATTRIBUTE;
+@property (nonatomic) Alias *redeemerAlias DEPRECATED_ATTRIBUTE;
 
 /// Redeemer, specified by Member ID.
-@property (readwrite) NSString* redeemerMemberId DEPRECATED_ATTRIBUTE;
+@property (nonatomic) NSString* redeemerMemberId DEPRECATED_ATTRIBUTE;
 
-/// Ppayer, specified by Alias.
-@property (readwrite) Alias *fromAlias;
+/// Payer, specified by Alias.
+@property (nonatomic) Alias *fromAlias;
 
 /// Payee, specified by Alias.
-@property (readwrite) Alias *toAlias;
+@property (nonatomic) Alias *toAlias;
 
 /// Payee, specified by Member ID.
-@property (readwrite) NSString *toMemberId;
+@property (nonatomic) NSString *toMemberId;
 
 /// Description.
-@property (readwrite) NSString *descr;
+@property (nonatomic) NSString *descr;
 
-/// Purpose of payment.
-@property (readwrite) PurposeOfPayment purposeOfPayment;
+/// Purpose code. Refer to ISO 20022 external code sets.
+@property (nonatomic) NSString *purposeCode;
 
 /// Destination bank accounts.
-@property (readwrite) NSArray<TransferDestination *> *transferDestinations;
+@property (nonatomic) NSArray<TransferDestination *> *transferDestinations;
 
 /// Deprecated. Use transferDestinations instead.
-@property (readwrite) NSArray<TransferEndpoint *> *destinations DEPRECATED_ATTRIBUTE;
+@property (nonatomic) NSArray<TransferEndpoint *> *destinations DEPRECATED_ATTRIBUTE;
 
 /// Attachment "files".
-@property (readwrite) NSArray<Attachment *> *attachments;
+@property (nonatomic) NSArray<Attachment *> *attachments;
 
 /// Specify reference ID. If not set, the Token system chooses a random one.
-@property (readwrite) NSString *refId;
+@property (nonatomic) NSString *refId;
 
 /// Set entity redeemer is acting on behalf of.
-@property (readwrite) ActingAs *actingAs;
+@property (nonatomic) ActingAs *actingAs;
 
 /// If receipt is requested. Default to false.
-@property (readwrite) BOOL receiptRequested;
+@property (nonatomic) BOOL receiptRequested;
 
 /// Set the token request ID.
-@property (readwrite) NSString *tokenRequestId;
+@property (nonatomic) NSString *tokenRequestId;
+
+/// End date of the standing order: ISO 8601 YYYY-MM-DD or YYYYMMDD
+@property (nonatomic) NSString *executionDate;
 
 /**
  * Initializes the transfer token builder.

@@ -155,8 +155,6 @@
 		AF4BE1CEABBEB93F8B329347 /* libPods-TokenSdkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD1F6AE0F506D81FFD59B81 /* libPods-TokenSdkTests.a */; };
 		D02A299A2177EC190066E8B8 /* Providerspecific.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D02A29982177EC190066E8B8 /* Providerspecific.pbobjc.h */; };
 		D02A299B2177EC190066E8B8 /* Providerspecific.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D02A29992177EC190066E8B8 /* Providerspecific.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D02EF67222C19313000B61D9 /* Polishapi.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D02EF67022C19313000B61D9 /* Polishapi.pbobjc.h */; };
-		D02EF67322C19313000B61D9 /* Polishapi.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D02EF67122C19313000B61D9 /* Polishapi.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D039410720C9F02100B980CE /* Field.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D039410320C9F02100B980CE /* Field.pbobjc.h */; };
 		D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410420C9F02100B980CE /* Message.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D039410520C9F02100B980CE /* Field.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -175,19 +173,30 @@
 		D062EFED22615B0100189D65 /* Bankstatus.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */; };
 		D062EFEE22615B0100189D65 /* Consent.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D062EFEA22615B0100189D65 /* Consent.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D062EFEF22615B0100189D65 /* Consent.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFEB22615B0100189D65 /* Consent.pbobjc.h */; };
+		D06E3B95231F800C00BA6DED /* Submission.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06E3B93231F800C00BA6DED /* Submission.pbobjc.h */; };
+		D06E3B96231F800C00BA6DED /* Submission.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B94231F800C00BA6DED /* Submission.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D06E3B9F231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D06E3BA0231F86CA00BA6DED /* Polishapi.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B9A231F86CA00BA6DED /* Polishapi.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D06E3BA1231F86CA00BA6DED /* Cma9.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06E3B9B231F86CA00BA6DED /* Cma9.pbobjc.h */; };
+		D06E3BA2231F86CA00BA6DED /* Polishapi.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06E3B9C231F86CA00BA6DED /* Polishapi.pbobjc.h */; };
+		D06E3BA3231F86CA00BA6DED /* Nextgenpsd2.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06E3B9D231F86CA00BA6DED /* Nextgenpsd2.pbobjc.h */; };
+		D06E3BA4231F86CA00BA6DED /* Cma9.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B9E231F86CA00BA6DED /* Cma9.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D07E49B21FE8829A003B33A5 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */; };
 		D07E49B31FE8829A003B33A5 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */; };
 		D082409F1EFDC5050063D9E9 /* TKProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D082409E1EFDC5050063D9E9 /* TKProfileTests.m */; };
 		D093A36C219F448500947EC4 /* TKEndorseSample.m in Sources */ = {isa = PBXBuildFile; fileRef = D093A36B219F448500947EC4 /* TKEndorseSample.m */; };
 		D093A36F219F464E00947EC4 /* TKSampleModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D093A36D219F464E00947EC4 /* TKSampleModel.h */; };
 		D093A370219F464E00947EC4 /* TKSampleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D093A36E219F464E00947EC4 /* TKSampleModel.m */; };
+		D096878823209440006A78DE /* StandingOrderTokenBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D096878623209440006A78DE /* StandingOrderTokenBuilder.h */; };
+		D096878923209440006A78DE /* StandingOrderTokenBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D096878723209440006A78DE /* StandingOrderTokenBuilder.m */; };
+		D096878B2321D261006A78DE /* StandingOrderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D096878A2321D261006A78DE /* StandingOrderTests.m */; };
 		D09E3BC62017EB2900CA0405 /* TKTokenBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */; };
 		D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */; };
 		D09E3BCD20191BDC00CA0405 /* TKTokenBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */; };
 		D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D09E3BCA20191BDC00CA0405 /* TKTokenBrowserViewController.h */; };
 		D09E3BCF20191BDC00CA0405 /* TKTokenBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E3BCB20191BDC00CA0405 /* TKTokenBrowser.m */; };
 		D0B29B8A22D901C1007400A2 /* Eidas.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D0B29B8822D901C1007400A2 /* Eidas.pbobjc.h */; };
-		D0B29B8B22D901C1007400A2 /* Eidas.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */; };
+		D0B29B8B22D901C1007400A2 /* Eidas.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D0DECB2F220AC99B00A73BD5 /* TKTestExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DECB2E220AC99A00A73BD5 /* TKTestExpectation.m */; };
 		D0EFF96F213766510048636D /* TokenRequestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D0EFF96D213766510048636D /* TokenRequestResult.h */; };
 		D0EFF970213766510048636D /* TokenRequestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EFF96E213766510048636D /* TokenRequestResult.m */; };
@@ -331,8 +340,6 @@
 		8AED88F21E27F02A001AD3F7 /* Banklink.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banklink.pbobjc.m; sourceTree = "<group>"; };
 		946239B41ED114F200C47BD0 /* Pricing.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pricing.pbobjc.h; sourceTree = "<group>"; };
 		946239B51ED114F200C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pricing.pbobjc.m; sourceTree = "<group>"; };
-		946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Pricing.pbobjc.m; path = src/generated/Pricing.pbobjc.m; sourceTree = "<group>"; };
-		946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Pricing.pbobjc.h; path = src/generated/Pricing.pbobjc.h; sourceTree = "<group>"; };
 		94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenBuilder.h; sourceTree = "<group>"; };
 		94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenBuilder.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
@@ -418,8 +425,6 @@
 		CFBD31F10BE53E6F6DBFEDEF /* Pods-TokenSdkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TokenSdkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TokenSdkTests/Pods-TokenSdkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D02A29982177EC190066E8B8 /* Providerspecific.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Providerspecific.pbobjc.h; sourceTree = "<group>"; };
 		D02A29992177EC190066E8B8 /* Providerspecific.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Providerspecific.pbobjc.m; sourceTree = "<group>"; };
-		D02EF67022C19313000B61D9 /* Polishapi.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polishapi.pbobjc.h; sourceTree = "<group>"; };
-		D02EF67122C19313000B61D9 /* Polishapi.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Polishapi.pbobjc.m; sourceTree = "<group>"; };
 		D039410320C9F02100B980CE /* Field.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.pbobjc.h; sourceTree = "<group>"; };
 		D039410420C9F02100B980CE /* Message.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.pbobjc.m; sourceTree = "<group>"; };
 		D039410520C9F02100B980CE /* Field.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.pbobjc.m; sourceTree = "<group>"; };
@@ -439,12 +444,23 @@
 		D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankstatus.pbobjc.h; sourceTree = "<group>"; };
 		D062EFEA22615B0100189D65 /* Consent.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consent.pbobjc.m; sourceTree = "<group>"; };
 		D062EFEB22615B0100189D65 /* Consent.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consent.pbobjc.h; sourceTree = "<group>"; };
+		D06E3B93231F800C00BA6DED /* Submission.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Submission.pbobjc.h; sourceTree = "<group>"; };
+		D06E3B94231F800C00BA6DED /* Submission.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Submission.pbobjc.m; sourceTree = "<group>"; };
+		D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nextgenpsd2.pbobjc.m; sourceTree = "<group>"; };
+		D06E3B9A231F86CA00BA6DED /* Polishapi.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Polishapi.pbobjc.m; sourceTree = "<group>"; };
+		D06E3B9B231F86CA00BA6DED /* Cma9.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cma9.pbobjc.h; sourceTree = "<group>"; };
+		D06E3B9C231F86CA00BA6DED /* Polishapi.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polishapi.pbobjc.h; sourceTree = "<group>"; };
+		D06E3B9D231F86CA00BA6DED /* Nextgenpsd2.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nextgenpsd2.pbobjc.h; sourceTree = "<group>"; };
+		D06E3B9E231F86CA00BA6DED /* Cma9.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cma9.pbobjc.m; sourceTree = "<group>"; };
 		D07E49A11FE49594003B33A5 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		D07E49A21FE49594003B33A5 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		D082409E1EFDC5050063D9E9 /* TKProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKProfileTests.m; sourceTree = "<group>"; };
 		D093A36B219F448500947EC4 /* TKEndorseSample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEndorseSample.m; sourceTree = "<group>"; };
 		D093A36D219F464E00947EC4 /* TKSampleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKSampleModel.h; sourceTree = "<group>"; };
 		D093A36E219F464E00947EC4 /* TKSampleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKSampleModel.m; sourceTree = "<group>"; };
+		D096878623209440006A78DE /* StandingOrderTokenBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StandingOrderTokenBuilder.h; sourceTree = "<group>"; };
+		D096878723209440006A78DE /* StandingOrderTokenBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StandingOrderTokenBuilder.m; sourceTree = "<group>"; };
+		D096878A2321D261006A78DE /* StandingOrderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StandingOrderTests.m; sourceTree = "<group>"; };
 		D09E3BC52017EB2900CA0405 /* TKTokenBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKTokenBrowserViewController.xib; sourceTree = "<group>"; };
 		D09E3BC820191BDC00CA0405 /* TKTokenBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTokenBrowserViewController.m; sourceTree = "<group>"; };
 		D09E3BC920191BDC00CA0405 /* TKTokenBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenBrowser.h; sourceTree = "<group>"; };
@@ -540,10 +556,11 @@
 		37637B201D989A930043345F /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				D06E3B98231F86CA00BA6DED /* provider */,
+				D06E3B93231F800C00BA6DED /* Submission.pbobjc.h */,
+				D06E3B94231F800C00BA6DED /* Submission.pbobjc.m */,
 				D0B29B8822D901C1007400A2 /* Eidas.pbobjc.h */,
 				D0B29B8922D901C1007400A2 /* Eidas.pbobjc.m */,
-				D02EF67022C19313000B61D9 /* Polishapi.pbobjc.h */,
-				D02EF67122C19313000B61D9 /* Polishapi.pbobjc.m */,
 				D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */,
 				D062EFE822615B0100189D65 /* Bankstatus.pbobjc.m */,
 				D062EFEB22615B0100189D65 /* Consent.pbobjc.h */,
@@ -649,8 +666,6 @@
 			isa = PBXGroup;
 			children = (
 				E5E98F4C1FA8CFBA00685135 /* sample */,
-				946239BB1ED11A9800C47BD0 /* Pricing.pbobjc.h */,
-				946239BA1ED11A7700C47BD0 /* Pricing.pbobjc.m */,
 				8A9909101D890E820096A7FA /* src */,
 				8A99091C1D890E820096A7FA /* tests */,
 				DDAA0D311E257C6000E9BB09 /* TestHost */,
@@ -690,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */,
+				D096878A2321D261006A78DE /* StandingOrderTests.m */,
 				6ACF46D21F94540F00D36A7B /* TokenClientTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
 				8A99091F1D890E820096A7FA /* Info.plist */,
@@ -742,6 +758,8 @@
 				1B3329211EE4455B00E3F145 /* TransferTokenBuilder.m */,
 				94F8BFE01DD4E93E008904C9 /* AccessTokenBuilder.h */,
 				94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */,
+				D096878623209440006A78DE /* StandingOrderTokenBuilder.h */,
+				D096878723209440006A78DE /* StandingOrderTokenBuilder.m */,
 				ABA7BBE03D06E8E8A1414155 /* TKTypedef.h */,
 				D0B9C52E219CF37F00B55101 /* TokenProto.h */,
 				3777163D1D99BF6800287239 /* TokenSdk.h */,
@@ -917,6 +935,19 @@
 			path = authorization;
 			sourceTree = "<group>";
 		};
+		D06E3B98231F86CA00BA6DED /* provider */ = {
+			isa = PBXGroup;
+			children = (
+				D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */,
+				D06E3B9A231F86CA00BA6DED /* Polishapi.pbobjc.m */,
+				D06E3B9B231F86CA00BA6DED /* Cma9.pbobjc.h */,
+				D06E3B9C231F86CA00BA6DED /* Polishapi.pbobjc.h */,
+				D06E3B9D231F86CA00BA6DED /* Nextgenpsd2.pbobjc.h */,
+				D06E3B9E231F86CA00BA6DED /* Cma9.pbobjc.m */,
+			);
+			path = provider;
+			sourceTree = "<group>";
+		};
 		D09E3BC42017EB2900CA0405 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -1019,9 +1050,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				946239B61ED114F200C47BD0 /* Pricing.pbobjc.h in Headers */,
+				D06E3BA2231F86CA00BA6DED /* Polishapi.pbobjc.h in Headers */,
 				D062EFED22615B0100189D65 /* Bankstatus.pbobjc.h in Headers */,
 				4B240F841F28096300497B2D /* TKHasher.h in Headers */,
 				D09E3BCE20191BDC00CA0405 /* TKTokenBrowserViewController.h in Headers */,
+				D06E3BA1231F86CA00BA6DED /* Cma9.pbobjc.h in Headers */,
 				948D195B1E2EF63D000258EE /* AccessTokenBuilder.h in Headers */,
 				ABA7B290C97F9D6136CA9D55 /* TKTestBase.h in Headers */,
 				37637B701D989A930043345F /* Transfer.pbobjc.h in Headers */,
@@ -1033,7 +1066,6 @@
 				ABA7BCD36D7269863CBD7AB9 /* TKClient.h in Headers */,
 				22EBBA4420F5680900E6A4DB /* Service.pbobjc.h in Headers */,
 				ABA7B2E2271AD00719ECDA53 /* TKUnauthenticatedClient.h in Headers */,
-				D02EF67222C19313000B61D9 /* Polishapi.pbobjc.h in Headers */,
 				DDF54B031E31797900BE739B /* QHex.h in Headers */,
 				37637B5C1D989A930043345F /* Annotations.pbobjc.h in Headers */,
 				37637B641D989A930043345F /* Money.pbobjc.h in Headers */,
@@ -1046,6 +1078,7 @@
 				37637B661D989A930043345F /* Notification.pbobjc.h in Headers */,
 				37637B6E1D989A930043345F /* Transaction.pbobjc.h in Headers */,
 				94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */,
+				D096878823209440006A78DE /* StandingOrderTokenBuilder.h in Headers */,
 				ABA7B38189FE91B2418918A2 /* TKRpcLog.h in Headers */,
 				DD0A77671E42AC040058FB8A /* TKError.h in Headers */,
 				37637B561D989A930043345F /* Auth.pbobjc.h in Headers */,
@@ -1060,6 +1093,7 @@
 				ABA7BF75FDD4B92E5456300E /* sha512.h in Headers */,
 				D039410D20CBA6A600B980CE /* TokenCluster.h in Headers */,
 				4B240F8D1F28135000497B2D /* Base58.h in Headers */,
+				D06E3B95231F800C00BA6DED /* Submission.pbobjc.h in Headers */,
 				37637B6C1D989A930043345F /* Token.pbobjc.h in Headers */,
 				37637B6A1D989A930043345F /* Security.pbobjc.h in Headers */,
 				3777163E1D99BF6800287239 /* TokenSdk.h in Headers */,
@@ -1088,6 +1122,7 @@
 				8A2937511DB825660034C110 /* Address.pbobjc.h in Headers */,
 				ABA7B155594D4232CAF702FF /* TKMember.h in Headers */,
 				ABA7BE7B3FD5403FD18AD799 /* TKRpc.h in Headers */,
+				D06E3BA3231F86CA00BA6DED /* Nextgenpsd2.pbobjc.h in Headers */,
 				ABA7BC52AA8DD15FF1FFB518 /* TKCryptoEngine.h in Headers */,
 				D093A36F219F464E00947EC4 /* TKSampleModel.h in Headers */,
 				ABA7B5F2312896189ADFC428 /* TKSignature.h in Headers */,
@@ -1184,6 +1219,7 @@
 					8A99090D1D890E820096A7FA = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 734Q44J6QX;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Manual;
 					};
 					8A9909171D890E820096A7FA = {
@@ -1364,13 +1400,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B3814091F394B0200557EEF /* Alias.pbobjc.m in Sources */,
-				D02EF67322C19313000B61D9 /* Polishapi.pbobjc.m in Sources */,
 				946239B71ED114F200C47BD0 /* Pricing.pbobjc.m in Sources */,
 				1B7C72271DAF128600E9FC84 /* Subscriber.pbobjc.m in Sources */,
 				94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */,
 				DDF54B061E3179A200BE739B /* TKSecureEnclaveCryptoEngine.m in Sources */,
+				D06E3BA4231F86CA00BA6DED /* Cma9.pbobjc.m in Sources */,
 				DD0A77681E42AC040058FB8A /* TKError.m in Sources */,
 				D039410820C9F02100B980CE /* Message.pbobjc.m in Sources */,
+				D06E3B96231F800C00BA6DED /* Submission.pbobjc.m in Sources */,
 				D062EFEC22615B0100189D65 /* Bankstatus.pbobjc.m in Sources */,
 				D09E3BCC20191BDC00CA0405 /* TKTokenBrowserViewController.m in Sources */,
 				4B240F8C1F28135000497B2D /* Base58.c in Sources */,
@@ -1391,6 +1428,7 @@
 				DDF54B041E31797900BE739B /* QHex.m in Sources */,
 				D039410920C9F02100B980CE /* Field.pbobjc.m in Sources */,
 				22EBBA4520F5680900E6A4DB /* Service.pbobjc.m in Sources */,
+				D096878923209440006A78DE /* StandingOrderTokenBuilder.m in Sources */,
 				4B240F851F28096300497B2D /* TKHasher.m in Sources */,
 				FAE918CC1F17E70B001692CF /* Fank.pbobjc.m in Sources */,
 				37637B6B1D989A930043345F /* Security.pbobjc.m in Sources */,
@@ -1419,8 +1457,10 @@
 				ABA7BD077F9C27D8BD8B1C8C /* verify.c in Sources */,
 				ABA7B164177B8BB039D61458 /* keypair.c in Sources */,
 				ABA7B5F5DCF3B29BB75B09E1 /* add_scalar.c in Sources */,
+				D06E3BA0231F86CA00BA6DED /* Polishapi.pbobjc.m in Sources */,
 				ABA7BEA330E88F4707EA089E /* key_exchange.c in Sources */,
 				ABA7BCC6096C71A76B4DC7B0 /* test.c in Sources */,
+				D06E3B9F231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m in Sources */,
 				37637B631D989A930043345F /* Member.pbobjc.m in Sources */,
 				37637B651D989A930043345F /* Money.pbobjc.m in Sources */,
 				8A2937521DB825660034C110 /* Address.pbobjc.m in Sources */,
@@ -1479,6 +1519,7 @@
 				DD6AD2A91E007E9000358830 /* TKLogTests.m in Sources */,
 				ABA7BDC1005207233E4CA2A6 /* TKCryptoTests.m in Sources */,
 				ABA7B3CEB44D8A66CE4AA71B /* TKAccountsTests.m in Sources */,
+				D096878B2321D261006A78DE /* StandingOrderTests.m in Sources */,
 				D093A36C219F448500947EC4 /* TKEndorseSample.m in Sources */,
 				1B7089581EC3AA3500438CA1 /* TKBlobstoreTests.m in Sources */,
 				ABA7B6E8993EBFEDD6FDFCE2 /* TKTransferTokenTests.m in Sources */,
@@ -1663,8 +1704,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 33CF3E1136B16B6D4B8B60A1 /* Pods-TokenSdk.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1709,6 +1752,8 @@
 				PRODUCT_NAME = TokenSdk;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WARNING_LDFLAGS = "";
 			};
 			name = Debug;
@@ -1717,8 +1762,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78A493511A3865317CD4D20A /* Pods-TokenSdk.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 734Q44J6QX;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1763,6 +1810,7 @@
 				PRODUCT_NAME = TokenSdk;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				WARNING_LDFLAGS = "";
 			};
 			name = Release;

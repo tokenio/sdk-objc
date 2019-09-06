@@ -666,6 +666,7 @@ typedef GPB_ENUM(Account_FieldNumber) {
   Account_FieldNumber_Nickname = 4,
   Account_FieldNumber_Servicer = 5,
   Account_FieldNumber_Metadata = 6,
+  Account_FieldNumber_ProviderDetails = 7,
 };
 
 @interface Account : GPBMessage
@@ -687,6 +688,8 @@ typedef GPB_ENUM(Account_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *providerDetails;
 
 @end
 
@@ -780,6 +783,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
   Transaction_FieldNumber_TransactionId = 7,
   Transaction_FieldNumber_TransactionInformation = 8,
   Transaction_FieldNumber_Metadata = 9,
+  Transaction_FieldNumber_ProviderDetails = 10,
 };
 
 @interface Transaction : GPBMessage
@@ -807,6 +811,8 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
 /** The number of items in @c metadata without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger metadata_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *providerDetails;
 
 @end
 

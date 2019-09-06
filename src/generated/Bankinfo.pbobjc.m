@@ -14,6 +14,8 @@
 #endif
 
 #import "Bankinfo.pbobjc.h"
+#import "Alias.pbobjc.h"
+#import "extensions/Field.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,8 +25,18 @@
 
 @implementation BankinfoRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
++ (GPBExtensionRegistry*)extensionRegistry {
+  // This is called by +initialize so there is no need to worry
+  // about thread safety and initialization of registry.
+  static GPBExtensionRegistry* registry = nil;
+  if (!registry) {
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    registry = [[GPBExtensionRegistry alloc] init];
+    // Merge in the imports (direct or indirect) that defined extensions.
+    [registry addExtensions:[FieldRoot extensionRegistry]];
+  }
+  return registry;
+}
 
 @end
 
@@ -57,6 +69,9 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic supportsSendPayment;
 @dynamic supportsReceivePayment;
 @dynamic supportsBalance;
+@dynamic supportsScheduledPayment;
+@dynamic supportsStandingOrder;
+@dynamic supportsBulkTransfer;
 @dynamic requiresLegacyTransfer;
 @dynamic requiresOneStepPayment;
 @dynamic provider;
@@ -165,7 +180,7 @@ typedef struct Bank__storage_ {
         .name = "provider",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Provider,
-        .hasIndex = 22,
+        .hasIndex = 28,
         .offset = (uint32_t)offsetof(Bank__storage_, provider),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -174,7 +189,7 @@ typedef struct Bank__storage_ {
         .name = "country",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Country,
-        .hasIndex = 23,
+        .hasIndex = 29,
         .offset = (uint32_t)offsetof(Bank__storage_, country),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -183,7 +198,7 @@ typedef struct Bank__storage_ {
         .name = "identifier",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Identifier,
-        .hasIndex = 24,
+        .hasIndex = 30,
         .offset = (uint32_t)offsetof(Bank__storage_, identifier),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -192,8 +207,8 @@ typedef struct Bank__storage_ {
         .name = "requiresLegacyTransfer",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_RequiresLegacyTransfer,
-        .hasIndex = 18,
-        .offset = 19,  // Stored in _has_storage_ to save space.
+        .hasIndex = 24,
+        .offset = 25,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -219,8 +234,35 @@ typedef struct Bank__storage_ {
         .name = "requiresOneStepPayment",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_RequiresOneStepPayment,
+        .hasIndex = 26,
+        .offset = 27,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsScheduledPayment",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsScheduledPayment,
+        .hasIndex = 18,
+        .offset = 19,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsStandingOrder",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsStandingOrder,
         .hasIndex = 20,
         .offset = 21,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsBulkTransfer",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsBulkTransfer,
+        .hasIndex = 22,
+        .offset = 23,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -252,6 +294,7 @@ typedef struct Bank__storage_ {
 @dynamic bankLinkingUri;
 @dynamic realmArray, realmArray_Count;
 @dynamic customAliasLabel;
+@dynamic aliasTypesArray, aliasTypesArray_Count;
 
 typedef struct BankInfo__storage_ {
   uint32_t _has_storage_[1];
@@ -260,6 +303,7 @@ typedef struct BankInfo__storage_ {
   NSString *bankLinkingUri;
   NSMutableArray *realmArray;
   NSString *customAliasLabel;
+  GPBEnumArray *aliasTypesArray;
 } BankInfo__storage_;
 
 // This method is threadsafe because it is initially called
@@ -312,6 +356,15 @@ typedef struct BankInfo__storage_ {
         .offset = (uint32_t)offsetof(BankInfo__storage_, customAliasLabel),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "aliasTypesArray",
+        .dataTypeSpecific.enumDescFunc = Alias_Type_EnumDescriptor,
+        .number = BankInfo_FieldNumber_AliasTypesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BankInfo__storage_, aliasTypesArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =

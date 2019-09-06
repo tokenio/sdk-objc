@@ -63,6 +63,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_SupportsGuestCheckout = 15,
   Bank_FieldNumber_SupportsBalance = 16,
   Bank_FieldNumber_RequiresOneStepPayment = 17,
+  Bank_FieldNumber_SupportsScheduledPayment = 18,
+  Bank_FieldNumber_SupportsStandingOrder = 19,
+  Bank_FieldNumber_SupportsBulkTransfer = 20,
 };
 
 @interface Bank : GPBMessage
@@ -98,6 +101,12 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Connection allows for retrieving balances */
 @property(nonatomic, readwrite) BOOL supportsBalance;
 
+@property(nonatomic, readwrite) BOOL supportsScheduledPayment;
+
+@property(nonatomic, readwrite) BOOL supportsStandingOrder;
+
+@property(nonatomic, readwrite) BOOL supportsBulkTransfer;
+
 /** Connection only supports immediate redemption of transfers */
 @property(nonatomic, readwrite) BOOL requiresLegacyTransfer GPB_DEPRECATED_MSG("io.token.proto.common.bank.Bank.requires_legacy_transfer is deprecated (see bankinfo.proto).");
 
@@ -123,6 +132,7 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
   BankInfo_FieldNumber_BankLinkingUri = 3,
   BankInfo_FieldNumber_RealmArray = 4,
   BankInfo_FieldNumber_CustomAliasLabel = 6,
+  BankInfo_FieldNumber_AliasTypesArray = 7,
 };
 
 /**
@@ -149,6 +159,12 @@ typedef GPB_ENUM(BankInfo_FieldNumber) {
 
 /** (Optional) Label to be displayed if bank supports custom aliases */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customAliasLabel;
+
+/** Alias type for users to login with in web app, PHONE, EMAIL, CUSTOM */
+// |aliasTypesArray| contains |Alias_Type|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *aliasTypesArray;
+/** The number of items in @c aliasTypesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger aliasTypesArray_Count;
 
 @end
 

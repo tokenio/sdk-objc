@@ -29,6 +29,7 @@ CF_EXTERN_C_BEGIN
 
 @class Balance_TypedBalance;
 @class Money;
+@class ProviderStandingOrderDetails;
 @class ProviderTransactionDetails;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -100,7 +101,7 @@ typedef GPB_ENUM(TransactionStatus) {
   /** the transaction has failed due to invalid quote (wrong fx rate) */
   TransactionStatus_FailureInvalidQuote = 13,
 
-  /** the transaction has failed to complete within alotted time */
+  /** the transaction has failed to complete within allotted time */
   TransactionStatus_FailureExpired = 14,
 
   /** the transaction has failed due to other reasons */
@@ -147,6 +148,30 @@ GPBEnumDescriptor *RequestStatus_EnumDescriptor(void);
  **/
 BOOL RequestStatus_IsValidValue(int32_t value);
 
+#pragma mark - Enum StandingOrder_Status
+
+typedef GPB_ENUM(StandingOrder_Status) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  StandingOrder_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  StandingOrder_Status_Invalid = 0,
+  StandingOrder_Status_Active = 1,
+  StandingOrder_Status_Inactive = 2,
+  StandingOrder_Status_Processing = 3,
+  StandingOrder_Status_Failed = 4,
+};
+
+GPBEnumDescriptor *StandingOrder_Status_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL StandingOrder_Status_IsValidValue(int32_t value);
+
 #pragma mark - TransactionRoot
 
 /**
@@ -179,7 +204,7 @@ typedef GPB_ENUM(Transaction_FieldNumber) {
 
 @interface Transaction : GPBMessage
 
-/** Transaction ID */
+/** Transaction ID. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** Debit or credit */
@@ -290,6 +315,54 @@ typedef GPB_ENUM(Balance_TypedBalance_FieldNumber) {
 @property(nonatomic, readwrite) int64_t updatedAtMs;
 
 @end
+
+#pragma mark - StandingOrder
+
+typedef GPB_ENUM(StandingOrder_FieldNumber) {
+  StandingOrder_FieldNumber_Id_p = 1,
+  StandingOrder_FieldNumber_Status = 2,
+  StandingOrder_FieldNumber_TokenId = 3,
+  StandingOrder_FieldNumber_TokenSubmissionId = 4,
+  StandingOrder_FieldNumber_CreatedAtMs = 5,
+  StandingOrder_FieldNumber_ProviderStandingOrderDetails = 6,
+};
+
+/**
+ * Represents a standing order as defined by the bank.
+ **/
+@interface StandingOrder : GPBMessage
+
+/** Standing order ID defined by the bank */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+@property(nonatomic, readwrite) StandingOrder_Status status;
+
+/** Points to the token, only set for Token standing orders. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+/** Points to the token submission, only set for Token standing orders. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenSubmissionId;
+
+/** CreationTime */
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+@property(nonatomic, readwrite, strong, null_resettable) ProviderStandingOrderDetails *providerStandingOrderDetails;
+/** Test to see if @c providerStandingOrderDetails has been set. */
+@property(nonatomic, readwrite) BOOL hasProviderStandingOrderDetails;
+
+@end
+
+/**
+ * Fetches the raw value of a @c StandingOrder's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t StandingOrder_Status_RawValue(StandingOrder *message);
+/**
+ * Sets the raw value of an @c StandingOrder's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetStandingOrder_Status_RawValue(StandingOrder *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

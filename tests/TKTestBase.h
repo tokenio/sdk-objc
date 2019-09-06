@@ -171,5 +171,18 @@ typedef id _Nonnull (^AsyncTestBlockWithResult)(TokenClient *);
  * @param builder transer token builder
  */
 - (Token *)createToken:(TransferTokenBuilder *)builder;
+
+/**
+ * Returns a yyyy-MM-dd date time of tomorrow.
+ *
+ */
+- (NSString *)tomorrow;
+
+/**
+ * Returns a yyyy-MM-dd date time of next week.
+ *
+ */
+- (NSString *)nextWeek;
+
 @end
 NS_ASSUME_NONNULL_END

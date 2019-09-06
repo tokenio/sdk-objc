@@ -16,6 +16,7 @@ import "member.proto";
 import "money.proto";
 import "notification.proto";
 import "security.proto";
+import "submission.proto";
 import "subscriber.proto";
 import "token.proto";
 import "transaction.proto";
@@ -502,6 +503,27 @@ message GetTransactionsResponse {
   io.token.proto.common.transaction.RequestStatus status = 3;
 }
 
+message GetStandingOrderRequest {
+  string account_id = 1;
+  string standing_order_id = 2;
+}
+
+message GetStandingOrderResponse {
+  io.token.proto.common.transaction.StandingOrder standing_order = 1;
+  io.token.proto.common.transaction.RequestStatus status = 2;
+}
+
+message GetStandingOrdersRequest {
+  string account_id = 1;
+  Page page = 2; // Optional paging settings.
+}
+
+message GetStandingOrdersResponse {
+  repeated io.token.proto.common.transaction.StandingOrder standing_orders = 1;
+  string offset = 2; // Optional offset state for the client to roundtrip.
+  io.token.proto.common.transaction.RequestStatus status = 3;
+}
+
 message ApplyScaRequest {
   repeated string account_id = 1;
 }
@@ -779,6 +801,13 @@ message GetAuthRequestPayloadResponse {
   io.token.proto.common.token.TokenPayload payload = 1;
 }
 
+message SetTokenRequestTransferDestinationsRequest {
+  string token_request_id = 1;
+  repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 2;
+}
+
+message SetTokenRequestTransferDestinationsResponse {}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transfers.
 //
@@ -793,12 +822,28 @@ message CreateTransferResponse {
   io.token.proto.common.token.ExternalAuthorizationDetails authorization_details = 2; // Optional: used when transfer status is PENDING_EXTERNAL_AUTHORIZATION
 }
 
+message CreateStandingOrderRequest {
+  string token_id = 1;
+}
+
+message CreateStandingOrderResponse {
+  io.token.proto.common.submission.StandingOrderSubmission submission = 1; // Resulting standing order submission
+}
+
 message GetTransferRequest {
   string transfer_id = 1; // transfer to get
 }
 
 message GetTransferResponse {
   io.token.proto.common.transfer.Transfer transfer = 1; // Transfer spec
+}
+
+message GetStandingOrderSubmissionRequest {
+  string submission_id = 1;
+}
+
+message GetStandingOrderSubmissionResponse {
+  io.token.proto.common.submission.StandingOrderSubmission submission = 1;
 }
 
 message GetTransfersRequest {
@@ -828,6 +873,30 @@ message GetTransfersRequest {
 
 message GetTransfersResponse {
   repeated io.token.proto.common.transfer.Transfer transfers = 1; // List of transfers.
+  string offset = 2;                                              // Optional offset state for the client to roundtrip.
+}
+
+message GetStandingOrderSubmissionsRequest {
+  Page page = 1; // Optional paging settings
+  StandingOrderSubmissionFilter filter = 2; // Filter to restrict query
+
+  message StandingOrderSubmissionFilter {
+    int64 start_time_ms = 1; // Optional time range
+    int64 end_time_ms = 2; // Optional time range
+    io.token.proto.common.submission.SubmissionStatus submission_status = 3; // Optional status
+    Role role = 4; // Role. Default: ANY
+    string acting_as_ref_id = 5; // Optional ref_id of TokenPayload.acting_as
+
+    enum Role {
+      ANY = 0;
+      PAYER = 1;
+      PAYEE = 2;
+    }
+  }
+}
+
+message GetStandingOrderSubmissionsResponse {
+  repeated io.token.proto.common.submission.StandingOrderSubmission submissions = 1;
   string offset = 2;                                              // Optional offset state for the client to roundtrip.
 }
 
@@ -1492,7 +1561,7 @@ service GatewayService {
 
   rpc GetBalances (GetBalancesRequest) returns (GetBalancesResponse) {
     option (google.api.http) = {
-        get: "/accounts/balance"
+        get: "/account-balance"
     };
   }
 
@@ -1509,6 +1578,21 @@ service GatewayService {
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse) {
     option (google.api.http) = {
         get: "/accounts/{account_id}/transactions"
+    };
+  }
+
+
+  // get information about a particular standing order
+  rpc GetStandingOrder (GetStandingOrderRequest) returns (GetStandingOrderResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}/standing-orders/{standing_order_id}"
+    };
+  }
+
+  // get information about several standing orders
+  rpc GetStandingOrders (GetStandingOrdersRequest) returns (GetStandingOrdersResponse) {
+    option (google.api.http) = {
+        get: "/accounts/{account_id}/standing-orders"
     };
   }
 
@@ -1633,6 +1717,13 @@ service GatewayService {
   rpc UpdateTokenRequest (UpdateTokenRequestRequest) returns (UpdateTokenRequestResponse) {
     option (google.api.http) = {
         put: "/token-requests/{request_id}"
+        body: "*"
+    };
+  }
+
+  rpc SetTokenRequestTransferDestinations(SetTokenRequestTransferDestinationsRequest) returns (SetTokenRequestTransferDestinationsResponse) {
+    option (google.api.http) = {
+        put: "/token-requests/set/transfer-destinations/{request_id}"
         body: "*"
     };
   }
@@ -1792,6 +1883,14 @@ service GatewayService {
     };
   }
 
+  // Redeem a standing order token, creating a standing order submission.
+  rpc CreateStandingOrder (CreateStandingOrderRequest) returns (CreateStandingOrderResponse) {
+    option (google.api.http) = {
+        post: "/standing-order-submissions"
+        body: "*"
+    };
+  }
+
   // Get information about one transfer.
   // https://developer.token.io/sdk/#get-transfers
   rpc GetTransfer (GetTransferRequest) returns (GetTransferResponse) {
@@ -1800,11 +1899,25 @@ service GatewayService {
     };
   }
 
-  // Get a list of the auth'd member's transfers.
-  // https://developer.token.io/sdk/#get-transfers
+  // Get information about one standing order submission
+  rpc GetStandingOrderSubmission (GetStandingOrderSubmissionRequest) returns (GetStandingOrderSubmissionResponse) {
+    option (google.api.http) = {
+        get: "/standing-order-submissions/{submission_id}"
+    };
+  }
+
+  // Get a list of the auth'd member's submissions.
+  // https://developer.token.io/sdk/#get-submissions
   rpc GetTransfers (GetTransfersRequest) returns (GetTransfersResponse) {
     option (google.api.http) = {
         get: "/transfers"
+    };
+  }
+
+  // Get a list of the auth'd member's recurring submissions.
+  rpc GetStandingOrderSubmissions (GetStandingOrderSubmissionsRequest) returns (GetStandingOrderSubmissionsResponse) {
+    option (google.api.http) = {
+        get: "/standing-order-submissions"
     };
   }
 

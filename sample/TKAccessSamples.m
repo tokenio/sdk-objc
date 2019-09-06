@@ -69,7 +69,7 @@
     id<TKRepresentable> representable = [grantee forAccessToken:accessTokenId]; // future requests will behave as if we were grantor
     [representable getAccounts:^(NSArray <TKAccount *> *ary) {
         // use accounts
-        [ary[0] getBalance:^(TKBalance * b) {
+        [ary[0] getBalance:Key_Level_Low onSuccess:^(TKBalance * b) {
             balance0 = b.current;
         } onError:^(NSError *e) {
             @throw [NSException exceptionWithName:@"AccessBalanceException"

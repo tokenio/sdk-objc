@@ -2,6 +2,7 @@ syntax = "proto3";
 package io.token.proto.cma9;
 
 import "google/api/annotations.proto";
+import "providerspecific.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Common data structures (used in both Account Requests and Payments)
@@ -123,6 +124,7 @@ message Account {
   string Nickname = 4;
   Servicer Servicer = 5;
   map<string, string> metadata = 6;
+  string ProviderDetails = 7;
 }
 
 message AccountData {
@@ -175,6 +177,7 @@ message Transaction {
   string TransactionId = 7;
   string TransactionInformation = 8;
   map<string, string> metadata = 9;
+  string ProviderDetails = 10;
 }
 
 message TransactionData {
@@ -423,6 +426,7 @@ service Cma9Service {
   rpc CreateAccountRequest (AccountRequestsRequest) returns (AccountRequestsResponse) {
     option (google.api.http) = {
       post: "/cma9/account-requests"
+      body: "*"
     };
   }
 
@@ -465,6 +469,7 @@ service Cma9Service {
   rpc CreatePayment (PaymentsRequest) returns (PaymentsResponse) {
     option (google.api.http) = {
       post: "/cma9/payments"
+      body: "*"
     };
   }
 
@@ -472,6 +477,7 @@ service Cma9Service {
   rpc CreatePaymentSubmission (PaymentSubmissionsRequest) returns (PaymentSubmissionsResponse) {
     option (google.api.http) = {
       post: "/cma9/payment-submissions"
+      body: "*"
     };
   }
 

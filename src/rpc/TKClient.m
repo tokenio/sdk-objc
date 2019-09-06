@@ -929,6 +929,29 @@
              onError:onError];
 }
 
+- (void)createStandingOrder:(NSString *)tokenId
+                  onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                    onError:(OnError)onError {
+    CreateStandingOrderRequest *request = [CreateStandingOrderRequest message];
+    request.tokenId = tokenId;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToCreateStandingOrderWithRequest:request
+                                   handler:^(CreateStandingOrderResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.submission);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)getTransfer:(NSString *)transferId
           onSuccess:(OnSuccessWithTransfer)onSuccess
             onError:(OnError)onError {
@@ -1090,7 +1113,7 @@
                                                onError([NSError
                                                         errorFromRequestStatus:response.status
                                                         userInfo:@{@"AccountId": accountId,
-                                                                   @"TransactionId": response.transaction.id_p}]);
+                                                                   @"TransactionId": transactionId}]);
                                            }
                                            
                                        } else {
@@ -1143,6 +1166,142 @@
     [self _startCall:call
          withRequest:request
             usingKey:keyLevel
+             onError:onError];
+}
+
+- (void)getStandingOrder:(NSString *)standingOrderId
+              forAccount:(NSString *)accountId
+                 withKey:(Key_Level)keyLevel
+               onSuccess:(OnSuccessWithStandingOrder)onSuccess
+                 onError:(OnError)onError {
+    GetStandingOrderRequest *request = [GetStandingOrderRequest message];
+    request.accountId = accountId;
+    request.standingOrderId = standingOrderId;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetStandingOrderWithRequest:request
+                                   handler:
+                                   ^(GetStandingOrderResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           if (response.status == RequestStatus_SuccessfulRequest) {
+                                               onSuccess(response.standingOrder);
+                                           }
+                                           else {
+                                               onError([NSError
+                                                        errorFromRequestStatus:response.status
+                                                        userInfo:@{@"AccountId": accountId,
+                                                                   @"StandingOrderId":standingOrderId}]);
+                                           }
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+            usingKey:keyLevel
+             onError:onError];
+}
+
+- (void)getStandingOrdersOffset:(NSString *)offset
+                          limit:(int)limit
+                     forAccount:(NSString *)accountId
+                        withKey:(Key_Level)keyLevel
+                      onSuccess:(OnSuccessWithStandingOrders)onSuccess
+                        onError:(OnError)onError {
+    GetStandingOrdersRequest *request = [GetStandingOrdersRequest message];
+    request.accountId = accountId;
+    request.page.offset = offset;
+    request.page.limit = limit;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetStandingOrdersWithRequest:request
+                                   handler:
+                                   ^(GetStandingOrdersResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           if (response.status == RequestStatus_SuccessfulRequest) {
+                                               PagedArray<StandingOrder *> *paged =
+                                               [[PagedArray<StandingOrder *> alloc]
+                                                initWith: response.standingOrdersArray
+                                                offset: response.offset];
+                                               onSuccess(paged);
+                                           }
+                                           else {
+                                               onError([NSError
+                                                        errorFromRequestStatus:response.status
+                                                        userInfo:@{@"AccountId": accountId}]);
+                                           }
+
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+            usingKey:keyLevel
+             onError:onError];
+}
+
+- (void)getStandingOrderSubmission:(NSString *)submissionId
+                         onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
+                           onError:(OnError)onError {
+    GetStandingOrderSubmissionRequest *request = [GetStandingOrderSubmissionRequest message];
+    request.submissionId = submissionId;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetStandingOrderSubmissionWithRequest:request
+                                   handler:
+                                   ^(GetStandingOrderSubmissionResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.submission);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)getStandingOrderSubmissionsOffset:(NSString *)offset
+                                    limit:(int)limit
+                                onSuccess:(OnSuccessWithStandingOrderSubmissions)onSuccess
+                                  onError:(OnError)onError {
+    GetStandingOrderSubmissionsRequest *request = [GetStandingOrderSubmissionsRequest message];
+    request.page.offset = offset;
+    request.page.limit = limit;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetStandingOrderSubmissionsWithRequest:request
+                                   handler:
+                                   ^(GetStandingOrderSubmissionsResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           PagedArray<StandingOrderSubmission *> *paged =
+                                           [[PagedArray<StandingOrderSubmission *> alloc]
+                                            initWith: response.submissionsArray
+                                            offset: response.offset];
+                                           onSuccess(paged);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
              onError:onError];
 }
 

@@ -73,6 +73,7 @@ static GPBFileDescriptor *TransferRoot_FileDescriptor(void) {
 @dynamic status;
 @dynamic orderId;
 @dynamic method;
+@dynamic executionDate;
 
 typedef struct Transfer__storage_ {
   uint32_t _has_storage_[1];
@@ -83,6 +84,7 @@ typedef struct Transfer__storage_ {
   TransferPayload *payload;
   NSMutableArray *payloadSignaturesArray;
   NSString *orderId;
+  NSString *executionDate;
   int64_t createdAtMs;
 } Transfer__storage_;
 
@@ -163,6 +165,15 @@ typedef struct Transfer__storage_ {
         .offset = (uint32_t)offsetof(Transfer__storage_, method),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "executionDate",
+        .dataTypeSpecific.className = NULL,
+        .number = Transfer_FieldNumber_ExecutionDate,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(Transfer__storage_, executionDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -253,6 +264,7 @@ BOOL Transfer_Method_IsValidValue(int32_t value__) {
 @dynamic description_p;
 @dynamic transferDestinationsArray, transferDestinationsArray_Count;
 @dynamic hasMetadata, metadata;
+@dynamic confirmFunds;
 
 typedef struct TransferPayload__storage_ {
   uint32_t _has_storage_[1];
@@ -333,6 +345,15 @@ typedef struct TransferPayload__storage_ {
         .offset = (uint32_t)offsetof(TransferPayload__storage_, metadata),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "confirmFunds",
+        .dataTypeSpecific.className = NULL,
+        .number = TransferPayload_FieldNumber_ConfirmFunds,
+        .hasIndex = 5,
+        .offset = 6,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
