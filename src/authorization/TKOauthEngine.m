@@ -43,7 +43,6 @@
 
         successPattern = [callbackUrl stringByAppendingString:@"[/?]?.*#.*access_token=([^&]+)"];
         errorPattern = [callbackUrl stringByAppendingString:@"[/?]?error=([^&]+)"];
-        // https://web-app.sandbox.token.io/auth/callback?error=access_denied
     }
     
     return self;
