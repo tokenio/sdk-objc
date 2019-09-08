@@ -73,7 +73,10 @@ typedef enum {
     kTKErrorInvalidRealm = 109,
     
     /* Raised when no stored key is found in key store. */
-    kTKErrorNoStoredKeyIsFound = 110
+    kTKErrorNoStoredKeyIsFound = 110,
+
+    /* Raised when bank returns an error in bank linking. */
+    kTKErrorBankLinking = 111,
 } TKErrorCode;
 
 
