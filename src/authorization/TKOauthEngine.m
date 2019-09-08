@@ -18,7 +18,8 @@
     OnError onError;
     TKBrowser *browser;
     NSString *url;
-    NSString *pattern;
+    NSString *successPattern;
+    NSString *errorPattern;
     
     BOOL completionUrlIsFound;
 }
@@ -39,8 +40,10 @@
                url_,
                [callbackUrl stringByAddingPercentEncodingWithAllowedCharacters:
                 [NSCharacterSet URLHostAllowedCharacterSet]]];
-        
-        pattern = [callbackUrl stringByAppendingString:@"([/?]?.*#).*access_token=.+"];
+
+        successPattern = [callbackUrl stringByAppendingString:@"[/?]?.*#.*access_token=([^&]+)"];
+        errorPattern = [callbackUrl stringByAppendingString:@"[/?]?error=([^&]+)"];
+        // https://web-app.sandbox.token.io/auth/callback?error=access_denied
     }
     
     return self;
@@ -70,42 +73,25 @@
     }
     
     NSString* urlStr = request.URL.absoluteString;
-    
-    NSError *error = nil;
-    
-    if (error != nil) {
-        onError(error);
+
+    NSString* successMatch = [self matchResult:urlStr WithPattern:successPattern];
+    if (successMatch) {
+        completionUrlIsFound = YES;
+        onSuccess(successMatch);
         return NO;
     }
-    
-    NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:pattern
-                                  options:0
-                                  error:&error];
-    
-    NSArray *matches = [regex matchesInString:urlStr options:0 range:NSMakeRange(0, urlStr.length)];
-    
-    if (matches.count == 0) {
-        return YES;
+
+
+    NSString* errorMatch = [self matchResult:urlStr WithPattern:errorPattern];
+    if (errorMatch) {
+        completionUrlIsFound = YES;
+        onError([NSError errorWithDomain:kTokenErrorDomain
+                                    code:kTKErrorBankLinking
+                                userInfo:@{ NSLocalizedDescriptionKey: errorMatch }]);
+        return NO;
     }
-    
-    completionUrlIsFound = YES;
-    
-    NSArray<NSString *> *urlParts = [urlStr componentsSeparatedByCharactersInSet:
-                                     [NSCharacterSet characterSetWithCharactersInString:@"#|&"]];
-    for (int i = (int)urlParts.count - 1; i >=0; i--) {
-        if ([urlParts[i] containsString:@"access_token="]) {
-            onSuccess([urlParts[i] substringFromIndex:13]);
-            return NO;
-        }
-    }
-    
-    onError([NSError errorWithDomain:kTokenErrorDomain
-                                code:kTKErrorOauthAccessTokenNotFound
-                            userInfo:@{ NSLocalizedDescriptionKey:
-                                            @"Access token can't be retrieved from result page."}]);
-    
-    return NO;
+
+    return YES;
 }
 
 - (void) browserWillCancel:(NSError *)error {
@@ -113,6 +99,20 @@
                                 details:TKLocalizedString(@"User_Cancelled_Authentication",
                                                           @"User cancelled authentication")
                       encapsulatedError:error]);
+}
+
+- (NSString *) matchResult:(NSString *)string WithPattern:(NSString *)pattern {
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:pattern
+                                  options:0
+                                  error:nil];
+
+    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+
+    if (matches.count > 0) {
+        return [string substringWithRange:[matches[0] rangeAtIndex:1]];
+    }
+    return nil;
 }
 @end
 
