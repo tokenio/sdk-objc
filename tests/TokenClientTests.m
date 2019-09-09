@@ -18,35 +18,17 @@
 - (void)testInitWithDeveloperKey {
     NSString *validDeveloperKey = @"4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI";
     XCTAssertNotNil([[TokenClient alloc] initWithTokenCluster:[TokenCluster localhost]
-                                                     port:9001
-                                                timeoutMs:1000
-                                             developerKey:validDeveloperKey
-                                             languageCode:@"en"
-                                                   crypto:nil
-                                           browserFactory:nil
-                                                   useSsl:NO
-                                                certsPath:nil
-                                   globalRpcErrorCallback:^(NSError *error) {
-                                       /* noop default callback */
-                                   }]);
-}
-
-- (void)testInitWithoutDeveloperKey {
-    XCTAssertThrowsSpecificNamed([[TokenClient alloc] initWithTokenCluster:[TokenCluster localhost]
-                                                                  port:9001
-                                                             timeoutMs:1000
-                                                          developerKey:nil
-                                                          languageCode:@"en"
-                                                                crypto:nil
-                                                        browserFactory:nil
-                                                                useSsl:NO
-                                                             certsPath:nil
-                                                globalRpcErrorCallback:^(NSError *error) {
-                                                    /* noop default callback */
-                                                    
-                                                }],
-                                 NSException,
-                                 @"NoDeveloperKeyException");
+                                                         port:9001
+                                                    timeoutMs:1000
+                                                 developerKey:validDeveloperKey
+                                                 languageCode:@"en"
+                                                       crypto:nil
+                                               browserFactory:nil
+                                                       useSsl:NO
+                                                    certsPath:nil
+                                       globalRpcErrorCallback:^(NSError *error) {
+                                           /* noop default callback */
+                                       }]);
 }
 
 @end
