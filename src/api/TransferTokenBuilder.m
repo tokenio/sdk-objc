@@ -71,7 +71,7 @@
         _tokenRequestId = tokenRequest.id_p;
 
         if (tokenRequest.requestPayload.transferBody.executionDate
-            && [tokenRequest.requestPayload.transferBody.executionDate isEqualToString:@""]) {
+            && ![tokenRequest.requestPayload.transferBody.executionDate isEqualToString:@""]) {
             _executionDate = tokenRequest.requestPayload.transferBody.executionDate;
         }
     }
