@@ -1684,9 +1684,13 @@ typedef struct VerifyEidasRequest__storage_ {
 
 @implementation VerifyEidasResponse
 
+@dynamic status;
+@dynamic statusDetails;
 
 typedef struct VerifyEidasResponse__storage_ {
   uint32_t _has_storage_[1];
+  KonsentusVerificationStatus status;
+  NSString *statusDetails;
 } VerifyEidasResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1694,12 +1698,32 @@ typedef struct VerifyEidasResponse__storage_ {
 + (GPBDescriptor *)descriptor {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "status",
+        .dataTypeSpecific.enumDescFunc = KonsentusVerificationStatus_EnumDescriptor,
+        .number = VerifyEidasResponse_FieldNumber_Status,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VerifyEidasResponse__storage_, status),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "statusDetails",
+        .dataTypeSpecific.className = NULL,
+        .number = VerifyEidasResponse_FieldNumber_StatusDetails,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(VerifyEidasResponse__storage_, statusDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[VerifyEidasResponse class]
                                      rootClass:[GatewayRoot class]
                                           file:GatewayRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(VerifyEidasResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     #if defined(DEBUG) && DEBUG
@@ -1711,6 +1735,18 @@ typedef struct VerifyEidasResponse__storage_ {
 }
 
 @end
+
+int32_t VerifyEidasResponse_Status_RawValue(VerifyEidasResponse *message) {
+  GPBDescriptor *descriptor = [VerifyEidasResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:VerifyEidasResponse_FieldNumber_Status];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetVerifyEidasResponse_Status_RawValue(VerifyEidasResponse *message, int32_t value) {
+  GPBDescriptor *descriptor = [VerifyEidasResponse descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:VerifyEidasResponse_FieldNumber_Status];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
 
 #pragma mark - GetDefaultAgentRequest
 
@@ -8749,6 +8785,96 @@ typedef struct CreateStandingOrderResponse__storage_ {
 
 @end
 
+#pragma mark - CreateBulkTransferRequest
+
+@implementation CreateBulkTransferRequest
+
+@dynamic tokenId;
+
+typedef struct CreateBulkTransferRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *tokenId;
+} CreateBulkTransferRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokenId",
+        .dataTypeSpecific.className = NULL,
+        .number = CreateBulkTransferRequest_FieldNumber_TokenId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateBulkTransferRequest__storage_, tokenId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateBulkTransferRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateBulkTransferRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - CreateBulkTransferResponse
+
+@implementation CreateBulkTransferResponse
+
+@dynamic hasTransfer, transfer;
+
+typedef struct CreateBulkTransferResponse__storage_ {
+  uint32_t _has_storage_[1];
+  BulkTransfer *transfer;
+} CreateBulkTransferResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransfer),
+        .number = CreateBulkTransferResponse_FieldNumber_Transfer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(CreateBulkTransferResponse__storage_, transfer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[CreateBulkTransferResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(CreateBulkTransferResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - GetTransferRequest
 
 @implementation GetTransferRequest
@@ -9488,6 +9614,96 @@ typedef struct GetStandingOrderSubmissionsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetStandingOrderSubmissionsResponse__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBulkTransferRequest
+
+@implementation GetBulkTransferRequest
+
+@dynamic bulkTransferId;
+
+typedef struct GetBulkTransferRequest__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *bulkTransferId;
+} GetBulkTransferRequest__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bulkTransferId",
+        .dataTypeSpecific.className = NULL,
+        .number = GetBulkTransferRequest_FieldNumber_BulkTransferId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetBulkTransferRequest__storage_, bulkTransferId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBulkTransferRequest class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBulkTransferRequest__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GetBulkTransferResponse
+
+@implementation GetBulkTransferResponse
+
+@dynamic hasBulkTransfer, bulkTransfer;
+
+typedef struct GetBulkTransferResponse__storage_ {
+  uint32_t _has_storage_[1];
+  BulkTransfer *bulkTransfer;
+} GetBulkTransferResponse__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "bulkTransfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransfer),
+        .number = GetBulkTransferResponse_FieldNumber_BulkTransfer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GetBulkTransferResponse__storage_, bulkTransfer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GetBulkTransferResponse class]
+                                     rootClass:[GatewayRoot class]
+                                          file:GatewayRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GetBulkTransferResponse__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

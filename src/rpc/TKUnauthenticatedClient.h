@@ -141,6 +141,7 @@
  * to name if not specified.
  * @param provider If specified, return banks whose 'provider' matches the provider
  * (case-insensitive)
+ * @param bankFeatures If specified, return banks who meet the bank features requirement
  * @param onSuccess invoked on success with a list of banks
  */
 - (void)getBanks:(NSArray<NSString *> *)bankIds
@@ -150,6 +151,7 @@
          perPage:(int)perPage
             sort:(NSString *)sort
         provider:(NSString *)provider
+    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
 

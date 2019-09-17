@@ -3189,6 +3189,40 @@
              responseClass:[CreateStandingOrderResponse class]];
 }
 
+#pragma mark CreateBulkTransfer(CreateBulkTransferRequest) returns (CreateBulkTransferResponse)
+
+// Deprecated methods.
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)createBulkTransferWithRequest:(CreateBulkTransferRequest *)request handler:(void(^)(CreateBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToCreateBulkTransferWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToCreateBulkTransferWithRequest:(CreateBulkTransferRequest *)request handler:(void(^)(CreateBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"CreateBulkTransfer"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[CreateBulkTransferResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ */
+- (GRPCUnaryProtoCall *)createBulkTransferWithMessage:(CreateBulkTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"CreateBulkTransfer"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[CreateBulkTransferResponse class]];
+}
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 // Deprecated methods.
@@ -3258,6 +3292,40 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GetStandingOrderSubmissionResponse class]];
+}
+
+#pragma mark GetBulkTransfer(GetBulkTransferRequest) returns (GetBulkTransferResponse)
+
+// Deprecated methods.
+/**
+ * Get information about one bulk transfer
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getBulkTransferWithRequest:(GetBulkTransferRequest *)request handler:(void(^)(GetBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetBulkTransferWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * Get information about one bulk transfer
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetBulkTransferWithRequest:(GetBulkTransferRequest *)request handler:(void(^)(GetBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetBulkTransfer"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GetBulkTransferResponse class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * Get information about one bulk transfer
+ */
+- (GRPCUnaryProtoCall *)getBulkTransferWithMessage:(GetBulkTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetBulkTransfer"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GetBulkTransferResponse class]];
 }
 
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)

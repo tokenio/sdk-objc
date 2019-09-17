@@ -16,7 +16,7 @@ enum SubmissionStatus {
   PROCESSING = 2;                              // Submitted by Token; pending submission by the bank.
   SUCCESS = 3;                                 // Submission successful.
   FAILED = 4;                                  // Submission failed.
-  INITIATED = 5;                               // Submitted by token; unable to retrieve status from bank.
+  INITIATED = 5;                               // Submitted by Token; unable to retrieve status from bank.
   CANCELED = 6;
 }
 

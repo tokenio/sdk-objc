@@ -49,6 +49,8 @@ CF_EXTERN_C_BEGIN
 @class Alias;
 @class Attachment;
 @class BankAccount;
+@class BulkTransferBody;
+@class BulkTransferBody_Transfer;
 @class CustomerData;
 @class Policy_AllSignatures;
 @class Policy_Signer;
@@ -68,8 +70,10 @@ CF_EXTERN_C_BEGIN
 @class TokenRequestPayload_TransferBody;
 @class TokenSignature;
 @class TransferBody;
+@class TransferDestination;
 @class TransferEndpoint;
 @class TransferInstructions;
+@class TransferInstructions_Metadata;
 GPB_ENUM_FWD_DECLARE(Key_Level);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -370,6 +374,7 @@ typedef GPB_ENUM(TokenRequestPayload_FieldNumber) {
   TokenRequestPayload_FieldNumber_DestinationCountry = 10,
   TokenRequestPayload_FieldNumber_RefId = 11,
   TokenRequestPayload_FieldNumber_StandingOrderBody = 12,
+  TokenRequestPayload_FieldNumber_BulkTransferBody = 13,
 };
 
 typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
@@ -377,6 +382,7 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
   TokenRequestPayload_RequestBody_OneOfCase_AccessBody = 6,
   TokenRequestPayload_RequestBody_OneOfCase_TransferBody = 7,
   TokenRequestPayload_RequestBody_OneOfCase_StandingOrderBody = 12,
+  TokenRequestPayload_RequestBody_OneOfCase_BulkTransferBody = 13,
 };
 
 @interface TokenRequestPayload : GPBMessage
@@ -402,6 +408,8 @@ typedef GPB_ENUM(TokenRequestPayload_RequestBody_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) TokenRequestPayload_TransferBody *transferBody;
 
 @property(nonatomic, readwrite, strong, null_resettable) StandingOrderBody *standingOrderBody;
+
+@property(nonatomic, readwrite, strong, null_resettable) BulkTransferBody *bulkTransferBody;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
 
@@ -538,6 +546,7 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
   TokenRequestPayload_TransferBody_FieldNumber_Instructions = 5,
   TokenRequestPayload_TransferBody_FieldNumber_ExecutionDate = 6,
   TokenRequestPayload_TransferBody_FieldNumber_ConfirmFunds = 7,
+  TokenRequestPayload_TransferBody_FieldNumber_SetTransferDestinationsURL = 8,
 };
 
 @interface TokenRequestPayload_TransferBody : GPBMessage
@@ -563,6 +572,8 @@ typedef GPB_ENUM(TokenRequestPayload_TransferBody_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *executionDate;
 
 @property(nonatomic, readwrite) BOOL confirmFunds;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *setTransferDestinationsURL;
 
 @end
 
@@ -668,6 +679,7 @@ typedef GPB_ENUM(TokenPayload_FieldNumber) {
   TokenPayload_FieldNumber_TokenRequestId = 14,
   TokenPayload_FieldNumber_InitiatorId = 15,
   TokenPayload_FieldNumber_StandingOrder = 16,
+  TokenPayload_FieldNumber_BulkTransfer = 17,
 };
 
 typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
@@ -675,6 +687,7 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
   TokenPayload_Body_OneOfCase_Transfer = 9,
   TokenPayload_Body_OneOfCase_Access = 10,
   TokenPayload_Body_OneOfCase_StandingOrder = 16,
+  TokenPayload_Body_OneOfCase_BulkTransfer = 17,
 };
 
 @interface TokenPayload : GPBMessage
@@ -720,6 +733,8 @@ typedef GPB_ENUM(TokenPayload_Body_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) AccessBody *access;
 
 @property(nonatomic, readwrite, strong, null_resettable) StandingOrderBody *standingOrder;
+
+@property(nonatomic, readwrite, strong, null_resettable) BulkTransferBody *bulkTransfer;
 
 /** Optional, can be endorsed until this time */
 @property(nonatomic, readwrite) int64_t endorseUntilMs;
@@ -852,6 +867,60 @@ typedef GPB_ENUM(StandingOrderBody_FieldNumber) {
 
 /** ISO 4217, 3 letter currency code such as "USD" or "EUR". */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+@end
+
+#pragma mark - BulkTransferBody
+
+typedef GPB_ENUM(BulkTransferBody_FieldNumber) {
+  BulkTransferBody_FieldNumber_TransfersArray = 1,
+  BulkTransferBody_FieldNumber_TotalAmount = 2,
+  BulkTransferBody_FieldNumber_Source = 3,
+};
+
+@interface BulkTransferBody : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<BulkTransferBody_Transfer*> *transfersArray;
+/** The number of items in @c transfersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transfersArray_Count;
+
+/** Total amount irrespective of currency. Used for redundancy check. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *totalAmount;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferEndpoint *source;
+/** Test to see if @c source has been set. */
+@property(nonatomic, readwrite) BOOL hasSource;
+
+@end
+
+#pragma mark - BulkTransferBody_Transfer
+
+typedef GPB_ENUM(BulkTransferBody_Transfer_FieldNumber) {
+  BulkTransferBody_Transfer_FieldNumber_Amount = 1,
+  BulkTransferBody_Transfer_FieldNumber_Currency = 2,
+  BulkTransferBody_Transfer_FieldNumber_RefId = 3,
+  BulkTransferBody_Transfer_FieldNumber_Description_p = 4,
+  BulkTransferBody_Transfer_FieldNumber_Destination = 5,
+  BulkTransferBody_Transfer_FieldNumber_Metadata = 6,
+};
+
+@interface BulkTransferBody_Transfer : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination *destination;
+/** Test to see if @c destination has been set. */
+@property(nonatomic, readwrite) BOOL hasDestination;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferInstructions_Metadata *metadata;
+/** Test to see if @c metadata has been set. */
+@property(nonatomic, readwrite) BOOL hasMetadata;
 
 @end
 

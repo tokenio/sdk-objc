@@ -170,7 +170,10 @@ message VerifyEidasRequest {
   string signature = 2; // signature of payload signed with the private key of the certificate
 }
 
-message VerifyEidasResponse {}
+message VerifyEidasResponse {
+  io.token.proto.common.eidas.KonsentusVerificationStatus status = 1;
+  string status_details = 2;
+}
 
 message GetDefaultAgentRequest {}
 
@@ -830,6 +833,14 @@ message CreateStandingOrderResponse {
   io.token.proto.common.submission.StandingOrderSubmission submission = 1; // Resulting standing order submission
 }
 
+message CreateBulkTransferRequest {
+  string token_id = 1;
+}
+
+message CreateBulkTransferResponse {
+  io.token.proto.common.transfer.BulkTransfer transfer = 1; // Resulting bulk transfer
+}
+
 message GetTransferRequest {
   string transfer_id = 1; // transfer to get
 }
@@ -898,6 +909,15 @@ message GetStandingOrderSubmissionsRequest {
 message GetStandingOrderSubmissionsResponse {
   repeated io.token.proto.common.submission.StandingOrderSubmission submissions = 1;
   string offset = 2;                                              // Optional offset state for the client to roundtrip.
+}
+
+message GetBulkTransferRequest {
+  string bulk_transfer_id = 1;
+
+}
+
+message GetBulkTransferResponse {
+  io.token.proto.common.transfer.BulkTransfer bulk_transfer = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1581,7 +1601,6 @@ service GatewayService {
     };
   }
 
-
   // get information about a particular standing order
   rpc GetStandingOrder (GetStandingOrderRequest) returns (GetStandingOrderResponse) {
     option (google.api.http) = {
@@ -1723,7 +1742,7 @@ service GatewayService {
 
   rpc SetTokenRequestTransferDestinations(SetTokenRequestTransferDestinationsRequest) returns (SetTokenRequestTransferDestinationsResponse) {
     option (google.api.http) = {
-        put: "/token-requests/set/transfer-destinations/{request_id}"
+        put: "/token-requests/{request_id}/transfer-destinations"
         body: "*"
     };
   }
@@ -1891,6 +1910,14 @@ service GatewayService {
     };
   }
 
+  // Redeem a bulk transfer token, creating a bulk transfer submission.
+  rpc CreateBulkTransfer (CreateBulkTransferRequest) returns (CreateBulkTransferResponse) {
+    option (google.api.http) = {
+        post: "/bulk-transfers"
+        body: "*"
+    };
+  }
+
   // Get information about one transfer.
   // https://developer.token.io/sdk/#get-transfers
   rpc GetTransfer (GetTransferRequest) returns (GetTransferResponse) {
@@ -1903,6 +1930,13 @@ service GatewayService {
   rpc GetStandingOrderSubmission (GetStandingOrderSubmissionRequest) returns (GetStandingOrderSubmissionResponse) {
     option (google.api.http) = {
         get: "/standing-order-submissions/{submission_id}"
+    };
+  }
+
+  // Get information about one bulk transfer
+  rpc GetBulkTransfer (GetBulkTransferRequest) returns (GetBulkTransferResponse) {
+    option (google.api.http) = {
+        get: "/bulk-transfers/{bulk_transfer_id}"
     };
   }
 

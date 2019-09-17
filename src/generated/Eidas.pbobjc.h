@@ -27,9 +27,41 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Alias;
 GPB_ENUM_FWD_DECLARE(Key_Algorithm);
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum KonsentusVerificationStatus
+
+/**
+ * When a TPP verifies an eIDAS alias by providing a certificate (and all preconditions are met on
+ * our side) the verification may succeed or fail on the Konsentus side in two different ways
+ **/
+typedef GPB_ENUM(KonsentusVerificationStatus) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  KonsentusVerificationStatus_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  KonsentusVerificationStatus_Invalid = 0,
+  KonsentusVerificationStatus_Success = 1,
+
+  /** The request has succeeded (code 200), but at least one eIDAS.validity field in the response body is false */
+  KonsentusVerificationStatus_FailureEidasInvalid = 2,
+
+  /** Konsentus returned an error response (codes 4xx and 5xx) */
+  KonsentusVerificationStatus_FailureErrorResponse = 3,
+};
+
+GPBEnumDescriptor *KonsentusVerificationStatus_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL KonsentusVerificationStatus_IsValidValue(int32_t value);
 
 #pragma mark - EidasRoot
 
@@ -50,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(VerifyEidasPayload_FieldNumber) {
   VerifyEidasPayload_FieldNumber_MemberId = 1,
-  VerifyEidasPayload_FieldNumber_FiReferenceId = 2,
+  VerifyEidasPayload_FieldNumber_Alias = 2,
   VerifyEidasPayload_FieldNumber_Certificate = 3,
   VerifyEidasPayload_FieldNumber_Algorithm = 4,
 };
@@ -60,8 +92,10 @@ typedef GPB_ENUM(VerifyEidasPayload_FieldNumber) {
 /** member ID of the TPP */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *memberId;
 
-/** reference ID of the TPP as registered in the open banking directory */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *fiReferenceId;
+/** eIDAS alias to be verified */
+@property(nonatomic, readwrite, strong, null_resettable) Alias *alias;
+/** Test to see if @c alias has been set. */
+@property(nonatomic, readwrite) BOOL hasAlias;
 
 /** serialized eIDAS certificate */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *certificate;

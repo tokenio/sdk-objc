@@ -228,6 +228,28 @@
         provider:(NSString *)provider
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
+    [self getBanks:bankIds
+            search:search
+           country:country
+              page:page
+           perPage:perPage
+              sort:sort
+          provider:provider
+      bankFeatures:[NSDictionary dictionary]
+         onSuccess:onSuccess
+           onError:onError];
+}
+
+- (void)getBanks:(NSArray<NSString *> *)bankIds
+          search:(NSString *)search
+         country:(NSString *)country
+            page:(int)page
+         perPage:(int)perPage
+            sort:(NSString *)sort
+        provider:(NSString *)provider
+    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
+       onSuccess:(OnSuccessWithBanks)onSuccess
+         onError:(OnError)onError {
     [unauthenticatedClient getBanks:bankIds
                              search:search
                             country:country
@@ -235,6 +257,7 @@
                             perPage:perPage
                                sort:sort
                            provider:provider
+                       bankFeatures:bankFeatures
                           onSuccess:onSuccess
                             onError:onError];
 }

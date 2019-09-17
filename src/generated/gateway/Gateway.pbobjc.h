@@ -41,6 +41,7 @@ CF_EXTERN_C_BEGIN
 @class BankInfo;
 @class Blob;
 @class Blob_Payload;
+@class BulkTransfer;
 @class Consent;
 @class Customization;
 @class Device;
@@ -94,6 +95,7 @@ CF_EXTERN_C_BEGIN
 GPB_ENUM_FWD_DECLARE(AccountLinkingStatus);
 GPB_ENUM_FWD_DECLARE(Alias_Type);
 GPB_ENUM_FWD_DECLARE(CreateMemberType);
+GPB_ENUM_FWD_DECLARE(KonsentusVerificationStatus);
 GPB_ENUM_FWD_DECLARE(Notification_Status);
 GPB_ENUM_FWD_DECLARE(NotifyStatus);
 GPB_ENUM_FWD_DECLARE(ProfilePictureSize);
@@ -750,9 +752,30 @@ typedef GPB_ENUM(VerifyEidasRequest_FieldNumber) {
 
 #pragma mark - VerifyEidasResponse
 
+typedef GPB_ENUM(VerifyEidasResponse_FieldNumber) {
+  VerifyEidasResponse_FieldNumber_Status = 1,
+  VerifyEidasResponse_FieldNumber_StatusDetails = 2,
+};
+
 @interface VerifyEidasResponse : GPBMessage
 
+@property(nonatomic, readwrite) enum KonsentusVerificationStatus status;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *statusDetails;
+
 @end
+
+/**
+ * Fetches the raw value of a @c VerifyEidasResponse's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t VerifyEidasResponse_Status_RawValue(VerifyEidasResponse *message);
+/**
+ * Sets the raw value of an @c VerifyEidasResponse's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetVerifyEidasResponse_Status_RawValue(VerifyEidasResponse *message, int32_t value);
 
 #pragma mark - GetDefaultAgentRequest
 
@@ -3056,6 +3079,33 @@ typedef GPB_ENUM(CreateStandingOrderResponse_FieldNumber) {
 
 @end
 
+#pragma mark - CreateBulkTransferRequest
+
+typedef GPB_ENUM(CreateBulkTransferRequest_FieldNumber) {
+  CreateBulkTransferRequest_FieldNumber_TokenId = 1,
+};
+
+@interface CreateBulkTransferRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@end
+
+#pragma mark - CreateBulkTransferResponse
+
+typedef GPB_ENUM(CreateBulkTransferResponse_FieldNumber) {
+  CreateBulkTransferResponse_FieldNumber_Transfer = 1,
+};
+
+@interface CreateBulkTransferResponse : GPBMessage
+
+/** Resulting bulk transfer */
+@property(nonatomic, readwrite, strong, null_resettable) BulkTransfer *transfer;
+/** Test to see if @c transfer has been set. */
+@property(nonatomic, readwrite) BOOL hasTransfer;
+
+@end
+
 #pragma mark - GetTransferRequest
 
 typedef GPB_ENUM(GetTransferRequest_FieldNumber) {
@@ -3307,6 +3357,32 @@ typedef GPB_ENUM(GetStandingOrderSubmissionsResponse_FieldNumber) {
 
 /** Optional offset state for the client to roundtrip. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
+
+@end
+
+#pragma mark - GetBulkTransferRequest
+
+typedef GPB_ENUM(GetBulkTransferRequest_FieldNumber) {
+  GetBulkTransferRequest_FieldNumber_BulkTransferId = 1,
+};
+
+@interface GetBulkTransferRequest : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bulkTransferId;
+
+@end
+
+#pragma mark - GetBulkTransferResponse
+
+typedef GPB_ENUM(GetBulkTransferResponse_FieldNumber) {
+  GetBulkTransferResponse_FieldNumber_BulkTransfer = 1,
+};
+
+@interface GetBulkTransferResponse : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BulkTransfer *bulkTransfer;
+/** Test to see if @c bulkTransfer has been set. */
+@property(nonatomic, readwrite) BOOL hasBulkTransfer;
 
 @end
 

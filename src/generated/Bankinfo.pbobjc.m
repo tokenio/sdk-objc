@@ -74,12 +74,14 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic supportsBulkTransfer;
 @dynamic requiresLegacyTransfer;
 @dynamic requiresOneStepPayment;
+@dynamic supportsLinkingUri;
 @dynamic provider;
 @dynamic country;
 @dynamic identifier;
+@dynamic supportedTransferDestinationTypesArray, supportedTransferDestinationTypesArray_Count;
 
 typedef struct Bank__storage_ {
-  uint32_t _has_storage_[1];
+  uint32_t _has_storage_[2];
   NSString *id_p;
   NSString *name;
   NSString *logoUri;
@@ -87,6 +89,7 @@ typedef struct Bank__storage_ {
   NSString *provider;
   NSString *country;
   NSString *identifier;
+  NSMutableArray *supportedTransferDestinationTypesArray;
 } Bank__storage_;
 
 // This method is threadsafe because it is initially called
@@ -180,7 +183,7 @@ typedef struct Bank__storage_ {
         .name = "provider",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Provider,
-        .hasIndex = 28,
+        .hasIndex = 30,
         .offset = (uint32_t)offsetof(Bank__storage_, provider),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -189,7 +192,7 @@ typedef struct Bank__storage_ {
         .name = "country",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Country,
-        .hasIndex = 29,
+        .hasIndex = 31,
         .offset = (uint32_t)offsetof(Bank__storage_, country),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -198,7 +201,7 @@ typedef struct Bank__storage_ {
         .name = "identifier",
         .dataTypeSpecific.className = NULL,
         .number = Bank_FieldNumber_Identifier,
-        .hasIndex = 30,
+        .hasIndex = 32,
         .offset = (uint32_t)offsetof(Bank__storage_, identifier),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -263,6 +266,24 @@ typedef struct Bank__storage_ {
         .number = Bank_FieldNumber_SupportsBulkTransfer,
         .hasIndex = 22,
         .offset = 23,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportedTransferDestinationTypesArray",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportedTransferDestinationTypesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Bank__storage_, supportedTransferDestinationTypesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "supportsLinkingUri",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsLinkingUri,
+        .hasIndex = 28,
+        .offset = 29,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -473,6 +494,7 @@ typedef struct Paging__storage_ {
 @dynamic country;
 @dynamic idsArray, idsArray_Count;
 @dynamic search;
+@dynamic requiresBankFeatures, requiresBankFeatures_Count;
 
 typedef struct BankFilter__storage_ {
   uint32_t _has_storage_[1];
@@ -482,6 +504,7 @@ typedef struct BankFilter__storage_ {
   NSString *country;
   NSMutableArray *idsArray;
   NSString *search;
+  NSMutableDictionary *requiresBankFeatures;
 } BankFilter__storage_;
 
 // This method is threadsafe because it is initially called
@@ -542,6 +565,15 @@ typedef struct BankFilter__storage_ {
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(BankFilter__storage_, search),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "requiresBankFeatures",
+        .dataTypeSpecific.className = NULL,
+        .number = BankFilter_FieldNumber_RequiresBankFeatures,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, requiresBankFeatures),
+        .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
     };
