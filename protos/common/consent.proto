@@ -18,6 +18,7 @@ message Consent {
     InformationAccess information_access = 5;
     Payment payment = 6;
     StandingOrder standing_order = 9;
+    BulkPayment bulk_payment = 10;
   }
 
   string initiator_id = 7;                      // ID of the member requesting consent (e.g. merchant)
@@ -37,6 +38,7 @@ message Consent {
         TRANSACTIONS = 3;
         TRANSFER_DESTINATIONS = 4;
         FUNDS_CONFIRMATIONS = 5;
+        STANDING_ORDERS = 6;
       }
     }
   }
@@ -54,6 +56,19 @@ message Consent {
     io.token.proto.common.money.Money amount = 2; // amount per charge
     string frequency = 3; // ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
     repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 4;
+  }
+
+  message BulkPayment {
+    repeated Payment payments = 1;
+    io.token.proto.common.account.BankAccount account = 2;
+
+    message Payment {
+      string amount = 1;
+      string currency = 2;
+      string ref_id = 3;
+      string description = 4;
+      transferinstructions.TransferDestination destination = 5;
+    }
   }
 
   message Beneficiary {

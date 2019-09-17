@@ -57,6 +57,7 @@ message TokenRequestPayload {
     AccessBody access_body = 6;
     TransferBody transfer_body = 7;
     StandingOrderBody standing_order_body = 12;
+    BulkTransferBody bulk_transfer_body = 13;
   }
 
   string description = 8 [(io.token.proto.extensions.field.redact) = true];
@@ -120,6 +121,7 @@ message TokenRequestPayload {
     io.token.proto.common.transferinstructions.TransferInstructions instructions = 5;
     string execution_date = 6;                                                              // Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD.
     bool confirm_funds = 7;
+    string set_transfer_destinations_url = 8;
   }
 }
 
@@ -173,6 +175,7 @@ message TokenPayload {
     TransferBody transfer = 9;
     AccessBody access = 10;
     StandingOrderBody standing_order = 16;
+    BulkTransferBody bulk_transfer = 17;
   }
 
   int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
@@ -230,6 +233,21 @@ message StandingOrderBody {
   string frequency = 4;                                                              // ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
   string amount = 5;                                                                 // Amount of each individual payment
   string currency = 6;                                                               // ISO 4217, 3 letter currency code such as "USD" or "EUR".
+}
+
+message BulkTransferBody {
+  repeated Transfer transfers = 1;
+  string total_amount = 2; // Total amount irrespective of currency. Used for redundancy check.
+  transferinstructions.TransferEndpoint source = 3;
+
+  message Transfer {
+    string amount = 1;
+    string currency = 2;
+    string ref_id = 3;
+    string description = 4;
+    transferinstructions.TransferDestination destination = 5;
+    transferinstructions.TransferInstructions.Metadata metadata = 6;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

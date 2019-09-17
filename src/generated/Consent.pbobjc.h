@@ -30,6 +30,8 @@ CF_EXTERN_C_BEGIN
 @class ActingAs;
 @class BankAccount;
 @class Consent_Beneficiary;
+@class Consent_BulkPayment;
+@class Consent_BulkPayment_Payment;
 @class Consent_InformationAccess;
 @class Consent_InformationAccess_ResourceAccess;
 @class Consent_Payment;
@@ -56,6 +58,7 @@ typedef GPB_ENUM(Consent_InformationAccess_ResourceAccess_ResourceType) {
   Consent_InformationAccess_ResourceAccess_ResourceType_Transactions = 3,
   Consent_InformationAccess_ResourceAccess_ResourceType_TransferDestinations = 4,
   Consent_InformationAccess_ResourceAccess_ResourceType_FundsConfirmations = 5,
+  Consent_InformationAccess_ResourceAccess_ResourceType_StandingOrders = 6,
 };
 
 GPBEnumDescriptor *Consent_InformationAccess_ResourceAccess_ResourceType_EnumDescriptor(void);
@@ -92,6 +95,7 @@ typedef GPB_ENUM(Consent_FieldNumber) {
   Consent_FieldNumber_InitiatorId = 7,
   Consent_FieldNumber_InitiatorRefId = 8,
   Consent_FieldNumber_StandingOrder = 9,
+  Consent_FieldNumber_BulkPayment = 10,
 };
 
 typedef GPB_ENUM(Consent_Type_OneOfCase) {
@@ -99,6 +103,7 @@ typedef GPB_ENUM(Consent_Type_OneOfCase) {
   Consent_Type_OneOfCase_InformationAccess = 5,
   Consent_Type_OneOfCase_Payment = 6,
   Consent_Type_OneOfCase_StandingOrder = 9,
+  Consent_Type_OneOfCase_BulkPayment = 10,
 };
 
 @interface Consent : GPBMessage
@@ -119,6 +124,8 @@ typedef GPB_ENUM(Consent_Type_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Consent_Payment *payment;
 
 @property(nonatomic, readwrite, strong, null_resettable) Consent_StandingOrder *standingOrder;
+
+@property(nonatomic, readwrite, strong, null_resettable) Consent_BulkPayment *bulkPayment;
 
 /** ID of the member requesting consent (e.g. merchant) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *initiatorId;
@@ -227,6 +234,51 @@ typedef GPB_ENUM(Consent_StandingOrder_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TransferDestination*> *transferDestinationsArray;
 /** The number of items in @c transferDestinationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger transferDestinationsArray_Count;
+
+@end
+
+#pragma mark - Consent_BulkPayment
+
+typedef GPB_ENUM(Consent_BulkPayment_FieldNumber) {
+  Consent_BulkPayment_FieldNumber_PaymentsArray = 1,
+  Consent_BulkPayment_FieldNumber_Account = 2,
+};
+
+@interface Consent_BulkPayment : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Consent_BulkPayment_Payment*> *paymentsArray;
+/** The number of items in @c paymentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger paymentsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) BankAccount *account;
+/** Test to see if @c account has been set. */
+@property(nonatomic, readwrite) BOOL hasAccount;
+
+@end
+
+#pragma mark - Consent_BulkPayment_Payment
+
+typedef GPB_ENUM(Consent_BulkPayment_Payment_FieldNumber) {
+  Consent_BulkPayment_Payment_FieldNumber_Amount = 1,
+  Consent_BulkPayment_Payment_FieldNumber_Currency = 2,
+  Consent_BulkPayment_Payment_FieldNumber_RefId = 3,
+  Consent_BulkPayment_Payment_FieldNumber_Description_p = 4,
+  Consent_BulkPayment_Payment_FieldNumber_Destination = 5,
+};
+
+@interface Consent_BulkPayment_Payment : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *amount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *refId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *description_p;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferDestination *destination;
+/** Test to see if @c destination has been set. */
+@property(nonatomic, readwrite) BOOL hasDestination;
 
 @end
 

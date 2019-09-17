@@ -13,6 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
+#import <stdatomic.h>
+
 #import "Eidas.pbobjc.h"
 #import "Alias.pbobjc.h"
 #import "Security.pbobjc.h"
@@ -55,12 +57,52 @@ static GPBFileDescriptor *EidasRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum KonsentusVerificationStatus
+
+GPBEnumDescriptor *KonsentusVerificationStatus_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Invalid\000Success\000FailureEidasInvalid\000Fail"
+        "ureErrorResponse\000";
+    static const int32_t values[] = {
+        KonsentusVerificationStatus_Invalid,
+        KonsentusVerificationStatus_Success,
+        KonsentusVerificationStatus_FailureEidasInvalid,
+        KonsentusVerificationStatus_FailureErrorResponse,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(KonsentusVerificationStatus)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:KonsentusVerificationStatus_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL KonsentusVerificationStatus_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case KonsentusVerificationStatus_Invalid:
+    case KonsentusVerificationStatus_Success:
+    case KonsentusVerificationStatus_FailureEidasInvalid:
+    case KonsentusVerificationStatus_FailureErrorResponse:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - VerifyEidasPayload
 
 @implementation VerifyEidasPayload
 
 @dynamic memberId;
-@dynamic fiReferenceId;
+@dynamic hasAlias, alias;
 @dynamic certificate;
 @dynamic algorithm;
 
@@ -68,7 +110,7 @@ typedef struct VerifyEidasPayload__storage_ {
   uint32_t _has_storage_[1];
   Key_Algorithm algorithm;
   NSString *memberId;
-  NSString *fiReferenceId;
+  Alias *alias;
   NSString *certificate;
 } VerifyEidasPayload__storage_;
 
@@ -88,13 +130,13 @@ typedef struct VerifyEidasPayload__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "fiReferenceId",
-        .dataTypeSpecific.className = NULL,
-        .number = VerifyEidasPayload_FieldNumber_FiReferenceId,
+        .name = "alias",
+        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .number = VerifyEidasPayload_FieldNumber_Alias,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, fiReferenceId),
+        .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, alias),
         .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeString,
+        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "certificate",

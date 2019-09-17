@@ -6,6 +6,8 @@ option csharp_namespace = "Tokenio.Proto.Common.TransferProtos";
 
 import "money.proto";
 import "security.proto";
+import "submission.proto";
+import "token.proto";
 import "transaction.proto";
 import "transferinstructions.proto";
 
@@ -24,6 +26,22 @@ message Transfer {
   enum Method {
     DEFAULT = 0;
     INSTANT = 1; // Use Token's Currency Ledger
+  }
+}
+
+message BulkTransfer {
+  string id = 1;                            // Token ID computed as the hash of the token payload
+  string token_id = 2;
+  int64 created_at_ms = 3;
+  repeated Transaction transactions = 4;    // Transactions for which the bank provides IDs and/or statuses.
+                                            // Might not be populated right away.
+  string total_amount = 5;                  // Total amount irrespective of currency. Used for redundancy check.
+  transferinstructions.TransferEndpoint source = 6;
+
+  message Transaction {
+    io.token.proto.common.token.BulkTransferBody.Transfer transfer = 1;
+    string transaction_id = 2;
+    transaction.TransactionStatus status = 3;
   }
 }
 

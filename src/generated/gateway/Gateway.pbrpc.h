@@ -29,6 +29,8 @@
 @class CreateAccessTokenResponse;
 @class CreateBlobRequest;
 @class CreateBlobResponse;
+@class CreateBulkTransferRequest;
+@class CreateBulkTransferResponse;
 @class CreateCustomizationRequest;
 @class CreateCustomizationResponse;
 @class CreateKeychainRequest;
@@ -79,6 +81,8 @@
 @class GetBanksResponse;
 @class GetBlobRequest;
 @class GetBlobResponse;
+@class GetBulkTransferRequest;
+@class GetBulkTransferResponse;
 @class GetConsentRequest;
 @class GetConsentResponse;
 @class GetConsentsRequest;
@@ -926,6 +930,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)createStandingOrderWithMessage:(CreateStandingOrderRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark CreateBulkTransfer(CreateBulkTransferRequest) returns (CreateBulkTransferResponse)
+
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ */
+- (GRPCUnaryProtoCall *)createBulkTransferWithMessage:(CreateBulkTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 /**
@@ -940,6 +951,13 @@ NS_ASSUME_NONNULL_BEGIN
  * Get information about one standing order submission
  */
 - (GRPCUnaryProtoCall *)getStandingOrderSubmissionWithMessage:(GetStandingOrderSubmissionRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark GetBulkTransfer(GetBulkTransferRequest) returns (GetBulkTransferResponse)
+
+/**
+ * Get information about one bulk transfer
+ */
+- (GRPCUnaryProtoCall *)getBulkTransferWithMessage:(GetBulkTransferRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)
 
@@ -2635,6 +2653,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToCreateStandingOrderWithRequest:(CreateStandingOrderRequest *)request handler:(void(^)(CreateStandingOrderResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark CreateBulkTransfer(CreateBulkTransferRequest) returns (CreateBulkTransferResponse)
+
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)createBulkTransferWithRequest:(CreateBulkTransferRequest *)request handler:(void(^)(CreateBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Redeem a bulk transfer token, creating a bulk transfer submission.
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToCreateBulkTransferWithRequest:(CreateBulkTransferRequest *)request handler:(void(^)(CreateBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark GetTransfer(GetTransferRequest) returns (GetTransferResponse)
 
 /**
@@ -2669,6 +2704,23 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetStandingOrderSubmissionWithRequest:(GetStandingOrderSubmissionRequest *)request handler:(void(^)(GetStandingOrderSubmissionResponse *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark GetBulkTransfer(GetBulkTransferRequest) returns (GetBulkTransferResponse)
+
+/**
+ * Get information about one bulk transfer
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)getBulkTransferWithRequest:(GetBulkTransferRequest *)request handler:(void(^)(GetBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Get information about one bulk transfer
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetBulkTransferWithRequest:(GetBulkTransferRequest *)request handler:(void(^)(GetBulkTransferResponse *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetTransfers(GetTransfersRequest) returns (GetTransfersResponse)

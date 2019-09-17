@@ -66,6 +66,8 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_SupportsScheduledPayment = 18,
   Bank_FieldNumber_SupportsStandingOrder = 19,
   Bank_FieldNumber_SupportsBulkTransfer = 20,
+  Bank_FieldNumber_SupportedTransferDestinationTypesArray = 21,
+  Bank_FieldNumber_SupportsLinkingUri = 22,
 };
 
 @interface Bank : GPBMessage
@@ -80,38 +82,44 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Full size bank icon */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fullLogoUri;
 
-/** Works with appless payments */
+/** Works with appless payments. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsAppless;
 
-/** Connection supports guest checkout */
+/** Connection supports guest checkout. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsGuestCheckout;
 
-/** Connection allows for retrieval of information */
+/** Connection allows for retrieval of information. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsInformation;
 
-/** Connection requires external authorization for creating transfers */
+/** Connection requires external authorization for creating transfers. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL requiresExternalAuth;
 
-/** Connection allows for payment initiation */
+/** Connection allows for payment initiation. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsSendPayment;
 
-/** Connection allows for receiving payments */
+/** Connection allows for receiving payments. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
-/** Connection allows for retrieving balances */
+/** Connection allows for retrieving balances. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsBalance;
 
+/** Connection supports scheduled payments. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsScheduledPayment;
 
+/** Connection supports standing orders. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsStandingOrder;
 
+/** Connection supports bulk payments. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL supportsBulkTransfer;
 
 /** Connection only supports immediate redemption of transfers */
 @property(nonatomic, readwrite) BOOL requiresLegacyTransfer GPB_DEPRECATED_MSG("io.token.proto.common.bank.Bank.requires_legacy_transfer is deprecated (see bankinfo.proto).");
 
-/** Connection only supports immediate redemption of transfers */
+/** Connection only supports immediate redemption of transfers. Supports BankFilter */
 @property(nonatomic, readwrite) BOOL requiresOneStepPayment;
+
+/** Connection supports linking with a bank linking URI. Supports BankFilter */
+@property(nonatomic, readwrite) BOOL supportsLinkingUri;
 
 /** Provider of the bank, e.g. Yodlee, FinApi, Token */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *provider;
@@ -121,6 +129,11 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 
 /** Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *identifier;
+
+/** A list of Transfer Destination Types, like SEPA, ELIXIR, supported by the bank. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *supportedTransferDestinationTypesArray;
+/** The number of items in @c supportedTransferDestinationTypesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger supportedTransferDestinationTypesArray_Count;
 
 @end
 
@@ -202,6 +215,7 @@ typedef GPB_ENUM(BankFilter_FieldNumber) {
   BankFilter_FieldNumber_Country = 4,
   BankFilter_FieldNumber_IdsArray = 5,
   BankFilter_FieldNumber_Search = 6,
+  BankFilter_FieldNumber_RequiresBankFeatures = 7,
 };
 
 @interface BankFilter : GPBMessage
@@ -225,6 +239,15 @@ typedef GPB_ENUM(BankFilter_FieldNumber) {
 
 /** (Optional) Filter for banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *search;
+
+/**
+ * (Optional) Filter for banks that support or don't support certain features. See Bank for the feature keys we support.
+ * Set "true" for banks that support the feature or "false" for banks that don't support the feature.
+ * e.g. ["supports_linking_uri": "true"] means only banks who supports the linking uri feature.
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *requiresBankFeatures;
+/** The number of items in @c requiresBankFeatures without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger requiresBankFeatures_Count;
 
 @end
 

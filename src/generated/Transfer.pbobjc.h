@@ -27,6 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class BulkTransferBody_Transfer;
+@class BulkTransfer_Transaction;
 @class Money;
 @class Signature;
 @class TransferDestination;
@@ -147,6 +149,72 @@ int32_t Transfer_Method_RawValue(Transfer *message);
  * was generated.
  **/
 void SetTransfer_Method_RawValue(Transfer *message, int32_t value);
+
+#pragma mark - BulkTransfer
+
+typedef GPB_ENUM(BulkTransfer_FieldNumber) {
+  BulkTransfer_FieldNumber_Id_p = 1,
+  BulkTransfer_FieldNumber_TokenId = 2,
+  BulkTransfer_FieldNumber_CreatedAtMs = 3,
+  BulkTransfer_FieldNumber_TransactionsArray = 4,
+  BulkTransfer_FieldNumber_TotalAmount = 5,
+  BulkTransfer_FieldNumber_Source = 6,
+};
+
+@interface BulkTransfer : GPBMessage
+
+/** Token ID computed as the hash of the token payload */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *tokenId;
+
+@property(nonatomic, readwrite) int64_t createdAtMs;
+
+/** Transactions for which the bank provides IDs and/or statuses. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<BulkTransfer_Transaction*> *transactionsArray;
+/** The number of items in @c transactionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger transactionsArray_Count;
+
+/** Might not be populated right away. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *totalAmount;
+
+@property(nonatomic, readwrite, strong, null_resettable) TransferEndpoint *source;
+/** Test to see if @c source has been set. */
+@property(nonatomic, readwrite) BOOL hasSource;
+
+@end
+
+#pragma mark - BulkTransfer_Transaction
+
+typedef GPB_ENUM(BulkTransfer_Transaction_FieldNumber) {
+  BulkTransfer_Transaction_FieldNumber_Transfer = 1,
+  BulkTransfer_Transaction_FieldNumber_TransactionId = 2,
+  BulkTransfer_Transaction_FieldNumber_Status = 3,
+};
+
+@interface BulkTransfer_Transaction : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) BulkTransferBody_Transfer *transfer;
+/** Test to see if @c transfer has been set. */
+@property(nonatomic, readwrite) BOOL hasTransfer;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *transactionId;
+
+@property(nonatomic, readwrite) enum TransactionStatus status;
+
+@end
+
+/**
+ * Fetches the raw value of a @c BulkTransfer_Transaction's @c status property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t BulkTransfer_Transaction_Status_RawValue(BulkTransfer_Transaction *message);
+/**
+ * Sets the raw value of an @c BulkTransfer_Transaction's @c status property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetBulkTransfer_Transaction_Status_RawValue(BulkTransfer_Transaction *message, int32_t value);
 
 #pragma mark - TransferPayload
 

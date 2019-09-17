@@ -413,6 +413,7 @@ typedef struct TokenRequestOptions__storage_ {
 @dynamic accessBody;
 @dynamic transferBody;
 @dynamic standingOrderBody;
+@dynamic bulkTransferBody;
 @dynamic description_p;
 @dynamic callbackState;
 @dynamic destinationCountry;
@@ -432,6 +433,7 @@ typedef struct TokenRequestPayload__storage_ {
   NSString *destinationCountry;
   NSString *refId;
   StandingOrderBody *standingOrderBody;
+  BulkTransferBody *bulkTransferBody;
 } TokenRequestPayload__storage_;
 
 // This method is threadsafe because it is initially called
@@ -545,6 +547,15 @@ typedef struct TokenRequestPayload__storage_ {
         .number = TokenRequestPayload_FieldNumber_StandingOrderBody,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, standingOrderBody),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "bulkTransferBody",
+        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransferBody),
+        .number = TokenRequestPayload_FieldNumber_BulkTransferBody,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TokenRequestPayload__storage_, bulkTransferBody),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -952,6 +963,7 @@ void SetTokenRequestPayload_AccessBody_AccountResourceList_AccountResource_Type_
 @dynamic hasInstructions, instructions;
 @dynamic executionDate;
 @dynamic confirmFunds;
+@dynamic setTransferDestinationsURL;
 
 typedef struct TokenRequestPayload_TransferBody__storage_ {
   uint32_t _has_storage_[1];
@@ -961,6 +973,7 @@ typedef struct TokenRequestPayload_TransferBody__storage_ {
   NSString *lifetimeAmount;
   TransferInstructions *instructions;
   NSString *executionDate;
+  NSString *setTransferDestinationsURL;
 } TokenRequestPayload_TransferBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1032,6 +1045,15 @@ typedef struct TokenRequestPayload_TransferBody__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
+      {
+        .name = "setTransferDestinationsURL",
+        .dataTypeSpecific.className = NULL,
+        .number = TokenRequestPayload_TransferBody_FieldNumber_SetTransferDestinationsURL,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(TokenRequestPayload_TransferBody__storage_, setTransferDestinationsURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[TokenRequestPayload_TransferBody class]
@@ -1041,6 +1063,11 @@ typedef struct TokenRequestPayload_TransferBody__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TokenRequestPayload_TransferBody__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\010\003\250\254\241!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TokenRequestPayload)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -1323,6 +1350,7 @@ typedef struct TokenMember__storage_ {
 @dynamic transfer;
 @dynamic access;
 @dynamic standingOrder;
+@dynamic bulkTransfer;
 @dynamic endorseUntilMs;
 @dynamic hasActingAs, actingAs;
 @dynamic receiptRequested;
@@ -1343,6 +1371,7 @@ typedef struct TokenPayload__storage_ {
   NSString *tokenRequestId;
   NSString *initiatorId;
   StandingOrderBody *standingOrder;
+  BulkTransferBody *bulkTransfer;
   int64_t effectiveAtMs;
   int64_t expiresAtMs;
   int64_t endorseUntilMs;
@@ -1495,6 +1524,15 @@ typedef struct TokenPayload__storage_ {
         .number = TokenPayload_FieldNumber_StandingOrder,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TokenPayload__storage_, standingOrder),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "bulkTransfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransferBody),
+        .number = TokenPayload_FieldNumber_BulkTransfer,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(TokenPayload__storage_, bulkTransfer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1822,6 +1860,174 @@ typedef struct StandingOrderBody__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(StandingOrderBody__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - BulkTransferBody
+
+@implementation BulkTransferBody
+
+@dynamic transfersArray, transfersArray_Count;
+@dynamic totalAmount;
+@dynamic hasSource, source;
+
+typedef struct BulkTransferBody__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *transfersArray;
+  NSString *totalAmount;
+  TransferEndpoint *source;
+} BulkTransferBody__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "transfersArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransferBody_Transfer),
+        .number = BulkTransferBody_FieldNumber_TransfersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(BulkTransferBody__storage_, transfersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "totalAmount",
+        .dataTypeSpecific.className = NULL,
+        .number = BulkTransferBody_FieldNumber_TotalAmount,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BulkTransferBody__storage_, totalAmount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "source",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .number = BulkTransferBody_FieldNumber_Source,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BulkTransferBody__storage_, source),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BulkTransferBody class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BulkTransferBody__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - BulkTransferBody_Transfer
+
+@implementation BulkTransferBody_Transfer
+
+@dynamic amount;
+@dynamic currency;
+@dynamic refId;
+@dynamic description_p;
+@dynamic hasDestination, destination;
+@dynamic hasMetadata, metadata;
+
+typedef struct BulkTransferBody_Transfer__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *amount;
+  NSString *currency;
+  NSString *refId;
+  NSString *description_p;
+  TransferDestination *destination;
+  TransferInstructions_Metadata *metadata;
+} BulkTransferBody_Transfer__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = NULL,
+        .number = BulkTransferBody_Transfer_FieldNumber_Amount,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = BulkTransferBody_Transfer_FieldNumber_Currency,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "refId",
+        .dataTypeSpecific.className = NULL,
+        .number = BulkTransferBody_Transfer_FieldNumber_RefId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, refId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "description_p",
+        .dataTypeSpecific.className = NULL,
+        .number = BulkTransferBody_Transfer_FieldNumber_Description_p,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destination",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = BulkTransferBody_Transfer_FieldNumber_Destination,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, destination),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "metadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions_Metadata),
+        .number = BulkTransferBody_Transfer_FieldNumber_Metadata,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(BulkTransferBody_Transfer__storage_, metadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BulkTransferBody_Transfer class]
+                                     rootClass:[TokenRoot class]
+                                          file:TokenRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BulkTransferBody_Transfer__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BulkTransferBody)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

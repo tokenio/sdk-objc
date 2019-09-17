@@ -79,13 +79,13 @@ typedef GPB_ENUM(Alias_Type) {
    **/
   Alias_Type_Unknown = 1,
 
-  /** Email address. For example, "sandy\@example.com" */
+  /** Email address. For example, "sandy\@example.com". */
   Alias_Type_Email = 2,
 
-  /** unused */
+  /** Phone number. */
   Alias_Type_Phone = 3,
 
-  /** unused */
+  /** Business web domain. Please contact Token to verify. */
   Alias_Type_Domain = 4,
 
   /** deprecated */

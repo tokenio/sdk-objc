@@ -8,7 +8,16 @@ import "security.proto";
 
 message VerifyEidasPayload {
   string member_id = 1; // member ID of the TPP
-  string fi_reference_id = 2; // reference ID of the TPP as registered in the open banking directory
+  io.token.proto.common.alias.Alias alias = 2; // eIDAS alias to be verified
   string certificate = 3; // serialized eIDAS certificate
   io.token.proto.common.security.Key.Algorithm algorithm = 4; // signing algorithm of the eIDAS certificate
+}
+
+// When a TPP verifies an eIDAS alias by providing a certificate (and all preconditions are met on
+// our side) the verification may succeed or fail on the Konsentus side in two different ways
+enum KonsentusVerificationStatus {
+  INVALID = 0;
+  SUCCESS = 1;
+  FAILURE_EIDAS_INVALID = 2; // The request has succeeded (code 200), but at least one eIDAS.validity field in the response body is false
+  FAILURE_ERROR_RESPONSE = 3; // Konsentus returned an error response (codes 4xx and 5xx)
 }

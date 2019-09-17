@@ -56,7 +56,7 @@ typedef GPB_ENUM(SubmissionStatus) {
   /** Submission failed. */
   SubmissionStatus_Failed = 4,
 
-  /** Submitted by token; unable to retrieve status from bank. */
+  /** Submitted by Token; unable to retrieve status from bank. */
   SubmissionStatus_Initiated = 5,
   SubmissionStatus_Canceled = 6,
 };

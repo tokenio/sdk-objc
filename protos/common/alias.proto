@@ -20,9 +20,9 @@ message Alias {
     // Unknown type. Useful for UI: For example, if user wants to pay "sandy@example.com",
     // let server determine that's an EMAIL alias.
     UNKNOWN = 1;
-    EMAIL = 2;    // Email address. For example, "sandy@example.com"
-    PHONE = 3;    // unused
-    DOMAIN = 4;   // unused
+    EMAIL = 2;    // Email address. For example, "sandy@example.com".
+    PHONE = 3;    // Phone number.
+    DOMAIN = 4;   // Business web domain. Please contact Token to verify.
     USERNAME = 5; // deprecated
     BANK = 6;     // for banks only
     CUSTOM = 7;   // Custom type, for instance a bank specific customer ID.

@@ -73,6 +73,7 @@ static GPBFileDescriptor *ConsentRoot_FileDescriptor(void) {
 @dynamic informationAccess;
 @dynamic payment;
 @dynamic standingOrder;
+@dynamic bulkPayment;
 @dynamic initiatorId;
 @dynamic initiatorRefId;
 
@@ -86,6 +87,7 @@ typedef struct Consent__storage_ {
   NSString *initiatorId;
   NSString *initiatorRefId;
   Consent_StandingOrder *standingOrder;
+  Consent_BulkPayment *bulkPayment;
 } Consent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -163,6 +165,15 @@ typedef struct Consent__storage_ {
         .number = Consent_FieldNumber_StandingOrder,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Consent__storage_, standingOrder),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "bulkPayment",
+        .dataTypeSpecific.className = GPBStringifySymbol(Consent_BulkPayment),
+        .number = Consent_FieldNumber_BulkPayment,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(Consent__storage_, bulkPayment),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -307,7 +318,7 @@ GPBEnumDescriptor *Consent_InformationAccess_ResourceAccess_ResourceType_EnumDes
     static const char *valueNames =
         "InvalidResourceType\000Account\000Balance\000Tran"
         "sactions\000TransferDestinations\000FundsConfi"
-        "rmations\000";
+        "rmations\000StandingOrders\000";
     static const int32_t values[] = {
         Consent_InformationAccess_ResourceAccess_ResourceType_InvalidResourceType,
         Consent_InformationAccess_ResourceAccess_ResourceType_Account,
@@ -315,6 +326,7 @@ GPBEnumDescriptor *Consent_InformationAccess_ResourceAccess_ResourceType_EnumDes
         Consent_InformationAccess_ResourceAccess_ResourceType_Transactions,
         Consent_InformationAccess_ResourceAccess_ResourceType_TransferDestinations,
         Consent_InformationAccess_ResourceAccess_ResourceType_FundsConfirmations,
+        Consent_InformationAccess_ResourceAccess_ResourceType_StandingOrders,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Consent_InformationAccess_ResourceAccess_ResourceType)
@@ -338,6 +350,7 @@ BOOL Consent_InformationAccess_ResourceAccess_ResourceType_IsValidValue(int32_t 
     case Consent_InformationAccess_ResourceAccess_ResourceType_Transactions:
     case Consent_InformationAccess_ResourceAccess_ResourceType_TransferDestinations:
     case Consent_InformationAccess_ResourceAccess_ResourceType_FundsConfirmations:
+    case Consent_InformationAccess_ResourceAccess_ResourceType_StandingOrders:
       return YES;
     default:
       return NO;
@@ -503,6 +516,153 @@ typedef struct Consent_StandingOrder__storage_ {
                                    storageSize:sizeof(Consent_StandingOrder__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Consent_BulkPayment
+
+@implementation Consent_BulkPayment
+
+@dynamic paymentsArray, paymentsArray_Count;
+@dynamic hasAccount, account;
+
+typedef struct Consent_BulkPayment__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *paymentsArray;
+  BankAccount *account;
+} Consent_BulkPayment__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "paymentsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(Consent_BulkPayment_Payment),
+        .number = Consent_BulkPayment_FieldNumber_PaymentsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment__storage_, paymentsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "account",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .number = Consent_BulkPayment_FieldNumber_Account,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment__storage_, account),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Consent_BulkPayment class]
+                                     rootClass:[ConsentRoot class]
+                                          file:ConsentRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Consent_BulkPayment__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Consent_BulkPayment_Payment
+
+@implementation Consent_BulkPayment_Payment
+
+@dynamic amount;
+@dynamic currency;
+@dynamic refId;
+@dynamic description_p;
+@dynamic hasDestination, destination;
+
+typedef struct Consent_BulkPayment_Payment__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *amount;
+  NSString *currency;
+  NSString *refId;
+  NSString *description_p;
+  TransferDestination *destination;
+} Consent_BulkPayment_Payment__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "amount",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_BulkPayment_Payment_FieldNumber_Amount,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, amount),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_BulkPayment_Payment_FieldNumber_Currency,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "refId",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_BulkPayment_Payment_FieldNumber_RefId,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, refId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "description_p",
+        .dataTypeSpecific.className = NULL,
+        .number = Consent_BulkPayment_Payment_FieldNumber_Description_p,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destination",
+        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .number = Consent_BulkPayment_Payment_FieldNumber_Destination,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, destination),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Consent_BulkPayment_Payment class]
+                                     rootClass:[ConsentRoot class]
+                                          file:ConsentRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Consent_BulkPayment_Payment__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent_BulkPayment)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
