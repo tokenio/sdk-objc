@@ -41,8 +41,8 @@ PODS:
   - Unirest (1.1.4)
 
 DEPENDENCIES:
-  - "!ProtoCompiler"
-  - "!ProtoCompiler-gRPCPlugin"
+  - "!ProtoCompiler (= 3.8.0)"
+  - "!ProtoCompiler-gRPCPlugin (= 1.23.0)"
   - OrderedDictionary
   - Protobuf
   - Unirest (~> 1.1.4)
@@ -74,6 +74,6 @@ SPEC CHECKSUMS:
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
-PODFILE CHECKSUM: bb6b52da2b3aa49657512ab233c3463cbdf0268d
+PODFILE CHECKSUM: 3a964ae6e866bda7f5ab63b58dadbd8d5e307915
 
 COCOAPODS: 1.7.5
