@@ -45,8 +45,8 @@ Pod::Spec.new do |s|
         ss.public_header_files = "src/api", "src/security", "src/security/secureenclave", "src/authorization/", "src/security/token", "src/util"
         ss.ios.public_header_files =  "src/authorization/ios"
         ss.exclude_files = "**/*_test.*","**/test_*.*","**/test/*.*","**/test.*", "#{gendir}/fank/*"
-        ss.dependency "BoringSSL-GRPC"
-        ss.dependency "gRPC-ProtoRPC"
+        ss.dependency "BoringSSL-GRPC", '0.0.3'
+        ss.dependency "gRPC-ProtoRPC", '1.23.0'
         ss.dependency "#{s.name}/Messages"
         ss.dependency "OrderedDictionary"
         ss.platform = :osx, '10.11'
