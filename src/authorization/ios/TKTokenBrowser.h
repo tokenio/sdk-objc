@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "TKBrowser.h"
 
 /**
  * Default implementation of TKBrowser.
  */
-@interface TKTokenBrowser : TKBrowser <UIWebViewDelegate>
+@interface TKTokenBrowser : TKBrowser <WKNavigationDelegate>
 @end
