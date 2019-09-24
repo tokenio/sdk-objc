@@ -6,17 +6,24 @@
 //  Copyright © 2017 Token Inc. All rights reserved.
 //
 
+#import <WebKit/WebKit.h>
 #import "TKTokenBrowserViewController.h"
 #import "TKTokenBrowser.h"
 #import "TKLocalizer.h"
 
-@interface TKTokenBrowserViewController () <UIWebViewDelegate>{
+@interface TKTokenBrowserViewController () <WKNavigationDelegate>{
     id<TKTokenBrowserViewControllerDelegate> delegate;
-    IBOutlet UIWebView *webview;
+    /*
+     * From iOS 11, a constraint error will be thrown when the keyboard pops up.
+     * No way to 
+     */
+    WKWebView *webView;
     IBOutlet UIActivityIndicatorView *spinner;
     IBOutlet UILabel *urlLabel;
     IBOutlet UILabel *titleLabel;
     IBOutlet UIButton *backButton;
+    // WKWebview is not supported in Nib until iOS 11.0.
+    IBOutlet UIView *layoutView;
 }
 @end
 
@@ -47,40 +54,54 @@
     titleLabel.text = TKLocalizedString( @"Authorization", nil);
     [backButton setTitle:TKLocalizedString( @"Back", nil)
                 forState:UIControlStateNormal];
-    
-    webview.delegate = self;
+
+    [self createWebView];
     [spinner startAnimating];
+}
+
+- (void) createWebView {
+    webView = [[WKWebView alloc] initWithFrame: CGRectZero];
+    webView.translatesAutoresizingMaskIntoConstraints = false;
+
+    [layoutView addSubview:webView];
+    [[webView.leadingAnchor constraintEqualToAnchor:layoutView.leadingAnchor] setActive:true];
+    [[webView.trailingAnchor constraintEqualToAnchor:layoutView.trailingAnchor] setActive:true];
+    [[webView.topAnchor constraintEqualToAnchor:layoutView.topAnchor] setActive:true];
+    [[webView.bottomAnchor constraintEqualToAnchor:layoutView.bottomAnchor] setActive:true];
+
+    webView.navigationDelegate = self;
 }
 
 - (void)loadUrl:(NSString *)url {
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     urlLabel.text = request.URL.host;
-    [webview loadRequest:request];
+    [webView loadRequest:request];
 }
 
 - (IBAction)dismiss {
     [delegate browserViewControllerCancelCallback: self];
 }
 
-#pragma mark - UIWebViewDelegate
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [delegate webView:webView didFailLoadWithError:error];
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView
+didFailNavigation:(WKNavigation *)navigation
+      withError:(NSError *)error {
+    [delegate webView:webView didFailNavigation:navigation withError:error];
 }
 
-- (BOOL)webView:(UIWebView *)webView
-shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType {
-    return [delegate webView:webView
-  shouldStartLoadWithRequest:request
-              navigationType:navigationType];
+- (void)webView:(WKWebView *)webView
+didFailProvisionalNavigation:(WKNavigation *)navigation
+      withError:(NSError *)error {
+    [delegate webView:webView didFailProvisionalNavigation:navigation withError:error];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    // TODO: (sibinlu) Remove this js after the problem fix on bank-demo
-    NSString *jsRemoveYobleeTopRightCloseButton =
-    @"var element = document.getElementsByClassName('yodlee-font-icon svg_close close-modal-window closeIcon right hide-for-mobile-only')[0];  element.style.display = 'none';";
-    [webView stringByEvaluatingJavaScriptFromString:jsRemoveYobleeTopRightCloseButton];
-    
+- (void)webView:(WKWebView *)webView
+decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    [delegate webView:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [spinner stopAnimating];
     [spinner setHidden:YES];
 }

@@ -15,6 +15,6 @@
 @property NSString* stringsFile;
 
 + (instancetype)shared;
-- (NSString*)localizedStringForKey:(NSString*)key;
+- (NSString *)localizedStringForKey:(NSString *)key;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "TKBrowser.h"
 
 @class TKTokenBrowserViewController;
@@ -14,7 +15,7 @@
 /**
  * Protocol for all the event handlings in TKTokenBrowserViewController
  */
-@protocol TKTokenBrowserViewControllerDelegate <UIWebViewDelegate>
+@protocol TKTokenBrowserViewControllerDelegate <WKNavigationDelegate>
 @required
 - (void)browserViewControllerCancelCallback:(TKTokenBrowserViewController *)browserViewController;
 @end

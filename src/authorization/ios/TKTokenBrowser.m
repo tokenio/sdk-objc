@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "TKTokenBrowser.h"
 #import "TKTokenBrowserViewController.h"
 
@@ -52,7 +53,9 @@
     [browserViewController dismissViewControllerAnimated:true completion:nil];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView
+didFailNavigation:(WKNavigation *)navigation
+      withError:(NSError *)error {
     if (error.code >= 400) {
         // Error code 102 is the result of not passing redirect URL through so we can ignore that
         [self.delegate browserWillCancel:error];
@@ -60,9 +63,23 @@
     }
 }
 
-- (BOOL)webView:(UIWebView *)webView
-shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType{
-    return [self.delegate shouldStartLoadWithRequest:request];
+- (void)webView:(WKWebView *)webView
+didFailProvisionalNavigation:(WKNavigation *)navigation
+      withError:(NSError *)error {
+    if (error.code >= 400) {
+        // Error code 102 is the result of not passing redirect URL through so we can ignore that
+        [self.delegate browserWillCancel:error];
+        [browserViewController dismissViewControllerAnimated:true completion:nil];
+    }
+}
+
+- (void)webView:(WKWebView *)webView
+decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    if ([self.delegate shouldStartLoadWithRequest:navigationAction.request]) {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    } else {
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }
 }
 @end

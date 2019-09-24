@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -22,11 +20,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TKTokenBrowserViewController" customModule="TokenSdk" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="yrp-HV-nZY" id="uxo-uY-7ru"/>
+                <outlet property="layoutView" destination="CDl-iL-gOa" id="QRe-xi-QvW"/>
                 <outlet property="spinner" destination="MQ7-4W-mdo" id="H8n-Fn-xaG"/>
                 <outlet property="titleLabel" destination="P5p-Ai-wh3" id="rgo-dU-u8K"/>
                 <outlet property="urlLabel" destination="tRM-2U-tk2" id="dKv-zV-idV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Ug8-av-drw"/>
-                <outlet property="webview" destination="5WK-5R-sp2" id="Nnx-wi-Otj"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -57,49 +55,49 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="url" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRM-2U-tk2">
+                            <rect key="frame" x="181" y="44" width="13" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="HfU-s4-egD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="11"/>
+                            <color key="textColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.10196078431372549" green="0.14901960784313725" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="LJ9-3a-GoV"/>
+                        <constraint firstItem="tRM-2U-tk2" firstAttribute="centerX" secondItem="mNU-bK-CUs" secondAttribute="centerX" id="Vxw-wh-dVh"/>
                         <constraint firstAttribute="bottom" secondItem="yrp-HV-nZY" secondAttribute="bottom" id="Y8Z-Fc-zZc"/>
                         <constraint firstItem="yrp-HV-nZY" firstAttribute="leading" secondItem="mNU-bK-CUs" secondAttribute="leading" constant="10" id="isq-pL-dIW"/>
                         <constraint firstItem="P5p-Ai-wh3" firstAttribute="centerX" secondItem="mNU-bK-CUs" secondAttribute="centerX" id="lbw-7I-qUe"/>
+                        <constraint firstItem="tRM-2U-tk2" firstAttribute="top" secondItem="P5p-Ai-wh3" secondAttribute="bottom" id="taC-Xz-45l"/>
                         <constraint firstAttribute="bottom" secondItem="P5p-Ai-wh3" secondAttribute="bottom" constant="20" id="yAh-aq-QTF"/>
                     </constraints>
                 </view>
-                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5WK-5R-sp2">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CDl-iL-gOa">
                     <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </webView>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MQ7-4W-mdo">
                     <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                 </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="url" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRM-2U-tk2">
-                    <rect key="frame" x="181" y="44" width="13" height="14"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="14" id="HfU-s4-egD"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="11"/>
-                    <color key="textColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="5WK-5R-sp2" secondAttribute="bottom" id="A5P-n6-ZDS"/>
+                <constraint firstAttribute="trailing" secondItem="CDl-iL-gOa" secondAttribute="trailing" id="3N5-9Q-n40"/>
+                <constraint firstItem="CDl-iL-gOa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="B5W-4c-Og9"/>
                 <constraint firstAttribute="topMargin" secondItem="mNU-bK-CUs" secondAttribute="bottom" priority="750" constant="-44" id="BbJ-zn-ENp"/>
-                <constraint firstItem="5WK-5R-sp2" firstAttribute="top" secondItem="tRM-2U-tk2" secondAttribute="bottom" constant="6" id="D3r-N7-ehU"/>
                 <constraint firstAttribute="trailing" secondItem="mNU-bK-CUs" secondAttribute="trailing" id="IUI-w3-I5y"/>
-                <constraint firstItem="5WK-5R-sp2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JIE-gF-fwU"/>
-                <constraint firstAttribute="trailing" secondItem="5WK-5R-sp2" secondAttribute="trailing" id="L9K-HF-sc7"/>
-                <constraint firstItem="tRM-2U-tk2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="W1s-ck-XSp"/>
+                <constraint firstItem="CDl-iL-gOa" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="bottom" id="OC0-XX-jrb"/>
+                <constraint firstAttribute="bottom" secondItem="CDl-iL-gOa" secondAttribute="bottom" id="XuP-c7-qK1"/>
                 <constraint firstItem="MQ7-4W-mdo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jC5-Lh-Yy9"/>
                 <constraint firstItem="mNU-bK-CUs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pXH-VX-mOI"/>
                 <constraint firstItem="MQ7-4W-mdo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="u6v-1J-66n"/>
-                <constraint firstItem="5WK-5R-sp2" firstAttribute="top" secondItem="mNU-bK-CUs" secondAttribute="bottom" id="xIK-IJ-oxh"/>
                 <constraint firstItem="mNU-bK-CUs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zFx-gp-hJg"/>
             </constraints>
-            <point key="canvasLocation" x="24.5" y="52.5"/>
+            <point key="canvasLocation" x="23.199999999999999" y="51.724137931034484"/>
         </view>
     </objects>
 </document>
