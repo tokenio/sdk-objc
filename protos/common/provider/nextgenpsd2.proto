@@ -3,7 +3,61 @@ package io.token.proto.common.providerspecific.nextgenpsd2;
 option java_outer_classname = "NextGenPsd2";
 option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific.NextGenPsd2";
 
+message NextGenPsd2AccountDetails {
+  string iban = 1;
+  string bban = 2;
+  string msisdn = 3;
+  string currency = 4;
+  string product = 5;
+  string cash_account_type = 6;  // ExternalCashAccountType1Code from ISO 20022.
+  string bic = 7;
+  string linked_accounts = 8;
+  string usuage = 9;
+  string details = 10;
+}
+
+message NextGenPsd2TransactionDetails {
+  string entry_reference = 1; // Is the identification of the transaction as used e.g. for reference for deltafunction on application level. The same identification as for example used within camt.05x messages.
+  string end_to_end_id = 2;
+  string mandate_id = 3;
+  string check_id = 4;
+  string creditor_id = 5;
+  string value_date = 6;
+  repeated ReportExchangeRate currency_exchange = 7;
+  string creditor_name = 8;
+  AccountReference creditor_account = 9;
+  string ultimate_creditor = 10;
+  string debtor_name = 11;
+  AccountReference debtor_account = 12;
+  string ultimate_debtor = 13;
+  string remittance_information_structured = 14;
+  string additional_information = 15;
+  string purpose_code = 16;  // ExternalPurpose1Code from ISO 20022.
+  string bank_transaction_code = 17; // Bank transaction code as used by the ASPSP and using the sub elements of this structured code defined by ISO 20022.
+  string proprietary_bank_transaction_code = 18; // Proprietary bank transaction code as used within a community or within an ASPSP e.g. for MT94x based transaction reports.
+}
+
 message NextGenPsd2TransferMetadata {
-  string end_to_end_identification = 1;
-  string remittance_information_structured = 2;
+  string end_to_end_identification = 1; // Has specific format requirements in the case of Croatian banks
+  string remittance_information_structured = 2; // Has specific format requirements in the case of Croatian banks
+  string creditor_agent = 3;  // BICFI, example: AAAADEBBXXX
+  string creditor_agent_name = 4;
+}
+
+message ReportExchangeRate {
+  string source_currency = 1;
+  string exchange_rate = 2;
+  string unit_currency = 3;
+  string target_currency = 4;
+  string quotation_date = 5;
+  string contract_identification = 6;
+}
+
+message AccountReference {
+  string iban = 1;
+  string bban = 2;
+  string pan = 3;
+  string masked_pan = 4;
+  string msisdn = 5;
+  string currency = 6;
 }

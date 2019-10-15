@@ -29,10 +29,15 @@ CF_EXTERN_C_BEGIN
 
 @class Cma9AccountDetails;
 @class Cma9StandingOrderDetails;
+@class NextGenPsd2AccountDetails;
+@class NextGenPsd2TransactionDetails;
 @class NextGenPsd2TransferMetadata;
 @class POLISHAPIPolishApiAccountDetails;
 @class POLISHAPIPolishApiTransactionDetails;
 @class POLISHAPIPolishApiTransferMetadata;
+@class StetAccountDetails;
+@class StetTransactionDetails;
+@class StetTransferMetadata;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,12 +61,16 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(ProviderAccountDetails_FieldNumber) {
   ProviderAccountDetails_FieldNumber_Cma9AccountDetails = 1,
   ProviderAccountDetails_FieldNumber_PolishApiAccountDetails = 2,
+  ProviderAccountDetails_FieldNumber_NextGenPsd2AccountDetails = 3,
+  ProviderAccountDetails_FieldNumber_StetAccountDetails = 4,
 };
 
 typedef GPB_ENUM(ProviderAccountDetails_Details_OneOfCase) {
   ProviderAccountDetails_Details_OneOfCase_GPBUnsetOneOfCase = 0,
   ProviderAccountDetails_Details_OneOfCase_Cma9AccountDetails = 1,
   ProviderAccountDetails_Details_OneOfCase_PolishApiAccountDetails = 2,
+  ProviderAccountDetails_Details_OneOfCase_NextGenPsd2AccountDetails = 3,
+  ProviderAccountDetails_Details_OneOfCase_StetAccountDetails = 4,
 };
 
 @interface ProviderAccountDetails : GPBMessage
@@ -71,6 +80,10 @@ typedef GPB_ENUM(ProviderAccountDetails_Details_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) Cma9AccountDetails *cma9AccountDetails;
 
 @property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiAccountDetails *polishApiAccountDetails;
+
+@property(nonatomic, readwrite, strong, null_resettable) NextGenPsd2AccountDetails *nextGenPsd2AccountDetails;
+
+@property(nonatomic, readwrite, strong, null_resettable) StetAccountDetails *stetAccountDetails;
 
 @end
 
@@ -83,11 +96,15 @@ void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *messag
 
 typedef GPB_ENUM(ProviderTransactionDetails_FieldNumber) {
   ProviderTransactionDetails_FieldNumber_PolishApiTransactionDetails = 1,
+  ProviderTransactionDetails_FieldNumber_NextGenPsd2TransactionDetails = 3,
+  ProviderTransactionDetails_FieldNumber_StetTransactionDetails = 4,
 };
 
 typedef GPB_ENUM(ProviderTransactionDetails_Details_OneOfCase) {
   ProviderTransactionDetails_Details_OneOfCase_GPBUnsetOneOfCase = 0,
   ProviderTransactionDetails_Details_OneOfCase_PolishApiTransactionDetails = 1,
+  ProviderTransactionDetails_Details_OneOfCase_NextGenPsd2TransactionDetails = 3,
+  ProviderTransactionDetails_Details_OneOfCase_StetTransactionDetails = 4,
 };
 
 @interface ProviderTransactionDetails : GPBMessage
@@ -95,6 +112,10 @@ typedef GPB_ENUM(ProviderTransactionDetails_Details_OneOfCase) {
 @property(nonatomic, readonly) ProviderTransactionDetails_Details_OneOfCase detailsOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiTransactionDetails *polishApiTransactionDetails;
+
+@property(nonatomic, readwrite, strong, null_resettable) NextGenPsd2TransactionDetails *nextGenPsd2TransactionDetails;
+
+@property(nonatomic, readwrite, strong, null_resettable) StetTransactionDetails *stetTransactionDetails;
 
 @end
 
@@ -132,12 +153,14 @@ void ProviderStandingOrderDetails_ClearDetailsOneOfCase(ProviderStandingOrderDet
 typedef GPB_ENUM(ProviderTransferMetadata_FieldNumber) {
   ProviderTransferMetadata_FieldNumber_PolishApiTransferMetadata = 1,
   ProviderTransferMetadata_FieldNumber_NextGenPsd2TransferMetadata = 2,
+  ProviderTransferMetadata_FieldNumber_StetTransferMetadata = 3,
 };
 
 typedef GPB_ENUM(ProviderTransferMetadata_Metadata_OneOfCase) {
   ProviderTransferMetadata_Metadata_OneOfCase_GPBUnsetOneOfCase = 0,
   ProviderTransferMetadata_Metadata_OneOfCase_PolishApiTransferMetadata = 1,
   ProviderTransferMetadata_Metadata_OneOfCase_NextGenPsd2TransferMetadata = 2,
+  ProviderTransferMetadata_Metadata_OneOfCase_StetTransferMetadata = 3,
 };
 
 @interface ProviderTransferMetadata : GPBMessage
@@ -147,6 +170,8 @@ typedef GPB_ENUM(ProviderTransferMetadata_Metadata_OneOfCase) {
 @property(nonatomic, readwrite, strong, null_resettable) POLISHAPIPolishApiTransferMetadata *polishApiTransferMetadata;
 
 @property(nonatomic, readwrite, strong, null_resettable) NextGenPsd2TransferMetadata *nextGenPsd2TransferMetadata;
+
+@property(nonatomic, readwrite, strong, null_resettable) StetTransferMetadata *stetTransferMetadata;
 
 @end
 

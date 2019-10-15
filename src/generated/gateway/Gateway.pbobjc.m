@@ -5261,6 +5261,8 @@ void SetGetTransactionResponse_Status_RawValue(GetTransactionResponse *message, 
 @dynamic hasPage, page;
 @dynamic offset;
 @dynamic limit;
+@dynamic startDate;
+@dynamic endDate;
 
 typedef struct GetTransactionsRequest__storage_ {
   uint32_t _has_storage_[1];
@@ -5268,6 +5270,8 @@ typedef struct GetTransactionsRequest__storage_ {
   NSString *accountId;
   Page *page;
   NSString *offset;
+  NSString *startDate;
+  NSString *endDate;
 } GetTransactionsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -5311,6 +5315,24 @@ typedef struct GetTransactionsRequest__storage_ {
         .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, limit),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "startDate",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransactionsRequest_FieldNumber_StartDate,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, startDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "endDate",
+        .dataTypeSpecific.className = NULL,
+        .number = GetTransactionsRequest_FieldNumber_EndDate,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(GetTransactionsRequest__storage_, endDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

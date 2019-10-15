@@ -27,6 +27,9 @@
 
 CF_EXTERN_C_BEGIN
 
+@class BankFilter_BankFeatures;
+@class GPBBoolValue;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - BankinfoRoot
@@ -68,6 +71,7 @@ typedef GPB_ENUM(Bank_FieldNumber) {
   Bank_FieldNumber_SupportsBulkTransfer = 20,
   Bank_FieldNumber_SupportedTransferDestinationTypesArray = 21,
   Bank_FieldNumber_SupportsLinkingUri = 22,
+  Bank_FieldNumber_SupportsAisGuestCheckout = 23,
 };
 
 @interface Bank : GPBMessage
@@ -82,43 +86,43 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 /** Full size bank icon */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fullLogoUri;
 
-/** Works with appless payments. Supports BankFilter */
+/** Works with appless payments */
 @property(nonatomic, readwrite) BOOL supportsAppless;
 
-/** Connection supports guest checkout. Supports BankFilter */
+/** Connection supports guest checkout */
 @property(nonatomic, readwrite) BOOL supportsGuestCheckout;
 
-/** Connection allows for retrieval of information. Supports BankFilter */
+/** Connection allows for retrieval of information */
 @property(nonatomic, readwrite) BOOL supportsInformation;
 
-/** Connection requires external authorization for creating transfers. Supports BankFilter */
+/** Connection requires external authorization for creating transfers */
 @property(nonatomic, readwrite) BOOL requiresExternalAuth;
 
-/** Connection allows for payment initiation. Supports BankFilter */
+/** Connection allows for payment initiation */
 @property(nonatomic, readwrite) BOOL supportsSendPayment;
 
-/** Connection allows for receiving payments. Supports BankFilter */
+/** Connection allows for receiving payments */
 @property(nonatomic, readwrite) BOOL supportsReceivePayment;
 
-/** Connection allows for retrieving balances. Supports BankFilter */
+/** Connection allows for retrieving balances */
 @property(nonatomic, readwrite) BOOL supportsBalance;
 
-/** Connection supports scheduled payments. Supports BankFilter */
+/** Connection supports scheduled payments */
 @property(nonatomic, readwrite) BOOL supportsScheduledPayment;
 
-/** Connection supports standing orders. Supports BankFilter */
+/** Connection supports standing orders */
 @property(nonatomic, readwrite) BOOL supportsStandingOrder;
 
-/** Connection supports bulk payments. Supports BankFilter */
+/** Connection supports bulk payments */
 @property(nonatomic, readwrite) BOOL supportsBulkTransfer;
 
 /** Connection only supports immediate redemption of transfers */
 @property(nonatomic, readwrite) BOOL requiresLegacyTransfer GPB_DEPRECATED_MSG("io.token.proto.common.bank.Bank.requires_legacy_transfer is deprecated (see bankinfo.proto).");
 
-/** Connection only supports immediate redemption of transfers. Supports BankFilter */
+/** Connection only supports immediate redemption of transfers */
 @property(nonatomic, readwrite) BOOL requiresOneStepPayment;
 
-/** Connection supports linking with a bank linking URI. Supports BankFilter */
+/** Connection supports linking with a bank linking URI */
 @property(nonatomic, readwrite) BOOL supportsLinkingUri;
 
 /** Provider of the bank, e.g. Yodlee, FinApi, Token */
@@ -134,6 +138,9 @@ typedef GPB_ENUM(Bank_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *supportedTransferDestinationTypesArray;
 /** The number of items in @c supportedTransferDestinationTypesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger supportedTransferDestinationTypesArray_Count;
+
+/** Connection allows ais guest checkout */
+@property(nonatomic, readwrite) BOOL supportsAisGuestCheckout;
 
 @end
 
@@ -216,6 +223,7 @@ typedef GPB_ENUM(BankFilter_FieldNumber) {
   BankFilter_FieldNumber_IdsArray = 5,
   BankFilter_FieldNumber_Search = 6,
   BankFilter_FieldNumber_RequiresBankFeatures = 7,
+  BankFilter_FieldNumber_BankFeatures = 8,
 };
 
 @interface BankFilter : GPBMessage
@@ -240,14 +248,101 @@ typedef GPB_ENUM(BankFilter_FieldNumber) {
 /** (Optional) Filter for banks whose 'name' or 'identifier' contains the given search string (case-insensitive) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *search;
 
-/**
- * (Optional) Filter for banks that support or don't support certain features. See Bank for the feature keys we support.
- * Set "true" for banks that support the feature or "false" for banks that don't support the feature.
- * e.g. ["supports_linking_uri": "true"] means only banks who supports the linking uri feature.
- **/
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *requiresBankFeatures;
+/** TODO(sibinlu): Removes it after RD-3414 is finished. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *requiresBankFeatures GPB_DEPRECATED_MSG("io.token.proto.common.bank.BankFilter.requires_bank_features is deprecated (see bankinfo.proto).");
 /** The number of items in @c requiresBankFeatures without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger requiresBankFeatures_Count;
+@property(nonatomic, readonly) NSUInteger requiresBankFeatures_Count GPB_DEPRECATED_MSG("io.token.proto.common.bank.BankFilter.requires_bank_features is deprecated (see bankinfo.proto).");
+
+@property(nonatomic, readwrite, strong, null_resettable) BankFilter_BankFeatures *bankFeatures;
+/** Test to see if @c bankFeatures has been set. */
+@property(nonatomic, readwrite) BOOL hasBankFeatures;
+
+@end
+
+#pragma mark - BankFilter_BankFeatures
+
+typedef GPB_ENUM(BankFilter_BankFeatures_FieldNumber) {
+  BankFilter_BankFeatures_FieldNumber_SupportsAppless = 1,
+  BankFilter_BankFeatures_FieldNumber_SupportsGuestCheckout = 2,
+  BankFilter_BankFeatures_FieldNumber_SupportsInformation = 3,
+  BankFilter_BankFeatures_FieldNumber_RequiresExternalAuth = 4,
+  BankFilter_BankFeatures_FieldNumber_SupportsSendPayment = 5,
+  BankFilter_BankFeatures_FieldNumber_SupportsReceivePayment = 6,
+  BankFilter_BankFeatures_FieldNumber_SupportsBalance = 7,
+  BankFilter_BankFeatures_FieldNumber_SupportsScheduledPayment = 8,
+  BankFilter_BankFeatures_FieldNumber_SupportsStandingOrder = 9,
+  BankFilter_BankFeatures_FieldNumber_SupportsBulkTransfer = 10,
+  BankFilter_BankFeatures_FieldNumber_RequiresOneStepPayment = 11,
+  BankFilter_BankFeatures_FieldNumber_SupportsLinkingUri = 12,
+  BankFilter_BankFeatures_FieldNumber_SupportsAisGuestCheckout = 13,
+};
+
+@interface BankFilter_BankFeatures : GPBMessage
+
+/** Works with appless payments */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsAppless;
+/** Test to see if @c supportsAppless has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsAppless;
+
+/** Connection supports guest checkout */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsGuestCheckout;
+/** Test to see if @c supportsGuestCheckout has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsGuestCheckout;
+
+/** Connection allows for retrieval of information */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsInformation;
+/** Test to see if @c supportsInformation has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsInformation;
+
+/** Connection requires external authorization for creating transfers */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *requiresExternalAuth;
+/** Test to see if @c requiresExternalAuth has been set. */
+@property(nonatomic, readwrite) BOOL hasRequiresExternalAuth;
+
+/** Connection allows for payment initiation */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsSendPayment;
+/** Test to see if @c supportsSendPayment has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsSendPayment;
+
+/** Connection allows for receiving payments */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsReceivePayment;
+/** Test to see if @c supportsReceivePayment has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsReceivePayment;
+
+/** Connection allows for retrieving balances */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsBalance;
+/** Test to see if @c supportsBalance has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsBalance;
+
+/** Connection supports scheduled payments */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsScheduledPayment;
+/** Test to see if @c supportsScheduledPayment has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsScheduledPayment;
+
+/** Connection supports standing orders */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsStandingOrder;
+/** Test to see if @c supportsStandingOrder has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsStandingOrder;
+
+/** Connection supports bulk payments */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsBulkTransfer;
+/** Test to see if @c supportsBulkTransfer has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsBulkTransfer;
+
+/** Connection only supports immediate redemption of transfers */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *requiresOneStepPayment;
+/** Test to see if @c requiresOneStepPayment has been set. */
+@property(nonatomic, readwrite) BOOL hasRequiresOneStepPayment;
+
+/** Connection supports linking with a bank linking URI */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsLinkingUri;
+/** Test to see if @c supportsLinkingUri has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsLinkingUri;
+
+/** Connection allows ais guest checkout */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *supportsAisGuestCheckout;
+/** Test to see if @c supportsAisGuestCheckout has been set. */
+@property(nonatomic, readwrite) BOOL hasSupportsAisGuestCheckout;
 
 @end
 

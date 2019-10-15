@@ -27,6 +27,9 @@
 
 CF_EXTERN_C_BEGIN
 
+@class AccountReference;
+@class ReportExchangeRate;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Nextgenpsd2Root
@@ -44,18 +47,194 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Nextgenpsd2Root : GPBRootObject
 @end
 
+#pragma mark - NextGenPsd2AccountDetails
+
+typedef GPB_ENUM(NextGenPsd2AccountDetails_FieldNumber) {
+  NextGenPsd2AccountDetails_FieldNumber_Iban = 1,
+  NextGenPsd2AccountDetails_FieldNumber_Bban = 2,
+  NextGenPsd2AccountDetails_FieldNumber_Msisdn = 3,
+  NextGenPsd2AccountDetails_FieldNumber_Currency = 4,
+  NextGenPsd2AccountDetails_FieldNumber_Product = 5,
+  NextGenPsd2AccountDetails_FieldNumber_CashAccountType = 6,
+  NextGenPsd2AccountDetails_FieldNumber_Bic = 7,
+  NextGenPsd2AccountDetails_FieldNumber_LinkedAccounts = 8,
+  NextGenPsd2AccountDetails_FieldNumber_Usuage = 9,
+  NextGenPsd2AccountDetails_FieldNumber_Details = 10,
+};
+
+@interface NextGenPsd2AccountDetails : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bban;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *msisdn;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *product;
+
+/** ExternalCashAccountType1Code from ISO 20022. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *cashAccountType;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bic;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *linkedAccounts;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *usuage;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *details;
+
+@end
+
+#pragma mark - NextGenPsd2TransactionDetails
+
+typedef GPB_ENUM(NextGenPsd2TransactionDetails_FieldNumber) {
+  NextGenPsd2TransactionDetails_FieldNumber_EntryReference = 1,
+  NextGenPsd2TransactionDetails_FieldNumber_EndToEndId = 2,
+  NextGenPsd2TransactionDetails_FieldNumber_MandateId = 3,
+  NextGenPsd2TransactionDetails_FieldNumber_CheckId = 4,
+  NextGenPsd2TransactionDetails_FieldNumber_CreditorId = 5,
+  NextGenPsd2TransactionDetails_FieldNumber_ValueDate = 6,
+  NextGenPsd2TransactionDetails_FieldNumber_CurrencyExchangeArray = 7,
+  NextGenPsd2TransactionDetails_FieldNumber_CreditorName = 8,
+  NextGenPsd2TransactionDetails_FieldNumber_CreditorAccount = 9,
+  NextGenPsd2TransactionDetails_FieldNumber_UltimateCreditor = 10,
+  NextGenPsd2TransactionDetails_FieldNumber_DebtorName = 11,
+  NextGenPsd2TransactionDetails_FieldNumber_DebtorAccount = 12,
+  NextGenPsd2TransactionDetails_FieldNumber_UltimateDebtor = 13,
+  NextGenPsd2TransactionDetails_FieldNumber_RemittanceInformationStructured = 14,
+  NextGenPsd2TransactionDetails_FieldNumber_AdditionalInformation = 15,
+  NextGenPsd2TransactionDetails_FieldNumber_PurposeCode = 16,
+  NextGenPsd2TransactionDetails_FieldNumber_BankTransactionCode = 17,
+  NextGenPsd2TransactionDetails_FieldNumber_ProprietaryBankTransactionCode = 18,
+};
+
+@interface NextGenPsd2TransactionDetails : GPBMessage
+
+/** Is the identification of the transaction as used e.g. for reference for deltafunction on application level. The same identification as for example used within camt.05x messages. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *entryReference;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *endToEndId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *mandateId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *checkId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *creditorId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *valueDate;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ReportExchangeRate*> *currencyExchangeArray;
+/** The number of items in @c currencyExchangeArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger currencyExchangeArray_Count;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *creditorName;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccountReference *creditorAccount;
+/** Test to see if @c creditorAccount has been set. */
+@property(nonatomic, readwrite) BOOL hasCreditorAccount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ultimateCreditor;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *debtorName;
+
+@property(nonatomic, readwrite, strong, null_resettable) AccountReference *debtorAccount;
+/** Test to see if @c debtorAccount has been set. */
+@property(nonatomic, readwrite) BOOL hasDebtorAccount;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ultimateDebtor;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *remittanceInformationStructured;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *additionalInformation;
+
+/** ExternalPurpose1Code from ISO 20022. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *purposeCode;
+
+/** Bank transaction code as used by the ASPSP and using the sub elements of this structured code defined by ISO 20022. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bankTransactionCode;
+
+/** Proprietary bank transaction code as used within a community or within an ASPSP e.g. for MT94x based transaction reports. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *proprietaryBankTransactionCode;
+
+@end
+
 #pragma mark - NextGenPsd2TransferMetadata
 
 typedef GPB_ENUM(NextGenPsd2TransferMetadata_FieldNumber) {
   NextGenPsd2TransferMetadata_FieldNumber_EndToEndIdentification = 1,
   NextGenPsd2TransferMetadata_FieldNumber_RemittanceInformationStructured = 2,
+  NextGenPsd2TransferMetadata_FieldNumber_CreditorAgent = 3,
+  NextGenPsd2TransferMetadata_FieldNumber_CreditorAgentName = 4,
 };
 
 @interface NextGenPsd2TransferMetadata : GPBMessage
 
+/** Has specific format requirements in the case of Croatian banks */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *endToEndIdentification;
 
+/** Has specific format requirements in the case of Croatian banks */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *remittanceInformationStructured;
+
+/** BICFI, example: AAAADEBBXXX */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *creditorAgent;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *creditorAgentName;
+
+@end
+
+#pragma mark - ReportExchangeRate
+
+typedef GPB_ENUM(ReportExchangeRate_FieldNumber) {
+  ReportExchangeRate_FieldNumber_SourceCurrency = 1,
+  ReportExchangeRate_FieldNumber_ExchangeRate = 2,
+  ReportExchangeRate_FieldNumber_UnitCurrency = 3,
+  ReportExchangeRate_FieldNumber_TargetCurrency = 4,
+  ReportExchangeRate_FieldNumber_QuotationDate = 5,
+  ReportExchangeRate_FieldNumber_ContractIdentification = 6,
+};
+
+@interface ReportExchangeRate : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceCurrency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *exchangeRate;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *unitCurrency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *targetCurrency;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *quotationDate;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *contractIdentification;
+
+@end
+
+#pragma mark - AccountReference
+
+typedef GPB_ENUM(AccountReference_FieldNumber) {
+  AccountReference_FieldNumber_Iban = 1,
+  AccountReference_FieldNumber_Bban = 2,
+  AccountReference_FieldNumber_Pan = 3,
+  AccountReference_FieldNumber_MaskedPan = 4,
+  AccountReference_FieldNumber_Msisdn = 5,
+  AccountReference_FieldNumber_Currency = 6,
+};
+
+@interface AccountReference : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *iban;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bban;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *pan;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *maskedPan;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *msisdn;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *currency;
 
 @end
 

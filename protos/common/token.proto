@@ -238,7 +238,7 @@ message StandingOrderBody {
 message BulkTransferBody {
   repeated Transfer transfers = 1;
   string total_amount = 2; // Total amount irrespective of currency. Used for redundancy check.
-  transferinstructions.TransferEndpoint source = 3;
+  transferinstructions.TransferEndpoint source = 3;  // Optional. Set to bypass Token bank selection UI.
 
   message Transfer {
     string amount = 1;

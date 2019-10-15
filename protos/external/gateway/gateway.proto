@@ -498,6 +498,12 @@ message GetTransactionsRequest {
   // for backwards compatibility with older JS clients TODO(RD-2738) remove
   string offset = 3;
   int32 limit = 4;
+  // Optional lower bound for a transaction's booking date as returned by the bank, in the format 'YYYY-MM-DD' (e.g. '2016-01-01').
+  // If specified, then only transactions whose bank booking date is equal to or later than the given date will be regarded.
+  string start_date = 5;
+  // Optional upper bound for a transaction's booking date as returned by the bank (= original booking date), in the format 'YYYY-MM-DD' (e.g. '2016-01-01').
+  // If specified, then only transactions whose bank booking date is equal to or earlier than the given date will be regarded.
+  string end_date = 6;
 }
 
 message GetTransactionsResponse {

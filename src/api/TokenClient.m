@@ -235,7 +235,7 @@
            perPage:perPage
               sort:sort
           provider:provider
-      bankFeatures:[NSDictionary dictionary]
+      bankFeatures:nil
          onSuccess:onSuccess
            onError:onError];
 }
@@ -247,7 +247,7 @@
          perPage:(int)perPage
             sort:(NSString *)sort
         provider:(NSString *)provider
-    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
+    bankFeatures:(BankFilter_BankFeatures *)bankFeatures
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     [unauthenticatedClient getBanks:bankIds
