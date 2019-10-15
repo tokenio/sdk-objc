@@ -612,6 +612,17 @@
                   onError:(OnError)onError;
 
 /**
+ * Confirm that the given account has sufficient funds to cover the charge.
+ *
+ * @param accountId account ID
+ * @param amount charge amount
+ */
+- (void)confirmFunds:(NSString *)accountId
+              amount:(Money *)amount
+           onSuccess:(OnSuccessWithBoolean)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Returns linking information for the specified bank id.
  *
  * @param bankId the bank id
