@@ -1928,6 +1928,8 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
   GetTransactionsRequest_FieldNumber_Page = 2,
   GetTransactionsRequest_FieldNumber_Offset = 3,
   GetTransactionsRequest_FieldNumber_Limit = 4,
+  GetTransactionsRequest_FieldNumber_StartDate = 5,
+  GetTransactionsRequest_FieldNumber_EndDate = 6,
 };
 
 @interface GetTransactionsRequest : GPBMessage
@@ -1943,6 +1945,18 @@ typedef GPB_ENUM(GetTransactionsRequest_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *offset;
 
 @property(nonatomic, readwrite) int32_t limit;
+
+/**
+ * Optional lower bound for a transaction's booking date as returned by the bank, in the format 'YYYY-MM-DD' (e.g. '2016-01-01').
+ * If specified, then only transactions whose bank booking date is equal to or later than the given date will be regarded.
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *startDate;
+
+/**
+ * Optional upper bound for a transaction's booking date as returned by the bank (= original booking date), in the format 'YYYY-MM-DD' (e.g. '2016-01-01').
+ * If specified, then only transactions whose bank booking date is equal to or earlier than the given date will be regarded.
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *endDate;
 
 @end
 

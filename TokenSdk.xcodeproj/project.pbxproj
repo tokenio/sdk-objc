@@ -173,6 +173,8 @@
 		D062EFED22615B0100189D65 /* Bankstatus.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */; };
 		D062EFEE22615B0100189D65 /* Consent.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D062EFEA22615B0100189D65 /* Consent.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D062EFEF22615B0100189D65 /* Consent.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D062EFEB22615B0100189D65 /* Consent.pbobjc.h */; };
+		D06C9104235653B8007B401C /* Stet.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C9102235653B8007B401C /* Stet.pbobjc.m */; };
+		D06C9105235653B8007B401C /* Stet.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06C9103235653B8007B401C /* Stet.pbobjc.h */; };
 		D06E3B95231F800C00BA6DED /* Submission.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = D06E3B93231F800C00BA6DED /* Submission.pbobjc.h */; };
 		D06E3B96231F800C00BA6DED /* Submission.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B94231F800C00BA6DED /* Submission.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D06E3B9F231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -444,6 +446,8 @@
 		D062EFE922615B0100189D65 /* Bankstatus.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bankstatus.pbobjc.h; sourceTree = "<group>"; };
 		D062EFEA22615B0100189D65 /* Consent.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consent.pbobjc.m; sourceTree = "<group>"; };
 		D062EFEB22615B0100189D65 /* Consent.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consent.pbobjc.h; sourceTree = "<group>"; };
+		D06C9102235653B8007B401C /* Stet.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stet.pbobjc.m; sourceTree = "<group>"; };
+		D06C9103235653B8007B401C /* Stet.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stet.pbobjc.h; sourceTree = "<group>"; };
 		D06E3B93231F800C00BA6DED /* Submission.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Submission.pbobjc.h; sourceTree = "<group>"; };
 		D06E3B94231F800C00BA6DED /* Submission.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Submission.pbobjc.m; sourceTree = "<group>"; };
 		D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nextgenpsd2.pbobjc.m; sourceTree = "<group>"; };
@@ -938,6 +942,8 @@
 		D06E3B98231F86CA00BA6DED /* provider */ = {
 			isa = PBXGroup;
 			children = (
+				D06C9103235653B8007B401C /* Stet.pbobjc.h */,
+				D06C9102235653B8007B401C /* Stet.pbobjc.m */,
 				D06E3B99231F86CA00BA6DED /* Nextgenpsd2.pbobjc.m */,
 				D06E3B9A231F86CA00BA6DED /* Polishapi.pbobjc.m */,
 				D06E3B9B231F86CA00BA6DED /* Cma9.pbobjc.h */,
@@ -1116,6 +1122,7 @@
 				ABA7B1621EE5B60FF933B3BD /* TKBankClient.h in Headers */,
 				8A040B781EBE8F9E00425C3A /* Blob.pbobjc.h in Headers */,
 				ABA7B84C3E4141392B53FC47 /* TKAccount.h in Headers */,
+				D06C9105235653B8007B401C /* Stet.pbobjc.h in Headers */,
 				DD6AD2A61E00786800358830 /* TKLogManager.h in Headers */,
 				ABA7B932650CECAE9F596A92 /* TokenClient.h in Headers */,
 				37637B5A1D989A930043345F /* Gateway.pbrpc.h in Headers */,
@@ -1417,6 +1424,7 @@
 				ABA7B5835408D6DD145BFCD0 /* TKClient.m in Sources */,
 				37637B5B1D989A930043345F /* Gateway.pbrpc.m in Sources */,
 				ABA7B2CE9549E2939698431C /* TKUnauthenticatedClient.m in Sources */,
+				D06C9104235653B8007B401C /* Stet.pbobjc.m in Sources */,
 				37637B6D1D989A930043345F /* Token.pbobjc.m in Sources */,
 				FA73A47B1E0EF1560079EAC8 /* Bankinfo.pbobjc.m in Sources */,
 				D03A56031FE07368008342E0 /* TKAuthorizationEngine.m in Sources */,

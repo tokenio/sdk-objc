@@ -151,7 +151,7 @@
          perPage:(int)perPage
             sort:(NSString *)sort
         provider:(NSString *)provider
-    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
+    bankFeatures:(BankFilter_BankFeatures *)bankFeatures
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
 

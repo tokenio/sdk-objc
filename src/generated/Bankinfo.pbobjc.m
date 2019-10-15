@@ -79,6 +79,7 @@ static GPBFileDescriptor *BankinfoRoot_FileDescriptor(void) {
 @dynamic country;
 @dynamic identifier;
 @dynamic supportedTransferDestinationTypesArray, supportedTransferDestinationTypesArray_Count;
+@dynamic supportsAisGuestCheckout;
 
 typedef struct Bank__storage_ {
   uint32_t _has_storage_[2];
@@ -284,6 +285,15 @@ typedef struct Bank__storage_ {
         .number = Bank_FieldNumber_SupportsLinkingUri,
         .hasIndex = 28,
         .offset = 29,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "supportsAisGuestCheckout",
+        .dataTypeSpecific.className = NULL,
+        .number = Bank_FieldNumber_SupportsAisGuestCheckout,
+        .hasIndex = 33,
+        .offset = 34,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -495,6 +505,7 @@ typedef struct Paging__storage_ {
 @dynamic idsArray, idsArray_Count;
 @dynamic search;
 @dynamic requiresBankFeatures, requiresBankFeatures_Count;
+@dynamic hasBankFeatures, bankFeatures;
 
 typedef struct BankFilter__storage_ {
   uint32_t _has_storage_[1];
@@ -505,6 +516,7 @@ typedef struct BankFilter__storage_ {
   NSMutableArray *idsArray;
   NSString *search;
   NSMutableDictionary *requiresBankFeatures;
+  BankFilter_BankFeatures *bankFeatures;
 } BankFilter__storage_;
 
 // This method is threadsafe because it is initially called
@@ -576,6 +588,15 @@ typedef struct BankFilter__storage_ {
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "bankFeatures",
+        .dataTypeSpecific.className = GPBStringifySymbol(BankFilter_BankFeatures),
+        .number = BankFilter_FieldNumber_BankFeatures,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(BankFilter__storage_, bankFeatures),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[BankFilter class]
@@ -585,6 +606,184 @@ typedef struct BankFilter__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankFilter__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - BankFilter_BankFeatures
+
+@implementation BankFilter_BankFeatures
+
+@dynamic hasSupportsAppless, supportsAppless;
+@dynamic hasSupportsGuestCheckout, supportsGuestCheckout;
+@dynamic hasSupportsInformation, supportsInformation;
+@dynamic hasRequiresExternalAuth, requiresExternalAuth;
+@dynamic hasSupportsSendPayment, supportsSendPayment;
+@dynamic hasSupportsReceivePayment, supportsReceivePayment;
+@dynamic hasSupportsBalance, supportsBalance;
+@dynamic hasSupportsScheduledPayment, supportsScheduledPayment;
+@dynamic hasSupportsStandingOrder, supportsStandingOrder;
+@dynamic hasSupportsBulkTransfer, supportsBulkTransfer;
+@dynamic hasRequiresOneStepPayment, requiresOneStepPayment;
+@dynamic hasSupportsLinkingUri, supportsLinkingUri;
+@dynamic hasSupportsAisGuestCheckout, supportsAisGuestCheckout;
+
+typedef struct BankFilter_BankFeatures__storage_ {
+  uint32_t _has_storage_[1];
+  GPBBoolValue *supportsAppless;
+  GPBBoolValue *supportsGuestCheckout;
+  GPBBoolValue *supportsInformation;
+  GPBBoolValue *requiresExternalAuth;
+  GPBBoolValue *supportsSendPayment;
+  GPBBoolValue *supportsReceivePayment;
+  GPBBoolValue *supportsBalance;
+  GPBBoolValue *supportsScheduledPayment;
+  GPBBoolValue *supportsStandingOrder;
+  GPBBoolValue *supportsBulkTransfer;
+  GPBBoolValue *requiresOneStepPayment;
+  GPBBoolValue *supportsLinkingUri;
+  GPBBoolValue *supportsAisGuestCheckout;
+} BankFilter_BankFeatures__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "supportsAppless",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsAppless,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsAppless),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsGuestCheckout",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsGuestCheckout,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsGuestCheckout),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsInformation",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsInformation,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsInformation),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "requiresExternalAuth",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_RequiresExternalAuth,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, requiresExternalAuth),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsSendPayment",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsSendPayment,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsSendPayment),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsReceivePayment",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsReceivePayment,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsReceivePayment),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsBalance",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsBalance,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsBalance),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsScheduledPayment",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsScheduledPayment,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsScheduledPayment),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsStandingOrder",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsStandingOrder,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsStandingOrder),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsBulkTransfer",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsBulkTransfer,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsBulkTransfer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "requiresOneStepPayment",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_RequiresOneStepPayment,
+        .hasIndex = 10,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, requiresOneStepPayment),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsLinkingUri",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsLinkingUri,
+        .hasIndex = 11,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsLinkingUri),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "supportsAisGuestCheckout",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .number = BankFilter_BankFeatures_FieldNumber_SupportsAisGuestCheckout,
+        .hasIndex = 12,
+        .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsAisGuestCheckout),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[BankFilter_BankFeatures class]
+                                     rootClass:[BankinfoRoot class]
+                                          file:BankinfoRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(BankFilter_BankFeatures__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BankFilter)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

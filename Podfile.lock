@@ -37,7 +37,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - OrderedDictionary (1.4)
-  - Protobuf (3.9.0)
+  - Protobuf (3.10.0)
   - Unirest (1.1.4)
 
 DEPENDENCIES:
@@ -71,9 +71,9 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: 7172f64310c12f6d033f1657f7e5ebf71ae35cb5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
-  Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
+  Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   Unirest: 5e4d93eaf32463bf619a4ecd3bbc8c32acf21eac
 
-PODFILE CHECKSUM: 3a964ae6e866bda7f5ab63b58dadbd8d5e307915
+PODFILE CHECKSUM: 6ced7079d32cbe400f6a72068f6838d477300296
 
 COCOAPODS: 1.7.5

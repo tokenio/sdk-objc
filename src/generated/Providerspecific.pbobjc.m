@@ -18,6 +18,7 @@
 #import "provider/Cma9.pbobjc.h"
 #import "provider/Polishapi.pbobjc.h"
 #import "provider/Nextgenpsd2.pbobjc.h"
+#import "provider/Stet.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -64,11 +65,15 @@ static GPBFileDescriptor *ProviderspecificRoot_FileDescriptor(void) {
 @dynamic detailsOneOfCase;
 @dynamic cma9AccountDetails;
 @dynamic polishApiAccountDetails;
+@dynamic nextGenPsd2AccountDetails;
+@dynamic stetAccountDetails;
 
 typedef struct ProviderAccountDetails__storage_ {
   uint32_t _has_storage_[2];
   Cma9AccountDetails *cma9AccountDetails;
   POLISHAPIPolishApiAccountDetails *polishApiAccountDetails;
+  NextGenPsd2AccountDetails *nextGenPsd2AccountDetails;
+  StetAccountDetails *stetAccountDetails;
 } ProviderAccountDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -92,6 +97,24 @@ typedef struct ProviderAccountDetails__storage_ {
         .number = ProviderAccountDetails_FieldNumber_PolishApiAccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, polishApiAccountDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "nextGenPsd2AccountDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(NextGenPsd2AccountDetails),
+        .number = ProviderAccountDetails_FieldNumber_NextGenPsd2AccountDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, nextGenPsd2AccountDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "stetAccountDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(StetAccountDetails),
+        .number = ProviderAccountDetails_FieldNumber_StetAccountDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, stetAccountDetails),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -131,10 +154,14 @@ void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *messag
 
 @dynamic detailsOneOfCase;
 @dynamic polishApiTransactionDetails;
+@dynamic nextGenPsd2TransactionDetails;
+@dynamic stetTransactionDetails;
 
 typedef struct ProviderTransactionDetails__storage_ {
   uint32_t _has_storage_[2];
   POLISHAPIPolishApiTransactionDetails *polishApiTransactionDetails;
+  NextGenPsd2TransactionDetails *nextGenPsd2TransactionDetails;
+  StetTransactionDetails *stetTransactionDetails;
 } ProviderTransactionDetails__storage_;
 
 // This method is threadsafe because it is initially called
@@ -149,6 +176,24 @@ typedef struct ProviderTransactionDetails__storage_ {
         .number = ProviderTransactionDetails_FieldNumber_PolishApiTransactionDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, polishApiTransactionDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "nextGenPsd2TransactionDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(NextGenPsd2TransactionDetails),
+        .number = ProviderTransactionDetails_FieldNumber_NextGenPsd2TransactionDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, nextGenPsd2TransactionDetails),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "stetTransactionDetails",
+        .dataTypeSpecific.className = GPBStringifySymbol(StetTransactionDetails),
+        .number = ProviderTransactionDetails_FieldNumber_StetTransactionDetails,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, stetTransactionDetails),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -246,11 +291,13 @@ void ProviderStandingOrderDetails_ClearDetailsOneOfCase(ProviderStandingOrderDet
 @dynamic metadataOneOfCase;
 @dynamic polishApiTransferMetadata;
 @dynamic nextGenPsd2TransferMetadata;
+@dynamic stetTransferMetadata;
 
 typedef struct ProviderTransferMetadata__storage_ {
   uint32_t _has_storage_[2];
   POLISHAPIPolishApiTransferMetadata *polishApiTransferMetadata;
   NextGenPsd2TransferMetadata *nextGenPsd2TransferMetadata;
+  StetTransferMetadata *stetTransferMetadata;
 } ProviderTransferMetadata__storage_;
 
 // This method is threadsafe because it is initially called
@@ -274,6 +321,15 @@ typedef struct ProviderTransferMetadata__storage_ {
         .number = ProviderTransferMetadata_FieldNumber_NextGenPsd2TransferMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, nextGenPsd2TransferMetadata),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "stetTransferMetadata",
+        .dataTypeSpecific.className = GPBStringifySymbol(StetTransferMetadata),
+        .number = ProviderTransferMetadata_FieldNumber_StetTransferMetadata,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, stetTransferMetadata),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

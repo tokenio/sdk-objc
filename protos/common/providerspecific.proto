@@ -7,17 +7,22 @@ import "extensions/message.proto";
 import "provider/cma9.proto";
 import "provider/polishapi.proto";
 import "provider/nextgenpsd2.proto";
+import "provider/stet.proto";
 
 message ProviderAccountDetails {
   oneof details {
     cma9.Cma9AccountDetails cma9_account_details = 1;
     polishapi.PolishApiAccountDetails polish_api_account_details = 2;
+    nextgenpsd2.NextGenPsd2AccountDetails next_gen_psd2_account_details = 3;
+    stet.StetAccountDetails stet_account_details = 4;
   }
 }
 
 message ProviderTransactionDetails {
   oneof details {
     polishapi.PolishApiTransactionDetails polish_api_transaction_details = 1;
+    nextgenpsd2.NextGenPsd2TransactionDetails next_gen_psd2_transaction_details = 3;
+    stet.StetTransactionDetails stet_transaction_details = 4;
   }
 }
 
@@ -31,5 +36,6 @@ message ProviderTransferMetadata {
   oneof metadata {
     polishapi.PolishApiTransferMetadata polish_api_transfer_metadata = 1;
     nextgenpsd2.NextGenPsd2TransferMetadata next_gen_psd2_transfer_metadata = 2;
+    stet.StetTransferMetadata stet_transfer_metadata = 3;
   }
 }

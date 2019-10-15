@@ -15,7 +15,7 @@
 - (void)testGetBanks {
     TokenClient *tokenClient = [self client];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    expectation.expectedFulfillmentCount = 4;
+    expectation.expectedFulfillmentCount = 5;
     
     [tokenClient
      getBanks:nil
@@ -68,6 +68,23 @@
          XCTAssertTrue(banks.count > 0);
          [expectation fulfill];
      } onError:THROWERROR];
+
+    BankFilter_BankFeatures *features = [BankFilter_BankFeatures message];
+    features.supportsLinkingUri.value = true;
+
+    [tokenClient
+     getBanks:nil
+     search:nil
+     country:nil
+     page:1
+     perPage:10
+     sort:nil
+     provider:nil
+     bankFeatures:features
+     onSuccess:^(NSArray *banks) {
+        XCTAssertTrue(banks.count > 0);
+        [expectation fulfill];
+    } onError:THROWERROR];
     
     [self waitForExpectations:@[expectation] timeout:10];
 }

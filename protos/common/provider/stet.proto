@@ -1,0 +1,88 @@
+syntax = "proto3";
+package io.token.proto.common.providerspecific.stet;
+option java_outer_classname = "Stet";
+option csharp_namespace = "Tokenio.Proto.Common.ProviderSpecific.Stet";
+
+message StetAccountDetails {
+  string bic_fi = 1;
+  AccountIdentification accountId = 2;
+  string details = 3;
+  string linked_account = 4;
+  string usage = 5; // PRIV: private personal account, ORGA: professional account
+  string cash_account_type = 6; // CACC: Cash account, CARD: List of card based transactions
+  string product = 7;
+  string psu_status = 8;
+}
+
+message StetTransactionDetails {
+  string entry_reference = 1; // Technical incremental identification of the transaction.
+  string value_date = 2;
+  // Date used for specific purposes:
+  // for card transaction: date of the transaction;
+  // for credit transfer: acquiring date of the transaction;
+  // for direct debit: receiving date of the transaction.
+  string transaction_date = 3;
+}
+
+message StetTransferMetadata {
+  PaymentTypeInformation payment_type_information = 1;
+  FinancialInstitutionIdentification debtor_agent = 2;
+  Beneficiary beneficiary = 3;
+  string end_to_end_id = 4;
+  string execution_rule = 5; // Execution date shifting rule for standing orders.This data attribute defines the behaviour when recurring payment dates falls on a weekend or bank holiday. FWNG: following, PREC: preceding.
+  RegulatoryReportingCodes regulatory_reporting_codes = 6; // List of needed regulatory reporting codes for international payments
+}
+
+message AccountIdentification {
+  string iban = 1;
+  GenericIdentification other = 2;
+  string currency = 3;
+}
+
+message GenericIdentification {
+  string identification = 1;
+  string scheme_name = 2;
+  string issuer = 3;
+}
+
+message PartyIdentification {
+  string name = 1;
+  PostalAddress postal_address = 2;
+  GenericIdentification organisation_id = 3;
+  GenericIdentification private_id = 4;
+}
+
+message PaymentTypeInformation {
+  string instruction_priority = 1; // ISO20022: Indicator of the urgency or order of importance that the instructing party would like the instructed party to apply to the processing of the instruction. Enum: [HIGH, NORM].
+  string service_level = 2; // ISO20022: Agreement under which or rules under which the transaction should be processed. Only SEPA is allowed
+  string local_instrument = 3; // ISO20022: User community specific instrument. Usage: This element is used to specify a local instrument, local clearing option and/or further qualify the service or service level.
+  string category_purpose = 4; // ISO20022: Specifies the high level purpose of the instruction based on a set of pre-defined categories. Enum: [CASH, CORT, DVPM, INTC, TREA]
+}
+
+message FinancialInstitutionIdentification {
+  string bic_fi = 1;
+  ClearingSystemMemberIdentification clearing_system_member_id= 2;
+  string name = 3;
+  PostalAddress postal_address = 4;
+}
+
+message ClearingSystemMemberIdentification {
+  string clearing_system_id = 1;
+  string member_id = 2;
+}
+
+message PostalAddress {
+  string country = 1;
+  repeated string address_line = 2;
+}
+
+message Beneficiary {
+  string id = 1;
+  FinancialInstitutionIdentification creditor_agent = 2;
+  PartyIdentification creditor = 3;
+  AccountIdentification creditor_account = 4;
+}
+
+message RegulatoryReportingCodes {
+  repeated string regulatory_reporting_code = 1;
+}

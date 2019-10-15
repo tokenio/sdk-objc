@@ -4,6 +4,7 @@ package io.token.proto.common.bank;
 option java_outer_classname = "BankProtos";
 option csharp_namespace = "Tokenio.Proto.Common.BankProtos";
 
+import "google/protobuf/wrappers.proto";
 import "alias.proto";
 
 message Bank {
@@ -11,23 +12,24 @@ message Bank {
   string name = 2;
   string logo_uri = 3;                  // Square bank avatar icon
   string full_logo_uri = 4;             // Full size bank icon
-  bool supports_appless = 5;            // Works with appless payments. Supports BankFilter
-  bool supports_guest_checkout = 15;    // Connection supports guest checkout. Supports BankFilter
-  bool supports_information = 7;        // Connection allows for retrieval of information. Supports BankFilter
-  bool requires_external_auth = 8;      // Connection requires external authorization for creating transfers. Supports BankFilter
-  bool supports_send_payment = 9;       // Connection allows for payment initiation. Supports BankFilter
-  bool supports_receive_payment = 10;   // Connection allows for receiving payments. Supports BankFilter
-  bool supports_balance = 16;           // Connection allows for retrieving balances. Supports BankFilter
-  bool supports_scheduled_payment = 18; // Connection supports scheduled payments. Supports BankFilter
-  bool supports_standing_order = 19;    // Connection supports standing orders. Supports BankFilter
-  bool supports_bulk_transfer = 20;     // Connection supports bulk payments. Supports BankFilter
+  bool supports_appless = 5;            // Works with appless payments
+  bool supports_guest_checkout = 15;    // Connection supports guest checkout
+  bool supports_information = 7;        // Connection allows for retrieval of information
+  bool requires_external_auth = 8;      // Connection requires external authorization for creating transfers
+  bool supports_send_payment = 9;       // Connection allows for payment initiation
+  bool supports_receive_payment = 10;   // Connection allows for receiving payments
+  bool supports_balance = 16;           // Connection allows for retrieving balances
+  bool supports_scheduled_payment = 18; // Connection supports scheduled payments
+  bool supports_standing_order = 19;    // Connection supports standing orders
+  bool supports_bulk_transfer = 20;     // Connection supports bulk payments
   bool requires_legacy_transfer = 14  [deprecated = true];   // Connection only supports immediate redemption of transfers
-  bool requires_one_step_payment = 17;   // Connection only supports immediate redemption of transfers. Supports BankFilter
-  bool supports_linking_uri = 22;       // Connection supports linking with a bank linking URI. Supports BankFilter
+  bool requires_one_step_payment = 17;   // Connection only supports immediate redemption of transfers
+  bool supports_linking_uri = 22;       // Connection supports linking with a bank linking URI
   string provider = 11;                 // Provider of the bank, e.g. Yodlee, FinApi, Token
   string country = 12;                  // The ISO 3166-1 alpha-2 two letter country code in upper case.
   string identifier = 13;               // Optional identifier of the bank, not guaranteed to be unique across all banks. BLZ for German banks.
   repeated string supported_transfer_destination_types = 21; // A list of Transfer Destination Types, like SEPA, ELIXIR, supported by the bank.
+  bool supports_ais_guest_checkout = 23;  //Connection allows ais guest checkout
 }
 
 // Depending on how user can interact with bank,
@@ -57,8 +59,24 @@ message BankFilter {
   string country = 4;                 // (Optional) Filter for banks whose 'country' matches the given ISO 3166-1 alpha-2 country code (case-insensitive)
   repeated string ids = 5;            // (Optional) Filter for banks whose 'id' matches any one of the given ids (case-insensitive). Can be at most 1000.
   string search = 6;                  // (Optional) Filter for banks whose 'name' or 'identifier' contains the given search string (case-insensitive)
-  // (Optional) Filter for banks that support or don't support certain features. See Bank for the feature keys we support.
-  // Set "true" for banks that support the feature or "false" for banks that don't support the feature.
-  // e.g. ["supports_linking_uri": "true"] means only banks who supports the linking uri feature.
-  map<string, string> requires_bank_features = 7;
+  // TODO(sibinlu): Removes it after RD-3414 is finished.
+  map<string, string> requires_bank_features = 7 [deprecated = true];
+
+  BankFeatures bank_features = 8;
+
+  message BankFeatures {
+    google.protobuf.BoolValue supports_appless = 1;            // Works with appless payments
+    google.protobuf.BoolValue supports_guest_checkout = 2;     // Connection supports guest checkout
+    google.protobuf.BoolValue supports_information = 3;        // Connection allows for retrieval of information
+    google.protobuf.BoolValue requires_external_auth = 4;      // Connection requires external authorization for creating transfers
+    google.protobuf.BoolValue supports_send_payment = 5;       // Connection allows for payment initiation
+    google.protobuf.BoolValue supports_receive_payment = 6;    // Connection allows for receiving payments
+    google.protobuf.BoolValue supports_balance = 7;            // Connection allows for retrieving balances
+    google.protobuf.BoolValue supports_scheduled_payment = 8;  // Connection supports scheduled payments
+    google.protobuf.BoolValue supports_standing_order = 9;     // Connection supports standing orders
+    google.protobuf.BoolValue supports_bulk_transfer = 10;     // Connection supports bulk payments
+    google.protobuf.BoolValue requires_one_step_payment = 11;  // Connection only supports immediate redemption of transfers
+    google.protobuf.BoolValue supports_linking_uri = 12;       // Connection supports linking with a bank linking URI
+    google.protobuf.BoolValue supports_ais_guest_checkout = 13; //Connection allows ais guest checkout
+  }
 }

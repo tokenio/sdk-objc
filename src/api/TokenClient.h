@@ -15,6 +15,7 @@
 #import "TokenCluster.h"
 #import "TKCrypto.h"
 
+@class BankFilter_BankFeatures;
 @class DeviceMetadata;
 @class GatewayService;
 @class Key;
@@ -78,7 +79,7 @@
  * @param alias member alias to use, must be unique
  */
 - (void)createMember:(Alias *)alias
-            onSuccess:(OnSuccessWithTKMember)onSuccess
+           onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError;
 
 /**
@@ -196,7 +197,7 @@
          perPage:(int)perPage
             sort:(NSString *)sort
         provider:(NSString *)provider
-    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
+    bankFeatures:(BankFilter_BankFeatures *)bankFeatures
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError;
 

@@ -887,6 +887,7 @@ typedef GPB_ENUM(BulkTransferBody_FieldNumber) {
 /** Total amount irrespective of currency. Used for redundancy check. */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *totalAmount;
 
+/** Optional. Set to bypass Token bank selection UI. */
 @property(nonatomic, readwrite, strong, null_resettable) TransferEndpoint *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;

@@ -213,7 +213,7 @@
          perPage:(int)perPage
             sort:(NSString *)sort
         provider:(NSString *)provider
-    bankFeatures:(NSDictionary<NSString *, NSString *> *)bankFeatures
+    bankFeatures:(BankFilter_BankFeatures *)bankFeatures
        onSuccess:(OnSuccessWithBanks)onSuccess
          onError:(OnError)onError {
     GetBanksRequest *request = [GetBanksRequest message];
@@ -224,7 +224,7 @@
     request.perPage = perPage;
     request.sort = sort;
     request.filter.provider = provider;
-    request.filter.requiresBankFeatures = bankFeatures;
+    request.filter.bankFeatures = bankFeatures;
     RpcLogStart(request);
     
     __block GRPCProtoCall *call = [gateway
