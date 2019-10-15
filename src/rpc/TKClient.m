@@ -1499,6 +1499,32 @@
              onError:onError];
 }
 
+- (void)confirmFunds:(NSString *)accountId
+              amount:(Money *)amount
+           onSuccess:(OnSuccessWithBoolean)onSuccess
+             onError:(OnError)onError {
+    ConfirmFundsRequest *request = [ConfirmFundsRequest message];
+    request.accountId = accountId;
+    request.amount = amount;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToConfirmFundsWithRequest:request
+                                   handler:
+                                   ^(ConfirmFundsResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.fundsAvailable);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)getBankInfo:(NSString *) bankId
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError {

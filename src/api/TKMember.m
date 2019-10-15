@@ -995,6 +995,20 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
      }];
 }
 
+- (void)confirmFunds:(NSString *)accountId
+              amount:(NSDecimalNumber *)amount
+            currency:(NSString *)currency
+           onSuccess:(OnSuccessWithBoolean)onSuccess
+             onError:(OnError)onError {
+    Money *money = [Money message];
+    money.currency = currency;
+    money.value = [amount stringValue];
+    [client confirmFunds:accountId
+                  amount:money
+               onSuccess:onSuccess
+                 onError:onError];
+}
+
 - (void)getBankInfo:(NSString *)bankId
           onSuccess:(OnSuccessWithBankInfo)onSuccess
             onError:(OnError)onError {

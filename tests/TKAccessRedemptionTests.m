@@ -128,4 +128,39 @@
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
 }
+
+- (void)testConfirmFundsToken {
+    AccessTokenBuilder *access = [AccessTokenBuilder createWithToId:grantee.id];
+    [access forFundsConfirmation:grantorAccount.id];
+    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
+    expectation.expectedFulfillmentCount = 2;
+    [grantor createAccessToken:access onSuccess:^(Token *created) {
+        [self->grantor endorseToken:created withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *result) {
+            [self->grantorAccount getBalance:Key_Level_Standard
+                                   onSuccess:^(TKBalance *balance) {
+                id<TKRepresentable> representable = [self->grantee forAccessToken:[result token].id_p];
+                NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:balance.current.value];
+                NSString *currency = balance.current.currency;
+
+                [representable confirmFunds:self->grantorAccount.id
+                                     amount:[amount decimalNumberByAdding:NSDecimalNumber.one]
+                                   currency:currency
+                                  onSuccess:^(BOOL fundsAvailable) {
+                    XCTAssertFalse(fundsAvailable);
+                    [expectation fulfill];
+                } onError:THROWERROR];
+
+                [representable confirmFunds:self->grantorAccount.id
+                                     amount:[amount decimalNumberBySubtracting:NSDecimalNumber.one]
+                                   currency:currency
+                                  onSuccess:^(BOOL fundsAvailable) {
+                    XCTAssertTrue(fundsAvailable);
+                    [expectation fulfill];
+                } onError:THROWERROR];
+
+            } onError:THROWERROR];
+        } onError:THROWERROR];
+    } onError:THROWERROR];
+    [self waitForExpectations:@[expectation] timeout:10];
+}
 @end

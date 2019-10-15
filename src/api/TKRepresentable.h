@@ -145,4 +145,17 @@
                         withKey:(Key_Level)keyLevel
                       onSuccess:(OnSuccessWithStandingOrders)onSuccess
                         onError:(OnError)onError;
+
+/**
+ * Confirm that the given account has sufficient funds to cover the charge.
+ *
+ * @param accountId account ID
+ * @param amount charge amount
+ * @param currency charge currency
+ */
+- (void)confirmFunds:(NSString *)accountId
+              amount:(NSDecimalNumber *)amount
+            currency:(NSString *)currency
+           onSuccess:(OnSuccessWithBoolean)onSuccess
+             onError:(OnError)onError;
 @end
