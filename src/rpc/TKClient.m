@@ -1305,6 +1305,56 @@
              onError:onError];
 }
 
+-(void)getBulkTransfer:(NSString *)bulkTransferId
+             onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+               onError:(OnError)onError {
+    GetBulkTransferRequest *request = [GetBulkTransferRequest message];
+    request.bulkTransferId = bulkTransferId;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetBulkTransferWithRequest:request
+                                   handler:
+                                   ^(GetBulkTransferResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.bulkTransfer);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+-(void)createBulkTransfer:(NSString *)tokenId
+                onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+                  onError:(OnError)onError {
+    CreateBulkTransferRequest *request = [CreateBulkTransferRequest message];
+    request.tokenId = tokenId;
+
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToCreateBulkTransferWithRequest:request
+                                   handler:
+                                   ^(CreateBulkTransferResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.transfer);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 - (void)createBlob:(NSString *)ownerId
           withType:(NSString *)type
           withName:(NSString *)name

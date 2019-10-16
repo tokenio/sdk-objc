@@ -9,8 +9,9 @@
 #ifndef TokenSdk_h
 #define TokenSdk_h
 
-#import "PagedArray.h"
+#import "DeviceInfo.h"
 #import "NotifyResult.h"
+#import "PagedArray.h"
 #import "TKAccount.h"
 #import "TKBalance.h"
 #import "TKError.h"
@@ -22,6 +23,7 @@
 #import "TokenClient.h"
 #import "TokenClientBuilder.h"
 #import "TokenProto.h"
+#import "TokenRequestResult.h"
 #import "PrepareTokenResult.h"
 
 #endif /* TokenSdk_h */
