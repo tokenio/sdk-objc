@@ -14,6 +14,7 @@
 #import "Subscriber.pbobjc.h"
 
 #import "AccessTokenBuilder.h"
+#import "BulkTransferTokenBuilder.h"
 #import "StandingOrderTokenBuilder.h"
 #import "TKBrowser.h"
 #import "TKRepresentable.h"
@@ -412,6 +413,17 @@ NS_ASSUME_NONNULL_BEGIN
                                   onError:(OnError)onError;
 
 /**
+ * Looks up an existing bulk transfer.
+ *
+ * @param bulkTransferId bulk transfer ID
+ * @param onSuccess invoked on success with a bulk transfer record
+ * @param onError invoked on error
+*/
+-(void)getBulkTransfer:(NSString *)bulkTransferId
+             onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Creates a new member address.
  *
  * @param name the name of the address
@@ -522,6 +534,26 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
 - (StandingOrderTokenBuilder *)createStandingOrderTokenBuilderWithTokenRequest:(TokenRequest *)tokenRequest;
 
 /**
+ * Creates a new bulk transfer token builder.
+ *
+ * @param transfers list of transfers
+ * @param totalAmount total amount irrespective of currency. Used for redundancy check.
+ * @param source source account for all transfer
+ * @return bulk transfer token builder
+ */
+- (BulkTransferTokenBuilder *) createBulkTransferTokenBuilder:(NSArray<BulkTransferBody_Transfer *> *)transfers
+                                                 totalAmount:(NSDecimalNumber *) totalAmount
+                                                      source:(TransferEndpoint *)source;
+
+/**
+ * Creates a new bulk transfer token builder from a token request.
+ *
+ * @param tokenRequest token request
+ * @return bulk transfer token builder
+*/
+- (BulkTransferTokenBuilder *) createBulkTransferTokenBuilder:(TokenRequest *)tokenRequest;
+
+/**
  * Prepares a transfer token, returning the resolved token payload and policy.
  *
  * @param builder transfer token builder
@@ -539,6 +571,17 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
 - (void)prepareStandingOrderToken:(StandingOrderTokenBuilder *)builder
                         onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                           onError:(OnError)onError;
+
+/**
+ * Prepares a bulk transfer token, returning the resolved token payload
+ * and policy.
+ *
+ * @param builder bulk transfer token builder
+ * @return resolved token payload and policy
+ */
+- (void)prepareBulkTransferToken:(BulkTransferTokenBuilder *)builder
+                       onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                         onError:(OnError)onError;
 
 /**
  * Signs a token payload.
@@ -733,6 +776,15 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
 - (void)redeemStandingOrderToken:(NSString *)tokenId
                        onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
                          onError:(OnError)onError;
+
+/**
+ * Redeems a bulk transfer token.
+ *
+ * @param tokenId ID of token to redeem
+ */
+- (void)redeemBulkTransferToken:(NSString *)tokenId
+                      onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+                        onError:(OnError)onError;
 
 /**
  * Uploads a blob to the server.

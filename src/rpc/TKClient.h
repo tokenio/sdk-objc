@@ -535,6 +535,29 @@
                                   onError:(OnError)onError;
 
 /**
+ * Looks up an existing bulk transfer.
+ *
+ * @param bulkTransferId bulk transfer ID
+ * @param onSuccess invoked on success with a bulk transfer record
+ * @param onError invoked on error
+*/
+-(void)getBulkTransfer:(NSString *)bulkTransferId
+             onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+               onError:(OnError)onError;
+
+/**
+ * Redeems a bulk transfer token.
+ *
+ * @param tokenId ID of token to redeem
+ * @param onSuccess invoked on success with a bulk transfer record
+ * @param onError invoked on error
+*/
+
+-(void)createBulkTransfer:(NSString *)tokenId
+                onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+                  onError:(OnError)onError;
+
+/**
  * Uploads a blob to the server.
  *
  * @param ownerId owner of the blob

@@ -577,6 +577,17 @@ NS_ASSUME_NONNULL_BEGIN
     return [[StandingOrderTokenBuilder alloc] init:self tokenRequest:tokenRequest];
 }
 
+- (BulkTransferTokenBuilder *) createBulkTransferTokenBuilder:(NSArray<BulkTransferBody_Transfer *> *)transfers
+                                                 totalAmount:(NSDecimalNumber *) totalAmount
+                                                       source:(TransferEndpoint *)source {
+    return [[BulkTransferTokenBuilder alloc] init:self transfers:transfers totalAmount:totalAmount source:source];
+}
+
+
+- (BulkTransferTokenBuilder *) createBulkTransferTokenBuilder:(TokenRequest *)tokenRequest {
+    return [[BulkTransferTokenBuilder alloc] init:self tokenRequest:tokenRequest];
+}
+
 - (void)prepareTransferToken:(TransferTokenBuilder *)builder
                    onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                      onError:(OnError)onError {
@@ -587,6 +598,14 @@ NS_ASSUME_NONNULL_BEGIN
                         onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
                           onError:(OnError)onError {
     [client prepareToken:[builder buildPayload] onSuccess:onSuccess onError:onError];
+}
+
+- (void)prepareBulkTransferToken:(BulkTransferTokenBuilder *)builder
+                       onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess
+                         onError:(OnError)onError {
+    [client prepareToken:[builder buildPayload]
+               onSuccess:onSuccess
+                 onError:onError];
 }
 
 - (Signature * _Nullable)signTokenPayload:(TokenPayload *)tokenPayload
@@ -784,15 +803,16 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
                 onError:onError];
 }
 
-/**
- * Redeems a standing order token.
- *
- * @param tokenId ID of token to redeem
- */
 - (void)redeemStandingOrderToken:(NSString *)tokenId
                        onSuccess:(OnSuccessWithStandingOrderSubmission)onSuccess
                          onError:(OnError)onError {
     [client createStandingOrder:tokenId onSuccess:onSuccess onError:onError];
+}
+
+- (void)redeemBulkTransferToken:(NSString *)tokenId
+                      onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+                        onError:(OnError)onError {
+    [client createBulkTransfer:tokenId onSuccess:onSuccess onError:onError];
 }
 
 - (void)getTransaction:(NSString *)transactionId
@@ -911,6 +931,12 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
              onError(error);
          }
      }];
+}
+
+-(void)getBulkTransfer:(NSString *)bulkTransferId
+             onSuccess:(OnSuccessWithBulkTransfer)onSuccess
+               onError:(OnError)onError {
+    [client getBulkTransfer:bulkTransferId onSuccess:onSuccess onError:onError];
 }
 
 - (void)createBlob:(NSString *)ownerId

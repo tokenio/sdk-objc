@@ -122,7 +122,6 @@
 
 /**
  * Builds the token payload.
- *
  */
 - (TokenPayload *)buildPayload;
 

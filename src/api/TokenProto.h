@@ -11,6 +11,7 @@
 
 #import "Alias.pbobjc.h"
 #import "Account.pbobjc.h"
+#import "Bankinfo.pbobjc.h"
 #import "Banklink.pbobjc.h"
 #import "Member.pbobjc.h"
 #import "Money.pbobjc.h"
