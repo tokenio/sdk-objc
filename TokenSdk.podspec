@@ -28,7 +28,6 @@ Pod::Spec.new do |s|
     # These headers need the directory structure preserved
     s.subspec "Messages" do |ss|
         ss.public_header_files = gendir
-        ss.header_mappings_dir = gendir
         ss.source_files = "#{gendir}/*.pbobjc.m", "#{gendir}/**/*.pbobjc.m", "#{gendir}/**/*.h"
         ss.exclude_files = "#{gendir}/fank/*"
         ss.requires_arc = false
