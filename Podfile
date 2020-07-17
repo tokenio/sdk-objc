@@ -6,8 +6,8 @@ platform :ios, '9.0'
 inhibit_all_warnings!
 
 target 'TokenSdk' do
-  pod '!ProtoCompiler', '3.8.0'
-  pod '!ProtoCompiler-gRPCPlugin', '1.23.0'
+  pod '!ProtoCompiler'#, '3.8.0'
+  pod '!ProtoCompiler-gRPCPlugin'#, '1.23.0'
   pod "OrderedDictionary"
   pod 'Unirest', '~>1.1.4'
   # A workaround for issue https://github.com/firebase/firebase-ios-sdk/issues/2665

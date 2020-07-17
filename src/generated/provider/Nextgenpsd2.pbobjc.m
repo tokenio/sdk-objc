@@ -18,6 +18,14 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(AccountReference);
+GPBObjCClassDeclaration(ReportExchangeRate);
 
 #pragma mark - Nextgenpsd2Root
 
@@ -79,92 +87,92 @@ typedef struct NextGenPsd2AccountDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Bban,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, bban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "msisdn",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Msisdn,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, msisdn),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Currency,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, currency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "product",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Product,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, product),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "cashAccountType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_CashAccountType,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, cashAccountType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Bic,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "linkedAccounts",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_LinkedAccounts,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, linkedAccounts),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "usuage",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Usuage,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, usuage),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "details",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2AccountDetails_FieldNumber_Details,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(NextGenPsd2AccountDetails__storage_, details),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -175,7 +183,7 @@ typedef struct NextGenPsd2AccountDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NextGenPsd2AccountDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -239,61 +247,61 @@ typedef struct NextGenPsd2TransactionDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "entryReference",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_EntryReference,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, entryReference),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "endToEndId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_EndToEndId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, endToEndId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "mandateId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_MandateId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, mandateId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "checkId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_CheckId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, checkId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creditorId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_CreditorId,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, creditorId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "valueDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_ValueDate,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, valueDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currencyExchangeArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(ReportExchangeRate),
+        .dataTypeSpecific.clazz = GPBObjCClass(ReportExchangeRate),
         .number = NextGenPsd2TransactionDetails_FieldNumber_CurrencyExchangeArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, currencyExchangeArray),
@@ -302,16 +310,16 @@ typedef struct NextGenPsd2TransactionDetails__storage_ {
       },
       {
         .name = "creditorName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_CreditorName,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, creditorName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creditorAccount",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountReference),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountReference),
         .number = NextGenPsd2TransactionDetails_FieldNumber_CreditorAccount,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, creditorAccount),
@@ -320,25 +328,25 @@ typedef struct NextGenPsd2TransactionDetails__storage_ {
       },
       {
         .name = "ultimateCreditor",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_UltimateCreditor,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, ultimateCreditor),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "debtorName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_DebtorName,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, debtorName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "debtorAccount",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountReference),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountReference),
         .number = NextGenPsd2TransactionDetails_FieldNumber_DebtorAccount,
         .hasIndex = 10,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, debtorAccount),
@@ -347,56 +355,56 @@ typedef struct NextGenPsd2TransactionDetails__storage_ {
       },
       {
         .name = "ultimateDebtor",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_UltimateDebtor,
         .hasIndex = 11,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, ultimateDebtor),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "remittanceInformationStructured",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_RemittanceInformationStructured,
         .hasIndex = 12,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, remittanceInformationStructured),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "additionalInformation",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_AdditionalInformation,
         .hasIndex = 13,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, additionalInformation),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "purposeCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_PurposeCode,
         .hasIndex = 14,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, purposeCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bankTransactionCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_BankTransactionCode,
         .hasIndex = 15,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, bankTransactionCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "proprietaryBankTransactionCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransactionDetails_FieldNumber_ProprietaryBankTransactionCode,
         .hasIndex = 16,
         .offset = (uint32_t)offsetof(NextGenPsd2TransactionDetails__storage_, proprietaryBankTransactionCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -407,7 +415,7 @@ typedef struct NextGenPsd2TransactionDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NextGenPsd2TransactionDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -443,38 +451,38 @@ typedef struct NextGenPsd2TransferMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "endToEndIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransferMetadata_FieldNumber_EndToEndIdentification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(NextGenPsd2TransferMetadata__storage_, endToEndIdentification),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "remittanceInformationStructured",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransferMetadata_FieldNumber_RemittanceInformationStructured,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(NextGenPsd2TransferMetadata__storage_, remittanceInformationStructured),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creditorAgent",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransferMetadata_FieldNumber_CreditorAgent,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(NextGenPsd2TransferMetadata__storage_, creditorAgent),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creditorAgentName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = NextGenPsd2TransferMetadata_FieldNumber_CreditorAgentName,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(NextGenPsd2TransferMetadata__storage_, creditorAgentName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -485,7 +493,7 @@ typedef struct NextGenPsd2TransferMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(NextGenPsd2TransferMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -525,56 +533,56 @@ typedef struct ReportExchangeRate__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "sourceCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_SourceCurrency,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, sourceCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "exchangeRate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_ExchangeRate,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, exchangeRate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "unitCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_UnitCurrency,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, unitCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "targetCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_TargetCurrency,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, targetCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "quotationDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_QuotationDate,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, quotationDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "contractIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReportExchangeRate_FieldNumber_ContractIdentification,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(ReportExchangeRate__storage_, contractIdentification),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -585,7 +593,7 @@ typedef struct ReportExchangeRate__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ReportExchangeRate__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -625,56 +633,56 @@ typedef struct AccountReference__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountReference__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_Bban,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountReference__storage_, bban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "pan",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_Pan,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountReference__storage_, pan),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "maskedPan",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_MaskedPan,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(AccountReference__storage_, maskedPan),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "msisdn",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_Msisdn,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(AccountReference__storage_, msisdn),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountReference_FieldNumber_Currency,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(AccountReference__storage_, currency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -685,7 +693,7 @@ typedef struct AccountReference__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountReference__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

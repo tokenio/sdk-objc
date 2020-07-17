@@ -22,6 +22,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(SealedMessage);
 
 #pragma mark - BanklinkRoot
 
@@ -115,16 +122,16 @@ typedef struct BankAuthorization__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bankId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankAuthorization_FieldNumber_BankId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BankAuthorization__storage_, bankId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage),
+        .dataTypeSpecific.clazz = GPBObjCClass(SealedMessage),
         .number = BankAuthorization_FieldNumber_AccountsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BankAuthorization__storage_, accountsArray),
@@ -139,7 +146,7 @@ typedef struct BankAuthorization__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankAuthorization__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -171,20 +178,20 @@ typedef struct OauthBankAuthorization__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bankId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = OauthBankAuthorization_FieldNumber_BankId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(OauthBankAuthorization__storage_, bankId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accessToken",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = OauthBankAuthorization_FieldNumber_AccessToken,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(OauthBankAuthorization__storage_, accessToken),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -195,7 +202,7 @@ typedef struct OauthBankAuthorization__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(OauthBankAuthorization__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

@@ -155,7 +155,7 @@
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
-- (void)testGetTokenRequestResult {
+- (void)sampleGetTokenRequestResult {
     TokenRequestPayload *payload = [[TokenRequestPayload alloc] init];
     payload.refId = [TKUtil nonce];
     payload.redirectURL = @"https://token.io";

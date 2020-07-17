@@ -49,6 +49,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "TKAccessTokenTests/testGetTokenRequestResult">
+               </Test>
+               <Test
                   Identifier = "TKAccountSamples/testBankAuthorizationNotification">
                </Test>
                <Test

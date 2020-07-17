@@ -82,56 +82,56 @@ typedef struct HttpAuthPayload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "method",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_Method,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, method),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "uriHost",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_UriHost,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, uriHost),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "uriPath",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_UriPath,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, uriPath),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "queryString",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_QueryString,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, queryString),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "requestBody",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_RequestBody,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, requestBody),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = HttpAuthPayload_FieldNumber_CreatedAtMs,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(HttpAuthPayload__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -142,7 +142,7 @@ typedef struct HttpAuthPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(HttpAuthPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -174,20 +174,20 @@ typedef struct GrpcAuthPayload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "request",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = GrpcAuthPayload_FieldNumber_Request,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GrpcAuthPayload__storage_, request),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
       },
       {
         .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = GrpcAuthPayload_FieldNumber_CreatedAtMs,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(GrpcAuthPayload__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -198,7 +198,7 @@ typedef struct GrpcAuthPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GrpcAuthPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

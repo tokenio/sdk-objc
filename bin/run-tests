@@ -2,7 +2,7 @@
 
 scheme=$1
 
-destination=$(instruments -s devices | grep iPhone | tail -1 \
+destination=$(instruments -s devices | grep iPhone\ 8| tail -1 \
      | sed 's/\(iPhone[^\(]*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
 
 xcodebuild \

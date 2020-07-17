@@ -19,6 +19,15 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(GPBMethodOptions);
+GPBObjCClassDeclaration(RateLimitSelector);
+GPBObjCClassDeclaration(RateLimitSelector_Selector);
 
 #pragma mark - ServiceRoot
 
@@ -35,8 +44,8 @@
       {
         .defaultValue.valueMessage = nil,
         .singletonName = GPBStringifySymbol(ServiceRoot_rateLimit),
-        .extendedClass = GPBStringifySymbol(GPBMethodOptions),
-        .messageOrGroupClassName = GPBStringifySymbol(RateLimitSelector),
+        .extendedClass.clazz = GPBObjCClass(GPBMethodOptions),
+        .messageOrGroupClass.clazz = GPBObjCClass(RateLimitSelector),
         .enumDescriptorFunc = NULL,
         .fieldNumber = 5000,
         .dataType = GPBDataTypeMessage,
@@ -45,7 +54,8 @@
     };
     for (size_t i = 0; i < sizeof(descriptions) / sizeof(descriptions[0]); ++i) {
       GPBExtensionDescriptor *extension =
-          [[GPBExtensionDescriptor alloc] initWithExtensionDescription:&descriptions[i]];
+          [[GPBExtensionDescriptor alloc] initWithExtensionDescription:&descriptions[i]
+                                                         usesClassRefs:YES];
       [registry addExtension:extension];
       [self globallyRegisterExtension:extension];
       [extension release];
@@ -91,7 +101,7 @@ typedef struct RateLimitSelector__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "selectorArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(RateLimitSelector_Selector),
+        .dataTypeSpecific.clazz = GPBObjCClass(RateLimitSelector_Selector),
         .number = RateLimitSelector_FieldNumber_SelectorArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RateLimitSelector__storage_, selectorArray),
@@ -106,7 +116,7 @@ typedef struct RateLimitSelector__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RateLimitSelector__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -138,20 +148,20 @@ typedef struct RateLimitSelector_Selector__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "key",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RateLimitSelector_Selector_FieldNumber_Key,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RateLimitSelector_Selector__storage_, key),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "path",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RateLimitSelector_Selector_FieldNumber_Path,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RateLimitSelector_Selector__storage_, path),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -162,8 +172,8 @@ typedef struct RateLimitSelector_Selector__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RateLimitSelector_Selector__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(RateLimitSelector)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(RateLimitSelector)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

@@ -23,6 +23,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Alias);
 
 #pragma mark - EidasRoot
 
@@ -122,16 +129,16 @@ typedef struct VerifyEidasPayload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = VerifyEidasPayload_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "alias",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .dataTypeSpecific.clazz = GPBObjCClass(Alias),
         .number = VerifyEidasPayload_FieldNumber_Alias,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, alias),
@@ -140,11 +147,11 @@ typedef struct VerifyEidasPayload__storage_ {
       },
       {
         .name = "certificate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = VerifyEidasPayload_FieldNumber_Certificate,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, certificate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -153,7 +160,7 @@ typedef struct VerifyEidasPayload__storage_ {
         .number = VerifyEidasPayload_FieldNumber_Algorithm,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(VerifyEidasPayload__storage_, algorithm),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -164,7 +171,7 @@ typedef struct VerifyEidasPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(VerifyEidasPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -178,13 +185,13 @@ typedef struct VerifyEidasPayload__storage_ {
 int32_t VerifyEidasPayload_Algorithm_RawValue(VerifyEidasPayload *message) {
   GPBDescriptor *descriptor = [VerifyEidasPayload descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:VerifyEidasPayload_FieldNumber_Algorithm];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetVerifyEidasPayload_Algorithm_RawValue(VerifyEidasPayload *message, int32_t value) {
   GPBDescriptor *descriptor = [VerifyEidasPayload descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:VerifyEidasPayload_FieldNumber_Algorithm];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 

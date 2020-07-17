@@ -28,6 +28,21 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(BulkTransfer);
+GPBObjCClassDeclaration(BulkTransferBody_Transfer);
+GPBObjCClassDeclaration(BulkTransfer_Transaction);
+GPBObjCClassDeclaration(Money);
+GPBObjCClassDeclaration(Signature);
+GPBObjCClassDeclaration(TransferDestination);
+GPBObjCClassDeclaration(TransferEndpoint);
+GPBObjCClassDeclaration(TransferInstructions_Metadata);
+GPBObjCClassDeclaration(TransferPayload);
 
 #pragma mark - TransferRoot
 
@@ -98,34 +113,34 @@ typedef struct Transfer__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transfer_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Transfer__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transactionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transfer_FieldNumber_TransactionId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Transfer__storage_, transactionId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transfer_FieldNumber_CreatedAtMs,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Transfer__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferPayload),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferPayload),
         .number = Transfer_FieldNumber_Payload,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Transfer__storage_, payload),
@@ -134,7 +149,7 @@ typedef struct Transfer__storage_ {
       },
       {
         .name = "payloadSignaturesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .dataTypeSpecific.clazz = GPBObjCClass(Signature),
         .number = Transfer_FieldNumber_PayloadSignaturesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Transfer__storage_, payloadSignaturesArray),
@@ -147,16 +162,16 @@ typedef struct Transfer__storage_ {
         .number = Transfer_FieldNumber_Status,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Transfer__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "orderId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transfer_FieldNumber_OrderId,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Transfer__storage_, orderId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -165,16 +180,16 @@ typedef struct Transfer__storage_ {
         .number = Transfer_FieldNumber_Method,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Transfer__storage_, method),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "executionDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transfer_FieldNumber_ExecutionDate,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Transfer__storage_, executionDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -185,7 +200,7 @@ typedef struct Transfer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Transfer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -199,25 +214,25 @@ typedef struct Transfer__storage_ {
 int32_t Transfer_Status_RawValue(Transfer *message) {
   GPBDescriptor *descriptor = [Transfer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransfer_Status_RawValue(Transfer *message, int32_t value) {
   GPBDescriptor *descriptor = [Transfer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Transfer_Method_RawValue(Transfer *message) {
   GPBDescriptor *descriptor = [Transfer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Method];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransfer_Method_RawValue(Transfer *message, int32_t value) {
   GPBDescriptor *descriptor = [Transfer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transfer_FieldNumber_Method];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Transfer_Method
@@ -284,34 +299,34 @@ typedef struct BulkTransfer__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BulkTransfer_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tokenId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BulkTransfer_FieldNumber_TokenId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, tokenId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BulkTransfer_FieldNumber_CreatedAtMs,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "transactionsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransfer_Transaction),
+        .dataTypeSpecific.clazz = GPBObjCClass(BulkTransfer_Transaction),
         .number = BulkTransfer_FieldNumber_TransactionsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, transactionsArray),
@@ -320,16 +335,16 @@ typedef struct BulkTransfer__storage_ {
       },
       {
         .name = "totalAmount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BulkTransfer_FieldNumber_TotalAmount,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, totalAmount),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "source",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferEndpoint),
         .number = BulkTransfer_FieldNumber_Source,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(BulkTransfer__storage_, source),
@@ -344,7 +359,7 @@ typedef struct BulkTransfer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BulkTransfer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -378,7 +393,7 @@ typedef struct BulkTransfer_Transaction__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "transfer",
-        .dataTypeSpecific.className = GPBStringifySymbol(BulkTransferBody_Transfer),
+        .dataTypeSpecific.clazz = GPBObjCClass(BulkTransferBody_Transfer),
         .number = BulkTransfer_Transaction_FieldNumber_Transfer,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BulkTransfer_Transaction__storage_, transfer),
@@ -387,11 +402,11 @@ typedef struct BulkTransfer_Transaction__storage_ {
       },
       {
         .name = "transactionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BulkTransfer_Transaction_FieldNumber_TransactionId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BulkTransfer_Transaction__storage_, transactionId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -400,7 +415,7 @@ typedef struct BulkTransfer_Transaction__storage_ {
         .number = BulkTransfer_Transaction_FieldNumber_Status,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BulkTransfer_Transaction__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -411,8 +426,8 @@ typedef struct BulkTransfer_Transaction__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BulkTransfer_Transaction__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BulkTransfer)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(BulkTransfer)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -426,13 +441,13 @@ typedef struct BulkTransfer_Transaction__storage_ {
 int32_t BulkTransfer_Transaction_Status_RawValue(BulkTransfer_Transaction *message) {
   GPBDescriptor *descriptor = [BulkTransfer_Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:BulkTransfer_Transaction_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetBulkTransfer_Transaction_Status_RawValue(BulkTransfer_Transaction *message, int32_t value) {
   GPBDescriptor *descriptor = [BulkTransfer_Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:BulkTransfer_Transaction_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - TransferPayload
@@ -467,25 +482,25 @@ typedef struct TransferPayload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "refId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferPayload_FieldNumber_RefId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, refId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tokenId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferPayload_FieldNumber_TokenId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, tokenId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "amount",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = TransferPayload_FieldNumber_Amount,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, amount),
@@ -494,7 +509,7 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferEndpoint),
         .number = TransferPayload_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, destinationsArray),
@@ -503,16 +518,16 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "description_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferPayload_FieldNumber_Description_p,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, description_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transferDestinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination),
         .number = TransferPayload_FieldNumber_TransferDestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, transferDestinationsArray),
@@ -521,7 +536,7 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "metadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions_Metadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferInstructions_Metadata),
         .number = TransferPayload_FieldNumber_Metadata,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(TransferPayload__storage_, metadata),
@@ -530,11 +545,11 @@ typedef struct TransferPayload__storage_ {
       },
       {
         .name = "confirmFunds",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferPayload_FieldNumber_ConfirmFunds,
         .hasIndex = 5,
         .offset = 6,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
     };
@@ -545,7 +560,7 @@ typedef struct TransferPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

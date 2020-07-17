@@ -20,6 +20,16 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(PricingInstructions);
+GPBObjCClassDeclaration(TransferQuote);
+GPBObjCClassDeclaration(TransferQuote_Fee);
+GPBObjCClassDeclaration(TransferQuote_FxRate);
 
 #pragma mark - PricingRoot
 
@@ -153,34 +163,34 @@ typedef struct TransferQuote__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FieldNumber_AccountCurrency,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, accountCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "feesTotal",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FieldNumber_FeesTotal,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, feesTotal),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "feesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote_Fee),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferQuote_Fee),
         .number = TransferQuote_FieldNumber_FeesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, feesArray),
@@ -189,7 +199,7 @@ typedef struct TransferQuote__storage_ {
       },
       {
         .name = "ratesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote_FxRate),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferQuote_FxRate),
         .number = TransferQuote_FieldNumber_RatesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, ratesArray),
@@ -198,11 +208,11 @@ typedef struct TransferQuote__storage_ {
       },
       {
         .name = "expiresAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FieldNumber_ExpiresAtMs,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(TransferQuote__storage_, expiresAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -213,7 +223,7 @@ typedef struct TransferQuote__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferQuote__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -247,20 +257,20 @@ typedef struct TransferQuote_Fee__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "amount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_Fee_FieldNumber_Amount,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferQuote_Fee__storage_, amount),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "description_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_Fee_FieldNumber_Description_p,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferQuote_Fee__storage_, description_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -271,8 +281,8 @@ typedef struct TransferQuote_Fee__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferQuote_Fee__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferQuote)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferQuote)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -306,29 +316,29 @@ typedef struct TransferQuote_FxRate__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "baseCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FxRate_FieldNumber_BaseCurrency,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferQuote_FxRate__storage_, baseCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "quoteCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FxRate_FieldNumber_QuoteCurrency,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferQuote_FxRate__storage_, quoteCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "rate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferQuote_FxRate_FieldNumber_Rate,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferQuote_FxRate__storage_, rate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -339,8 +349,8 @@ typedef struct TransferQuote_FxRate__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferQuote_FxRate__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferQuote)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferQuote)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -377,7 +387,7 @@ typedef struct Pricing__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "sourceQuote",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferQuote),
         .number = Pricing_FieldNumber_SourceQuote,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Pricing__storage_, sourceQuote),
@@ -386,7 +396,7 @@ typedef struct Pricing__storage_ {
       },
       {
         .name = "destinationQuote",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferQuote),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferQuote),
         .number = Pricing_FieldNumber_DestinationQuote,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Pricing__storage_, destinationQuote),
@@ -395,7 +405,7 @@ typedef struct Pricing__storage_ {
       },
       {
         .name = "instructions",
-        .dataTypeSpecific.className = GPBStringifySymbol(PricingInstructions),
+        .dataTypeSpecific.clazz = GPBObjCClass(PricingInstructions),
         .number = Pricing_FieldNumber_Instructions,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Pricing__storage_, instructions),
@@ -410,7 +420,7 @@ typedef struct Pricing__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Pricing__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -451,7 +461,7 @@ typedef struct PricingInstructions__storage_ {
         .number = PricingInstructions_FieldNumber_FeesPaidBy,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PricingInstructions__storage_, feesPaidBy),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -460,7 +470,7 @@ typedef struct PricingInstructions__storage_ {
         .number = PricingInstructions_FieldNumber_FxPerformedBy,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PricingInstructions__storage_, fxPerformedBy),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -471,7 +481,7 @@ typedef struct PricingInstructions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PricingInstructions__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -487,25 +497,25 @@ typedef struct PricingInstructions__storage_ {
 int32_t PricingInstructions_FeesPaidBy_RawValue(PricingInstructions *message) {
   GPBDescriptor *descriptor = [PricingInstructions descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PricingInstructions_FieldNumber_FeesPaidBy];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPricingInstructions_FeesPaidBy_RawValue(PricingInstructions *message, int32_t value) {
   GPBDescriptor *descriptor = [PricingInstructions descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PricingInstructions_FieldNumber_FeesPaidBy];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t PricingInstructions_FxPerformedBy_RawValue(PricingInstructions *message) {
   GPBDescriptor *descriptor = [PricingInstructions descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PricingInstructions_FieldNumber_FxPerformedBy];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPricingInstructions_FxPerformedBy_RawValue(PricingInstructions *message, int32_t value) {
   GPBDescriptor *descriptor = [PricingInstructions descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PricingInstructions_FieldNumber_FxPerformedBy];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 

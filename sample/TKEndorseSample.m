@@ -17,7 +17,7 @@
 
 @implementation TKEndorseSample
 
-- (void)testEndorseAccessToken {
+- (void)sampleEndorseAccessToken {
     TKMember *member = self.payer;
     TKMember *aisp = self.payee;
     __block NSString *notificationId = nil;
@@ -131,7 +131,7 @@
     }];
 }
 
-- (void)testEndorseTransferToken {
+- (void)sampleEndorseTransferToken {
     TKMember *member = self.payer;
     TKMember *pisp = self.payee;
     __block NSString *notificationId = nil;

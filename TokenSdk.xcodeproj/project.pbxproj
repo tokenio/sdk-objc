@@ -1764,7 +1764,6 @@
 					"-l\"gRPC-Core\"",
 					"-l\"gRPC-ProtoRPC\"",
 					"-l\"gRPC-RxLibrary\"",
-					"-l\"nanopb\"",
 					"-l\"z\"",
 					"-w",
 				);
@@ -1822,7 +1821,6 @@
 					"-l\"gRPC-Core\"",
 					"-l\"gRPC-ProtoRPC\"",
 					"-l\"gRPC-RxLibrary\"",
-					"-l\"nanopb\"",
 					"-l\"z\"",
 					"-w",
 				);

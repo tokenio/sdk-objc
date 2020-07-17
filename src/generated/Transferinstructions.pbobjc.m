@@ -28,6 +28,35 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Address);
+GPBObjCClassDeclaration(BankAccount);
+GPBObjCClassDeclaration(CustomerData);
+GPBObjCClassDeclaration(ProviderTransferMetadata);
+GPBObjCClassDeclaration(TransferDestination);
+GPBObjCClassDeclaration(TransferDestination_Ach);
+GPBObjCClassDeclaration(TransferDestination_Bacs);
+GPBObjCClassDeclaration(TransferDestination_BlueCash);
+GPBObjCClassDeclaration(TransferDestination_Chaps);
+GPBObjCClassDeclaration(TransferDestination_Custom);
+GPBObjCClassDeclaration(TransferDestination_Elixir);
+GPBObjCClassDeclaration(TransferDestination_ExpressElixir);
+GPBObjCClassDeclaration(TransferDestination_FasterPayments);
+GPBObjCClassDeclaration(TransferDestination_Hsvp);
+GPBObjCClassDeclaration(TransferDestination_Sepa);
+GPBObjCClassDeclaration(TransferDestination_SepaInstant);
+GPBObjCClassDeclaration(TransferDestination_Sorbnet);
+GPBObjCClassDeclaration(TransferDestination_Swift);
+GPBObjCClassDeclaration(TransferDestination_Target2);
+GPBObjCClassDeclaration(TransferDestination_Token);
+GPBObjCClassDeclaration(TransferEndpoint);
+GPBObjCClassDeclaration(TransferInstructions);
+GPBObjCClassDeclaration(TransferInstructions_Metadata);
 
 #pragma mark - TransferinstructionsRoot
 
@@ -170,7 +199,7 @@ typedef struct CustomerData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "legalNamesArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = CustomerData_FieldNumber_LegalNamesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(CustomerData__storage_, legalNamesArray),
@@ -179,7 +208,7 @@ typedef struct CustomerData__storage_ {
       },
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Address),
         .number = CustomerData_FieldNumber_Address,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CustomerData__storage_, address),
@@ -194,7 +223,7 @@ typedef struct CustomerData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CustomerData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -226,7 +255,7 @@ typedef struct TransferEndpoint__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankAccount),
         .number = TransferEndpoint_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferEndpoint__storage_, account),
@@ -235,7 +264,7 @@ typedef struct TransferEndpoint__storage_ {
       },
       {
         .name = "customerData",
-        .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
+        .dataTypeSpecific.clazz = GPBObjCClass(CustomerData),
         .number = TransferEndpoint_FieldNumber_CustomerData,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferEndpoint__storage_, customerData),
@@ -250,7 +279,7 @@ typedef struct TransferEndpoint__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferEndpoint__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -311,7 +340,7 @@ typedef struct TransferDestination__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "token",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Token),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Token),
         .number = TransferDestination_FieldNumber_Token,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, token),
@@ -320,7 +349,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "sepa",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Sepa),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Sepa),
         .number = TransferDestination_FieldNumber_Sepa,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, sepa),
@@ -329,7 +358,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "sepaInstant",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_SepaInstant),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_SepaInstant),
         .number = TransferDestination_FieldNumber_SepaInstant,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, sepaInstant),
@@ -338,7 +367,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "fasterPayments",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_FasterPayments),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_FasterPayments),
         .number = TransferDestination_FieldNumber_FasterPayments,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, fasterPayments),
@@ -347,7 +376,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "ach",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Ach),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Ach),
         .number = TransferDestination_FieldNumber_Ach,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, ach),
@@ -356,7 +385,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "swift",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Swift),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Swift),
         .number = TransferDestination_FieldNumber_Swift,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, swift),
@@ -365,7 +394,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "elixir",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Elixir),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Elixir),
         .number = TransferDestination_FieldNumber_Elixir,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, elixir),
@@ -374,7 +403,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "expressElixir",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_ExpressElixir),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_ExpressElixir),
         .number = TransferDestination_FieldNumber_ExpressElixir,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, expressElixir),
@@ -383,7 +412,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "blueCash",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_BlueCash),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_BlueCash),
         .number = TransferDestination_FieldNumber_BlueCash,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, blueCash),
@@ -392,7 +421,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "sorbnet",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Sorbnet),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Sorbnet),
         .number = TransferDestination_FieldNumber_Sorbnet,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, sorbnet),
@@ -401,7 +430,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "customerData",
-        .dataTypeSpecific.className = GPBStringifySymbol(CustomerData),
+        .dataTypeSpecific.clazz = GPBObjCClass(CustomerData),
         .number = TransferDestination_FieldNumber_CustomerData,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, customerData),
@@ -410,7 +439,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "custom",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Custom),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Custom),
         .number = TransferDestination_FieldNumber_Custom,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, custom),
@@ -419,7 +448,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "chaps",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Chaps),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Chaps),
         .number = TransferDestination_FieldNumber_Chaps,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, chaps),
@@ -428,7 +457,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "bacs",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Bacs),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Bacs),
         .number = TransferDestination_FieldNumber_Bacs,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, bacs),
@@ -437,7 +466,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "target2",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Target2),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Target2),
         .number = TransferDestination_FieldNumber_Target2,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, target2),
@@ -446,7 +475,7 @@ typedef struct TransferDestination__storage_ {
       },
       {
         .name = "hsvp",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination_Hsvp),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination_Hsvp),
         .number = TransferDestination_FieldNumber_Hsvp,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(TransferDestination__storage_, hsvp),
@@ -461,7 +490,7 @@ typedef struct TransferDestination__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "destination",
     };
@@ -479,9 +508,9 @@ typedef struct TransferDestination__storage_ {
 @end
 
 void TransferDestination_ClearDestinationOneOfCase(TransferDestination *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [TransferDestination descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - TransferDestination_Token
 
@@ -504,20 +533,20 @@ typedef struct TransferDestination_Token__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Token_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Token__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Token_FieldNumber_AccountId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Token__storage_, accountId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -528,8 +557,8 @@ typedef struct TransferDestination_Token__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Token__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -561,20 +590,20 @@ typedef struct TransferDestination_Custom__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bankId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Custom_FieldNumber_BankId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Custom__storage_, bankId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "payload",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Custom_FieldNumber_Payload,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Custom__storage_, payload),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -585,8 +614,8 @@ typedef struct TransferDestination_Custom__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Custom__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -618,20 +647,20 @@ typedef struct TransferDestination_Sepa__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Sepa_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Sepa__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Sepa_FieldNumber_Iban,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Sepa__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -642,8 +671,8 @@ typedef struct TransferDestination_Sepa__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Sepa__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -673,11 +702,11 @@ typedef struct TransferDestination_SepaInstant__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_SepaInstant_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_SepaInstant__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -688,8 +717,8 @@ typedef struct TransferDestination_SepaInstant__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_SepaInstant__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -721,20 +750,20 @@ typedef struct TransferDestination_FasterPayments__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "sortCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_FasterPayments_FieldNumber_SortCode,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_FasterPayments__storage_, sortCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_FasterPayments_FieldNumber_AccountNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_FasterPayments__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -745,8 +774,8 @@ typedef struct TransferDestination_FasterPayments__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_FasterPayments__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -778,20 +807,20 @@ typedef struct TransferDestination_Chaps__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "sortCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Chaps_FieldNumber_SortCode,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Chaps__storage_, sortCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Chaps_FieldNumber_AccountNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Chaps__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -802,8 +831,8 @@ typedef struct TransferDestination_Chaps__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Chaps__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -835,20 +864,20 @@ typedef struct TransferDestination_Bacs__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "sortCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Bacs_FieldNumber_SortCode,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Bacs__storage_, sortCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Bacs_FieldNumber_AccountNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Bacs__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -859,8 +888,8 @@ typedef struct TransferDestination_Bacs__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Bacs__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -892,20 +921,20 @@ typedef struct TransferDestination_Ach__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "routing",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Ach_FieldNumber_Routing,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Ach__storage_, routing),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Ach_FieldNumber_Account,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Ach__storage_, account),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -916,8 +945,8 @@ typedef struct TransferDestination_Ach__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Ach__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -949,20 +978,20 @@ typedef struct TransferDestination_Swift__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Swift_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Swift__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Swift_FieldNumber_Account,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferDestination_Swift__storage_, account),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -973,8 +1002,8 @@ typedef struct TransferDestination_Swift__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Swift__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1004,11 +1033,11 @@ typedef struct TransferDestination_Elixir__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Elixir_FieldNumber_AccountNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Elixir__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1019,8 +1048,8 @@ typedef struct TransferDestination_Elixir__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Elixir__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1050,11 +1079,11 @@ typedef struct TransferDestination_ExpressElixir__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_ExpressElixir_FieldNumber_AccountNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_ExpressElixir__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1065,8 +1094,8 @@ typedef struct TransferDestination_ExpressElixir__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_ExpressElixir__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1096,11 +1125,11 @@ typedef struct TransferDestination_BlueCash__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_BlueCash_FieldNumber_AccountNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_BlueCash__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1111,8 +1140,8 @@ typedef struct TransferDestination_BlueCash__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_BlueCash__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1142,11 +1171,11 @@ typedef struct TransferDestination_Sorbnet__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Sorbnet_FieldNumber_AccountNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Sorbnet__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1157,8 +1186,8 @@ typedef struct TransferDestination_Sorbnet__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Sorbnet__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1188,11 +1217,11 @@ typedef struct TransferDestination_Target2__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Target2_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Target2__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1203,8 +1232,8 @@ typedef struct TransferDestination_Target2__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Target2__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1234,11 +1263,11 @@ typedef struct TransferDestination_Hsvp__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "iban",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferDestination_Hsvp_FieldNumber_Iban,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferDestination_Hsvp__storage_, iban),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1249,8 +1278,8 @@ typedef struct TransferDestination_Hsvp__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferDestination_Hsvp__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferDestination)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferDestination)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1286,7 +1315,7 @@ typedef struct TransferInstructions__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "source",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferEndpoint),
         .number = TransferInstructions_FieldNumber_Source,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferInstructions__storage_, source),
@@ -1295,7 +1324,7 @@ typedef struct TransferInstructions__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferEndpoint),
         .number = TransferInstructions_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferInstructions__storage_, destinationsArray),
@@ -1304,7 +1333,7 @@ typedef struct TransferInstructions__storage_ {
       },
       {
         .name = "metadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferInstructions_Metadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferInstructions_Metadata),
         .number = TransferInstructions_FieldNumber_Metadata,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferInstructions__storage_, metadata),
@@ -1313,7 +1342,7 @@ typedef struct TransferInstructions__storage_ {
       },
       {
         .name = "transferDestinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination),
         .number = TransferInstructions_FieldNumber_TransferDestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransferInstructions__storage_, transferDestinationsArray),
@@ -1328,7 +1357,7 @@ typedef struct TransferInstructions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferInstructions__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1378,30 +1407,30 @@ typedef struct TransferInstructions_Metadata__storage_ {
         .number = TransferInstructions_Metadata_FieldNumber_PaymentContext,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, paymentContext),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "merchantCategoryCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferInstructions_Metadata_FieldNumber_MerchantCategoryCode,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, merchantCategoryCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "merchantCustomerId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferInstructions_Metadata_FieldNumber_MerchantCustomerId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, merchantCustomerId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "deliveryAddress",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Address),
         .number = TransferInstructions_Metadata_FieldNumber_DeliveryAddress,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, deliveryAddress),
@@ -1410,7 +1439,7 @@ typedef struct TransferInstructions_Metadata__storage_ {
       },
       {
         .name = "providerTransferMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(ProviderTransferMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(ProviderTransferMetadata),
         .number = TransferInstructions_Metadata_FieldNumber_ProviderTransferMetadata,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, providerTransferMetadata),
@@ -1423,34 +1452,34 @@ typedef struct TransferInstructions_Metadata__storage_ {
         .number = TransferInstructions_Metadata_FieldNumber_ChargeBearer,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, chargeBearer),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "ultimateCreditor",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferInstructions_Metadata_FieldNumber_UltimateCreditor,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, ultimateCreditor),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "ultimateDebtor",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferInstructions_Metadata_FieldNumber_UltimateDebtor,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, ultimateDebtor),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "purposeCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TransferInstructions_Metadata_FieldNumber_PurposeCode,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(TransferInstructions_Metadata__storage_, purposeCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1461,13 +1490,13 @@ typedef struct TransferInstructions_Metadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransferInstructions_Metadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\007\014\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TransferInstructions)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TransferInstructions)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1481,25 +1510,25 @@ typedef struct TransferInstructions_Metadata__storage_ {
 int32_t TransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message) {
   GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_PaymentContext];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransferInstructions_Metadata_PaymentContext_RawValue(TransferInstructions_Metadata *message, int32_t value) {
   GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_PaymentContext];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t TransferInstructions_Metadata_ChargeBearer_RawValue(TransferInstructions_Metadata *message) {
   GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_ChargeBearer];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransferInstructions_Metadata_ChargeBearer_RawValue(TransferInstructions_Metadata *message, int32_t value) {
   GPBDescriptor *descriptor = [TransferInstructions_Metadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:TransferInstructions_Metadata_FieldNumber_ChargeBearer];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 

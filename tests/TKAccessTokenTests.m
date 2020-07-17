@@ -158,7 +158,7 @@
     XCTAssertNotEqual(token.payload.refId, tokenPayload.refId);
 }
 
-- (void)testGetTokenRequestResult {
+- (void)sampleGetTokenRequestResult {
     TokenClient *tokenClient = [self client];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [grantee storeTokenRequest:requestPayload requestOptions:requestOptions onSuccess:^(NSString *tokenRequestId) {

@@ -23,6 +23,17 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Address);
+GPBObjCClassDeclaration(Cma9Account);
+GPBObjCClassDeclaration(Cma9AccountDetails);
+GPBObjCClassDeclaration(Cma9AccountDetails_Cma9Address);
+GPBObjCClassDeclaration(Money);
 
 #pragma mark - Cma9Root
 
@@ -96,20 +107,20 @@ typedef struct Cma9AccountDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "partyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_PartyId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, partyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "partyNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_PartyNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, partyNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -118,48 +129,48 @@ typedef struct Cma9AccountDetails__storage_ {
         .number = Cma9AccountDetails_FieldNumber_PartyType,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, partyType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_Name,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "emailAddress",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_EmailAddress,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, emailAddress),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "phone",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_Phone,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, phone),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "mobile",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_Mobile,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, mobile),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "addressArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Cma9AccountDetails_Cma9Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Cma9AccountDetails_Cma9Address),
         .number = Cma9AccountDetails_FieldNumber_AddressArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, addressArray),
@@ -172,7 +183,7 @@ typedef struct Cma9AccountDetails__storage_ {
         .number = Cma9AccountDetails_FieldNumber_AccountType,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, accountType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -181,16 +192,16 @@ typedef struct Cma9AccountDetails__storage_ {
         .number = Cma9AccountDetails_FieldNumber_AccountSubtype,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, accountSubtype),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "description_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9AccountDetails_FieldNumber_Description_p,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(Cma9AccountDetails__storage_, description_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -201,7 +212,7 @@ typedef struct Cma9AccountDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Cma9AccountDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -215,37 +226,37 @@ typedef struct Cma9AccountDetails__storage_ {
 int32_t Cma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_PartyType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCma9AccountDetails_PartyType_RawValue(Cma9AccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_PartyType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Cma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCma9AccountDetails_AccountType_RawValue(Cma9AccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Cma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountSubtype];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCma9AccountDetails_AccountSubtype_RawValue(Cma9AccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [Cma9AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_FieldNumber_AccountSubtype];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Cma9AccountDetails_PartyType
@@ -452,12 +463,12 @@ typedef struct Cma9AccountDetails_Cma9Address__storage_ {
         .number = Cma9AccountDetails_Cma9Address_FieldNumber_AddressType,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Cma9AccountDetails_Cma9Address__storage_, addressType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Address),
         .number = Cma9AccountDetails_Cma9Address_FieldNumber_Address,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Cma9AccountDetails_Cma9Address__storage_, address),
@@ -472,8 +483,8 @@ typedef struct Cma9AccountDetails_Cma9Address__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Cma9AccountDetails_Cma9Address__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Cma9AccountDetails)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Cma9AccountDetails)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -487,13 +498,13 @@ typedef struct Cma9AccountDetails_Cma9Address__storage_ {
 int32_t Cma9AccountDetails_Cma9Address_AddressType_RawValue(Cma9AccountDetails_Cma9Address *message) {
   GPBDescriptor *descriptor = [Cma9AccountDetails_Cma9Address descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_Cma9Address_FieldNumber_AddressType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCma9AccountDetails_Cma9Address_AddressType_RawValue(Cma9AccountDetails_Cma9Address *message, int32_t value) {
   GPBDescriptor *descriptor = [Cma9AccountDetails_Cma9Address descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Cma9AccountDetails_Cma9Address_FieldNumber_AddressType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Cma9StandingOrderDetails
@@ -529,16 +540,16 @@ typedef struct Cma9StandingOrderDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "frequency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9StandingOrderDetails_FieldNumber_Frequency,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, frequency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "firstPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Cma9StandingOrderDetails_FieldNumber_FirstPayment,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, firstPayment),
@@ -547,16 +558,16 @@ typedef struct Cma9StandingOrderDetails__storage_ {
       },
       {
         .name = "firstPaymentDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9StandingOrderDetails_FieldNumber_FirstPaymentDateTime,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, firstPaymentDateTime),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "nextPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Cma9StandingOrderDetails_FieldNumber_NextPayment,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, nextPayment),
@@ -565,16 +576,16 @@ typedef struct Cma9StandingOrderDetails__storage_ {
       },
       {
         .name = "nextPaymentDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9StandingOrderDetails_FieldNumber_NextPaymentDateTime,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, nextPaymentDateTime),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "finalPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Cma9StandingOrderDetails_FieldNumber_FinalPayment,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, finalPayment),
@@ -583,16 +594,16 @@ typedef struct Cma9StandingOrderDetails__storage_ {
       },
       {
         .name = "finalPaymentDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9StandingOrderDetails_FieldNumber_FinalPaymentDateTime,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, finalPaymentDateTime),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creditorAccount",
-        .dataTypeSpecific.className = GPBStringifySymbol(Cma9Account),
+        .dataTypeSpecific.clazz = GPBObjCClass(Cma9Account),
         .number = Cma9StandingOrderDetails_FieldNumber_CreditorAccount,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Cma9StandingOrderDetails__storage_, creditorAccount),
@@ -607,7 +618,7 @@ typedef struct Cma9StandingOrderDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Cma9StandingOrderDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -641,29 +652,29 @@ typedef struct Cma9Account__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "schemeName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9Account_FieldNumber_SchemeName,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Cma9Account__storage_, schemeName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9Account_FieldNumber_Identification,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Cma9Account__storage_, identification),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Cma9Account_FieldNumber_Name,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Cma9Account__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -674,7 +685,7 @@ typedef struct Cma9Account__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Cma9Account__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

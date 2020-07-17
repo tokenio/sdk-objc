@@ -19,6 +19,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(GPBFieldOptions);
 
 #pragma mark - FieldRoot
 
@@ -35,8 +42,8 @@
       {
         .defaultValue.valueBool = NO,
         .singletonName = GPBStringifySymbol(FieldRoot_redact),
-        .extendedClass = GPBStringifySymbol(GPBFieldOptions),
-        .messageOrGroupClassName = NULL,
+        .extendedClass.clazz = GPBObjCClass(GPBFieldOptions),
+        .messageOrGroupClass.clazz = Nil,
         .enumDescriptorFunc = NULL,
         .fieldNumber = 50000,
         .dataType = GPBDataTypeBool,
@@ -45,7 +52,8 @@
     };
     for (size_t i = 0; i < sizeof(descriptions) / sizeof(descriptions[0]); ++i) {
       GPBExtensionDescriptor *extension =
-          [[GPBExtensionDescriptor alloc] initWithExtensionDescription:&descriptions[i]];
+          [[GPBExtensionDescriptor alloc] initWithExtensionDescription:&descriptions[i]
+                                                         usesClassRefs:YES];
       [registry addExtension:extension];
       [self globallyRegisterExtension:extension];
       [extension release];

@@ -21,6 +21,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Alias);
 
 #pragma mark - AliasRoot
 
@@ -128,34 +135,34 @@ typedef struct Alias__storage_ {
         .number = Alias_FieldNumber_Type,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Alias__storage_, type),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "value",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Alias_FieldNumber_Value,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Alias__storage_, value),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "realm",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Alias_FieldNumber_Realm,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Alias__storage_, realm),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "realmId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Alias_FieldNumber_RealmId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Alias__storage_, realmId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -166,7 +173,7 @@ typedef struct Alias__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Alias__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -180,13 +187,13 @@ typedef struct Alias__storage_ {
 int32_t Alias_Type_RawValue(Alias *message) {
   GPBDescriptor *descriptor = [Alias descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Alias_FieldNumber_Type];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetAlias_Type_RawValue(Alias *message, int32_t value) {
   GPBDescriptor *descriptor = [Alias descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Alias_FieldNumber_Type];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Alias_Type
@@ -260,16 +267,16 @@ typedef struct VerifyAliasPayload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = VerifyAliasPayload_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(VerifyAliasPayload__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "alias",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .dataTypeSpecific.clazz = GPBObjCClass(Alias),
         .number = VerifyAliasPayload_FieldNumber_Alias,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(VerifyAliasPayload__storage_, alias),
@@ -284,7 +291,7 @@ typedef struct VerifyAliasPayload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(VerifyAliasPayload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

@@ -26,6 +26,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(StandingOrderBody);
 
 #pragma mark - SubmissionRoot
 
@@ -136,43 +143,43 @@ typedef struct StandingOrderSubmission__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = StandingOrderSubmission_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "standingOrderId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = StandingOrderSubmission_FieldNumber_StandingOrderId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, standingOrderId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tokenId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = StandingOrderSubmission_FieldNumber_TokenId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, tokenId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = StandingOrderSubmission_FieldNumber_CreatedAtMs,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, createdAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(StandingOrderBody),
+        .dataTypeSpecific.clazz = GPBObjCClass(StandingOrderBody),
         .number = StandingOrderSubmission_FieldNumber_Payload,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, payload),
@@ -185,7 +192,7 @@ typedef struct StandingOrderSubmission__storage_ {
         .number = StandingOrderSubmission_FieldNumber_Status,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(StandingOrderSubmission__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -196,7 +203,7 @@ typedef struct StandingOrderSubmission__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(StandingOrderSubmission__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -210,13 +217,13 @@ typedef struct StandingOrderSubmission__storage_ {
 int32_t StandingOrderSubmission_Status_RawValue(StandingOrderSubmission *message) {
   GPBDescriptor *descriptor = [StandingOrderSubmission descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:StandingOrderSubmission_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetStandingOrderSubmission_Status_RawValue(StandingOrderSubmission *message, int32_t value) {
   GPBDescriptor *descriptor = [StandingOrderSubmission descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:StandingOrderSubmission_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 

@@ -22,6 +22,16 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(SealedMessage);
+GPBObjCClassDeclaration(SealedMessage_NoopMethod);
+GPBObjCClassDeclaration(SealedMessage_RsaAesMethod);
+GPBObjCClassDeclaration(SealedMessage_RsaMethod);
 
 #pragma mark - SecurityRoot
 
@@ -83,20 +93,20 @@ typedef struct Key__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Key_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Key__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "publicKey",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Key_FieldNumber_PublicKey,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Key__storage_, publicKey),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -105,7 +115,7 @@ typedef struct Key__storage_ {
         .number = Key_FieldNumber_Level,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Key__storage_, level),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -114,16 +124,16 @@ typedef struct Key__storage_ {
         .number = Key_FieldNumber_Algorithm,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Key__storage_, algorithm),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "expiresAtMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Key_FieldNumber_ExpiresAtMs,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Key__storage_, expiresAtMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -134,7 +144,7 @@ typedef struct Key__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Key__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -148,25 +158,25 @@ typedef struct Key__storage_ {
 int32_t Key_Level_RawValue(Key *message) {
   GPBDescriptor *descriptor = [Key descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Level];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetKey_Level_RawValue(Key *message, int32_t value) {
   GPBDescriptor *descriptor = [Key descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Level];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Key_Algorithm_RawValue(Key *message) {
   GPBDescriptor *descriptor = [Key descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Algorithm];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetKey_Algorithm_RawValue(Key *message, int32_t value) {
   GPBDescriptor *descriptor = [Key descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Key_FieldNumber_Algorithm];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Key_Algorithm
@@ -273,20 +283,20 @@ typedef struct PrivateKey__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PrivateKey_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PrivateKey__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "privateKey",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PrivateKey_FieldNumber_PrivateKey,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PrivateKey__storage_, privateKey),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -295,7 +305,7 @@ typedef struct PrivateKey__storage_ {
         .number = PrivateKey_FieldNumber_Level,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PrivateKey__storage_, level),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -304,7 +314,7 @@ typedef struct PrivateKey__storage_ {
         .number = PrivateKey_FieldNumber_Algorithm,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(PrivateKey__storage_, algorithm),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -315,7 +325,7 @@ typedef struct PrivateKey__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PrivateKey__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -329,25 +339,25 @@ typedef struct PrivateKey__storage_ {
 int32_t PrivateKey_Level_RawValue(PrivateKey *message) {
   GPBDescriptor *descriptor = [PrivateKey descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Level];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPrivateKey_Level_RawValue(PrivateKey *message, int32_t value) {
   GPBDescriptor *descriptor = [PrivateKey descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Level];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t PrivateKey_Algorithm_RawValue(PrivateKey *message) {
   GPBDescriptor *descriptor = [PrivateKey descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Algorithm];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPrivateKey_Algorithm_RawValue(PrivateKey *message, int32_t value) {
   GPBDescriptor *descriptor = [PrivateKey descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PrivateKey_FieldNumber_Algorithm];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Signature
@@ -373,29 +383,29 @@ typedef struct Signature__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Signature_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Signature__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "keyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Signature_FieldNumber_KeyId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Signature__storage_, keyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signature",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Signature_FieldNumber_Signature,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Signature__storage_, signature),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -406,7 +416,7 @@ typedef struct Signature__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Signature__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -443,16 +453,16 @@ typedef struct SealedMessage__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "ciphertext",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_FieldNumber_Ciphertext,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SealedMessage__storage_, ciphertext),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "noop",
-        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_NoopMethod),
+        .dataTypeSpecific.clazz = GPBObjCClass(SealedMessage_NoopMethod),
         .number = SealedMessage_FieldNumber_Noop,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SealedMessage__storage_, noop),
@@ -461,7 +471,7 @@ typedef struct SealedMessage__storage_ {
       },
       {
         .name = "rsa",
-        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_RsaMethod),
+        .dataTypeSpecific.clazz = GPBObjCClass(SealedMessage_RsaMethod),
         .number = SealedMessage_FieldNumber_Rsa,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SealedMessage__storage_, rsa),
@@ -470,7 +480,7 @@ typedef struct SealedMessage__storage_ {
       },
       {
         .name = "rsaAes",
-        .dataTypeSpecific.className = GPBStringifySymbol(SealedMessage_RsaAesMethod),
+        .dataTypeSpecific.clazz = GPBObjCClass(SealedMessage_RsaAesMethod),
         .number = SealedMessage_FieldNumber_RsaAes,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SealedMessage__storage_, rsaAes),
@@ -485,7 +495,7 @@ typedef struct SealedMessage__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "method",
     };
@@ -503,9 +513,9 @@ typedef struct SealedMessage__storage_ {
 @end
 
 void SealedMessage_ClearMethodOneOfCase(SealedMessage *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [SealedMessage descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - SealedMessage_NoopMethod
 
@@ -528,8 +538,8 @@ typedef struct SealedMessage_NoopMethod__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(SealedMessage_NoopMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(SealedMessage)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -565,38 +575,38 @@ typedef struct SealedMessage_RsaMethod__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "keyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaMethod_FieldNumber_KeyId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, keyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "algorithm",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaMethod_FieldNumber_Algorithm,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, algorithm),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signature",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaMethod_FieldNumber_Signature,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, signature),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signatureKeyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaMethod_FieldNumber_SignatureKeyId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(SealedMessage_RsaMethod__storage_, signatureKeyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -607,8 +617,8 @@ typedef struct SealedMessage_RsaMethod__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage_RsaMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(SealedMessage)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -648,56 +658,56 @@ typedef struct SealedMessage_RsaAesMethod__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "rsaKeyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_RsaKeyId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, rsaKeyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "rsaAlgorithm",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_RsaAlgorithm,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, rsaAlgorithm),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "aesAlgorithm",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_AesAlgorithm,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, aesAlgorithm),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "encryptedAesKey",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_EncryptedAesKey,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, encryptedAesKey),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signature",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_Signature,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, signature),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "signatureKeyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SealedMessage_RsaAesMethod_FieldNumber_SignatureKeyId,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(SealedMessage_RsaAesMethod__storage_, signatureKeyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -708,8 +718,8 @@ typedef struct SealedMessage_RsaAesMethod__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SealedMessage_RsaAesMethod__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(SealedMessage)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(SealedMessage)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -743,29 +753,29 @@ typedef struct SecurityMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "ipAddress",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SecurityMetadata_FieldNumber_IpAddress,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SecurityMetadata__storage_, ipAddress),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "geoLocation",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SecurityMetadata_FieldNumber_GeoLocation,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(SecurityMetadata__storage_, geoLocation),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "deviceFingerprint",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = SecurityMetadata_FieldNumber_DeviceFingerprint,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(SecurityMetadata__storage_, deviceFingerprint),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -776,7 +786,7 @@ typedef struct SecurityMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SecurityMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

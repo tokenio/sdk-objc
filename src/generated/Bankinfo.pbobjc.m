@@ -20,6 +20,15 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(BankFilter);
+GPBObjCClassDeclaration(BankFilter_BankFeatures);
+GPBObjCClassDeclaration(GPBBoolValue);
 
 #pragma mark - BankinfoRoot
 
@@ -101,178 +110,178 @@ typedef struct Bank__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Bank__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Bank__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "logoUri",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_LogoUri,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Bank__storage_, logoUri),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "fullLogoUri",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_FullLogoUri,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Bank__storage_, fullLogoUri),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "supportsAppless",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsAppless,
         .hasIndex = 4,
         .offset = 5,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsInformation",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsInformation,
         .hasIndex = 8,
         .offset = 9,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "requiresExternalAuth",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_RequiresExternalAuth,
         .hasIndex = 10,
         .offset = 11,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsSendPayment",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsSendPayment,
         .hasIndex = 12,
         .offset = 13,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsReceivePayment",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsReceivePayment,
         .hasIndex = 14,
         .offset = 15,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "provider",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_Provider,
         .hasIndex = 30,
         .offset = (uint32_t)offsetof(Bank__storage_, provider),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "country",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_Country,
         .hasIndex = 31,
         .offset = (uint32_t)offsetof(Bank__storage_, country),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "identifier",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_Identifier,
         .hasIndex = 32,
         .offset = (uint32_t)offsetof(Bank__storage_, identifier),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "requiresLegacyTransfer",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_RequiresLegacyTransfer,
         .hasIndex = 24,
         .offset = 25,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsGuestCheckout",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsGuestCheckout,
         .hasIndex = 6,
         .offset = 7,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsBalance",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsBalance,
         .hasIndex = 16,
         .offset = 17,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "requiresOneStepPayment",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_RequiresOneStepPayment,
         .hasIndex = 26,
         .offset = 27,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsScheduledPayment",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsScheduledPayment,
         .hasIndex = 18,
         .offset = 19,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsStandingOrder",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsStandingOrder,
         .hasIndex = 20,
         .offset = 21,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsBulkTransfer",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsBulkTransfer,
         .hasIndex = 22,
         .offset = 23,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportedTransferDestinationTypesArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportedTransferDestinationTypesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Bank__storage_, supportedTransferDestinationTypesArray),
@@ -281,20 +290,20 @@ typedef struct Bank__storage_ {
       },
       {
         .name = "supportsLinkingUri",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsLinkingUri,
         .hasIndex = 28,
         .offset = 29,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "supportsAisGuestCheckout",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Bank_FieldNumber_SupportsAisGuestCheckout,
         .hasIndex = 33,
         .offset = 34,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
     };
@@ -305,7 +314,7 @@ typedef struct Bank__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Bank__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -345,34 +354,34 @@ typedef struct BankInfo__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "linkingUri",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankInfo_FieldNumber_LinkingUri,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BankInfo__storage_, linkingUri),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "redirectUriRegex",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankInfo_FieldNumber_RedirectUriRegex,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BankInfo__storage_, redirectUriRegex),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bankLinkingUri",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankInfo_FieldNumber_BankLinkingUri,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BankInfo__storage_, bankLinkingUri),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "realmArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankInfo_FieldNumber_RealmArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BankInfo__storage_, realmArray),
@@ -381,11 +390,11 @@ typedef struct BankInfo__storage_ {
       },
       {
         .name = "customAliasLabel",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankInfo_FieldNumber_CustomAliasLabel,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(BankInfo__storage_, customAliasLabel),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -405,7 +414,7 @@ typedef struct BankInfo__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankInfo__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -441,38 +450,38 @@ typedef struct Paging__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "page",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Paging_FieldNumber_Page,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Paging__storage_, page),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "perPage",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Paging_FieldNumber_PerPage,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Paging__storage_, perPage),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "pageCount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Paging_FieldNumber_PageCount,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Paging__storage_, pageCount),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "totalCount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Paging_FieldNumber_TotalCount,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Paging__storage_, totalCount),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
@@ -483,7 +492,7 @@ typedef struct Paging__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Paging__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -527,43 +536,43 @@ typedef struct BankFilter__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "provider",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_Provider,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BankFilter__storage_, provider),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tppId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_TppId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BankFilter__storage_, tppId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "destinationCountry",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_DestinationCountry,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BankFilter__storage_, destinationCountry),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "country",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_Country,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(BankFilter__storage_, country),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "idsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_IdsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BankFilter__storage_, idsArray),
@@ -572,16 +581,16 @@ typedef struct BankFilter__storage_ {
       },
       {
         .name = "search",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_Search,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(BankFilter__storage_, search),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "requiresBankFeatures",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = BankFilter_FieldNumber_RequiresBankFeatures,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BankFilter__storage_, requiresBankFeatures),
@@ -590,7 +599,7 @@ typedef struct BankFilter__storage_ {
       },
       {
         .name = "bankFeatures",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankFilter_BankFeatures),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankFilter_BankFeatures),
         .number = BankFilter_FieldNumber_BankFeatures,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(BankFilter__storage_, bankFeatures),
@@ -605,7 +614,7 @@ typedef struct BankFilter__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankFilter__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -659,7 +668,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "supportsAppless",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsAppless,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsAppless),
@@ -668,7 +677,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsGuestCheckout",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsGuestCheckout,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsGuestCheckout),
@@ -677,7 +686,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsInformation",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsInformation,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsInformation),
@@ -686,7 +695,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "requiresExternalAuth",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_RequiresExternalAuth,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, requiresExternalAuth),
@@ -695,7 +704,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsSendPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsSendPayment,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsSendPayment),
@@ -704,7 +713,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsReceivePayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsReceivePayment,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsReceivePayment),
@@ -713,7 +722,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsBalance",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsBalance,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsBalance),
@@ -722,7 +731,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsScheduledPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsScheduledPayment,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsScheduledPayment),
@@ -731,7 +740,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsStandingOrder",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsStandingOrder,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsStandingOrder),
@@ -740,7 +749,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsBulkTransfer",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsBulkTransfer,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsBulkTransfer),
@@ -749,7 +758,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "requiresOneStepPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_RequiresOneStepPayment,
         .hasIndex = 10,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, requiresOneStepPayment),
@@ -758,7 +767,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsLinkingUri",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsLinkingUri,
         .hasIndex = 11,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsLinkingUri),
@@ -767,7 +776,7 @@ typedef struct BankFilter_BankFeatures__storage_ {
       },
       {
         .name = "supportsAisGuestCheckout",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBBoolValue),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
         .number = BankFilter_BankFeatures_FieldNumber_SupportsAisGuestCheckout,
         .hasIndex = 12,
         .offset = (uint32_t)offsetof(BankFilter_BankFeatures__storage_, supportsAisGuestCheckout),
@@ -782,8 +791,8 @@ typedef struct BankFilter_BankFeatures__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BankFilter_BankFeatures__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(BankFilter)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(BankFilter)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

@@ -26,6 +26,35 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Address);
+GPBObjCClassDeclaration(Alias);
+GPBObjCClassDeclaration(Customization);
+GPBObjCClassDeclaration(Key);
+GPBObjCClassDeclaration(MemberAddKeyOperation);
+GPBObjCClassDeclaration(MemberAliasOperation);
+GPBObjCClassDeclaration(MemberDeleteOperation);
+GPBObjCClassDeclaration(MemberOperation);
+GPBObjCClassDeclaration(MemberOperationMetadata);
+GPBObjCClassDeclaration(MemberOperationMetadata_AddAliasMetadata);
+GPBObjCClassDeclaration(MemberOperationMetadata_AddKeyMetadata);
+GPBObjCClassDeclaration(MemberOperationResponseMetadata);
+GPBObjCClassDeclaration(MemberOperationResponseMetadata_AddAliasResponseMetadata);
+GPBObjCClassDeclaration(MemberPartnerOperation);
+GPBObjCClassDeclaration(MemberRealmPermissionOperation);
+GPBObjCClassDeclaration(MemberRecoveryOperation);
+GPBObjCClassDeclaration(MemberRecoveryOperation_Authorization);
+GPBObjCClassDeclaration(MemberRecoveryRulesOperation);
+GPBObjCClassDeclaration(MemberRemoveKeyOperation);
+GPBObjCClassDeclaration(RecoveryRule);
+GPBObjCClassDeclaration(Signature);
+GPBObjCClassDeclaration(TrustedBeneficiary);
+GPBObjCClassDeclaration(TrustedBeneficiary_Payload);
 
 #pragma mark - MemberRoot
 
@@ -205,7 +234,7 @@ typedef struct MemberAddKeyOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "key",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = MemberAddKeyOperation_FieldNumber_Key,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberAddKeyOperation__storage_, key),
@@ -220,7 +249,7 @@ typedef struct MemberAddKeyOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberAddKeyOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -250,11 +279,11 @@ typedef struct MemberRemoveKeyOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "keyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberRemoveKeyOperation_FieldNumber_KeyId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberRemoveKeyOperation__storage_, keyId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -265,7 +294,7 @@ typedef struct MemberRemoveKeyOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberRemoveKeyOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -299,29 +328,29 @@ typedef struct MemberAliasOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "aliasHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberAliasOperation_FieldNumber_AliasHash,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, aliasHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "realm",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberAliasOperation_FieldNumber_Realm,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, realm),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "realmId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberAliasOperation_FieldNumber_RealmId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(MemberAliasOperation__storage_, realmId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -332,7 +361,7 @@ typedef struct MemberAliasOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberAliasOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -362,7 +391,7 @@ typedef struct MemberRecoveryRulesOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "recoveryRule",
-        .dataTypeSpecific.className = GPBStringifySymbol(RecoveryRule),
+        .dataTypeSpecific.clazz = GPBObjCClass(RecoveryRule),
         .number = MemberRecoveryRulesOperation_FieldNumber_RecoveryRule,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberRecoveryRulesOperation__storage_, recoveryRule),
@@ -377,7 +406,7 @@ typedef struct MemberRecoveryRulesOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberRecoveryRulesOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -409,7 +438,7 @@ typedef struct MemberRecoveryOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "authorization",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRecoveryOperation_Authorization),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberRecoveryOperation_Authorization),
         .number = MemberRecoveryOperation_FieldNumber_Authorization,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation__storage_, authorization),
@@ -418,7 +447,7 @@ typedef struct MemberRecoveryOperation__storage_ {
       },
       {
         .name = "agentSignature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .dataTypeSpecific.clazz = GPBObjCClass(Signature),
         .number = MemberRecoveryOperation_FieldNumber_AgentSignature,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation__storage_, agentSignature),
@@ -433,7 +462,7 @@ typedef struct MemberRecoveryOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberRecoveryOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -467,25 +496,25 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberRecoveryOperation_Authorization_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation_Authorization__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "prevHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberRecoveryOperation_Authorization_FieldNumber_PrevHash,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation_Authorization__storage_, prevHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "memberKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = MemberRecoveryOperation_Authorization_FieldNumber_MemberKey,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(MemberRecoveryOperation_Authorization__storage_, memberKey),
@@ -500,8 +529,8 @@ typedef struct MemberRecoveryOperation_Authorization__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberRecoveryOperation_Authorization__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberRecoveryOperation)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MemberRecoveryOperation)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -533,7 +562,7 @@ typedef struct MemberDeleteOperation__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(MemberDeleteOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -565,7 +594,7 @@ typedef struct MemberPartnerOperation__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(MemberPartnerOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -610,7 +639,7 @@ typedef struct MemberRealmPermissionOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberRealmPermissionOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -661,7 +690,7 @@ typedef struct MemberOperation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "addKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAddKeyOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberAddKeyOperation),
         .number = MemberOperation_FieldNumber_AddKey,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, addKey),
@@ -670,7 +699,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "removeKey",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRemoveKeyOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberRemoveKeyOperation),
         .number = MemberOperation_FieldNumber_RemoveKey,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, removeKey),
@@ -679,7 +708,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "removeAlias",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAliasOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberAliasOperation),
         .number = MemberOperation_FieldNumber_RemoveAlias,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, removeAlias),
@@ -688,7 +717,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "addAlias",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAliasOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberAliasOperation),
         .number = MemberOperation_FieldNumber_AddAlias,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, addAlias),
@@ -697,7 +726,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "verifyAlias",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberAliasOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberAliasOperation),
         .number = MemberOperation_FieldNumber_VerifyAlias,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, verifyAlias),
@@ -706,7 +735,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "recoveryRules",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRecoveryRulesOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberRecoveryRulesOperation),
         .number = MemberOperation_FieldNumber_RecoveryRules,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, recoveryRules),
@@ -715,7 +744,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "recover",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRecoveryOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberRecoveryOperation),
         .number = MemberOperation_FieldNumber_Recover,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, recover),
@@ -724,7 +753,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "delete_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberDeleteOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberDeleteOperation),
         .number = MemberOperation_FieldNumber_Delete_p,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, delete_p),
@@ -733,7 +762,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "verifyPartner",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberPartnerOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberPartnerOperation),
         .number = MemberOperation_FieldNumber_VerifyPartner,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, verifyPartner),
@@ -742,7 +771,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "unverifyPartner",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberPartnerOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberPartnerOperation),
         .number = MemberOperation_FieldNumber_UnverifyPartner,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, unverifyPartner),
@@ -751,7 +780,7 @@ typedef struct MemberOperation__storage_ {
       },
       {
         .name = "realmPermissions",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberRealmPermissionOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberRealmPermissionOperation),
         .number = MemberOperation_FieldNumber_RealmPermissions,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperation__storage_, realmPermissions),
@@ -766,7 +795,7 @@ typedef struct MemberOperation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "operation",
     };
@@ -784,9 +813,9 @@ typedef struct MemberOperation__storage_ {
 @end
 
 void MemberOperation_ClearOperationOneOfCase(MemberOperation *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [MemberOperation descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - MemberUpdate
 
@@ -811,25 +840,25 @@ typedef struct MemberUpdate__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "prevHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberUpdate_FieldNumber_PrevHash,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberUpdate__storage_, prevHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberUpdate_FieldNumber_MemberId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberUpdate__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "operationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperation),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberOperation),
         .number = MemberUpdate_FieldNumber_OperationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(MemberUpdate__storage_, operationsArray),
@@ -844,7 +873,7 @@ typedef struct MemberUpdate__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberUpdate__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -877,7 +906,7 @@ typedef struct MemberOperationMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "addAliasMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationMetadata_AddAliasMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberOperationMetadata_AddAliasMetadata),
         .number = MemberOperationMetadata_FieldNumber_AddAliasMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperationMetadata__storage_, addAliasMetadata),
@@ -886,7 +915,7 @@ typedef struct MemberOperationMetadata__storage_ {
       },
       {
         .name = "addKeyMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationMetadata_AddKeyMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberOperationMetadata_AddKeyMetadata),
         .number = MemberOperationMetadata_FieldNumber_AddKeyMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperationMetadata__storage_, addKeyMetadata),
@@ -901,7 +930,7 @@ typedef struct MemberOperationMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperationMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "type",
     };
@@ -919,9 +948,9 @@ typedef struct MemberOperationMetadata__storage_ {
 @end
 
 void MemberOperationMetadata_ClearTypeOneOfCase(MemberOperationMetadata *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [MemberOperationMetadata descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - MemberOperationMetadata_AddAliasMetadata
 
@@ -944,16 +973,16 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "aliasHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_AliasHash,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, aliasHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "alias",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .dataTypeSpecific.clazz = GPBObjCClass(Alias),
         .number = MemberOperationMetadata_AddAliasMetadata_FieldNumber_Alias,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberOperationMetadata_AddAliasMetadata__storage_, alias),
@@ -968,8 +997,8 @@ typedef struct MemberOperationMetadata_AddAliasMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperationMetadata_AddAliasMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberOperationMetadata)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MemberOperationMetadata)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -999,11 +1028,11 @@ typedef struct MemberOperationMetadata_AddKeyMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "keychainId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberOperationMetadata_AddKeyMetadata_FieldNumber_KeychainId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberOperationMetadata_AddKeyMetadata__storage_, keychainId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1014,8 +1043,8 @@ typedef struct MemberOperationMetadata_AddKeyMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperationMetadata_AddKeyMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberOperationMetadata)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MemberOperationMetadata)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1046,7 +1075,7 @@ typedef struct MemberOperationResponseMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "addAliasResponseMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(MemberOperationResponseMetadata_AddAliasResponseMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(MemberOperationResponseMetadata_AddAliasResponseMetadata),
         .number = MemberOperationResponseMetadata_FieldNumber_AddAliasResponseMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(MemberOperationResponseMetadata__storage_, addAliasResponseMetadata),
@@ -1061,7 +1090,7 @@ typedef struct MemberOperationResponseMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperationResponseMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "type",
     };
@@ -1079,9 +1108,9 @@ typedef struct MemberOperationResponseMetadata__storage_ {
 @end
 
 void MemberOperationResponseMetadata_ClearTypeOneOfCase(MemberOperationResponseMetadata *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [MemberOperationResponseMetadata descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - MemberOperationResponseMetadata_AddAliasResponseMetadata
 
@@ -1104,20 +1133,20 @@ typedef struct MemberOperationResponseMetadata_AddAliasResponseMetadata__storage
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "aliasHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_AliasHash,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_, aliasHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "verificationId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberOperationResponseMetadata_AddAliasResponseMetadata_FieldNumber_VerificationId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_, verificationId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1128,8 +1157,8 @@ typedef struct MemberOperationResponseMetadata_AddAliasResponseMetadata__storage
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberOperationResponseMetadata_AddAliasResponseMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(MemberOperationResponseMetadata)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MemberOperationResponseMetadata)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1161,16 +1190,16 @@ typedef struct RecoveryRule__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "primaryAgent",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RecoveryRule_FieldNumber_PrimaryAgent,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RecoveryRule__storage_, primaryAgent),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "secondaryAgentsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RecoveryRule_FieldNumber_SecondaryAgentsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RecoveryRule__storage_, secondaryAgentsArray),
@@ -1185,7 +1214,7 @@ typedef struct RecoveryRule__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RecoveryRule__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1238,25 +1267,25 @@ typedef struct Member__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Member__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "lastHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_LastHash,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Member__storage_, lastHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "aliasHashesArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_AliasHashesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Member__storage_, aliasHashesArray),
@@ -1265,7 +1294,7 @@ typedef struct Member__storage_ {
       },
       {
         .name = "keysArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = Member_FieldNumber_KeysArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Member__storage_, keysArray),
@@ -1274,7 +1303,7 @@ typedef struct Member__storage_ {
       },
       {
         .name = "unverifiedAliasHashesArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_UnverifiedAliasHashesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Member__storage_, unverifiedAliasHashesArray),
@@ -1283,7 +1312,7 @@ typedef struct Member__storage_ {
       },
       {
         .name = "recoveryRule",
-        .dataTypeSpecific.className = GPBStringifySymbol(RecoveryRule),
+        .dataTypeSpecific.clazz = GPBObjCClass(RecoveryRule),
         .number = Member_FieldNumber_RecoveryRule,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Member__storage_, recoveryRule),
@@ -1292,20 +1321,20 @@ typedef struct Member__storage_ {
       },
       {
         .name = "lastRecoverySequence",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_LastRecoverySequence,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Member__storage_, lastRecoverySequence),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "lastOperationSequence",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_LastOperationSequence,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Member__storage_, lastOperationSequence),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
@@ -1314,34 +1343,34 @@ typedef struct Member__storage_ {
         .number = Member_FieldNumber_Type,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Member__storage_, type),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "partnerId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_PartnerId,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Member__storage_, partnerId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "isVerifiedPartner",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_IsVerifiedPartner,
         .hasIndex = 7,
         .offset = 8,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
         .name = "realmId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Member_FieldNumber_RealmId,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(Member__storage_, realmId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1361,7 +1390,7 @@ typedef struct Member__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Member__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1375,13 +1404,13 @@ typedef struct Member__storage_ {
 int32_t Member_Type_RawValue(Member *message) {
   GPBDescriptor *descriptor = [Member descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Member_FieldNumber_Type];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetMember_Type_RawValue(Member *message, int32_t value) {
   GPBDescriptor *descriptor = [Member descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Member_FieldNumber_Type];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Member_MemberType
@@ -1451,25 +1480,25 @@ typedef struct AddressRecord__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AddressRecord_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AddressRecord__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AddressRecord_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AddressRecord__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "address",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Address),
         .number = AddressRecord_FieldNumber_Address,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AddressRecord__storage_, address),
@@ -1478,7 +1507,7 @@ typedef struct AddressRecord__storage_ {
       },
       {
         .name = "addressSignature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .dataTypeSpecific.clazz = GPBObjCClass(Signature),
         .number = AddressRecord_FieldNumber_AddressSignature,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(AddressRecord__storage_, addressSignature),
@@ -1493,7 +1522,7 @@ typedef struct AddressRecord__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AddressRecord__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1533,56 +1562,56 @@ typedef struct Profile__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "displayNameFirst",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_DisplayNameFirst,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Profile__storage_, displayNameFirst),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "displayNameLast",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_DisplayNameLast,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Profile__storage_, displayNameLast),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "originalPictureId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_OriginalPictureId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Profile__storage_, originalPictureId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "smallPictureId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_SmallPictureId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Profile__storage_, smallPictureId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "mediumPictureId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_MediumPictureId,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Profile__storage_, mediumPictureId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "largePictureId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Profile_FieldNumber_LargePictureId,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Profile__storage_, largePictureId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1593,7 +1622,7 @@ typedef struct Profile__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Profile__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1625,11 +1654,11 @@ typedef struct ReceiptContact__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "value",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = ReceiptContact_FieldNumber_Value,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(ReceiptContact__storage_, value),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1638,7 +1667,7 @@ typedef struct ReceiptContact__storage_ {
         .number = ReceiptContact_FieldNumber_Type,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(ReceiptContact__storage_, type),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -1649,7 +1678,7 @@ typedef struct ReceiptContact__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ReceiptContact__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1663,13 +1692,13 @@ typedef struct ReceiptContact__storage_ {
 int32_t ReceiptContact_Type_RawValue(ReceiptContact *message) {
   GPBDescriptor *descriptor = [ReceiptContact descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:ReceiptContact_FieldNumber_Type];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetReceiptContact_Type_RawValue(ReceiptContact *message, int32_t value) {
   GPBDescriptor *descriptor = [ReceiptContact descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:ReceiptContact_FieldNumber_Type];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum ReceiptContact_Type
@@ -1730,16 +1759,16 @@ typedef struct Device__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Device_FieldNumber_Name,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Device__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "key",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = Device_FieldNumber_Key,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Device__storage_, key),
@@ -1748,7 +1777,7 @@ typedef struct Device__storage_ {
       },
       {
         .name = "keysArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = Device_FieldNumber_KeysArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Device__storage_, keysArray),
@@ -1763,7 +1792,7 @@ typedef struct Device__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Device__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1795,7 +1824,7 @@ typedef struct TrustedBeneficiary__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(TrustedBeneficiary_Payload),
+        .dataTypeSpecific.clazz = GPBObjCClass(TrustedBeneficiary_Payload),
         .number = TrustedBeneficiary_FieldNumber_Payload,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TrustedBeneficiary__storage_, payload),
@@ -1804,7 +1833,7 @@ typedef struct TrustedBeneficiary__storage_ {
       },
       {
         .name = "signature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .dataTypeSpecific.clazz = GPBObjCClass(Signature),
         .number = TrustedBeneficiary_FieldNumber_Signature,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TrustedBeneficiary__storage_, signature),
@@ -1819,7 +1848,7 @@ typedef struct TrustedBeneficiary__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TrustedBeneficiary__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1851,20 +1880,20 @@ typedef struct TrustedBeneficiary_Payload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TrustedBeneficiary_Payload_FieldNumber_MemberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(TrustedBeneficiary_Payload__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "nonce",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = TrustedBeneficiary_Payload_FieldNumber_Nonce,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(TrustedBeneficiary_Payload__storage_, nonce),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1875,8 +1904,8 @@ typedef struct TrustedBeneficiary_Payload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TrustedBeneficiary_Payload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(TrustedBeneficiary)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(TrustedBeneficiary)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1916,25 +1945,25 @@ typedef struct Customization__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "customizationId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_CustomizationId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Customization__storage_, customizationId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "logoBlobId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_LogoBlobId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Customization__storage_, logoBlobId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "colors",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_Colors,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Customization__storage_, colors),
@@ -1943,29 +1972,29 @@ typedef struct Customization__storage_ {
       },
       {
         .name = "consentText",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_ConsentText,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Customization__storage_, consentText),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Customization__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "appName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Customization_FieldNumber_AppName,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Customization__storage_, appName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1976,7 +2005,7 @@ typedef struct Customization__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Customization__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2010,25 +2039,25 @@ typedef struct Keychain__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "keychainId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Keychain_FieldNumber_KeychainId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Keychain__storage_, keychainId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Keychain_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Keychain__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "keysArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Key),
+        .dataTypeSpecific.clazz = GPBObjCClass(Key),
         .number = Keychain_FieldNumber_KeysArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Keychain__storage_, keysArray),
@@ -2043,7 +2072,7 @@ typedef struct Keychain__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Keychain__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2075,16 +2104,16 @@ typedef struct MemberInfo__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MemberInfo_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MemberInfo__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "aliasesArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .dataTypeSpecific.clazz = GPBObjCClass(Alias),
         .number = MemberInfo_FieldNumber_AliasesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(MemberInfo__storage_, aliasesArray),
@@ -2099,7 +2128,7 @@ typedef struct MemberInfo__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MemberInfo__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

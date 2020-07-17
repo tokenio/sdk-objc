@@ -24,6 +24,23 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Cma9AccountDetails);
+GPBObjCClassDeclaration(Cma9StandingOrderDetails);
+GPBObjCClassDeclaration(NextGenPsd2AccountDetails);
+GPBObjCClassDeclaration(NextGenPsd2TransactionDetails);
+GPBObjCClassDeclaration(NextGenPsd2TransferMetadata);
+GPBObjCClassDeclaration(POLISHAPIPolishApiAccountDetails);
+GPBObjCClassDeclaration(POLISHAPIPolishApiTransactionDetails);
+GPBObjCClassDeclaration(POLISHAPIPolishApiTransferMetadata);
+GPBObjCClassDeclaration(StetAccountDetails);
+GPBObjCClassDeclaration(StetTransactionDetails);
+GPBObjCClassDeclaration(StetTransferMetadata);
 
 #pragma mark - ProviderspecificRoot
 
@@ -84,7 +101,7 @@ typedef struct ProviderAccountDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "cma9AccountDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(Cma9AccountDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(Cma9AccountDetails),
         .number = ProviderAccountDetails_FieldNumber_Cma9AccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, cma9AccountDetails),
@@ -93,7 +110,7 @@ typedef struct ProviderAccountDetails__storage_ {
       },
       {
         .name = "polishApiAccountDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiAccountDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIPolishApiAccountDetails),
         .number = ProviderAccountDetails_FieldNumber_PolishApiAccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, polishApiAccountDetails),
@@ -102,7 +119,7 @@ typedef struct ProviderAccountDetails__storage_ {
       },
       {
         .name = "nextGenPsd2AccountDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(NextGenPsd2AccountDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(NextGenPsd2AccountDetails),
         .number = ProviderAccountDetails_FieldNumber_NextGenPsd2AccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, nextGenPsd2AccountDetails),
@@ -111,7 +128,7 @@ typedef struct ProviderAccountDetails__storage_ {
       },
       {
         .name = "stetAccountDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(StetAccountDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(StetAccountDetails),
         .number = ProviderAccountDetails_FieldNumber_StetAccountDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderAccountDetails__storage_, stetAccountDetails),
@@ -126,7 +143,7 @@ typedef struct ProviderAccountDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ProviderAccountDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "details",
     };
@@ -144,9 +161,9 @@ typedef struct ProviderAccountDetails__storage_ {
 @end
 
 void ProviderAccountDetails_ClearDetailsOneOfCase(ProviderAccountDetails *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [ProviderAccountDetails descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - ProviderTransactionDetails
 
@@ -172,7 +189,7 @@ typedef struct ProviderTransactionDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "polishApiTransactionDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiTransactionDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIPolishApiTransactionDetails),
         .number = ProviderTransactionDetails_FieldNumber_PolishApiTransactionDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, polishApiTransactionDetails),
@@ -181,7 +198,7 @@ typedef struct ProviderTransactionDetails__storage_ {
       },
       {
         .name = "nextGenPsd2TransactionDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(NextGenPsd2TransactionDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(NextGenPsd2TransactionDetails),
         .number = ProviderTransactionDetails_FieldNumber_NextGenPsd2TransactionDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, nextGenPsd2TransactionDetails),
@@ -190,7 +207,7 @@ typedef struct ProviderTransactionDetails__storage_ {
       },
       {
         .name = "stetTransactionDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(StetTransactionDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(StetTransactionDetails),
         .number = ProviderTransactionDetails_FieldNumber_StetTransactionDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransactionDetails__storage_, stetTransactionDetails),
@@ -205,7 +222,7 @@ typedef struct ProviderTransactionDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ProviderTransactionDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "details",
     };
@@ -223,9 +240,9 @@ typedef struct ProviderTransactionDetails__storage_ {
 @end
 
 void ProviderTransactionDetails_ClearDetailsOneOfCase(ProviderTransactionDetails *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [ProviderTransactionDetails descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - ProviderStandingOrderDetails
 
@@ -247,7 +264,7 @@ typedef struct ProviderStandingOrderDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "cma9StandingOrderDetails",
-        .dataTypeSpecific.className = GPBStringifySymbol(Cma9StandingOrderDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(Cma9StandingOrderDetails),
         .number = ProviderStandingOrderDetails_FieldNumber_Cma9StandingOrderDetails,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderStandingOrderDetails__storage_, cma9StandingOrderDetails),
@@ -262,7 +279,7 @@ typedef struct ProviderStandingOrderDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ProviderStandingOrderDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "details",
     };
@@ -280,9 +297,9 @@ typedef struct ProviderStandingOrderDetails__storage_ {
 @end
 
 void ProviderStandingOrderDetails_ClearDetailsOneOfCase(ProviderStandingOrderDetails *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [ProviderStandingOrderDetails descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - ProviderTransferMetadata
 
@@ -308,7 +325,7 @@ typedef struct ProviderTransferMetadata__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "polishApiTransferMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPolishApiTransferMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIPolishApiTransferMetadata),
         .number = ProviderTransferMetadata_FieldNumber_PolishApiTransferMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, polishApiTransferMetadata),
@@ -317,7 +334,7 @@ typedef struct ProviderTransferMetadata__storage_ {
       },
       {
         .name = "nextGenPsd2TransferMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(NextGenPsd2TransferMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(NextGenPsd2TransferMetadata),
         .number = ProviderTransferMetadata_FieldNumber_NextGenPsd2TransferMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, nextGenPsd2TransferMetadata),
@@ -326,7 +343,7 @@ typedef struct ProviderTransferMetadata__storage_ {
       },
       {
         .name = "stetTransferMetadata",
-        .dataTypeSpecific.className = GPBStringifySymbol(StetTransferMetadata),
+        .dataTypeSpecific.clazz = GPBObjCClass(StetTransferMetadata),
         .number = ProviderTransferMetadata_FieldNumber_StetTransferMetadata,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ProviderTransferMetadata__storage_, stetTransferMetadata),
@@ -341,7 +358,7 @@ typedef struct ProviderTransferMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ProviderTransferMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "metadata",
     };
@@ -359,9 +376,9 @@ typedef struct ProviderTransferMetadata__storage_ {
 @end
 
 void ProviderTransferMetadata_ClearMetadataOneOfCase(ProviderTransferMetadata *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [ProviderTransferMetadata descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 
 #pragma clang diagnostic pop

@@ -21,6 +21,14 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Blob);
+GPBObjCClassDeclaration(Blob_Payload);
 
 #pragma mark - BlobRoot
 
@@ -76,16 +84,16 @@ typedef struct Blob__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Blob_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Blob__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(Blob_Payload),
+        .dataTypeSpecific.clazz = GPBObjCClass(Blob_Payload),
         .number = Blob_FieldNumber_Payload,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Blob__storage_, payload),
@@ -100,7 +108,7 @@ typedef struct Blob__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Blob__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -173,38 +181,38 @@ typedef struct Blob_Payload__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "ownerId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Blob_Payload_FieldNumber_OwnerId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Blob_Payload__storage_, ownerId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "type",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Blob_Payload_FieldNumber_Type,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Blob_Payload__storage_, type),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Blob_Payload_FieldNumber_Name,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Blob_Payload__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "data_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Blob_Payload_FieldNumber_Data_p,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Blob_Payload__storage_, data_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
       },
       {
@@ -213,7 +221,7 @@ typedef struct Blob_Payload__storage_ {
         .number = Blob_Payload_FieldNumber_AccessMode,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Blob_Payload__storage_, accessMode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -224,8 +232,8 @@ typedef struct Blob_Payload__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Blob_Payload__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Blob)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Blob)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -239,13 +247,13 @@ typedef struct Blob_Payload__storage_ {
 int32_t Blob_Payload_AccessMode_RawValue(Blob_Payload *message) {
   GPBDescriptor *descriptor = [Blob_Payload descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Blob_Payload_FieldNumber_AccessMode];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetBlob_Payload_AccessMode_RawValue(Blob_Payload *message, int32_t value) {
   GPBDescriptor *descriptor = [Blob_Payload descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Blob_Payload_FieldNumber_AccessMode];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Attachment
@@ -271,29 +279,29 @@ typedef struct Attachment__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "blobId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Attachment_FieldNumber_BlobId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Attachment__storage_, blobId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "type",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Attachment_FieldNumber_Type,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Attachment__storage_, type),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Attachment_FieldNumber_Name,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Attachment__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -304,7 +312,7 @@ typedef struct Attachment__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Attachment__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

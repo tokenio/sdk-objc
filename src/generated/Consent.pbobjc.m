@@ -27,6 +27,26 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(ActingAs);
+GPBObjCClassDeclaration(BankAccount);
+GPBObjCClassDeclaration(Consent);
+GPBObjCClassDeclaration(Consent_Beneficiary);
+GPBObjCClassDeclaration(Consent_BulkPayment);
+GPBObjCClassDeclaration(Consent_BulkPayment_Payment);
+GPBObjCClassDeclaration(Consent_InformationAccess);
+GPBObjCClassDeclaration(Consent_InformationAccess_ResourceAccess);
+GPBObjCClassDeclaration(Consent_Payment);
+GPBObjCClassDeclaration(Consent_StandingOrder);
+GPBObjCClassDeclaration(Money);
+GPBObjCClassDeclaration(TokenMember);
+GPBObjCClassDeclaration(TransferDestination);
+GPBObjCClassDeclaration(TransferEndpoint);
 
 #pragma mark - ConsentRoot
 
@@ -98,16 +118,16 @@ typedef struct Consent__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "beneficiary",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_Beneficiary),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_Beneficiary),
         .number = Consent_FieldNumber_Beneficiary,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Consent__storage_, beneficiary),
@@ -116,16 +136,16 @@ typedef struct Consent__storage_ {
       },
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_FieldNumber_MemberId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Consent__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "informationAccess",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_InformationAccess),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_InformationAccess),
         .number = Consent_FieldNumber_InformationAccess,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Consent__storage_, informationAccess),
@@ -134,7 +154,7 @@ typedef struct Consent__storage_ {
       },
       {
         .name = "payment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_Payment),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_Payment),
         .number = Consent_FieldNumber_Payment,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Consent__storage_, payment),
@@ -143,25 +163,25 @@ typedef struct Consent__storage_ {
       },
       {
         .name = "initiatorId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_FieldNumber_InitiatorId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Consent__storage_, initiatorId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "initiatorRefId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_FieldNumber_InitiatorRefId,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Consent__storage_, initiatorRefId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "standingOrder",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_StandingOrder),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_StandingOrder),
         .number = Consent_FieldNumber_StandingOrder,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Consent__storage_, standingOrder),
@@ -170,7 +190,7 @@ typedef struct Consent__storage_ {
       },
       {
         .name = "bulkPayment",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_BulkPayment),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_BulkPayment),
         .number = Consent_FieldNumber_BulkPayment,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(Consent__storage_, bulkPayment),
@@ -185,7 +205,7 @@ typedef struct Consent__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "type",
     };
@@ -203,9 +223,9 @@ typedef struct Consent__storage_ {
 @end
 
 void Consent_ClearTypeOneOfCase(Consent *message) {
-  GPBDescriptor *descriptor = [message descriptor];
+  GPBDescriptor *descriptor = [Consent descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBMaybeClearOneof(message, oneof, -1, 0);
+  GPBClearOneof(message, oneof);
 }
 #pragma mark - Consent_InformationAccess
 
@@ -226,7 +246,7 @@ typedef struct Consent_InformationAccess__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "resourceAccessArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_InformationAccess_ResourceAccess),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_InformationAccess_ResourceAccess),
         .number = Consent_InformationAccess_FieldNumber_ResourceAccessArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_InformationAccess__storage_, resourceAccessArray),
@@ -241,8 +261,8 @@ typedef struct Consent_InformationAccess__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_InformationAccess__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -274,7 +294,7 @@ typedef struct Consent_InformationAccess_ResourceAccess__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankAccount),
         .number = Consent_InformationAccess_ResourceAccess_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_InformationAccess_ResourceAccess__storage_, account),
@@ -298,8 +318,8 @@ typedef struct Consent_InformationAccess_ResourceAccess__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_InformationAccess_ResourceAccess__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent_InformationAccess)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent_InformationAccess)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -384,7 +404,7 @@ typedef struct Consent_Payment__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankAccount),
         .number = Consent_Payment_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, account),
@@ -393,7 +413,7 @@ typedef struct Consent_Payment__storage_ {
       },
       {
         .name = "lifetimeAmount",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Consent_Payment_FieldNumber_LifetimeAmount,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, lifetimeAmount),
@@ -402,7 +422,7 @@ typedef struct Consent_Payment__storage_ {
       },
       {
         .name = "amount",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Consent_Payment_FieldNumber_Amount,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, amount),
@@ -411,7 +431,7 @@ typedef struct Consent_Payment__storage_ {
       },
       {
         .name = "destinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferEndpoint),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferEndpoint),
         .number = Consent_Payment_FieldNumber_DestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, destinationsArray),
@@ -420,7 +440,7 @@ typedef struct Consent_Payment__storage_ {
       },
       {
         .name = "transferDestinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination),
         .number = Consent_Payment_FieldNumber_TransferDestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_Payment__storage_, transferDestinationsArray),
@@ -435,8 +455,8 @@ typedef struct Consent_Payment__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_Payment__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -472,7 +492,7 @@ typedef struct Consent_StandingOrder__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankAccount),
         .number = Consent_StandingOrder_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, account),
@@ -481,7 +501,7 @@ typedef struct Consent_StandingOrder__storage_ {
       },
       {
         .name = "amount",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = Consent_StandingOrder_FieldNumber_Amount,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, amount),
@@ -490,16 +510,16 @@ typedef struct Consent_StandingOrder__storage_ {
       },
       {
         .name = "frequency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_StandingOrder_FieldNumber_Frequency,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, frequency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transferDestinationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination),
         .number = Consent_StandingOrder_FieldNumber_TransferDestinationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_StandingOrder__storage_, transferDestinationsArray),
@@ -514,8 +534,8 @@ typedef struct Consent_StandingOrder__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_StandingOrder__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -547,7 +567,7 @@ typedef struct Consent_BulkPayment__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "paymentsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Consent_BulkPayment_Payment),
+        .dataTypeSpecific.clazz = GPBObjCClass(Consent_BulkPayment_Payment),
         .number = Consent_BulkPayment_FieldNumber_PaymentsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Consent_BulkPayment__storage_, paymentsArray),
@@ -556,7 +576,7 @@ typedef struct Consent_BulkPayment__storage_ {
       },
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(BankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(BankAccount),
         .number = Consent_BulkPayment_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_BulkPayment__storage_, account),
@@ -571,8 +591,8 @@ typedef struct Consent_BulkPayment__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_BulkPayment__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -610,43 +630,43 @@ typedef struct Consent_BulkPayment_Payment__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "amount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_BulkPayment_Payment_FieldNumber_Amount,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, amount),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_BulkPayment_Payment_FieldNumber_Currency,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, currency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "refId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_BulkPayment_Payment_FieldNumber_RefId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, refId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "description_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Consent_BulkPayment_Payment_FieldNumber_Description_p,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, description_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "destination",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransferDestination),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransferDestination),
         .number = Consent_BulkPayment_Payment_FieldNumber_Destination,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Consent_BulkPayment_Payment__storage_, destination),
@@ -661,8 +681,8 @@ typedef struct Consent_BulkPayment_Payment__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_BulkPayment_Payment__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent_BulkPayment)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent_BulkPayment)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -694,7 +714,7 @@ typedef struct Consent_Beneficiary__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "member",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenMember),
+        .dataTypeSpecific.clazz = GPBObjCClass(TokenMember),
         .number = Consent_Beneficiary_FieldNumber_Member,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Consent_Beneficiary__storage_, member),
@@ -703,7 +723,7 @@ typedef struct Consent_Beneficiary__storage_ {
       },
       {
         .name = "actingAs",
-        .dataTypeSpecific.className = GPBStringifySymbol(ActingAs),
+        .dataTypeSpecific.clazz = GPBObjCClass(ActingAs),
         .number = Consent_Beneficiary_FieldNumber_ActingAs,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Consent_Beneficiary__storage_, actingAs),
@@ -718,8 +738,8 @@ typedef struct Consent_Beneficiary__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Consent_Beneficiary__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(Consent)];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Consent)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

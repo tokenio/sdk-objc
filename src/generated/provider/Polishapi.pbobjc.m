@@ -20,6 +20,25 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(POLISHAPIAccountPsuRelation);
+GPBObjCClassDeclaration(POLISHAPIBank);
+GPBObjCClassDeclaration(POLISHAPIBankAccountInfo);
+GPBObjCClassDeclaration(POLISHAPICurrencyRate);
+GPBObjCClassDeclaration(POLISHAPINameAddress);
+GPBObjCClassDeclaration(POLISHAPIPayer);
+GPBObjCClassDeclaration(POLISHAPIPolishApiAccountDetails);
+GPBObjCClassDeclaration(POLISHAPIPolishApiTransactionDetails);
+GPBObjCClassDeclaration(POLISHAPISenderRecipient);
+GPBObjCClassDeclaration(POLISHAPISocialSecurityPayer);
+GPBObjCClassDeclaration(POLISHAPITransactionInfoCard);
+GPBObjCClassDeclaration(POLISHAPITransactionInfoTax);
+GPBObjCClassDeclaration(POLISHAPITransactionInfoZus);
 
 #pragma mark - POLISHAPIPolishapiRoot
 
@@ -244,7 +263,7 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "nameAddress",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPINameAddress),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPINameAddress),
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_NameAddress,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, nameAddress),
@@ -257,30 +276,30 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_AccountHolderType,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, accountHolderType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "accountNameClient",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_AccountNameClient,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, accountNameClient),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_Currency,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, currency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bank",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIBankAccountInfo),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIBankAccountInfo),
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_Bank,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, bank),
@@ -289,7 +308,7 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
       },
       {
         .name = "psuRelationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIAccountPsuRelation),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIAccountPsuRelation),
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_PsuRelationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, psuRelationsArray),
@@ -298,7 +317,7 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
       },
       {
         .name = "auxData",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiAccountDetails_FieldNumber_AuxData,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiAccountDetails__storage_, auxData),
@@ -313,7 +332,7 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIPolishApiAccountDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\007\007\000";
@@ -332,13 +351,13 @@ typedef struct POLISHAPIPolishApiAccountDetails__storage_ {
 int32_t POLISHAPIPolishApiAccountDetails_AccountHolderType_RawValue(POLISHAPIPolishApiAccountDetails *message) {
   GPBDescriptor *descriptor = [POLISHAPIPolishApiAccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIPolishApiAccountDetails_FieldNumber_AccountHolderType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPOLISHAPIPolishApiAccountDetails_AccountHolderType_RawValue(POLISHAPIPolishApiAccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [POLISHAPIPolishApiAccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIPolishApiAccountDetails_FieldNumber_AccountHolderType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - POLISHAPIPolishApiTransactionDetails
@@ -400,25 +419,25 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "transactionType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TransactionType,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, transactionType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "mcc",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_Mcc,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, mcc),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "auxData",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_AuxData,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, auxData),
@@ -427,7 +446,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "initiator",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPINameAddress),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPINameAddress),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_Initiator,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, initiator),
@@ -436,7 +455,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "sender",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPISenderRecipient),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPISenderRecipient),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_Sender,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, sender),
@@ -445,7 +464,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "recipient",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPISenderRecipient),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPISenderRecipient),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_Recipient,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, recipient),
@@ -454,43 +473,43 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "tradeDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TradeDate,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, tradeDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "postTransactionBalance",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_PostTransactionBalance,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, postTransactionBalance),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "rejectionDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_RejectionDate,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, rejectionDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "rejectionReason",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_RejectionReason,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, rejectionReason),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "zusInfo",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPITransactionInfoZus),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPITransactionInfoZus),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_ZusInfo,
         .hasIndex = 9,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, zusInfo),
@@ -499,7 +518,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "taxInfo",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPITransactionInfoTax),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPITransactionInfoTax),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TaxInfo,
         .hasIndex = 10,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, taxInfo),
@@ -508,7 +527,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "cardInfo",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPITransactionInfoCard),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPITransactionInfoCard),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_CardInfo,
         .hasIndex = 11,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, cardInfo),
@@ -517,16 +536,16 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "currencyDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_CurrencyDate,
         .hasIndex = 12,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, currencyDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transactionRateArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPICurrencyRate),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPICurrencyRate),
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TransactionRateArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, transactionRateArray),
@@ -535,56 +554,56 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
       },
       {
         .name = "baseCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_BaseCurrency,
         .hasIndex = 13,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, baseCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountBaseCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_AccountBaseCurrency,
         .hasIndex = 14,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, accountBaseCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "usedPaymentInstrumentId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_UsedPaymentInstrumentId,
         .hasIndex = 15,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, usedPaymentInstrumentId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tppTransactionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TppTransactionId,
         .hasIndex = 16,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, tppTransactionId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "tppName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_TppName,
         .hasIndex = 17,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, tppName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "holdExpirationDate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransactionDetails_FieldNumber_HoldExpirationDate,
         .hasIndex = 18,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransactionDetails__storage_, holdExpirationDate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -595,7 +614,7 @@ typedef struct POLISHAPIPolishApiTransactionDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIPolishApiTransactionDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\003\007\000";
@@ -635,16 +654,16 @@ typedef struct POLISHAPIPolishApiTransferMetadata__storage_ {
         .number = POLISHAPIPolishApiTransferMetadata_FieldNumber_DeliveryMode,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIPolishApiTransferMetadata__storage_, deliveryMode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "hold",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPolishApiTransferMetadata_FieldNumber_Hold,
         .hasIndex = 1,
         .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
     };
@@ -655,7 +674,7 @@ typedef struct POLISHAPIPolishApiTransferMetadata__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIPolishApiTransferMetadata__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -669,13 +688,13 @@ typedef struct POLISHAPIPolishApiTransferMetadata__storage_ {
 int32_t POLISHAPIPolishApiTransferMetadata_DeliveryMode_RawValue(POLISHAPIPolishApiTransferMetadata *message) {
   GPBDescriptor *descriptor = [POLISHAPIPolishApiTransferMetadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIPolishApiTransferMetadata_FieldNumber_DeliveryMode];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPOLISHAPIPolishApiTransferMetadata_DeliveryMode_RawValue(POLISHAPIPolishApiTransferMetadata *message, int32_t value) {
   GPBDescriptor *descriptor = [POLISHAPIPolishApiTransferMetadata descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIPolishApiTransferMetadata_FieldNumber_DeliveryMode];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - POLISHAPISenderRecipient
@@ -703,25 +722,25 @@ typedef struct POLISHAPISenderRecipient__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPISenderRecipient_FieldNumber_AccountNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPISenderRecipient__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountMassPayment",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPISenderRecipient_FieldNumber_AccountMassPayment,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPISenderRecipient__storage_, accountMassPayment),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "bank",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIBank),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIBank),
         .number = POLISHAPISenderRecipient_FieldNumber_Bank,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPISenderRecipient__storage_, bank),
@@ -730,7 +749,7 @@ typedef struct POLISHAPISenderRecipient__storage_ {
       },
       {
         .name = "nameAddress",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPINameAddress),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPINameAddress),
         .number = POLISHAPISenderRecipient_FieldNumber_NameAddress,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPISenderRecipient__storage_, nameAddress),
@@ -745,7 +764,7 @@ typedef struct POLISHAPISenderRecipient__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPISenderRecipient__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -783,7 +802,7 @@ typedef struct POLISHAPIAccountPsuRelation__storage_ {
         .number = POLISHAPIAccountPsuRelation_FieldNumber_TypeOfRelation,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIAccountPsuRelation__storage_, typeOfRelation),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -792,16 +811,16 @@ typedef struct POLISHAPIAccountPsuRelation__storage_ {
         .number = POLISHAPIAccountPsuRelation_FieldNumber_TypeOfProxy,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIAccountPsuRelation__storage_, typeOfProxy),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "stake",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIAccountPsuRelation_FieldNumber_Stake,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPIAccountPsuRelation__storage_, stake),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
@@ -812,7 +831,7 @@ typedef struct POLISHAPIAccountPsuRelation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIAccountPsuRelation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -826,25 +845,25 @@ typedef struct POLISHAPIAccountPsuRelation__storage_ {
 int32_t POLISHAPIAccountPsuRelation_TypeOfRelation_RawValue(POLISHAPIAccountPsuRelation *message) {
   GPBDescriptor *descriptor = [POLISHAPIAccountPsuRelation descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIAccountPsuRelation_FieldNumber_TypeOfRelation];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPOLISHAPIAccountPsuRelation_TypeOfRelation_RawValue(POLISHAPIAccountPsuRelation *message, int32_t value) {
   GPBDescriptor *descriptor = [POLISHAPIAccountPsuRelation descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIAccountPsuRelation_FieldNumber_TypeOfRelation];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t POLISHAPIAccountPsuRelation_TypeOfProxy_RawValue(POLISHAPIAccountPsuRelation *message) {
   GPBDescriptor *descriptor = [POLISHAPIAccountPsuRelation descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIAccountPsuRelation_FieldNumber_TypeOfProxy];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPOLISHAPIAccountPsuRelation_TypeOfProxy_RawValue(POLISHAPIAccountPsuRelation *message, int32_t value) {
   GPBDescriptor *descriptor = [POLISHAPIAccountPsuRelation descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:POLISHAPIAccountPsuRelation_FieldNumber_TypeOfProxy];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - POLISHAPINameAddress
@@ -866,7 +885,7 @@ typedef struct POLISHAPINameAddress__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "valueArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPINameAddress_FieldNumber_ValueArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPINameAddress__storage_, valueArray),
@@ -881,7 +900,7 @@ typedef struct POLISHAPINameAddress__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPINameAddress__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -915,25 +934,25 @@ typedef struct POLISHAPIBankAccountInfo__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bicOrSwift",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBankAccountInfo_FieldNumber_BicOrSwift,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIBankAccountInfo__storage_, bicOrSwift),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBankAccountInfo_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIBankAccountInfo__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "addressArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBankAccountInfo_FieldNumber_AddressArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIBankAccountInfo__storage_, addressArray),
@@ -948,7 +967,7 @@ typedef struct POLISHAPIBankAccountInfo__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIBankAccountInfo__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -986,43 +1005,43 @@ typedef struct POLISHAPIBank__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bicOrSwift",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBank_FieldNumber_BicOrSwift,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIBank__storage_, bicOrSwift),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBank_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIBank__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "code",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBank_FieldNumber_Code,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPIBank__storage_, code),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "countryCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBank_FieldNumber_CountryCode,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPIBank__storage_, countryCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "addressArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIBank_FieldNumber_AddressArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(POLISHAPIBank__storage_, addressArray),
@@ -1037,7 +1056,7 @@ typedef struct POLISHAPIBank__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIBank__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1077,7 +1096,7 @@ typedef struct POLISHAPITransactionInfoZus__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payerInfo",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPISocialSecurityPayer),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPISocialSecurityPayer),
         .number = POLISHAPITransactionInfoZus_FieldNumber_PayerInfo,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, payerInfo),
@@ -1086,47 +1105,47 @@ typedef struct POLISHAPITransactionInfoZus__storage_ {
       },
       {
         .name = "contributionType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoZus_FieldNumber_ContributionType,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, contributionType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "contributionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoZus_FieldNumber_ContributionId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, contributionId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "contributionPeriod",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoZus_FieldNumber_ContributionPeriod,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, contributionPeriod),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "paymentTypeId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoZus_FieldNumber_PaymentTypeId,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, paymentTypeId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "obligationId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoZus_FieldNumber_ObligationId,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoZus__storage_, obligationId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1137,7 +1156,7 @@ typedef struct POLISHAPITransactionInfoZus__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPITransactionInfoZus__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1177,7 +1196,7 @@ typedef struct POLISHAPITransactionInfoTax__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payerInfo",
-        .dataTypeSpecific.className = GPBStringifySymbol(POLISHAPIPayer),
+        .dataTypeSpecific.clazz = GPBObjCClass(POLISHAPIPayer),
         .number = POLISHAPITransactionInfoTax_FieldNumber_PayerInfo,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, payerInfo),
@@ -1186,47 +1205,47 @@ typedef struct POLISHAPITransactionInfoTax__storage_ {
       },
       {
         .name = "formCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoTax_FieldNumber_FormCode,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, formCode),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "periodId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoTax_FieldNumber_PeriodId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, periodId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "periodType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoTax_FieldNumber_PeriodType,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, periodType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "year",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoTax_FieldNumber_Year,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, year),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
         .name = "obligationId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoTax_FieldNumber_ObligationId,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoTax__storage_, obligationId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1237,7 +1256,7 @@ typedef struct POLISHAPITransactionInfoTax__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPITransactionInfoTax__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1269,20 +1288,20 @@ typedef struct POLISHAPITransactionInfoCard__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "cardHolder",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoCard_FieldNumber_CardHolder,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoCard__storage_, cardHolder),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "cardNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPITransactionInfoCard_FieldNumber_CardNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPITransactionInfoCard__storage_, cardNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1293,7 +1312,7 @@ typedef struct POLISHAPITransactionInfoCard__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPITransactionInfoCard__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1327,29 +1346,29 @@ typedef struct POLISHAPISocialSecurityPayer__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "nip",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPISocialSecurityPayer_FieldNumber_Nip,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPISocialSecurityPayer__storage_, nip),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "additionalPayerId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPISocialSecurityPayer_FieldNumber_AdditionalPayerId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPISocialSecurityPayer__storage_, additionalPayerId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "additionalPayerIdType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPISocialSecurityPayer_FieldNumber_AdditionalPayerIdType,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPISocialSecurityPayer__storage_, additionalPayerIdType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1360,7 +1379,7 @@ typedef struct POLISHAPISocialSecurityPayer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPISocialSecurityPayer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1392,20 +1411,20 @@ typedef struct POLISHAPIPayer__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payerId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPayer_FieldNumber_PayerId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPIPayer__storage_, payerId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "payerIdType",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPIPayer_FieldNumber_PayerIdType,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPIPayer__storage_, payerIdType),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1416,7 +1435,7 @@ typedef struct POLISHAPIPayer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPIPayer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1450,29 +1469,29 @@ typedef struct POLISHAPICurrencyRate__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "rate",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPICurrencyRate_FieldNumber_Rate,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(POLISHAPICurrencyRate__storage_, rate),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeDouble,
       },
       {
         .name = "fromCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPICurrencyRate_FieldNumber_FromCurrency,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(POLISHAPICurrencyRate__storage_, fromCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "toCurrency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = POLISHAPICurrencyRate_FieldNumber_ToCurrency,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(POLISHAPICurrencyRate__storage_, toCurrency),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1483,7 +1502,7 @@ typedef struct POLISHAPICurrencyRate__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(POLISHAPICurrencyRate__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

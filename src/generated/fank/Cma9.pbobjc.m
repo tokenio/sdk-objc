@@ -23,6 +23,41 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Account);
+GPBObjCClassDeclaration(AccountData);
+GPBObjCClassDeclaration(AccountDetails);
+GPBObjCClassDeclaration(AccountRequestData);
+GPBObjCClassDeclaration(AccountRequestSetup);
+GPBObjCClassDeclaration(Address);
+GPBObjCClassDeclaration(Balance);
+GPBObjCClassDeclaration(BalanceData);
+GPBObjCClassDeclaration(CreditorAccount);
+GPBObjCClassDeclaration(CreditorAgent);
+GPBObjCClassDeclaration(DebtorAccount);
+GPBObjCClassDeclaration(DebtorAgent);
+GPBObjCClassDeclaration(DeliveryAddress);
+GPBObjCClassDeclaration(Initiation);
+GPBObjCClassDeclaration(InstructedAmount);
+GPBObjCClassDeclaration(Links);
+GPBObjCClassDeclaration(Meta);
+GPBObjCClassDeclaration(MetaData);
+GPBObjCClassDeclaration(Party);
+GPBObjCClassDeclaration(PartyData);
+GPBObjCClassDeclaration(PaymentData);
+GPBObjCClassDeclaration(PaymentSetup);
+GPBObjCClassDeclaration(PaymentSubmission);
+GPBObjCClassDeclaration(PaymentSubmissionData);
+GPBObjCClassDeclaration(RemittanceInformation);
+GPBObjCClassDeclaration(Risk);
+GPBObjCClassDeclaration(Servicer);
+GPBObjCClassDeclaration(Transaction);
+GPBObjCClassDeclaration(TransactionData);
 
 #pragma mark - Cma9Root
 
@@ -319,7 +354,7 @@ typedef struct DeliveryAddress__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "addressLineArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_AddressLineArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, addressLineArray),
@@ -328,25 +363,25 @@ typedef struct DeliveryAddress__storage_ {
       },
       {
         .name = "buildingNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_BuildingNumber,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, buildingNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "country",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_Country,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, country),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "countrySubDivisionArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_CountrySubDivisionArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, countrySubDivisionArray),
@@ -355,29 +390,29 @@ typedef struct DeliveryAddress__storage_ {
       },
       {
         .name = "postCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_PostCode,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, postCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "streetName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_StreetName,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, streetName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "townName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeliveryAddress_FieldNumber_TownName,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(DeliveryAddress__storage_, townName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -388,7 +423,7 @@ typedef struct DeliveryAddress__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DeliveryAddress__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\007\001\000AddressLine\000\002N\000\003G\000\004\000CountrySubDivisio"
@@ -430,7 +465,7 @@ typedef struct Risk__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "deliveryAddress",
-        .dataTypeSpecific.className = GPBStringifySymbol(DeliveryAddress),
+        .dataTypeSpecific.clazz = GPBObjCClass(DeliveryAddress),
         .number = Risk_FieldNumber_DeliveryAddress,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Risk__storage_, deliveryAddress),
@@ -439,20 +474,20 @@ typedef struct Risk__storage_ {
       },
       {
         .name = "merchantCategoryCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Risk_FieldNumber_MerchantCategoryCode,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Risk__storage_, merchantCategoryCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "merchantCustomerIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Risk_FieldNumber_MerchantCustomerIdentification,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Risk__storage_, merchantCustomerIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -461,7 +496,7 @@ typedef struct Risk__storage_ {
         .number = Risk_FieldNumber_PaymentContextCode,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Risk__storage_, paymentContextCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -472,7 +507,7 @@ typedef struct Risk__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Risk__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001O\000\002T\000\003^\000\004R\000";
@@ -491,13 +526,13 @@ typedef struct Risk__storage_ {
 int32_t Risk_PaymentContextCode_RawValue(Risk *message) {
   GPBDescriptor *descriptor = [Risk descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Risk_FieldNumber_PaymentContextCode];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetRisk_PaymentContextCode_RawValue(Risk *message, int32_t value) {
   GPBDescriptor *descriptor = [Risk descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Risk_FieldNumber_PaymentContextCode];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Links
@@ -527,47 +562,47 @@ typedef struct Links__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "first",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Links_FieldNumber_First,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Links__storage_, first),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "last",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Links_FieldNumber_Last,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Links__storage_, last),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "next",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Links_FieldNumber_Next,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Links__storage_, next),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "prev",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Links_FieldNumber_Prev,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Links__storage_, prev),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "self_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Links_FieldNumber_Self_p,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Links__storage_, self_p),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -578,7 +613,7 @@ typedef struct Links__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Links__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\005\001E\000\002D\000\003D\000\004D\000\005\000Self\000";
@@ -613,11 +648,11 @@ typedef struct Meta__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "totalPages",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Meta_FieldNumber_TotalPages,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Meta__storage_, totalPages),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
@@ -628,7 +663,7 @@ typedef struct Meta__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Meta__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001J\000";
@@ -669,11 +704,11 @@ typedef struct AccountRequestSetup__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "expirationDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestSetup_FieldNumber_ExpirationDateTime,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountRequestSetup__storage_, expirationDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -687,20 +722,20 @@ typedef struct AccountRequestSetup__storage_ {
       },
       {
         .name = "transactionFromDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestSetup_FieldNumber_TransactionFromDateTime,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountRequestSetup__storage_, transactionFromDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transactionToDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestSetup_FieldNumber_TransactionToDateTime,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountRequestSetup__storage_, transactionToDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -711,7 +746,7 @@ typedef struct AccountRequestSetup__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountRequestSetup__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001R\000\002\000Permissions\000\003W\000\004U\000";
@@ -758,29 +793,29 @@ typedef struct AccountRequestData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountRequestId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestData_FieldNumber_AccountRequestId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, accountRequestId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creationDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestData_FieldNumber_CreationDateTime,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, creationDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "expirationDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestData_FieldNumber_ExpirationDateTime,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, expirationDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -798,25 +833,25 @@ typedef struct AccountRequestData__storage_ {
         .number = AccountRequestData_FieldNumber_Status,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "transactionFromDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestData_FieldNumber_TransactionFromDateTime,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, transactionFromDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transactionToDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequestData_FieldNumber_TransactionToDateTime,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(AccountRequestData__storage_, transactionToDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -827,7 +862,7 @@ typedef struct AccountRequestData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountRequestData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\007\001P\000\002P\000\003R\000\004\000Permissions\000\005F\000\006W\000\007U\000";
@@ -846,13 +881,13 @@ typedef struct AccountRequestData__storage_ {
 int32_t AccountRequestData_Status_RawValue(AccountRequestData *message) {
   GPBDescriptor *descriptor = [AccountRequestData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountRequestData_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetAccountRequestData_Status_RawValue(AccountRequestData *message, int32_t value) {
   GPBDescriptor *descriptor = [AccountRequestData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountRequestData_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum AccountRequestData_AccountRequestStatus
@@ -922,29 +957,29 @@ typedef struct MetaData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "firstAvailableDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MetaData_FieldNumber_FirstAvailableDateTime,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MetaData__storage_, firstAvailableDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "lastAvailableDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MetaData_FieldNumber_LastAvailableDateTime,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MetaData__storage_, lastAvailableDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "totalPages",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = MetaData_FieldNumber_TotalPages,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(MetaData__storage_, totalPages),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
@@ -955,7 +990,7 @@ typedef struct MetaData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MetaData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001V\000\002U\000\003J\000";
@@ -992,11 +1027,11 @@ typedef struct Servicer__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Servicer_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Servicer__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1005,7 +1040,7 @@ typedef struct Servicer__storage_ {
         .number = Servicer_FieldNumber_SchemeName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Servicer__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -1016,7 +1051,7 @@ typedef struct Servicer__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Servicer__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001N\000\002J\000";
@@ -1035,13 +1070,13 @@ typedef struct Servicer__storage_ {
 int32_t Servicer_SchemeName_RawValue(Servicer *message) {
   GPBDescriptor *descriptor = [Servicer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Servicer_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetServicer_SchemeName_RawValue(Servicer *message, int32_t value) {
   GPBDescriptor *descriptor = [Servicer descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Servicer_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Servicer_ServicerSchemeName
@@ -1106,20 +1141,20 @@ typedef struct AccountDetails__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountDetails_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountDetails__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountDetails_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountDetails__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1128,16 +1163,16 @@ typedef struct AccountDetails__storage_ {
         .number = AccountDetails_FieldNumber_SchemeName,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountDetails__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "secondaryIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountDetails_FieldNumber_SecondaryIdentification,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(AccountDetails__storage_, secondaryIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1148,7 +1183,7 @@ typedef struct AccountDetails__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountDetails__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001N\000\002D\000\003J\000\004W\000";
@@ -1167,13 +1202,13 @@ typedef struct AccountDetails__storage_ {
 int32_t AccountDetails_SchemeName_RawValue(AccountDetails *message) {
   GPBDescriptor *descriptor = [AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountDetails_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetAccountDetails_SchemeName_RawValue(AccountDetails *message, int32_t value) {
   GPBDescriptor *descriptor = [AccountDetails descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:AccountDetails_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Account
@@ -1207,7 +1242,7 @@ typedef struct Account__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountDetails),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountDetails),
         .number = Account_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Account__storage_, account),
@@ -1216,34 +1251,34 @@ typedef struct Account__storage_ {
       },
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Account_FieldNumber_AccountId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Account__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Account_FieldNumber_Currency,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Account__storage_, currency),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "nickname",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Account_FieldNumber_Nickname,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Account__storage_, nickname),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "servicer",
-        .dataTypeSpecific.className = GPBStringifySymbol(Servicer),
+        .dataTypeSpecific.clazz = GPBObjCClass(Servicer),
         .number = Account_FieldNumber_Servicer,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Account__storage_, servicer),
@@ -1252,7 +1287,7 @@ typedef struct Account__storage_ {
       },
       {
         .name = "metadata",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Account_FieldNumber_Metadata,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Account__storage_, metadata),
@@ -1261,11 +1296,11 @@ typedef struct Account__storage_ {
       },
       {
         .name = "providerDetails",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Account_FieldNumber_ProviderDetails,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Account__storage_, providerDetails),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1276,7 +1311,7 @@ typedef struct Account__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Account__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\006\001G\000\002I\000\003H\000\004H\000\005H\000\007O\000";
@@ -1311,7 +1346,7 @@ typedef struct AccountData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Account),
+        .dataTypeSpecific.clazz = GPBObjCClass(Account),
         .number = AccountData_FieldNumber_AccountArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(AccountData__storage_, accountArray),
@@ -1326,7 +1361,7 @@ typedef struct AccountData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001\000Account\000";
@@ -1369,16 +1404,16 @@ typedef struct Balance__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Balance_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Balance__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "amount",
-        .dataTypeSpecific.className = GPBStringifySymbol(InstructedAmount),
+        .dataTypeSpecific.clazz = GPBObjCClass(InstructedAmount),
         .number = Balance_FieldNumber_Amount,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Balance__storage_, amount),
@@ -1391,16 +1426,16 @@ typedef struct Balance__storage_ {
         .number = Balance_FieldNumber_CreditDebitIndicator,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Balance__storage_, creditDebitIndicator),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "dateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Balance_FieldNumber_DateTime,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Balance__storage_, dateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1409,7 +1444,7 @@ typedef struct Balance__storage_ {
         .number = Balance_FieldNumber_Type,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Balance__storage_, type),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -1420,7 +1455,7 @@ typedef struct Balance__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Balance__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\005\001I\000\002F\000\003T\000\004H\000\005D\000";
@@ -1439,25 +1474,25 @@ typedef struct Balance__storage_ {
 int32_t Balance_CreditDebitIndicator_RawValue(Balance *message) {
   GPBDescriptor *descriptor = [Balance descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Balance_FieldNumber_CreditDebitIndicator];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetBalance_CreditDebitIndicator_RawValue(Balance *message, int32_t value) {
   GPBDescriptor *descriptor = [Balance descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Balance_FieldNumber_CreditDebitIndicator];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Balance_Type_RawValue(Balance *message) {
   GPBDescriptor *descriptor = [Balance descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Balance_FieldNumber_Type];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetBalance_Type_RawValue(Balance *message, int32_t value) {
   GPBDescriptor *descriptor = [Balance descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Balance_FieldNumber_Type];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Balance_BalanceType
@@ -1538,7 +1573,7 @@ typedef struct BalanceData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "balanceArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Balance),
+        .dataTypeSpecific.clazz = GPBObjCClass(Balance),
         .number = BalanceData_FieldNumber_BalanceArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(BalanceData__storage_, balanceArray),
@@ -1553,7 +1588,7 @@ typedef struct BalanceData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(BalanceData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001\000Balance\000";
@@ -1606,16 +1641,16 @@ typedef struct Transaction__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Transaction__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "amount",
-        .dataTypeSpecific.className = GPBStringifySymbol(InstructedAmount),
+        .dataTypeSpecific.clazz = GPBObjCClass(InstructedAmount),
         .number = Transaction_FieldNumber_Amount,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Transaction__storage_, amount),
@@ -1624,7 +1659,7 @@ typedef struct Transaction__storage_ {
       },
       {
         .name = "balance",
-        .dataTypeSpecific.className = GPBStringifySymbol(Balance),
+        .dataTypeSpecific.clazz = GPBObjCClass(Balance),
         .number = Transaction_FieldNumber_Balance,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Transaction__storage_, balance),
@@ -1633,11 +1668,11 @@ typedef struct Transaction__storage_ {
       },
       {
         .name = "bookingDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_BookingDateTime,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Transaction__storage_, bookingDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -1646,7 +1681,7 @@ typedef struct Transaction__storage_ {
         .number = Transaction_FieldNumber_CreditDebitIndicator,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Transaction__storage_, creditDebitIndicator),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -1655,30 +1690,30 @@ typedef struct Transaction__storage_ {
         .number = Transaction_FieldNumber_Status,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Transaction__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "transactionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_TransactionId,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Transaction__storage_, transactionId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "transactionInformation",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_TransactionInformation,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Transaction__storage_, transactionInformation),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "metadata",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_Metadata,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Transaction__storage_, metadata),
@@ -1687,11 +1722,11 @@ typedef struct Transaction__storage_ {
       },
       {
         .name = "providerDetails",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Transaction_FieldNumber_ProviderDetails,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(Transaction__storage_, providerDetails),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1702,7 +1737,7 @@ typedef struct Transaction__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Transaction__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\t\001I\000\002F\000\003G\000\004O\000\005T\000\006F\000\007M\000\010V\000\nO\000";
@@ -1721,25 +1756,25 @@ typedef struct Transaction__storage_ {
 int32_t Transaction_CreditDebitIndicator_RawValue(Transaction *message) {
   GPBDescriptor *descriptor = [Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transaction_FieldNumber_CreditDebitIndicator];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransaction_CreditDebitIndicator_RawValue(Transaction *message, int32_t value) {
   GPBDescriptor *descriptor = [Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transaction_FieldNumber_CreditDebitIndicator];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 int32_t Transaction_Status_RawValue(Transaction *message) {
   GPBDescriptor *descriptor = [Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transaction_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetTransaction_Status_RawValue(Transaction *message, int32_t value) {
   GPBDescriptor *descriptor = [Transaction descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Transaction_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Transaction_TransactionStatus
@@ -1800,7 +1835,7 @@ typedef struct TransactionData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "transactionArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Transaction),
+        .dataTypeSpecific.clazz = GPBObjCClass(Transaction),
         .number = TransactionData_FieldNumber_TransactionArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(TransactionData__storage_, transactionArray),
@@ -1815,7 +1850,7 @@ typedef struct TransactionData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(TransactionData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001\000Transaction\000";
@@ -1852,7 +1887,7 @@ typedef struct AccountRequestsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountRequestSetup),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountRequestSetup),
         .number = AccountRequestsRequest_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountRequestsRequest__storage_, data_p),
@@ -1861,7 +1896,7 @@ typedef struct AccountRequestsRequest__storage_ {
       },
       {
         .name = "risk",
-        .dataTypeSpecific.className = GPBStringifySymbol(Risk),
+        .dataTypeSpecific.clazz = GPBObjCClass(Risk),
         .number = AccountRequestsRequest_FieldNumber_Risk,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountRequestsRequest__storage_, risk),
@@ -1876,7 +1911,7 @@ typedef struct AccountRequestsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountRequestsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001\000Data\000\002D\000";
@@ -1917,7 +1952,7 @@ typedef struct AccountRequestsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountRequestData),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountRequestData),
         .number = AccountRequestsResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountRequestsResponse__storage_, data_p),
@@ -1926,7 +1961,7 @@ typedef struct AccountRequestsResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = AccountRequestsResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountRequestsResponse__storage_, links),
@@ -1935,7 +1970,7 @@ typedef struct AccountRequestsResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(Meta),
+        .dataTypeSpecific.clazz = GPBObjCClass(Meta),
         .number = AccountRequestsResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountRequestsResponse__storage_, meta),
@@ -1944,7 +1979,7 @@ typedef struct AccountRequestsResponse__storage_ {
       },
       {
         .name = "risk",
-        .dataTypeSpecific.className = GPBStringifySymbol(Risk),
+        .dataTypeSpecific.clazz = GPBObjCClass(Risk),
         .number = AccountRequestsResponse_FieldNumber_Risk,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(AccountRequestsResponse__storage_, risk),
@@ -1959,7 +1994,7 @@ typedef struct AccountRequestsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountRequestsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001\000Data\000\002E\000\003D\000\004D\000";
@@ -1996,7 +2031,7 @@ typedef struct AccountsRequest__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(AccountsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2030,7 +2065,7 @@ typedef struct AccountsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountData),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountData),
         .number = AccountsResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountsResponse__storage_, data_p),
@@ -2039,7 +2074,7 @@ typedef struct AccountsResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = AccountsResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountsResponse__storage_, links),
@@ -2048,7 +2083,7 @@ typedef struct AccountsResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(MetaData),
+        .dataTypeSpecific.clazz = GPBObjCClass(MetaData),
         .number = AccountsResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountsResponse__storage_, meta),
@@ -2063,7 +2098,7 @@ typedef struct AccountsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";
@@ -2098,11 +2133,11 @@ typedef struct AccountRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountRequest_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountRequest__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2113,7 +2148,7 @@ typedef struct AccountRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001I\000";
@@ -2152,7 +2187,7 @@ typedef struct AccountResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(AccountData),
+        .dataTypeSpecific.clazz = GPBObjCClass(AccountData),
         .number = AccountResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountResponse__storage_, data_p),
@@ -2161,7 +2196,7 @@ typedef struct AccountResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = AccountResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountResponse__storage_, links),
@@ -2170,7 +2205,7 @@ typedef struct AccountResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(MetaData),
+        .dataTypeSpecific.clazz = GPBObjCClass(MetaData),
         .number = AccountResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountResponse__storage_, meta),
@@ -2185,7 +2220,7 @@ typedef struct AccountResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";
@@ -2220,11 +2255,11 @@ typedef struct DeleteAccountRequestsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountRequestId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DeleteAccountRequestsRequest_FieldNumber_AccountRequestId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(DeleteAccountRequestsRequest__storage_, accountRequestId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2235,7 +2270,7 @@ typedef struct DeleteAccountRequestsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DeleteAccountRequestsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001P\000";
@@ -2272,7 +2307,7 @@ typedef struct DeleteAccountRequestsResponse__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(DeleteAccountRequestsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2302,11 +2337,11 @@ typedef struct AccountBalancesRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountBalancesRequest_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountBalancesRequest__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2317,7 +2352,7 @@ typedef struct AccountBalancesRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountBalancesRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001I\000";
@@ -2356,7 +2391,7 @@ typedef struct AccountBalancesResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(BalanceData),
+        .dataTypeSpecific.clazz = GPBObjCClass(BalanceData),
         .number = AccountBalancesResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountBalancesResponse__storage_, data_p),
@@ -2365,7 +2400,7 @@ typedef struct AccountBalancesResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = AccountBalancesResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountBalancesResponse__storage_, links),
@@ -2374,7 +2409,7 @@ typedef struct AccountBalancesResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(Meta),
+        .dataTypeSpecific.clazz = GPBObjCClass(Meta),
         .number = AccountBalancesResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountBalancesResponse__storage_, meta),
@@ -2389,7 +2424,7 @@ typedef struct AccountBalancesResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountBalancesResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";
@@ -2426,20 +2461,20 @@ typedef struct AccountTransactionsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountTransactionsRequest_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountTransactionsRequest__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "page",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = AccountTransactionsRequest_FieldNumber_Page,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountTransactionsRequest__storage_, page),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
@@ -2450,7 +2485,7 @@ typedef struct AccountTransactionsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountTransactionsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001I\000";
@@ -2489,7 +2524,7 @@ typedef struct AccountTransactionsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(TransactionData),
+        .dataTypeSpecific.clazz = GPBObjCClass(TransactionData),
         .number = AccountTransactionsResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AccountTransactionsResponse__storage_, data_p),
@@ -2498,7 +2533,7 @@ typedef struct AccountTransactionsResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = AccountTransactionsResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(AccountTransactionsResponse__storage_, links),
@@ -2507,7 +2542,7 @@ typedef struct AccountTransactionsResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(Meta),
+        .dataTypeSpecific.clazz = GPBObjCClass(Meta),
         .number = AccountTransactionsResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(AccountTransactionsResponse__storage_, meta),
@@ -2522,7 +2557,7 @@ typedef struct AccountTransactionsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AccountTransactionsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";
@@ -2563,20 +2598,20 @@ typedef struct CreditorAccount__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = CreditorAccount_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreditorAccount__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = CreditorAccount_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(CreditorAccount__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -2585,16 +2620,16 @@ typedef struct CreditorAccount__storage_ {
         .number = CreditorAccount_FieldNumber_SchemeName,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(CreditorAccount__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "secondaryIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = CreditorAccount_FieldNumber_SecondaryIdentification,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(CreditorAccount__storage_, secondaryIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2605,7 +2640,7 @@ typedef struct CreditorAccount__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CreditorAccount__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001N\000\002D\000\003J\000\004W\000";
@@ -2624,13 +2659,13 @@ typedef struct CreditorAccount__storage_ {
 int32_t CreditorAccount_SchemeName_RawValue(CreditorAccount *message) {
   GPBDescriptor *descriptor = [CreditorAccount descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreditorAccount_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCreditorAccount_SchemeName_RawValue(CreditorAccount *message, int32_t value) {
   GPBDescriptor *descriptor = [CreditorAccount descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreditorAccount_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - CreditorAgent
@@ -2654,11 +2689,11 @@ typedef struct CreditorAgent__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = CreditorAgent_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(CreditorAgent__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -2667,7 +2702,7 @@ typedef struct CreditorAgent__storage_ {
         .number = CreditorAgent_FieldNumber_SchemeName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(CreditorAgent__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -2678,7 +2713,7 @@ typedef struct CreditorAgent__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CreditorAgent__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001N\000\002J\000";
@@ -2697,13 +2732,13 @@ typedef struct CreditorAgent__storage_ {
 int32_t CreditorAgent_SchemeName_RawValue(CreditorAgent *message) {
   GPBDescriptor *descriptor = [CreditorAgent descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreditorAgent_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetCreditorAgent_SchemeName_RawValue(CreditorAgent *message, int32_t value) {
   GPBDescriptor *descriptor = [CreditorAgent descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:CreditorAgent_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - DebtorAccount
@@ -2731,20 +2766,20 @@ typedef struct DebtorAccount__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DebtorAccount_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(DebtorAccount__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DebtorAccount_FieldNumber_Name,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(DebtorAccount__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -2753,16 +2788,16 @@ typedef struct DebtorAccount__storage_ {
         .number = DebtorAccount_FieldNumber_SchemeName,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(DebtorAccount__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "secondaryIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DebtorAccount_FieldNumber_SecondaryIdentification,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(DebtorAccount__storage_, secondaryIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2773,7 +2808,7 @@ typedef struct DebtorAccount__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DebtorAccount__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001N\000\002D\000\003J\000\004W\000";
@@ -2792,13 +2827,13 @@ typedef struct DebtorAccount__storage_ {
 int32_t DebtorAccount_SchemeName_RawValue(DebtorAccount *message) {
   GPBDescriptor *descriptor = [DebtorAccount descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:DebtorAccount_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetDebtorAccount_SchemeName_RawValue(DebtorAccount *message, int32_t value) {
   GPBDescriptor *descriptor = [DebtorAccount descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:DebtorAccount_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - DebtorAgent
@@ -2822,11 +2857,11 @@ typedef struct DebtorAgent__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "identification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = DebtorAgent_FieldNumber_Identification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(DebtorAgent__storage_, identification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -2835,7 +2870,7 @@ typedef struct DebtorAgent__storage_ {
         .number = DebtorAgent_FieldNumber_SchemeName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(DebtorAgent__storage_, schemeName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -2846,7 +2881,7 @@ typedef struct DebtorAgent__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DebtorAgent__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001N\000\002J\000";
@@ -2865,13 +2900,13 @@ typedef struct DebtorAgent__storage_ {
 int32_t DebtorAgent_SchemeName_RawValue(DebtorAgent *message) {
   GPBDescriptor *descriptor = [DebtorAgent descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:DebtorAgent_FieldNumber_SchemeName];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetDebtorAgent_SchemeName_RawValue(DebtorAgent *message, int32_t value) {
   GPBDescriptor *descriptor = [DebtorAgent descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:DebtorAgent_FieldNumber_SchemeName];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - InstructedAmount
@@ -2895,20 +2930,20 @@ typedef struct InstructedAmount__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "amount",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = InstructedAmount_FieldNumber_Amount,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(InstructedAmount__storage_, amount),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "currency",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = InstructedAmount_FieldNumber_Currency,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(InstructedAmount__storage_, currency),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2919,7 +2954,7 @@ typedef struct InstructedAmount__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(InstructedAmount__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001F\000\002H\000";
@@ -2956,20 +2991,20 @@ typedef struct RemittanceInformation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "reference",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RemittanceInformation_FieldNumber_Reference,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RemittanceInformation__storage_, reference),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "unstructured",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = RemittanceInformation_FieldNumber_Unstructured,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RemittanceInformation__storage_, unstructured),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -2980,7 +3015,7 @@ typedef struct RemittanceInformation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RemittanceInformation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001I\000\002L\000";
@@ -3029,7 +3064,7 @@ typedef struct Initiation__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "creditorAccount",
-        .dataTypeSpecific.className = GPBStringifySymbol(CreditorAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(CreditorAccount),
         .number = Initiation_FieldNumber_CreditorAccount,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Initiation__storage_, creditorAccount),
@@ -3038,7 +3073,7 @@ typedef struct Initiation__storage_ {
       },
       {
         .name = "creditorAgent",
-        .dataTypeSpecific.className = GPBStringifySymbol(CreditorAgent),
+        .dataTypeSpecific.clazz = GPBObjCClass(CreditorAgent),
         .number = Initiation_FieldNumber_CreditorAgent,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Initiation__storage_, creditorAgent),
@@ -3047,7 +3082,7 @@ typedef struct Initiation__storage_ {
       },
       {
         .name = "debtorAccount",
-        .dataTypeSpecific.className = GPBStringifySymbol(DebtorAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(DebtorAccount),
         .number = Initiation_FieldNumber_DebtorAccount,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Initiation__storage_, debtorAccount),
@@ -3056,7 +3091,7 @@ typedef struct Initiation__storage_ {
       },
       {
         .name = "debtorAgent",
-        .dataTypeSpecific.className = GPBStringifySymbol(DebtorAgent),
+        .dataTypeSpecific.clazz = GPBObjCClass(DebtorAgent),
         .number = Initiation_FieldNumber_DebtorAgent,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Initiation__storage_, debtorAgent),
@@ -3065,16 +3100,16 @@ typedef struct Initiation__storage_ {
       },
       {
         .name = "endToEndIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Initiation_FieldNumber_EndToEndIdentification,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Initiation__storage_, endToEndIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "instructedAmount",
-        .dataTypeSpecific.className = GPBStringifySymbol(InstructedAmount),
+        .dataTypeSpecific.clazz = GPBObjCClass(InstructedAmount),
         .number = Initiation_FieldNumber_InstructedAmount,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Initiation__storage_, instructedAmount),
@@ -3083,16 +3118,16 @@ typedef struct Initiation__storage_ {
       },
       {
         .name = "instructionIdentification",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Initiation_FieldNumber_InstructionIdentification,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Initiation__storage_, instructionIdentification),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "remittanceInformation",
-        .dataTypeSpecific.className = GPBStringifySymbol(RemittanceInformation),
+        .dataTypeSpecific.clazz = GPBObjCClass(RemittanceInformation),
         .number = Initiation_FieldNumber_RemittanceInformation,
         .hasIndex = 7,
         .offset = (uint32_t)offsetof(Initiation__storage_, remittanceInformation),
@@ -3107,7 +3142,7 @@ typedef struct Initiation__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Initiation__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\010\001O\000\002M\000\003M\000\004K\000\005V\000\006P\000\007Y\000\010U\000";
@@ -3142,7 +3177,7 @@ typedef struct PaymentSetup__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "initiation",
-        .dataTypeSpecific.className = GPBStringifySymbol(Initiation),
+        .dataTypeSpecific.clazz = GPBObjCClass(Initiation),
         .number = PaymentSetup_FieldNumber_Initiation,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentSetup__storage_, initiation),
@@ -3157,7 +3192,7 @@ typedef struct PaymentSetup__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentSetup__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001J\000";
@@ -3198,16 +3233,16 @@ typedef struct PaymentData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "creationDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentData_FieldNumber_CreationDateTime,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentData__storage_, creationDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "initiation",
-        .dataTypeSpecific.className = GPBStringifySymbol(Initiation),
+        .dataTypeSpecific.clazz = GPBObjCClass(Initiation),
         .number = PaymentData_FieldNumber_Initiation,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentData__storage_, initiation),
@@ -3216,11 +3251,11 @@ typedef struct PaymentData__storage_ {
       },
       {
         .name = "paymentId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentData_FieldNumber_PaymentId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PaymentData__storage_, paymentId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -3229,7 +3264,7 @@ typedef struct PaymentData__storage_ {
         .number = PaymentData_FieldNumber_Status,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(PaymentData__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -3240,7 +3275,7 @@ typedef struct PaymentData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001P\000\002J\000\003I\000\004F\000";
@@ -3259,13 +3294,13 @@ typedef struct PaymentData__storage_ {
 int32_t PaymentData_Status_RawValue(PaymentData *message) {
   GPBDescriptor *descriptor = [PaymentData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PaymentData_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPaymentData_Status_RawValue(PaymentData *message, int32_t value) {
   GPBDescriptor *descriptor = [PaymentData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PaymentData_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum PaymentData_PaymentSetupStatus
@@ -3333,7 +3368,7 @@ typedef struct PaymentSubmission__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "initiation",
-        .dataTypeSpecific.className = GPBStringifySymbol(Initiation),
+        .dataTypeSpecific.clazz = GPBObjCClass(Initiation),
         .number = PaymentSubmission_FieldNumber_Initiation,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentSubmission__storage_, initiation),
@@ -3342,11 +3377,11 @@ typedef struct PaymentSubmission__storage_ {
       },
       {
         .name = "paymentId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentSubmission_FieldNumber_PaymentId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentSubmission__storage_, paymentId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -3357,7 +3392,7 @@ typedef struct PaymentSubmission__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentSubmission__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001J\000\002I\000";
@@ -3398,29 +3433,29 @@ typedef struct PaymentSubmissionData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "paymentId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentSubmissionData_FieldNumber_PaymentId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentSubmissionData__storage_, paymentId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "paymentSubmissionId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentSubmissionData_FieldNumber_PaymentSubmissionId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentSubmissionData__storage_, paymentSubmissionId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "creationDateTime",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PaymentSubmissionData_FieldNumber_CreationDateTime,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PaymentSubmissionData__storage_, creationDateTime),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -3429,7 +3464,7 @@ typedef struct PaymentSubmissionData__storage_ {
         .number = PaymentSubmissionData_FieldNumber_Status,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(PaymentSubmissionData__storage_, status),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -3440,7 +3475,7 @@ typedef struct PaymentSubmissionData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentSubmissionData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001I\000\002S\000\003P\000\004F\000";
@@ -3459,13 +3494,13 @@ typedef struct PaymentSubmissionData__storage_ {
 int32_t PaymentSubmissionData_Status_RawValue(PaymentSubmissionData *message) {
   GPBDescriptor *descriptor = [PaymentSubmissionData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PaymentSubmissionData_FieldNumber_Status];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetPaymentSubmissionData_Status_RawValue(PaymentSubmissionData *message, int32_t value) {
   GPBDescriptor *descriptor = [PaymentSubmissionData descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:PaymentSubmissionData_FieldNumber_Status];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum PaymentSubmissionData_PaymentSubmissionStatus
@@ -3534,7 +3569,7 @@ typedef struct PaymentsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentSetup),
+        .dataTypeSpecific.clazz = GPBObjCClass(PaymentSetup),
         .number = PaymentsRequest_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentsRequest__storage_, data_p),
@@ -3543,7 +3578,7 @@ typedef struct PaymentsRequest__storage_ {
       },
       {
         .name = "risk",
-        .dataTypeSpecific.className = GPBStringifySymbol(Risk),
+        .dataTypeSpecific.clazz = GPBObjCClass(Risk),
         .number = PaymentsRequest_FieldNumber_Risk,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentsRequest__storage_, risk),
@@ -3558,7 +3593,7 @@ typedef struct PaymentsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001\000Data\000\002D\000";
@@ -3599,7 +3634,7 @@ typedef struct PaymentsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentData),
+        .dataTypeSpecific.clazz = GPBObjCClass(PaymentData),
         .number = PaymentsResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentsResponse__storage_, data_p),
@@ -3608,7 +3643,7 @@ typedef struct PaymentsResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = PaymentsResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentsResponse__storage_, links),
@@ -3617,7 +3652,7 @@ typedef struct PaymentsResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(Meta),
+        .dataTypeSpecific.clazz = GPBObjCClass(Meta),
         .number = PaymentsResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PaymentsResponse__storage_, meta),
@@ -3626,7 +3661,7 @@ typedef struct PaymentsResponse__storage_ {
       },
       {
         .name = "risk",
-        .dataTypeSpecific.className = GPBStringifySymbol(Risk),
+        .dataTypeSpecific.clazz = GPBObjCClass(Risk),
         .number = PaymentsResponse_FieldNumber_Risk,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(PaymentsResponse__storage_, risk),
@@ -3641,7 +3676,7 @@ typedef struct PaymentsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\004\001\000Data\000\002E\000\003D\000\004D\000";
@@ -3678,7 +3713,7 @@ typedef struct PaymentSubmissionsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentSubmission),
+        .dataTypeSpecific.clazz = GPBObjCClass(PaymentSubmission),
         .number = PaymentSubmissionsRequest_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentSubmissionsRequest__storage_, data_p),
@@ -3687,7 +3722,7 @@ typedef struct PaymentSubmissionsRequest__storage_ {
       },
       {
         .name = "risk",
-        .dataTypeSpecific.className = GPBStringifySymbol(Risk),
+        .dataTypeSpecific.clazz = GPBObjCClass(Risk),
         .number = PaymentSubmissionsRequest_FieldNumber_Risk,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentSubmissionsRequest__storage_, risk),
@@ -3702,7 +3737,7 @@ typedef struct PaymentSubmissionsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentSubmissionsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\002\001\000Data\000\002D\000";
@@ -3741,7 +3776,7 @@ typedef struct PaymentSubmissionsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(PaymentSubmissionData),
+        .dataTypeSpecific.clazz = GPBObjCClass(PaymentSubmissionData),
         .number = PaymentSubmissionsResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PaymentSubmissionsResponse__storage_, data_p),
@@ -3750,7 +3785,7 @@ typedef struct PaymentSubmissionsResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = PaymentSubmissionsResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PaymentSubmissionsResponse__storage_, links),
@@ -3759,7 +3794,7 @@ typedef struct PaymentSubmissionsResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(Meta),
+        .dataTypeSpecific.clazz = GPBObjCClass(Meta),
         .number = PaymentSubmissionsResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PaymentSubmissionsResponse__storage_, meta),
@@ -3774,7 +3809,7 @@ typedef struct PaymentSubmissionsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PaymentSubmissionsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";
@@ -3827,12 +3862,12 @@ typedef struct Address__storage_ {
         .number = Address_FieldNumber_AddressType,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Address__storage_, addressType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "addressLineArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_AddressLineArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Address__storage_, addressLineArray),
@@ -3841,56 +3876,56 @@ typedef struct Address__storage_ {
       },
       {
         .name = "streetName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_StreetName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Address__storage_, streetName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "buildingNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_BuildingNumber,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Address__storage_, buildingNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "postCode",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_PostCode,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Address__storage_, postCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "townName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_TownName,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Address__storage_, townName),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "countrySubDivision",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_CountrySubDivision,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Address__storage_, countrySubDivision),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "country",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Address_FieldNumber_Country,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Address__storage_, country),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -3901,7 +3936,7 @@ typedef struct Address__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Address__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\010\001K\000\002\000AddressLine\000\003J\000\004N\000\005H\000\006H\000\007R\000\010G\000";
@@ -3920,13 +3955,13 @@ typedef struct Address__storage_ {
 int32_t Address_AddressType_RawValue(Address *message) {
   GPBDescriptor *descriptor = [Address descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Address_FieldNumber_AddressType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetAddress_AddressType_RawValue(Address *message, int32_t value) {
   GPBDescriptor *descriptor = [Address descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Address_FieldNumber_AddressType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Address_AddressTypeEnum
@@ -4015,20 +4050,20 @@ typedef struct Party__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "partyId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_PartyId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Party__storage_, partyId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "partyNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_PartyNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Party__storage_, partyNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
@@ -4037,48 +4072,48 @@ typedef struct Party__storage_ {
         .number = Party_FieldNumber_PartyType,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(Party__storage_, partyType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_Name,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Party__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "emailAddress",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_EmailAddress,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(Party__storage_, emailAddress),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "phone",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_Phone,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(Party__storage_, phone),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "mobile",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = Party_FieldNumber_Mobile,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(Party__storage_, mobile),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "addressArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Address),
+        .dataTypeSpecific.clazz = GPBObjCClass(Address),
         .number = Party_FieldNumber_AddressArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Party__storage_, addressArray),
@@ -4093,7 +4128,7 @@ typedef struct Party__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(Party__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\010\001G\000\002K\000\003I\000\004D\000\005L\000\006E\000\007F\000\010\000Address\000";
@@ -4112,13 +4147,13 @@ typedef struct Party__storage_ {
 int32_t Party_PartyType_RawValue(Party *message) {
   GPBDescriptor *descriptor = [Party descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Party_FieldNumber_PartyType];
-  return GPBGetMessageInt32Field(message, field);
+  return GPBGetMessageRawEnumField(message, field);
 }
 
 void SetParty_PartyType_RawValue(Party *message, int32_t value) {
   GPBDescriptor *descriptor = [Party descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:Party_FieldNumber_PartyType];
-  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+  GPBSetMessageRawEnumField(message, field, value);
 }
 
 #pragma mark - Enum Party_PartyTypeEnum
@@ -4181,7 +4216,7 @@ typedef struct PartyData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "party",
-        .dataTypeSpecific.className = GPBStringifySymbol(Party),
+        .dataTypeSpecific.clazz = GPBObjCClass(Party),
         .number = PartyData_FieldNumber_Party,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PartyData__storage_, party),
@@ -4196,7 +4231,7 @@ typedef struct PartyData__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PartyData__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001E\000";
@@ -4231,11 +4266,11 @@ typedef struct PartyRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = PartyRequest_FieldNumber_AccountId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PartyRequest__storage_, accountId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -4246,7 +4281,7 @@ typedef struct PartyRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PartyRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\001\001I\000";
@@ -4285,7 +4320,7 @@ typedef struct PartyResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "data_p",
-        .dataTypeSpecific.className = GPBStringifySymbol(PartyData),
+        .dataTypeSpecific.clazz = GPBObjCClass(PartyData),
         .number = PartyResponse_FieldNumber_Data_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(PartyResponse__storage_, data_p),
@@ -4294,7 +4329,7 @@ typedef struct PartyResponse__storage_ {
       },
       {
         .name = "links",
-        .dataTypeSpecific.className = GPBStringifySymbol(Links),
+        .dataTypeSpecific.clazz = GPBObjCClass(Links),
         .number = PartyResponse_FieldNumber_Links,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PartyResponse__storage_, links),
@@ -4303,7 +4338,7 @@ typedef struct PartyResponse__storage_ {
       },
       {
         .name = "meta",
-        .dataTypeSpecific.className = GPBStringifySymbol(MetaData),
+        .dataTypeSpecific.clazz = GPBObjCClass(MetaData),
         .number = PartyResponse_FieldNumber_Meta,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(PartyResponse__storage_, meta),
@@ -4318,7 +4353,7 @@ typedef struct PartyResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(PartyResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
         "\003\001\000Data\000\002E\000\003D\000";

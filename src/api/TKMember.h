@@ -577,7 +577,6 @@ __deprecated_msg("Use createTransferTokenBuilderWithTokenRequest instead");
  * and policy.
  *
  * @param builder bulk transfer token builder
- * @return resolved token payload and policy
  */
 - (void)prepareBulkTransferToken:(BulkTransferTokenBuilder *)builder
                        onSuccess:(OnSuccessWithPrepareTokenResult)onSuccess

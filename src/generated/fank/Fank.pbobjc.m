@@ -28,6 +28,19 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+
+#pragma mark - Objective C Class declarations
+// Forward declarations of Objective C classes that we can use as
+// static values in struct initializers.
+// We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Alias);
+GPBObjCClassDeclaration(FankAccount);
+GPBObjCClassDeclaration(FankClient);
+GPBObjCClassDeclaration(Money);
+GPBObjCClassDeclaration(Notification);
+GPBObjCClassDeclaration(Signature);
+GPBObjCClassDeclaration(TokenPayload);
 
 #pragma mark - FankRoot
 
@@ -88,29 +101,29 @@ typedef struct FankClient__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankClient_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankClient__storage_, id_p),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "firstName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankClient_FieldNumber_FirstName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankClient__storage_, firstName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "lastName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankClient_FieldNumber_LastName,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankClient__storage_, lastName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -121,7 +134,7 @@ typedef struct FankClient__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankClient__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -155,25 +168,25 @@ typedef struct FankAccount__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAccount_FieldNumber_Name,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAccount__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAccount_FieldNumber_AccountNumber,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankAccount__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "balance",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = FankAccount_FieldNumber_Balance,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankAccount__storage_, balance),
@@ -188,7 +201,7 @@ typedef struct FankAccount__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAccount__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -222,29 +235,29 @@ typedef struct FankAddClientRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddClientRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAddClientRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "firstName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddClientRequest_FieldNumber_FirstName,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankAddClientRequest__storage_, firstName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "lastName",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddClientRequest_FieldNumber_LastName,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankAddClientRequest__storage_, lastName),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -255,7 +268,7 @@ typedef struct FankAddClientRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddClientRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -285,7 +298,7 @@ typedef struct FankAddClientResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "client",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankClient),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankClient),
         .number = FankAddClientResponse_FieldNumber_Client,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAddClientResponse__storage_, client),
@@ -300,7 +313,7 @@ typedef struct FankAddClientResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddClientResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -332,20 +345,20 @@ typedef struct FankGetClientRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetClientRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetClientRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetClientRequest_FieldNumber_ClientId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetClientRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -356,7 +369,7 @@ typedef struct FankGetClientRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetClientRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -386,7 +399,7 @@ typedef struct FankGetClientResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "client",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankClient),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankClient),
         .number = FankGetClientResponse_FieldNumber_Client,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetClientResponse__storage_, client),
@@ -401,7 +414,7 @@ typedef struct FankGetClientResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetClientResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -441,43 +454,43 @@ typedef struct FankAddAccountRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddAccountRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddAccountRequest_FieldNumber_ClientId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddAccountRequest_FieldNumber_Name,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, name),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddAccountRequest_FieldNumber_AccountNumber,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "balance",
-        .dataTypeSpecific.className = GPBStringifySymbol(Money),
+        .dataTypeSpecific.clazz = GPBObjCClass(Money),
         .number = FankAddAccountRequest_FieldNumber_Balance,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, balance),
@@ -486,11 +499,11 @@ typedef struct FankAddAccountRequest__storage_ {
       },
       {
         .name = "profile",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAddAccountRequest_FieldNumber_Profile,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(FankAddAccountRequest__storage_, profile),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -501,7 +514,7 @@ typedef struct FankAddAccountRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddAccountRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -531,7 +544,7 @@ typedef struct FankAddAccountResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankAccount),
         .number = FankAddAccountResponse_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAddAccountResponse__storage_, account),
@@ -546,7 +559,7 @@ typedef struct FankAddAccountResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAddAccountResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -578,20 +591,20 @@ typedef struct FankGetAccountsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAccountsRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAccountsRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAccountsRequest_FieldNumber_ClientId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetAccountsRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -602,7 +615,7 @@ typedef struct FankGetAccountsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -632,7 +645,7 @@ typedef struct FankGetAccountsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accountArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankAccount),
         .number = FankGetAccountsResponse_FieldNumber_AccountArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(FankGetAccountsResponse__storage_, accountArray),
@@ -647,7 +660,7 @@ typedef struct FankGetAccountsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -681,29 +694,29 @@ typedef struct FankGetAccountRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAccountRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAccountRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAccountRequest_FieldNumber_ClientId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetAccountRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAccountRequest_FieldNumber_AccountNumber,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankGetAccountRequest__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -714,7 +727,7 @@ typedef struct FankGetAccountRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -744,7 +757,7 @@ typedef struct FankGetAccountResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "account",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankAccount),
         .number = FankGetAccountResponse_FieldNumber_Account,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAccountResponse__storage_, account),
@@ -759,7 +772,7 @@ typedef struct FankGetAccountResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAccountResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -795,34 +808,34 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAuthorizeLinkAccountsRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAuthorizeLinkAccountsRequest_FieldNumber_MemberId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAuthorizeLinkAccountsRequest_FieldNumber_ClientId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountsArray",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankAuthorizeLinkAccountsRequest_FieldNumber_AccountsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(FankAuthorizeLinkAccountsRequest__storage_, accountsArray),
@@ -837,7 +850,7 @@ typedef struct FankAuthorizeLinkAccountsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankAuthorizeLinkAccountsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -869,20 +882,20 @@ typedef struct FankGetNotificationRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "subscriberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetNotificationRequest_FieldNumber_SubscriberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetNotificationRequest__storage_, subscriberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "notificationId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetNotificationRequest_FieldNumber_NotificationId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetNotificationRequest__storage_, notificationId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -893,7 +906,7 @@ typedef struct FankGetNotificationRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -923,7 +936,7 @@ typedef struct FankGetNotificationResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "notification",
-        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .dataTypeSpecific.clazz = GPBObjCClass(Notification),
         .number = FankGetNotificationResponse_FieldNumber_Notification,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetNotificationResponse__storage_, notification),
@@ -938,7 +951,7 @@ typedef struct FankGetNotificationResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -968,11 +981,11 @@ typedef struct FankGetNotificationsRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "subscriberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetNotificationsRequest_FieldNumber_SubscriberId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetNotificationsRequest__storage_, subscriberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -983,7 +996,7 @@ typedef struct FankGetNotificationsRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationsRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1013,7 +1026,7 @@ typedef struct FankGetNotificationsResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "notificationsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(Notification),
+        .dataTypeSpecific.clazz = GPBObjCClass(Notification),
         .number = FankGetNotificationsResponse_FieldNumber_NotificationsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(FankGetNotificationsResponse__storage_, notificationsArray),
@@ -1028,7 +1041,7 @@ typedef struct FankGetNotificationsResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetNotificationsResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1066,34 +1079,34 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "profile",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenRequest_FieldNumber_Profile,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, profile),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenRequest_FieldNumber_MemberId,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(FankAccount),
+        .dataTypeSpecific.clazz = GPBObjCClass(FankAccount),
         .number = FankGetOauthAccessTokenRequest_FieldNumber_AccountsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, accountsArray),
@@ -1102,11 +1115,11 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
       },
       {
         .name = "clientId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenRequest_FieldNumber_ClientId,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenRequest__storage_, clientId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1117,7 +1130,7 @@ typedef struct FankGetOauthAccessTokenRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetOauthAccessTokenRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1149,20 +1162,20 @@ typedef struct FankGetOauthAccessTokenResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "accessToken",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenResponse_FieldNumber_AccessToken,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenResponse__storage_, accessToken),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "expiresInMs",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetOauthAccessTokenResponse_FieldNumber_ExpiresInMs,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetOauthAccessTokenResponse__storage_, expiresInMs),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -1173,7 +1186,7 @@ typedef struct FankGetOauthAccessTokenResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetOauthAccessTokenResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1207,25 +1220,25 @@ typedef struct FankVerifyAliasRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankVerifyAliasRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "memberId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankVerifyAliasRequest_FieldNumber_MemberId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, memberId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "alias",
-        .dataTypeSpecific.className = GPBStringifySymbol(Alias),
+        .dataTypeSpecific.clazz = GPBObjCClass(Alias),
         .number = FankVerifyAliasRequest_FieldNumber_Alias,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankVerifyAliasRequest__storage_, alias),
@@ -1240,7 +1253,7 @@ typedef struct FankVerifyAliasRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankVerifyAliasRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1272,7 +1285,7 @@ typedef struct FankVerifyAliasResponse__storage_ {
                                         fields:NULL
                                     fieldCount:0
                                    storageSize:sizeof(FankVerifyAliasResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1304,20 +1317,20 @@ typedef struct FankGetAuthRequestPayloadRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestPayloadRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAuthRequestPayloadRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "authRequestId",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestPayloadRequest_FieldNumber_AuthRequestId,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetAuthRequestPayloadRequest__storage_, authRequestId),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1328,7 +1341,7 @@ typedef struct FankGetAuthRequestPayloadRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAuthRequestPayloadRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1360,7 +1373,7 @@ typedef struct FankGetAuthRequestPayloadResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "payload",
-        .dataTypeSpecific.className = GPBStringifySymbol(TokenPayload),
+        .dataTypeSpecific.clazz = GPBObjCClass(TokenPayload),
         .number = FankGetAuthRequestPayloadResponse_FieldNumber_Payload,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAuthRequestPayloadResponse__storage_, payload),
@@ -1369,11 +1382,11 @@ typedef struct FankGetAuthRequestPayloadResponse__storage_ {
       },
       {
         .name = "sourceAccountHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestPayloadResponse_FieldNumber_SourceAccountHash,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetAuthRequestPayloadResponse__storage_, sourceAccountHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1384,7 +1397,7 @@ typedef struct FankGetAuthRequestPayloadResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAuthRequestPayloadResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1418,29 +1431,29 @@ typedef struct FankGetAuthRequestSignatureRequest__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bic",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestSignatureRequest_FieldNumber_Bic,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAuthRequestSignatureRequest__storage_, bic),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "sourceAccountHash",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestSignatureRequest_FieldNumber_SourceAccountHash,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FankGetAuthRequestSignatureRequest__storage_, sourceAccountHash),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "accountNumber",
-        .dataTypeSpecific.className = NULL,
+        .dataTypeSpecific.clazz = Nil,
         .number = FankGetAuthRequestSignatureRequest_FieldNumber_AccountNumber,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(FankGetAuthRequestSignatureRequest__storage_, accountNumber),
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1451,7 +1464,7 @@ typedef struct FankGetAuthRequestSignatureRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAuthRequestSignatureRequest__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1481,7 +1494,7 @@ typedef struct FankGetAuthRequestSignatureResponse__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "bankSignature",
-        .dataTypeSpecific.className = GPBStringifySymbol(Signature),
+        .dataTypeSpecific.clazz = GPBObjCClass(Signature),
         .number = FankGetAuthRequestSignatureResponse_FieldNumber_BankSignature,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FankGetAuthRequestSignatureResponse__storage_, bankSignature),
@@ -1496,7 +1509,7 @@ typedef struct FankGetAuthRequestSignatureResponse__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FankGetAuthRequestSignatureResponse__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
