@@ -12,6 +12,7 @@ target 'TokenSdk' do
   pod 'Unirest', '~>1.1.4'
   # A workaround for issue https://github.com/firebase/firebase-ios-sdk/issues/2665
   pod 'Protobuf', :inhibit_warnings => true
+  pod 'Firebase', '6.22'
 
   target 'TokenSdkTests' do
     inherit! :search_paths
@@ -103,17 +104,17 @@ post_install do |installer|
     dir = "src/generated"
     system("rm -rf #{dir}");
 
-    gencommand = 
+    gencommand =
         generate_protos_cmd("common", dir) +
         generate_protos_cmd("common/provider", dir) +
-        generate_protos_cmd("common/google/api", dir) + 
+        generate_protos_cmd("common/google/api", dir) +
         generate_protos_cmd("common/google/protobuf", dir) +
         generate_protos_cmd("external/gateway", dir) +
         generate_protos_cmd("fank", dir) +
         generate_protos_cmd("extensions", dir) ;
-    
+
     system(gencommand)
-    
+
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
