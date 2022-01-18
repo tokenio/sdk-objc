@@ -93,7 +93,7 @@
             TransferEndpoint *destination = [[TransferEndpoint alloc] init];
             destination.account.token.memberId = redeemerAccount.member.id;
             destination.account.token.accountId = redeemerAccount.id;
-            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.11"];
             [redeemer
              redeemToken:[result token]
              amount:redeemAmount

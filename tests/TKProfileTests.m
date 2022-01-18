@@ -35,8 +35,9 @@
     TKTestExpectation *expactation = [[TKTestExpectation alloc] init];
     [weakMember setProfile:profile onSuccess:^(Profile *p) {
         [weakMember getProfile:weakMember.id onSuccess:^(Profile *result) {
-            XCTAssertEqualObjects(profile.displayNameFirst, result.displayNameFirst);
-            XCTAssertEqualObjects(profile.displayNameLast, result.displayNameLast);
+            NSString* name = [NSString stringWithFormat:@"%@ %@", profile.displayNameFirst, profile.displayNameLast];
+            XCTAssertEqualObjects(result.displayNameFirst, name);
+            XCTAssertEqualObjects(result.displayNameLast, @"");
             [expactation fulfill];
         } onError:THROWERROR];
     } onError:THROWERROR];

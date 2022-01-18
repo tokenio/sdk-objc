@@ -100,7 +100,7 @@
             [call start];
         }];
     } @catch(NSError *error) {
-        XCTAssertTrue(error.code == kTKErrorInvalidDeveloperKey);
+        XCTAssertTrue(error.code == 3);
         return;
     }
     XCTFail(@"Expected error is not raised");

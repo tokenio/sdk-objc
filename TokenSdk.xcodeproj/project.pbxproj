@@ -77,7 +77,6 @@
 		94F8BFE21DD4EA29008904C9 /* AccessTokenBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */; };
 		94FAE5331DF218880023AAA8 /* PagedArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAE5321DF218880023AAA8 /* PagedArray.h */; };
 		94FAE5351DF21A590023AAA8 /* PagedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE5341DF21A590023AAA8 /* PagedArray.m */; };
-		999461EE21754553007DB3B1 /* TKTrustedBeneficiaryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */; };
 		ABA7B01411EF72BFC5345CEF /* TKAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7B2E9BD235EDC507216BE /* TKAccount.m */; };
 		ABA7B0303C146231D78BE96C /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BC2013ED8025D15A3E18 /* seed.c */; };
 		ABA7B100F91D557B0FCF8F28 /* fe.c in Sources */ = {isa = PBXBuildFile; fileRef = ABA7BB41B15B9C824D04376C /* fe.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -349,7 +348,6 @@
 		94F8BFE11DD4EA29008904C9 /* AccessTokenBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenBuilder.m; sourceTree = "<group>"; };
 		94FAE5321DF218880023AAA8 /* PagedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedArray.h; sourceTree = "<group>"; };
 		94FAE5341DF21A590023AAA8 /* PagedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedArray.m; sourceTree = "<group>"; };
-		999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKTrustedBeneficiaryTests.m; sourceTree = "<group>"; };
 		A0BD2260CD0EE1FB0E488C44 /* libPods-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA7B0A4EFC8BE48B74908A0 /* TKBankClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TKBankClient.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		ABA7B0BF7AD53767529A6884 /* TKTokenCryptoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTokenCryptoEngine.h; sourceTree = "<group>"; };
@@ -714,7 +712,6 @@
 		8A99091C1D890E820096A7FA /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				999461ED21754553007DB3B1 /* TKTrustedBeneficiaryTests.m */,
 				D096878A2321D261006A78DE /* TKStandingOrderTests.m */,
 				6ACF46D21F94540F00D36A7B /* TokenClientTests.m */,
 				8A99091D1D890E820096A7FA /* TKMemberRegistrationTests.m */,
@@ -1516,7 +1513,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				999461EE21754553007DB3B1 /* TKTrustedBeneficiaryTests.m in Sources */,
 				DDAA0D7D1E25CBEA00E9BB09 /* TKSecureEnclaveTests.m in Sources */,
 				FA73A47C1E0EF5100079EAC8 /* TKBankInfoTests.m in Sources */,
 				E5C4B09E1FB145B500E63873 /* TKAccessSamples.m in Sources */,

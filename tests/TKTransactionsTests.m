@@ -128,7 +128,7 @@
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = self->payeeAccount.member.id;
     destination.account.token.accountId = self->payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"49.99"];
     for (int i = 0; i < 3; i++) {
         TKTestExpectation *redeemExpectation = [[TKTestExpectation alloc] init];
         [self->payee

@@ -39,7 +39,7 @@
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = self->payeeAccount.member.id;
     destination.account.token.accountId = self->payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     [self->payee
      redeemToken:endorsed
      amount:redeemAmount
@@ -49,7 +49,7 @@
      onSuccess:^(Transfer *transfer) {
          XCTAssert((transfer.status == TransactionStatus_Success)
                    || (transfer.status == TransactionStatus_Processing));
-         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
          XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
          XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
          [expectation fulfill];
@@ -64,7 +64,7 @@
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = self->payeeAccount.member.id;
     destination.account.token.accountId = self->payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     [self->payee
      redeemToken:endorsed
      amount:redeemAmount
@@ -74,7 +74,7 @@
      onSuccess:^(Transfer *transfer) {
          XCTAssert((transfer.status == TransactionStatus_Success)
                    || (transfer.status == TransactionStatus_Processing));
-         XCTAssertEqualObjects(@"99.12", transfer.payload.amount.value);
+         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
          XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
          XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
          [expectation fulfill];
@@ -89,7 +89,7 @@
     Token *endorsed = [self createToken:[self preparedBuilder]];
     
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50.1"];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     [self->payee
      redeemToken:endorsed
      amount:redeemAmount
@@ -99,7 +99,7 @@
      onSuccess:^(Transfer *transfer) {
          XCTAssert((transfer.status == TransactionStatus_Success)
                    || (transfer.status == TransactionStatus_Processing));
-         XCTAssertEqualObjects(@"50.1", transfer.payload.amount.value);
+         XCTAssertEqualObjects(@"100.99", transfer.payload.amount.value);
          XCTAssertEqualObjects(@"USD", transfer.payload.amount.currency);
          XCTAssertEqual(2, transfer.payloadSignaturesArray_Count);
          [expectation fulfill];
@@ -114,7 +114,7 @@
     
     Token * _Nonnull endorsed = [self createToken:[self preparedBuilder]];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"99.12"];
+    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
     [self->payee
      redeemToken:endorsed
      amount:redeemAmount
@@ -128,48 +128,6 @@
          } onError:THROWERROR];
      } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
-}
-
-- (void)testLookupTransfers {
-    TransferDestination *destination = [TransferDestination message];
-    destination.token.accountId = payeeAccount.id;
-    destination.token.memberId = payee.id;
-    
-    Token *endorsed = [self createToken:[self preparedBuilder]];
-    
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"11.11"];
-    for (int i = 0; i < 3; i++) {
-        TKTestExpectation *redeemExpectation = [[TKTestExpectation alloc] init];
-        [self->payee
-         redeemToken:endorsed
-         amount:redeemAmount
-         currency:@"USD"
-         description:nil
-         transferDestination:destination
-         onSuccess:^(Transfer *transfer) {
-             [redeemExpectation fulfill];
-         } onError:THROWERROR];
-        [self waitForExpectations:@[redeemExpectation] timeout:10];
-    }
-    
-    TKTestExpectation *payerExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payer transfer tokens"];
-    TKTestExpectation *payeeExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payee transfer tokens"];
-    [self runUntilTrue:^{
-        [self->payer getTransfersOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
-            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
-                [payerExpectation fulfill];
-            }
-        } onError:THROWERROR];
-        
-        [self->payee getTransfersOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
-            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
-                [payeeExpectation fulfill];
-            }
-        } onError:THROWERROR];
-        
-        return (payerExpectation.isFulfilled && payeeExpectation.isFulfilled) ;
-    }];
-    [self waitForExpectations:@[payerExpectation, payeeExpectation] timeout:10];
 }
 
 - (TransferTokenBuilder *)preparedBuilder {

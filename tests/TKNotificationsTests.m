@@ -68,7 +68,7 @@ void check(NSString *message, BOOL condition) {
             TransferEndpoint *destination = [[TransferEndpoint alloc] init];
             destination.account.token.memberId = self->payeeAccount.member.id;
             destination.account.token.accountId = self->payeeAccount.id;
-            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
             
             [self->payee
              redeemToken:[result token]
@@ -100,7 +100,7 @@ void check(NSString *message, BOOL condition) {
             TransferEndpoint *destination = [[TransferEndpoint alloc] init];
             destination.account.token.memberId = self->payeeAccount.member.id;
             destination.account.token.accountId = self->payeeAccount.id;
-            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
             
             [self->payee
              redeemToken:[result token]
@@ -263,7 +263,7 @@ void check(NSString *message, BOOL condition) {
             TransferEndpoint *destination = [[TransferEndpoint alloc] init];
             destination.account.token.memberId = self->payeeAccount.member.id;
             destination.account.token.accountId = self->payeeAccount.id;
-            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"50"];
+            NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"100.99"];
             
             [self->payee
              redeemToken:[result token]
