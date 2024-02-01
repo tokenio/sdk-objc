@@ -36,7 +36,7 @@ def fetch_protos()
         else
             url = "https://token.jfrog.io/token/libs-release/#{path}/#{name}-#{type}/#{version}/#{file}"
             open(file, 'wb') do |file|
-                file << open(url).read
+                file << URI.open(url).read
             end
         end
         file
@@ -103,17 +103,17 @@ post_install do |installer|
     dir = "src/generated"
     system("rm -rf #{dir}");
 
-    gencommand = 
+    gencommand =
         generate_protos_cmd("common", dir) +
         generate_protos_cmd("common/provider", dir) +
-        generate_protos_cmd("common/google/api", dir) + 
+        generate_protos_cmd("common/google/api", dir) +
         generate_protos_cmd("common/google/protobuf", dir) +
         generate_protos_cmd("external/gateway", dir) +
         generate_protos_cmd("fank", dir) +
         generate_protos_cmd("extensions", dir) ;
-    
+
     system(gencommand)
-    
+
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
