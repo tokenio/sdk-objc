@@ -17,6 +17,7 @@
 #import "TKUnauthenticatedClient.h"
 #import "PagedArray.h"
 #import "TKLogManager.h"
+#import "TKUtil.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -81,6 +82,29 @@
 }
 - (void)useAccessToken:(NSString *)accessTokenId {
     onBehalfOfMemberId = accessTokenId;
+}
+
+- (void)createMemberId:(enum CreateMemberType)memberType
+             onSuccess:(OnSuccessWithString)onSuccess
+               onError:(OnError)onError {
+    CreateMemberRequest *request = [CreateMemberRequest message];
+    request.nonce = [TKUtil nonce];
+    request.memberType = memberType;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToCreateMemberWithRequest:request
+                                   handler:^(CreateMemberResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess(response.memberId);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
 }
 
 - (void)getMember:(NSString *)memberId

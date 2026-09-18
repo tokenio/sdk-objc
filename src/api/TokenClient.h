@@ -73,6 +73,42 @@
     globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
 /**
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias.
+ *
+ * The member creation request is authenticated as `authenticatedAs`, an
+ * existing member whose keys are held by this device. The new member cannot
+ * authenticate the call itself: it has no keys until the keys generated here
+ * are registered against it.
+ *
+ * @param alias member alias to use, must be unique
+ * @param authenticatedAs existing member that authenticates the creation
+ */
+- (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias.
+ *
+ * The member creation request is authenticated as `authenticatedAs`, an
+ * existing member whose keys are held by this device. The new member cannot
+ * authenticate the call itself: it has no keys until the keys generated here
+ * are registered against it.
+ *
+ * @param alias member alias to use, must be unique
+ * @param authenticatedAs existing member that authenticates the creation
+ * @param recoveryAgent member id of the primary recovery agent.
+ */
+- (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
+       recoveryAgent:(NSString *)recoveryAgent
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError;
+
+/**
  * Creates a new Token member with a pair of auto generated keys and the
  * given alias.
  *
@@ -80,7 +116,8 @@
  */
 - (void)createMember:(Alias *)alias
            onSuccess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError;
+             onError:(OnError)onError
+__deprecated_msg("CreateMember requires authentication. Use createMember:authenticatedAs:onSuccess:onError: instead");
 
 /**
  * Creates a new Token member with a pair of auto generated keys and the
@@ -92,7 +129,8 @@
 - (void)createMember:(Alias *)alias
        recoveryAgent:(NSString *)recoveryAgent
            onSuccess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError;
+             onError:(OnError)onError
+__deprecated_msg("CreateMember requires authentication. Use createMember:authenticatedAs:recoveryAgent:onSuccess:onError: instead");
 /**
  * Provisions a new device for an existing user. The call generates a set
  * of keys that are returned back. The keys need to be approved by an

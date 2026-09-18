@@ -105,47 +105,47 @@
 }
 
 - (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
            onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
-    Alias *tokenAgent = [Alias message];
-    tokenAgent.value = @"token.io";
-    tokenAgent.type = Alias_Type_Domain;
-    [unauthenticatedClient
-     getTokenMember:tokenAgent
-     onSuccess:^(TokenMember* tokenMember) {
-         if (tokenMember && tokenMember.id_p && ![tokenMember.id_p isEqualToString:@""]) {
-             [self->unauthenticatedClient
-              createMemberId:^(NSString *memberId) {
-                  [self _addKeysAndAlias:memberId
-                                   alias:alias
-                   memberRecoveryAgentId:tokenMember.id_p
-                               onSuccess:onSuccess
-                                 onError:onError];
-              }
-              onError:onError];
-         }
-         else {
-             onError([NSError errorWithDomain:@"io.grpc"
-                                         code:GRPCErrorCodeNotFound
-                                     userInfo:nil]);
-         }
-     }
-     onError:onError];
+    [self _createMember:alias
+        authenticatedAs:authenticatedAs
+          recoveryAgent:nil
+              onSuccess:onSuccess
+                onError:onError];
+}
+
+- (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
+       recoveryAgent:(NSString *)recoveryAgent
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError {
+    [self _createMember:alias
+        authenticatedAs:authenticatedAs
+          recoveryAgent:recoveryAgent
+              onSuccess:onSuccess
+                onError:onError];
+}
+
+- (void)createMember:(Alias *)alias
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError {
+    [self _createMember:alias
+        authenticatedAs:nil
+          recoveryAgent:nil
+              onSuccess:onSuccess
+                onError:onError];
 }
 
 - (void)createMember:(Alias *)alias
        recoveryAgent:(NSString *)recoveryAgent
            onSuccess:(OnSuccessWithTKMember)onSuccess
              onError:(OnError)onError {
-    [self->unauthenticatedClient
-     createMemberId:^(NSString *memberId) {
-         [self _addKeysAndAlias:memberId
-                          alias:alias
-          memberRecoveryAgentId:recoveryAgent
-                      onSuccess:onSuccess
-                        onError:onError];
-     }
-     onError:onError];
+    [self _createMember:alias
+        authenticatedAs:nil
+          recoveryAgent:recoveryAgent
+              onSuccess:onSuccess
+                onError:onError];
 }
 
 - (void)provisionDevice:(Alias *)alias
@@ -427,6 +427,71 @@
 }
 
 #pragma mark - private
+
+// authenticatedAs can be nil, in which case the member is created with the
+// unauthenticated client (deprecated path).
+// recoveryAgent can be nil. In this case the Token recovery agent is used.
+- (void)_createMember:(Alias *)alias
+      authenticatedAs:(TKMember *)authenticatedAs
+        recoveryAgent:(NSString *)recoveryAgent
+            onSuccess:(OnSuccessWithTKMember)onSuccess
+              onError:(OnError)onError {
+    if (recoveryAgent) {
+        [self _mintMemberId:alias
+            authenticatedAs:authenticatedAs
+              recoveryAgent:recoveryAgent
+                  onSuccess:onSuccess
+                    onError:onError];
+        return;
+    }
+
+    Alias *tokenAgent = [Alias message];
+    tokenAgent.value = @"token.io";
+    tokenAgent.type = Alias_Type_Domain;
+    [unauthenticatedClient
+     getTokenMember:tokenAgent
+     onSuccess:^(TokenMember* tokenMember) {
+         if (tokenMember && tokenMember.id_p && ![tokenMember.id_p isEqualToString:@""]) {
+             [self _mintMemberId:alias
+                 authenticatedAs:authenticatedAs
+                   recoveryAgent:tokenMember.id_p
+                       onSuccess:onSuccess
+                         onError:onError];
+         }
+         else {
+             onError([NSError errorWithDomain:@"io.grpc"
+                                         code:GRPCErrorCodeNotFound
+                                     userInfo:nil]);
+         }
+     }
+     onError:onError];
+}
+
+// Reserves a member id on the server and sets the new member up with keys
+// and the given alias.
+- (void)_mintMemberId:(Alias *)alias
+      authenticatedAs:(TKMember *)authenticatedAs
+        recoveryAgent:(NSString *)recoveryAgent
+            onSuccess:(OnSuccessWithTKMember)onSuccess
+              onError:(OnError)onError {
+    OnSuccessWithString onMemberId = ^(NSString *memberId) {
+        [self _addKeysAndAlias:memberId
+                         alias:alias
+         memberRecoveryAgentId:recoveryAgent
+                     onSuccess:onSuccess
+                       onError:onError];
+    };
+
+    if (authenticatedAs) {
+        [[authenticatedAs getClient] createMemberId:CreateMemberType_Personal
+                                          onSuccess:onMemberId
+                                            onError:onError];
+    }
+    else {
+        [unauthenticatedClient createMemberId:onMemberId
+                                      onError:onError];
+    }
+}
 
 // alias can be nil. In this case only add the key.
 - (void)_addKeysAndAlias:(NSString *)memberId
