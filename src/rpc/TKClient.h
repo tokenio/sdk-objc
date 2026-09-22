@@ -226,6 +226,19 @@
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError;
 
+/**
+ * Sends a notification to request payment. The from alias in tokenpayload will
+ * be notified. The request is authenticated as the member this client belongs
+ * to; the gateway rejects it otherwise.
+ *
+ * @param token payload of a token to be sent
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyPaymentRequest:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError;
+
 
 /**
  * Links some funding bank accounts to Token.

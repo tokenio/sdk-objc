@@ -339,6 +339,14 @@ NS_ASSUME_NONNULL_BEGIN
                     onError:onError];
 }
 
+- (void)notifyPaymentRequest:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError {
+    [client notifyPaymentRequest:token
+                       onSuccess:onSuccess
+                         onError:onError];
+}
+
 - (void)updateNotificationStatus:(NSString *)notificationId
                           status:(Notification_Status)status
                        onSuccess:(OnSuccess)onSuccess

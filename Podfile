@@ -95,29 +95,64 @@ def generate_protos_cmd(path_to_protos, out_dir)
 end
 
 
+#
+# Whether to skip fetching the protos and regenerating src/generated.
+#
+# Regeneration needs authenticated access to token.jfrog.io. src/generated and
+# protos/ are both committed, so set SKIP_PROTO_REGEN=true to install the pods
+# against the committed sources when the protos have not changed.
+#
+def skip_proto_regen?()
+    %w(1 true yes).include?(ENV["SKIP_PROTO_REGEN"].to_s.downcase)
+end
+
+
 post_install do |installer|
-    # Fetch the protos.
-    fetch_protos();
+    if skip_proto_regen?()
+        puts("SKIP_PROTO_REGEN is set - keeping the committed protos and src/generated.")
+    else
+        # Fetch the protos.
+        fetch_protos();
 
-    # Build the command that generates the protos.
-    dir = "src/generated"
-    system("rm -rf #{dir}");
+        # Build the command that generates the protos.
+        dir = "src/generated"
+        system("rm -rf #{dir}");
 
-    gencommand =
-        generate_protos_cmd("common", dir) +
-        generate_protos_cmd("common/provider", dir) +
-        generate_protos_cmd("common/google/api", dir) +
-        generate_protos_cmd("common/google/protobuf", dir) +
-        generate_protos_cmd("external/gateway", dir) +
-        generate_protos_cmd("fank", dir) +
-        generate_protos_cmd("extensions", dir) ;
+        gencommand =
+            generate_protos_cmd("common", dir) +
+            generate_protos_cmd("common/provider", dir) +
+            generate_protos_cmd("common/google/api", dir) +
+            generate_protos_cmd("common/google/protobuf", dir) +
+            generate_protos_cmd("external/gateway", dir) +
+            generate_protos_cmd("fank", dir) +
+            generate_protos_cmd("extensions", dir) ;
 
-    system(gencommand)
+        system(gencommand)
+    end
 
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
             config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.12'
+        end
+
+        # Aggregate targets (Pods-TokenSdk et al) have no source build phase.
+        next unless target.respond_to?(:source_build_phase)
+
+        # BoringSSL-GRPC's podspec puts the *build setting* name
+        # GCC_WARN_INHIBIT_ALL_WARNINGS in its per-file compiler_flags, so every
+        # source file is compiled with a literal "-GCC_WARN_INHIBIT_ALL_WARNINGS".
+        # clang reads that as -G <arg>, which it accepted silently until Xcode 14
+        # and now rejects with "unsupported option '-G' for target
+        # 'arm64-apple-ios9.0-simulator'". The flag is redundant anyway - the same
+        # list already carries -w - so drop it.
+        target.source_build_phase.files.each do |file|
+            next unless file.settings && file.settings['COMPILER_FLAGS']
+
+            flags = file.settings['COMPILER_FLAGS'].split
+            next unless flags.delete('-GCC_WARN_INHIBIT_ALL_WARNINGS')
+
+            file.settings['COMPILER_FLAGS'] = flags.join(' ')
         end
     end
 end

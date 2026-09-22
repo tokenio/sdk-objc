@@ -270,17 +270,6 @@
                                      onError:onError];
 }
 
-- (void)notifyPaymentRequest:(TokenPayload *)token
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError {
-    if ([token.refId length] == 0) {
-        token.refId = [TKUtil nonce];
-    }
-    [unauthenticatedClient notifyPaymentRequest:token
-                                      onSuccess:onSuccess
-                                        onError:onError];
-}
-
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys
       deviceMetadata:(DeviceMetadata *)deviceMetadata

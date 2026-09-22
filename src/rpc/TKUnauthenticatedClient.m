@@ -264,26 +264,6 @@
     [rpc execute:call request:request];
 }
 
-- (void)notifyPaymentRequest:(TokenPayload *)token
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError {
-    RequestTransferRequest *request = [RequestTransferRequest message];
-    request.tokenPayload = token;
-    RpcLogStart(request);
-    
-    __block GRPCProtoCall *call = [gateway
-                                   RPCToRequestTransferWithRequest:request
-                                   handler:^(RequestTransferResponse *response, NSError *error) {
-                                       if (response) {
-                                           RpcLogCompletedWithMetaData(response, call);
-                                           onSuccess();
-                                       } else {
-                                           [self->errorHandler handle:onError withError:error];
-                                       }
-                                   }];
-    [rpc execute:call request:request];
-}
-
 - (void)notifyAddKey:(Alias *)alias
                 keys:(NSArray<Key *> *)keys
       deviceMetadata:(DeviceMetadata *)deviceMetadata

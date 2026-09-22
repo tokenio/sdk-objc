@@ -265,6 +265,17 @@ NS_ASSUME_NONNULL_BEGIN
                 onError:(OnError)onError;
 
 /**
+ * Sends a notification to request payment. The from alias in tokenpayload will
+ * be notified. The notification is sent on behalf of this member, which the
+ * gateway authenticates.
+ *
+ * @param token payload of a token to be sent
+ */
+- (void)notifyPaymentRequest:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError;
+
+/**
  * Updates the status of a notification.
  *
  * @param notificationId the notification id to update

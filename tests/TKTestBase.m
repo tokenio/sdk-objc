@@ -237,7 +237,11 @@
             return;
         }
         NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        if (now - start < waitingTimeMs) {
+        // timeIntervalSince1970 is in seconds; the budget is in milliseconds.
+        // Comparing them directly made the deadline ~20000 seconds, so the
+        // branch below was unreachable and a condition that never came true
+        // hung the whole suite instead of failing.
+        if ((now - start) * 1000 < waitingTimeMs) {
             usleep(1000 * backOffTimeMs);
             [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode
                                   beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
@@ -247,6 +251,21 @@
             return;
         }
     }
+}
+
+- (void)runUntilTrue:(int (^)(void))condition reissuing:(void (^)(void))request {
+    // Back off between attempts: the request is re-issued on every iteration
+    // that does not satisfy the condition, and the default 0 ms would turn
+    // this into ~10 calls a second for the whole budget.
+    [self runUntilTrue:^ {
+        if (condition()) {
+            return 1;
+        }
+        request();
+        return 0;
+    }
+         backOffTimeMs:500
+         waitingTimeMs:20000];
 }
 
 - (Notification *)runUntilNotificationReceived:(TKMember *)member; {

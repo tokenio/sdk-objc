@@ -51,6 +51,29 @@
     [self waitForExpectations:@[expectation] timeout:10];
 }
 
+// The member created in setUp signs the CreateMember call for the new member.
+// The new member cannot sign it: it has no keys until this flow registers them.
+- (void)testCreateMemberAuthenticatedAsAnotherMember {
+    Alias *alias = [self generateAlias];
+    __block TKMember *newMember = nil;
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+
+    [tokenClient createMember:alias
+              authenticatedAs:member
+                    onSuccess:^(TKMember *created) {
+                        newMember = created;
+                        XCTAssert(created.id.length > 0);
+                        XCTAssertNotEqualObjects(created.id, self->member.id);
+                        XCTAssertEqualObjects(created.firstAlias, [TKUtil normalizeAlias:alias]);
+                        [expectation fulfill];
+                    }
+                      onError:THROWERROR];
+
+    [self waitForExpectations:@[expectation] timeout:10];
+
+    [self assertKeysCount:3 for:newMember];
+}
+
 - (void)testProvisionNewDevice {
     TokenClient *anotherClient = [self client];
     

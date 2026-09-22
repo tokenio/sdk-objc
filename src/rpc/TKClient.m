@@ -439,6 +439,33 @@
              onError:onError];
 }
 
+- (void)notifyPaymentRequest:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError {
+    if ([token.refId length] == 0) {
+        token.refId = [TKUtil nonce];
+    }
+
+    RequestTransferRequest *request = [RequestTransferRequest message];
+    request.tokenPayload = token;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToRequestTransferWithRequest:request
+                                   handler:^(RequestTransferResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess();
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
 
 - (void)linkAccounts:(BankAuthorization *)bankAuthorization
            onSuccess:(OnSuccessWithAccounts)onSuccess

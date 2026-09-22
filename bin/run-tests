@@ -1,15 +1,28 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 scheme=$1
 
-destination=$(instruments -s devices | grep iPhone\ 8| tail -1 \
-     | sed 's/\(iPhone[^\(]*\) (\([0-9.]*\)).*/platform=iOS Simulator,name=\1,OS=\2/')
+# The workspace path is relative, so xcodebuild only finds it when the repo root
+# is the working directory. Resolve it from the script's own location instead,
+# so the runners work when invoked from anywhere.
+repo_root=$(cd "$(dirname "$0")/.." && pwd)
+
+# The simulator to test against. instruments(1), which this used to query for a
+# device, was deprecated in Xcode 12 and removed in Xcode 14; OS=latest now lets
+# xcodebuild pick the newest installed runtime itself. Override the device with
+# SIMULATOR_DEVICE, and run `xcrun simctl list devices available` to see the
+# names the installed runtimes offer.
+device=${SIMULATOR_DEVICE:-iPhone 17}
 
 xcodebuild \
-    -workspace TokenSdk.xcworkspace \
+    -workspace "${repo_root}/TokenSdk.xcworkspace" \
     -scheme "${scheme}" \
     -sdk iphonesimulator \
-    -destination "${destination}" \
+    -destination "platform=iOS Simulator,name=${device},OS=latest" \
     -skip-testing:TokenSdkTests/TKAccountSamples/testBankAuthorizationNotification  \
     -skip-testing:TokenSdkTests/TKAccountSamples/testInitiateAccountLinking  \
     test

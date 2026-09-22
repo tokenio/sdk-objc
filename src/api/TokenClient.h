@@ -250,17 +250,6 @@ __deprecated_msg("CreateMember requires authentication. Use createMember:authent
                   onError:(OnError)onError;
 
 /**
- * Sends a notification to request payment. The from alias in tokenpayload will be notified.
- *
- * @param token payload of a token to be sent
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
- */
-- (void)notifyPaymentRequest:(TokenPayload *)token
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError;
-
-/**
  * Sends a notification to request adding keys
  *
  * @param alias alias to notify
