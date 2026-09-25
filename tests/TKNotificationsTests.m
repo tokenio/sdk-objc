@@ -299,7 +299,13 @@ void check(NSString *message, BOOL condition) {
                                                             fromJSON:notification.content.payload];
                     if ([transactionStepup.transactionId isEqualToString: transactionId]
                         && [transactionStepup.accountId isEqualToString: self->payerAccount.id]) {
-                        [expectation fulfill];
+                        // Stop at the first match: XCTest treats a second
+                        // fulfill of the same expectation as an API violation,
+                        // and the loop above can see more than one match.
+                        if (!expectation.isFulfilled) {
+                            [expectation fulfill];
+                        }
+                        break;
                     }
                 }
             }
@@ -367,7 +373,13 @@ void check(NSString *message, BOOL condition) {
                 if ((notification.status == status)
                     && ([notification.content.type isEqualToString:type])) {
                     notificationId = notification.id_p;
-                    [expectation fulfill];
+                    // Stop at the first match: XCTest treats a second fulfill
+                    // of the same expectation as an API violation, and a page
+                    // can hold more than one notification of this type.
+                    if (!expectation.isFulfilled) {
+                        [expectation fulfill];
+                    }
+                    break;
                 }
             }
         } onError:THROWERROR];

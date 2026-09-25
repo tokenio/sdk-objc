@@ -46,6 +46,10 @@
                onError:(void(^)(NSError *))onError {
     CreateMemberRequest *request = [CreateMemberRequest message];
     request.nonce = [TKUtil nonce];
+    // Without this the member registers as INVALID_MEMBER_TYPE. Every member
+    // this SDK creates is a personal one, and sdk-java sends the type on its
+    // unauthenticated path too.
+    request.memberType = CreateMemberType_Personal;
     RpcLogStart(request);
     
     __block GRPCProtoCall *call = [gateway

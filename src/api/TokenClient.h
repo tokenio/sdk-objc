@@ -109,19 +109,26 @@
              onError:(OnError)onError;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
- * given alias.
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias, without authenticating the call.
+ *
+ * This is the only way to create the first member on a device: the
+ * authenticated overloads above need an existing member whose keys are already
+ * held here.
  *
  * @param alias member alias to use, must be unique
  */
 - (void)createMember:(Alias *)alias
            onSuccess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError
-__deprecated_msg("CreateMember requires authentication. Use createMember:authenticatedAs:onSuccess:onError: instead");
+             onError:(OnError)onError;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
- * given alias.
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias, without authenticating the call.
+ *
+ * This is the only way to create the first member on a device: the
+ * authenticated overloads above need an existing member whose keys are already
+ * held here.
  *
  * @param alias member alias to use, must be unique
  * @param recoveryAgent member id of the primary recovery agent.
@@ -129,8 +136,7 @@ __deprecated_msg("CreateMember requires authentication. Use createMember:authent
 - (void)createMember:(Alias *)alias
        recoveryAgent:(NSString *)recoveryAgent
            onSuccess:(OnSuccessWithTKMember)onSuccess
-             onError:(OnError)onError
-__deprecated_msg("CreateMember requires authentication. Use createMember:authenticatedAs:recoveryAgent:onSuccess:onError: instead");
+             onError:(OnError)onError;
 /**
  * Provisions a new device for an existing user. The call generates a set
  * of keys that are returned back. The keys need to be approved by an

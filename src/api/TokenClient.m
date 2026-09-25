@@ -418,7 +418,8 @@
 #pragma mark - private
 
 // authenticatedAs can be nil, in which case the member is created with the
-// unauthenticated client (deprecated path).
+// unauthenticated client. That is the only path open to a device that does not
+// hold an existing member yet.
 // recoveryAgent can be nil. In this case the Token recovery agent is used.
 - (void)_createMember:(Alias *)alias
       authenticatedAs:(TKMember *)authenticatedAs

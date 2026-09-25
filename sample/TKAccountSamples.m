@@ -322,112 +322,133 @@
     TKMember *payer = self.payer;
     TKAccount *payerAccount = self.payerAccount;
     
-    __block int displayed = 0;
-    void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
-        // ignores inputs, but makes examples look purposeful
-        displayed++;
-    };
-    
     // The lookups below are eventually consistent, so each one is wrapped in a
     // block and re-issued until it yields something. Firing it once and then
     // waiting on its callback cannot work: an empty first response never
     // changes, no matter how long the poll waits.
-    void (^getTransactions)(void) = ^{
-        // getTransactionsOffset begin snippet to include in docs
-        [payer getTransactionsOffset:NULL // NULL: get first "page" of results
-                               limit:10
-                          forAccount:payerAccount.id
-                             withKey:Key_Level_Low
-                           onSuccess:^(PagedArray<Transaction *> *ary) {
-                               for (Transaction *tr in ary.items) {
-                                   // use transactions
-                                   displayMoney(tr.amount.currency, tr.amount.value);
-                               }
-                           } onError:^(NSError *e) {
-                               // Something went wrong.
-                               @throw [NSException exceptionWithName:@"GetTransactionsException"
-                                                              reason:[e localizedFailureReason]
-                                                            userInfo:[e userInfo]];
-                           }];
-        // getTransactionsOffset done snippet to include in docs
-    };
-    getTransactions();
+    //
+    // Each section keeps its own counter and its own displayMoney block. A
+    // re-issued lookup can still be in flight once its section is done, and on
+    // a counter shared between sections that late response would satisfy the
+    // next section on its own, without its lookup having returned anything.
+    {
+        __block int displayed = 0;
+        void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
+            // ignores inputs, but makes examples look purposeful
+            displayed++;
+        };
+        void (^getTransactions)(void) = ^{
+            // getTransactionsOffset begin snippet to include in docs
+            [payer getTransactionsOffset:NULL // NULL: get first "page" of results
+                                   limit:10
+                              forAccount:payerAccount.id
+                                 withKey:Key_Level_Low
+                               onSuccess:^(PagedArray<Transaction *> *ary) {
+                                   for (Transaction *tr in ary.items) {
+                                       // use transactions
+                                       displayMoney(tr.amount.currency, tr.amount.value);
+                                   }
+                               } onError:^(NSError *e) {
+                                   // Something went wrong.
+                                   @throw [NSException exceptionWithName:@"GetTransactionsException"
+                                                                  reason:[e localizedFailureReason]
+                                                                userInfo:[e userInfo]];
+                               }];
+            // getTransactionsOffset done snippet to include in docs
+        };
+        getTransactions();
 
-    [self runUntilTrue:^ {
-        return (displayed > 0);
-    } reissuing:getTransactions];
-    
-    displayed = 0;
-    
-    // getTransaction begin snippet to include in docs
-    [payer getTransaction:transactionId
-                forAccount:payerAccount.id
-                  withKey:Key_Level_Low
-                onSuccess:^(Transaction *tr) {
-                    // use the transaction
-                    displayMoney(tr.amount.currency, tr.amount.value);
-                } onError:^(NSError *e) {
-                    // Something went wrong.
-                    @throw [NSException exceptionWithName:@"GetTransactionException"
-                                                   reason:[e localizedFailureReason]
-                                                 userInfo:[e userInfo]];
-                }];
-    // getTransaction done snippet to include in docs
-    
-    [self runUntilTrue:^ {
-        return (displayed > 0);
-    }];
-    
-    displayed = 0;
-    
-    void (^getTransferTokens)(void) = ^{
-        // getTransferTokensOffset begin snippet to include in docs
-        [payer getTransferTokensOffset:NULL // NULL: get first "page" of results
-                                 limit:10
-                             onSuccess:^(PagedArray<Token*> *ary) {
-                                 for (Token *tt in ary.items) {
-                                     // use the tokens
-                                     displayMoney(tt.payload.transfer.currency, tt.payload.transfer.amount);
-                                 }
-                             } onError:^(NSError *e) {
-                                 // Something went wrong.
-                                 @throw [NSException exceptionWithName:@"GetTransferTokensException"
-                                                                reason:[e localizedFailureReason]
-                                                              userInfo:[e userInfo]];
-                             }];
-        // getTransferTokensOffset done snippet to include in docs
-    };
-    getTransferTokens();
+        [self runUntilTrue:^ {
+            return (displayed > 0);
+        } reissuing:getTransactions];
+    }
 
-    [self runUntilTrue:^ {
-        return (displayed > 0);
-    } reissuing:getTransferTokens];
-    
-    displayed = 0;
-    
-    void (^getTransfers)(void) = ^{
-        // getTransfersOffset begin snippet to include in docs
-        [payer getTransfersOffset:NULL // NULL: get first "page" of results
-                            limit:10
-                          tokenId:NULL // NULL: don't filter by token
-                        onSuccess:^(PagedArray<Transfer*> *ary) {
-                            for (Transfer *t in ary.items) {
-                                // use the transfers
-                                displayMoney(t.payload.amount.currency, t.payload.amount.value);
-                            }
-                        } onError:^(NSError *e) {
-                            // Something went wrong.
-                            @throw [NSException exceptionWithName:@"GetTransfersException"
-                                                           reason:[e localizedFailureReason]
-                                                         userInfo:[e userInfo]];
-                        }];
-        // getTransfersOffset done snippet to include in docs
-    };
-    getTransfers();
+    {
+        __block int displayed = 0;
+        void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
+            // ignores inputs, but makes examples look purposeful
+            displayed++;
+        };
+        // getTransaction begin snippet to include in docs
+        [payer getTransaction:transactionId
+                    forAccount:payerAccount.id
+                      withKey:Key_Level_Low
+                    onSuccess:^(Transaction *tr) {
+                        // use the transaction
+                        displayMoney(tr.amount.currency, tr.amount.value);
+                    } onError:^(NSError *e) {
+                        // Something went wrong.
+                        @throw [NSException exceptionWithName:@"GetTransactionException"
+                                                       reason:[e localizedFailureReason]
+                                                     userInfo:[e userInfo]];
+                    }];
+        // getTransaction done snippet to include in docs
 
-    [self runUntilTrue:^ {
-        return (displayed > 0);
-    } reissuing:getTransfers];
+        [self runUntilTrue:^ {
+            return (displayed > 0);
+        }];
+    }
+
+    {
+        __block int displayed = 0;
+        void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
+            // ignores inputs, but makes examples look purposeful
+            displayed++;
+        };
+        void (^getTransferTokens)(void) = ^{
+            // getTransferTokensOffset begin snippet to include in docs
+            [payer getTransferTokensOffset:NULL // NULL: get first "page" of results
+                                     limit:10
+                                 onSuccess:^(PagedArray<Token*> *ary) {
+                                     for (Token *tt in ary.items) {
+                                         // use the tokens
+                                         displayMoney(tt.payload.transfer.currency, tt.payload.transfer.amount);
+                                     }
+                                 } onError:^(NSError *e) {
+                                     // Something went wrong.
+                                     @throw [NSException exceptionWithName:@"GetTransferTokensException"
+                                                                    reason:[e localizedFailureReason]
+                                                                  userInfo:[e userInfo]];
+                                 }];
+            // getTransferTokensOffset done snippet to include in docs
+        };
+        getTransferTokens();
+
+        [self runUntilTrue:^ {
+            return (displayed > 0);
+        } reissuing:getTransferTokens];
+    }
+
+    {
+        __block int displayed = 0;
+        void (^displayMoney)(NSString*, NSString*) = ^(NSString *cur, NSString *val) {
+            // ignores inputs, but makes examples look purposeful
+            displayed++;
+        };
+        void (^getTransfers)(void) = ^{
+            // getTransfersOffset begin snippet to include in docs
+            [payer getTransfersOffset:NULL // NULL: get first "page" of results
+                                limit:10
+                              tokenId:NULL // NULL: don't filter by token
+                            onSuccess:^(PagedArray<Transfer*> *ary) {
+                                for (Transfer *t in ary.items) {
+                                    // use the transfers
+                                    displayMoney(t.payload.amount.currency, t.payload.amount.value);
+                                }
+                            } onError:^(NSError *e) {
+                                // Something went wrong.
+                                @throw [NSException exceptionWithName:@"GetTransfersException"
+                                                               reason:[e localizedFailureReason]
+                                                             userInfo:[e userInfo]];
+                            }];
+            // getTransfersOffset done snippet to include in docs
+        };
+        getTransfers();
+
+        [self runUntilTrue:^ {
+            return (displayed > 0);
+        } reissuing:getTransfers];
+    }
 }
 
 @end
