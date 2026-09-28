@@ -108,38 +108,37 @@
 }
 
 - (void)testLookupTransactions {
-    
+
+    // A transfer has to be for the token's full amount, and the token's amount
+    // is also its lifetime cap, so each of the three transactions looked up
+    // below needs a token of its own.
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:@"49.99"];
-    TransferTokenBuilder *builder = [payer createTransferToken:amount
-                                                      currency:@"USD"];
-    builder.accountId = payerAccount.id;
-    builder.toMemberId = payee.id;
-    __block Token *endorsed = nil;
-    TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    [builder executeAsync:^(Token *token) {
-        [self->payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *endorsedResult) {
-            XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
-            endorsed = [endorsedResult token];
-            [expectation fulfill];
-        } onError:THROWERROR];
-    } onError:THROWERROR];
-    [self waitForExpectations:@[expectation] timeout:10];
-    
+
     TransferEndpoint *destination = [[TransferEndpoint alloc] init];
     destination.account.token.memberId = self->payeeAccount.member.id;
     destination.account.token.accountId = self->payeeAccount.id;
-    NSDecimalNumber *redeemAmount = [NSDecimalNumber decimalNumberWithString:@"49.99"];
+
     for (int i = 0; i < 3; i++) {
+        TransferTokenBuilder *builder = [payer createTransferToken:amount
+                                                          currency:@"USD"];
+        builder.accountId = payerAccount.id;
+        builder.toMemberId = payee.id;
+
         TKTestExpectation *redeemExpectation = [[TKTestExpectation alloc] init];
-        [self->payee
-         redeemToken:endorsed
-         amount:redeemAmount
-         currency:@"USD"
-         description:nil
-         destination:destination
-         onSuccess:^(Transfer *transfer) {
-             [redeemExpectation fulfill];
-         } onError:THROWERROR];
+        [builder executeAsync:^(Token *token) {
+            [self->payer endorseToken:token withKey:Key_Level_Standard onSuccess:^(TokenOperationResult *endorsedResult) {
+                XCTAssertEqual([endorsedResult status], TokenOperationResult_Status_Success);
+                [self->payee
+                 redeemToken:[endorsedResult token]
+                 amount:amount
+                 currency:@"USD"
+                 description:nil
+                 destination:destination
+                 onSuccess:^(Transfer *transfer) {
+                     [redeemExpectation fulfill];
+                 } onError:THROWERROR];
+            } onError:THROWERROR];
+        } onError:THROWERROR];
         [self waitForExpectations:@[redeemExpectation] timeout:10];
     }
     

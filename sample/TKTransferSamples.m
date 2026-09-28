@@ -22,7 +22,6 @@
 @implementation TKTransferSamples
 
 - (void)testNotifyPaymentRequest {
-    TokenClient *tokenClient = [self client];
     TKMember *payee = self.payee;
     Alias *payerAlias = self.payerAlias;
     
@@ -36,17 +35,18 @@
     payload.transfer.lifetimeAmount = @"100";
     payload.transfer.currency = @"EUR";
     
-    [tokenClient notifyPaymentRequest:payload
-                            onSuccess:^ {
-                                // Notification sent.
-                                notificationSent = true;
-                            } onError:^(NSError *e) {
-                                // Something went wrong.
-                                // Maybe we used wrong alias?
-                                @throw [NSException exceptionWithName:@"NotifyException"
-                                                               reason:[e localizedFailureReason]
-                                                             userInfo:[e userInfo]];
-                            }
+    // The payee requests the payment, so the payee signs the notification.
+    [payee notifyPaymentRequest:payload
+                      onSuccess:^ {
+                          // Notification sent.
+                          notificationSent = true;
+                      } onError:^(NSError *e) {
+                          // Something went wrong.
+                          // Maybe we used wrong alias?
+                          @throw [NSException exceptionWithName:@"NotifyException"
+                                                         reason:[e localizedFailureReason]
+                                                       userInfo:[e userInfo]];
+                      }
      ];
      // notifyPaymentRequest done snippet to include in docs
     

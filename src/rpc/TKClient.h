@@ -68,6 +68,20 @@
 -(void)setSecurityMetadata:(SecurityMetadata *)metadata;
 
 /**
+ * Creates new member ID. After the method returns the ID is reserved on
+ * the server. The request is authenticated as the member this client
+ * belongs to, which must already exist; the newly created member has no
+ * keys of its own yet and so cannot authenticate the call itself.
+ *
+ * @param memberType type of member to create
+ * @param onSuccess invoked if successful; returns the new member id
+ * @param onError invoked if failed
+ */
+- (void)createMemberId:(enum CreateMemberType)memberType
+             onSuccess:(OnSuccessWithString)onSuccess
+               onError:(OnError)onError;
+
+/**
  * Looks up member information for the current user. The user is defined by
  * the key used for authentication.
  *
@@ -211,6 +225,19 @@
 - (void)unsubscribeFromNotifications:(NSString *)subscriberId
                            onSuccess:(OnSuccess)onSuccess
                              onError:(OnError)onError;
+
+/**
+ * Sends a notification to request payment. The from alias in tokenpayload will
+ * be notified. The request is authenticated as the member this client belongs
+ * to; the gateway rejects it otherwise.
+ *
+ * @param token payload of a token to be sent
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)notifyPaymentRequest:(TokenPayload *)token
+                   onSuccess:(OnSuccess)onSuccess
+                     onError:(OnError)onError;
 
 
 /**

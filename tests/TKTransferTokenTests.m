@@ -12,6 +12,7 @@
 #import "Transferinstructions.pbobjc.h"
 #import "PagedArray.h"
 #import "PrepareTokenResult.h"
+#import "TKRpcSyncCall.h"
 
 @interface TKTransferTokenTests : TKTestBase
 @end
@@ -110,25 +111,22 @@
         [self createToken:[self preparedBuilder:amounts[i]]];
     }
     
-    TKTestExpectation *payerExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payer transfer tokens"];
-    TKTestExpectation *payeeExpectation = [[TKTestExpectation alloc] initWithDescription:@"Payee transfer tokens"];
+    // Each lookup is awaited before the next poll starts. Firing them async left
+    // calls in flight across iterations, and an error reaching THROWERROR inside
+    // a gRPC callback brings the test host down rather than failing the test.
+    // Each side latches once it has seen its tokens: the two do not have to be
+    // ready on the same poll, and a lookup that has not caught up yet retries.
+    __block BOOL payerHasTokens = NO;
+    __block BOOL payeeHasTokens = NO;
     [self runUntilTrue:^{
-        [self->payer getTransferTokensOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
-            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
-                [payerExpectation fulfill];
-            }
-        } onError:THROWERROR];
-        
-        [self->payee getTransferTokensOffset:NULL limit:100 onSuccess:^(PagedArray<Token *> *lookedUp) {
-            if (lookedUp.items.count == 3 && lookedUp.offset != nil) {
-                [payeeExpectation fulfill];
-            }
-        } onError:THROWERROR];
-        
-        return (payerExpectation.isFulfilled && payeeExpectation.isFulfilled) ;
+        if (!payerHasTokens) {
+            payerHasTokens = [self hasTransferTokens:3 for:self->payer];
+        }
+        if (!payeeHasTokens) {
+            payeeHasTokens = [self hasTransferTokens:3 for:self->payee];
+        }
+        return (int) (payerHasTokens && payeeHasTokens);
     }];
-    [self waitForExpectations:@[payerExpectation, payeeExpectation] timeout:10];
-    
 }
 
 - (void)testCreateToken_Unicode {
@@ -196,6 +194,19 @@
         } onError:THROWERROR];
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
+}
+
+// A fresh TKRpcSyncCall per call: it keeps its result and error for the life of
+// the object, so a reused one would replay them on the next run.
+- (BOOL)hasTransferTokens:(NSUInteger)count for:(TKMember *)member {
+    TKRpcSyncCall<PagedArray<Token *> *> *call = [TKRpcSyncCall create];
+    PagedArray<Token *> *lookedUp = [call run:^{
+        [member getTransferTokensOffset:NULL
+                                  limit:100
+                              onSuccess:call.onSuccess
+                                onError:call.onError];
+    }];
+    return lookedUp.items.count == count && lookedUp.offset != nil;
 }
 
 - (TransferTokenBuilder *)preparedBuilder {

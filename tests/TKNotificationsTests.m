@@ -144,7 +144,7 @@ void check(NSString *message, BOOL condition) {
     tokenPayload.transfer.lifetimeAmount = @"100";
     tokenPayload.transfer.currency = @"EUR";
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    [[self client] notifyPaymentRequest:tokenPayload onSuccess:^ {
+    [payee notifyPaymentRequest:tokenPayload onSuccess:^ {
         [expectation fulfill];
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
@@ -287,9 +287,11 @@ void check(NSString *message, BOOL condition) {
     expectation = [[TKTestExpectation alloc] init];
     [self runUntilTrue:^{
         [self->payer getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
-            if (notifications.items.count >= 1) {
-                Notification* notification = [notifications.items objectAtIndex:0];
-                
+            // Search the whole page rather than the first entry: redeeming the
+            // token above also notifies the payer, and that notification is
+            // written within a millisecond or two of this one, so either can
+            // end up sorted first.
+            for (Notification *notification in notifications.items) {
                 if ((notification.status == Notification_Status_Pending)
                     && ([notification.content.type isEqualToString:@"TRANSACTION_STEP_UP"])) {
                     TransactionStepUp *transactionStepup = [TKJson
@@ -297,7 +299,13 @@ void check(NSString *message, BOOL condition) {
                                                             fromJSON:notification.content.payload];
                     if ([transactionStepup.transactionId isEqualToString: transactionId]
                         && [transactionStepup.accountId isEqualToString: self->payerAccount.id]) {
-                        [expectation fulfill];
+                        // Stop at the first match: XCTest treats a second
+                        // fulfill of the same expectation as an API violation,
+                        // and the loop above can see more than one match.
+                        if (!expectation.isFulfilled) {
+                            [expectation fulfill];
+                        }
+                        break;
                     }
                 }
             }
@@ -317,7 +325,7 @@ void check(NSString *message, BOOL condition) {
     tokenPayload.transfer.lifetimeAmount = @"100";
     tokenPayload.transfer.currency = @"EUR";
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
-    [[self client] notifyPaymentRequest:tokenPayload onSuccess:^ {
+    [payee notifyPaymentRequest:tokenPayload onSuccess:^ {
         [expectation fulfill];
     } onError:THROWERROR];
     [self waitForExpectations:@[expectation] timeout:10];
@@ -358,12 +366,20 @@ void check(NSString *message, BOOL condition) {
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [self runUntilTrue:^{
         [member getNotificationsOffset:nil limit:100 onSuccess:^(PagedArray<Notification *> *notifications) {
-            if (notifications.items.count == 1) {
-                Notification* notification = [notifications.items objectAtIndex:0];
+            // Match on type and status anywhere in the page. Requiring exactly
+            // one notification made this fail permanently as soon as the member
+            // received a second one, whatever its type.
+            for (Notification *notification in notifications.items) {
                 if ((notification.status == status)
                     && ([notification.content.type isEqualToString:type])) {
                     notificationId = notification.id_p;
-                    [expectation fulfill];
+                    // Stop at the first match: XCTest treats a second fulfill
+                    // of the same expectation as an API violation, and a page
+                    // can hold more than one notification of this type.
+                    if (!expectation.isFulfilled) {
+                        [expectation fulfill];
+                    }
+                    break;
                 }
             }
         } onError:THROWERROR];

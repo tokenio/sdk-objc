@@ -159,6 +159,22 @@ typedef id _Nonnull (^AsyncTestBlockWithResult)(TokenClient *);
 - (void)runUntilTrue:(int (^)(void))condition;
 
 /**
+ * Runs until `condition` block returns true, hits exception, or times out,
+ * re-issuing `request` each time round.
+ *
+ * Several lookups are eventually consistent: `report` in particular only
+ * catches up with the tokens and transfers we have just created a second or
+ * two later, so a single call can legitimately come back empty. A condition
+ * waiting on the callback of a request that has already returned nothing can
+ * never become true, however long the budget, so the request has to be made
+ * again rather than merely waited on.
+ *
+ * @param condition block that returns a Boolean
+ * @param request block that issues the request `condition` observes
+ */
+- (void)runUntilTrue:(int (^)(void))condition reissuing:(void (^)(void))request;
+
+/**
  * Runs until one notification found, hits exception, or times out.
  *
  * @param member member

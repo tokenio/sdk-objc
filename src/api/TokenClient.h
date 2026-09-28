@@ -73,8 +73,48 @@
     globalRpcErrorCallback:(OnError)globalRpcErrorCallback;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
- * given alias.
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias.
+ *
+ * The member creation request is authenticated as `authenticatedAs`, an
+ * existing member whose keys are held by this device. The new member cannot
+ * authenticate the call itself: it has no keys until the keys generated here
+ * are registered against it.
+ *
+ * @param alias member alias to use, must be unique
+ * @param authenticatedAs existing member that authenticates the creation
+ */
+- (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias.
+ *
+ * The member creation request is authenticated as `authenticatedAs`, an
+ * existing member whose keys are held by this device. The new member cannot
+ * authenticate the call itself: it has no keys until the keys generated here
+ * are registered against it.
+ *
+ * @param alias member alias to use, must be unique
+ * @param authenticatedAs existing member that authenticates the creation
+ * @param recoveryAgent member id of the primary recovery agent.
+ */
+- (void)createMember:(Alias *)alias
+     authenticatedAs:(TKMember *)authenticatedAs
+       recoveryAgent:(NSString *)recoveryAgent
+           onSuccess:(OnSuccessWithTKMember)onSuccess
+             onError:(OnError)onError;
+
+/**
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias, without authenticating the call.
+ *
+ * This is the only way to create the first member on a device: the
+ * authenticated overloads above need an existing member whose keys are already
+ * held here.
  *
  * @param alias member alias to use, must be unique
  */
@@ -83,8 +123,12 @@
              onError:(OnError)onError;
 
 /**
- * Creates a new Token member with a pair of auto generated keys and the
- * given alias.
+ * Creates a new PERSONAL Token member with a pair of auto generated keys and
+ * the given alias, without authenticating the call.
+ *
+ * This is the only way to create the first member on a device: the
+ * authenticated overloads above need an existing member whose keys are already
+ * held here.
  *
  * @param alias member alias to use, must be unique
  * @param recoveryAgent member id of the primary recovery agent.
@@ -210,17 +254,6 @@
 - (void)getBanksCountries:(NSString *)provider
                 onSuccess:(OnSuccessWithStrings)onSuccess
                   onError:(OnError)onError;
-
-/**
- * Sends a notification to request payment. The from alias in tokenpayload will be notified.
- *
- * @param token payload of a token to be sent
- * @param onSuccess invoked if successful
- * @param onError invoked if failed
- */
-- (void)notifyPaymentRequest:(TokenPayload *)token
-                   onSuccess:(OnSuccess)onSuccess
-                     onError:(OnError)onError;
 
 /**
  * Sends a notification to request adding keys
