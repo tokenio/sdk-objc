@@ -816,6 +816,20 @@
                   onError:(OnError)onError;
 
 /**
+ * Get the token request result based on a token's tokenRequestId. The request
+ * is authenticated as the member this client belongs to. When that member
+ * created the token request, the gateway returns the result even after the
+ * token request has expired.
+ *
+ * @param tokenRequestId token request id
+ * @param onSuccess invoked if successful
+ * @param onError invoked if failed
+ */
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError;
+
+/**
  * Updates an existing token request.
  *
  * @param requestId token request ID

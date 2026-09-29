@@ -18,6 +18,7 @@
 #import "PagedArray.h"
 #import "TKLogManager.h"
 #import "TKUtil.h"
+#import "TokenRequestResult.h"
 
 @implementation TKClient {
     GatewayService *gateway;
@@ -1944,7 +1945,31 @@
                                            [self->errorHandler handle:onError withError:error];
                                        }
                                    }];
-    
+
+    [self _startCall:call
+         withRequest:request
+             onError:onError];
+}
+
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError {
+    GetTokenRequestResultRequest *request = [GetTokenRequestResultRequest message];
+    request.tokenRequestId = tokenRequestId;
+    RpcLogStart(request);
+
+    __block GRPCProtoCall *call = [gateway
+                                   RPCToGetTokenRequestResultWithRequest:request
+                                   handler:^(GetTokenRequestResultResponse *response, NSError *error) {
+                                       if (response) {
+                                           RpcLogCompletedWithMetaData(response, call);
+                                           onSuccess([TokenRequestResult createWithTokenId:response.tokenId
+                                                                                 signature:response.signature]);
+                                       } else {
+                                           [self->errorHandler handle:onError withError:error];
+                                       }
+                                   }];
+
     [self _startCall:call
          withRequest:request
              onError:onError];
