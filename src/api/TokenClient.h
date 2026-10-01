@@ -299,7 +299,11 @@
                        onError:(OnError)onError;
 
 /**
- * Get the token request result based on a token's tokenRequestId.
+ * Get the token request result based on a token's tokenRequestId, without
+ * authenticating the call.
+ *
+ * Prefer `-[TKMember getTokenRequestResult:onSuccess:onError:]`, which
+ * authenticates the request as that member.
  *
  * @param tokenRequestId token request id
  * @param onSuccess invoked if successful

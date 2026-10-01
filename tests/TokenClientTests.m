@@ -13,12 +13,13 @@
 #import "TokenClient.h"
 
 /**
- * Records the member creation request instead of sending it, and fails the
+ * Records the requests it is given instead of sending them, and fails each
  * call so that nothing downstream reaches the network.
  */
 @interface RecordingClient : TKClient
 @property (nonatomic) BOOL createMemberIdCalled;
 @property (nonatomic) enum CreateMemberType requestedMemberType;
+@property (nonatomic, copy) NSString *requestedTokenRequestId;
 @end
 
 @implementation RecordingClient
@@ -28,6 +29,13 @@
                onError:(OnError)onError {
     self.createMemberIdCalled = YES;
     self.requestedMemberType = memberType;
+    onError([NSError errorWithDomain:@"io.token.test" code:1 userInfo:nil]);
+}
+
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError {
+    self.requestedTokenRequestId = tokenRequestId;
     onError([NSError errorWithDomain:@"io.token.test" code:1 userInfo:nil]);
 }
 
@@ -82,6 +90,32 @@
     [self waitForExpectations:@[expectation] timeout:1];
     XCTAssertTrue(client.createMemberIdCalled);
     XCTAssertEqual(client.requestedMemberType, CreateMemberType_Personal);
+}
+
+// A member's token request result lookup must go through that member's
+// authenticated client, not the unauthenticated one TokenClient uses.
+- (void)testGetTokenRequestResultUsesTheMembersAuthenticatedClient {
+    // Given
+    RecordingClient *client = [[RecordingClient alloc] init];
+    TKMember *member = [TKMember member:[Member message]
+                           tokenCluster:[TokenCluster localhost]
+                              useClient:client
+                      useBrowserFactory:nil
+                                aliases:[NSMutableArray array]];
+    XCTestExpectation *expectation = [[XCTestExpectation alloc] init];
+
+    // When
+    [member getTokenRequestResult:@"rq:token-request"
+                        onSuccess:^(TokenRequestResult *result) {
+                            XCTFail(@"The lookup was expected to fail");
+                        }
+                          onError:^(NSError *error) {
+                              [expectation fulfill];
+                          }];
+
+    // Then
+    [self waitForExpectations:@[expectation] timeout:1];
+    XCTAssertEqualObjects(client.requestedTokenRequestId, @"rq:token-request");
 }
 
 - (TokenClient *)tokenClient {

@@ -159,14 +159,13 @@
 }
 
 - (void)sampleGetTokenRequestResult {
-    TokenClient *tokenClient = [self client];
     TKTestExpectation *expectation = [[TKTestExpectation alloc] init];
     [grantee storeTokenRequest:requestPayload requestOptions:requestOptions onSuccess:^(NSString *tokenRequestId) {
         [self->grantor
          signTokenRequestState:tokenRequestId
          tokenId:self->token.id_p
          state:self->requestPayload.callbackState onSuccess:^(Signature *signature) {
-             [tokenClient getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
+             [self->grantee getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
                  XCTAssert([result.tokenId isEqualToString: self->token.id_p]);
                  XCTAssert([result.signature.signature isEqualToString: signature.signature]);
                  [expectation fulfill];

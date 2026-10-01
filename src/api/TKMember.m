@@ -1162,6 +1162,14 @@ transferDestination:(TransferDestination * _Nullable)transferDestination
                       onError:onError];
 }
 
+- (void)getTokenRequestResult:(NSString *)tokenRequestId
+                    onSuccess:(OnSuccessWithTokenRequestResult)onSuccess
+                      onError:(OnError)onError {
+    [client getTokenRequestResult:tokenRequestId
+                        onSuccess:onSuccess
+                          onError:onError];
+}
+
 - (void)updateTokenRequest:(NSString *)requestId
                    options:(TokenRequestOptions *)options
                  onSuccess:(OnSuccess)onSuccess

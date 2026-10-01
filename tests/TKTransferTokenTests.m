@@ -184,7 +184,7 @@
                             keyLevel:prepareTokenResult.policy.singleSignature.signer.keyLevel
                            onSuccess:^(Token *token){
                 [self->payer signTokenRequestState:tokenRequestId tokenId:token.id_p state:state onSuccess:^(Signature *signature) {
-                    [self->tokenClient getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
+                    [self->payee getTokenRequestResult:tokenRequestId onSuccess:^(TokenRequestResult *result) {
                         XCTAssert([result.tokenId isEqualToString: token.id_p]);
                         XCTAssert([result.signature.signature isEqualToString: signature.signature]);
                         [expectation fulfill];
